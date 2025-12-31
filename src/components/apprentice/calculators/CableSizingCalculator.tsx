@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sigma, Calculator, RefreshCw, Zap, AlertCircle, CheckCircle2, Info } from "lucide-react";
+import { Sigma, Zap, Info } from "lucide-react";
 import { useCableSizing } from "./cable-sizing/useCableSizing";
 import CableSizingForm from "./cable-sizing/CableSizingInputs";
 import CableSizingResult from "./cable-sizing/CableSizingResult";
@@ -9,39 +9,12 @@ import CalculationReport from "./CalculationReport";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useMemo } from "react";
 import { SimpleValidator, SimpleValidationResult } from "@/services/simplifiedValidation";
-import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-const protectiveDeviceOptions = [
-  { value: "mcb", label: "MCB" },
-  { value: "rcbo", label: "RCBO" },
-  { value: "fuse", label: "Fuse" },
-];
-
-const deviceRatingOptions = [
-  { value: "6", label: "6A" },
-  { value: "10", label: "10A" },
-  { value: "16", label: "16A" },
-  { value: "20", label: "20A" },
-  { value: "25", label: "25A" },
-  { value: "32", label: "32A" },
-  { value: "40", label: "40A" },
-  { value: "50", label: "50A" },
-  { value: "63", label: "63A" },
-  { value: "80", label: "80A" },
-  { value: "100", label: "100A" },
-  { value: "125", label: "125A" },
-  { value: "160", label: "160A" },
-  { value: "200", label: "200A" },
-  { value: "250", label: "250A" },
-  { value: "315", label: "315A" },
-  { value: "400", label: "400A" },
-];
 
 const voltageOptions = [
   { value: "230", label: "230V Single Phase" },
@@ -59,11 +32,6 @@ const CableSizingCalculator = () => {
   const [validation, setValidation] = useState<SimpleValidationResult | null>(null);
   const [calculationInputs, setCalculationInputs] = useState<any>({});
   const [calculationResults, setCalculationResults] = useState<any>({});
-  
-  // Enhanced inputs for protective device integration
-  const [protectiveDevice, setProtectiveDevice] = useState<string>("mcb");
-  const [deviceRating, setDeviceRating] = useState<string>("32");
-  const [designCurrent, setDesignCurrent] = useState<string>("");
   
   // Load/Current input mode
   const [inputMode, setInputMode] = useState<'current' | 'load'>('current');
@@ -108,34 +76,6 @@ const CableSizingCalculator = () => {
     }
   }, [calculatedCurrent, inputMode, updateInput]);
 
-  // Calculate Ib ≤ In ≤ Iz compliance
-  const calculateCompliance = () => {
-    if (!result.recommendedCable) return null;
-    
-    // Use design current if provided, otherwise fall back to main current input
-    const currentToUse = designCurrent || inputs.current;
-    if (!currentToUse || !deviceRating) return null;
-    
-    const Ib = parseFloat(currentToUse); // Design current (or main current as fallback)
-    const In = parseFloat(deviceRating);  // Device rating  
-    const Iz = result.recommendedCable.deratedCapacity || result.recommendedCable.tabulatedCapacity || 0; // Cable capacity
-    
-    const ibInCompliant = Ib <= In;
-    const inIzCompliant = In <= Iz;
-    const overallCompliant = ibInCompliant && inIzCompliant;
-    
-    return {
-      Ib,
-      In, 
-      Iz,
-      ibInCompliant,
-      inIzCompliant,
-      overallCompliant,
-      safetyMargin: Iz > 0 ? ((Iz - In) / Iz * 100) : 0,
-      usingFallbackCurrent: !designCurrent && inputs.current
-    };
-  };
-
   // Enhanced validation with safety factors
   useEffect(() => {
     if (result.recommendedCable && !result.errors) {
@@ -163,8 +103,6 @@ const CableSizingCalculator = () => {
         cableType: inputs.cableType,
         loadType: (inputs as any).loadType || 'resistive',
         diversityFactor: parseFloat((inputs as any).diversityFactor || '1.0'),
-        protectiveDevice,
-        deviceRating: parseFloat(deviceRating)
       });
       
       setCalculationResults({
@@ -172,17 +110,9 @@ const CableSizingCalculator = () => {
         currentRating: result.recommendedCable.tabulatedCapacity,
         deratedCurrentRating: result.recommendedCable.deratedCapacity,
         safetyMargin: safetyValidation.safetyFactors.safetyMargin,
-        compliance: calculateCompliance()
       });
 
-      const compliance = calculateCompliance();
-      if (compliance && !compliance.overallCompliant) {
-        toast({
-          title: "⚠️ Ib ≤ In ≤ Iz Compliance Issue",
-          description: "Circuit does not meet BS 7671 design requirements",
-          variant: "destructive",
-        });
-      } else if (safetyValidation.criticalAlerts.length > 0) {
+      if (safetyValidation.criticalAlerts.length > 0) {
         toast({
           title: "⚠️ CRITICAL SAFETY ALERT",
           description: "Serious safety issues detected. Do not proceed with installation.",
@@ -202,7 +132,7 @@ const CableSizingCalculator = () => {
         });
       }
     }
-  }, [result, inputs, protectiveDevice, deviceRating, designCurrent, toast]);
+  }, [result, inputs, toast]);
 
   const handleCalculate = () => {
     if (!inputs.current || !inputs.length) {
@@ -234,17 +164,12 @@ const CableSizingCalculator = () => {
     setValidation(null);
     setCalculationInputs({});
     setCalculationResults({});
-    setProtectiveDevice("mcb");
-    setDeviceRating("32");
-    setDesignCurrent("");
     setLoadPower("");
     setLoadVoltage("230");
     setPowerFactor("1.0");
     setPhases("single");
     setInputMode("current");
   };
-
-  const compliance = calculateCompliance();
 
   return (
     <div className="space-y-6">
@@ -349,32 +274,6 @@ const CableSizingCalculator = () => {
 
             <Separator className="bg-elec-yellow/20" />
 
-            {/* Protective Device Section */}
-            <div className="space-y-6">
-              <h3 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
-                <AlertCircle className="h-5 w-5" />
-                Protective Device
-              </h3>
-              <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/50">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <MobileSelectWrapper
-                    label="Device Type"
-                    value={protectiveDevice}
-                    onValueChange={setProtectiveDevice}
-                    options={protectiveDeviceOptions}
-                  />
-                  <MobileSelectWrapper
-                    label="Device Rating (A)"
-                    value={deviceRating}
-                    onValueChange={setDeviceRating}
-                    options={deviceRatingOptions}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <Separator className="bg-elec-yellow/20" />
-
             <CableSizingForm
               inputs={inputs}
               errors={result.errors}
@@ -389,61 +288,6 @@ const CableSizingCalculator = () => {
           </div>
           
           <div className="flex flex-col space-y-4 mt-6 xl:mt-0">
-              {/* Compliance Status - Appears with results */}
-              {compliance && result.recommendedCable && (
-                <div className={`p-4 rounded-lg ${
-                  compliance.overallCompliant 
-                    ? 'bg-green-500/10 border border-green-500/30' 
-                    : 'bg-red-500/10 border border-red-500/30'
-                }`}>
-                  <div className="flex items-center gap-2 mb-3">
-                    {compliance.overallCompliant ? (
-                      <CheckCircle2 className="h-6 w-6 text-green-400" />
-                    ) : (
-                      <AlertCircle className="h-6 w-6 text-red-400" />
-                    )}
-                    <span className={`font-semibold ${
-                      compliance.overallCompliant ? 'text-green-400' : 'text-red-400'
-                    }`}>
-                      BS 7671 Compliance: Ib ≤ In ≤ Iz
-                    </span>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-4 text-sm">
-                    <div className="text-center p-2 rounded bg-card/50">
-                      <div className="text-muted-foreground text-xs">Ib (Design)</div>
-                      <div className="font-mono font-bold text-white">{compliance.Ib.toFixed(1)}A</div>
-                    </div>
-                    <div className="text-center p-2 rounded bg-card/50">
-                      <div className="text-muted-foreground text-xs">In (Device)</div>
-                      <div className="font-mono font-bold text-white">{compliance.In}A</div>
-                    </div>
-                    <div className="text-center p-2 rounded bg-card/50">
-                      <div className="text-muted-foreground text-xs">Iz (Cable)</div>
-                      <div className="font-mono font-bold text-white">{compliance.Iz.toFixed(1)}A</div>
-                    </div>
-                  </div>
-
-                  <div className="mt-3 space-y-1 text-xs">
-                    <div className={`flex items-center gap-2 ${compliance.ibInCompliant ? 'text-green-400' : 'text-red-400'}`}>
-                      {compliance.ibInCompliant ? <CheckCircle2 className="h-3 w-3" /> : <AlertCircle className="h-3 w-3" />}
-                      Ib ≤ In: {compliance.ibInCompliant ? 'PASS' : 'FAIL'}
-                    </div>
-                    <div className={`flex items-center gap-2 ${compliance.inIzCompliant ? 'text-green-400' : 'text-red-400'}`}>
-                      {compliance.inIzCompliant ? <CheckCircle2 className="h-3 w-3" /> : <AlertCircle className="h-3 w-3" />}
-                      In ≤ Iz: {compliance.inIzCompliant ? 'PASS' : 'FAIL'}
-                    </div>
-                  </div>
-
-                  {compliance.usingFallbackCurrent && (
-                    <div className="mt-2 text-xs text-amber-400 flex items-center gap-1">
-                      <Info className="h-3 w-3" />
-                      Using main current input as design current
-                    </div>
-                  )}
-                </div>
-              )}
-
               {/* Validation Results */}
               {validation && (
                 <SimpleValidationIndicator validation={validation} calculationType="cableSizing" />
