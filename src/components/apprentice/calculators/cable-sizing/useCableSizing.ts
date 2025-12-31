@@ -11,6 +11,8 @@ import {
   getThermalInsulationCapacity,
   flatTwinEarthThermalCapacities
 } from "@/lib/calculators/bs7671-data/cableCapacities";
+
+export type { CableType };
 import { getVoltageDropValue } from "@/lib/calculators/bs7671-data/voltageDropTables";
 
 export interface CableSizingInputs {

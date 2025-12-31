@@ -4,7 +4,7 @@ import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Calculator, RefreshCw, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
-import { CableSizingInputs, CableSizingErrors } from "./useCableSizing";
+import { CableSizingInputs, CableSizingErrors, CableType } from "./useCableSizing";
 import { installationCategories, getMethodsByCategory, isUndergroundMethod, isDomesticInsulationMethod } from "@/lib/calculators/bs7671-data/installationMethodFactors";
 
 interface CableSizingFormProps {
@@ -16,7 +16,7 @@ interface CableSizingFormProps {
   };
   updateInput: (field: keyof CableSizingInputs, value: string) => void;
   setInstallationType: (type: string) => void;
-  setCableType: (type: string) => void;
+  setCableType: (type: CableType) => void;
   calculateCableSize: () => void;
   resetCalculator: () => void;
   inputMode: 'current' | 'load';
@@ -65,10 +65,14 @@ const allInstallationOptions = Object.entries(installationOptionsByCategory).fla
 );
 
 const cableTypeOptions = [
-  { value: "pvc-70", label: "PVC 70°C (Standard)" },
-  { value: "xlpe-90", label: "XLPE 90°C (Enhanced)" },
-  { value: "lsf-70", label: "LSF 70°C (Low Smoke)" },
-  { value: "mineral-70", label: "MI Cable 70°C" },
+  { value: "pvc-twin-earth", label: "Flat Twin & Earth 70°C (Table 4D5)" },
+  { value: "pvc-single", label: "PVC Single-core 70°C (Table 4D1A)" },
+  { value: "xlpe-single", label: "XLPE Single-core 90°C (Table 4D2A)" },
+  { value: "xlpe-twin-earth", label: "XLPE Twin & Earth 90°C" },
+  { value: "swa", label: "SWA Multicore Armoured (Table 4D4A)" },
+  { value: "swa-single-core", label: "SWA Single-core Armoured (Table 4D3A)" },
+  { value: "micc", label: "Mineral Insulated (MICC)" },
+  { value: "aluminium-xlpe", label: "Aluminium XLPE 90°C" },
 ];
 
 const loadTypeOptions = [
