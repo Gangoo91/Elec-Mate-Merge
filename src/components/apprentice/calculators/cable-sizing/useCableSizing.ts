@@ -127,7 +127,18 @@ export const useCableSizing = () => {
   });
 
   const updateInput = (field: keyof CableSizingInputs, value: string) => {
-    setInputs(prev => ({ ...prev, [field]: value }));
+    setInputs(prev => {
+      const updated = { ...prev, [field]: value };
+      
+      // Smart form: auto-update voltage when cores selection changes
+      if (field === 'cores') {
+        // 2-core = Single Phase = 230V, 3-core or 4-core = Three Phase = 400V
+        updated.voltage = value === '2' ? '230' : '400';
+      }
+      
+      return updated;
+    });
+    
     if (result.errors[field]) {
       clearError(field);
     }

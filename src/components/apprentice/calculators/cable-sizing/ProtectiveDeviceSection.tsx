@@ -58,13 +58,13 @@ const ProtectiveDeviceSection = ({
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="mt-8 pt-8 border-t border-elec-yellow/30">
-      <CollapsibleTrigger className="w-full flex items-center justify-between p-4 text-elec-yellow hover:text-elec-yellow/80 transition-colors bg-elec-gray/20 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/40">
-        <div className="flex items-center gap-2">
-          <Shield className="h-5 w-5" />
-          <span className="font-semibold">Protective Device Check</span>
-          <span className="text-xs text-white/60 font-normal">(BS 7671 Reg 433.1)</span>
+      <CollapsibleTrigger className="w-full flex items-center justify-between p-4 text-elec-yellow hover:text-elec-yellow/80 transition-all duration-200 bg-elec-gray/20 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/40 min-h-[56px] active:scale-[0.98]">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Shield className="h-5 w-5 flex-shrink-0" />
+          <span className="font-semibold text-sm sm:text-base">Protective Device Check</span>
+          <span className="text-xs text-white font-normal hidden sm:inline">(BS 7671 Reg 433.1)</span>
         </div>
-        {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        {isOpen ? <ChevronUp className="h-4 w-4 flex-shrink-0" /> : <ChevronDown className="h-4 w-4 flex-shrink-0" />}
       </CollapsibleTrigger>
 
       <CollapsibleContent className="pt-6 space-y-6">
@@ -76,22 +76,22 @@ const ProtectiveDeviceSection = ({
               <RequiredFieldTooltip content="Select the type of protective device for overload protection" />
             </label>
             <Select value={deviceType} onValueChange={(v) => setDeviceType(v as DeviceType)}>
-              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30">
+              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30 min-h-[48px] text-base">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 {deviceTypeOptions.map(option => (
-                  <SelectItem key={option.value} value={option.value}>
+                  <SelectItem key={option.value} value={option.value} className="py-3">
                     <div className="flex flex-col">
-                      <span>{option.label}</span>
-                      <span className="text-xs text-muted-foreground">{option.standard}</span>
+                      <span className="text-white">{option.label}</span>
+                      <span className="text-xs text-white/70">{option.standard}</span>
                     </div>
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {deviceInfo && (
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-white">
                 I₂ = {i2Multiplier} × In ({deviceInfo.standard})
               </p>
             )}
@@ -103,12 +103,12 @@ const ProtectiveDeviceSection = ({
               <RequiredFieldTooltip content="Nominal current rating of the protective device" />
             </label>
             <Select value={rating.toString()} onValueChange={(v) => setRating(parseInt(v))}>
-              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30">
+              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30 min-h-[48px] text-base">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="max-h-60">
                 {availableRatings.map(r => (
-                  <SelectItem key={r} value={r.toString()}>
+                  <SelectItem key={r} value={r.toString()} className="py-3 text-white">
                     {r}A
                   </SelectItem>
                 ))}
@@ -143,58 +143,64 @@ const ProtectiveDeviceSection = ({
             {/* Individual Checks */}
             <div className="space-y-3">
               {/* Check 1: Ib ≤ In */}
-              <div className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg">
-                <CheckIcon passed={validation.checks.ibLessEqualIn.passed} />
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium text-white">Check 1:</span>
-                    <span className="text-white/80">Ib ≤ In</span>
+              <div className="flex flex-col sm:flex-row sm:items-start gap-3 p-4 bg-elec-dark/30 rounded-lg min-h-[60px]">
+                <div className="flex items-center gap-3 flex-1">
+                  <CheckIcon passed={validation.checks.ibLessEqualIn.passed} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-medium text-white text-sm sm:text-base">Check 1:</span>
+                      <span className="text-white text-sm sm:text-base">Ib ≤ In</span>
+                    </div>
+                    <p className="text-sm text-white mt-1">
+                      Design current ({validation.checks.ibLessEqualIn.ib}A) 
+                      {validation.checks.ibLessEqualIn.passed ? ' ≤ ' : ' > '}
+                      Device rating ({validation.checks.ibLessEqualIn.in_}A)
+                    </p>
                   </div>
-                  <p className="text-sm text-white/60 mt-1">
-                    Design current ({validation.checks.ibLessEqualIn.ib}A) 
-                    {validation.checks.ibLessEqualIn.passed ? ' ≤ ' : ' > '}
-                    Device rating ({validation.checks.ibLessEqualIn.in_}A)
-                  </p>
                 </div>
-                <span className={`text-sm font-bold ${validation.checks.ibLessEqualIn.passed ? 'text-green-400' : 'text-red-400'}`}>
+                <span className={`text-sm font-bold self-start sm:self-center ${validation.checks.ibLessEqualIn.passed ? 'text-green-400' : 'text-red-400'}`}>
                   {validation.checks.ibLessEqualIn.passed ? 'PASS' : 'FAIL'}
                 </span>
               </div>
 
               {/* Check 2: In ≤ Iz */}
-              <div className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg">
-                <CheckIcon passed={validation.checks.inLessEqualIz.passed} />
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium text-white">Check 2:</span>
-                    <span className="text-white/80">In ≤ Iz</span>
+              <div className="flex flex-col sm:flex-row sm:items-start gap-3 p-4 bg-elec-dark/30 rounded-lg min-h-[60px]">
+                <div className="flex items-center gap-3 flex-1">
+                  <CheckIcon passed={validation.checks.inLessEqualIz.passed} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-medium text-white text-sm sm:text-base">Check 2:</span>
+                      <span className="text-white text-sm sm:text-base">In ≤ Iz</span>
+                    </div>
+                    <p className="text-sm text-white mt-1">
+                      Device rating ({validation.checks.inLessEqualIz.in_}A) 
+                      {validation.checks.inLessEqualIz.passed ? ' ≤ ' : ' > '}
+                      Effective capacity ({validation.checks.inLessEqualIz.iz}A)
+                    </p>
                   </div>
-                  <p className="text-sm text-white/60 mt-1">
-                    Device rating ({validation.checks.inLessEqualIz.in_}A) 
-                    {validation.checks.inLessEqualIz.passed ? ' ≤ ' : ' > '}
-                    Effective capacity ({validation.checks.inLessEqualIz.iz}A)
-                  </p>
                 </div>
-                <span className={`text-sm font-bold ${validation.checks.inLessEqualIz.passed ? 'text-green-400' : 'text-red-400'}`}>
+                <span className={`text-sm font-bold self-start sm:self-center ${validation.checks.inLessEqualIz.passed ? 'text-green-400' : 'text-red-400'}`}>
                   {validation.checks.inLessEqualIz.passed ? 'PASS' : 'FAIL'}
                 </span>
               </div>
 
               {/* Check 3: I2 ≤ 1.45 × Iz */}
-              <div className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg">
-                <CheckIcon passed={validation.checks.i2LessEqual145Iz.passed} />
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium text-white">Check 3:</span>
-                    <span className="text-white/80">I₂ ≤ 1.45 × Iz</span>
+              <div className="flex flex-col sm:flex-row sm:items-start gap-3 p-4 bg-elec-dark/30 rounded-lg min-h-[60px]">
+                <div className="flex items-center gap-3 flex-1">
+                  <CheckIcon passed={validation.checks.i2LessEqual145Iz.passed} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-medium text-white text-sm sm:text-base">Check 3:</span>
+                      <span className="text-white text-sm sm:text-base">I₂ ≤ 1.45 × Iz</span>
+                    </div>
+                    <p className="text-sm text-white mt-1">
+                      Overload trip current ({validation.checks.i2LessEqual145Iz.i2}A) 
+                      {validation.checks.i2LessEqual145Iz.passed ? ' ≤ ' : ' > '}
+                      1.45 × Iz ({validation.checks.i2LessEqual145Iz.limit}A)
+                    </p>
                   </div>
-                  <p className="text-sm text-white/60 mt-1">
-                    Overload trip current ({validation.checks.i2LessEqual145Iz.i2}A) 
-                    {validation.checks.i2LessEqual145Iz.passed ? ' ≤ ' : ' > '}
-                    1.45 × Iz ({validation.checks.i2LessEqual145Iz.limit}A)
-                  </p>
                 </div>
-                <span className={`text-sm font-bold ${validation.checks.i2LessEqual145Iz.passed ? 'text-green-400' : 'text-red-400'}`}>
+                <span className={`text-sm font-bold self-start sm:self-center ${validation.checks.i2LessEqual145Iz.passed ? 'text-green-400' : 'text-red-400'}`}>
                   {validation.checks.i2LessEqual145Iz.passed ? 'PASS' : 'FAIL'}
                 </span>
               </div>
@@ -207,9 +213,9 @@ const ProtectiveDeviceSection = ({
                   <Info className="h-5 w-5 text-amber-400" />
                   <span className="font-medium text-amber-400">Suggestions</span>
                 </div>
-                <ul className="space-y-1">
+                <ul className="space-y-2">
                   {validation.suggestions.map((suggestion, idx) => (
-                    <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                    <li key={idx} className="text-sm text-white flex items-start gap-2">
                       <span className="text-amber-400">•</span>
                       {suggestion}
                     </li>
@@ -219,16 +225,16 @@ const ProtectiveDeviceSection = ({
             )}
 
             {/* Device Reference Info */}
-            <div className="p-3 bg-elec-dark/20 rounded-lg border border-elec-yellow/10">
-              <div className="flex items-center gap-2 mb-2">
-                <Info className="h-4 w-4 text-elec-yellow/60" />
-                <span className="text-sm font-medium text-white/80">Device I₂ Values (Conventional Operating Current)</span>
+            <div className="p-4 bg-elec-dark/20 rounded-lg border border-elec-yellow/10">
+              <div className="flex items-center gap-2 mb-3">
+                <Info className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <span className="text-sm font-medium text-white">Device I₂ Values (Conventional Operating Current)</span>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-white/60">
-                <div>MCB/RCBO: 1.45 × In</div>
-                <div>BS 88 gG: 1.6 × In</div>
-                <div>BS 3036: 2.0 × In</div>
-                <div>MCCB: 1.3 × In</div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-white">
+                <div className="p-2 bg-white/5 rounded">MCB/RCBO: 1.45 × In</div>
+                <div className="p-2 bg-white/5 rounded">BS 88 gG: 1.6 × In</div>
+                <div className="p-2 bg-white/5 rounded">BS 3036: 2.0 × In</div>
+                <div className="p-2 bg-white/5 rounded">MCCB: 1.3 × In</div>
               </div>
             </div>
           </div>
