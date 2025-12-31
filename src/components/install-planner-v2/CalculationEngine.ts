@@ -157,6 +157,7 @@ const getCableTypeName = (cableType: CableType): string => {
     'pvc-twin-earth': 'PVC Twin & Earth',
     'xlpe-twin-earth': 'XLPE Twin & Earth (90°C)',
     'swa': 'SWA Armoured Cable',
+    'swa-single-core': 'SWA Single Core Armoured',
     'micc': 'Mineral Insulated (MICC)',
     'aluminium-xlpe': 'Aluminium XLPE'
   };
@@ -238,6 +239,7 @@ const generateMaterialsList = (
       'pvc-twin-earth': { 1.0: 0.85, 1.5: 1.05, 2.5: 1.65, 4: 2.45, 6: 3.55, 10: 5.85, 16: 9.20, 25: 14.50, 35: 19.80 },
       'pvc-single': { 1.5: 2.80, 2.5: 3.25, 4: 4.20, 6: 5.50, 10: 8.50, 16: 12.50, 25: 19.00, 35: 26.00 },
       'swa': { 1.5: 3.80, 2.5: 4.85, 4: 6.50, 6: 8.80, 10: 13.50, 16: 20.00, 25: 29.50, 35: 40.00 },
+      'swa-single-core': { 50: 18.00, 70: 24.00, 95: 32.00, 120: 42.00, 150: 52.00, 185: 64.00, 240: 82.00, 300: 105.00 },
       'xlpe-twin-earth': { 1.5: 1.35, 2.5: 2.15, 4: 3.20, 6: 4.50, 10: 7.50, 16: 12.00, 25: 19.00, 35: 26.00 },
       'xlpe-single': { 1.5: 0.65, 2.5: 0.95, 4: 1.35, 6: 1.90, 10: 3.15, 16: 4.90, 25: 7.80, 35: 10.50 },
       'micc': { 1.5: 3.20, 2.5: 4.50, 4: 5.90, 6: 7.80, 10: 12.50, 16: 19.00, 25: 29.00 },

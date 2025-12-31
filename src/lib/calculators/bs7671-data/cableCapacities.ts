@@ -74,6 +74,29 @@ export const pvcTwinEarthCapacities: CableCapacity[] = [
   { size: 50, capacities: { A1: 108, A2: 119, B: 119, C: 151, E: 151, F: 151 }, resistance: 0.387, reactance: 0.082 }
 ];
 
+// BS 7671 Table 4D5 - Flat twin and earth cables with thermal insulation
+// Methods 100e, 101e, 102e, 103e from Regulation 523.9
+export interface ThermalInsulationCapacity {
+  size: number;
+  method100e: number; // Above ceiling, insulation ≤100mm
+  method101e: number; // Above ceiling, insulation >100mm
+  method102e: number; // Stud wall, not touching inner surface
+  method103e: number; // Stud wall, touching inner surface
+  methodA: number;    // Reference Method A
+  methodB: number;    // Reference Method B
+  methodC: number;    // Reference Method C (clipped direct)
+}
+
+export const flatTwinEarthThermalCapacities: ThermalInsulationCapacity[] = [
+  { size: 1.0, method100e: 15, method101e: 10.5, method102e: 13, method103e: 8, methodA: 11.5, methodB: 13, methodC: 13 },
+  { size: 1.5, method100e: 16, method101e: 13, method102e: 16, method103e: 10, methodA: 14.5, methodB: 16.5, methodC: 20 },
+  { size: 2.5, method100e: 21, method101e: 17, method102e: 21, method103e: 13.5, methodA: 20, methodB: 23, methodC: 27 },
+  { size: 4, method100e: 27, method101e: 22, method102e: 27, method103e: 18.5, methodA: 26, methodB: 30, methodC: 37 },
+  { size: 6, method100e: 34, method101e: 27, method102e: 35, method103e: 23.5, methodA: 32, methodB: 38, methodC: 47 },
+  { size: 10, method100e: 45, method101e: 36, method102e: 46, method103e: 32, methodA: 44, methodB: 52, methodC: 64 },
+  { size: 16, method100e: 57, method101e: 46, method102e: 63, method103e: 42.5, methodA: 57, methodB: 69, methodC: 85 },
+];
+
 // BS 7671 Table 4D4B - XLPE insulated twin and earth cables (90°C)
 export const xlpeTwinEarthCapacities: CableCapacity[] = [
   { size: 1.0, capacities: { A1: 12, A2: 13, B: 13, C: 16, E: 16, F: 16 }, resistance: 18.1, reactance: 0.14 },
@@ -112,6 +135,22 @@ export const swaCapacities: CableCapacity[] = [
   { size: 400, capacities: { C: 511, D: 483, E: 511, F: 511 }, resistance: 0.0470, reactance: 0.070 },
   { size: 500, capacities: { C: 569, D: 538, E: 569, F: 569 }, resistance: 0.0366, reactance: 0.069 },
   { size: 630, capacities: { C: 640, D: 605, E: 640, F: 640 }, resistance: 0.0283, reactance: 0.068 }
+];
+
+// BS 7671 Table 4D3A - Single-core armoured cables (non-magnetic armour), 70°C PVC
+// Reference Methods C and F with 2 cables or 3/4 cables
+export const singleCoreArmouredCapacities: CableCapacity[] = [
+  { size: 50, capacities: { 'C-2c': 193, 'C-3c': 179, 'F-2c': 205, 'F-3c': 189 }, resistance: 0.387, reactance: 0.082 },
+  { size: 70, capacities: { 'C-2c': 245, 'C-3c': 225, 'F-2c': 259, 'F-3c': 238 }, resistance: 0.268, reactance: 0.079 },
+  { size: 95, capacities: { 'C-2c': 296, 'C-3c': 269, 'F-2c': 313, 'F-3c': 285 }, resistance: 0.193, reactance: 0.077 },
+  { size: 120, capacities: { 'C-2c': 340, 'C-3c': 307, 'F-2c': 359, 'F-3c': 325 }, resistance: 0.153, reactance: 0.075 },
+  { size: 150, capacities: { 'C-2c': 387, 'C-3c': 348, 'F-2c': 408, 'F-3c': 368 }, resistance: 0.124, reactance: 0.074 },
+  { size: 185, capacities: { 'C-2c': 436, 'C-3c': 390, 'F-2c': 459, 'F-3c': 412 }, resistance: 0.0991, reactance: 0.073 },
+  { size: 240, capacities: { 'C-2c': 506, 'C-3c': 450, 'F-2c': 532, 'F-3c': 475 }, resistance: 0.0754, reactance: 0.072 },
+  { size: 300, capacities: { 'C-2c': 571, 'C-3c': 506, 'F-2c': 600, 'F-3c': 533 }, resistance: 0.0601, reactance: 0.071 },
+  { size: 400, capacities: { 'C-2c': 656, 'C-3c': 578, 'F-2c': 688, 'F-3c': 609 }, resistance: 0.0470, reactance: 0.070 },
+  { size: 500, capacities: { 'C-2c': 740, 'C-3c': 649, 'F-2c': 775, 'F-3c': 683 }, resistance: 0.0366, reactance: 0.069 },
+  { size: 630, capacities: { 'C-2c': 844, 'C-3c': 737, 'F-2c': 883, 'F-3c': 774 }, resistance: 0.0283, reactance: 0.068 }
 ];
 
 /**
@@ -187,6 +226,7 @@ export const cableCapacityData = {
   'pvc-twin-earth': pvcTwinEarthCapacities,
   'xlpe-twin-earth': xlpeTwinEarthCapacities,
   'swa': swaCapacities,
+  'swa-single-core': singleCoreArmouredCapacities,
   'micc': miccCapacities,
   'aluminium-xlpe': aluminiumXlpeCapacities,
 };
@@ -197,8 +237,21 @@ export type CableType =
   | 'pvc-twin-earth'
   | 'xlpe-twin-earth'
   | 'swa'
+  | 'swa-single-core'
   | 'micc'
   | 'aluminium-xlpe';
+
+// Helper to get thermal insulation capacity for flat T&E cables
+export const getThermalInsulationCapacity = (
+  size: number,
+  method: '100e' | '101e' | '102e' | '103e'
+): number | null => {
+  const entry = flatTwinEarthThermalCapacities.find(c => c.size === size);
+  if (!entry) return null;
+  
+  const methodKey = `method${method.replace('e', '')}e` as keyof ThermalInsulationCapacity;
+  return entry[methodKey] as number;
+};
 
 export const getCableCapacity = (
   cableType: CableType,
