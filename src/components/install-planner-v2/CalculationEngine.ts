@@ -428,7 +428,7 @@ const generateCostEstimate = (
   // UK market prices (September 2025 - CORRECTED REAL MARKET RATES)
   // Cable prices per meter based on cable type
   const getCablePricePerMeter = (type: CableType, size: number): number => {
-    const prices: Record<CableType, Record<number, number>> = {
+const prices: Partial<Record<CableType, Record<number, number>>> = {
       'pvc-twin-earth': {
         1.0: 0.85, 1.5: 1.05, 2.5: 1.65, 4: 2.45, 6: 3.55,
         10: 5.85, 16: 9.20, 25: 14.50, 35: 19.80, 50: 27.50
