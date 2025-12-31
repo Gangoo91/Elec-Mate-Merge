@@ -237,6 +237,61 @@ export const useCableSizing = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Helper function to get correct capacity key based on cable type and reference method
+  const getCapacityKey = (
+    cableType: CableType, 
+    referenceMethod: string, 
+    cores: '2' | '3' | '4'
+  ): string[] => {
+    const coresSuffix = cores === '3' || cores === '4' ? '3' : '2';
+    const coreLabel = cores === '3' || cores === '4' ? '3c' : '2c';
+    
+    // SWA multicore uses C2, C3, D2, D3, E2, E3
+    if (cableType === 'swa') {
+      const baseMethod = referenceMethod.charAt(0); // Extract C, D, E from C, D1, D2, E etc.
+      return [
+        `${baseMethod}${coresSuffix}`,  // C2, C3, D2, D3, E2, E3
+        `C${coresSuffix}`,               // Fallback to clipped method
+        'C2',                            // Ultimate fallback
+      ];
+    }
+    
+    // SWA single-core uses C-2c, C-3c, F-2c, F-3c format
+    if (cableType === 'swa-single-core') {
+      const baseMethod = referenceMethod.charAt(0);
+      return [
+        `${baseMethod}-${coreLabel}`,    // C-2c, C-3c, F-2c, F-3c
+        `C-${coreLabel}`,                // Fallback
+        'C-2c',                          // Ultimate fallback
+      ];
+    }
+    
+    // Standard cables use A1, A2, B, C, E, F, G
+    // Map B1/B2 to B for trunking methods
+    const standardMethodMap: Record<string, string> = {
+      'A': 'A1',
+      'A1': 'A1',
+      'A2': 'A2',
+      'B': 'B',
+      'B1': 'B',  // Trunking on wall
+      'B2': 'B',  // Trunking flush
+      'C': 'C',
+      'D': 'C',   // Underground - use C as reference for non-SWA
+      'D1': 'C',
+      'D2': 'C',
+      'E': 'E',
+      'F': 'F',
+      'G': 'G',
+      '100': 'A1',
+      '101': 'A1',
+      '102': 'A1',
+      '103': 'A1',
+    };
+    
+    const mappedMethod = standardMethodMap[referenceMethod] || 'C';
+    return [mappedMethod, 'C']; // Fallback to C (clipped direct)
+  };
+
   const calculateCableSize = () => {
     if (!validateInputs()) return;
     
@@ -254,6 +309,9 @@ export const useCableSizing = () => {
     const powerFactor = parseFloat(inputs.powerFactor || '1.0');
     const soilResistivity = parseFloat(inputs.soilResistivity || '2.5');
     const burialDepth = parseFloat(inputs.burialDepth || '0.7');
+    
+    // Apply diversity factor to design current
+    const effectiveDesignCurrent = designCurrent * diversityFactor;
     
     // Calculate maximum allowable voltage drop in volts
     const maxVoltageDrop = (maxVoltageDropPercentage / 100) * supplyVoltage;
@@ -290,8 +348,8 @@ export const useCableSizing = () => {
     // Calculate total derating
     const totalDerating = Ca * Cg * Ci * Cs * Cd;
     
-    // Required tabulated current capacity: It ≥ Ib / (Ca × Cg × Ci × Cs × Cd)
-    const requiredTabulatedCapacity = designCurrent / totalDerating;
+    // Required tabulated current capacity: It ≥ Ib_eff / (Ca × Cg × Ci × Cs × Cd)
+    const requiredTabulatedCapacity = effectiveDesignCurrent / totalDerating;
     
     // Store derating factors for display
     const deratingFactors: DeratingFactors = {
@@ -334,34 +392,18 @@ export const useCableSizing = () => {
         if (thermalCap) tabulatedCapacity = thermalCap;
       }
       
-      // Standard reference method lookup
+      // Standard reference method lookup using the helper function
       if (!tabulatedCapacity) {
-        // For SWA cables, try core-specific reference methods FIRST (C2, C3, D2, D3)
-        const isSWA = cableType === 'swa' || cableType === 'swa-single-core';
-        const coresSuffix = cores === '3' || cores === '4' ? '3' : '2';
+        const capacityKeys = getCapacityKey(cableType, referenceMethod, cores);
         
-        const methodKeys = isSWA 
-          ? [
-              `${referenceMethod}${coresSuffix}`, // C2, C3, D2, D3 first for SWA
-              referenceMethod,
-              `C${coresSuffix}`, // Fallback to C2/C3
-              'C'
-            ]
-          : [
-              referenceMethod,
-              `${referenceMethod}${coresSuffix}`, // C2, C3, D2, D3, E2, E3
-              referenceMethod.charAt(0), // Just the letter (A, B, C, D, E, F, G)
-              'C' // Default fallback
-            ];
-        
-        for (const key of methodKeys) {
+        for (const key of capacityKeys) {
           if (cableData.capacities[key]) {
             tabulatedCapacity = cableData.capacities[key];
             break;
           }
         }
         
-        // Final fallback: get minimum of all available capacities
+        // Final fallback: get minimum of all available capacities (conservative)
         if (!tabulatedCapacity) {
           const capacityValues = Object.values(cableData.capacities).filter(v => typeof v === 'number') as number[];
           if (capacityValues.length > 0) {
@@ -392,7 +434,7 @@ export const useCableSizing = () => {
         calculatedVoltageDrop: Math.round(calculatedVoltageDrop * 100) / 100,
         voltageDropPercent: Math.round(voltageDropPercent * 100) / 100,
         meetsVoltageDrop: voltageDropPercent <= maxVoltageDropPercentage,
-        meetsCurrentCapacity: deratedCapacity >= designCurrent,
+        meetsCurrentCapacity: deratedCapacity >= effectiveDesignCurrent,
         tableReference: `Table ${getCableTableReference(cableType)} Col ${referenceMethod}`
       });
     }
