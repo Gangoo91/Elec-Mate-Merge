@@ -117,7 +117,12 @@ const CableSizingResult = ({
               </div>
               
               <div className="flex items-center justify-between py-3 border-b border-elec-yellow/20">
-                <span className="text-sm text-white">Derated Capacity (Iz)</span>
+                <span className="text-sm text-white flex items-center gap-1">
+                  Effective Capacity
+                  <RequiredFieldTooltip 
+                    content="It × Ca × Cg × Ci — the current-carrying capacity adjusted for installation conditions"
+                  />
+                </span>
                 <span className="text-2xl font-bold text-elec-yellow">
                   {recommendedCable.deratedCapacity}A
                 </span>
@@ -170,7 +175,7 @@ const CableSizingResult = ({
                         <span className="font-bold text-white">{cable.tabulatedCapacity}A</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-white">Derated:</span>
+                        <span className="text-white">Effective:</span>
                         <span className="font-bold text-white">{cable.deratedCapacity}A</span>
                       </div>
                       <div className="flex justify-between text-sm">
