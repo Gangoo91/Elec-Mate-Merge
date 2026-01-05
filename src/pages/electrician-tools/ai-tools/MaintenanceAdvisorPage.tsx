@@ -19,44 +19,35 @@ const MaintenanceAdvisorPage = () => {
   } = useMaintenanceAdvisor();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-grey via-elec-dark to-elec-grey">
-      {/* Header */}
-      <div className="border-b border-elec-gray/20">
-        <div className="ai-tool-page-padding">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex items-center mb-4">
-              <Link to="/electrician-tools/ai-tooling">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
-                >
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to AI Tooling
-                </Button>
-              </Link>
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-orange-500/10 border border-orange-500/20">
+              <Calendar className="h-6 w-6 sm:h-7 sm:w-7 text-orange-400" />
             </div>
-
-            <div className="text-center mb-2">
-              <div className="inline-flex items-center justify-center w-14 h-14 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl mb-2">
-                <Calendar className="h-7 w-7 text-elec-yellow" />
-              </div>
-              
-              <h1 className="text-2xl md:text-3xl font-bold text-elec-light mb-2">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Maintenance Advisor
               </h1>
-              
-              <p className="text-base text-elec-light/70 max-w-2xl mx-auto">
-                Generate comprehensive maintenance schedules with risk assessment, cost estimates, and compliance tracking
-              </p>
+              <p className="text-sm text-white/60">Schedules, risk assessment & compliance</p>
             </div>
           </div>
-        </div>
-      </div>
+          <Link to="/electrician-tools/ai-tooling">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to AI Tools
+            </Button>
+          </Link>
+        </header>
 
-      {/* Main Content */}
-      <div className="ai-tool-page-padding">
-        <div className="max-w-5xl mx-auto">
+        {/* Main Content */}
+        <div className="space-y-6">
           {state === 'input' && (
             <MaintenanceInput
               input={input}
@@ -65,16 +56,16 @@ const MaintenanceAdvisorPage = () => {
               isProcessing={isProcessing}
             />
           )}
-          
+
           {state === 'processing' && (
             <MaintenanceProcessingView progress={progress} detailLevel={input.detailLevel} />
           )}
-          
+
           {state === 'results' && results && (
             <MaintenanceResults results={results} onReset={resetForm} />
           )}
         </div>
-      </div>
+      </main>
     </div>
   );
 };

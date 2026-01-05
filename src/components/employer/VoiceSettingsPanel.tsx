@@ -4,9 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Mic, ExternalLink, CheckCircle2, XCircle, Copy, ChevronDown, ChevronUp, Download, FileJson, Search, Wand2, RotateCcw } from 'lucide-react';
+import { Mic, ExternalLink, CheckCircle2, XCircle, Copy, ChevronDown, ChevronUp, Download, FileJson, Search, Wand2, RotateCcw, CloudUpload, Loader2, RefreshCw } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { getSetting, setSetting } from '@/services/settingsService';
+import { supabase } from '@/integrations/supabase/client';
 import { VoiceCommandCheatSheet } from './VoiceCommandCheatSheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
@@ -27,6 +28,22 @@ import {
 } from '@/config/voiceToolsRegistry';
 
 const SETTINGS_KEY = 'elevenlabs_agent_id';
+const API_KEY_SETTINGS_KEY = 'elevenlabs_api_key';
+
+interface SyncResult {
+  success: boolean;
+  message: string;
+  created: number;
+  skipped: number;
+  failed: number;
+  totalAssigned: number;
+  details?: {
+    createdTools: string[];
+    skippedTools: string[];
+    failedTools: { name: string; error: string }[];
+  };
+  systemPromptUpdated?: boolean;
+}
 
 // Navigation section enum values for reference
 const NAVIGATION_SECTIONS = [
@@ -126,13 +143,18 @@ const convertToolForCard = (tool: VoiceTool) => ({
 const VoiceSettingsPanel: React.FC = () => {
   const { toast } = useToast();
   const [agentId, setAgentId] = useState('');
+  const [apiKey, setApiKey] = useState('');
   const [isSaved, setIsSaved] = useState(false);
+  const [isApiKeySaved, setIsApiKeySaved] = useState(false);
   const [showConfig, setShowConfig] = useState(false);
   const [showWizard, setShowWizard] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [filterMode, setFilterMode] = useState<'all' | 'configured' | 'unconfigured'>('all');
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
+  const [syncIncludePrompt, setSyncIncludePrompt] = useState(true);
 
   const {
     configuredTools,
@@ -172,20 +194,27 @@ const VoiceSettingsPanel: React.FC = () => {
   const filteredTools = getFilteredTools();
 
   useEffect(() => {
-    const loadSetting = async () => {
+    const loadSettings = async () => {
       try {
-        const value = await getSetting(SETTINGS_KEY);
-        if (value) {
-          setAgentId(value);
+        const [agentIdValue, apiKeyValue] = await Promise.all([
+          getSetting(SETTINGS_KEY),
+          getSetting(API_KEY_SETTINGS_KEY),
+        ]);
+        if (agentIdValue) {
+          setAgentId(agentIdValue);
           setIsSaved(true);
         }
+        if (apiKeyValue) {
+          setApiKey(apiKeyValue);
+          setIsApiKeySaved(true);
+        }
       } catch (error) {
-        console.error('Failed to load agent ID:', error);
+        console.error('Failed to load settings:', error);
       } finally {
         setIsLoading(false);
       }
     };
-    loadSetting();
+    loadSettings();
   }, []);
 
   const saveAgentId = async () => {
@@ -225,6 +254,102 @@ const VoiceSettingsPanel: React.FC = () => {
     }
   };
 
+  const saveApiKey = async () => {
+    if (apiKey.trim()) {
+      try {
+        await setSetting(API_KEY_SETTINGS_KEY, apiKey.trim());
+        setIsApiKeySaved(true);
+        toast({
+          title: 'Saved',
+          description: 'ElevenLabs API key has been saved',
+        });
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: 'Failed to save API key',
+          variant: 'destructive',
+        });
+      }
+    }
+  };
+
+  const clearApiKey = async () => {
+    try {
+      await setSetting(API_KEY_SETTINGS_KEY, '');
+      setApiKey('');
+      setIsApiKeySaved(false);
+      toast({
+        title: 'Cleared',
+        description: 'API key has been removed',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to clear API key',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const syncToElevenLabs = async () => {
+    if (!apiKey.trim() || !agentId.trim()) {
+      toast({
+        title: 'Missing Configuration',
+        description: 'Please enter both Agent ID and API Key before syncing',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsSyncing(true);
+    setSyncResult(null);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('sync-elevenlabs-tools', {
+        body: {
+          apiKey: apiKey.trim(),
+          agentId: agentId.trim(),
+          tools: voiceToolsRegistry,
+          systemPrompt: syncIncludePrompt ? ELEC_MATE_SYSTEM_PROMPT : undefined,
+        },
+      });
+
+      if (error) throw error;
+
+      setSyncResult(data as SyncResult);
+
+      if (data.success) {
+        toast({
+          title: 'Sync Complete',
+          description: data.message,
+        });
+      } else {
+        toast({
+          title: 'Sync Failed',
+          description: data.error || 'Unknown error occurred',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Sync error:', error);
+      toast({
+        title: 'Sync Failed',
+        description: error instanceof Error ? error.message : 'Failed to sync tools',
+        variant: 'destructive',
+      });
+      setSyncResult({
+        success: false,
+        message: error instanceof Error ? error.message : 'Failed to sync tools',
+        created: 0,
+        skipped: 0,
+        failed: totalTools,
+        totalAssigned: 0,
+      });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
     toast({
@@ -260,28 +385,141 @@ const VoiceSettingsPanel: React.FC = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="agent-id">ElevenLabs Agent ID</Label>
-          <div className="flex gap-2">
-            <Input
-              id="agent-id"
-              value={agentId}
-              onChange={(e) => {
-                setAgentId(e.target.value);
-                setIsSaved(false);
-              }}
-              placeholder="Enter your ElevenLabs Agent ID..."
-              className="flex-1"
-            />
-            <Button onClick={saveAgentId} disabled={!agentId.trim() || isSaved}>
-              {isSaved ? <CheckCircle2 className="h-4 w-4" /> : 'Save'}
-            </Button>
-            {isSaved && (
-              <Button variant="outline" onClick={clearAgentId}>
-                <XCircle className="h-4 w-4" />
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="agent-id">ElevenLabs Agent ID</Label>
+            <div className="flex gap-2">
+              <Input
+                id="agent-id"
+                value={agentId}
+                onChange={(e) => {
+                  setAgentId(e.target.value);
+                  setIsSaved(false);
+                }}
+                placeholder="Enter your ElevenLabs Agent ID..."
+                className="flex-1"
+              />
+              <Button onClick={saveAgentId} disabled={!agentId.trim() || isSaved}>
+                {isSaved ? <CheckCircle2 className="h-4 w-4" /> : 'Save'}
               </Button>
-            )}
+              {isSaved && (
+                <Button variant="outline" onClick={clearAgentId}>
+                  <XCircle className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
           </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="api-key">ElevenLabs API Key</Label>
+            <div className="flex gap-2">
+              <Input
+                id="api-key"
+                type="password"
+                value={apiKey}
+                onChange={(e) => {
+                  setApiKey(e.target.value);
+                  setIsApiKeySaved(false);
+                }}
+                placeholder="Enter your ElevenLabs API Key..."
+                className="flex-1"
+              />
+              <Button onClick={saveApiKey} disabled={!apiKey.trim() || isApiKeySaved}>
+                {isApiKeySaved ? <CheckCircle2 className="h-4 w-4" /> : 'Save'}
+              </Button>
+              {isApiKeySaved && (
+                <Button variant="outline" onClick={clearApiKey}>
+                  <XCircle className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Get your API key from <a href="https://elevenlabs.io/app/settings/api-keys" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">ElevenLabs Settings</a>
+            </p>
+          </div>
+        </div>
+
+        {/* Automatic Sync Section */}
+        <div className="rounded-lg border-2 border-elec-yellow/50 p-4 bg-elec-yellow/5 space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="font-semibold flex items-center gap-2">
+                <CloudUpload className="h-5 w-5 text-elec-yellow" />
+                Automatic Tool Sync
+              </h4>
+              <p className="text-sm text-muted-foreground mt-1">
+                Push all {totalTools} tools to ElevenLabs with one click
+              </p>
+            </div>
+            <Button
+              onClick={syncToElevenLabs}
+              disabled={isSyncing || !agentId.trim() || !apiKey.trim()}
+              className="gap-2"
+            >
+              {isSyncing ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Syncing...
+                </>
+              ) : (
+                <>
+                  <RefreshCw className="h-4 w-4" />
+                  Sync All Tools
+                </>
+              )}
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="include-prompt"
+              checked={syncIncludePrompt}
+              onChange={(e) => setSyncIncludePrompt(e.target.checked)}
+              className="rounded border-gray-300"
+            />
+            <Label htmlFor="include-prompt" className="text-sm cursor-pointer">
+              Also update system prompt
+            </Label>
+          </div>
+
+          {/* Sync Result */}
+          {syncResult && (
+            <div className={`rounded-lg p-3 ${syncResult.success ? 'bg-green-500/10 border border-green-500/30' : 'bg-red-500/10 border border-red-500/30'}`}>
+              <p className={`font-medium ${syncResult.success ? 'text-green-400' : 'text-red-400'}`}>
+                {syncResult.success ? '✓ ' : '✗ '}{syncResult.message}
+              </p>
+              {syncResult.success && (
+                <div className="mt-2 grid grid-cols-4 gap-2 text-center text-xs">
+                  <div className="bg-green-500/20 rounded p-2">
+                    <div className="font-bold text-green-400">{syncResult.created}</div>
+                    <div className="text-muted-foreground">Created</div>
+                  </div>
+                  <div className="bg-blue-500/20 rounded p-2">
+                    <div className="font-bold text-blue-400">{syncResult.skipped}</div>
+                    <div className="text-muted-foreground">Existed</div>
+                  </div>
+                  <div className="bg-red-500/20 rounded p-2">
+                    <div className="font-bold text-red-400">{syncResult.failed}</div>
+                    <div className="text-muted-foreground">Failed</div>
+                  </div>
+                  <div className="bg-elec-yellow/20 rounded p-2">
+                    <div className="font-bold text-elec-yellow">{syncResult.totalAssigned}</div>
+                    <div className="text-muted-foreground">Total</div>
+                  </div>
+                </div>
+              )}
+              {syncResult.systemPromptUpdated && (
+                <p className="text-xs text-muted-foreground mt-2">System prompt was also updated</p>
+              )}
+            </div>
+          )}
+
+          {(!agentId.trim() || !apiKey.trim()) && (
+            <p className="text-xs text-amber-400">
+              Enter both Agent ID and API Key above to enable sync
+            </p>
+          )}
         </div>
 
         {/* Progress Tracker */}

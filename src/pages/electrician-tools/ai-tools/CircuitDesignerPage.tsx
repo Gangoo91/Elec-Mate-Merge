@@ -1,31 +1,40 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import CircuitDesigner from "@/components/electrician-tools/ai-tools/CircuitDesigner";
 
 const CircuitDesignerPage = () => {
   return (
-    <div className="min-h-screen bg-elec-dark">
-      <div className="px-2 sm:px-4 py-3 sm:py-4 md:py-6">
-        <div className="max-w-7xl mx-auto w-full">
-          {/* Navigation */}
-          <div className="mb-4 sm:mb-8">
-            <Link to="/electrician-tools/ai-tooling">
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/20 hover:border-elec-yellow/70"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to AI Tools
-              </Button>
-            </Link>
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <Cpu className="h-6 w-6 sm:h-7 sm:w-7 text-amber-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Circuit Designer
+              </h1>
+              <p className="text-sm text-white/60">AI-powered circuit design assistant</p>
+            </div>
           </div>
+          <Link to="/electrician-tools/ai-tooling">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to AI Tools
+            </Button>
+          </Link>
+        </header>
 
-          {/* Content */}
-          <CircuitDesigner />
-        </div>
-      </div>
+        {/* Content */}
+        <CircuitDesigner />
+      </main>
     </div>
   );
 };

@@ -504,7 +504,7 @@ Thank you for your business!`;
   }, [highlightId]);
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-fade-in px-0">
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
       <Helmet>
         <title>Invoices | ElecMate - Manage Your Electrical Invoices</title>
         <meta
@@ -514,55 +514,55 @@ Thank you for your business!`;
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Header */}
-      <header className="relative bg-card border-b">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-        <div className="relative px-4 py-8 space-y-6">
-          {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/electrician/business" className="hover:text-foreground transition-colors">
-              Business Hub
-            </Link>
-            <span>/</span>
-            <span>Invoices</span>
-          </nav>
-
-          {/* Title and Description Row */}
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row items-start sm:items-baseline gap-3">
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-green-500/10 border border-green-500/20">
+              <FileText className="h-6 w-6 sm:h-7 sm:w-7 text-green-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Invoices
               </h1>
-              <p className="text-muted-foreground text-lg">
-                Manage and track all your electrical invoices
-              </p>
-            </div>
-            
-            {/* Action Buttons Row */}
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <Link to="/electrician/quote-invoice-dashboard" className="w-full sm:w-auto">
-                <MobileButton variant="outline" size="wide" className="sm:w-auto">
-                  <LayoutDashboard className="mr-2 h-4 w-4" /> Workflow Dashboard
-                </MobileButton>
-              </Link>
-              <Link to="/electrician" className="w-full sm:w-auto">
-                <MobileButton variant="secondary" size="wide" className="sm:w-auto">
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Electrical Hub
-                </MobileButton>
-              </Link>
-              <Link to="/electrician/invoice-builder/create" className="w-full sm:w-auto">
-                <MobileButton variant="elec" size="wide" className="sm:w-auto">
-                  <Plus className="mr-2 h-4 w-4" /> Create Invoice
-                </MobileButton>
-              </Link>
+              <p className="text-sm text-white/60">Manage and track your invoices</p>
             </div>
           </div>
-        </div>
-      </header>
+          <Link to="/electrician/business">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Business
+            </Button>
+          </Link>
+        </header>
 
-      {/* Dashboard Content */}
-      <div className="px-4 md:px-6 py-6 md:py-8 space-y-6">
-        <div className="max-w-[1400px] mx-auto space-y-6">
+        {/* Quick Actions */}
+        <div className="flex flex-wrap gap-3">
+          <Link to="/electrician/invoice-builder/create">
+            <Button
+              className="bg-green-500 hover:bg-green-600 text-black font-semibold gap-2 h-11 px-5 touch-manipulation active:scale-[0.98] transition-transform"
+            >
+              <Plus className="h-4 w-4" />
+              Create Invoice
+            </Button>
+          </Link>
+          <Link to="/electrician/quote-invoice-dashboard">
+            <Button
+              variant="outline"
+              className="border-white/20 text-white/80 hover:text-white hover:bg-white/10 gap-2 h-11 px-5 touch-manipulation"
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              Workflow Dashboard
+            </Button>
+          </Link>
+        </div>
+
+        {/* Dashboard Content */}
+        <div className="space-y-6">
           {/* Stats Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
           <Card 
@@ -724,7 +724,7 @@ Thank you for your business!`;
         </CardContent>
         </Card>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

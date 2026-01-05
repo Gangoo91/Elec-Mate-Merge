@@ -52,9 +52,9 @@ const ApprenticeHub = () => {
     {
       id: 4,
       title: "Inspection & Testing",
-      description: "BS7671 testing procedures and requirements",
+      description: "Testing procedures, fault finding, regulations and quizzes",
       icon: CheckSquare,
-      link: "/apprentice/bs7671-inspection-testing"
+      link: "/apprentice/inspection-testing-hub"
     }
   ];
 

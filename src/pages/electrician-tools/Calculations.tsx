@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Anchor } from "lucide-react";
+import { ArrowLeft, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import OhmsLawCalculator from "@/components/apprentice/calculators/OhmsLawCalculator";
@@ -193,42 +193,43 @@ const Calculations = () => {
   };
 
   return (
-    <div className="min-h-screen bg-elec-grey">
-      <div className="container mx-auto px-4 py-6 max-w-7xl space-y-6 animate-fade-in">
-        {/* Header Section - Mobile Optimized */}
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="space-y-2">
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-elec-light">
-                Professional Electrical Calculations
-              </h1>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                Comprehensive electrical calculations for professional work. Industry-standard tools following BS 7671 and UK electrical regulations.
-              </p>
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <Calculator className="h-6 w-6 sm:h-7 sm:w-7 text-blue-400" />
             </div>
-            <Link to="/electrician" className="w-full sm:w-auto">
-              <Button 
-                variant="outline" 
-                className="w-full sm:w-auto flex items-center justify-center gap-2 h-11 px-6 border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10"
-              >
-                <ArrowLeft className="h-4 w-4" /> 
-                <span className="hidden sm:inline">Back to Electrical Hub</span>
-                <span className="sm:hidden">Back to Hub</span>
-              </Button>
-            </Link>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Electrical Calculations
+              </h1>
+              <p className="text-sm text-white/60">BS 7671 compliant professional tools</p>
+            </div>
           </div>
-        </div>
+          <Link to="/electrician">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Hub
+            </Button>
+          </Link>
+        </header>
 
-        {/* Calculator Selector - Enhanced Mobile Layout */}
-        <div className="bg-elec-card rounded-lg border border-elec-yellow/20 p-4 sm:p-6">
+        {/* Calculator Selector */}
+        <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-4 sm:p-6">
           <CalculatorSelector calculatorType={calculatorType} setCalculatorType={setCalculatorType} />
         </div>
-        
-        {/* Dynamic Calculator - Mobile Optimized Container */}
+
+        {/* Dynamic Calculator */}
         <div className="w-full">
           {renderCalculator()}
         </div>
-      </div>
+      </main>
     </div>
   );
 };

@@ -1,64 +1,44 @@
-
 import { Helmet } from "react-helmet";
 import EnhancedIndustryNewsCard from "@/components/electrician/safety-shares/EnhancedIndustryNewsCard";
-import { ArrowLeft, Newspaper, Clock, Zap } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Newspaper } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const IndustryNewsEnhanced = () => {
-  const navigate = useNavigate();
-
-  const handleBackClick = () => {
-    navigate('/electrician');
-  };
-
   return (
-    <div className="min-h-screen bg-elec-dark">
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
       <Helmet>
-        <title>Enhanced Industry News - Elec-Mate</title>
-        <meta name="description" content="Enhanced electrical industry news with user interactions and filtering" />
+        <title>Industry News - Elec-Mate</title>
+        <meta name="description" content="Latest electrical industry news and updates" />
       </Helmet>
-      
-      {/* Professional News Header */}
-      <header className="border-b border-elec-yellow/10 bg-elec-dark/95 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between py-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleBackClick}
-              className="text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Back to Hub</span>
-            </Button>
-            
-            {/* News Masthead */}
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded bg-elec-yellow flex items-center justify-center">
-                <Zap className="h-4 w-4 text-elec-dark" />
-              </div>
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  ElecMate <span className="text-elec-yellow">News</span>
-                </h1>
-                <p className="text-xs text-muted-foreground hidden sm:block">
-                  Electrical Industry Updates
-                </p>
-              </div>
-            </div>
 
-            {/* Live Update Indicator */}
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Clock className="h-3 w-3" />
-              <span className="hidden sm:inline">Live Updates</span>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <Newspaper className="h-6 w-6 sm:h-7 sm:w-7 text-blue-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Industry News
+              </h1>
+              <p className="text-sm text-white/60">Latest electrical industry updates</p>
             </div>
           </div>
-        </div>
-      </header>
+          <Link to="/electrician">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Hub
+            </Button>
+          </Link>
+        </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        {/* Content */}
         <EnhancedIndustryNewsCard />
       </main>
     </div>

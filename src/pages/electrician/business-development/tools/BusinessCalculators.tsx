@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import BackButton from "@/components/common/BackButton";
-import { 
-  Calculator, 
-  TrendingUp, 
+import { Button } from "@/components/ui/button";
+import {
+  Calculator,
+  TrendingUp,
   PoundSterling,
   BarChart3,
   Target,
@@ -13,7 +13,8 @@ import {
   Scale,
   Users,
   ClipboardList,
-  Percent
+  Percent,
+  ArrowLeft
 } from "lucide-react";
 import { Helmet } from "react-helmet";
 
@@ -106,61 +107,81 @@ const BusinessCalculators = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
       <Helmet>
         <title>Electrician Business Calculators UK | Pricing, ROI, Tax</title>
         <meta name="description" content="UK electrician calculators: hourly rate, pricing, ROI, cash flow, capacity and tax. Mobile-first, fast and accurate." />
         <link rel="canonical" href="/electrician/business-development/tools" />
       </Helmet>
-      <div className="flex flex-col items-center justify-center mb-8">
-        <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
-          <Calculator className="h-8 w-8 text-elec-yellow" />
-          Business Calculators
-        </h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-6">
+
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <Calculator className="h-6 w-6 sm:h-7 sm:w-7 text-blue-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Business Calculators
+              </h1>
+              <p className="text-sm text-white/60">Financial planning tools</p>
+            </div>
+          </div>
+          <Link to="/electrician/business">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Business
+            </Button>
+          </Link>
+        </header>
+
+        {/* Subtitle */}
+        <p className="text-white/60 text-center max-w-2xl mx-auto">
           Professional calculators and tools to help you make informed business decisions and plan for success.
         </p>
-        <BackButton customUrl="/electrician/business" label="Back to Business Hub" />
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {calculators.map((calculator) => (
-          calculator.status === "available" ? (
-            <Link
-              key={calculator.id}
-              to={`/electrician/business-development/tools/${calculator.id}`}
-              className="block no-underline"
-            >
-              <Card className="border-elec-yellow/20 bg-elec-card hover:bg-elec-yellow/5 transition-all duration-300 group">
-                <CardHeader className="text-center">
-                  <div className="transition-transform group-hover:scale-110 duration-300 mx-auto mb-4">
-                    {calculator.icon}
-                  </div>
-                  <CardTitle className="text-foreground text-lg">
-                    {calculator.title}
-                  </CardTitle>
-                </CardHeader>
-              </Card>
-            </Link>
-          ) : (
-            <div
-              key={calculator.id}
-              className="cursor-not-allowed opacity-60"
-            >
-              <Card className="border-elec-yellow/20 bg-elec-card">
-                <CardHeader className="text-center">
-                  <div className="mx-auto mb-4">
-                    {calculator.icon}
-                  </div>
-                  <CardTitle className="text-foreground text-lg">
-                    {calculator.title}
-                  </CardTitle>
-                </CardHeader>
-              </Card>
-            </div>
-          )
-        ))}
-      </div>
+        {/* Calculator Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+          {calculators.map((calculator) => (
+            calculator.status === "available" ? (
+              <Link
+                key={calculator.id}
+                to={`/electrician/business-development/tools/${calculator.id}`}
+                className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
+              >
+                <Card className="relative overflow-hidden border-white/10 bg-white/5 hover:bg-white/10 hover:border-elec-yellow/40 active:scale-[0.97] h-full transition-all duration-200">
+                  <CardHeader className="flex flex-col items-center justify-center text-center p-4 sm:p-5 space-y-2 sm:space-y-3">
+                    <div className="p-2 sm:p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                      {calculator.icon}
+                    </div>
+                    <CardTitle className="text-xs sm:text-sm font-semibold text-white leading-tight">
+                      {calculator.title}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+              </Link>
+            ) : (
+              <div key={calculator.id} className="cursor-not-allowed opacity-50">
+                <Card className="border-white/10 bg-white/5 h-full">
+                  <CardHeader className="flex flex-col items-center justify-center text-center p-4 sm:p-5 space-y-2 sm:space-y-3">
+                    <div className="p-2 sm:p-2.5 rounded-xl bg-white/5 border border-white/10">
+                      {calculator.icon}
+                    </div>
+                    <CardTitle className="text-xs sm:text-sm font-semibold text-white/50 leading-tight">
+                      {calculator.title}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+              </div>
+            )
+          ))}
+        </div>
+      </main>
     </div>
   );
 };

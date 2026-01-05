@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -18,7 +18,7 @@ import { useLiveMarketData } from "@/hooks/useLiveMarketData";
 const CareerProgression = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const { marketData } = useLiveMarketData();
-  
+
   const handleBackToSections = () => {
     setActiveSection(null);
   };
@@ -43,39 +43,58 @@ const CareerProgression = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in px-2 sm:px-0">
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
       <Helmet>
         <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
         <meta name="description" content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant." />
         <link rel="canonical" href="/electrician/career-progression" />
       </Helmet>
 
-      {/* Header */}
-      <div className="space-y-3">
-        {!activeSection && (
-          <>
-            <h1 className="text-xl sm:text-2xl font-bold text-center mb-4">
-              Career Progression
-            </h1>
-            <p className="text-sm sm:text-base text-white text-center max-w-4xl mx-auto px-4">
-              Comprehensive career development resources for qualified electricians. Explore emerging technologies, 
-              strategic career planning tools, and professional growth opportunities in the rapidly evolving electrical sector.
-            </p>
-          </>
-        )}
-        {!activeSection && (
-          <Link to="/electrician" className="w-full sm:w-auto">
-            <Button variant="outline" className="flex items-center gap-2 w-full">
-              <ArrowLeft className="h-4 w-4" /> Back to Electrical Hub
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20">
+              <GraduationCap className="h-6 w-6 sm:h-7 sm:w-7 text-purple-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Career Progression
+              </h1>
+              <p className="text-sm text-white/60">JIB grades, training & opportunities</p>
+            </div>
+          </div>
+          {!activeSection ? (
+            <Link to="/electrician">
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Hub
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleBackToSections}
+              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Sections
             </Button>
-          </Link>
+          )}
+        </header>
+
+        {/* Subtitle - only show when not in a section */}
+        {!activeSection && (
+          <p className="text-white/60 text-center max-w-3xl mx-auto">
+            Comprehensive career development resources for qualified electricians. Explore emerging technologies,
+            strategic career planning tools, and professional growth opportunities.
+          </p>
         )}
-        {activeSection && (
-          <Button variant="outline" className="flex items-center gap-2 w-full sm:w-auto" onClick={handleBackToSections}>
-            <ArrowLeft className="h-4 w-4" /> Back to Sections
-          </Button>
-        )}
-      </div>
 
       {activeSection === null ? (
         <>
@@ -441,11 +460,12 @@ const CareerProgression = () => {
             </CardContent>
           </Card>
         </>
-      ) : (
-        <div className="space-y-4">
-          {renderSectionContent()}
-        </div>
-      )}
+        ) : (
+          <div className="space-y-4">
+            {renderSectionContent()}
+          </div>
+        )}
+      </main>
     </div>
   );
 };

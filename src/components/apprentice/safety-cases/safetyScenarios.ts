@@ -480,5 +480,465 @@ export const safetyScenarios: SafetyScenario[] = [
     riskLevel: "Medium",
     duration: "8 minutes",
     tags: ["manual-handling", "team-lifting", "mechanical-aids"]
+  },
+  {
+    id: 11,
+    title: "Underground Cable Location",
+    description: "You're about to dig a trench for a new garden lighting cable. The homeowner says there are no underground services.",
+    question: "What should you do before starting excavation?",
+    options: [
+      {
+        id: "A",
+        text: "Trust the homeowner's knowledge and start digging carefully",
+        isCorrect: false,
+        feedback: "Homeowners often don't know about buried services. Many cables and pipes were installed before current records existed.",
+        outcome: "Risk of striking unknown services causing injury or supply disruption",
+        regulation: "HSG47 Avoiding Danger from Underground Services"
+      },
+      {
+        id: "B",
+        text: "Use a cable avoidance tool (CAT) to scan the area before digging",
+        isCorrect: true,
+        feedback: "Correct! Always use CAT and Genny equipment to locate underground services before any excavation work.",
+        outcome: "Underground services located and marked, safe digging area established",
+        regulation: "HSG47 Avoiding Danger from Underground Services"
+      },
+      {
+        id: "C",
+        text: "Dig slowly with a spade and stop if you hit anything",
+        isCorrect: false,
+        feedback: "By the time you hit a cable, damage may already have occurred. Prevention through detection is essential.",
+        outcome: "High risk of cable strike causing electric shock or burns",
+        regulation: "Electricity at Work Regulations 1989, Regulation 14"
+      },
+      {
+        id: "D",
+        text: "Only dig to a shallow depth to avoid deep services",
+        isCorrect: false,
+        feedback: "Services can be at any depth, especially in gardens where previous work may have disturbed original positions.",
+        outcome: "False sense of security, services may be at unexpected depths",
+        regulation: "HSG47 Avoiding Danger from Underground Services"
+      }
+    ],
+    category: "Underground Services",
+    difficulty: "Beginner",
+    industry: "Domestic",
+    riskLevel: "High",
+    duration: "6 minutes",
+    tags: ["excavation", "cable-location", "cat-scanner"]
+  },
+  {
+    id: 12,
+    title: "Wet Conditions Working",
+    description: "Heavy rain has flooded the construction site where you're installing temporary power distribution equipment.",
+    question: "What is the safest course of action?",
+    options: [
+      {
+        id: "A",
+        text: "Continue working but wear wellington boots",
+        isCorrect: false,
+        feedback: "Wellington boots alone don't provide adequate protection against electrical hazards in standing water.",
+        outcome: "Risk of electrocution if equipment faults while in contact with water",
+        regulation: "Electricity at Work Regulations 1989, Regulation 6"
+      },
+      {
+        id: "B",
+        text: "Stop work and relocate equipment to higher ground when safe to do so",
+        isCorrect: true,
+        feedback: "Correct! Water significantly increases electrical risk. Equipment must be elevated and protected from flooding.",
+        outcome: "Electrical equipment protected, workers removed from immediate danger",
+        regulation: "BS 7671:2018 Section 704, Electricity at Work Regulations 1989"
+      },
+      {
+        id: "C",
+        text: "Cover the distribution board with a tarpaulin",
+        isCorrect: false,
+        feedback: "A tarpaulin doesn't provide IP protection. Water may already have compromised equipment safety.",
+        outcome: "False protection, equipment may already be compromised",
+        regulation: "BS 7671:2018 Section 704 - Construction Sites"
+      },
+      {
+        id: "D",
+        text: "Switch off the main supply and wait for the water to drain",
+        isCorrect: false,
+        feedback: "While isolating is good, equipment may be damaged and unsafe even after water drains. Inspection is required.",
+        outcome: "Equipment damage may go undetected, creating future hazards",
+        regulation: "Electricity at Work Regulations 1989, Regulation 4"
+      }
+    ],
+    category: "Weather Hazards",
+    difficulty: "Intermediate",
+    industry: "Construction",
+    riskLevel: "High",
+    duration: "7 minutes",
+    tags: ["weather", "flooding", "temporary-installations"]
+  },
+  {
+    id: 13,
+    title: "Asbestos Discovery",
+    description: "While chasing a cable route in an older building, you notice fibrous material behind the plasterboard that could be asbestos.",
+    question: "What is your immediate priority?",
+    options: [
+      {
+        id: "A",
+        text: "Carefully remove a sample to get it tested",
+        isCorrect: false,
+        feedback: "Never disturb suspected asbestos. Sampling can release fibres and requires specialist equipment and training.",
+        outcome: "Risk of asbestos fibre release affecting yourself and others",
+        regulation: "Control of Asbestos Regulations 2012"
+      },
+      {
+        id: "B",
+        text: "Continue working but wear a dust mask",
+        isCorrect: false,
+        feedback: "Standard dust masks don't protect against asbestos fibres. Specialist respiratory protection is required.",
+        outcome: "Potential asbestos exposure causing serious long-term health effects",
+        regulation: "Control of Asbestos Regulations 2012, Regulation 10"
+      },
+      {
+        id: "C",
+        text: "Stop work immediately, seal the area, and report to your supervisor",
+        isCorrect: true,
+        feedback: "Correct! Suspected asbestos must be treated as asbestos until tested. Only licensed contractors can remove it.",
+        outcome: "Area secured, specialist assessment arranged, workers protected",
+        regulation: "Control of Asbestos Regulations 2012, Regulation 11"
+      },
+      {
+        id: "D",
+        text: "Spray water on the material to reduce dust and continue working",
+        isCorrect: false,
+        feedback: "Wetting asbestos can help reduce fibre release but doesn't make it safe. Professional removal is required.",
+        outcome: "Ongoing exposure risk, potential contamination spread",
+        regulation: "Control of Asbestos Regulations 2012"
+      }
+    ],
+    category: "Hazardous Materials",
+    difficulty: "Intermediate",
+    industry: "Commercial",
+    riskLevel: "High",
+    duration: "8 minutes",
+    tags: ["asbestos", "hazardous-materials", "stop-work"]
+  },
+  {
+    id: 14,
+    title: "Battery Room Hazards",
+    description: "You need to perform maintenance work on UPS batteries in a data centre battery room.",
+    question: "What specific hazard is most critical to address before starting work?",
+    options: [
+      {
+        id: "A",
+        text: "The weight of the batteries for manual handling",
+        isCorrect: false,
+        feedback: "While manual handling is a concern, the most critical hazard in battery rooms is explosive hydrogen gas.",
+        outcome: "Focus on secondary hazard while primary danger remains uncontrolled",
+        regulation: "Manual Handling Operations Regulations 1992"
+      },
+      {
+        id: "B",
+        text: "Hydrogen gas accumulation and explosion risk",
+        isCorrect: true,
+        feedback: "Correct! Lead-acid batteries produce hydrogen gas. Ventilation must be verified and non-sparking tools used.",
+        outcome: "Explosive atmosphere hazard identified and controlled",
+        regulation: "DSEAR 2002, BS EN 50272-2"
+      },
+      {
+        id: "C",
+        text: "The DC voltage present in the battery strings",
+        isCorrect: false,
+        feedback: "DC voltage is a hazard but hydrogen explosion risk is more immediately life-threatening and affects all in the room.",
+        outcome: "Electrical hazard considered but explosion risk overlooked",
+        regulation: "Electricity at Work Regulations 1989"
+      },
+      {
+        id: "D",
+        text: "The acid in the batteries causing chemical burns",
+        isCorrect: false,
+        feedback: "Acid burns are a hazard but contained within batteries. Hydrogen accumulation is the primary room hazard.",
+        outcome: "Chemical hazard considered but atmospheric hazard overlooked",
+        regulation: "COSHH Regulations 2002"
+      }
+    ],
+    category: "Battery Systems",
+    difficulty: "Advanced",
+    industry: "Commercial",
+    riskLevel: "Critical",
+    duration: "10 minutes",
+    tags: ["batteries", "hydrogen", "explosion-risk"]
+  },
+  {
+    id: 15,
+    title: "Apprentice Supervision",
+    description: "As a qualified electrician, you're supervising a second-year apprentice. You need to attend a site meeting but the apprentice is mid-task installing sockets.",
+    question: "What should you do about the apprentice while you're at the meeting?",
+    options: [
+      {
+        id: "A",
+        text: "Leave them to continue as they're nearly finished",
+        isCorrect: false,
+        feedback: "Apprentices require appropriate supervision. Leaving them unsupervised on electrical work breaches your duty of care.",
+        outcome: "Apprentice works unsupervised, increased risk of accident or poor work quality",
+        regulation: "Management of Health and Safety at Work Regulations 1999"
+      },
+      {
+        id: "B",
+        text: "Ask another qualified person to supervise or bring the apprentice with you",
+        isCorrect: true,
+        feedback: "Correct! Apprentices must have appropriate supervision. Either transfer supervision or pause their electrical work.",
+        outcome: "Supervision maintained, apprentice protected, duty of care fulfilled",
+        regulation: "Apprenticeship Standards, HASAWA 1974 Section 3"
+      },
+      {
+        id: "C",
+        text: "Tell them to wait and do nothing until you return",
+        isCorrect: false,
+        feedback: "This wastes productive time. Better solutions exist that maintain both supervision and productivity.",
+        outcome: "Time wasted but at least apprentice not working unsupervised",
+        regulation: "Management of Health and Safety at Work Regulations 1999"
+      },
+      {
+        id: "D",
+        text: "Give them detailed instructions and check their work when you return",
+        isCorrect: false,
+        feedback: "Instructions aren't supervision. The apprentice needs a competent person available to guide them.",
+        outcome: "Apprentice effectively unsupervised, potential for errors and accidents",
+        regulation: "Apprenticeship Standards, Electricity at Work Regulations 1989"
+      }
+    ],
+    category: "Supervision",
+    difficulty: "Intermediate",
+    industry: "All",
+    riskLevel: "Medium",
+    duration: "6 minutes",
+    tags: ["supervision", "apprentice", "duty-of-care"]
+  },
+  {
+    id: 16,
+    title: "Consumer Unit Replacement",
+    description: "You're replacing a consumer unit in an occupied domestic property. The existing installation has a mix of old and new cables.",
+    question: "What testing is essential before energising the new consumer unit?",
+    options: [
+      {
+        id: "A",
+        text: "A quick continuity check of the earth wires",
+        isCorrect: false,
+        feedback: "Continuity alone is insufficient. Full testing sequence is required to verify the installation is safe.",
+        outcome: "Incomplete testing may miss faults that could cause shock or fire",
+        regulation: "BS 7671:2018 Section 6"
+      },
+      {
+        id: "B",
+        text: "Visual inspection only - the cables were already working",
+        isCorrect: false,
+        feedback: "Existing cables may have deteriorated or been damaged. Previous functionality doesn't guarantee current safety.",
+        outcome: "Hidden defects remain undetected, risk of failure in service",
+        regulation: "BS 7671:2018 Section 6, Regulation 643"
+      },
+      {
+        id: "C",
+        text: "Complete initial verification including insulation resistance, continuity, and RCD tests",
+        isCorrect: true,
+        feedback: "Correct! Consumer unit replacement requires full initial verification testing as it affects the entire installation.",
+        outcome: "Installation safety verified, defects identified before energisation",
+        regulation: "BS 7671:2018 Section 6, IET Guidance Note 3"
+      },
+      {
+        id: "D",
+        text: "Just test the new circuits you've added",
+        isCorrect: false,
+        feedback: "The new consumer unit affects the entire installation. All circuits supplied from it must be verified.",
+        outcome: "Existing circuit faults remain undetected, incomplete certification",
+        regulation: "BS 7671:2018 Chapter 61"
+      }
+    ],
+    category: "Testing & Verification",
+    difficulty: "Intermediate",
+    industry: "Domestic",
+    riskLevel: "Medium",
+    duration: "9 minutes",
+    tags: ["testing", "consumer-unit", "initial-verification"]
+  },
+  {
+    id: 17,
+    title: "Solar PV System Isolation",
+    description: "You need to work on a roof-mounted solar PV system during daylight hours to replace a faulty DC isolator.",
+    question: "What is the critical safety consideration specific to solar PV systems?",
+    options: [
+      {
+        id: "A",
+        text: "The AC inverter must be switched off at the consumer unit",
+        isCorrect: false,
+        feedback: "AC isolation alone doesn't make the DC side safe. Panels generate DC voltage whenever exposed to light.",
+        outcome: "DC side remains energised, shock hazard from panels",
+        regulation: "BS 7671:2018 Section 712"
+      },
+      {
+        id: "B",
+        text: "The DC side remains live whenever light falls on the panels",
+        isCorrect: true,
+        feedback: "Correct! Solar panels cannot be truly isolated in daylight. DC voltage is always present. Cover panels or work at dawn/dusk.",
+        outcome: "Hazard understood, appropriate controls implemented",
+        regulation: "BS 7671:2018 Section 712, BS EN 62446"
+      },
+      {
+        id: "C",
+        text: "The system can be isolated using the DC isolator at the inverter",
+        isCorrect: false,
+        feedback: "This isolates downstream but the panels and cables to the isolator remain energised by sunlight.",
+        outcome: "Work area upstream of isolator remains live",
+        regulation: "BS 7671:2018 Section 712"
+      },
+      {
+        id: "D",
+        text: "Standard electrical PPE provides adequate protection",
+        isCorrect: false,
+        feedback: "DC-rated PPE is required. Standard AC equipment may not be suitable for DC voltages and arc characteristics.",
+        outcome: "Inadequate protection for DC hazards",
+        regulation: "BS 7671:2018 Section 712, PPE at Work Regulations"
+      }
+    ],
+    category: "Renewable Energy",
+    difficulty: "Advanced",
+    industry: "Domestic",
+    riskLevel: "High",
+    duration: "10 minutes",
+    tags: ["solar-pv", "dc-systems", "renewable-energy"]
+  },
+  {
+    id: 18,
+    title: "Ring Final Circuit Testing",
+    description: "You're conducting periodic inspection testing on a ring final circuit. Your continuity readings suggest the ring may have an interconnection.",
+    question: "What does this indicate and how should you proceed?",
+    options: [
+      {
+        id: "A",
+        text: "The ring is fine - interconnections improve the circuit",
+        isCorrect: false,
+        feedback: "Interconnections can mask faults and lead to overloaded cables. They indicate non-compliant installation.",
+        outcome: "Fault undetected, potential for cable overload and fire risk",
+        regulation: "BS 7671:2018 Regulation 543.1.1"
+      },
+      {
+        id: "B",
+        text: "Report the interconnection as requiring investigation and potential remedial work",
+        isCorrect: true,
+        feedback: "Correct! Interconnections in rings must be investigated. They can cause unbalanced loading and mask faults.",
+        outcome: "Issue recorded, investigation and remediation can proceed",
+        regulation: "BS 7671:2018, IET Guidance Note 3"
+      },
+      {
+        id: "C",
+        text: "Convert the circuit to radials if an interconnection exists",
+        isCorrect: false,
+        feedback: "This may be a solution but requires proper design verification. You can't just convert without assessment.",
+        outcome: "Premature action without proper engineering evaluation",
+        regulation: "BS 7671:2018 Section 433"
+      },
+      {
+        id: "D",
+        text: "Ignore it if the insulation resistance test passes",
+        isCorrect: false,
+        feedback: "Insulation resistance doesn't detect interconnections. Different tests reveal different types of faults.",
+        outcome: "Installation fault remains, potential for future problems",
+        regulation: "BS 7671:2018 Chapter 64"
+      }
+    ],
+    category: "Inspection & Testing",
+    difficulty: "Advanced",
+    industry: "All",
+    riskLevel: "Medium",
+    duration: "11 minutes",
+    tags: ["testing", "ring-circuits", "fault-finding"]
+  },
+  {
+    id: 19,
+    title: "Three-Phase Supply",
+    description: "You're connecting a new three-phase machine. During testing, you notice the phase rotation is incorrect.",
+    question: "Why is correct phase rotation important and how should you address it?",
+    options: [
+      {
+        id: "A",
+        text: "It's not important for most equipment - proceed with connection",
+        isCorrect: false,
+        feedback: "Incorrect phase rotation can cause motors to run backwards, potentially damaging equipment or causing injury.",
+        outcome: "Equipment damage, potential safety hazard from reversed rotation",
+        regulation: "BS 7671:2018 Section 6"
+      },
+      {
+        id: "B",
+        text: "Swap any two phases at the supply end to correct the rotation",
+        isCorrect: true,
+        feedback: "Correct! Phase rotation can be corrected by swapping any two phases. Always retest after correction.",
+        outcome: "Phase rotation corrected, equipment operates safely",
+        regulation: "BS 7671:2018, Equipment manufacturer's requirements"
+      },
+      {
+        id: "C",
+        text: "The machine manufacturer should modify the machine",
+        isCorrect: false,
+        feedback: "Phase rotation is an installation issue, not a machine modification. It's the installer's responsibility.",
+        outcome: "Unnecessary delay and cost, installation fault remains",
+        regulation: "BS 7671:2018 Section 6, PUWER 1998"
+      },
+      {
+        id: "D",
+        text: "Reverse all three phases to maintain balance",
+        isCorrect: false,
+        feedback: "Reversing all three phases doesn't change rotation. Only swapping two phases reverses the sequence.",
+        outcome: "Problem not solved, phase rotation unchanged",
+        regulation: "Basic electrical theory"
+      }
+    ],
+    category: "Three-Phase Systems",
+    difficulty: "Intermediate",
+    industry: "Industrial",
+    riskLevel: "Medium",
+    duration: "8 minutes",
+    tags: ["three-phase", "phase-rotation", "motor-connection"]
+  },
+  {
+    id: 20,
+    title: "Client Pressure",
+    description: "A client is pressuring you to energise a new installation before you've completed all required testing. They have an important event tomorrow.",
+    question: "How should you handle this situation?",
+    options: [
+      {
+        id: "A",
+        text: "Energise the system but explain the risks to the client",
+        isCorrect: false,
+        feedback: "You cannot transfer legal responsibility to the client. Energising untested work is illegal under EAWR.",
+        outcome: "Potential prosecution, insurance invalidation, safety risks",
+        regulation: "Electricity at Work Regulations 1989, Regulation 4"
+      },
+      {
+        id: "B",
+        text: "Complete essential safety tests and leave cosmetic items for later",
+        isCorrect: false,
+        feedback: "All required tests must be completed. There's no distinction between 'essential' and 'cosmetic' in certification.",
+        outcome: "Non-compliant certification, potential legal liability",
+        regulation: "BS 7671:2018 Section 6"
+      },
+      {
+        id: "C",
+        text: "Politely refuse and explain that testing is a legal requirement for safety",
+        isCorrect: true,
+        feedback: "Correct! Professional integrity requires completing all testing. Explain the legal and safety implications calmly.",
+        outcome: "Legal compliance maintained, client educated, professional standards upheld",
+        regulation: "Electricity at Work Regulations 1989, BS 7671:2018"
+      },
+      {
+        id: "D",
+        text: "Get the client to sign a waiver accepting responsibility",
+        isCorrect: false,
+        feedback: "Waivers don't remove your legal obligations under health and safety law. You remain responsible.",
+        outcome: "False protection, legal liability remains with installer",
+        regulation: "HASAWA 1974, Electricity at Work Regulations 1989"
+      }
+    ],
+    category: "Professional Conduct",
+    difficulty: "Intermediate",
+    industry: "All",
+    riskLevel: "High",
+    duration: "7 minutes",
+    tags: ["professional-ethics", "client-management", "legal-compliance"]
   }
 ];

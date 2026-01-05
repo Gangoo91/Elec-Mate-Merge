@@ -182,6 +182,350 @@ const CaseStudiesTab = () => {
       fineAmount: "£500,000",
       views: 1856,
       difficulty: "Advanced"
+    },
+    {
+      id: "case-005",
+      title: "Consumer Unit Fire - Domestic Rewire",
+      date: "July 2023",
+      location: "Terraced House, Bristol",
+      severity: "Serious",
+      category: "Fire",
+      industry: "Domestic",
+      description: "A house fire originated from a newly installed consumer unit due to poor workmanship and inadequate cable terminations.",
+      detailedDescription: "Three weeks after a full domestic rewire, a fire broke out in the utility cupboard where the new consumer unit had been installed. Investigation revealed loose terminations, undersized cables on high-load circuits, and missing fire barriers. The family escaped but the property suffered £80,000 in damage.",
+      keyLearnings: [
+        "Importance of proper torque settings on terminal connections",
+        "Correct cable sizing calculations for actual load",
+        "Fire stopping and barrier requirements in domestic installations",
+        "Value of post-installation inspection and testing"
+      ],
+      preventiveMeasures: [
+        "Use of torque screwdrivers for all terminations",
+        "Independent inspection of completed work",
+        "Thermal imaging checks on new installations",
+        "Proper documentation and certification procedures"
+      ],
+      regulations: ["BS 7671:2018 Section 526", "Building Regulations Part P", "Electricity at Work Regulations 1989"],
+      timeline: [
+        "Week 1 - Rewire work commenced",
+        "Week 2 - Consumer unit installed",
+        "Week 3 - EIC issued and work signed off",
+        "Week 6 - Fire discovered at 02:30",
+        "Investigation revealed workmanship failures"
+      ],
+      rootCauses: [
+        "Loose terminal connections causing arcing",
+        "Undersized 4mm² cable on 9.5kW shower circuit",
+        "Missing fire barriers around cable penetrations",
+        "Inadequate supervision of work quality"
+      ],
+      lessonsLearned: "This case demonstrates that poor workmanship can have devastating consequences even weeks after installation. Proper torque settings, cable sizing, and independent verification are essential safeguards.",
+      impact: "High",
+      investigationDuration: "4 months",
+      fineAmount: "£125,000",
+      views: 2341,
+      difficulty: "Intermediate"
+    },
+    {
+      id: "case-006",
+      title: "Buried Cable Strike - Garden Landscaping",
+      date: "August 2023",
+      location: "Residential Garden, Southampton",
+      severity: "Serious",
+      category: "Underground Cables",
+      industry: "Domestic",
+      description: "A landscaper struck a buried electrical cable while digging a trench for garden lighting, causing serious burns and electrical injuries.",
+      detailedDescription: "A self-employed landscaper was installing garden lighting when his spade cut through a buried armoured cable supplying an outbuilding. The cable was not at the required depth and no cable location survey had been conducted. The worker suffered significant burns to hands and arms.",
+      keyLearnings: [
+        "Essential requirement for cable avoidance tools (CAT scanners)",
+        "Understanding of safe digging practices near services",
+        "Importance of as-built drawings and service records",
+        "Recognition that 'garden' work can involve serious hazards"
+      ],
+      preventiveMeasures: [
+        "Always use CAT and Genny before excavation",
+        "Request service drawings before any digging",
+        "Hand dig within 500mm of suspected services",
+        "Ensure cables are installed at correct depth (500mm minimum)"
+      ],
+      regulations: ["HSG47 Avoiding Danger from Underground Services", "Electricity at Work Regulations 1989", "CDM Regulations 2015"],
+      timeline: [
+        "09:00 - Landscaping work commenced",
+        "11:30 - Cable struck during trenching",
+        "11:31 - Emergency services called",
+        "12:15 - DNO attended to isolate supply",
+        "Worker hospitalised for 5 days"
+      ],
+      rootCauses: [
+        "No cable avoidance survey conducted",
+        "Original installation at insufficient depth",
+        "No records of cable route available",
+        "Assumption that garden work is low risk"
+      ],
+      lessonsLearned: "Underground services can be anywhere. This incident reinforces that cable location equipment must be used before ANY excavation work, regardless of how minor it may seem.",
+      impact: "Medium",
+      investigationDuration: "2 months",
+      fineAmount: "£45,000",
+      views: 1567,
+      difficulty: "Beginner"
+    },
+    {
+      id: "case-007",
+      title: "Apprentice Ladder Fall - Socket Installation",
+      date: "October 2023",
+      location: "New Build Estate, Milton Keynes",
+      severity: "Serious",
+      category: "Working at Height",
+      industry: "Construction",
+      description: "A first-year apprentice fell from a stepladder while installing a high-level socket, sustaining a broken wrist and concussion.",
+      detailedDescription: "An 18-year-old apprentice was left unsupervised to install a socket for a wall-mounted TV at 2.4m height. Using a worn stepladder on an uneven floor, they overreached and fell. The supervising electrician was working in another room at the time of the incident.",
+      keyLearnings: [
+        "Apprentices require direct supervision for working at height",
+        "Proper equipment selection and inspection before use",
+        "Three points of contact rule when on ladders",
+        "Importance of level, stable footing for access equipment"
+      ],
+      preventiveMeasures: [
+        "Direct supervision for apprentices on elevated work",
+        "Pre-use inspection of all access equipment",
+        "Use of podium steps for extended work at height",
+        "Level base or use of leg levellers on uneven surfaces"
+      ],
+      regulations: ["Work at Height Regulations 2005", "Management of Health and Safety at Work Regulations 1999", "Apprenticeship Standards"],
+      timeline: [
+        "08:30 - Work commenced on site",
+        "10:00 - Supervisor moved to different area",
+        "10:45 - Fall occurred",
+        "10:46 - First aider attended",
+        "11:15 - Ambulance arrived"
+      ],
+      rootCauses: [
+        "Inadequate supervision of apprentice",
+        "Defective stepladder not removed from service",
+        "No assessment of floor conditions",
+        "Overreaching instead of repositioning ladder"
+      ],
+      lessonsLearned: "Apprentices need appropriate supervision levels based on their competence. This case shows how quickly accidents can happen when supervision lapses, even for seemingly simple tasks.",
+      impact: "Medium",
+      investigationDuration: "6 weeks",
+      fineAmount: "£35,000",
+      views: 1823,
+      difficulty: "Beginner"
+    },
+    {
+      id: "case-008",
+      title: "Three-Phase Imbalance - Industrial Motor Failure",
+      date: "May 2023",
+      location: "Food Processing Plant, Grimsby",
+      severity: "Near Miss",
+      category: "Industrial Systems",
+      industry: "Industrial",
+      description: "A three-phase motor overheated due to phase imbalance, nearly causing a fire in a food processing area.",
+      detailedDescription: "During routine maintenance, one phase connection to a large conveyor motor was not properly tightened. Over several weeks, the loose connection caused increasing resistance and phase imbalance. The motor overheated to near-ignition point before thermal protection finally tripped.",
+      keyLearnings: [
+        "Importance of torque verification on three-phase connections",
+        "Understanding phase imbalance and its effects",
+        "Regular thermographic surveys on industrial equipment",
+        "Value of motor protection devices and their correct settings"
+      ],
+      preventiveMeasures: [
+        "Documented torque checks on all connections",
+        "Annual thermographic surveys on distribution equipment",
+        "Phase imbalance monitoring systems",
+        "Regular motor current measurements to detect issues"
+      ],
+      regulations: ["BS 7671:2018 Section 433", "PUWER 1998", "DSEAR 2002"],
+      timeline: [
+        "March - Maintenance work completed",
+        "April - Slight increase in motor running temperature noted",
+        "May Week 1 - Unusual humming reported by operators",
+        "May Week 2 - Thermal protection tripped",
+        "Investigation revealed loose connection"
+      ],
+      rootCauses: [
+        "Terminal not torqued to specification",
+        "No post-maintenance verification procedure",
+        "Operator reports not escalated promptly",
+        "Inadequate thermal monitoring"
+      ],
+      lessonsLearned: "Phase imbalance is a gradual killer of motors and can create serious fire risks. Proper connection torques and regular thermal monitoring are essential preventive measures in industrial settings.",
+      impact: "Low",
+      investigationDuration: "3 weeks",
+      fineAmount: "No fine",
+      views: 987,
+      difficulty: "Advanced"
+    },
+    {
+      id: "case-009",
+      title: "Temporary Installation Electrocution - Festival Site",
+      date: "June 2023",
+      location: "Music Festival, Hertfordshire",
+      severity: "Fatal",
+      category: "Temporary Installations",
+      industry: "Events",
+      description: "A festival worker was electrocuted by a temporary power installation that had not been properly protected against ground conditions.",
+      detailedDescription: "During setup for a music festival, a 23-year-old worker touched a generator distribution board that had become live due to water ingress. Heavy rain had flooded the area but work continued. The installation lacked adequate IP rating and earth fault protection for the conditions.",
+      keyLearnings: [
+        "Temporary installations require same standards as permanent",
+        "Weather conditions must be considered in risk assessments",
+        "IP ratings must match environmental conditions",
+        "Additional RCD protection essential for outdoor events"
+      ],
+      preventiveMeasures: [
+        "Use of IP65 or higher rated equipment outdoors",
+        "30mA RCD protection on all circuits",
+        "Regular inspection during changing weather",
+        "Elevated equipment positions in flood-prone areas"
+      ],
+      regulations: ["BS 7909 Temporary Electrical Systems", "BS 7671:2018 Section 740", "Electricity at Work Regulations 1989"],
+      timeline: [
+        "06:00 - Heavy rain commenced",
+        "08:00 - Work continued despite flooding",
+        "09:30 - Fatality occurred",
+        "09:32 - Power isolated and emergency services called",
+        "Site closed for investigation"
+      ],
+      rootCauses: [
+        "Inadequate IP rating for outdoor conditions",
+        "No RCD protection on distribution circuit",
+        "Work continued despite dangerous conditions",
+        "Pressure to meet setup deadline"
+      ],
+      lessonsLearned: "Temporary does not mean temporary standards. This tragedy shows that outdoor and temporary installations face unique hazards that require specific protective measures and the courage to stop work when conditions deteriorate.",
+      impact: "High",
+      investigationDuration: "10 months",
+      fineAmount: "£750,000",
+      views: 3421,
+      difficulty: "Advanced"
+    },
+    {
+      id: "case-010",
+      title: "Data Centre UPS Explosion - Battery Room",
+      date: "February 2023",
+      location: "Data Centre, Slough",
+      severity: "Serious",
+      category: "Battery Systems",
+      industry: "Commercial",
+      description: "A battery explosion in a data centre UPS room caused injuries to two technicians and significant equipment damage.",
+      detailedDescription: "During routine UPS maintenance, a lead-acid battery exploded due to hydrogen gas accumulation and an ignition source from sparking during connection work. Two technicians suffered burns and hearing damage. Investigation revealed inadequate ventilation and missing gas detection systems.",
+      keyLearnings: [
+        "Battery rooms require specific ventilation calculations",
+        "Hydrogen gas detection systems are essential",
+        "Non-sparking tools required for battery work",
+        "Emergency eyewash and shower facilities required"
+      ],
+      preventiveMeasures: [
+        "Ventilation to prevent hydrogen accumulation (BS EN 50272-2)",
+        "Hydrogen detection with automatic alarm and ventilation boost",
+        "Use of insulated, non-sparking tools",
+        "PPE including face shields and chemical-resistant gloves"
+      ],
+      regulations: ["BS EN 50272-2 Battery Installations", "DSEAR 2002", "Electricity at Work Regulations 1989"],
+      timeline: [
+        "09:00 - Maintenance work began",
+        "09:45 - Battery terminal connection commenced",
+        "09:47 - Explosion occurred",
+        "09:48 - Fire alarm activated, evacuation began",
+        "Both workers treated for injuries"
+      ],
+      rootCauses: [
+        "Ventilation system not operational during work",
+        "No hydrogen gas detection fitted",
+        "Standard tools used instead of non-sparking",
+        "PPE not appropriate for battery work"
+      ],
+      lessonsLearned: "Battery systems present explosion risks that are often underestimated. This case emphasises the importance of treating battery rooms as hazardous areas requiring specific safety measures and procedures.",
+      impact: "Medium",
+      investigationDuration: "5 months",
+      fineAmount: "£280,000",
+      views: 1654,
+      difficulty: "Advanced"
+    },
+    {
+      id: "case-011",
+      title: "School Rewire Near Miss - Live Working",
+      date: "April 2023",
+      location: "Primary School, Newcastle",
+      severity: "Near Miss",
+      category: "Live Working",
+      industry: "Commercial",
+      description: "An electrician nearly contacted live parts while working on what was believed to be an isolated circuit in a school during term time.",
+      detailedDescription: "During a partial rewire of a primary school, an electrician began work on a circuit he believed was isolated. Unknown to him, the circuit had been incorrectly labelled and was fed from a different distribution board. A colleague noticed the voltage indicator hadn't been used and stopped the work.",
+      keyLearnings: [
+        "Always prove dead at point of work, not just at isolation point",
+        "Distribution board labelling must be verified, not trusted",
+        "Working in occupied buildings adds complexity",
+        "Colleague intervention can save lives"
+      ],
+      preventiveMeasures: [
+        "Prove dead at every point of work without exception",
+        "Verify circuit identification through testing, not labels",
+        "Enhanced isolation procedures in occupied buildings",
+        "Two-person verification for complex isolations"
+      ],
+      regulations: ["Electricity at Work Regulations 1989 Reg 13", "BS 7671:2018 Section 537", "GS38 HSE Guidance"],
+      timeline: [
+        "08:00 - Isolation attempted at DB-3",
+        "08:15 - Work commenced without proving dead",
+        "08:20 - Colleague noticed omission",
+        "08:21 - Work stopped immediately",
+        "Circuit found to be live from DB-1"
+      ],
+      rootCauses: [
+        "Failed to prove dead at point of work",
+        "Reliance on distribution board labelling",
+        "Complacency from working on 'simple' installation",
+        "Time pressure from working around school timetable"
+      ],
+      lessonsLearned: "Proving dead is non-negotiable. This near miss shows how even experienced electricians can make assumptions that could prove fatal. The intervention of a colleague prevented a potential tragedy.",
+      impact: "Low",
+      investigationDuration: "2 weeks",
+      fineAmount: "No fine",
+      views: 2156,
+      difficulty: "Beginner"
+    },
+    {
+      id: "case-012",
+      title: "Solar PV DC Shock - Roof Installation",
+      date: "September 2023",
+      location: "Farm Building, Devon",
+      severity: "Serious",
+      category: "Renewable Energy",
+      industry: "Agricultural",
+      description: "A solar installer received a serious DC electric shock while working on a rooftop PV array in sunny conditions.",
+      detailedDescription: "An installer was connecting DC cables from a solar array when they received a shock from exposed conductors. Despite the AC isolator being off, the DC side remained energised by sunlight. The installer had not used appropriate DC-rated PPE or followed solar-specific safe working procedures.",
+      keyLearnings: [
+        "Solar panels generate DC voltage whenever light hits them",
+        "AC isolation does not make DC side safe",
+        "DC shocks can be more dangerous than AC at similar voltages",
+        "Solar-specific PPE and procedures are essential"
+      ],
+      preventiveMeasures: [
+        "Cover arrays with opaque sheeting before DC work",
+        "Use DC-rated insulated tools and gloves",
+        "Work at dawn/dusk when output is minimal",
+        "Understand that PV DC cannot be truly isolated in daylight"
+      ],
+      regulations: ["BS 7671:2018 Section 712", "BS EN 62446 PV Systems", "Electricity at Work Regulations 1989"],
+      timeline: [
+        "10:00 - AC isolator switched off",
+        "10:15 - DC connection work commenced",
+        "10:18 - Electric shock received",
+        "10:20 - First aid administered",
+        "Hospital treatment for cardiac monitoring"
+      ],
+      rootCauses: [
+        "Misunderstanding of PV system characteristics",
+        "AC isolation assumed to make system safe",
+        "No opaque covering used on array",
+        "Standard PPE used instead of DC-rated equipment"
+      ],
+      lessonsLearned: "Solar PV systems present unique hazards because DC is generated whenever light is present. This case highlights that renewable energy technologies require specific competencies and procedures beyond traditional electrical work.",
+      impact: "Medium",
+      investigationDuration: "3 months",
+      fineAmount: "£65,000",
+      views: 1987,
+      difficulty: "Intermediate"
     }
   ];
 

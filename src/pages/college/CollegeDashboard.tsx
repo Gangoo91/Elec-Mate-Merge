@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { CollegeOverviewSection } from "@/components/college/sections/CollegeOverviewSection";
 import { TutorsSection } from "@/components/college/sections/TutorsSection";
 import { StudentsSection } from "@/components/college/sections/StudentsSection";
@@ -31,7 +32,7 @@ import { CommandPalette } from "@/components/college/CommandPalette";
 import { QuickActions } from "@/components/college/QuickActions";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Search, ArrowLeft, School, Settings } from "lucide-react";
 
 export type CollegeSection =
   | "overview"
@@ -68,6 +69,7 @@ export type CollegeSection =
   | "employerportal";
 
 const CollegeDashboard = () => {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<CollegeSection>("overview");
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
@@ -344,9 +346,7 @@ const CollegeDashboard = () => {
               <Search className="h-4 w-4" />
             </Button>
 
-            {/* Notifications */}
-            <NotificationCenter onNavigate={handleNavigate} />
-          </div>
+            </div>
         </div>
 
         {renderSection()}

@@ -110,25 +110,35 @@ const ClientExplainerPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-elec-grey">
-      <div className="ai-tool-page-padding">
-        <div className="max-w-7xl mx-auto">
-          {/* Navigation */}
-          <div className="mb-8">
-            <Link to="/electrician-tools/ai-tooling">
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to AI Tools
-              </Button>
-            </Link>
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+              <Brain className="h-6 w-6 sm:h-7 sm:w-7 text-cyan-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Client Explainer
+              </h1>
+              <p className="text-sm text-white/60">Translate technical findings for clients</p>
+            </div>
           </div>
+          <Link to="/electrician-tools/ai-tooling">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to AI Tools
+            </Button>
+          </Link>
+        </header>
 
-          {/* Hero Section */}
-          <ElectricalHeroSection />
+        {/* Hero Section */}
+        <ElectricalHeroSection />
 
           {/* Mobile-first responsive layout */}
           <div className="space-y-6 lg:grid lg:grid-cols-1 xl:grid-cols-3 lg:gap-6 lg:space-y-0">
@@ -348,8 +358,7 @@ const ClientExplainerPage = () => {
               />
             </div>
           </div>
-        </div>
-      </div>
+      </main>
     </div>
   );
 };

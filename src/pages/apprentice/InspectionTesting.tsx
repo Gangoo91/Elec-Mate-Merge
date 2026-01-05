@@ -12,6 +12,8 @@ import {
   Info,
   CheckSquare,
   BookOpen,
+  GraduationCap,
+  PlayCircle,
 } from "lucide-react";
 
 const InspectionTesting = () => {
@@ -130,11 +132,55 @@ const InspectionTesting = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 space-y-6">
+        {/* Featured Learning Hub Card */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 px-1">
+            <div className="h-1 w-1 rounded-full bg-elec-yellow"></div>
+            <h2 className="text-lg font-semibold text-white">Interactive Learning Hub</h2>
+          </div>
+
+          <Link to="/apprentice/inspection-testing-hub" className="block focus:outline-none group touch-manipulation">
+            <Card className="border-elec-yellow/40 bg-gradient-to-br from-elec-yellow/10 to-elec-gray hover:border-elec-yellow/60 transition-all duration-300 active:scale-[0.98]">
+              <CardContent className="p-6">
+                <div className="flex flex-col sm:flex-row items-start gap-4">
+                  <div className="p-4 rounded-2xl bg-elec-yellow/20 group-hover:bg-elec-yellow/30 transition-colors duration-300 flex-shrink-0">
+                    <GraduationCap className="h-10 w-10 text-elec-yellow" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-xl font-bold text-white">Inspection & Testing Hub</h3>
+                      <span className="text-xs px-2 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow font-medium">
+                        Recommended
+                      </span>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                      Access our comprehensive inspection and testing training with interactive modules covering testing procedures,
+                      fault finding techniques, BS 7671 regulations reference, and knowledge assessments. Same content used by
+                      qualified electricians.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-300">Testing Procedures</span>
+                      <span className="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-300">Fault Finding</span>
+                      <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">Regulations</span>
+                      <span className="text-xs px-2 py-1 rounded-full bg-orange-500/20 text-orange-300">Quizzes</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-elec-yellow font-semibold group-hover:gap-3 transition-all duration-300">
+                      <PlayCircle className="h-5 w-5" />
+                      <span>Enter Hub</span>
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
+
         {/* Topics Section */}
         <div className="space-y-4">
           <div className="flex items-center gap-2 px-1">
             <div className="h-1 w-1 rounded-full bg-elec-yellow"></div>
-            <h2 className="text-lg font-semibold text-white">Core Topics</h2>
+            <h2 className="text-lg font-semibold text-white">Quick Reference Topics</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -179,37 +225,48 @@ const InspectionTesting = () => {
             <h2 className="text-lg font-semibold text-white">Related Resources</h2>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            <Link to="/apprentice/inspection-testing-hub">
+              <Card className="border-elec-yellow/30 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/50 transition-all duration-300 active:scale-[0.97] h-full">
+                <CardContent className="p-4 flex flex-col items-center justify-center text-center">
+                  <div className="p-2 rounded-lg bg-elec-yellow/20 mb-2">
+                    <GraduationCap className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <p className="text-sm font-medium text-white">I&T Hub</p>
+                  <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Full training</p>
+                </CardContent>
+              </Card>
+            </Link>
             <Link to="/apprentice/on-job-tools/bs7671-runthrough">
               <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 active:scale-[0.97] h-full">
                 <CardContent className="p-4 flex flex-col items-center justify-center text-center">
                   <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2">
                     <CheckSquare className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <p className="text-sm font-medium text-white">Full Run-Through</p>
-                  <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Step-by-step guide</p>
-                </CardContent>
-              </Card>
-            </Link>
-            <Link to="/apprentice/electrical-installation-guides/bs7671-reference">
-              <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 active:scale-[0.97] h-full">
-                <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-                  <div className="p-2 rounded-lg bg-blue-500/10 mb-2">
-                    <BookOpen className="h-5 w-5 text-blue-400" />
-                  </div>
-                  <p className="text-sm font-medium text-white">Quick Reference</p>
-                  <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Tables & values</p>
+                  <p className="text-sm font-medium text-white">Run-Through</p>
+                  <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Step-by-step</p>
                 </CardContent>
               </Card>
             </Link>
             <Link to="/apprentice/on-job-tools/testing-procedures">
               <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 active:scale-[0.97] h-full">
                 <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-                  <div className="p-2 rounded-lg bg-card mb-2">
+                  <div className="p-2 rounded-lg bg-green-500/10 mb-2">
                     <Zap className="h-5 w-5 text-green-400" />
                   </div>
                   <p className="text-sm font-medium text-white">Test Procedures</p>
-                  <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Mini toolkit</p>
+                  <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Quick toolkit</p>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link to="/apprentice/on-job-tools/flashcards">
+              <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 active:scale-[0.97] h-full">
+                <CardContent className="p-4 flex flex-col items-center justify-center text-center">
+                  <div className="p-2 rounded-lg bg-blue-500/10 mb-2">
+                    <BookOpen className="h-5 w-5 text-blue-400" />
+                  </div>
+                  <p className="text-sm font-medium text-white">Flashcards</p>
+                  <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Quick revision</p>
                 </CardContent>
               </Card>
             </Link>
@@ -220,7 +277,7 @@ const InspectionTesting = () => {
                     <FileText className="h-5 w-5 text-purple-400" />
                   </div>
                   <p className="text-sm font-medium text-white">Calculators</p>
-                  <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Zs, R1+R2, etc</p>
+                  <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Zs, R1+R2</p>
                 </CardContent>
               </Card>
             </Link>

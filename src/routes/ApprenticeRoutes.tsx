@@ -44,6 +44,8 @@ import Year1 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year1"
 import Year2 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year2";
 import Year3 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year3";
 import Year4 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year4";
+import InspectionTesting from "@/pages/apprentice/InspectionTesting";
+import InspectionTestingHubPage from "@/pages/apprentice/LearningHubPage";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -93,6 +95,8 @@ const ApprenticeRoutes = () => (
     <Route path="on-job-tools/bs7671-runthrough" element={<OnJobBS7671RunThrough />} />
     <Route path="on-job-tools/supervisor-knowledge" element={<OnJobSupervisorKnowledge />} />
     <Route path="on-job-tools/flashcards" element={<OnJobFlashcards />} />
+    <Route path="inspection-testing" element={<InspectionTesting />} />
+    <Route path="inspection-testing-hub" element={<InspectionTestingHubPage />} />
   </Routes>
 );
 

@@ -16,7 +16,7 @@ import CompactScrapMerchantFinder from "@/components/electrician-pricing/Compact
 const LivePricing = () => {
   const { data, isLoading, refreshPrices } = useLiveMetalPrices();
   const [showMerchantFinder, setShowMerchantFinder] = useState(false);
-  
+
   // Debug logging for data changes
   useEffect(() => {
     logger.info('LivePricing component data updated:', {
@@ -26,37 +26,46 @@ const LivePricing = () => {
       dataStructure: data ? Object.keys(data) : []
     });
   }, [data, isLoading]);
-  
+
   return (
-    <div className="min-h-screen bg-elec-dark text-foreground">
-      <div className="p-4 space-y-4">
-        <div className="space-y-6 animate-fade-in">
-          {/* Compact Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <PoundSterling className="h-7 w-7 text-elec-yellow" />
-              <h1 className="text-2xl font-bold tracking-tight">UK Live Pricing</h1>
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <PoundSterling className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
             </div>
-            
-            <div className="flex gap-2">
-              <Link to="/electrician">
-                <Button variant="outline" size="sm" className="flex items-center gap-1">
-                  <ArrowLeft className="h-4 w-4" /> Back
-                </Button>
-              </Link>
-              
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="flex items-center gap-1"
-                onClick={() => refreshPrices(true)}
-                disabled={isLoading}
-              >
-                <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
-                Refresh
-              </Button>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                UK Live Pricing
+              </h1>
+              <p className="text-sm text-white/60">Real-time market prices & rates</p>
             </div>
           </div>
+          <div className="flex gap-2">
+            <Link to="/electrician">
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Hub
+              </Button>
+            </Link>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 px-4 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 gap-2 touch-manipulation"
+              onClick={() => refreshPrices(true)}
+              disabled={isLoading}
+            >
+              <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
+              Refresh
+            </Button>
+          </div>
+        </header>
 
           {/* Compact Scrap Merchant Finder - Always visible */}
           <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -72,10 +81,9 @@ const LivePricing = () => {
             </div>
           </Card>
 
-          {/* Enhanced Regional Job Pricing - Complete Tabbed Experience */}
-          <EnhancedRegionalPricing />
-        </div>
-      </div>
+        {/* Enhanced Regional Job Pricing - Complete Tabbed Experience */}
+        <EnhancedRegionalPricing />
+      </main>
     </div>
   );
 };

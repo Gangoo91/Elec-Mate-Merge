@@ -1,6 +1,5 @@
 import { ArrowLeft, FileCheck, Zap, Gauge, TrendingUp, Home, Car, Battery, Settings, Shield, Cable, CheckCircle, Building, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 
 // All available upskilling courses
