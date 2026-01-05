@@ -1,7 +1,5 @@
 import { useState, useRef } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Sparkles, Camera, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -32,7 +30,6 @@ export function HeroWelcome() {
     const file = event.target.files?.[0];
     if (!file || !user) return;
 
-    // Validate file
     if (!file.type.startsWith("image/")) {
       toast({ title: "Invalid file", description: "Please select an image file", variant: "destructive" });
       return;
@@ -49,19 +46,16 @@ export function HeroWelcome() {
       const fileName = `${user.id}-${Date.now()}.${fileExt}`;
       const filePath = `avatars/${fileName}`;
 
-      // Upload to Supabase Storage
       const { error: uploadError } = await supabase.storage
         .from("avatars")
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) throw uploadError;
 
-      // Get public URL
       const { data: { publicUrl } } = supabase.storage
         .from("avatars")
         .getPublicUrl(filePath);
 
-      // Update profile
       const { error: updateError } = await supabase
         .from("profiles")
         .update({ avatar_url: publicUrl })
@@ -80,17 +74,13 @@ export function HeroWelcome() {
   };
 
   return (
-    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-elec-gray via-elec-gray to-elec-dark shadow-none">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/3 via-transparent to-elec-yellow/3" />
-
-      {/* Decorative elements - smaller on mobile, optimized for performance */}
-      <div className="absolute top-0 right-0 w-24 sm:w-48 h-24 sm:h-48 bg-elec-yellow/8 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-20 sm:w-36 h-20 sm:h-36 bg-elec-yellow/5 rounded-full blur-xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+    <div className="relative overflow-hidden rounded-2xl bg-[#1a1a1a] border border-white/[0.06]">
+      {/* Subtle accent glow */}
+      <div className="absolute top-0 right-0 w-32 sm:w-48 h-32 sm:h-48 bg-elec-yellow/[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 p-4 sm:p-6 md:p-8">
-        <div className="flex items-start gap-4">
+      <div className="relative z-10 p-4 sm:p-5 md:p-6">
+        <div className="flex items-start gap-3 sm:gap-4">
           {/* Profile Photo */}
           <div className="relative flex-shrink-0">
             <input
@@ -103,14 +93,14 @@ export function HeroWelcome() {
             <button
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
-              className="group relative"
+              className="group relative touch-manipulation"
             >
               <div className={`
-                w-14 h-14 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl sm:rounded-2xl overflow-hidden
-                bg-elec-yellow/10 border-2 border-elec-yellow/30
+                w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl overflow-hidden
+                bg-white/[0.05] border border-white/[0.08]
                 flex items-center justify-center
-                transition-colors duration-200
-                group-hover:border-elec-yellow/60
+                transition-all duration-200
+                group-hover:border-elec-yellow/40
                 ${uploading ? "animate-pulse" : ""}
               `}>
                 {avatarUrl ? (
@@ -120,50 +110,46 @@ export function HeroWelcome() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <User className="w-8 h-8 sm:w-10 sm:h-10 text-elec-yellow/60" />
+                  <User className="w-6 h-6 sm:w-7 sm:h-7 text-white/40" />
                 )}
               </div>
               {/* Camera overlay */}
               <div className="
-                absolute inset-0 rounded-2xl
-                bg-black/50 opacity-0 group-hover:opacity-100
+                absolute inset-0 rounded-xl
+                bg-black/60 opacity-0 group-hover:opacity-100
                 flex items-center justify-center
                 transition-opacity duration-200
               ">
-                <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+                <Camera className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
             </button>
           </div>
 
           {/* Text content */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 text-elec-yellow/80 mb-1">
-              <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-              <span className="text-xs sm:text-sm font-medium tracking-wide uppercase truncate">
-                ElecMate Dashboard
+          <div className="flex-1 min-w-0 pt-0.5">
+            <div className="flex items-center gap-1.5 text-elec-yellow/60 mb-0.5">
+              <Sparkles className="h-3 w-3 flex-shrink-0" />
+              <span className="text-[10px] sm:text-xs font-medium tracking-wide uppercase">
+                Dashboard
               </span>
             </div>
 
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
-              {greeting},<br className="sm:hidden" />
-              <span className="text-elec-yellow"> {firstName}</span>
+            <h1 className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight">
+              {greeting}, <span className="text-elec-yellow">{firstName}</span>
             </h1>
 
-            <p className="text-sm sm:text-base text-gray-400 mt-1 sm:mt-2 line-clamp-2 sm:line-clamp-none">
-              Your command center for electrical excellence.
+            <p className="text-xs sm:text-sm text-white/40 mt-0.5 line-clamp-1">
+              Your command center for electrical excellence
             </p>
           </div>
 
           {/* Status indicator - desktop only */}
-          <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 flex-shrink-0">
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-xs text-gray-300 whitespace-nowrap">Active</span>
+          <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] flex-shrink-0">
+            <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+            <span className="text-[10px] text-white/50 font-medium">Online</span>
           </div>
         </div>
       </div>
-
-      {/* Bottom accent line */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />
-    </Card>
+    </div>
   );
 }

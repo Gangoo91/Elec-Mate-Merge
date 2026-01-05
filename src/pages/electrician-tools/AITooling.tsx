@@ -18,36 +18,31 @@ const toolColors: Record<string, { gradient: string; bgGradient: string }> = {
 const AITooling = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
-      {/* Sticky Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-elec-dark/80 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                <Brain className="h-5 w-5 sm:h-6 sm:w-6 text-purple-400" />
-              </div>
-              <div>
-                <h1 className="text-lg sm:text-xl font-bold tracking-tight text-white">
-                  AI Tooling
-                </h1>
-                <p className="text-xs text-white/50 hidden sm:block">Smart analysis tools</p>
-              </div>
-            </div>
-            <Link to="/electrician">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-10 px-3 sm:px-4 text-white/70 hover:text-white hover:bg-white/10 gap-1.5 touch-manipulation"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                <span className="hidden sm:inline">Electrical Hub</span>
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-10 pb-safe">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20">
+              <Brain className="h-6 w-6 sm:h-7 sm:w-7 text-purple-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                AI Tooling Suite
+              </h1>
+              <p className="text-sm text-white/60">Smart analysis tools for UK electricians</p>
+            </div>
+          </div>
+          <Link to="/electrician">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Hub
+            </Button>
+          </Link>
+        </header>
         {/* Hero Section - Compact for mobile */}
         <section className="relative overflow-hidden rounded-2xl border border-purple-500/20 bg-gradient-to-br from-elec-gray via-elec-gray/90 to-elec-gray/70">
           {/* Decorative gradient blobs */}

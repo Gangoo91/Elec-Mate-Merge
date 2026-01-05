@@ -7,8 +7,8 @@ import TrialBanner from "@/components/dashboard/TrialBanner";
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-background to-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-5 sm:space-y-6 lg:space-y-8">
+    <div className="min-h-screen bg-[#0a0a0a]">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-5 lg:py-6 space-y-4 sm:space-y-5">
         {/* Hero Welcome Section */}
         <section className="animate-fade-in">
           <HeroWelcome />
@@ -24,10 +24,9 @@ const Dashboard = () => {
           <TrialBanner />
         </section>
 
-        {/* Main Hub Cards - Equal Prominence */}
+        {/* Main Hub Cards */}
         <section className="animate-fade-in" style={{ animationDelay: "150ms" }}>
-          <h2 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2">
-            <span className="w-1 h-5 sm:h-6 bg-elec-yellow rounded-full"></span>
+          <h2 className="text-xs sm:text-sm font-medium text-white/40 uppercase tracking-wider mb-2.5 px-0.5">
             Your Hubs
           </h2>
           <HubGrid />
@@ -44,7 +43,7 @@ const Dashboard = () => {
         </section>
 
         {/* Footer spacing for mobile nav */}
-        <div className="h-4 sm:h-8" />
+        <div className="h-4 sm:h-6" />
       </div>
     </div>
   );

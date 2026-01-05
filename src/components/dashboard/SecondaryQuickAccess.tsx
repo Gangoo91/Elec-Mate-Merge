@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { Card } from "@/components/ui/card";
 import { BookOpen, ClipboardCheck, Calculator, Heart, Sparkles, FileText } from "lucide-react";
 
 interface QuickAccessItemProps {
@@ -13,37 +12,38 @@ function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
   const navigate = useNavigate();
 
   return (
-    <Card
+    <button
       className="
-        group relative overflow-hidden cursor-pointer
-        bg-elec-gray/50 border border-elec-yellow/10
-        hover:border-elec-yellow/30 hover:bg-elec-gray/70
-        active:scale-[0.97]
-        transition-colors duration-150
-        touch-manipulation shadow-none
+        w-full text-left
+        group relative overflow-hidden rounded-xl
+        bg-[#1a1a1a] border border-white/[0.06]
+        hover:border-white/[0.12] hover:bg-[#1e1e1e]
+        active:scale-[0.97] active:opacity-90
+        transition-all duration-150
+        touch-manipulation
       "
       onClick={() => navigate(path)}
     >
-      <div className="p-2.5 sm:p-3 flex items-center gap-2 sm:gap-3">
+      <div className="p-2.5 sm:p-3 flex items-center gap-2 sm:gap-2.5">
         <div className="
           p-1.5 sm:p-2 rounded-lg
-          bg-elec-yellow/10 text-elec-yellow/80
-          group-hover:bg-elec-yellow/15 group-hover:text-elec-yellow
+          bg-white/[0.05] text-elec-yellow/80
+          group-hover:text-elec-yellow
           transition-colors duration-150
           flex-shrink-0
         ">
           {icon}
         </div>
-        <span className="text-xs sm:text-sm font-medium text-gray-300 group-hover:text-foreground transition-colors truncate">
+        <span className="text-xs sm:text-sm font-medium text-white/70 group-hover:text-white transition-colors truncate">
           {title}
         </span>
         {badge && (
-          <span className="ml-auto px-1.5 py-0.5 text-[10px] font-medium bg-elec-yellow/20 text-elec-yellow rounded-full flex-shrink-0">
+          <span className="ml-auto px-1.5 py-0.5 text-[9px] sm:text-[10px] font-semibold bg-elec-yellow/20 text-elec-yellow rounded-full flex-shrink-0">
             {badge}
           </span>
         )}
       </div>
-    </Card>
+    </button>
   );
 }
 
@@ -84,10 +84,10 @@ export function SecondaryQuickAccess() {
 
   return (
     <div>
-      <h3 className="text-xs sm:text-sm font-medium text-gray-400 uppercase tracking-wider mb-2 sm:mb-3">
+      <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-2.5 px-0.5">
         Quick Access
       </h3>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
         {items.map((item) => (
           <QuickAccessItem key={item.path + item.title} {...item} />
         ))}

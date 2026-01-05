@@ -571,11 +571,6 @@
     @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-elec-dark;
   }
 
-  /* Premium sticky header style */
-  .sticky-header {
-    @apply sticky top-0 z-50 backdrop-blur-xl bg-elec-dark/80 border-b border-white/5;
-  }
-
   /* Mobile-first section spacing */
   .section-spacing {
     @apply space-y-4 sm:space-y-5;
@@ -663,11 +658,6 @@
 
   .cta-button-purple {
     @apply bg-purple-500/10 border border-purple-500/20 hover:bg-purple-500/20 active:bg-purple-500/30;
-  }
-
-  /* Mobile header height compensation */
-  .header-offset {
-    @apply pt-14 sm:pt-16;
   }
 
   /* Premium section header */

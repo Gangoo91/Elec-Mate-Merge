@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AlertCircle, Clock, FileText, CheckCircle2, ChevronRight } from "lucide-react";
@@ -20,20 +19,20 @@ function ActionItem({ type, title, description, action, onAction }: ActionItemPr
     urgent: {
       bg: "bg-red-500/10",
       border: "border-red-500/20",
-      icon: "text-red-500",
-      iconBg: "bg-red-500/20"
+      icon: "text-red-400",
+      iconBg: "bg-red-500/15"
     },
     warning: {
       bg: "bg-amber-500/10",
       border: "border-amber-500/20",
-      icon: "text-amber-500",
-      iconBg: "bg-amber-500/20"
+      icon: "text-amber-400",
+      iconBg: "bg-amber-500/15"
     },
     info: {
       bg: "bg-blue-500/10",
       border: "border-blue-500/20",
-      icon: "text-blue-500",
-      iconBg: "bg-blue-500/20"
+      icon: "text-blue-400",
+      iconBg: "bg-blue-500/15"
     }
   };
 
@@ -43,29 +42,30 @@ function ActionItem({ type, title, description, action, onAction }: ActionItemPr
     <button
       onClick={onAction}
       className={`
-        w-full flex items-center gap-3 p-3 sm:p-4 rounded-lg
+        w-full flex items-center gap-3 p-3 rounded-xl
         ${style.bg} border ${style.border}
-        hover:bg-opacity-80 active:scale-[0.99]
-        transition-all duration-200 text-left
+        hover:opacity-90 active:scale-[0.99]
+        transition-all duration-150 text-left
+        touch-manipulation
       `}
     >
       {/* Icon */}
-      <div className={`p-2 rounded-full ${style.iconBg} ${style.icon} flex-shrink-0`}>
-        {type === "urgent" ? <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5" /> :
-         type === "warning" ? <Clock className="h-4 w-4 sm:h-5 sm:w-5" /> :
-         <FileText className="h-4 w-4 sm:h-5 sm:w-5" />}
+      <div className={`p-2 rounded-lg ${style.iconBg} ${style.icon} flex-shrink-0`}>
+        {type === "urgent" ? <AlertCircle className="h-4 w-4" /> :
+         type === "warning" ? <Clock className="h-4 w-4" /> :
+         <FileText className="h-4 w-4" />}
       </div>
 
       {/* Content */}
       <div className="flex-grow min-w-0">
-        <p className="text-sm sm:text-base font-medium text-foreground truncate">{title}</p>
-        <p className="text-xs sm:text-sm text-gray-400 truncate">{description}</p>
+        <p className="text-sm font-medium text-white truncate">{title}</p>
+        <p className="text-xs text-white/50 truncate">{description}</p>
       </div>
 
       {/* Action arrow */}
       <div className="flex-shrink-0 flex items-center gap-1 text-elec-yellow">
-        <span className="text-xs sm:text-sm font-medium hidden sm:inline">{action}</span>
-        <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+        <span className="text-xs font-medium hidden sm:inline">{action}</span>
+        <ChevronRight className="h-4 w-4" />
       </div>
     </button>
   );
@@ -113,49 +113,49 @@ export function ActionRequired() {
   // If no action items, show all clear
   if (actionItems.length === 0) {
     return (
-      <Card className="bg-elec-gray/50 border-elec-yellow/10">
-        <CardContent className="p-4 sm:p-6">
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className="p-2.5 sm:p-3 rounded-full bg-green-500/10 flex-shrink-0">
-              <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-sm sm:text-base font-medium text-foreground">All Clear</p>
-              <p className="text-xs sm:text-sm text-gray-400">No urgent actions required</p>
-            </div>
+      <div className="rounded-2xl bg-[#1a1a1a] border border-white/[0.06] p-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-green-500/10 flex-shrink-0">
+            <CheckCircle2 className="h-5 w-5 text-green-400" />
           </div>
-        </CardContent>
-      </Card>
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-white">All Clear</p>
+            <p className="text-xs text-white/50">No urgent actions required</p>
+          </div>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="bg-elec-gray/50 border-elec-yellow/10">
-      <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
+    <div className="rounded-2xl bg-[#1a1a1a] border border-white/[0.06]">
+      <div className="p-4 pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
-            <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow flex-shrink-0" />
-            <span className="truncate">Action Required</span>
-          </CardTitle>
-          <Badge variant="outline" className="bg-red-500/10 text-red-400 border-red-500/20 text-xs flex-shrink-0">
+          <div className="flex items-center gap-2">
+            <div className="p-1.5 rounded-lg bg-elec-yellow/10">
+              <AlertCircle className="h-4 w-4 text-elec-yellow" />
+            </div>
+            <span className="text-sm font-semibold text-white">Action Required</span>
+          </div>
+          <Badge className="bg-red-500/15 text-red-400 border-0 text-[10px] font-semibold px-1.5 py-0.5">
             {actionItems.length}
           </Badge>
         </div>
-      </CardHeader>
-      <CardContent className="p-4 pt-2 sm:p-6 sm:pt-0 space-y-2 sm:space-y-3">
+      </div>
+      <div className="px-4 pb-4 space-y-2">
         {actionItems.slice(0, 4).map((item, index) => (
           <ActionItem key={index} {...item} />
         ))}
         {actionItems.length > 4 && (
           <Button
             variant="ghost"
-            className="w-full text-elec-yellow hover:text-elec-dark hover:bg-elec-yellow text-sm"
+            className="w-full text-elec-yellow hover:text-black hover:bg-elec-yellow text-xs h-9"
             onClick={() => navigate("/electrician/quotes")}
           >
             View All ({actionItems.length - 4} more)
           </Button>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

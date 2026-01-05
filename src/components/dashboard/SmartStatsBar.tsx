@@ -62,39 +62,38 @@ function StatItem({ icon, value, label, color = "text-elec-yellow", path }: Stat
   };
 
   return (
-    <div className="flex-shrink-0 min-w-[110px] sm:min-w-0 group">
-      <Card
+    <div className="flex-shrink-0 min-w-[100px] sm:min-w-0 group">
+      <div
         className={`
-          relative overflow-hidden h-full
-          bg-elec-gray/60 border-elec-yellow/10
-          hover:border-elec-yellow/30 hover:bg-elec-gray/80
-          transition-colors duration-200
-          active:scale-[0.97]
-          shadow-none
+          relative overflow-hidden h-full rounded-xl
+          bg-[#1a1a1a] border border-white/[0.06]
+          hover:border-white/[0.12] hover:bg-[#1e1e1e]
+          transition-all duration-200
+          active:scale-[0.97] active:opacity-90
           ${path ? "cursor-pointer" : ""}
         `}
         onClick={handleClick}
       >
-        <div className="p-3 sm:p-4 flex flex-col items-center text-center">
+        <div className="p-2.5 sm:p-3.5 flex flex-col items-center text-center">
           {/* Icon */}
           <div className={`
-            p-2 sm:p-2.5 rounded-xl mb-2
-            bg-elec-yellow/10 ${color}
-            group-hover:scale-110
-            transition-transform duration-300
+            p-1.5 sm:p-2 rounded-lg mb-1.5
+            bg-white/[0.05] ${color}
+            transition-transform duration-200
+            group-hover:scale-105
           `}>
             {icon}
           </div>
 
-          {/* Value - centered and prominent */}
-          <span className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+          {/* Value */}
+          <span className="text-lg sm:text-xl md:text-2xl font-semibold text-white tracking-tight">
             {formattedValue}
           </span>
 
           {/* Label */}
-          <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5 whitespace-nowrap">{label}</p>
+          <p className="text-[10px] sm:text-xs text-white/50 mt-0.5 whitespace-nowrap font-medium">{label}</p>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

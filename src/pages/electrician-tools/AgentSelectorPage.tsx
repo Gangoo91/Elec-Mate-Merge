@@ -126,36 +126,31 @@ const AgentSelectorPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
-      {/* Sticky Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-elec-dark/80 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-              </div>
-              <div>
-                <h1 className="text-lg sm:text-xl font-bold tracking-tight text-white">
-                  AI Consultation
-                </h1>
-                <p className="text-xs text-white/50 hidden sm:block">Choose your specialist agent</p>
-              </div>
-            </div>
-            <Link to="/electrician">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-10 px-3 sm:px-4 text-white/70 hover:text-white hover:bg-white/10 gap-1.5 touch-manipulation"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                <span className="hidden sm:inline">Electrical Hub</span>
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-10 pb-safe">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                AI Design Consultation
+              </h1>
+              <p className="text-sm text-white/60">Choose your specialist agent to begin</p>
+            </div>
+          </div>
+          <Link to="/electrician">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Hub
+            </Button>
+          </Link>
+        </header>
         {/* Available Agents Section */}
         <section className="space-y-4 sm:space-y-5">
           <div className="flex items-center gap-2.5 px-1">
