@@ -62,11 +62,11 @@ const ProfessionalTips = () => {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Critical": return "bg-red-600/90 text-white border-red-400";
-      case "Important": return "bg-orange-600/90 text-white border-orange-400";
-      case "Intermediate": return "bg-yellow-600/90 text-white border-yellow-400";
-      case "Basic": return "bg-green-600/90 text-white border-green-400";
-      default: return "bg-blue-600/90 text-white border-blue-400";
+      case "Critical": return "bg-red-600/90 text-foreground border-red-400";
+      case "Important": return "bg-orange-600/90 text-foreground border-orange-400";
+      case "Intermediate": return "bg-yellow-600/90 text-foreground border-yellow-400";
+      case "Basic": return "bg-green-600/90 text-foreground border-green-400";
+      default: return "bg-blue-600/90 text-foreground border-blue-400";
     }
   };
 
@@ -78,8 +78,8 @@ const ProfessionalTips = () => {
             <Lightbulb className="h-6 w-6" />
           </div>
           <div>
-            <CardTitle className="text-white">Professional Tips</CardTitle>
-            <p className="text-white/80 text-sm">Expert advice from experienced electricians</p>
+            <CardTitle className="text-foreground">Professional Tips</CardTitle>
+            <p className="text-foreground/80 text-sm">Expert advice from experienced electricians</p>
           </div>
         </div>
       </CardHeader>
@@ -95,13 +95,13 @@ const ProfessionalTips = () => {
                   </div>
                   <div className="flex items-center gap-1">
                     <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                    <span className="text-xs text-white/80">{tip.rating}</span>
+                    <span className="text-xs text-foreground/80">{tip.rating}</span>
                   </div>
                 </div>
                 
-                <h4 className="font-semibold text-white leading-tight">{tip.title}</h4>
+                <h4 className="font-semibold text-foreground leading-tight">{tip.title}</h4>
                 
-                <p className="text-sm text-white/80 leading-relaxed line-clamp-3">
+                <p className="text-sm text-foreground/80 leading-relaxed line-clamp-3">
                   {tip.content}
                 </p>
                 
@@ -109,7 +109,7 @@ const ProfessionalTips = () => {
                   <Badge className={getDifficultyColor(tip.difficulty)}>
                     {tip.difficulty}
                   </Badge>
-                  <div className="flex items-center gap-1 text-xs text-white/60">
+                  <div className="flex items-center gap-1 text-xs text-foreground/60">
                     <Clock className="h-3 w-3" />
                     {tip.timeToRead}
                   </div>
@@ -123,8 +123,8 @@ const ProfessionalTips = () => {
           <div className="flex items-start gap-3">
             <Shield className="h-5 w-5 text-blue-400 mt-0.5" />
             <div>
-              <h5 className="font-medium text-white mb-1">Safety Reminder</h5>
-              <p className="text-sm text-white/80">
+              <h5 className="font-medium text-foreground mb-1">Safety Reminder</h5>
+              <p className="text-sm text-foreground/80">
                 Always follow proper safety procedures and consult BS7671 regulations. 
                 When in doubt, consult with a qualified supervisor or seek additional training.
               </p>

@@ -37,7 +37,7 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
       "Professional Development": "bg-orange-500/20 border-orange-500/30 text-orange-300",
       "Business Skills": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getDemandColor = (demand: string) => {
@@ -46,7 +46,7 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
       "Medium": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
       "Low": "bg-green-500/20 border-green-500/30 text-green-300",
     };
-    return colors[demand as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[demand as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getCategoryImages = (category: string) => {
@@ -128,10 +128,10 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
     <div className={cn("space-y-4", className)}>
       {/* Section Header */}
       <div className="space-y-1">
-        <h2 className="text-xl sm:text-2xl font-bold text-white">
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground">
           Featured Courses
         </h2>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-foreground/80">
           Top-rated and high-demand electrical training courses
         </p>
       </div>
@@ -186,7 +186,7 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
                 {/* Content */}
                 <div className="p-3 sm:p-4 space-y-2 flex flex-col h-[calc(100%-8rem)] sm:h-[calc(100%-9rem)]">
                   {/* Meta Info */}
-                  <div className="flex items-center justify-between text-xs text-white/80">
+                  <div className="flex items-center justify-between text-xs text-foreground/80">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
                         <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
@@ -204,7 +204,7 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-semibold text-white line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
+                  <h3 className="font-semibold text-foreground line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
                     {course.title}
                   </h3>
 
@@ -214,7 +214,7 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
                   </p>
 
                   {/* Format & Locations */}
-                  <div className="text-white/80 text-xs space-y-1">
+                  <div className="text-foreground/80 text-xs space-y-1">
                     <div className="flex items-center gap-1">
                       <span className="font-medium">Format:</span>
                       <span>{course.format}</span>
@@ -232,7 +232,7 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
 
                   {/* Footer */}
                   <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                    <div className="text-xs text-white/80">
+                    <div className="text-xs text-foreground/80">
                       <span className="font-medium">{course.price}</span>
                     </div>
                     
@@ -265,7 +265,7 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
       </Carousel>
 
       {/* Mobile scroll hint */}
-      <div className="md:hidden flex items-center justify-center gap-2 text-xs text-white/60">
+      <div className="md:hidden flex items-center justify-center gap-2 text-xs text-foreground/60">
         <ChevronLeft className="h-3 w-3" />
         <span>Swipe to browse more courses</span>
         <ChevronRight className="h-3 w-3" />

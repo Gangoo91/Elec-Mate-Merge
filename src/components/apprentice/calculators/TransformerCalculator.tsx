@@ -370,6 +370,92 @@ const TransformerCalculator = () => {
                   </CardContent>
                 </Card>
 
+                {/* How It Worked Out */}
+                <Card className="border-purple-500/20 bg-purple-500/10">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center gap-2">
+                      <Calculator className="h-5 w-5 text-purple-400" />
+                      <CardTitle className="text-base text-purple-200">How It Worked Out</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="space-y-3 text-sm font-mono">
+                      <div className="text-purple-300">
+                        <div className="text-xs text-purple-400 mb-1">Step 1: Voltage Ratio</div>
+                        <div>n = Vp ÷ Vs</div>
+                        <div>n = {primaryVoltage}V ÷ {secondaryVoltage}V = <span className="text-purple-200 font-bold">{result.voltageRatio.toFixed(2)}</span></div>
+                      </div>
+
+                      <Separator className="bg-purple-500/20" />
+
+                      <div className="text-purple-300">
+                        <div className="text-xs text-purple-400 mb-1">Step 2: Primary Current</div>
+                        {phase === 'three' ? (
+                          <>
+                            <div>Ip = (kVA × 1000) ÷ (√3 × Vp)</div>
+                            <div>Ip = ({kvaRating} × 1000) ÷ (1.732 × {primaryVoltage})</div>
+                            <div>Ip = {parseFloat(kvaRating) * 1000} ÷ {(1.732 * parseFloat(primaryVoltage)).toFixed(1)} = <span className="text-purple-200 font-bold">{result.primaryRatedCurrent.toFixed(1)}A</span></div>
+                          </>
+                        ) : (
+                          <>
+                            <div>Ip = (kVA × 1000) ÷ Vp</div>
+                            <div>Ip = ({kvaRating} × 1000) ÷ {primaryVoltage}</div>
+                            <div>Ip = {parseFloat(kvaRating) * 1000} ÷ {primaryVoltage} = <span className="text-purple-200 font-bold">{result.primaryRatedCurrent.toFixed(1)}A</span></div>
+                          </>
+                        )}
+                      </div>
+
+                      <Separator className="bg-purple-500/20" />
+
+                      <div className="text-purple-300">
+                        <div className="text-xs text-purple-400 mb-1">Step 3: Secondary Current</div>
+                        {phase === 'three' ? (
+                          <>
+                            <div>Is = (kVA × 1000) ÷ (√3 × Vs)</div>
+                            <div>Is = ({kvaRating} × 1000) ÷ (1.732 × {secondaryVoltage})</div>
+                            <div>Is = {parseFloat(kvaRating) * 1000} ÷ {(1.732 * parseFloat(secondaryVoltage)).toFixed(1)} = <span className="text-purple-200 font-bold">{result.secondaryRatedCurrent.toFixed(1)}A</span></div>
+                          </>
+                        ) : (
+                          <>
+                            <div>Is = (kVA × 1000) ÷ Vs</div>
+                            <div>Is = ({kvaRating} × 1000) ÷ {secondaryVoltage}</div>
+                            <div>Is = {parseFloat(kvaRating) * 1000} ÷ {secondaryVoltage} = <span className="text-purple-200 font-bold">{result.secondaryRatedCurrent.toFixed(1)}A</span></div>
+                          </>
+                        )}
+                      </div>
+
+                      <Separator className="bg-purple-500/20" />
+
+                      <div className="text-purple-300">
+                        <div className="text-xs text-purple-400 mb-1">Step 4: Real Power (kW)</div>
+                        <div>P = S × pf</div>
+                        <div>P = {kvaRating}kVA × {powerFactor} = <span className="text-purple-200 font-bold">{result.kw.toFixed(1)}kW</span></div>
+                      </div>
+
+                      <Separator className="bg-purple-500/20" />
+
+                      <div className="text-purple-300">
+                        <div className="text-xs text-purple-400 mb-1">Step 5: Fault Current (3-phase)</div>
+                        <div>Zbase = Vs² ÷ (kVA × 1000)</div>
+                        <div>Zbase = {secondaryVoltage}² ÷ ({kvaRating} × 1000) = {((parseFloat(secondaryVoltage) ** 2) / (parseFloat(kvaRating) * 1000)).toFixed(4)}Ω</div>
+                        <div className="mt-1">Zt = (Z% ÷ 100) × Zbase</div>
+                        <div>Zt = ({percentImpedance}% ÷ 100) × {((parseFloat(secondaryVoltage) ** 2) / (parseFloat(kvaRating) * 1000)).toFixed(4)} = {((parseFloat(percentImpedance) / 100) * ((parseFloat(secondaryVoltage) ** 2) / (parseFloat(kvaRating) * 1000))).toFixed(5)}Ω</div>
+                        <div className="mt-1">Isc = Vs ÷ (√3 × Zt)</div>
+                        <div>Isc = {secondaryVoltage} ÷ (1.732 × {((parseFloat(percentImpedance) / 100) * ((parseFloat(secondaryVoltage) ** 2) / (parseFloat(kvaRating) * 1000))).toFixed(5)})</div>
+                        <div>Isc = <span className="text-purple-200 font-bold">{(result.transformerFaultCurrent / 1000).toFixed(2)}kA</span></div>
+                      </div>
+
+                      <Separator className="bg-purple-500/20" />
+
+                      <div className="text-purple-300">
+                        <div className="text-xs text-purple-400 mb-1">Step 6: Voltage Regulation</div>
+                        <div>VR = (R% × pf + X% × sin(θ)) ÷ 100</div>
+                        <div>VR ≈ <span className="text-purple-200 font-bold">{(result.voltageRegulation * 100).toFixed(2)}%</span></div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
                 {/* What This Means */}
                 <Card className="border-blue-500/20 bg-blue-500/10">
                   <CardHeader className="pb-3">

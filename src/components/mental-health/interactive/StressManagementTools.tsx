@@ -169,7 +169,7 @@ const StressManagementTools = () => {
               <div key={exercise.id} className="p-4 bg-blue-500/5 rounded-lg border border-blue-500/20">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h4 className="font-medium text-white mb-1">{exercise.name}</h4>
+                    <h4 className="font-medium text-foreground mb-1">{exercise.name}</h4>
                     <p className="text-sm text-blue-200 mb-2">{exercise.description}</p>
                     <Badge variant="outline" className="text-blue-300 border-blue-400/30">
                       {Math.floor(exercise.duration / 60)} min
@@ -190,7 +190,7 @@ const StressManagementTools = () => {
         ) : (
           <div className="text-center space-y-6">
             <div>
-              <h3 className="text-lg font-medium text-white mb-2">
+              <h3 className="text-lg font-medium text-foreground mb-2">
                 {currentExercise?.name}
               </h3>
               <div className="text-3xl font-bold text-blue-300 mb-1">
@@ -215,14 +215,14 @@ const StressManagementTools = () => {
                     style={{ transform: `scale(${getCircleScale()})` }}
                   >
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-white">{phaseTimeLeft}</div>
+                      <div className="text-2xl font-bold text-foreground">{phaseTimeLeft}</div>
                       <div className="text-xs text-muted-foreground">seconds</div>
                     </div>
                   </div>
                 </div>
                 
                 <div>
-                  <div className="text-lg font-medium text-white mb-2 capitalize">
+                  <div className="text-lg font-medium text-foreground mb-2 capitalize">
                     {currentPhase?.instruction}
                   </div>
                   <Progress value={getPhaseProgress()} className="h-2" />

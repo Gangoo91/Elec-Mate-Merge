@@ -33,7 +33,7 @@ export const CommissioningHeroSummary = ({
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <Zap className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg font-semibold text-white">Testing Overview</h3>
+          <h3 className="text-lg font-semibold text-foreground">Testing Overview</h3>
         </div>
         
         {/* Desktop Layout - 5 columns */}
@@ -45,7 +45,7 @@ export const CommissioningHeroSummary = ({
                 <CheckCircle2 className="h-4 w-4" />
                 <span className="text-xs font-medium">Total Tests</span>
               </div>
-              <div className="text-3xl font-black text-white text-center">{totalTests}</div>
+              <div className="text-3xl font-black text-foreground text-center">{totalTests}</div>
             </div>
           </div>
 
@@ -56,7 +56,7 @@ export const CommissioningHeroSummary = ({
                 <XCircle className="h-4 w-4" />
                 <span className="text-xs font-medium">Dead Tests</span>
               </div>
-              <div className="text-3xl font-black text-white text-center">{deadTestsCount}</div>
+              <div className="text-3xl font-black text-foreground text-center">{deadTestsCount}</div>
             </div>
           </div>
 
@@ -67,7 +67,7 @@ export const CommissioningHeroSummary = ({
                 <Zap className="h-4 w-4" />
                 <span className="text-xs font-medium">Live Tests</span>
               </div>
-              <div className="text-3xl font-black text-white text-center">{liveTestsCount}</div>
+              <div className="text-3xl font-black text-foreground text-center">{liveTestsCount}</div>
             </div>
           </div>
 
@@ -78,7 +78,7 @@ export const CommissioningHeroSummary = ({
                 <Clock className="h-4 w-4" />
                 <span className="text-xs font-medium">Duration</span>
               </div>
-              <div className="text-xl font-black text-white text-center truncate" title={estimatedDuration}>
+              <div className="text-xl font-black text-foreground text-center truncate" title={estimatedDuration}>
                 {estimatedDuration}
               </div>
             </div>
@@ -107,7 +107,7 @@ export const CommissioningHeroSummary = ({
                 <CheckCircle2 className="h-5 w-5" />
                 <span className="text-xs font-medium">TESTS</span>
               </div>
-              <div className="text-4xl font-black text-white text-center">{totalTests}</div>
+              <div className="text-4xl font-black text-foreground text-center">{totalTests}</div>
             </div>
 
             {/* Duration */}
@@ -116,7 +116,7 @@ export const CommissioningHeroSummary = ({
                 <Clock className="h-5 w-5" />
                 <span className="text-xs font-medium">DURATION</span>
               </div>
-              <div className="text-2xl font-black text-white text-center truncate" title={estimatedDuration}>
+              <div className="text-2xl font-black text-foreground text-center truncate" title={estimatedDuration}>
                 {estimatedDuration}
               </div>
             </div>
@@ -127,7 +127,7 @@ export const CommissioningHeroSummary = ({
                 <XCircle className="h-5 w-5" />
                 <span className="text-xs font-medium">DEAD</span>
               </div>
-              <div className="text-4xl font-black text-white text-center">{deadTestsCount}</div>
+              <div className="text-4xl font-black text-foreground text-center">{deadTestsCount}</div>
             </div>
 
             {/* Live Tests */}
@@ -136,7 +136,7 @@ export const CommissioningHeroSummary = ({
                 <Zap className="h-5 w-5" />
                 <span className="text-xs font-medium">LIVE</span>
               </div>
-              <div className="text-4xl font-black text-white text-center">{liveTestsCount}</div>
+              <div className="text-4xl font-black text-foreground text-center">{liveTestsCount}</div>
             </div>
           </div>
 
@@ -157,8 +157,8 @@ export const CommissioningHeroSummary = ({
           {completedTests > 0 && (
             <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 rounded-lg p-4 border border-purple-500/20 touch-manipulation">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-white">Progress</span>
-                <span className="text-lg font-bold text-white">{completionPercentage}%</span>
+                <span className="text-sm font-medium text-foreground">Progress</span>
+                <span className="text-lg font-bold text-foreground">{completionPercentage}%</span>
               </div>
               <div className="w-full bg-background/50 rounded-full h-3">
                 <div 

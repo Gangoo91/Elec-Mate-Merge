@@ -125,7 +125,7 @@ const SelfCareReminders = () => {
                   />
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className={reminder.isActive ? 'text-white' : 'text-muted-foreground'}>
+                      <span className={reminder.isActive ? 'text-foreground' : 'text-muted-foreground'}>
                         {reminder.title}
                       </span>
                       {isCompletedToday(reminder) && (

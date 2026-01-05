@@ -24,7 +24,7 @@ export const CollapsibleSection = ({
           className="w-full justify-between p-0 h-auto text-left hover:bg-transparent"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <CardTitle className="text-lg text-white">{title}</CardTitle>
+          <CardTitle className="text-lg text-foreground">{title}</CardTitle>
           {isOpen ? (
             <ChevronUp className="h-5 w-5 text-gray-400" />
           ) : (

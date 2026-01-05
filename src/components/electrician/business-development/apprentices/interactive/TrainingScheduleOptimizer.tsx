@@ -182,7 +182,7 @@ const TrainingScheduleOptimiser = () => {
             <div className="space-y-6">
               {/* Training Modules Timeline */}
               <div>
-                <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                   <Clock className="h-4 w-4" />
                   Core Training Modules
                 </h4>
@@ -194,7 +194,7 @@ const TrainingScheduleOptimiser = () => {
                           module.priority === 'critical' ? 'text-red-400' :
                           module.priority === 'high' ? 'text-amber-400' : 'text-green-400'
                         }`} />
-                        <span className="text-white">{module.name}</span>
+                        <span className="text-foreground">{module.name}</span>
                         <Badge 
                           variant="outline" 
                           className={`text-xs ${
@@ -244,7 +244,7 @@ const TrainingScheduleOptimiser = () => {
 
               {/* Weekly Schedule */}
               <div>
-                <h4 className="font-semibold text-white mb-3">Optimized Weekly Schedule</h4>
+                <h4 className="font-semibold text-foreground mb-3">Optimized Weekly Schedule</h4>
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
                   {Object.entries(results.weeklySchedule).map(([day, schedule]: [string, any]) => (
                     <div key={day} className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
@@ -261,7 +261,7 @@ const TrainingScheduleOptimiser = () => {
 
               {/* Business-Specific Tips */}
               <div>
-                <h4 className="font-semibold text-white mb-3">Business-Specific Training Focus</h4>
+                <h4 className="font-semibold text-foreground mb-3">Business-Specific Training Focus</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {results.businessSpecificTips.map((tip, index) => (
                     <div key={index} className="p-2 bg-purple-500/10 border border-purple-500/30 rounded text-sm text-purple-200">
@@ -274,7 +274,7 @@ const TrainingScheduleOptimiser = () => {
               {/* Team Training Options */}
               {apprenticeCount > 1 && (
                 <div>
-                  <h4 className="font-semibold text-white mb-3">Multiple Apprentices Strategy</h4>
+                  <h4 className="font-semibold text-foreground mb-3">Multiple Apprentices Strategy</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {results.teamTrainingOptions.map((option, index) => (
                       <div key={index} className="p-2 bg-amber-500/10 border border-amber-500/30 rounded text-sm text-amber-200">

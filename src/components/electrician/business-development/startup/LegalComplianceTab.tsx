@@ -252,7 +252,7 @@ const LegalComplianceTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -270,7 +270,7 @@ const LegalComplianceTab = () => {
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{structure.structure}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{structure.structure}</h4>
                       <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {structure.timeline}
                       </Badge>
@@ -324,7 +324,7 @@ const LegalComplianceTab = () => {
                   </h4>
                   <div className="border border-green-500/20 rounded-lg p-3 space-y-3">
                     <div className="flex items-center justify-between mb-2">
-                      <h5 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Required Qualifications</h5>
+                      <h5 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>Required Qualifications</h5>
                       <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {category.totalInvestment}
                       </Badge>
@@ -340,7 +340,7 @@ const LegalComplianceTab = () => {
                               <Badge variant="outline" className="text-green-300 border-green-400/30 text-sm">
                                 {requirement.necessity}
                               </Badge>
-                              <div className="text-base text-white font-bold">{requirement.cost}</div>
+                              <div className="text-base text-foreground font-bold">{requirement.cost}</div>
                             </>
                           ) : (
                             <>
@@ -352,7 +352,7 @@ const LegalComplianceTab = () => {
                                 <Badge variant="outline" className="text-green-300 border-green-400/30 text-sm">
                                   {requirement.necessity}
                                 </Badge>
-                                <span className="text-sm text-white font-medium">{requirement.cost}</span>
+                                <span className="text-sm text-foreground font-medium">{requirement.cost}</span>
                               </div>
                             </>
                           )}
@@ -380,7 +380,7 @@ const LegalComplianceTab = () => {
                   {category.policies.map((policy, policyIndex) => (
                     <div key={policyIndex} className="border border-purple-500/20 rounded-lg p-3 space-y-2">
                       <div className="flex items-center justify-between">
-                        <h5 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{policy.type}</h5>
+                        <h5 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{policy.type}</h5>
                         <Badge variant="outline" className={`text-purple-300 border-purple-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                           {policy.cost}
                         </Badge>
@@ -409,7 +409,7 @@ const LegalComplianceTab = () => {
                 <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{requirement.requirement}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{requirement.requirement}</h4>
                       <Badge variant="outline" className={`text-orange-300 border-orange-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {requirement.timeline}
                       </Badge>

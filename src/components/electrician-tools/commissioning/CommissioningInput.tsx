@@ -163,7 +163,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
                 className={`flex-1 h-11 font-semibold transition-all ${
                   queryMode === 'testing'
                     ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
-                    : 'bg-elec-dark/40 text-white/70 border border-elec-yellow/30 hover:bg-elec-dark/60'
+                    : 'bg-elec-dark/40 text-foreground/70 border border-elec-yellow/30 hover:bg-elec-dark/60'
                 }`}
               >
                 <CheckCircle2 className="h-4 w-4 mr-2" />
@@ -175,7 +175,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
                 className={`flex-1 h-11 font-semibold transition-all ${
                   queryMode === 'fault'
                     ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
-                    : 'bg-elec-dark/40 text-white/70 border border-elec-yellow/30 hover:bg-elec-dark/60'
+                    : 'bg-elec-dark/40 text-foreground/70 border border-elec-yellow/30 hover:bg-elec-dark/60'
                 }`}
               >
                 <AlertTriangle className="h-4 w-4 mr-2" />
@@ -192,10 +192,10 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-base sm:text-lg font-bold text-white">
+                <h3 className="text-base sm:text-lg font-bold text-foreground">
                   {queryMode === 'testing' ? 'What needs testing?' : "What's the fault?"}
                 </h3>
-                <p className="text-xs sm:text-sm text-white/80 mt-0.5">
+                <p className="text-xs sm:text-sm text-foreground/80 mt-0.5">
                   {queryMode === 'testing' 
                     ? 'Describe the installation and required tests'
                     : "Describe the symptoms and what you've observed"
@@ -230,7 +230,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
               />
             </div>
             
-            <div className="text-xs text-white/70 text-right mt-2">
+            <div className="text-xs text-foreground/70 text-right mt-2">
               <span className="text-elec-yellow font-medium">{prompt.length}</span>/500 
               {prompt.length < 50 && <span className="ml-2 text-elec-yellow/80">• 50+ chars recommended</span>}
             </div>
@@ -264,7 +264,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
             <div className="mt-3 p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <p className="text-xs text-white/90 font-medium">
+                <p className="text-xs text-foreground/90 font-medium">
                   {imageUrls.length} photo{imageUrls.length > 1 ? 's' : ''} uploaded - AI will analyse for safety issues and EICR defect coding
                 </p>
               </div>
@@ -281,7 +281,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
         >
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="projectName" className="text-sm font-medium text-white">Project Name</Label>
+              <Label htmlFor="projectName" className="text-sm font-medium text-foreground">Project Name</Label>
               <Input
                 id="projectName"
                 value={projectName}
@@ -292,7 +292,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="location" className="text-sm font-medium text-white">Location</Label>
+              <Label htmlFor="location" className="text-sm font-medium text-foreground">Location</Label>
               <Input
                 id="location"
                 value={location}
@@ -303,7 +303,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="clientName" className="text-sm font-medium text-white">Client Name</Label>
+              <Label htmlFor="clientName" className="text-sm font-medium text-foreground">Client Name</Label>
               <Input
                 id="clientName"
                 value={clientName}
@@ -314,7 +314,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="installationDate" className="text-sm font-medium text-white">Installation Date</Label>
+              <Label htmlFor="installationDate" className="text-sm font-medium text-foreground">Installation Date</Label>
               <Input
                 id="installationDate"
                 type="date"
@@ -344,9 +344,9 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
                 >
                   <div className="flex items-start gap-2 mb-2">
                     <IconComponent className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <h5 className="font-semibold text-sm text-white">{scenario.title}</h5>
+                    <h5 className="font-semibold text-sm text-foreground">{scenario.title}</h5>
                   </div>
-                   <p className="text-xs text-white/80 line-clamp-3">
+                   <p className="text-xs text-foreground/80 line-clamp-3">
                     {scenario.prompt}
                   </p>
                 </Card>

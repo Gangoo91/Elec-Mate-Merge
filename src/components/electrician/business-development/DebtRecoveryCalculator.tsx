@@ -93,7 +93,7 @@ const DebtRecoveryCalculator = () => {
   const annualBadDebtWriteOff = (inputs.monthlyRevenue * 12) * (inputs.badDebtProvision / 100);
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white">
+    <div className="min-h-screen bg-elec-dark text-foreground">
       <div className="container mx-auto p-6 space-y-6">
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-3">

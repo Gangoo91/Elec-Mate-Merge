@@ -105,7 +105,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
       {component.visual_identifiers && component.visual_identifiers.length > 0 && (
         <Card className="border-elec-yellow/30">
           <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-foreground">
               <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
               How to Confirm This Identification
             </CardTitle>
@@ -127,7 +127,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
       {component.specifications && Object.keys(component.specifications).length > 0 && (
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-foreground">
               <Zap className="h-5 w-5 text-elec-yellow" />
               Technical Specifications
             </CardTitle>
@@ -140,7 +140,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
                     {/* Label on top - WHITE text */}
                     <div className="flex items-center gap-2 mb-2">
                       <Zap className="h-4 w-4 text-elec-yellow/60" />
-                      <span className="text-sm font-medium text-white uppercase tracking-wide">
+                      <span className="text-sm font-medium text-foreground uppercase tracking-wide">
                         {key.replace(/_/g, ' ')}
                       </span>
                     </div>
@@ -191,7 +191,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
       {(component.age_estimate || component.current_compliance) && (
         <Card className="border-elec-yellow/20">
           <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-foreground">
               <Info className="h-5 w-5 text-elec-yellow" />
               Age & Compliance Status
             </CardTitle>
@@ -199,13 +199,13 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
           <CardContent className="p-4 sm:p-6 space-y-5">
             {component.age_estimate && (
               <div className="border-b border-elec-yellow/20 pb-4">
-                <p className="text-sm font-medium text-white/90 uppercase tracking-wide mb-2">Estimated Age</p>
+                <p className="text-sm font-medium text-foreground/90 uppercase tracking-wide mb-2">Estimated Age</p>
                 <p className="text-left text-base sm:text-lg font-semibold text-elec-yellow">{component.age_estimate}</p>
               </div>
             )}
             {component.current_compliance && (
               <div className={component.age_estimate ? "" : "pb-0"}>
-                <p className="text-sm font-medium text-white/90 uppercase tracking-wide mb-2">BS 7671:2018 Compliance</p>
+                <p className="text-sm font-medium text-foreground/90 uppercase tracking-wide mb-2">BS 7671:2018 Compliance</p>
                 <p className={`text-left text-base sm:text-lg font-semibold ${
                   component.current_compliance.toLowerCase().includes('meets') || 
                   component.current_compliance.toLowerCase().includes('compliant')
@@ -224,7 +224,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
       {component.bs7671_requirements && component.bs7671_requirements.length > 0 && (
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-foreground">
               <BookOpen className="h-5 w-5 text-elec-yellow" />
               BS 7671:2018 Requirements
             </CardTitle>
@@ -246,7 +246,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
       {(component.where_found || (component.typical_applications && component.typical_applications.length > 0)) && (
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-foreground">
               <Wrench className="h-5 w-5 text-elec-yellow" />
               Common Uses & Locations
             </CardTitle>
@@ -254,13 +254,13 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
           <CardContent className="p-4 sm:p-6 space-y-5">
             {component.where_found && (
               <div className="border-b border-elec-yellow/20 pb-4">
-                <p className="text-sm font-medium text-white/90 uppercase tracking-wide mb-2">Where You'll Find This</p>
-                <p className="text-left text-sm sm:text-base leading-relaxed text-white/80">{component.where_found}</p>
+                <p className="text-sm font-medium text-foreground/90 uppercase tracking-wide mb-2">Where You'll Find This</p>
+                <p className="text-left text-sm sm:text-base leading-relaxed text-foreground/80">{component.where_found}</p>
               </div>
             )}
             {component.typical_applications && component.typical_applications.length > 0 && (
               <div>
-                <p className="text-sm font-medium text-white/90 uppercase tracking-wide mb-3">Typical Applications</p>
+                <p className="text-sm font-medium text-foreground/90 uppercase tracking-wide mb-3">Typical Applications</p>
                 <div className="space-y-2">
                   {component.typical_applications.map((app, index) => (
                     <div key={index} className="flex items-start gap-2 min-h-[44px] p-2 rounded bg-elec-grey/20">
@@ -280,13 +280,13 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
         {component.installation_notes && (
           <Card className="border-elec-yellow/10">
             <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
+              <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-foreground">
                 <Wrench className="h-5 w-5 text-elec-yellow" />
                 Installation Notes
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 sm:p-6">
-              <p className="text-left text-sm sm:text-base leading-relaxed text-white/80">{component.installation_notes}</p>
+              <p className="text-left text-sm sm:text-base leading-relaxed text-foreground/80">{component.installation_notes}</p>
             </CardContent>
           </Card>
         )}
@@ -300,7 +300,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 sm:p-6">
-              <p className="text-left text-sm sm:text-base leading-relaxed text-white">{component.replacement_notes}</p>
+              <p className="text-left text-sm sm:text-base leading-relaxed text-foreground">{component.replacement_notes}</p>
             </CardContent>
           </Card>
         )}
@@ -314,7 +314,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 sm:p-6">
-              <p className="text-left text-sm sm:text-base leading-relaxed text-white">{component.common_issues}</p>
+              <p className="text-left text-sm sm:text-base leading-relaxed text-foreground">{component.common_issues}</p>
             </CardContent>
           </Card>
         )}

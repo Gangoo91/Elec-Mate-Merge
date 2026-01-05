@@ -130,7 +130,7 @@ const LiveEducationAnalyticsDashboard = ({
                 <GraduationCap className="h-4 w-4 text-green-400" />
                 <span className="text-sm font-medium text-green-400">High Demand</span>
               </div>
-              <div className="text-2xl font-bold text-white mb-1">{displayAnalytics.highDemandPrograms}</div>
+              <div className="text-2xl font-bold text-foreground mb-1">{displayAnalytics.highDemandPrograms}</div>
               <div className="text-xs text-muted-foreground">programmes in high demand</div>
               <div className="mt-2 text-xs text-green-400">
                 Excellent career prospects
@@ -144,7 +144,7 @@ const LiveEducationAnalyticsDashboard = ({
                 <PoundSterling className="h-4 w-4 text-blue-400" />
                 <span className="text-sm font-medium text-blue-400">Funding Available</span>
               </div>
-              <div className="text-2xl font-bold text-white mb-1">{displayAnalytics.fundingOptionsAvailable}</div>
+              <div className="text-2xl font-bold text-foreground mb-1">{displayAnalytics.fundingOptionsAvailable}</div>
               <div className="text-xs text-muted-foreground">different funding options</div>
               <div className="mt-2 text-xs text-blue-400">
                 Multiple pathways to finance
@@ -158,7 +158,7 @@ const LiveEducationAnalyticsDashboard = ({
                 <Award className="h-4 w-4 text-amber-400" />
                 <span className="text-sm font-medium text-amber-400">Starting Salary</span>
               </div>
-              <div className="text-lg font-bold text-white mb-1">{displayAnalytics.averageStartingSalary}</div>
+              <div className="text-lg font-bold text-foreground mb-1">{displayAnalytics.averageStartingSalary}</div>
               <div className="text-xs text-muted-foreground">average graduate salary</div>
               <div className="mt-2 text-xs text-amber-400">
                 Strong return on investment
@@ -178,7 +178,7 @@ const LiveEducationAnalyticsDashboard = ({
               <div key={idx} className="flex items-center justify-between p-3 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
                 <div className="flex items-center gap-2">
                   <Building className="h-3 w-3 text-elec-yellow" />
-                  <span className="text-sm text-white">{category.name}</span>
+                  <span className="text-sm text-foreground">{category.name}</span>
                 </div>
                 <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
                   {category.count}

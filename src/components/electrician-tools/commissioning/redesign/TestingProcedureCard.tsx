@@ -34,7 +34,7 @@ export const TestingProcedureCard = ({ test, index }: TestingProcedureCardProps)
             <span className="text-sm font-bold">{index + 1}</span>
           </div>
           <div className="text-left flex-1">
-            <div className="font-semibold text-sm sm:text-base text-white">{test.testName}</div>
+            <div className="font-semibold text-sm sm:text-base text-foreground">{test.testName}</div>
             <Badge variant="outline" className="mt-1 text-xs border-elec-yellow/30 text-elec-yellow/80">
               {test.regulation}
             </Badge>
@@ -50,9 +50,9 @@ export const TestingProcedureCard = ({ test, index }: TestingProcedureCardProps)
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <FlaskConical className="h-4 w-4 text-elec-yellow" />
-                <span className="text-sm font-semibold text-white">Why We Test</span>
+                <span className="text-sm font-semibold text-foreground">Why We Test</span>
               </div>
-              <p className="text-sm text-white/90 leading-relaxed pl-6">
+              <p className="text-sm text-foreground/90 leading-relaxed pl-6">
                 {test.clientExplanation}
               </p>
             </div>
@@ -63,13 +63,13 @@ export const TestingProcedureCard = ({ test, index }: TestingProcedureCardProps)
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <AlertTriangle className="h-4 w-4 text-amber-400" />
-                <span className="text-sm font-semibold text-white">What to Look For</span>
+                <span className="text-sm font-semibold text-foreground">What to Look For</span>
               </div>
               <ul className="space-y-1.5 pl-6">
                 {whatToLookFor.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="text-amber-400 mt-1">•</span>
-                    <span className="text-sm text-white/90 leading-relaxed">{item}</span>
+                    <span className="text-sm text-foreground/90 leading-relaxed">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -81,13 +81,13 @@ export const TestingProcedureCard = ({ test, index }: TestingProcedureCardProps)
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Lightbulb className="h-4 w-4 text-elec-yellow" />
-                <span className="text-sm font-semibold text-white">Practical Tips</span>
+                <span className="text-sm font-semibold text-foreground">Practical Tips</span>
               </div>
               <ul className="space-y-1.5 pl-6">
                 {practicalTips.map((tip, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="text-elec-yellow mt-1">•</span>
-                    <span className="text-sm text-white/90 leading-relaxed">{tip}</span>
+                    <span className="text-sm text-foreground/90 leading-relaxed">{tip}</span>
                   </li>
                 ))}
               </ul>
@@ -98,17 +98,17 @@ export const TestingProcedureCard = ({ test, index }: TestingProcedureCardProps)
           <div>
             <div className="flex items-center gap-2 mb-2">
               <CheckCircle2 className="h-4 w-4 text-green-400" />
-              <span className="text-sm font-semibold text-white">Pass Criteria</span>
+              <span className="text-sm font-semibold text-foreground">Pass Criteria</span>
             </div>
-            <p className="text-sm text-white/90 leading-relaxed pl-6">
+            <p className="text-sm text-foreground/90 leading-relaxed pl-6">
               {test.acceptanceCriteria}
             </p>
           </div>
 
           {/* Instrument Setup */}
           <div className="pt-3 border-t border-elec-yellow/20">
-            <div className="text-xs font-semibold text-white/70 mb-1">Instrument Setup</div>
-            <p className="text-sm text-white/80">{test.instrumentSetup}</p>
+            <div className="text-xs font-semibold text-foreground/70 mb-1">Instrument Setup</div>
+            <p className="text-sm text-foreground/80">{test.instrumentSetup}</p>
           </div>
         </div>
       </MobileAccordionContent>

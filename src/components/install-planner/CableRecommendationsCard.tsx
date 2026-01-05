@@ -43,11 +43,11 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
       case "low":
         return "text-green-400";
       case "medium":
-        return "text-white";
+        return "text-foreground";
       case "high":
         return "text-red-400";
       default:
-        return "text-white";
+        return "text-foreground";
     }
   };
 
@@ -78,7 +78,7 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
             {/* Streamlined Header */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2 flex-1 min-w-0">
-                <span className="text-lg font-bold text-white">{cable.size}</span>
+                <span className="text-lg font-bold text-foreground">{cable.size}</span>
                 {getSuitabilityIcon(cable.suitability)}
                 {index === 0 && (
                   <Badge className={`text-xs px-2 py-0.5 flex-shrink-0 ${
@@ -95,11 +95,11 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
             {/* Clean Specs Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-white/80">Capacity:</span>
-                <span className="font-medium text-white tabular-nums">{cable.currentCarryingCapacity}A</span>
+                <span className="text-foreground/80">Capacity:</span>
+                <span className="font-medium text-foreground tabular-nums">{cable.currentCarryingCapacity}A</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/80">V.Drop:</span>
+                <span className="text-foreground/80">V.Drop:</span>
                 <span className={`font-medium tabular-nums ${
                   cable.voltageDropPercentage > 5 ? 'text-red-400' : 
                   cable.voltageDropPercentage > 3 ? 'text-amber-400' : 'text-green-400'
@@ -108,16 +108,16 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/80">Cost:</span>
+                <span className="text-foreground/80">Cost:</span>
                 <span className={`font-medium ${getCostColor(cable.cost || "medium")}`}>
                   {cable.cost?.toUpperCase() || "MEDIUM"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/80">Install:</span>
+                <span className="text-foreground/80">Install:</span>
                 <span className={`font-medium ${
                   cable.installationComplexity === "simple" ? "text-green-400" :
-                  cable.installationComplexity === "moderate" ? "text-white" : "text-red-400"
+                  cable.installationComplexity === "moderate" ? "text-foreground" : "text-red-400"
                 }`}>
                   {cable.installationComplexity?.toUpperCase() || "MODERATE"}
                 </span>
@@ -130,7 +130,7 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
                 <div className="space-y-1">
                   {/* Always show first note */}
                   {cable.notes.slice(0, 1).map((note, noteIndex) => (
-                    <div key={noteIndex} className="text-xs text-white/80 flex items-start gap-1">
+                    <div key={noteIndex} className="text-xs text-foreground/80 flex items-start gap-1">
                       <span className="text-elec-yellow mt-0.5 text-xs flex-shrink-0">•</span>
                       <span className="flex-1 leading-relaxed">{note}</span>
                     </div>
@@ -138,7 +138,7 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
                   
                   {/* Show additional notes if expanded or if only 2 total */}
                   {expandedCards[index] && cable.notes.slice(1).map((note, noteIndex) => (
-                    <div key={noteIndex + 1} className="text-xs text-white/80 flex items-start gap-1">
+                    <div key={noteIndex + 1} className="text-xs text-foreground/80 flex items-start gap-1">
                       <span className="text-elec-yellow mt-0.5 text-xs flex-shrink-0">•</span>
                       <span className="flex-1 leading-relaxed">{note}</span>
                     </div>

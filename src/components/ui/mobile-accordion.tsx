@@ -30,7 +30,7 @@ const MobileAccordionTrigger = React.forwardRef<
       className={cn(
         "flex flex-1 items-center justify-start py-4 px-4 text-sm font-medium transition-all hover:underline relative",
         "bg-elec-gray border border-elec-yellow/20 rounded-t-lg [&[data-state=open]]:rounded-b-none",
-        "touch-manipulation min-h-[48px] text-white",
+        "touch-manipulation min-h-[48px] text-foreground",
         className
       )}
       {...props}
@@ -54,7 +54,7 @@ const MobileAccordionContent = React.forwardRef<
     className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
     {...props}
   >
-    <div className={cn("p-0 text-white", className)}>
+    <div className={cn("p-0 text-foreground", className)}>
       {children}
     </div>
   </AccordionPrimitive.Content>

@@ -236,11 +236,11 @@ const NewIndustryNewsCard = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-center py-12">
-          <Newspaper className="h-16 w-16 text-white/40 mx-auto mb-4" />
-          <p className="text-lg text-white mb-2">
+          <Newspaper className="h-16 w-16 text-foreground/40 mx-auto mb-4" />
+          <p className="text-lg text-foreground mb-2">
             No news articles available
           </p>
-          <p className="text-sm text-white/80 mb-4">
+          <p className="text-sm text-foreground/80 mb-4">
             Click "Refresh News" to fetch the latest industry updates from live sources
           </p>
           <Button
@@ -276,7 +276,7 @@ const NewIndustryNewsCard = () => {
       <div className="bg-white/5 rounded-lg border border-white/10 p-3 sm:p-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
           <div className="flex flex-col gap-2 min-w-0 flex-1">
-            <div className="text-sm text-white/80">
+            <div className="text-sm text-foreground/80">
               <p className="break-words">
                 Showing <span className="text-elec-yellow font-medium">{startIndex + 1}-{Math.min(endIndex, filteredAndSortedArticles.length)}</span> of <span className="text-elec-yellow font-medium">{filteredAndSortedArticles.length}</span> articles
                 {totalPages > 1 && (
@@ -286,7 +286,7 @@ const NewIndustryNewsCard = () => {
                 )}
               </p>
               {articles.length > 0 && (
-                <p className="text-xs text-white/80 mt-1">
+                <p className="text-xs text-foreground/80 mt-1">
                   Sources: Electrical Times, Professional Electrician, ECN
                 </p>
               )}
@@ -308,11 +308,11 @@ const NewIndustryNewsCard = () => {
 
       {displayArticles.length === 0 ? (
         <div className="text-center py-12 bg-white/5 rounded-xl border border-white/10">
-          <Newspaper className="h-16 w-16 text-white/40 mx-auto mb-4" />
-          <p className="text-lg text-white/80 mb-2">
+          <Newspaper className="h-16 w-16 text-foreground/40 mx-auto mb-4" />
+          <p className="text-lg text-foreground/80 mb-2">
             No articles match your filters
           </p>
-          <p className="text-sm text-white/80">
+          <p className="text-sm text-foreground/80">
             Try adjusting your search terms or category filter
           </p>
         </div>
@@ -332,7 +332,7 @@ const NewIndustryNewsCard = () => {
             <div className="space-y-4 sm:space-y-6">
               <div className="flex items-center gap-3">
                 <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-                <h3 className="text-lg sm:text-xl font-semibold text-white px-4">
+                <h3 className="text-lg sm:text-xl font-semibold text-foreground px-4">
                   More Industry News
                 </h3>
                 <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />

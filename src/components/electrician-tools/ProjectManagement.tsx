@@ -52,24 +52,24 @@ const ProjectManagement = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="rounded-lg border border-elec-yellow/20 bg-elec-dark p-4 text-center">
                   <Package className="h-6 w-6 mx-auto mb-2 text-elec-yellow" />
-                  <div className="text-2xl font-bold text-white">{toolStats.totalTools}</div>
+                  <div className="text-2xl font-bold text-foreground">{toolStats.totalTools}</div>
                   <div className="text-sm text-muted-foreground">Tools Available</div>
                 </div>
                 <div className="rounded-lg border border-elec-yellow/20 bg-elec-dark p-4 text-center">
                   <TrendingUp className="h-6 w-6 mx-auto mb-2 text-elec-yellow" />
-                  <div className="text-2xl font-bold text-white">{toolStats.trending.length}</div>
+                  <div className="text-2xl font-bold text-foreground">{toolStats.trending.length}</div>
                   <div className="text-sm text-muted-foreground">Trending Categories</div>
                 </div>
                 <div className="rounded-lg border border-elec-yellow/20 bg-elec-dark p-4 text-center">
                   <Calculator className="h-6 w-6 mx-auto mb-2 text-elec-yellow" />
-                  <div className="text-2xl font-bold text-white">
+                  <div className="text-2xl font-bold text-foreground">
                     £{toolStats.averagePrice}
                   </div>
                   <div className="text-sm text-muted-foreground">Average Price</div>
                 </div>
               </div>
               <div className="rounded-lg border border-elec-yellow/20 bg-elec-dark p-4">
-                <h4 className="font-medium text-white mb-2">Categories Available:</h4>
+                <h4 className="font-medium text-foreground mb-2">Categories Available:</h4>
                 <div className="flex flex-wrap gap-2">
                   {toolStats.categories.map((category) => (
                     <span key={category.name} className="px-2 py-1 bg-elec-yellow/20 text-elec-yellow text-sm rounded">

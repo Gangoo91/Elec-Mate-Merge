@@ -17,7 +17,7 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+          <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
             Job Complexity
           </CardTitle>
@@ -45,7 +45,7 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
                 className={`h-4 w-4 ${
                   star <= complexity.rating 
                     ? `fill-current ${getComplexityColor(complexity.rating)}` 
-                    : 'text-white/30'
+                    : 'text-foreground/30'
                 }`}
               />
             ))}
@@ -54,7 +54,7 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
 
         {/* Explanation */}
         {complexity.explanation && (
-          <p className="text-base sm:text-sm text-white leading-relaxed">
+          <p className="text-base sm:text-sm text-foreground leading-relaxed">
             {complexity.explanation}
           </p>
         )}
@@ -62,10 +62,10 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
         {/* Factors */}
         {complexity.factors && complexity.factors.length > 0 && (
           <div>
-            <div className="text-lg sm:text-base font-medium text-white mb-2">Contributing Factors:</div>
+            <div className="text-lg sm:text-base font-medium text-foreground mb-2">Contributing Factors:</div>
             <ul className="space-y-2">
               {complexity.factors.map((factor: string, idx: number) => (
-                <li key={idx} className="text-base sm:text-sm text-white flex items-start gap-2">
+                <li key={idx} className="text-base sm:text-sm text-foreground flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>{factor}</span>
                 </li>
@@ -77,7 +77,7 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
         {/* Recommended Margin */}
         {complexity.recommendedMargin && (
           <div className="p-4 sm:p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-            <div className="text-base sm:text-sm text-white">Recommended Margin</div>
+            <div className="text-base sm:text-sm text-foreground">Recommended Margin</div>
             <div className="text-2xl sm:text-xl font-bold text-elec-yellow">
               {complexity.recommendedMargin}%
             </div>

@@ -44,7 +44,7 @@ const NewsFilters = ({
               placeholder="Search news, regulations, safety updates..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full pl-12 pr-4 bg-white/5 border-white/20 text-white placeholder:text-white/70 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 h-10 sm:h-14 text-sm sm:text-base rounded-lg transition-all duration-200 touch-target"
+              className="w-full pl-12 pr-4 bg-white/5 border-white/20 text-foreground placeholder:text-foreground/70 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 h-10 sm:h-14 text-sm sm:text-base rounded-lg transition-all duration-200 touch-target"
             />
           </div>
 
@@ -58,7 +58,7 @@ const NewsFilters = ({
                 onClick={() => onSortChange('newest')}
                 className={`flex-1 min-w-[120px] touch-target min-h-[40px] sm:min-h-[44px] transition-all duration-200 text-sm sm:text-base ${sortBy === 'newest' 
                   ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium shadow-lg" 
-                  : "border-white/30 text-white hover:bg-white/10 hover:border-white/50 bg-white/5"
+                  : "border-white/30 text-foreground hover:bg-white/10 hover:border-white/50 bg-white/5"
                 }`}
               >
                 <Clock className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
@@ -70,7 +70,7 @@ const NewsFilters = ({
                 onClick={() => onSortChange('views_desc')}
                 className={`flex-1 min-w-[120px] touch-target min-h-[40px] sm:min-h-[44px] transition-all duration-200 text-sm sm:text-base ${sortBy === 'views_desc' 
                   ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium shadow-lg" 
-                  : "border-white/30 text-white hover:bg-white/10 hover:border-white/50 bg-white/5"
+                  : "border-white/30 text-foreground hover:bg-white/10 hover:border-white/50 bg-white/5"
                 }`}
               >
                 <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
@@ -81,18 +81,18 @@ const NewsFilters = ({
             {/* Dropdown Filters - Mobile Optimized */}
             <div className="flex flex-col sm:flex-row gap-3 w-full">
               <Select value={selectedCategory} onValueChange={onCategoryChange}>
-                <SelectTrigger className="w-full bg-white/5 border-white/30 text-white h-10 sm:h-11 rounded-lg hover:border-white/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 transition-all duration-200 touch-target text-sm sm:text-base">
+                <SelectTrigger className="w-full bg-white/5 border-white/30 text-foreground h-10 sm:h-11 rounded-lg hover:border-white/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 transition-all duration-200 touch-target text-sm sm:text-base">
                   <Filter className="h-3 w-3 sm:h-4 sm:w-4 mr-2 text-elec-yellow" />
                   <SelectValue placeholder="Filter by Category" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark/95 border-white/30 backdrop-blur-md z-50 rounded-lg shadow-xl">
-                  <SelectItem value="all" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">
+                  <SelectItem value="all" className="text-foreground hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">
                     All Categories ({totalArticles})
                   </SelectItem>
                   {uniqueCategories.map((category) => {
                     const count = articles.filter(a => a.category === category).length;
                     return (
-                      <SelectItem key={category} value={category} className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">
+                      <SelectItem key={category} value={category} className="text-foreground hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">
                         {category} ({count})
                       </SelectItem>
                     );
@@ -101,13 +101,13 @@ const NewsFilters = ({
               </Select>
 
               <Select value={sortBy} onValueChange={onSortChange}>
-                <SelectTrigger className="w-full bg-white/5 border-white/30 text-white h-10 sm:h-11 rounded-lg hover:border-white/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 transition-all duration-200 touch-target text-sm sm:text-base">
+                <SelectTrigger className="w-full bg-white/5 border-white/30 text-foreground h-10 sm:h-11 rounded-lg hover:border-white/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 transition-all duration-200 touch-target text-sm sm:text-base">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark/95 border-white/30 backdrop-blur-md z-50 rounded-lg shadow-xl">
-                  <SelectItem value="newest" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">Latest First</SelectItem>
-                  <SelectItem value="oldest" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">Oldest First</SelectItem>
-                  <SelectItem value="title" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">Alphabetical</SelectItem>
+                  <SelectItem value="newest" className="text-foreground hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">Latest First</SelectItem>
+                  <SelectItem value="oldest" className="text-foreground hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">Oldest First</SelectItem>
+                  <SelectItem value="title" className="text-foreground hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">Alphabetical</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -122,14 +122,14 @@ const NewsFilters = ({
             {filteredCount} {filteredCount === 1 ? 'Article' : 'Articles'}
           </Badge>
           {selectedCategory !== 'all' && (
-            <Badge variant="secondary" className="bg-white/10 text-white border-white/30 px-3 py-2 text-sm">
+            <Badge variant="secondary" className="bg-white/10 text-foreground border-white/30 px-3 py-2 text-sm">
               {selectedCategory}
             </Badge>
           )}
         </div>
         
         {searchTerm && (
-          <div className="text-sm text-white bg-white/5 px-3 py-2 rounded-md border border-white/10 max-w-full overflow-hidden">
+          <div className="text-sm text-foreground bg-white/5 px-3 py-2 rounded-md border border-white/10 max-w-full overflow-hidden">
             <span className="text-elec-yellow font-medium">Search:</span> <span className="break-words">"{searchTerm}"</span>
           </div>
         )}

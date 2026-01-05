@@ -99,11 +99,11 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
           <MessageSquare className="h-5 w-5 text-blue-400" />
           How to Present & Defend This Quote
         </CardTitle>
-        <CardDescription className="text-base sm:text-sm text-white">
+        <CardDescription className="text-base sm:text-sm text-foreground">
           Ready-to-use responses for client conversations and pricing objections
         </CardDescription>
       </CardHeader>
@@ -113,11 +113,11 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
         <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
           <div className="flex items-start justify-between gap-3 mb-3">
             <div>
-              <h3 className="font-semibold text-lg sm:text-base text-white flex items-center gap-2">
+              <h3 className="font-semibold text-lg sm:text-base text-foreground flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-blue-400" />
                 30-Second Value Proposition
               </h3>
-              <p className="text-base sm:text-sm text-white mt-1">
+              <p className="text-base sm:text-sm text-foreground mt-1">
                 Your elevator pitch for this quote
               </p>
             </div>
@@ -130,14 +130,14 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               <Copy className="h-3 w-3" />
             </Button>
           </div>
-          <pre className="text-base sm:text-sm whitespace-pre-wrap font-sans text-white leading-relaxed text-left">
+          <pre className="text-base sm:text-sm whitespace-pre-wrap font-sans text-foreground leading-relaxed text-left">
             {valueProposition}
           </pre>
         </div>
 
         {/* Common Objections */}
         <div className="space-y-3">
-          <h3 className="font-semibold text-lg sm:text-base text-white flex items-center gap-2">
+          <h3 className="font-semibold text-lg sm:text-base text-foreground flex items-center gap-2">
             <Shield className="h-4 w-4 text-amber-400" />
             Common Objections & Evidence-Based Responses
           </h3>
@@ -150,18 +150,18 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   <div className="p-2 rounded-lg bg-amber-500/10">
                     <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
                   </div>
-                  <span className="font-medium text-base text-white">"This seems expensive / too high"</span>
+                  <span className="font-medium text-base text-foreground">"This seems expensive / too high"</span>
                 </div>
                 <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection1') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
                   <div className="space-y-2">
-                    <h4 className="font-medium text-lg sm:text-base text-white flex items-center gap-2">
+                    <h4 className="font-medium text-lg sm:text-base text-foreground flex items-center gap-2">
                       <MessageSquare className="h-3 w-3 text-blue-400" />
                       Your Response:
                     </h4>
-                    <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-3 text-left">
+                    <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-foreground space-y-3 text-left">
                       <p>"I understand it might seem high at first glance. Let me break down exactly what's included:"</p>
                       
                       <div className="space-y-3">
@@ -245,13 +245,13 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   <div className="p-2 rounded-lg bg-amber-500/10">
                     <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
                   </div>
-                  <span className="font-medium text-base text-white">"I got a cheaper quote from someone else"</span>
+                  <span className="font-medium text-base text-foreground">"I got a cheaper quote from someone else"</span>
                 </div>
                 <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection2') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
-                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-4 text-left">
+                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-foreground space-y-4 text-left">
                     <p>"That's a valid concern. Lower quotes often cut corners in these areas:"</p>
                     
                     <div className="bg-yellow-500/10 border border-yellow-500/30 p-3 rounded-lg">
@@ -360,18 +360,18 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   <div className="p-2 rounded-lg bg-amber-500/10">
                     <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
                   </div>
-                  <span className="font-medium text-base text-white">"Can you do it for less / Give me a discount?"</span>
+                  <span className="font-medium text-base text-foreground">"Can you do it for less / Give me a discount?"</span>
                 </div>
                 <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection3') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
-                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-4 text-left">
+                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-foreground space-y-4 text-left">
                     <p>"I appreciate you asking, but let me explain why this price is already fair:"</p>
                     
                     <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
                       <p className="font-semibold mb-2 text-blue-400">Break-even Point: {formatCurrency(breakEven)}</p>
-                      <p className="text-sm text-white mb-2">This is the absolute minimum to cover:</p>
+                      <p className="text-sm text-foreground mb-2">This is the absolute minimum to cover:</p>
                       <ul className="space-y-2">
                         <li className="flex items-start gap-2 text-sm">
                           <span className="text-amber-400 flex-shrink-0">•</span>
@@ -394,8 +394,8 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div>
                       <p className="font-semibold text-sm">Current Quote: {formatCurrency(recommendedPrice)}</p>
-                      <p className="text-sm text-white mt-1">Profit: {formatCurrency(profit)} ({margin.toFixed(1)}% margin)</p>
-                      <p className="text-sm text-white mt-2">
+                      <p className="text-sm text-foreground mt-1">Profit: {formatCurrency(profit)} ({margin.toFixed(1)}% margin)</p>
+                      <p className="text-sm text-foreground mt-2">
                         This {margin.toFixed(1)}% margin is my business income for living expenses, tool replacement, and ongoing training.
                       </p>
                     </div>
@@ -477,7 +477,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   <div className="p-2 rounded-lg bg-amber-500/10">
                     <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
                   </div>
-                  <span className="font-medium text-base text-white">"What if I supply the materials?"</span>
+                  <span className="font-medium text-base text-foreground">"What if I supply the materials?"</span>
                 </div>
                 <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection4') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
@@ -489,19 +489,19 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
                       <p className="font-semibold text-red-400 mb-3">❌ If you supply materials:</p>
                       <ul className="space-y-2">
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-red-400 flex-shrink-0">•</span>
                           <span>No warranty if materials are faulty</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-red-400 flex-shrink-0">•</span>
                           <span>No guarantee they're correct for the job</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-red-400 flex-shrink-0">•</span>
                           <span>Delays if wrong items or missing parts</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-red-400 flex-shrink-0">•</span>
                           <span>Risk of non-compliant/counterfeit items</span>
                         </li>
@@ -510,7 +510,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
                       <p className="font-semibold text-blue-400 mb-2">Current materials breakdown:</p>
-                      <div className="space-y-1 text-sm text-white">
+                      <div className="space-y-1 text-sm text-foreground">
                         <div className="grid grid-cols-[1fr_auto] gap-x-4 items-baseline">
                           <span>Net cost (what I pay):</span>
                           <span className="font-medium whitespace-nowrap">{formatCurrency(materialsNet)}</span>
@@ -525,23 +525,23 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     <div className="bg-accent/20 border border-primary/20 p-3 rounded-lg">
                       <p className="font-semibold text-sm mb-3">The {materialsMarkup.toFixed(0)}% markup covers:</p>
                       <ul className="space-y-2">
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Expertise selecting correct items</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Trade supplier access</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Warranty and returns handling</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Waste and offcuts (5-10%)</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Collection time and checking</span>
                         </li>
@@ -550,7 +550,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg">
                       <p className="font-semibold text-green-400 mb-2">Trade pricing benefit:</p>
-                      <p className="text-sm text-white">My trade accounts get 25-40% off retail prices. You'd likely pay MORE buying retail yourself.</p>
+                      <p className="text-sm text-foreground">My trade accounts get 25-40% off retail prices. You'd likely pay MORE buying retail yourself.</p>
                     </div>
                     
                     <p className="pt-2 font-medium text-sm">"Recommendation: Keep materials included for warranty protection and to avoid delays. This protects both of us."</p>
@@ -577,7 +577,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   <div className="p-2 rounded-lg bg-amber-500/10">
                     <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
                   </div>
-                  <span className="font-medium text-base text-white">"Why does labour cost so much?"</span>
+                  <span className="font-medium text-base text-foreground">"Why does labour cost so much?"</span>
                 </div>
                 <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection5') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
@@ -593,31 +593,31 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     <div className="bg-accent/20 border border-primary/20 p-3 rounded-lg text-left">
                       <p className="font-semibold text-sm mb-3">✓ What this rate covers:</p>
                       <ul className="space-y-2">
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Years of training and apprenticeship</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>18th Edition BS7671:2018+A3:2024 qualification</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>NICEIC/NAPIT membership (£450-520/year)</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Ongoing CPD training (£400/year)</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Professional liability insurance (£850/year)</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Experience preventing costly mistakes</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Legal compliance knowledge</span>
                         </li>
@@ -627,46 +627,46 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg text-left">
                       <p className="font-semibold text-sm mb-3 text-purple-400">UK Market Rates 2025:</p>
                       <ul className="space-y-2">
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Apprentice: £{marketRate.min - 12}-{marketRate.min - 6}/hour</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Improver: £{marketRate.min - 6}-{marketRate.min}/hour</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Qualified: £{marketRate.min}-{marketRate.max}/hour ← You're here</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Experienced: £{marketRate.max + 5}-{marketRate.max + 10}/hour</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Specialist: £{marketRate.max + 15}-{marketRate.max + 30}/hour</span>
                         </li>
                       </ul>
-                      <p className="text-sm mt-3 text-white">My rate: {formatCurrency(labourRate)}/hour (competitive for qualified work)</p>
+                      <p className="text-sm mt-3 text-foreground">My rate: {formatCurrency(labourRate)}/hour (competitive for qualified work)</p>
                     </div>
                     
                     <div className="bg-cyan-500/10 border border-cyan-500/30 p-3 rounded-lg text-left">
                       <p className="font-semibold text-sm mb-3 text-cyan-400">Compare to other trades:</p>
                       <ul className="space-y-2">
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Plumber: £40-80/hour</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Gas engineer: £50-90/hour</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Builder: £35-60/hour</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-amber-400 flex-shrink-0">•</span>
                           <span>Electrician: £{marketRate.min}-{marketRate.max}/hour ← Best value</span>
                         </li>
@@ -697,7 +697,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   <div className="p-2 rounded-lg bg-destructive/10">
                     <AlertTriangle className="h-5 w-5 text-destructive shrink-0" />
                   </div>
-                  <span className="font-medium text-base text-white">"Can't you just do it cash for less?"</span>
+                  <span className="font-medium text-base text-foreground">"Can't you just do it cash for less?"</span>
                 </div>
                 <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection6') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
@@ -709,27 +709,27 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     <div className="bg-red-400/20 border border-red-400/30 p-3 rounded-lg text-left">
                       <p className="font-semibold text-red-400 mb-3">❌ Why I can't do cash-in-hand:</p>
                       <ul className="space-y-2">
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-red-400 flex-shrink-0">•</span>
                           <span>It's illegal tax evasion (fines up to £20,000)</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-red-400 flex-shrink-0">•</span>
                           <span>Voids your building insurance</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-red-400 flex-shrink-0">•</span>
                           <span>No legal recourse if issues arise</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-red-400 flex-shrink-0">•</span>
                           <span>Can't provide proper certification</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-red-400 flex-shrink-0">•</span>
                           <span>Risk my NICEIC/NAPIT registration</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-red-400 flex-shrink-0">•</span>
                           <span>Jeopardizes professional reputation</span>
                         </li>
@@ -739,38 +739,38 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg text-left">
                       <p className="font-semibold text-green-400 mb-3">✓ What you get with a proper invoice:</p>
                       <ul className="space-y-2">
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Legal proof of professional work</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Building Control notification</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Electrical Installation Certificate</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Insurance coverage maintained</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Warranty protection</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Legal guarantee rights</span>
                         </li>
-                        <li className="flex items-start gap-2 text-sm text-white">
+                        <li className="flex items-start gap-2 text-sm text-foreground">
                           <span className="text-green-400 flex-shrink-0">•</span>
                           <span>Tax-deductible if rental property</span>
                         </li>
                       </ul>
                     </div>
                     
-                    <p className="text-sm border-t border-border pt-3 mt-3 text-white">
+                    <p className="text-sm border-t border-border pt-3 mt-3 text-foreground">
                       "VAT-registered businesses must charge VAT by law. This protects you with proper documentation and certification. Professional electrical work requires proper records for safety and legal compliance."
                     </p>
                   </div>
@@ -803,18 +803,18 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
                 <div className="flex items-start gap-2 mb-2">
                   <Shield className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-                  <h4 className="font-medium text-sm text-white">Professional Standards</h4>
+                  <h4 className="font-medium text-sm text-foreground">Professional Standards</h4>
                 </div>
                 <ul className="space-y-2">
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-green-400 flex-shrink-0">•</span>
                     <span>18th Edition qualified</span>
                   </li>
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-green-400 flex-shrink-0">•</span>
                     <span>NICEIC/NAPIT registered</span>
                   </li>
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-green-400 flex-shrink-0">•</span>
                     <span>£2M liability insurance</span>
                   </li>
@@ -824,18 +824,18 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
                 <div className="flex items-start gap-2 mb-2">
                   <Package className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-                  <h4 className="font-medium text-sm text-white">Quality Materials</h4>
+                  <h4 className="font-medium text-sm text-foreground">Quality Materials</h4>
                 </div>
                 <ul className="space-y-2">
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-blue-400 flex-shrink-0">•</span>
                     <span>Trade supplier materials</span>
                   </li>
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-blue-400 flex-shrink-0">•</span>
                     <span>Manufacturer warranties</span>
                   </li>
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-blue-400 flex-shrink-0">•</span>
                     <span>BS/EU compliance</span>
                   </li>
@@ -845,18 +845,18 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
                 <div className="flex items-start gap-2 mb-2">
                   <FileText className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
-                  <h4 className="font-medium text-sm text-white">Legal Compliance</h4>
+                  <h4 className="font-medium text-sm text-foreground">Legal Compliance</h4>
                 </div>
                 <ul className="space-y-2">
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-purple-400 flex-shrink-0">•</span>
                     <span>BS7671:2018+A3:2024</span>
                   </li>
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-purple-400 flex-shrink-0">•</span>
                     <span>Building Control notification</span>
                   </li>
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-purple-400 flex-shrink-0">•</span>
                     <span>EIC certification</span>
                   </li>
@@ -866,18 +866,18 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
                 <div className="flex items-start gap-2 mb-2">
                   <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-                  <h4 className="font-medium text-sm text-white">Guarantees</h4>
+                  <h4 className="font-medium text-sm text-foreground">Guarantees</h4>
                 </div>
                 <ul className="space-y-2">
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-amber-400 flex-shrink-0">•</span>
                     <span>12-month workmanship</span>
                   </li>
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-amber-400 flex-shrink-0">•</span>
                     <span>Material warranties</span>
                   </li>
-                  <li className="flex items-start gap-2 text-xs text-white">
+                  <li className="flex items-start gap-2 text-xs text-foreground">
                     <span className="text-amber-400 flex-shrink-0">•</span>
                     <span>Insurance-backed work</span>
                   </li>
@@ -892,7 +892,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               <AlertTriangle className="h-4 w-4 flex-shrink-0" />
               What Budget Quotes Often Cut:
             </p>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-xs text-white">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-xs text-foreground">
               <div className="flex items-start gap-2">
                 <span className="text-red-400 flex-shrink-0">❌</span>
                 <span>Unqualified labour</span>
@@ -932,7 +932,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
           <div className="bg-primary/10 border-2 border-primary/30 rounded-lg p-4">
             <div className="flex items-start gap-2">
               <TrendingUp className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-              <p className="text-sm text-white">
+              <p className="text-sm text-foreground">
                 <strong className="text-primary">Your Investment:</strong> {formatCurrency(recommendedPrice)} for professional electrical work 
                 that will last 20+ years and keep your property safe, legal, and insurable.
               </p>
@@ -952,7 +952,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
             </CollapsibleTrigger>
             <CollapsibleContent>
               <div className="p-4 pt-2 space-y-3 border-t border-border">
-                <p className="text-sm text-white">Help clients properly evaluate quotes with this checklist:</p>
+                <p className="text-sm text-foreground">Help clients properly evaluate quotes with this checklist:</p>
                 
                 <div className="bg-accent/30 p-3 rounded text-xs space-y-3 text-left">
                   <div>
@@ -961,15 +961,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       <span>Qualifications</span>
                     </p>
                     <ul className="space-y-1.5">
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>18th Edition certified?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>NICEIC/NAPIT/scheme registered?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Years of experience?</span>
                       </li>
@@ -982,15 +982,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       <span>Insurance</span>
                     </p>
                     <ul className="space-y-1.5">
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Public liability (min £2M)?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Professional indemnity?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Proof available?</span>
                       </li>
@@ -1003,15 +1003,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       <span>Materials</span>
                     </p>
                     <ul className="space-y-1.5">
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Supplier specified?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Brand names listed?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Warranties included?</span>
                       </li>
@@ -1024,15 +1024,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       <span>Certification</span>
                     </p>
                     <ul className="space-y-1.5">
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>EIC provided?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Building Control notification?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Test certificates?</span>
                       </li>
@@ -1045,19 +1045,19 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       <span>Pricing</span>
                     </p>
                     <ul className="space-y-1.5">
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Itemized breakdown?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Materials + labour separated?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>VAT clearly shown?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Payment terms defined?</span>
                       </li>
@@ -1070,15 +1070,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       <span>Guarantees</span>
                     </p>
                     <ul className="space-y-1.5">
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Workmanship guarantee period?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>What's covered?</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-amber-400 flex-shrink-0">•</span>
                         <span>Insurance-backed?</span>
                       </li>
@@ -1091,35 +1091,35 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       <span>Red Flags:</span>
                     </p>
                     <ul className="space-y-1.5">
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-red-400 flex-shrink-0">•</span>
                         <span>"Cash only, no invoice"</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-red-400 flex-shrink-0">•</span>
                         <span>No qualifications mentioned</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-red-400 flex-shrink-0">•</span>
                         <span>Too cheap (below market)</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-red-400 flex-shrink-0">•</span>
                         <span>Vague pricing</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-red-400 flex-shrink-0">•</span>
                         <span>No insurance proof</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-red-400 flex-shrink-0">•</span>
                         <span>Pressure to decide immediately</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-red-400 flex-shrink-0">•</span>
                         <span>No written quote</span>
                       </li>
-                      <li className="flex items-start gap-2 text-white">
+                      <li className="flex items-start gap-2 text-foreground">
                         <span className="text-red-400 flex-shrink-0">•</span>
                         <span>Payment upfront in full</span>
                       </li>
@@ -1128,7 +1128,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   
                   <div className="bg-green-500/10 border border-green-500/20 p-3 rounded mt-2 text-left">
                     <p className="font-medium text-green-400 text-xs mb-1">✅ This Quote Checklist:</p>
-                    <p className="text-white">All boxes ticked above ✓</p>
+                    <p className="text-foreground">All boxes ticked above ✓</p>
                   </div>
                 </div>
                 
@@ -1149,7 +1149,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
         {/* Info Footer */}
         <div className="flex items-start gap-2 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-xs">
           <Info className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-          <p className="text-white">
+          <p className="text-foreground">
             These responses use your actual quote data to provide evidence-based justification. 
             Copy individual responses or the full summary to use in client conversations, emails, or printed quotes.
           </p>

@@ -71,7 +71,7 @@ const BusinessCalculator = () => {
       if (value > 15) return 'text-amber-400';
       return 'text-red-400';
     }
-    return 'text-white';
+    return 'text-foreground';
   };
 
   return (
@@ -86,7 +86,7 @@ const BusinessCalculator = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
-            <h4 className="font-semibold text-white mb-3">Your Business Parameters</h4>
+            <h4 className="font-semibold text-foreground mb-3">Your Business Parameters</h4>
             
             <div className="space-y-2">
               <Label htmlFor="hourlyRate">Hourly Rate (£)</Label>
@@ -150,7 +150,7 @@ const BusinessCalculator = () => {
 
           {/* Results Section */}
           <div className="space-y-4">
-            <h4 className="font-semibold text-white mb-3">Financial Projections</h4>
+            <h4 className="font-semibold text-foreground mb-3">Financial Projections</h4>
             
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-elec-dark p-4 rounded-lg border border-blue-500/20">

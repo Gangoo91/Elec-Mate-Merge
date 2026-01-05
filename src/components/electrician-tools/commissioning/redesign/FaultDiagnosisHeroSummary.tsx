@@ -32,7 +32,7 @@ export const FaultDiagnosisHeroSummary = ({
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <AlertTriangle className="h-5 w-5 text-red-400" />
-          <h3 className="text-lg font-semibold text-white">Fault Overview</h3>
+          <h3 className="text-lg font-semibold text-foreground">Fault Overview</h3>
         </div>
         
         {/* Desktop Layout - 5 columns */}
@@ -57,7 +57,7 @@ export const FaultDiagnosisHeroSummary = ({
                 <Search className="h-4 w-4" />
                 <span className="text-xs font-medium">Diagnostic Steps</span>
               </div>
-              <div className="text-3xl font-black text-white text-center">{diagnosticStepsCount}</div>
+              <div className="text-3xl font-black text-foreground text-center">{diagnosticStepsCount}</div>
             </div>
           </div>
 
@@ -68,7 +68,7 @@ export const FaultDiagnosisHeroSummary = ({
                 <Wrench className="h-4 w-4" />
                 <span className="text-xs font-medium">Fix Actions</span>
               </div>
-              <div className="text-3xl font-black text-white text-center">{correctiveActionsCount}</div>
+              <div className="text-3xl font-black text-foreground text-center">{correctiveActionsCount}</div>
             </div>
           </div>
 
@@ -79,7 +79,7 @@ export const FaultDiagnosisHeroSummary = ({
                 <AlertTriangle className="h-4 w-4" />
                 <span className="text-xs font-medium">Root Causes</span>
               </div>
-              <div className="text-3xl font-black text-white text-center">{rootCausesCount}</div>
+              <div className="text-3xl font-black text-foreground text-center">{rootCausesCount}</div>
             </div>
           </div>
 
@@ -90,7 +90,7 @@ export const FaultDiagnosisHeroSummary = ({
                 <Clock className="h-4 w-4" />
                 <span className="text-xs font-medium">Est. Time</span>
               </div>
-              <div className="text-xl font-black text-white text-center truncate" title={estimatedRepairTime}>
+              <div className="text-xl font-black text-foreground text-center truncate" title={estimatedRepairTime}>
                 {estimatedRepairTime}
               </div>
             </div>
@@ -117,7 +117,7 @@ export const FaultDiagnosisHeroSummary = ({
                 <Clock className="h-5 w-5" />
                 <span className="text-xs font-medium">EST. TIME</span>
               </div>
-              <div className="text-2xl font-black text-white text-center truncate" title={estimatedRepairTime}>
+              <div className="text-2xl font-black text-foreground text-center truncate" title={estimatedRepairTime}>
                 {estimatedRepairTime}
               </div>
             </div>
@@ -128,7 +128,7 @@ export const FaultDiagnosisHeroSummary = ({
                 <Search className="h-5 w-5" />
                 <span className="text-xs font-medium">DIAGNOSTIC</span>
               </div>
-              <div className="text-4xl font-black text-white text-center">{diagnosticStepsCount}</div>
+              <div className="text-4xl font-black text-foreground text-center">{diagnosticStepsCount}</div>
             </div>
 
             {/* Corrective Actions */}
@@ -137,7 +137,7 @@ export const FaultDiagnosisHeroSummary = ({
                 <Wrench className="h-5 w-5" />
                 <span className="text-xs font-medium">FIX ACTIONS</span>
               </div>
-              <div className="text-4xl font-black text-white text-center">{correctiveActionsCount}</div>
+              <div className="text-4xl font-black text-foreground text-center">{correctiveActionsCount}</div>
             </div>
           </div>
 
@@ -148,7 +148,7 @@ export const FaultDiagnosisHeroSummary = ({
                 <AlertTriangle className="h-5 w-5" />
                 <span className="text-sm font-medium">LIKELY ROOT CAUSES</span>
               </div>
-              <span className="text-3xl font-black text-white">{rootCausesCount}</span>
+              <span className="text-3xl font-black text-foreground">{rootCausesCount}</span>
             </div>
           </div>
         </div>

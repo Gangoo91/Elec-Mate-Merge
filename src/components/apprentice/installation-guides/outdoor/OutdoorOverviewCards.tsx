@@ -57,7 +57,7 @@ const OutdoorOverviewCards = () => {
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <stat.icon className="h-4 w-4 text-elec-yellow" />
-                <span className="text-xs text-muted-foreground">{stat.label}</span>
+                <span className="text-xs text-neutral-300">{stat.label}</span>
               </div>
               <p className="text-lg font-semibold text-white">{stat.value}</p>
             </CardContent>
@@ -89,7 +89,7 @@ const OutdoorOverviewCards = () => {
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Complexity Level</span>
+                  <span className="text-neutral-300">Complexity Level</span>
                   <span className="text-blue-300">{project.complexity}%</span>
                 </div>
                 <Progress value={project.complexity} className="h-2" />
@@ -113,7 +113,7 @@ const OutdoorOverviewCards = () => {
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1">
                   <h4 className="font-medium text-purple-200 mb-1">{weather.factor}</h4>
-                  <p className="text-sm text-muted-foreground">{weather.consideration}</p>
+                  <p className="text-sm text-neutral-300">{weather.consideration}</p>
                 </div>
                 <Badge 
                   variant="outline" 
@@ -143,7 +143,7 @@ const OutdoorOverviewCards = () => {
           {installationChallenges.map((challenge, index) => (
             <div key={index} className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
               <h4 className="font-medium text-orange-200 mb-1">{challenge.challenge}</h4>
-              <p className="text-sm text-muted-foreground mb-2">{challenge.description}</p>
+              <p className="text-sm text-neutral-300 mb-2">{challenge.description}</p>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-orange-300 font-medium">Solution:</span>
                 <span className="text-xs text-green-400">{challenge.solution}</span>
@@ -168,7 +168,7 @@ const OutdoorOverviewCards = () => {
                 <Sun className="h-4 w-4" />
                 Summer Installation (May-September)
               </h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-neutral-300 space-y-1">
                 <li>• Optimal working conditions</li>
                 <li>• Extended daylight hours</li>
                 <li>• Ground conditions suitable for excavation</li>
@@ -180,7 +180,7 @@ const OutdoorOverviewCards = () => {
                 <Snowflake className="h-4 w-4" />
                 Winter Installation (October-April)
               </h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-neutral-300 space-y-1">
                 <li>• Weather-dependent scheduling</li>
                 <li>• Frozen ground complications</li>
                 <li>• Reduced working hours</li>
@@ -214,7 +214,7 @@ const OutdoorOverviewCards = () => {
           ].map((item, index) => (
             <div key={index} className="flex items-center gap-2 text-sm">
               <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-              <span className="text-muted-foreground">{item}</span>
+              <span className="text-neutral-300">{item}</span>
             </div>
           ))}
         </CardContent>

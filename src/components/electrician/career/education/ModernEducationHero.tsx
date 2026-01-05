@@ -28,12 +28,12 @@ const ModernEducationHero = ({ analytics, isFromCache, lastUpdated, onFundingCal
               <div className="p-3 rounded-full bg-elec-yellow/20">
                 <GraduationCap className="h-8 w-8 text-elec-yellow" />
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
                 Further Education Hub
               </h1>
             </div>
             
-            <p className="text-base sm:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg text-foreground/90 max-w-3xl mx-auto leading-relaxed">
               Discover comprehensive educational pathways to advance your electrical career. 
               From certificates to master's degrees, find the perfect qualification to achieve your professional goals.
             </p>
@@ -41,7 +41,7 @@ const ModernEducationHero = ({ analytics, isFromCache, lastUpdated, onFundingCal
 
           {/* Live Data Indicator */}
           {isFromCache && lastUpdated && (
-            <div className="flex items-center justify-center gap-2 text-sm text-white/80">
+            <div className="flex items-center justify-center gap-2 text-sm text-foreground/80">
               <div className="w-2 h-2 bg-elec-yellow rounded-full animate-pulse"></div>
               <span>Live data • Last updated {new Date(lastUpdated).toLocaleDateString()}</span>
             </div>
@@ -54,32 +54,32 @@ const ModernEducationHero = ({ analytics, isFromCache, lastUpdated, onFundingCal
                 <div className="flex items-center justify-center mb-2">
                   <BookOpen className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-white">{analytics.totalCourses}</div>
-                <div className="text-xs sm:text-sm text-white/80">Programmes</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">{analytics.totalCourses}</div>
+                <div className="text-xs sm:text-sm text-foreground/80">Programmes</div>
               </div>
 
               <div className="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm border border-white/10">
                 <div className="flex items-center justify-center mb-2">
                   <Users className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-white">{analytics.totalProviders}</div>
-                <div className="text-xs sm:text-sm text-white/80">Providers</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">{analytics.totalProviders}</div>
+                <div className="text-xs sm:text-sm text-foreground/80">Providers</div>
               </div>
 
               <div className="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm border border-white/10">
                 <div className="flex items-center justify-center mb-2">
                   <Star className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-white">{analytics.averageRating.toFixed(1)}</div>
-                <div className="text-xs sm:text-sm text-white/80">Avg Rating</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">{analytics.averageRating.toFixed(1)}</div>
+                <div className="text-xs sm:text-sm text-foreground/80">Avg Rating</div>
               </div>
 
               <div className="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm border border-white/10">
                 <div className="flex items-center justify-center mb-2">
                   <TrendingUp className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-white">{(analytics.averageEmploymentRate || 0).toFixed(1)}%</div>
-                <div className="text-xs sm:text-sm text-white/80">Employment</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">{(analytics.averageEmploymentRate || 0).toFixed(1)}%</div>
+                <div className="text-xs sm:text-sm text-foreground/80">Employment</div>
               </div>
             </div>
           )}
@@ -112,13 +112,13 @@ const ModernEducationHero = ({ analytics, isFromCache, lastUpdated, onFundingCal
           {/* Top Categories Preview */}
           {analytics?.topCategories && analytics.topCategories.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-lg font-semibold text-white text-center">Popular Categories</h3>
+              <h3 className="text-lg font-semibold text-foreground text-center">Popular Categories</h3>
               <div className="flex flex-wrap items-center justify-center gap-2">
                 {analytics.topCategories.slice(0, 6).map((category, index) => (
                   <Badge
                     key={category.name}
                     variant="secondary"
-                    className="bg-white/10 text-white border-white/20 hover:bg-elec-yellow/20 hover:text-elec-yellow transition-colors cursor-pointer"
+                    className="bg-white/10 text-foreground border-white/20 hover:bg-elec-yellow/20 hover:text-elec-yellow transition-colors cursor-pointer"
                   >
                     {category.name} ({category.count})
                   </Badge>

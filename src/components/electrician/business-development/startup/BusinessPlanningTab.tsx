@@ -183,7 +183,7 @@ const BusinessPlanningTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -201,7 +201,7 @@ const BusinessPlanningTab = () => {
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.strategy}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.strategy}</h4>
                       <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {strategy.timeline}
                       </Badge>
@@ -255,7 +255,7 @@ const BusinessPlanningTab = () => {
                   </h4>
                   <div className="border border-green-500/20 rounded-lg p-3 space-y-2">
                     <div className="flex items-center justify-between mb-2">
-                      <h5 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Investment Breakdown</h5>
+                      <h5 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>Investment Breakdown</h5>
                       <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {category.totalRange}
                       </Badge>
@@ -270,7 +270,7 @@ const BusinessPlanningTab = () => {
                               <Badge variant="outline" className="text-green-300 border-green-400/30 text-sm">
                                 {investment.necessity}
                               </Badge>
-                              <div className="text-base text-white font-bold">{investment.amount}</div>
+                              <div className="text-base text-foreground font-bold">{investment.amount}</div>
                             </>
                           ) : (
                             <>
@@ -281,7 +281,7 @@ const BusinessPlanningTab = () => {
                                 <Badge variant="outline" className="text-green-300 border-green-400/30 text-sm">
                                   {investment.necessity}
                                 </Badge>
-                                <span className="text-sm text-white font-medium">{investment.amount}</span>
+                                <span className="text-sm text-foreground font-medium">{investment.amount}</span>
                               </div>
                             </>
                           )}
@@ -305,7 +305,7 @@ const BusinessPlanningTab = () => {
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{structure.structure}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{structure.structure}</h4>
                       <Badge variant="outline" className={`text-purple-300 border-purple-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {structure.timeline}
                       </Badge>

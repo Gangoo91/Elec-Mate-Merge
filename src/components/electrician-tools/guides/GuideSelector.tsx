@@ -240,7 +240,7 @@ const GuideSelector = ({ onSelectGuide }: GuideSelectorProps) => {
                   <div className="absolute inset-0 bg-black/20 rounded-lg pointer-events-none z-10 flex items-center justify-center">
                     <div className="bg-elec-gray/90 border border-elec-yellow/30 rounded-lg px-4 py-2 text-center">
                       <AlertCircle className="h-5 w-5 text-amber-400 mx-auto mb-1" />
-                      <p className="text-sm font-medium text-white">Guide In Development</p>
+                      <p className="text-sm font-medium text-foreground">Guide In Development</p>
                       {estimatedDate && (
                         <p className="text-xs text-muted-foreground">Expected: {estimatedDate}</p>
                       )}
@@ -301,7 +301,7 @@ const GuideSelector = ({ onSelectGuide }: GuideSelectorProps) => {
                     </div>
                     <div className="flex-1">
                       <CardTitle className={`text-lg leading-tight ${
-                        isComingSoon ? "text-gray-300" : "text-white"
+                        isComingSoon ? "text-gray-300" : "text-foreground"
                       }`}>
                         {guide.title}
                       </CardTitle>

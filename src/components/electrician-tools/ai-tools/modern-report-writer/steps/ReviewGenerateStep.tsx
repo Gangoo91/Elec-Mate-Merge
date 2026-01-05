@@ -125,7 +125,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
         <Card className="bg-elec-gray border-elec-yellow/30 p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 flex-wrap">
             <div>
-              <h2 className="text-2xl font-bold text-white mb-2">Generated Report</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-2">Generated Report</h2>
               <p className="text-muted-foreground">
                 Your {wizardData.template?.name} has been generated successfully
               </p>
@@ -135,7 +135,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
               <Button
                 variant="outline"
                 onClick={() => setShowPreview(false)}
-                className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+                className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10"
               >
                 <ChevronLeft className="h-4 w-4 mr-2" />
                 Back to Review
@@ -143,7 +143,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
               <Button
                 onClick={onReset}
                 variant="outline"
-                className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+                className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Start New Report
@@ -168,7 +168,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
             <CheckCircle2 className="h-6 w-6 text-green-500" />
-            <h2 className="text-2xl font-bold text-white">Review & Generate Report</h2>
+            <h2 className="text-2xl font-bold text-foreground">Review & Generate Report</h2>
           </div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Review your information below and add any additional notes before generating your professional electrical report.
@@ -183,7 +183,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
             <FileText className="h-5 w-5 text-elec-yellow" />
           </div>
           <div>
-            <h3 className="text-lg font-medium text-white">Report Template</h3>
+            <h3 className="text-lg font-medium text-foreground">Report Template</h3>
             <p className="text-sm text-muted-foreground">Selected template and settings</p>
           </div>
         </div>
@@ -203,7 +203,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm text-muted-foreground">Category:</span>
-            <span className="text-sm text-white capitalize">{wizardData.template?.category}</span>
+            <span className="text-sm text-foreground capitalize">{wizardData.template?.category}</span>
           </div>
         </div>
       </Card>
@@ -217,7 +217,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
               <User className="h-4 w-4 text-blue-400" />
             </div>
             <div>
-              <h3 className="text-sm font-medium text-white">Client Info</h3>
+              <h3 className="text-sm font-medium text-foreground">Client Info</h3>
             </div>
           </div>
           
@@ -225,18 +225,18 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
             <div className="space-y-1">
               <div>
                 <span className="text-xs text-muted-foreground">Name:</span>
-                <p className="text-xs text-white font-medium">{summary.client.name}</p>
+                <p className="text-xs text-foreground font-medium">{summary.client.name}</p>
               </div>
               <div>
                 <span className="text-xs text-muted-foreground">Phone:</span>
-                <p className="text-xs text-white">{summary.client.phone}</p>
+                <p className="text-xs text-foreground">{summary.client.phone}</p>
               </div>
             </div>
             
             <div className="pt-2 border-t border-elec-yellow/10">
               <div>
                 <span className="text-xs text-muted-foreground">Address:</span>
-                <p className="text-xs text-white leading-relaxed">{summary.client.address}</p>
+                <p className="text-xs text-foreground leading-relaxed">{summary.client.address}</p>
               </div>
             </div>
           </div>
@@ -249,7 +249,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
               <MapPin className="h-4 w-4 text-green-400" />
             </div>
             <div>
-              <h3 className="text-sm font-medium text-white">Installation</h3>
+              <h3 className="text-sm font-medium text-foreground">Installation</h3>
             </div>
           </div>
           
@@ -257,18 +257,18 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
             <div className="space-y-1">
               <div>
                 <span className="text-xs text-muted-foreground">Location:</span>
-                <p className="text-xs text-white font-medium">{summary.installation.address}</p>
+                <p className="text-xs text-foreground font-medium">{summary.installation.address}</p>
               </div>
               <div>
                 <span className="text-xs text-muted-foreground">Type:</span>
-                <p className="text-xs text-white">{summary.installation.description}</p>
+                <p className="text-xs text-foreground">{summary.installation.description}</p>
               </div>
             </div>
             
             <div className="pt-2 border-t border-elec-yellow/10">
               <div>
                 <span className="text-xs text-muted-foreground">Age:</span>
-                <p className="text-xs text-white">{summary.installation.age}</p>
+                <p className="text-xs text-foreground">{summary.installation.age}</p>
               </div>
             </div>
           </div>
@@ -281,7 +281,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
               <Search className="h-4 w-4 text-purple-400" />
             </div>
             <div>
-              <h3 className="text-sm font-medium text-white">Inspection</h3>
+              <h3 className="text-sm font-medium text-foreground">Inspection</h3>
             </div>
           </div>
           
@@ -300,7 +300,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-muted-foreground">Faults:</span>
-                <span className="text-xs text-white font-medium">
+                <span className="text-xs text-foreground font-medium">
                   {summary.inspection.faultCount}
                 </span>
               </div>
@@ -309,7 +309,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
             <div className="pt-2 border-t border-elec-yellow/10">
               <div>
                 <span className="text-xs text-muted-foreground">Inspector:</span>
-                <p className="text-xs text-white">{summary.inspection.inspector}</p>
+                <p className="text-xs text-foreground">{summary.inspection.inspector}</p>
               </div>
             </div>
           </div>
@@ -320,13 +320,13 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
       <Card className="bg-elec-gray border-elec-yellow/30 p-6">
         <div className="flex items-center gap-2 mb-4">
           <Sparkles className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg font-medium text-white">Additional Notes</h3>
+          <h3 className="text-lg font-medium text-foreground">Additional Notes</h3>
         </div>
         
         <div className="space-y-3">
           <Textarea
             placeholder="Add any additional notes, special requirements, or instructions for the AI report generator..."
-            className="min-h-[100px] bg-elec-dark border border-primary/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[100px] bg-elec-dark border border-primary/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={wizardData.additionalNotes}
             onChange={(e) => onDataChange('additionalNotes', e.target.value)}
           />
@@ -340,7 +340,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
       <Card className="bg-elec-gray border-elec-yellow/30 p-6">
         <div className="space-y-4">
           <div className="text-center">
-            <h3 className="text-lg font-medium text-white mb-2">Ready to Generate Report</h3>
+            <h3 className="text-lg font-medium text-foreground mb-2">Ready to Generate Report</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Your report will be generated using AI technology following BS 7671:2018 standards.
             </p>
@@ -384,7 +384,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
             <Button
               variant="outline"
               onClick={onBack}
-              className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 w-full sm:w-auto"
+              className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10 w-full sm:w-auto"
             >
               <ChevronLeft className="h-4 w-4 mr-2" />
               Back to Inspection Details
@@ -399,7 +399,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
             <Button
               variant="ghost"
               onClick={onReset}
-              className="text-muted-foreground hover:text-white w-full sm:w-auto"
+              className="text-muted-foreground hover:text-foreground w-full sm:w-auto"
             >
               <RefreshCw className="h-4 w-4 mr-2" />
               Start Over

@@ -363,7 +363,7 @@ export const ServiceDiversificationTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -395,7 +395,7 @@ export const ServiceDiversificationTab = () => {
                 } rounded-lg p-3 space-y-3`}>
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
                       <Badge variant="outline" className={`${
                         strategy.id === "smart-home" ? "text-blue-300 border-blue-400/30" :
                         strategy.id === "ev-charging" ? "text-green-300 border-green-400/30" :
@@ -413,15 +413,15 @@ export const ServiceDiversificationTab = () => {
                   <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
                     <div className="flex items-center gap-2">
                       <Calculator className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.investment}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{strategy.investment}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.roi}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{strategy.roi}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Shield className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.riskLevel}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{strategy.riskLevel}</span>
                     </div>
                   </div>
 

@@ -282,22 +282,22 @@ const KnowingYourWorthTab = () => {
       <div aria-label="Key metrics" className="grid grid-cols-2 gap-3 sm:grid-cols-2">
         <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
           <Calculator className="h-6 w-6 text-green-400 mx-auto mb-2" />
-          <div className="text-sm font-medium text-white mb-1">Calculator</div>
+          <div className="text-sm font-medium text-foreground mb-1">Calculator</div>
           <div className="text-xs text-muted-foreground">AI-powered estimation</div>
         </div>
         <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
           <BarChart3 className="h-6 w-6 text-blue-400 mx-auto mb-2" />
-          <div className="text-sm font-medium text-white mb-1">Market Data</div>
+          <div className="text-sm font-medium text-foreground mb-1">Market Data</div>
           <div className="text-xs text-muted-foreground">July 2025 insights</div>
         </div>
         <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
           <TrendingUp className="h-6 w-6 text-purple-400 mx-auto mb-2" />
-          <div className="text-sm font-medium text-white mb-1">Growth Trends</div>
+          <div className="text-sm font-medium text-foreground mb-1">Growth Trends</div>
           <div className="text-xs text-muted-foreground">Future projections</div>
         </div>
         <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
           <MessageSquare className="h-6 w-6 text-red-400 mx-auto mb-2" />
-          <div className="text-sm font-medium text-white mb-1">Negotiation</div>
+          <div className="text-sm font-medium text-foreground mb-1">Negotiation</div>
           <div className="text-xs text-muted-foreground">Professional tips</div>
         </div>
       </div>
@@ -320,7 +320,7 @@ const KnowingYourWorthTab = () => {
           {/* Experience Slider */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-white">Years of Experience</label>
+              <label className="text-sm font-medium text-foreground">Years of Experience</label>
               <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
                 {experience} {experience === 1 ? 'year' : 'years'}
               </Badge>
@@ -344,7 +344,7 @@ const KnowingYourWorthTab = () => {
           {/* Location and Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Location</label>
+              <label className="text-sm font-medium text-foreground">Location</label>
               <Select value={location} onValueChange={setLocation}>
                 <SelectTrigger className="bg-elec-dark border-green-500/20">
                   <SelectValue placeholder="Select your location" />
@@ -421,7 +421,7 @@ const KnowingYourWorthTab = () => {
               </Select>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Highest Qualification</label>
+              <label className="text-sm font-medium text-foreground">Highest Qualification</label>
               <Select value={qualification} onValueChange={setQualification}>
                 <SelectTrigger className="bg-elec-dark border-green-500/20">
                   <SelectValue placeholder="Select qualification" />
@@ -439,7 +439,7 @@ const KnowingYourWorthTab = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Company Size</label>
+              <label className="text-sm font-medium text-foreground">Company Size</label>
               <Select value={companySize} onValueChange={setCompanySize}>
                 <SelectTrigger className="bg-elec-dark border-green-500/20">
                   <SelectValue placeholder="Select company size" />
@@ -454,7 +454,7 @@ const KnowingYourWorthTab = () => {
               </Select>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Contract Type</label>
+              <label className="text-sm font-medium text-foreground">Contract Type</label>
               <Select value={contractType} onValueChange={setContractType}>
                 <SelectTrigger className="bg-elec-dark border-green-500/20">
                   <SelectValue placeholder="Select contract type" />
@@ -470,7 +470,7 @@ const KnowingYourWorthTab = () => {
 
           {/* Specialisms */}
           <div className="space-y-3">
-            <label className="text-sm font-medium text-white">Specialisms & Certifications</label>
+            <label className="text-sm font-medium text-foreground">Specialisms & Certifications</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {[
                 { id: 'renewable_energy', label: 'Renewable Energy' },
@@ -498,7 +498,7 @@ const KnowingYourWorthTab = () => {
                   />
                   <label
                     htmlFor={spec.id}
-                    className="text-sm leading-snug text-white cursor-pointer"
+                    className="text-sm leading-snug text-foreground cursor-pointer"
                   >
                     {spec.label}
                   </label>
@@ -513,7 +513,7 @@ const KnowingYourWorthTab = () => {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
                 <div className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-green-400" />
-                  <span className="font-medium text-white text-sm">Your Estimated Salary Range</span>
+                  <span className="font-medium text-foreground text-sm">Your Estimated Salary Range</span>
                 </div>
                 <Badge className="bg-green-500/20 text-green-400 border-green-500/30 self-start sm:self-auto mt-1 sm:mt-0">
                   2025 Market Rate
@@ -544,7 +544,7 @@ const KnowingYourWorthTab = () => {
               </div>
 
               <div className="mt-2 text-xs text-muted-foreground">
-                <span className="text-white font-medium">Confidence factors: </span>
+                <span className="text-foreground font-medium">Confidence factors: </span>
                 {location ? '✓ Location specified' : '• Add location for better accuracy'},{' '}
                 {qualification ? '✓ Qualification provided' : '• Add qualification'},{' '}
                 {specialisms.length > 0 ? `✓ ${specialisms.length} specialisms` : '• Add specialisms for premium calculation'}
@@ -586,7 +586,7 @@ const KnowingYourWorthTab = () => {
                       {trend.urgency === 'high' ? 'Hot' : 'Rising'}
                     </Badge>
                   </div>
-                  <h4 className="font-medium text-white text-sm">{trend.trend}</h4>
+                  <h4 className="font-medium text-foreground text-sm">{trend.trend}</h4>
                 </div>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-lg font-bold text-cyan-400">{trend.impact}</span>
@@ -614,7 +614,7 @@ const KnowingYourWorthTab = () => {
                 <div className="mb-3">
                   <div className="flex items-center gap-2">
                     {range.icon}
-                    <h4 className="font-medium text-white text-sm">{range.level}</h4>
+                    <h4 className="font-medium text-foreground text-sm">{range.level}</h4>
                   </div>
                   <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs mt-2 w-fit">
                     {range.yearRange}
@@ -658,7 +658,7 @@ const KnowingYourWorthTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {regionalVariations.map((region, index) => (
               <div key={index} className="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
-                <h4 className="font-medium text-white text-sm mb-1">{region.region}</h4>
+                <h4 className="font-medium text-foreground text-sm mb-1">{region.region}</h4>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-purple-400">{region.multiplier}</span>
                   <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30 text-xs">
@@ -685,7 +685,7 @@ const KnowingYourWorthTab = () => {
             {skillPremiums.map((skill, index) => (
               <div key={index} className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20 hover:border-amber-500/40 transition-all hover:shadow-lg hover:shadow-amber-500/10">
                 <div className="mb-3">
-                  <h4 className="font-medium text-white text-sm">{skill.skill}</h4>
+                  <h4 className="font-medium text-foreground text-sm">{skill.skill}</h4>
                   <div className="mt-2 flex gap-2 flex-wrap">
                     <Badge className={`text-xs ${
                       skill.premium === "Essential" 
@@ -735,7 +735,7 @@ const KnowingYourWorthTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {negotiationTips.map((category, index) => (
               <div key={index} className="space-y-3">
-                <h4 className="font-medium text-white">{category.category}</h4>
+                <h4 className="font-medium text-foreground">{category.category}</h4>
                 <div className="space-y-2">
                   {category.tips.map((tip, tipIndex) => (
                     <div key={tipIndex} className="p-2 bg-red-500/10 rounded border border-red-500/20">
@@ -765,7 +765,7 @@ const KnowingYourWorthTab = () => {
             {/* Base Salary Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-white/5 rounded-lg border border-white/10">
-                <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                <h4 className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
                   <PoundSterling className="h-4 w-4 text-green-400" />
                   Base Salary Range
                 </h4>
@@ -778,7 +778,7 @@ const KnowingYourWorthTab = () => {
               </div>
               
               <div className="p-4 bg-white/5 rounded-lg border border-white/10">
-                <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                <h4 className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
                   <Gauge className="h-4 w-4 text-blue-400" />
                   Confidence Level
                 </h4>
@@ -791,7 +791,7 @@ const KnowingYourWorthTab = () => {
 
             {/* Breakdown Factors */}
             <div className="space-y-4">
-              <h4 className="text-sm font-medium text-white flex items-center gap-2">
+              <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
                 <Calculator className="h-4 w-4 text-elec-yellow" />
                 Salary Calculation Factors
               </h4>
@@ -799,7 +799,7 @@ const KnowingYourWorthTab = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-3 bg-white/5 rounded border border-white/10">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-white">Experience Level</span>
+                    <span className="text-sm text-foreground">Experience Level</span>
                     <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
                       {experience} years
                     </Badge>
@@ -814,7 +814,7 @@ const KnowingYourWorthTab = () => {
 
                 <div className="p-3 bg-white/5 rounded border border-white/10">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-white">Location</span>
+                    <span className="text-sm text-foreground">Location</span>
                     <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">
                       {location || "Not specified"}
                     </Badge>
@@ -826,7 +826,7 @@ const KnowingYourWorthTab = () => {
 
                 <div className="p-3 bg-white/5 rounded border border-white/10">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-white">Qualification</span>
+                    <span className="text-sm text-foreground">Qualification</span>
                     <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
                       {qualification || "Not specified"}
                     </Badge>
@@ -838,7 +838,7 @@ const KnowingYourWorthTab = () => {
 
                 <div className="p-3 bg-white/5 rounded border border-white/10">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-white">Specialisms</span>
+                    <span className="text-sm text-foreground">Specialisms</span>
                     <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
                       {specialisms.length} selected
                     </Badge>
@@ -854,7 +854,7 @@ const KnowingYourWorthTab = () => {
 
             {/* Market Context */}
             <div className="p-4 bg-cyan-500/10 rounded-lg border border-cyan-500/20">
-              <h4 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
+              <h4 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-cyan-400" />
                 2025 Market Context
               </h4>
@@ -876,7 +876,7 @@ const KnowingYourWorthTab = () => {
 
             {/* Recommendations */}
             <div className="p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
-              <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+              <h4 className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
                 <Lightbulb className="h-4 w-4 text-elec-yellow" />
                 Recommendations to Increase Your Worth
               </h4>

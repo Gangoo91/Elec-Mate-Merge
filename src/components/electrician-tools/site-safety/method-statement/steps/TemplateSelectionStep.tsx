@@ -153,7 +153,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
               <Button
                 size="sm"
                 onClick={handleCompareTemplates}
-                className="h-8 px-3 bg-purple-600 hover:bg-purple-700 text-white"
+                className="h-8 px-3 bg-purple-600 hover:bg-purple-700 text-foreground"
               >
                 Compare
               </Button>

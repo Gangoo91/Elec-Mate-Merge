@@ -44,7 +44,7 @@ interface AtAGlanceSummaryProps {
 
 const SummaryField = ({ label, value }: { label: string; value: string }) => (
   <div className="p-2.5 sm:p-3 bg-elec-dark/40 rounded border border-elec-yellow/20">
-    <p className="text-[10px] sm:text-xs text-white/60 mb-0.5 sm:mb-1">{label}</p>
+    <p className="text-[10px] sm:text-xs text-foreground/60 mb-0.5 sm:mb-1">{label}</p>
     <p className="text-sm sm:text-base font-semibold text-elec-light">{value}</p>
   </div>
 );
@@ -116,8 +116,8 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
         
         {safeNotes && (
           <div className="mt-4 p-3 sm:p-4 bg-elec-dark/40 rounded border border-elec-yellow/20">
-            <p className="text-xs text-white/60 mb-1">Notes</p>
-            <p className="text-sm text-white/90">{safeNotes}</p>
+            <p className="text-xs text-foreground/60 mb-1">Notes</p>
+            <p className="text-sm text-foreground/90">{safeNotes}</p>
           </div>
         )}
       </div>

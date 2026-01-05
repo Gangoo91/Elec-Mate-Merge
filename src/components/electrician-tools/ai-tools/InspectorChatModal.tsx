@@ -358,7 +358,7 @@ export const InspectorChatModal = ({
                 }
               }}
               placeholder="Ask about testing procedures, safety implications, or remediation..."
-              className="min-h-[64px] sm:min-h-[60px] resize-none text-sm sm:text-base font-medium text-white placeholder:text-gray-400 leading-relaxed"
+              className="min-h-[64px] sm:min-h-[60px] resize-none text-sm sm:text-base font-medium text-foreground placeholder:text-gray-400 leading-relaxed"
               disabled={isLoading}
             />
             <Button

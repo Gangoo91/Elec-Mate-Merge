@@ -1,12 +1,12 @@
-
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, X, ChevronRight, Loader2, ExternalLink, CheckCircle } from "lucide-react";
+import { Check, X, ChevronRight, Loader2, Zap, Building2, Sparkles, Mail, Users, CheckCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { stripePriceData, PlanDetails } from "@/data/stripePrices";
+import { cn } from "@/lib/utils";
 
 interface PlansListProps {
   billing: 'monthly' | 'yearly';
@@ -16,50 +16,30 @@ const PlansList = ({ billing }: PlansListProps) => {
   const { isSubscribed, subscriptionTier, checkSubscriptionStatus } = useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<{[key: string]: boolean}>({});
-  
-  // Check subscription status when component mounts or billing type changes
+
   useEffect(() => {
     checkSubscriptionStatus();
   }, [billing]);
-  
-  // Handle subscription checkout
-  const handleSubscribe = async (planId: string, priceId: string, mode: 'subscription') => {
+
+  const handleSubscribe = async (planId: string, priceId: string) => {
     try {
-      // Set loading state for this specific plan
       setIsLoading(prev => ({ ...prev, [planId]: true }));
-      
-      console.log("Starting checkout process for:", { planId, priceId, mode });
-      
+
       const { data, error } = await supabase.functions.invoke('create-checkout', {
-        body: { 
-          priceId, 
-          mode, 
-          planId
-        }
+        body: { priceId, mode: 'subscription', planId }
       });
-      
-      if (error) {
-        console.error("Checkout error:", error);
-        throw new Error(error.message);
-      }
-      
-      console.log("Checkout response:", data);
-      
+
+      if (error) throw new Error(error.message);
+
       if (data?.url) {
         toast({
           title: "Redirecting to checkout",
-          description: "You'll be redirected to the secure Stripe checkout page.",
+          description: "Opening secure Stripe checkout page.",
         });
-        
-        // Try both methods of opening the checkout
+
         const newWindow = window.open(data.url, '_blank');
-        
-        // If opening in a new window fails, try redirecting the current window
-        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-          // Small delay to show the toast before redirecting
-          setTimeout(() => {
-            window.location.href = data.url;
-          }, 1000);
+        if (!newWindow || newWindow.closed) {
+          setTimeout(() => { window.location.href = data.url; }, 1000);
         }
       } else {
         throw new Error('No checkout URL returned');
@@ -68,7 +48,7 @@ const PlansList = ({ billing }: PlansListProps) => {
       console.error('Checkout error:', error);
       toast({
         title: "Checkout Error",
-        description: error instanceof Error ? error.message : "Failed to start checkout process",
+        description: error instanceof Error ? error.message : "Failed to start checkout",
         variant: "destructive",
       });
     } finally {
@@ -76,131 +56,174 @@ const PlansList = ({ billing }: PlansListProps) => {
     }
   };
 
-  const handleDirectStripeLink = (priceId: string, planName: string) => {
-    // Use simplified direct checkout process
-    toast({
-      title: `Subscribe to ${planName}`,
-      description: "Opening Stripe checkout in a new window.",
-    });
-    
-    // Map of hard-coded direct Stripe checkout URLs for fallback
-    const directLinks: {[key: string]: string} = {
-      "price_1RL1wd2RKw5t5RAms8S0sLAt": "https://buy.stripe.com/test_4gw6pd3stc3bfOQ5kk", // Apprentice Monthly
-      "price_1RL1zR2RKw5t5RAmVABR93Zy": "https://buy.stripe.com/test_8wM15FgN74vHgSU9AB", // Electrician Monthly
-      "price_1RL2582RKw5t5RAm2qG45wK0": "https://buy.stripe.com/test_cN2dTb50xcTz0YgbIK", // Apprentice Yearly
-      "price_1RL25t2RKw5t5RAmXYxxJivo": "https://buy.stripe.com/test_5kA0XvcoLfLD8su3cd", // Electrician Yearly
-    };
-    
-    const url = directLinks[priceId] || "https://buy.stripe.com/test_6oEcP74bc25oclG000";
-    window.open(url, '_blank', 'noopener,noreferrer');
+  const handleContactEnterprise = (email: string) => {
+    window.location.href = `mailto:${email}?subject=Enterprise%20Subscription%20Inquiry`;
+  };
+
+  const getPlanIcon = (planName: string) => {
+    switch (planName) {
+      case 'Desktop Price':
+        return <Zap className="h-6 w-6" />;
+      case 'Employer':
+        return <Building2 className="h-6 w-6" />;
+      case 'Enterprise':
+        return <Sparkles className="h-6 w-6" />;
+      default:
+        return <Zap className="h-6 w-6" />;
+    }
   };
 
   const plans = stripePriceData[billing];
 
   return (
-    <div className="grid md:grid-cols-3 gap-6">
-      {plans.map((plan: PlanDetails) => {
-        // Check if this is the user's current plan
-        const isCurrentPlan = subscriptionTier === plan.name && isSubscribed;
-        
-        return (
-          <Card 
-            key={plan.id} 
-            className={`border-2 overflow-hidden relative transition-all duration-300 hover:shadow-xl 
-              ${plan.popular ? "border-elec-yellow" : "border-elec-yellow/20"} 
-              ${plan.color} 
-              ${isCurrentPlan ? "ring-4 ring-green-500 shadow-lg shadow-green-500/20" : ""}
-              ${isCurrentPlan ? "transform scale-[1.02]" : ""}
-            `}
-          >
-            {isCurrentPlan && (
-              <div className="absolute top-0 right-0 left-0 bg-green-500 text-white text-sm font-bold py-1.5 px-3 text-center">
-                <div className="flex items-center justify-center gap-2">
-                  <CheckCircle className="h-4 w-4" />
-                  CURRENT PLAN
-                </div>
-              </div>
-            )}
-            {plan.popular && !isCurrentPlan && (
-              <div className="absolute top-0 right-0 bg-elec-yellow text-elec-dark text-xs font-bold py-1 px-3 rounded-bl-lg">
-                POPULAR
-              </div>
-            )}
-            {plan.coming && (
-              <div className="absolute top-0 right-0 bg-elec-yellow/50 text-elec-dark text-xs font-bold py-1 px-3 rounded-bl-lg">
-                COMING SOON
-              </div>
-            )}
-            
-            <CardHeader className={isCurrentPlan ? "pt-12" : ""}>
-              <CardTitle>{plan.name}</CardTitle>
-              <CardDescription>{plan.description}</CardDescription>
-              <div className="mt-4">
-                <span className="text-3xl font-bold">{plan.price.replace('$', '£')}</span>
-                <span className="text-muted-foreground">{plan.period}</span>
-                {plan.savings && (
-                  <div className="mt-1 text-xs text-elec-yellow">{plan.savings.replace('$', '£')}</div>
-                )}
-              </div>
-            </CardHeader>
-            
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                {plan.features.map((feature, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <Check className="h-4 w-4 text-elec-yellow mt-0.5" />
-                    <span className="text-sm">{feature}</span>
-                  </div>
-                ))}
-                {plan.notIncluded.map((feature, i) => (
-                  <div key={i} className="flex items-start gap-2 text-muted-foreground">
-                    <X className="h-4 w-4 mt-0.5" />
-                    <span className="text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-            
-            <CardFooter className="flex flex-col gap-2">
-              <Button 
-                className="w-full" 
-                variant={isCurrentPlan ? "outline" : plan.popular ? "default" : "outline"}
-                disabled={plan.coming || isCurrentPlan || isLoading[plan.id]}
-                onClick={() => handleSubscribe(plan.id, plan.priceId, 'subscription')}
-              >
-                {isLoading[plan.id] ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Processing...
-                  </>
-                ) : isCurrentPlan 
-                  ? "Current Plan" 
-                  : plan.coming 
-                    ? "Coming Soon" 
-                    : (
-                      <>
-                        Choose Plan
-                        <ChevronRight className="h-4 w-4 ml-1" />
-                      </>
-                    )
-                }
-              </Button>
-              
-              {!plan.coming && !isCurrentPlan && (
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full flex items-center justify-center gap-2" 
-                  onClick={() => handleDirectStripeLink(plan.priceId, plan.name)}
-                >
-                  <ExternalLink className="h-3 w-3" />
-                  Direct Stripe Checkout
-                </Button>
+    <div className="space-y-8">
+      {/* Pricing Cards Grid */}
+      <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+        {plans.map((plan: PlanDetails) => {
+          const isCurrentPlan = subscriptionTier === plan.name && isSubscribed;
+          const isEnterprise = plan.enterprise;
+
+          return (
+            <Card
+              key={plan.id}
+              className={cn(
+                "relative overflow-hidden transition-all duration-300",
+                "bg-elec-gray/50 backdrop-blur-sm border-2",
+                "hover:shadow-2xl hover:shadow-elec-yellow/10 hover:-translate-y-1",
+                plan.popular && !isCurrentPlan && "border-elec-yellow shadow-lg shadow-elec-yellow/20",
+                !plan.popular && !isCurrentPlan && "border-white/10 hover:border-elec-yellow/50",
+                isCurrentPlan && "border-green-500 ring-2 ring-green-500/30 shadow-lg shadow-green-500/20"
               )}
-            </CardFooter>
-          </Card>
-        );
-      })}
+            >
+              {/* Current Plan Banner */}
+              {isCurrentPlan && (
+                <div className="absolute top-0 left-0 right-0 bg-green-500 text-foreground text-sm font-bold py-2 px-4 text-center flex items-center justify-center gap-2">
+                  <CheckCircle className="h-4 w-4" />
+                  YOUR CURRENT PLAN
+                </div>
+              )}
+
+              {/* Popular Badge */}
+              {plan.popular && !isCurrentPlan && (
+                <div className="absolute top-4 right-4">
+                  <span className="bg-elec-yellow text-elec-dark text-xs font-bold px-3 py-1 rounded-full">
+                    MOST POPULAR
+                  </span>
+                </div>
+              )}
+
+              <CardHeader className={cn("pb-4", isCurrentPlan && "pt-14")}>
+                {/* Plan Icon */}
+                <div className={cn(
+                  "w-12 h-12 rounded-xl flex items-center justify-center mb-4",
+                  plan.popular ? "bg-elec-yellow text-elec-dark" : "bg-white/10 text-elec-yellow"
+                )}>
+                  {getPlanIcon(plan.name)}
+                </div>
+
+                {/* Plan Name & Description */}
+                <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
+                <p className="text-sm text-muted-foreground mt-1">{plan.description}</p>
+
+                {/* Price */}
+                <div className="mt-4">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-4xl font-bold text-foreground">{plan.price}</span>
+                    {plan.period && (
+                      <span className="text-muted-foreground">{plan.period}</span>
+                    )}
+                  </div>
+                  {plan.savings && (
+                    <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20">
+                      <span className="text-xs font-medium text-green-400">{plan.savings}</span>
+                    </div>
+                  )}
+                </div>
+              </CardHeader>
+
+              <CardContent className="pb-6">
+                {/* Features List */}
+                <div className="space-y-3">
+                  {plan.features.map((feature, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Check className="h-3 w-3 text-elec-yellow" />
+                      </div>
+                      <span className="text-sm text-foreground/90">{feature}</span>
+                    </div>
+                  ))}
+                  {plan.notIncluded.map((feature, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <X className="h-3 w-3 text-foreground/30" />
+                      </div>
+                      <span className="text-sm text-foreground/40">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+
+              <CardFooter className="pt-0">
+                {isEnterprise ? (
+                  <Button
+                    className="w-full h-12 text-base font-semibold bg-white/10 hover:bg-white/20 text-foreground border border-white/20"
+                    onClick={() => handleContactEnterprise(plan.contactEmail || 'info@elec-mate.com')}
+                  >
+                    <Mail className="h-4 w-4 mr-2" />
+                    Contact Us
+                  </Button>
+                ) : (
+                  <Button
+                    className={cn(
+                      "w-full h-12 text-base font-semibold transition-all duration-300",
+                      plan.popular
+                        ? "bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
+                        : "bg-white/10 hover:bg-white/20 text-foreground border border-white/20",
+                      isCurrentPlan && "bg-green-500/20 text-green-400 border-green-500/30 cursor-default"
+                    )}
+                    disabled={isCurrentPlan || isLoading[plan.id]}
+                    onClick={() => handleSubscribe(plan.id, plan.priceId)}
+                  >
+                    {isLoading[plan.id] ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Processing...
+                      </>
+                    ) : isCurrentPlan ? (
+                      <>
+                        <CheckCircle className="mr-2 h-5 w-5" />
+                        Current Plan
+                      </>
+                    ) : (
+                      <>
+                        Get Started
+                        <ChevronRight className="ml-2 h-5 w-5" />
+                      </>
+                    )}
+                  </Button>
+                )}
+              </CardFooter>
+            </Card>
+          );
+        })}
+      </div>
+
+      {/* Team Discount Callout */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 p-6 md:p-8">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="relative flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
+          <div className="w-14 h-14 rounded-2xl bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+            <Users className="h-7 w-7 text-elec-yellow" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-bold text-foreground mb-1">Team Discount for Employers</h3>
+            <p className="text-foreground/70">
+              Subscribe to Employer or Enterprise and your electricians get Desktop Price access at a discounted rate.
+              Contact us at <a href="mailto:info@elec-mate.com" className="text-elec-yellow hover:underline">info@elec-mate.com</a> for team pricing options.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

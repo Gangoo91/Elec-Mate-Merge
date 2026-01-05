@@ -4,8 +4,7 @@ import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Calculator, RotateCcw, Sun, Settings, Info, AlertTriangle, CheckCircle, XCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
@@ -307,67 +306,56 @@ const SolarArrayCalculator = () => {
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-elec-yellow">Panel & Site Details</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Panel Wattage</Label>
-              <Select value={panelWattage} onValueChange={setPanelWattage}>
-                <SelectTrigger className="bg-card border-elec-yellow/20">
-                  <SelectValue placeholder="Choose panel wattage" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-yellow/30">
-                  {panelSpecs.wattage.map((spec) => (
-                    <SelectItem key={spec.value} value={spec.value}>{spec.label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Panel Size</Label>
-              <Select 
-                value={panelLength ? `${panelLength},${panelWidth}` : ""} 
-                onValueChange={(value) => {
-                  const [length, width] = value.split(',');
-                  setPanelLength(length);
-                  setPanelWidth(width);
-                }}
-              >
-                <SelectTrigger className="bg-card border-elec-yellow/20">
-                  <SelectValue placeholder="Choose panel dimensions" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-yellow/30">
-                  {panelSpecs.dimensions.map((spec) => (
-                    <SelectItem key={spec.label} value={`${spec.length},${spec.width}`}>
-                      {spec.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={panelWattage} onValueChange={setPanelWattage}>
+              <MobileSelectTrigger label="Panel Wattage">
+                <MobileSelectValue placeholder="Choose panel wattage" />
+              </MobileSelectTrigger>
+              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                {panelSpecs.wattage.map((spec) => (
+                  <MobileSelectItem key={spec.value} value={spec.value}>{spec.label}</MobileSelectItem>
+                ))}
+              </MobileSelectContent>
+            </MobileSelect>
 
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Location</Label>
-              <Select value={location} onValueChange={setLocation}>
-                <SelectTrigger className="bg-card border-elec-yellow/20">
-                  <SelectValue placeholder="Select location" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-yellow/30">
-                  {Object.entries(locationData).map(([key, data]) => (
-                    <SelectItem key={key} value={key}>{data.name}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect
+              value={panelLength ? `${panelLength},${panelWidth}` : ""}
+              onValueChange={(value) => {
+                const [length, width] = value.split(',');
+                setPanelLength(length);
+                setPanelWidth(width);
+              }}
+            >
+              <MobileSelectTrigger label="Panel Size">
+                <MobileSelectValue placeholder="Choose panel dimensions" />
+              </MobileSelectTrigger>
+              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                {panelSpecs.dimensions.map((spec) => (
+                  <MobileSelectItem key={spec.label} value={`${spec.length},${spec.width}`}>
+                    {spec.label}
+                  </MobileSelectItem>
+                ))}
+              </MobileSelectContent>
+            </MobileSelect>
 
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Custom Panel Wattage (optional)</Label>
-              <MobileInput
-                type="number"
-                value={panelWattage}
-                onChange={(e) => setPanelWattage(e.target.value)}
-                placeholder="Or enter custom wattage"
-                unit="W"
-              />
-            </div>
+            <MobileSelect value={location} onValueChange={setLocation}>
+              <MobileSelectTrigger label="Location">
+                <MobileSelectValue placeholder="Select location" />
+              </MobileSelectTrigger>
+              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                {Object.entries(locationData).map(([key, data]) => (
+                  <MobileSelectItem key={key} value={key}>{data.name}</MobileSelectItem>
+                ))}
+              </MobileSelectContent>
+            </MobileSelect>
+
+            <MobileInput
+              label="Custom Panel Wattage (optional)"
+              type="number"
+              value={panelWattage}
+              onChange={(e) => setPanelWattage(e.target.value)}
+              placeholder="Or enter custom wattage"
+              unit="W"
+            />
 
             <MobileInput
               label="Available Length"
@@ -395,29 +383,26 @@ const SolarArrayCalculator = () => {
             <MobileAccordionItem value="panel-specs">
               <MobileAccordionTrigger>Panel Electrical Specifications</MobileAccordionTrigger>
               <MobileAccordionContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Panel Electrical Preset</Label>
-                  <Select 
-                    value=""
-                    onValueChange={(value) => {
-                      const spec = panelSpecs.electrical.find(s => s.label === value);
-                      if (spec) {
-                        setPanelVoc(spec.voc);
-                        setPanelVmpp(spec.vmpp);
-                        setPanelImpp(spec.impp);
-                      }
-                    }}
-                  >
-                    <SelectTrigger className="bg-card border-elec-yellow/20">
-                      <SelectValue placeholder="Choose panel electrical specs" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-yellow/30">
-                      {panelSpecs.electrical.map((spec) => (
-                        <SelectItem key={spec.label} value={spec.label}>{spec.label}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <MobileSelect
+                  value=""
+                  onValueChange={(value) => {
+                    const spec = panelSpecs.electrical.find(s => s.label === value);
+                    if (spec) {
+                      setPanelVoc(spec.voc);
+                      setPanelVmpp(spec.vmpp);
+                      setPanelImpp(spec.impp);
+                    }
+                  }}
+                >
+                  <MobileSelectTrigger label="Panel Electrical Preset">
+                    <MobileSelectValue placeholder="Choose panel electrical specs" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {panelSpecs.electrical.map((spec) => (
+                      <MobileSelectItem key={spec.label} value={spec.label}>{spec.label}</MobileSelectItem>
+                    ))}
+                  </MobileSelectContent>
+                </MobileSelect>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <MobileInput
@@ -499,30 +484,27 @@ const SolarArrayCalculator = () => {
             <MobileAccordionItem value="inverter-specs">
               <MobileAccordionTrigger>Inverter Specifications</MobileAccordionTrigger>
               <MobileAccordionContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Inverter Preset</Label>
-                  <Select 
-                    value=""
-                    onValueChange={(value) => {
-                      const spec = inverterSpecs.find(s => s.label === value);
-                      if (spec) {
-                        setInverterMaxVdc(spec.maxVdc);
-                        setInverterMinVdc(spec.minVdc);
-                        setInverterMaxIdc(spec.maxIdc);
-                        setInverterNominalPower(spec.power);
-                      }
-                    }}
-                  >
-                    <SelectTrigger className="bg-card border-elec-yellow/20">
-                      <SelectValue placeholder="Choose inverter specifications" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-yellow/30">
-                      {inverterSpecs.map((spec) => (
-                        <SelectItem key={spec.label} value={spec.label}>{spec.label}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <MobileSelect
+                  value=""
+                  onValueChange={(value) => {
+                    const spec = inverterSpecs.find(s => s.label === value);
+                    if (spec) {
+                      setInverterMaxVdc(spec.maxVdc);
+                      setInverterMinVdc(spec.minVdc);
+                      setInverterMaxIdc(spec.maxIdc);
+                      setInverterNominalPower(spec.power);
+                    }
+                  }}
+                >
+                  <MobileSelectTrigger label="Inverter Preset">
+                    <MobileSelectValue placeholder="Choose inverter specifications" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {inverterSpecs.map((spec) => (
+                      <MobileSelectItem key={spec.label} value={spec.label}>{spec.label}</MobileSelectItem>
+                    ))}
+                  </MobileSelectContent>
+                </MobileSelect>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <MobileInput
@@ -572,28 +554,25 @@ const SolarArrayCalculator = () => {
             <MobileAccordionItem value="system-losses">
               <MobileAccordionTrigger>System Losses & Cabling</MobileAccordionTrigger>
               <MobileAccordionContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Cable Run Preset</Label>
-                  <Select 
-                    value=""
-                    onValueChange={(value) => {
-                      const spec = cableSpecs.find(s => s.label === value);
-                      if (spec) {
-                        setDcCableLoss(spec.dcLoss);
-                        setAcCableLoss(spec.acLoss);
-                      }
-                    }}
-                  >
-                    <SelectTrigger className="bg-card border-elec-yellow/20">
-                      <SelectValue placeholder="Choose cable run length preset" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-yellow/30">
-                      {cableSpecs.map((spec) => (
-                        <SelectItem key={spec.label} value={spec.label}>{spec.label}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <MobileSelect
+                  value=""
+                  onValueChange={(value) => {
+                    const spec = cableSpecs.find(s => s.label === value);
+                    if (spec) {
+                      setDcCableLoss(spec.dcLoss);
+                      setAcCableLoss(spec.acLoss);
+                    }
+                  }}
+                >
+                  <MobileSelectTrigger label="Cable Run Preset">
+                    <MobileSelectValue placeholder="Choose cable run length preset" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {cableSpecs.map((spec) => (
+                      <MobileSelectItem key={spec.label} value={spec.label}>{spec.label}</MobileSelectItem>
+                    ))}
+                  </MobileSelectContent>
+                </MobileSelect>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <MobileInput

@@ -179,7 +179,7 @@ export const PDFTemplateManager = () => {
   return (
     <Card className="p-4 space-y-4 bg-elec-card border-border/30">
       <div>
-        <h3 className="text-sm font-semibold text-white mb-1">PDF Template Manager</h3>
+        <h3 className="text-sm font-semibold text-foreground mb-1">PDF Template Manager</h3>
         <p className="text-xs text-muted-foreground">
           Upload your branded templates (PDF, Word, Excel). The AI will fill them with project data.
         </p>
@@ -198,7 +198,7 @@ export const PDFTemplateManager = () => {
                 <div className="flex items-center gap-2">
                   <span className="text-lg">{templateType.icon}</span>
                   <div>
-                    <p className="text-xs font-medium text-white">{templateType.label}</p>
+                    <p className="text-xs font-medium text-foreground">{templateType.label}</p>
                     {existingTemplate && (
                       <Badge variant="outline" className="text-xs mt-1 bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow">
                         Template set
@@ -216,7 +216,7 @@ export const PDFTemplateManager = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => window.open(existingTemplate.file_url!, '_blank')}
-                        className="flex-1 text-xs h-7 bg-white/5 hover:bg-white/10 border-white/10 text-white"
+                        className="flex-1 text-xs h-7 bg-white/5 hover:bg-white/10 border-white/10 text-foreground"
                       >
                         <Download className="h-3 w-3 mr-1" />
                         View
@@ -232,13 +232,13 @@ export const PDFTemplateManager = () => {
                             setTemplateId(existingTemplate.pdf_monkey_template_id || "");
                             setFieldMapping(existingTemplate.field_mapping || {});
                           }}
-                          className="flex-1 text-xs h-7 bg-white/5 hover:bg-white/10 border-white/10 text-white"
+                          className="flex-1 text-xs h-7 bg-white/5 hover:bg-white/10 border-white/10 text-foreground"
                         >
                           <Settings className="h-3 w-3 mr-1" />
                           Configure
                         </Button>
                       </DialogTrigger>
-                      <DialogContent className="bg-elec-dark border-border/30 text-white">
+                      <DialogContent className="bg-elec-dark border-border/30 text-foreground">
                         <DialogHeader>
                           <DialogTitle>Configure PDF Template</DialogTitle>
                           <DialogDescription className="text-muted-foreground">
@@ -253,7 +253,7 @@ export const PDFTemplateManager = () => {
                               value={templateId}
                               onChange={(e) => setTemplateId(e.target.value)}
                               placeholder="e.g., YOUR_TEMPLATE_ID"
-                              className="bg-elec-card border-border/30 text-white"
+                              className="bg-elec-card border-border/30 text-foreground"
                             />
                           </div>
                           <div className="space-y-2">
@@ -265,7 +265,7 @@ export const PDFTemplateManager = () => {
                                   setFieldMapping(JSON.parse(e.target.value));
                                 } catch {}
                               }}
-                              className="w-full h-32 p-2 rounded-md bg-elec-card border border-border/30 text-white text-xs font-mono"
+                              className="w-full h-32 p-2 rounded-md bg-elec-card border border-border/30 text-foreground text-xs font-mono"
                               placeholder='{"templateField": "dataPath"}'
                             />
                             <p className="text-xs text-muted-foreground">
@@ -310,7 +310,7 @@ export const PDFTemplateManager = () => {
                     size="sm"
                     onClick={() => document.getElementById(`upload-${templateType.key}`)?.click()}
                     disabled={uploading === templateType.key}
-                    className="w-full text-xs h-7 bg-white/5 hover:bg-white/10 border-white/10 text-white"
+                    className="w-full text-xs h-7 bg-white/5 hover:bg-white/10 border-white/10 text-foreground"
                   >
                     {uploading === templateType.key ? (
                       <>

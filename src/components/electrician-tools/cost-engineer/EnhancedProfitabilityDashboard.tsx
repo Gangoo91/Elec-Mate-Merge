@@ -78,13 +78,13 @@ export const EnhancedProfitabilityDashboard = ({
         {/* Break-Even Summary */}
         <div className="p-4 rounded-lg bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/30">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-medium text-white">Break-Even Point</span>
+            <span className="text-sm font-medium text-foreground">Break-Even Point</span>
             <CheckCircle2 className="h-5 w-5 text-amber-500" />
           </div>
           <p className="text-3xl font-bold text-foreground mb-1">
             £{breakEvenPoint.toFixed(2)}
           </p>
-          <p className="text-xs text-white">
+          <p className="text-xs text-foreground">
             Minimum price to cover all costs (no profit)
           </p>
         </div>
@@ -99,7 +99,7 @@ export const EnhancedProfitabilityDashboard = ({
           <TabsContent value="breakdown" className="space-y-3 mt-4">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-white">Direct Materials</span>
+                <span className="text-sm text-foreground">Direct Materials</span>
                 <span className="font-semibold">£{directCosts.materials.toFixed(2)}</span>
               </div>
               <Progress 
@@ -110,7 +110,7 @@ export const EnhancedProfitabilityDashboard = ({
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-white">Direct Labour</span>
+                <span className="text-sm text-foreground">Direct Labour</span>
                 <span className="font-semibold">£{directCosts.labour.toFixed(2)}</span>
               </div>
               <Progress 
@@ -121,7 +121,7 @@ export const EnhancedProfitabilityDashboard = ({
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-white">Job Overheads</span>
+                <span className="text-sm text-foreground">Job Overheads</span>
                 <span className="font-semibold">£{jobOverheads.total.toFixed(2)}</span>
               </div>
               <Progress 
@@ -138,22 +138,22 @@ export const EnhancedProfitabilityDashboard = ({
 
           <TabsContent value="overheads" className="space-y-2 mt-4">
             <div className="flex items-center justify-between px-3 py-2 rounded bg-muted/30">
-              <span className="text-sm text-white">Business Overheads</span>
+              <span className="text-sm text-foreground">Business Overheads</span>
               <span className="font-medium">£{jobOverheads.allocatedBusinessOverheads.toFixed(2)}</span>
             </div>
             <div className="flex items-center justify-between px-3 py-2 rounded bg-muted/30">
-              <span className="text-sm text-white">Travel & Fuel</span>
+              <span className="text-sm text-foreground">Travel & Fuel</span>
               <span className="font-medium">£{jobOverheads.travel.toFixed(2)}</span>
             </div>
             {jobOverheads.permitsAndFees > 0 && (
               <div className="flex items-center justify-between px-3 py-2 rounded bg-muted/30">
-                <span className="text-sm text-white">Permits & Fees</span>
+                <span className="text-sm text-foreground">Permits & Fees</span>
                 <span className="font-medium">£{jobOverheads.permitsAndFees.toFixed(2)}</span>
               </div>
             )}
             {jobOverheads.wasteDisposal > 0 && (
               <div className="flex items-center justify-between px-3 py-2 rounded bg-muted/30">
-                <span className="text-sm text-white">Waste Disposal</span>
+                <span className="text-sm text-foreground">Waste Disposal</span>
                 <span className="font-medium">£{jobOverheads.wasteDisposal.toFixed(2)}</span>
               </div>
             )}
@@ -197,11 +197,11 @@ export const EnhancedProfitabilityDashboard = ({
                 
                 <div className="grid grid-cols-2 gap-2 text-sm mt-3">
                   <div className="flex flex-col">
-                    <span className="text-xs text-white">Your Profit</span>
+                    <span className="text-xs text-foreground">Your Profit</span>
                     <span className="font-semibold text-foreground">£{tier.margin.toFixed(2)}</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-xs text-white">Margin</span>
+                    <span className="text-xs text-foreground">Margin</span>
                     <span className="font-semibold text-foreground">{tier.marginPercent.toFixed(1)}%</span>
                   </div>
                 </div>

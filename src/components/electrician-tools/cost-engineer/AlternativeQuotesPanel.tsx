@@ -91,11 +91,11 @@ const AlternativeQuotesPanel = ({ alternatives }: AlternativeQuotesPanelProps) =
                 `}
               >
                 {isRecommended && (
-                  <Badge className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1">
+                  <Badge className="absolute -top-2 -right-2 bg-green-500 text-foreground text-xs px-2 py-1">
                     <Check className="h-3 w-3" />
                   </Badge>
                 )}
-                <Icon className={`h-6 w-6 ${isSelected ? color : 'text-white'}`} />
+                <Icon className={`h-6 w-6 ${isSelected ? color : 'text-foreground'}`} />
                 <div className="text-center">
                   <p className={`mobile-small-text font-bold ${isSelected ? 'text-foreground' : 'text-elec-light'}`}>
                     {label}

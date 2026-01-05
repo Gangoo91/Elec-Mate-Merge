@@ -22,6 +22,10 @@ const OhmsLawCalculator = () => {
     formula?: string;
     currentAt230V?: number;
     protectionGuidance?: string;
+    // For "How It Worked Out" section
+    inputValues?: { V?: number; I?: number; R?: number; P?: number };
+    calculationSteps?: string[];
+    formulaType?: string;
   } | null>(null);
 
   const validateInputs = () => {
@@ -46,7 +50,7 @@ const OhmsLawCalculator = () => {
 
   const calculateOhmsLaw = () => {
     if (!validateInputs()) return;
-    
+
     const V = parseFloat(voltage) || 0;
     const I = parseFloat(current) || 0;
     const R = parseFloat(resistance) || 0;
@@ -57,37 +61,130 @@ const OhmsLawCalculator = () => {
     let calculatedR = R;
     let calculatedP = P;
     let formula = "";
+    let formulaType = "";
+    const calculationSteps: string[] = [];
+    const inputValues: { V?: number; I?: number; R?: number; P?: number } = {};
 
     // Calculate missing values based on what we have
     if (V > 0 && I > 0) {
+      inputValues.V = V;
+      inputValues.I = I;
       calculatedR = V / I;
       calculatedP = V * I;
       formula = "Using V and I: R = V/I, P = V×I";
+      formulaType = "V_I";
+      calculationSteps.push(
+        `Step 1: Calculate Resistance (R)`,
+        `R = V ÷ I`,
+        `R = ${V} ÷ ${I}`,
+        `R = ${calculatedR.toFixed(4)} Ω`,
+        ``,
+        `Step 2: Calculate Power (P)`,
+        `P = V × I`,
+        `P = ${V} × ${I}`,
+        `P = ${calculatedP.toFixed(2)} W`
+      );
     } else if (V > 0 && R > 0) {
+      inputValues.V = V;
+      inputValues.R = R;
       calculatedI = V / R;
       calculatedP = (V * V) / R;
       formula = "Using V and R: I = V/R, P = V²/R";
+      formulaType = "V_R";
+      calculationSteps.push(
+        `Step 1: Calculate Current (I)`,
+        `I = V ÷ R`,
+        `I = ${V} ÷ ${R}`,
+        `I = ${calculatedI.toFixed(4)} A`,
+        ``,
+        `Step 2: Calculate Power (P)`,
+        `P = V² ÷ R`,
+        `P = ${V}² ÷ ${R}`,
+        `P = ${(V * V).toFixed(2)} ÷ ${R}`,
+        `P = ${calculatedP.toFixed(2)} W`
+      );
     } else if (V > 0 && P > 0) {
+      inputValues.V = V;
+      inputValues.P = P;
       calculatedI = P / V;
       calculatedR = (V * V) / P;
       formula = "Using V and P: I = P/V, R = V²/P";
+      formulaType = "V_P";
+      calculationSteps.push(
+        `Step 1: Calculate Current (I)`,
+        `I = P ÷ V`,
+        `I = ${P} ÷ ${V}`,
+        `I = ${calculatedI.toFixed(4)} A`,
+        ``,
+        `Step 2: Calculate Resistance (R)`,
+        `R = V² ÷ P`,
+        `R = ${V}² ÷ ${P}`,
+        `R = ${(V * V).toFixed(2)} ÷ ${P}`,
+        `R = ${calculatedR.toFixed(4)} Ω`
+      );
     } else if (I > 0 && R > 0) {
+      inputValues.I = I;
+      inputValues.R = R;
       calculatedV = I * R;
       calculatedP = I * I * R;
       formula = "Using I and R: V = I×R, P = I²×R";
+      formulaType = "I_R";
+      calculationSteps.push(
+        `Step 1: Calculate Voltage (V)`,
+        `V = I × R`,
+        `V = ${I} × ${R}`,
+        `V = ${calculatedV.toFixed(2)} V`,
+        ``,
+        `Step 2: Calculate Power (P)`,
+        `P = I² × R`,
+        `P = ${I}² × ${R}`,
+        `P = ${(I * I).toFixed(4)} × ${R}`,
+        `P = ${calculatedP.toFixed(2)} W`
+      );
     } else if (I > 0 && P > 0) {
+      inputValues.I = I;
+      inputValues.P = P;
       calculatedV = P / I;
       calculatedR = P / (I * I);
       formula = "Using I and P: V = P/I, R = P/I²";
+      formulaType = "I_P";
+      calculationSteps.push(
+        `Step 1: Calculate Voltage (V)`,
+        `V = P ÷ I`,
+        `V = ${P} ÷ ${I}`,
+        `V = ${calculatedV.toFixed(2)} V`,
+        ``,
+        `Step 2: Calculate Resistance (R)`,
+        `R = P ÷ I²`,
+        `R = ${P} ÷ ${I}²`,
+        `R = ${P} ÷ ${(I * I).toFixed(4)}`,
+        `R = ${calculatedR.toFixed(4)} Ω`
+      );
     } else if (R > 0 && P > 0) {
+      inputValues.R = R;
+      inputValues.P = P;
       calculatedI = Math.sqrt(P / R);
       calculatedV = Math.sqrt(P * R);
       formula = "Using R and P: I = √(P/R), V = √(P×R)";
+      formulaType = "R_P";
+      calculationSteps.push(
+        `Step 1: Calculate Current (I)`,
+        `I = √(P ÷ R)`,
+        `I = √(${P} ÷ ${R})`,
+        `I = √${(P / R).toFixed(4)}`,
+        `I = ${calculatedI.toFixed(4)} A`,
+        ``,
+        `Step 2: Calculate Voltage (V)`,
+        `V = √(P × R)`,
+        `V = √(${P} × ${R})`,
+        `V = √${(P * R).toFixed(2)}`,
+        `V = ${calculatedV.toFixed(2)} V`
+      );
     }
 
     // Calculate current at 230V for reference
     const currentAt230V = calculatedR > 0 ? 230 / calculatedR : 0;
-    
+
     // Protection guidance
     let protectionGuidance = "";
     if (calculatedI > 32) {
@@ -107,7 +204,10 @@ const OhmsLawCalculator = () => {
       power: calculatedP,
       formula: formula,
       currentAt230V: currentAt230V,
-      protectionGuidance: protectionGuidance
+      protectionGuidance: protectionGuidance,
+      inputValues,
+      calculationSteps,
+      formulaType
     });
     setErrors({});
   };
@@ -284,7 +384,84 @@ const OhmsLawCalculator = () => {
                 )}
               </CardContent>
             </Card>
-            
+
+            {/* How It Worked Out - Step-by-step calculation breakdown */}
+            {result.calculationSteps && result.calculationSteps.length > 0 && (
+              <Card className="border-purple-500/30 bg-purple-500/5">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-purple-300 text-base flex items-center gap-2">
+                    <Calculator className="h-4 w-4" />
+                    How It Worked Out
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4 text-sm">
+                  {/* Input Values Summary */}
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Your input values:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {result.inputValues?.V && (
+                        <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
+                          V = {result.inputValues.V} V
+                        </Badge>
+                      )}
+                      {result.inputValues?.I && (
+                        <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+                          I = {result.inputValues.I} A
+                        </Badge>
+                      )}
+                      {result.inputValues?.R && (
+                        <Badge className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30">
+                          R = {result.inputValues.R} Ω
+                        </Badge>
+                      )}
+                      {result.inputValues?.P && (
+                        <Badge className="bg-red-500/20 text-red-300 border-red-500/30">
+                          P = {result.inputValues.P} W
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Calculation Steps */}
+                  <div className="font-mono text-xs bg-purple-500/10 rounded-lg p-4 border border-purple-500/20 space-y-1">
+                    {result.calculationSteps.map((step, index) => (
+                      <p
+                        key={index}
+                        className={`text-purple-200 ${
+                          step.startsWith('Step') ? 'text-purple-300 font-semibold mt-2' :
+                          step.includes('=') && !step.includes('÷') && !step.includes('×') && !step.includes('√') && step.split('=').length === 2 && index === result.calculationSteps!.length - 1 || (step.includes('Ω') || step.includes('V') || step.includes('A') || step.includes('W')) && step.includes('=') && !step.includes('÷') && !step.includes('×') && step.split('=')[1].trim().match(/^[\d.]+\s*[ΩVAW]$/)
+                            ? 'text-green-300 font-bold' : ''
+                        }`}
+                      >
+                        {step === '' ? <br /> : step}
+                      </p>
+                    ))}
+                  </div>
+
+                  {/* Ohm's Law Triangle Reference */}
+                  <div className="border-t border-purple-500/20 pt-3 mt-3">
+                    <p className="text-xs text-purple-300/70 mb-2">
+                      <strong>Ohm's Law Triangle:</strong> Cover the value you want to find
+                    </p>
+                    <div className="grid grid-cols-2 gap-2 text-xs text-purple-200">
+                      <div className="p-2 bg-purple-500/10 rounded border border-purple-500/20">
+                        <span className="font-mono">V = I × R</span> (Voltage)
+                      </div>
+                      <div className="p-2 bg-purple-500/10 rounded border border-purple-500/20">
+                        <span className="font-mono">I = V ÷ R</span> (Current)
+                      </div>
+                      <div className="p-2 bg-purple-500/10 rounded border border-purple-500/20">
+                        <span className="font-mono">R = V ÷ I</span> (Resistance)
+                      </div>
+                      <div className="p-2 bg-purple-500/10 rounded border border-purple-500/20">
+                        <span className="font-mono">P = V × I</span> (Power)
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* What this means panel */}
             <Card className="border-blue-500/30 bg-blue-500/5">
               <CardHeader>

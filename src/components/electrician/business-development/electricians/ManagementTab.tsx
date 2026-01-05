@@ -244,7 +244,7 @@ const ManagementTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -262,7 +262,7 @@ const ManagementTab = () => {
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{framework.area}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{framework.area}</h4>
                       <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {framework.timeline}
                       </Badge>
@@ -313,7 +313,7 @@ const ManagementTab = () => {
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex items-center gap-2">
                     {area.icon}
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{area.area}</h4>
+                    <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{area.area}</h4>
                   </div>
                   <ul className="space-y-1">
                     {area.practices.map((practice, practiceIndex) => (
@@ -418,7 +418,7 @@ const ManagementTab = () => {
                   onClick={() => window.open('https://www.hse.gov.uk/managing/', '_blank')}
                 >
                   <Shield className="h-4 w-4 mr-3 text-green-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>HSE Management Guide</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>HSE Management Guide</div>
                 </Button>
 
                 <Button 
@@ -427,7 +427,7 @@ const ManagementTab = () => {
                   onClick={() => window.open('https://www.cipd.co.uk/knowledge/fundamentals/people/performance', '_blank')}
                 >
                   <Target className="h-4 w-4 mr-3 text-blue-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>Performance Management</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>Performance Management</div>
                 </Button>
 
                 <Button 
@@ -436,7 +436,7 @@ const ManagementTab = () => {
                   onClick={() => window.open('https://www.gov.uk/disciplinary-procedures-and-action', '_blank')}
                 >
                   <FileText className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>Disciplinary Procedures</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>Disciplinary Procedures</div>
                 </Button>
               </div>
 

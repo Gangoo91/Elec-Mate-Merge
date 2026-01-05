@@ -1,0 +1,120 @@
+import { ArrowLeft, Shield, Zap, Clock, CircuitBoard, Gauge, Flame, TrendingUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Link } from 'react-router-dom';
+
+const BS7671Module4 = () => {
+  const sections = [
+    {
+      id: 1,
+      title: "Electric Shock Protection Methods (SELV, PELV, ADS, etc.)",
+      icon: Shield,
+      description: "Safety systems and methods for preventing electric shock in installations"
+    },
+    {
+      id: 2,
+      title: "Overcurrent Protection and Protective Device Selection", 
+      icon: Zap,
+      description: "Choosing and applying appropriate overcurrent protective devices"
+    },
+    {
+      id: 3,
+      title: "Disconnection Times and Fault Path Integrity",
+      icon: Clock,
+      description: "Understanding fault clearance requirements and protective conductor integrity"
+    },
+    {
+      id: 4,
+      title: "Residual Current Devices (RCDs) – Use and Placement",
+      icon: CircuitBoard,
+      description: "Application and positioning of RCDs including bidirectional protection requirements"
+    },
+    {
+      id: 5,
+      title: "Surge Protection Devices (SPDs) – When and Why",
+      icon: Gauge,
+      description: "Understanding surge protection requirements and device selection criteria"
+    },
+    {
+      id: 6,
+      title: "Arc Fault Detection Devices (AFDDs) – New Requirements",
+      icon: Flame,
+      description: "Latest requirements for arc fault detection including bidirectional systems"
+    },
+    {
+      id: 7,
+      title: "Bidirectional Protection Systems (Amendment 3)",
+      icon: TrendingUp,
+      description: "Comprehensive bidirectional protection requirements for renewable energy systems"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="px-8 pt-8 pb-12">
+        <Link to="../bs7671-course">
+          <Button
+            variant="ghost"
+            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to BS7671 Course
+          </Button>
+        </Link>
+        
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-2xl font-bold text-white mb-4">
+              Module 4: Protection for Safety
+            </h1>
+            <p className="text-xl text-white mb-6">
+              Comprehensive safety protection methods and protective device requirements
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-fr">
+            {sections.map((section) => (
+              <Link 
+                key={section.id} 
+                to={`../bs7671-module-4-section-${section.id}`}
+                className="h-full"
+              >
+                <Card className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col">
+                  <CardContent className="text-center space-y-3 pb-2 p-4 flex-shrink-0">
+                    {/* Icon */}
+                    <div className="flex justify-center">
+                      <section.icon className="h-8 w-8 text-yellow-400" strokeWidth={1.5} />
+                    </div>
+                    
+                    {/* Section Badge */}
+                    <div className="flex justify-center">
+                      <Badge 
+                        variant="secondary" 
+                        className="bg-yellow-400/10 text-yellow-400 hover:bg-yellow-400/10 font-bold text-xs px-3 py-1 border-0"
+                      >
+                        Section {section.id}
+                      </Badge>
+                    </div>
+                    
+                    {/* Title */}
+                    <h3 className="text-lg font-bold text-white leading-tight group-hover:text-yellow-400 transition-colors duration-300">
+                      {section.title}
+                    </h3>
+                    
+                    {/* Description */}
+                    <p className="text-white text-xs leading-relaxed">
+                      {section.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BS7671Module4;

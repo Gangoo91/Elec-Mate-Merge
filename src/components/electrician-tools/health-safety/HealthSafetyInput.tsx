@@ -194,7 +194,7 @@ export const HealthSafetyInput = ({ onGenerate, isProcessing }: HealthSafetyInpu
           type="submit"
           size="lg"
           disabled={!prompt.trim() || isProcessing}
-          className="w-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white h-12 sm:h-14 touch-manipulation text-base sm:text-lg"
+          className="w-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-foreground h-12 sm:h-14 touch-manipulation text-base sm:text-lg"
         >
           {isProcessing ? (
             <>

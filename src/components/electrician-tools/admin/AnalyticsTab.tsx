@@ -109,7 +109,7 @@ const AnalyticsTab = () => {
                       {metric.change}
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-white mb-1">{metric.value}</div>
+                  <div className="text-2xl font-bold text-foreground mb-1">{metric.value}</div>
                   <p className="text-xs text-muted-foreground">{metric.title}</p>
                   <p className="text-xs text-muted-foreground">{metric.period}</p>
                 </CardContent>
@@ -129,7 +129,7 @@ const AnalyticsTab = () => {
               {performanceAreas.map((area, index) => (
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-white text-sm">{area.area}</h4>
+                    <h4 className="font-medium text-foreground text-sm">{area.area}</h4>
                     <Badge variant="outline" className={getStatusColor(area.status)}>
                       {area.status}
                     </Badge>
@@ -155,7 +155,7 @@ const AnalyticsTab = () => {
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h4 className="font-medium text-white text-sm">{tool.name}</h4>
+                      <h4 className="font-medium text-foreground text-sm">{tool.name}</h4>
                       <p className="text-xs text-muted-foreground">{tool.description}</p>
                     </div>
                     <Link to={tool.link}>
@@ -179,17 +179,17 @@ const AnalyticsTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
             <div className="border border-orange-500/20 rounded-lg p-4">
               <Clock className="h-8 w-8 text-orange-400 mx-auto mb-2" />
-              <h4 className="font-semibold text-white mb-1">Time Tracking</h4>
+              <h4 className="font-semibold text-foreground mb-1">Time Tracking</h4>
               <p className="text-xs text-muted-foreground">Monitor job duration and improve efficiency</p>
             </div>
             <div className="border border-orange-500/20 rounded-lg p-4">
               <TrendingUp className="h-8 w-8 text-orange-400 mx-auto mb-2" />
-              <h4 className="font-semibold text-white mb-1">Growth Analysis</h4>
+              <h4 className="font-semibold text-foreground mb-1">Growth Analysis</h4>
               <p className="text-xs text-muted-foreground">Track business growth and identify opportunities</p>
             </div>
             <div className="border border-orange-500/20 rounded-lg p-4">
               <BarChart4 className="h-8 w-8 text-orange-400 mx-auto mb-2" />
-              <h4 className="font-semibold text-white mb-1">Custom Reports</h4>
+              <h4 className="font-semibold text-foreground mb-1">Custom Reports</h4>
               <p className="text-xs text-muted-foreground">Generate detailed business reports</p>
             </div>
           </div>

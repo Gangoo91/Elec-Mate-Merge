@@ -302,7 +302,7 @@ const PreventionTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -319,7 +319,7 @@ const PreventionTab = () => {
               {riskAssessmentTools.map((tool, index) => (
                 <div key={index} className="space-y-3">
                   <div className="flex flex-col gap-2">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{tool.tool}</h4>
+                    <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{tool.tool}</h4>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{tool.description}</p>
                   </div>
 
@@ -361,7 +361,7 @@ const PreventionTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {contractBestPractices.map((section, index) => (
                 <div key={index} className="space-y-3">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-purple-500/20 pb-1`}>
+                  <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'} border-b border-purple-500/20 pb-1`}>
                     {section.section}
                   </h4>
                   
@@ -392,7 +392,7 @@ const PreventionTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {clientScreeningProcedures.map((category, index) => (
                 <div key={index} className="space-y-3">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
+                  <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
                   
                   <div className="grid md:grid-cols-2 gap-3">
                     <div>
@@ -437,7 +437,7 @@ const PreventionTab = () => {
                 <div key={index} className="space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{structure.jobType}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{structure.jobType}</h4>
                       <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {structure.structure}
                       </Badge>
@@ -471,7 +471,7 @@ const PreventionTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {earlyWarningSystem.map((system, index) => (
                 <div key={index} className="space-y-3">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{system.indicator}</h4>
+                  <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{system.indicator}</h4>
                   
                   <div>
                     <h5 className={`font-medium text-amber-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Warning Signs</h5>
@@ -508,7 +508,7 @@ const PreventionTab = () => {
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2">
                       {strategy.icon}
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
                     </div>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{strategy.description}</p>
                   </div>
@@ -542,7 +542,7 @@ const PreventionTab = () => {
                 <div key={index} className="space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{flag.warning}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{flag.warning}</h4>
                       <Badge variant="outline" className={`text-red-300 border-red-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {flag.category}
                       </Badge>

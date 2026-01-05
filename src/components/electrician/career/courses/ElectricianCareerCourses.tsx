@@ -228,7 +228,7 @@ const ElectricianCareerCourses = () => {
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-                <h3 className="text-xl font-semibold text-white px-4">
+                <h3 className="text-xl font-semibold text-foreground px-4">
                   {featuredCourses.length > 0 ? 'More Courses' : 'All Courses'}
                 </h3>
                 <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
@@ -264,29 +264,29 @@ const ElectricianCareerCourses = () => {
               </div>
               <div className="space-y-4">
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Skills Bootcamp
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     Free skills training for adults. Available for digital, technical, and green skills including electrical courses.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Adult Education Budget
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     Funding for Level 2 qualifications and below for adults without these qualifications. Covers essential electrical training.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Construction Industry Levy
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     CITB funding available for electrical installation training. Grants up to £2,000 for eligible courses.
                   </p>
                 </div>
@@ -301,29 +301,29 @@ const ElectricianCareerCourses = () => {
               </div>
               <div className="space-y-4">
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Employer Funding
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     Many employers fund training for employees. Check with your employer about professional development budgets.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Professional Body Grants
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     IET, ECA, and NECA offer grants and bursaries for electrical training and continuing professional development.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Tax Relief & Deductions
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     Self-employed electricians can claim training costs as business expenses. Employed staff may qualify for tax relief.
                   </p>
                 </div>

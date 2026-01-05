@@ -6,7 +6,8 @@ import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { ResultCard } from "@/components/ui/result-card";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
-import { Calculator, Car, Zap, AlertTriangle, CheckCircle, Info, PoundSterling, Clock } from "lucide-react";
+import { Calculator, Car, Zap, AlertTriangle, CheckCircle, Info, PoundSterling, Clock, Lightbulb } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 import { calculateEVCharging, type EVCalculationInputs } from "@/lib/ev-calculations";
 import { CHARGER_TYPES, EARTHING_SYSTEMS, DIVERSITY_FACTORS, INSTALLATION_LOCATIONS } from "@/lib/ev-constants";
 import { formatCurrency } from "@/lib/format";
@@ -341,6 +342,90 @@ const EVChargingCalculator = () => {
               status="info"
             />
           </div>
+
+          {/* How It Worked Out */}
+          <Card className="border-purple-500/20 bg-purple-500/10">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-purple-200">
+                <Calculator className="h-5 w-5 text-purple-400" />
+                How It Worked Out
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm font-mono">
+              <div className="text-purple-300">
+                <div className="text-xs text-purple-400 mb-1">Step 1: Energy Required</div>
+                <div>E = Battery × (Target% - Current%) ÷ 100</div>
+                <div>E = {inputs.batteryCapacity}kWh × ({inputs.targetCharge}% - {inputs.currentCharge}%) ÷ 100</div>
+                <div>E = <span className="text-purple-200 font-bold">{results.energyRequired.toFixed(2)} kWh</span></div>
+              </div>
+
+              <Separator className="bg-purple-500/20" />
+
+              <div className="text-purple-300">
+                <div className="text-xs text-purple-400 mb-1">Step 2: Charging Time</div>
+                <div>t = E ÷ (Power × Efficiency)</div>
+                <div>t = {results.energyRequired.toFixed(2)}kWh ÷ ({CHARGER_TYPES[inputs.chargerType].power}kW × {CHARGER_TYPES[inputs.chargerType].efficiency})</div>
+                <div>t = <span className="text-purple-200 font-bold">{results.chargingTime.toFixed(2)} hours</span></div>
+              </div>
+
+              <Separator className="bg-purple-500/20" />
+
+              <div className="text-purple-300">
+                <div className="text-xs text-purple-400 mb-1">Step 3: Design Current</div>
+                {CHARGER_TYPES[inputs.chargerType].phases === 3 ? (
+                  <>
+                    <div>I = (P × 1000) ÷ (√3 × V)</div>
+                    <div>I = ({results.peakDemand.toFixed(2)} × 1000) ÷ (1.732 × {CHARGER_TYPES[inputs.chargerType].voltage}V)</div>
+                  </>
+                ) : (
+                  <>
+                    <div>I = (P × 1000) ÷ V</div>
+                    <div>I = ({results.peakDemand.toFixed(2)} × 1000) ÷ {CHARGER_TYPES[inputs.chargerType].voltage}V</div>
+                  </>
+                )}
+                <div>I = <span className="text-purple-200 font-bold">{results.designCurrent.toFixed(1)}A</span></div>
+              </div>
+
+              <Separator className="bg-purple-500/20" />
+
+              <div className="text-purple-300">
+                <div className="text-xs text-purple-400 mb-1">Step 4: Circuit Current (with safety factors)</div>
+                <div>Ic = I × SafetyFactor × DiversityFactor</div>
+                <div>Ic = {results.designCurrent.toFixed(1)}A × 1.25 × {inputs.diversityFactor}</div>
+                <div>Ic = <span className="text-purple-200 font-bold">{results.circuitCurrent.toFixed(1)}A</span> (derated for {inputs.ambientTemp}°C)</div>
+              </div>
+
+              <Separator className="bg-purple-500/20" />
+
+              <div className="text-purple-300">
+                <div className="text-xs text-purple-400 mb-1">Step 5: Voltage Drop</div>
+                {CHARGER_TYPES[inputs.chargerType].phases === 3 ? (
+                  <div>ΔV = (√3 × I × L × z) ÷ 1000</div>
+                ) : (
+                  <div>ΔV = (2 × I × L × z) ÷ 1000</div>
+                )}
+                <div>ΔV = <span className="text-purple-200 font-bold">{results.voltageDrop.toFixed(1)}V</span> ({((results.voltageDrop / CHARGER_TYPES[inputs.chargerType].voltage) * 100).toFixed(1)}%)</div>
+              </div>
+
+              <Separator className="bg-purple-500/20" />
+
+              <div className="text-purple-300">
+                <div className="text-xs text-purple-400 mb-1">Step 6: Earth Fault Loop Impedance</div>
+                <div>Zs = Ze + (cable impedance × L / 1000)</div>
+                <div>Zs = <span className="text-purple-200 font-bold">{results.actualZs.toFixed(2)}Ω</span></div>
+                <div className="text-xs mt-1">Max allowed for {inputs.supplyType.toUpperCase()}: {results.maxZs}Ω</div>
+              </div>
+
+              <Separator className="bg-purple-500/20" />
+
+              <div className="text-purple-300">
+                <div className="text-xs text-purple-400 mb-1">Step 7: Cost Estimate</div>
+                <div>Cost = Energy × Rate</div>
+                <div>Cost = {results.energyRequired.toFixed(2)}kWh × £{inputs.electricityRate}/kWh</div>
+                <div>Cost = <span className="text-purple-200 font-bold">{formatCurrency(results.cost)}</span></div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Review Summary */}
           <Card className="border-elec-yellow/20 bg-elec-card">

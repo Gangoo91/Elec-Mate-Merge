@@ -70,7 +70,7 @@ const InteractiveToolsTab = () => {
             <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
               <div className="text-center space-y-2">
                 {metric.icon}
-                <div className="text-xs font-medium text-white">{metric.metric}</div>
+                <div className="text-xs font-medium text-foreground">{metric.metric}</div>
                 <div className="text-sm font-bold text-elec-yellow">{metric.value}</div>
                 <div className="text-xs text-green-300">{metric.change}</div>
               </div>
@@ -151,7 +151,7 @@ const InteractiveToolsTab = () => {
               <div key={index} className="p-4 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg">
                 <div className="flex items-center gap-3 mb-3">
                   {metric.icon}
-                  <div className="text-sm font-medium text-white">{metric.metric}</div>
+                  <div className="text-sm font-medium text-foreground">{metric.metric}</div>
                 </div>
                 <div className="text-2xl font-bold text-elec-yellow mb-1">{metric.value}</div>
                 <div className="text-sm text-green-300 mb-2">{metric.change}</div>
@@ -164,15 +164,15 @@ const InteractiveToolsTab = () => {
             <h4 className="font-semibold text-blue-300 mb-2">2025 Market Context</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
               <div className="text-center">
-                <div className="font-bold text-white">£47k</div>
+                <div className="font-bold text-foreground">£47k</div>
                 <div className="text-blue-200">Average qualified electrician salary</div>
               </div>
               <div className="text-center">
-                <div className="font-bold text-white">68%</div>
+                <div className="font-bold text-foreground">68%</div>
                 <div className="text-blue-200">Current apprentice completion rate</div>
               </div>
               <div className="text-center">
-                <div className="font-bold text-white">15,000</div>
+                <div className="font-bold text-foreground">15,000</div>
                 <div className="text-blue-200">New electricians needed annually (UK)</div>
               </div>
             </div>
@@ -203,7 +203,7 @@ const InteractiveToolsTab = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <h4 className="font-semibold text-white mb-3">Financial Benefits</h4>
+              <h4 className="font-semibold text-foreground mb-3">Financial Benefits</h4>
               <ul className="space-y-2 text-sm text-green-200">
                 <li>• 287% ROI over 5 years</li>
                 <li>• £15,000 saved vs. external recruitment</li>
@@ -214,7 +214,7 @@ const InteractiveToolsTab = () => {
             </div>
             
             <div>
-              <h4 className="font-semibold text-white mb-3">Operational Advantages</h4>
+              <h4 className="font-semibold text-foreground mb-3">Operational Advantages</h4>
               <ul className="space-y-2 text-sm text-green-200">
                 <li>• Skills tailored to business needs</li>
                 <li>• Higher employee retention rates</li>
@@ -225,7 +225,7 @@ const InteractiveToolsTab = () => {
             </div>
             
             <div>
-              <h4 className="font-semibold text-white mb-3">Strategic Impact</h4>
+              <h4 className="font-semibold text-foreground mb-3">Strategic Impact</h4>
               <ul className="space-y-2 text-sm text-green-200">
                 <li>• Future workforce development</li>
                 <li>• Competitive advantage in recruitment</li>

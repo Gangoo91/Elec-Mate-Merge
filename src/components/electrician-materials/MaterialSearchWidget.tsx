@@ -51,7 +51,7 @@ const MaterialSearchWidget = () => {
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
-        <CardTitle className="text-xl flex items-center gap-2 text-white">
+        <CardTitle className="text-xl flex items-center gap-2 text-foreground">
           <Search className="h-5 w-5 text-elec-yellow" />
           Advanced Material Search
         </CardTitle>
@@ -78,7 +78,7 @@ const MaterialSearchWidget = () => {
 
         {/* Quick Searches */}
         <div className="space-y-3">
-          <h4 className="text-sm font-medium text-white flex items-center gap-2">
+          <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
             <Zap className="h-4 w-4" />
             Quick Searches:
           </h4>
@@ -87,7 +87,7 @@ const MaterialSearchWidget = () => {
               <Badge 
                 key={search}
                 variant="outline" 
-                className="cursor-pointer hover:bg-elec-yellow/20 border-elec-yellow/30 text-white hover:text-elec-yellow transition-colors"
+                className="cursor-pointer hover:bg-elec-yellow/20 border-elec-yellow/30 text-foreground hover:text-elec-yellow transition-colors"
                 onClick={() => setSearchQuery(search)}
               >
                 {search}
@@ -98,7 +98,7 @@ const MaterialSearchWidget = () => {
 
         {/* Filters */}
         <div className="space-y-3">
-          <h4 className="text-sm font-medium text-white flex items-center gap-2">
+          <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
             <Filter className="h-4 w-4" />
             Filters:
           </h4>
@@ -110,7 +110,7 @@ const MaterialSearchWidget = () => {
                 className={`cursor-pointer transition-all text-center justify-center py-2 ${
                   selectedFilters.includes(filter.id)
                     ? "bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                    : "hover:bg-elec-yellow/20 border-elec-yellow/30 text-white hover:text-elec-yellow"
+                    : "hover:bg-elec-yellow/20 border-elec-yellow/30 text-foreground hover:text-elec-yellow"
                 }`}
                 onClick={() => toggleFilter(filter.id)}
               >
@@ -123,7 +123,7 @@ const MaterialSearchWidget = () => {
 
         {/* Location Filter */}
         <div className="space-y-3">
-          <h4 className="text-sm font-medium text-white flex items-center gap-2">
+          <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
             <Building2 className="h-4 w-4" />
             Preferred Location:
           </h4>
@@ -135,7 +135,7 @@ const MaterialSearchWidget = () => {
                 className={`cursor-pointer transition-colors ${
                   selectedLocation === location
                     ? "bg-elec-yellow text-black"
-                    : "hover:bg-elec-yellow/20 border-elec-yellow/30 text-white hover:text-elec-yellow"
+                    : "hover:bg-elec-yellow/20 border-elec-yellow/30 text-foreground hover:text-elec-yellow"
                 }`}
                 onClick={() => setSelectedLocation(selectedLocation === location ? "" : location)}
               >

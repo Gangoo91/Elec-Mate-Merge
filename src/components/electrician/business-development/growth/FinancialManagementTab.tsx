@@ -374,7 +374,7 @@ export const FinancialManagementTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -396,7 +396,7 @@ export const FinancialManagementTab = () => {
               <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{system.title}</h4>
+                    <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{system.title}</h4>
                     <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                       {system.timeline}
                     </Badge>
@@ -407,15 +407,15 @@ export const FinancialManagementTab = () => {
                 <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
                   <div className="flex items-center gap-2">
                     <DollarSign className="h-4 w-4 text-muted-foreground" />
-                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.investment}</span>
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{system.investment}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.roi}</span>
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{system.roi}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Shield className="h-4 w-4 text-muted-foreground" />
-                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.riskLevel}</span>
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{system.riskLevel}</span>
                   </div>
                 </div>
 
@@ -436,7 +436,7 @@ export const FinancialManagementTab = () => {
                   <div className="space-y-3">
                     {system.implementation.map((phase, phaseIndex) => (
                       <div key={phaseIndex} className="space-y-2">
-                        <h6 className={`font-medium text-white ${isMobile ? 'text-xs' : 'text-sm'}`}>{phase.phase}</h6>
+                        <h6 className={`font-medium text-foreground ${isMobile ? 'text-xs' : 'text-sm'}`}>{phase.phase}</h6>
                         <ul className="space-y-1">
                           {phase.tasks.map((task, taskIndex) => (
                             <li key={taskIndex} className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
@@ -472,7 +472,7 @@ export const FinancialManagementTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Industry Financial Benchmarks</h4>
+              <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>Industry Financial Benchmarks</h4>
               <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
                 Key financial performance indicators for electrical contracting businesses
               </p>
@@ -504,7 +504,7 @@ export const FinancialManagementTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Strategic Financial Growth</h4>
+              <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>Strategic Financial Growth</h4>
               <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
                 Financial strategies to drive sustainable business growth and profitability
               </p>
@@ -544,7 +544,7 @@ export const FinancialManagementTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Risk Management Framework</h4>
+              <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>Risk Management Framework</h4>
               <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
                 Comprehensive approach to identifying and managing financial risks in electrical contracting
               </p>

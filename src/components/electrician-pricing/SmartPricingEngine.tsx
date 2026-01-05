@@ -365,15 +365,15 @@ const SmartPricingEngine = () => {
               
               <div className="mt-4 grid grid-cols-3 gap-4 text-sm">
                 <div>
-                  <div className="font-medium text-white">Base Price</div>
+                  <div className="font-medium text-foreground">Base Price</div>
                   <div className="text-muted-foreground">£{recommendation.basePrice.toFixed(0)}</div>
                 </div>
                 <div>
-                  <div className="font-medium text-white">Profit Margin</div>
+                  <div className="font-medium text-foreground">Profit Margin</div>
                   <div className="text-muted-foreground">{recommendation.profitMargin.toFixed(1)}%</div>
                 </div>
                 <div>
-                  <div className="font-medium text-white">Market Range</div>
+                  <div className="font-medium text-foreground">Market Range</div>
                   <div className="text-muted-foreground">
                     £{recommendation.competitiveRange.min.toFixed(0)} - £{recommendation.competitiveRange.max.toFixed(0)}
                   </div>

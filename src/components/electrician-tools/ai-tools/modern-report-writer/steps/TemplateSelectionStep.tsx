@@ -129,7 +129,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
             <Sparkles className="h-6 w-6 text-elec-yellow" />
-            <h2 className="text-2xl font-bold text-white">General Condition Reports</h2>
+            <h2 className="text-2xl font-bold text-foreground">General Condition Reports</h2>
           </div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Select from our collection of BS 7671:2018 compliant electrical certificates and condition reports.
@@ -145,7 +145,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
               placeholder="Search templates..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-elec-dark border border-primary/30 text-white"
+              className="pl-10 bg-elec-dark border border-primary/30 text-foreground"
             />
           </div>
 
@@ -154,7 +154,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                className="w-full sm:w-64 justify-between bg-elec-dark border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+                className="w-full sm:w-64 justify-between bg-elec-dark border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
               >
                 <div className="flex items-center gap-2">
                   {selectedCategoryData && (
@@ -185,7 +185,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
                     className={`cursor-pointer transition-colors ${
                       isSelected 
                         ? 'bg-elec-yellow/10 text-elec-yellow focus:bg-elec-yellow/20 focus:text-elec-yellow' 
-                        : 'text-white hover:bg-elec-yellow/5 hover:text-white focus:bg-elec-yellow/5 focus:text-white'
+                        : 'text-foreground hover:bg-elec-yellow/5 hover:text-foreground focus:bg-elec-yellow/5 focus:text-foreground'
                     }`}
                   >
                     <div className="flex items-center justify-between w-full">
@@ -246,12 +246,12 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
                     isSelected ? 'bg-elec-yellow/20' : 'bg-elec-dark'
                   }`}>
                     <Icon className={`h-6 w-6 ${
-                      isSelected ? 'text-elec-yellow' : 'text-white'
+                      isSelected ? 'text-elec-yellow' : 'text-foreground'
                     }`} />
                   </div>
                   <div className="flex-1 min-w-0 mr-4">
                     <h3 className={`font-semibold text-sm leading-tight ${
-                      isSelected ? 'text-elec-yellow' : 'text-white'
+                      isSelected ? 'text-elec-yellow' : 'text-foreground'
                     }`}>
                       {template.name}
                     </h3>
@@ -315,7 +315,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
               <Search className="h-8 w-8 text-muted-foreground" />
             </div>
             <div>
-              <h3 className="text-lg font-medium text-white mb-2">No templates found</h3>
+              <h3 className="text-lg font-medium text-foreground mb-2">No templates found</h3>
               <p className="text-muted-foreground">
                 Try adjusting your search terms or category filters.
               </p>
@@ -326,7 +326,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
                 setSearchTerm("");
                 setSelectedCategory("all");
               }}
-              className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+              className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10"
             >
               Clear filters
             </Button>
@@ -339,7 +339,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
         <Card className="bg-elec-gray border-elec-yellow/30 p-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-center sm:text-left">
-              <h3 className="text-lg font-medium text-white">
+              <h3 className="text-lg font-medium text-foreground">
                 {selectedTemplate.name}
               </h3>
               <p className="text-sm text-muted-foreground">

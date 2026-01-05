@@ -53,7 +53,7 @@ const MaterialsCategoryProductList = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-elec-dark text-white p-6">
+      <div className="min-h-screen bg-elec-dark text-foreground p-6">
         <div className="max-w-7xl mx-auto">
           <Button asChild variant="outline" className="mb-6">
             <Link to="/materials">
@@ -76,7 +76,7 @@ const MaterialsCategoryProductList = () => {
   }
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white p-6">
+    <div className="min-h-screen bg-elec-dark text-foreground p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -130,7 +130,7 @@ const MaterialsCategoryProductList = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="text-sm font-medium text-white mb-2 block">Search Products</label>
+                <label className="text-sm font-medium text-foreground mb-2 block">Search Products</label>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -143,7 +143,7 @@ const MaterialsCategoryProductList = () => {
               </div>
 
               <div>
-                <label className="text-sm font-medium text-white mb-2 block">Sort By</label>
+                <label className="text-sm font-medium text-foreground mb-2 block">Sort By</label>
                 <Select value={sortBy} onValueChange={setSortBy}>
                   <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
                     <SelectValue />
@@ -157,7 +157,7 @@ const MaterialsCategoryProductList = () => {
               </div>
 
               <div>
-                <label className="text-sm font-medium text-white mb-2 block">Supplier</label>
+                <label className="text-sm font-medium text-foreground mb-2 block">Supplier</label>
                 <Select value={supplierFilter} onValueChange={setSupplierFilter}>
                   <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
                     <SelectValue />

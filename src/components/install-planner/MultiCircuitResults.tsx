@@ -174,7 +174,7 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
 
       {/* Individual Circuit Analysis */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-white">Circuit Analysis</h3>
+        <h3 className="text-lg font-semibold text-foreground">Circuit Analysis</h3>
         <div className="space-y-4">
           {circuitAnalysis.map((analysis, index) => {
             // Calculate Zs for each circuit using same logic as single circuit
@@ -221,7 +221,7 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
               <div key={analysis.circuit.id} className="space-y-4">
                 {/* Circuit Header */}
                 <div className="text-center md:text-left border-b border-elec-yellow/20 pb-2">
-                  <h3 className="text-lg font-bold text-white">
+                  <h3 className="text-lg font-bold text-foreground">
                     Circuit {index + 1}: {analysis.circuit.name}
                   </h3>
                   <p className="text-sm text-muted-foreground">

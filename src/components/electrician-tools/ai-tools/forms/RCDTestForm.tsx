@@ -126,10 +126,10 @@ export const RCDTestForm = ({ onFormChange }: RCDTestFormProps) => {
           Test Results
         </h3>
         <div className="space-y-2">
-          <label className="text-sm font-medium text-white">Test Results</label>
+          <label className="text-sm font-medium text-foreground">Test Results</label>
           <Textarea
             placeholder="Enter RCD test results (trip times, test button operation, etc.)"
-            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={watchedValues.testResults || ""}
             onChange={(e) => setValue("testResults", e.target.value)}
           />
@@ -146,10 +146,10 @@ export const RCDTestForm = ({ onFormChange }: RCDTestFormProps) => {
           error={errors.rcdCondition?.message}
         />
         <div className="space-y-2">
-          <label className="text-sm font-medium text-white">Action Required</label>
+          <label className="text-sm font-medium text-foreground">Action Required</label>
           <Textarea
             placeholder="Enter any required actions or recommendations"
-            className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={watchedValues.actionRequired || ""}
             onChange={(e) => setValue("actionRequired", e.target.value)}
           />

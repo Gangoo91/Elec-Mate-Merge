@@ -42,7 +42,7 @@ export const MobileJustificationAccordion = ({ sections }: MobileJustificationAc
             </MobileAccordionTrigger>
             <MobileAccordionContent>
               <div className="p-4 bg-elec-dark/60 border-t border-elec-yellow/10">
-                <p className="text-sm text-white/90 leading-relaxed whitespace-pre-wrap">
+                <p className="text-sm text-foreground/90 leading-relaxed whitespace-pre-wrap">
                   {section.content}
                 </p>
               </div>

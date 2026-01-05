@@ -3,6 +3,7 @@ import { Calculator, Battery, Zap, Clock, AlertTriangle, Settings, Thermometer, 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { MobileInput } from '@/components/ui/mobile-input';
 import { MobileButton } from '@/components/ui/mobile-button';
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from '@/components/ui/mobile-select';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -170,21 +171,18 @@ const BatteryBackupCalculator = () => {
             </div>
 
             {/* Battery Configuration */}
-            <div className="space-y-3">
-              <label className="text-sm font-medium">Battery Chemistry</label>
-              <div className="grid grid-cols-2 gap-2">
+            <MobileSelect value={chemistry} onValueChange={setChemistry}>
+              <MobileSelectTrigger label="Battery Chemistry">
+                <MobileSelectValue placeholder="Select battery chemistry" />
+              </MobileSelectTrigger>
+              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
                 {Object.entries(BATTERY_CHEMISTRIES).map(([key, chem]) => (
-                  <Badge
-                    key={key}
-                    variant={chemistry === key ? 'default' : 'outline'}
-                    className={`cursor-pointer ${chemistry === key ? 'bg-elec-yellow text-black' : ''}`}
-                    onClick={() => setChemistry(key)}
-                  >
+                  <MobileSelectItem key={key} value={key}>
                     {chem.name}
-                  </Badge>
+                  </MobileSelectItem>
                 ))}
-              </div>
-            </div>
+              </MobileSelectContent>
+            </MobileSelect>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <MobileInput
@@ -209,21 +207,18 @@ const BatteryBackupCalculator = () => {
             </div>
 
             {/* Inverter Type */}
-            <div className="space-y-3">
-              <label className="text-sm font-medium">Inverter Type</label>
-              <div className="grid grid-cols-1 gap-2">
+            <MobileSelect value={inverterType} onValueChange={setInverterType}>
+              <MobileSelectTrigger label="Inverter Type">
+                <MobileSelectValue placeholder="Select inverter type" />
+              </MobileSelectTrigger>
+              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
                 {Object.entries(INVERTER_TYPES).map(([key, inv]) => (
-                  <Badge
-                    key={key}
-                    variant={inverterType === key ? 'default' : 'outline'}
-                    className={`cursor-pointer p-3 text-center justify-center h-auto ${inverterType === key ? 'bg-elec-yellow text-black' : ''}`}
-                    onClick={() => setInverterType(key)}
-                  >
+                  <MobileSelectItem key={key} value={key}>
                     {inv.name}
-                  </Badge>
+                  </MobileSelectItem>
                 ))}
-              </div>
-            </div>
+              </MobileSelectContent>
+            </MobileSelect>
 
             {/* Quick Load Presets */}
             <div className="space-y-3">
@@ -262,21 +257,16 @@ const BatteryBackupCalculator = () => {
                   unit="W"
                 />
                 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Priority</label>
-                  <div className="grid grid-cols-1 gap-1">
-                    {(['essential', 'important', 'convenience'] as const).map((priority) => (
-                      <Badge
-                        key={priority}
-                        variant={newLoadPriority === priority ? 'default' : 'outline'}
-                        className={`cursor-pointer text-xs p-2 justify-center ${newLoadPriority === priority ? 'bg-elec-yellow text-black' : ''}`}
-                        onClick={() => setNewLoadPriority(priority)}
-                      >
-                        {priority}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
+                <MobileSelect value={newLoadPriority} onValueChange={(v) => setNewLoadPriority(v as typeof newLoadPriority)}>
+                  <MobileSelectTrigger label="Priority">
+                    <MobileSelectValue placeholder="Select priority" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    <MobileSelectItem value="essential">Essential</MobileSelectItem>
+                    <MobileSelectItem value="important">Important</MobileSelectItem>
+                    <MobileSelectItem value="convenience">Convenience</MobileSelectItem>
+                  </MobileSelectContent>
+                </MobileSelect>
               </div>
 
               <MobileButton 

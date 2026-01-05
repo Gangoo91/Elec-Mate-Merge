@@ -114,7 +114,7 @@ const CommunityPricingSubmission = ({ onSubmissionSuccess }: CommunityPricingSub
           <Users className="h-5 w-5 text-elec-yellow" />
           Submit Real Job Pricing
         </CardTitle>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-foreground/80">
           Help fellow electricians by sharing your actual job pricing data
         </p>
       </CardHeader>
@@ -123,7 +123,7 @@ const CommunityPricingSubmission = ({ onSubmissionSuccess }: CommunityPricingSub
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium text-white mb-2 block">
+              <label className="text-sm font-medium text-foreground mb-2 block">
                 Postcode <span className="text-red-400">*</span>
               </label>
               <PostcodeAutocomplete
@@ -134,7 +134,7 @@ const CommunityPricingSubmission = ({ onSubmissionSuccess }: CommunityPricingSub
             </div>
 
             <div>
-              <label className="text-sm font-medium text-white mb-2 block">
+              <label className="text-sm font-medium text-foreground mb-2 block">
                 Job Type <span className="text-red-400">*</span>
               </label>
               <Select 
@@ -153,7 +153,7 @@ const CommunityPricingSubmission = ({ onSubmissionSuccess }: CommunityPricingSub
             </div>
 
             <div>
-              <label className="text-sm font-medium text-white mb-2 block">
+              <label className="text-sm font-medium text-foreground mb-2 block">
                 Total Price (£) <span className="text-red-400">*</span>
               </label>
               <Input
@@ -166,7 +166,7 @@ const CommunityPricingSubmission = ({ onSubmissionSuccess }: CommunityPricingSub
             </div>
 
             <div>
-              <label className="text-sm font-medium text-white mb-2 block">
+              <label className="text-sm font-medium text-foreground mb-2 block">
                 Completion Date <span className="text-red-400">*</span>
               </label>
               <Input
@@ -177,7 +177,7 @@ const CommunityPricingSubmission = ({ onSubmissionSuccess }: CommunityPricingSub
             </div>
 
             <div>
-              <label className="text-sm font-medium text-white mb-2 block">
+              <label className="text-sm font-medium text-foreground mb-2 block">
                 Materials Cost (£)
               </label>
               <Input
@@ -190,7 +190,7 @@ const CommunityPricingSubmission = ({ onSubmissionSuccess }: CommunityPricingSub
             </div>
 
             <div>
-              <label className="text-sm font-medium text-white mb-2 block">
+              <label className="text-sm font-medium text-foreground mb-2 block">
                 Labour Hours
               </label>
               <Input
@@ -204,7 +204,7 @@ const CommunityPricingSubmission = ({ onSubmissionSuccess }: CommunityPricingSub
           </div>
 
           <div>
-            <label className="text-sm font-medium text-white mb-2 block">
+            <label className="text-sm font-medium text-foreground mb-2 block">
               Job Description
             </label>
             <Textarea
@@ -216,7 +216,7 @@ const CommunityPricingSubmission = ({ onSubmissionSuccess }: CommunityPricingSub
           </div>
 
           <div>
-            <label className="text-sm font-medium text-white mb-2 block">
+            <label className="text-sm font-medium text-foreground mb-2 block">
               Complexity Notes
             </label>
             <Textarea
@@ -254,7 +254,7 @@ const CommunityPricingSubmission = ({ onSubmissionSuccess }: CommunityPricingSub
           </Button>
         </form>
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-sm text-white/60">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-sm text-foreground/60">
           <div className="flex items-center gap-1">
             <CheckCircle className="h-4 w-4" />
             <span>Anonymous</span>

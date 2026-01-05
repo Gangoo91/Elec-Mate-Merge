@@ -73,15 +73,15 @@ const JobOverheadsBreakdown = ({ jobOverheads, directCosts }: JobOverheadsBreakd
       <CardContent className="space-y-4">
         {/* Direct Costs Summary */}
         <div className="p-4 rounded-lg bg-elec-dark/40 border border-elec-yellow/10 space-y-2">
-          <h4 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
+          <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3">
             Direct Costs
           </h4>
           <div className="flex items-center justify-between text-sm">
-            <span className="text-white">Materials</span>
+            <span className="text-foreground">Materials</span>
             <span className="font-semibold text-foreground">{formatCurrency(directCosts.materials)}</span>
           </div>
           <div className="flex items-center justify-between text-sm">
-            <span className="text-white">Labour</span>
+            <span className="text-foreground">Labour</span>
             <span className="font-semibold text-foreground">{formatCurrency(directCosts.labour)}</span>
           </div>
           <div className="flex items-center justify-between pt-2 border-t border-elec-yellow/10">
@@ -92,7 +92,7 @@ const JobOverheadsBreakdown = ({ jobOverheads, directCosts }: JobOverheadsBreakd
 
         {/* Overhead Items */}
         <div className="space-y-2">
-          <h4 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
+          <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3">
             Job Overheads
           </h4>
           {overheadItems.map((item, idx) => {
@@ -108,7 +108,7 @@ const JobOverheadsBreakdown = ({ jobOverheads, directCosts }: JobOverheadsBreakd
                   </div>
                   <div>
                     <p className="font-medium text-sm text-foreground">{item.label}</p>
-                    <p className="text-xs text-white">{item.description}</p>
+                    <p className="text-xs text-foreground">{item.description}</p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -129,8 +129,8 @@ const JobOverheadsBreakdown = ({ jobOverheads, directCosts }: JobOverheadsBreakd
         <div className="p-4 rounded-lg bg-gradient-to-br from-elec-yellow/10 to-transparent border-2 border-elec-yellow/30">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-white mb-1">Total Cost (Direct + Overheads)</p>
-              <p className="text-xs text-white">Before profit margin</p>
+              <p className="text-sm text-foreground mb-1">Total Cost (Direct + Overheads)</p>
+              <p className="text-xs text-foreground">Before profit margin</p>
             </div>
             <div className="text-right">
               <p className="text-2xl font-bold text-foreground">

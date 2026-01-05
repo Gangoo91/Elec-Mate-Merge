@@ -189,8 +189,8 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
           <div className="flex items-center gap-3">
             <FileText className="h-6 w-6 text-elec-yellow" />
             <div>
-              <h3 className="text-lg font-bold text-white">Certificate Pre-Fill Data</h3>
-              <p className="text-sm text-white/70 mt-1">
+              <h3 className="text-lg font-bold text-foreground">Certificate Pre-Fill Data</h3>
+              <p className="text-sm text-foreground/70 mt-1">
                 Ready for EIC/EICR software - {scheduleData.length} test results recorded
               </p>
             </div>
@@ -233,23 +233,23 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
 
           {/* Schedule of Test Results */}
           <div>
-            <h4 className="text-base font-semibold text-white mb-3">Schedule of Test Results</h4>
+            <h4 className="text-base font-semibold text-foreground mb-3">Schedule of Test Results</h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-elec-yellow/20">
-                    <th className="text-left py-2 text-white/70 font-medium">Ref</th>
-                    <th className="text-left py-2 text-white/70 font-medium">Test</th>
-                    <th className="text-left py-2 text-white/70 font-medium">Value</th>
-                    <th className="text-left py-2 text-white/70 font-medium">Result</th>
+                    <th className="text-left py-2 text-foreground/70 font-medium">Ref</th>
+                    <th className="text-left py-2 text-foreground/70 font-medium">Test</th>
+                    <th className="text-left py-2 text-foreground/70 font-medium">Value</th>
+                    <th className="text-left py-2 text-foreground/70 font-medium">Result</th>
                   </tr>
                 </thead>
                 <tbody>
                   {scheduleData.map((row, index) => (
                     <tr key={index} className="border-b border-elec-yellow/10">
-                      <td className="py-2 text-white">{row.ref}</td>
-                      <td className="py-2 text-white">{row.description}</td>
-                      <td className="py-2 text-white">{row.value} {row.unit}</td>
+                      <td className="py-2 text-foreground">{row.ref}</td>
+                      <td className="py-2 text-foreground">{row.description}</td>
+                      <td className="py-2 text-foreground">{row.value} {row.unit}</td>
                       <td className="py-2">
                         <span className={`px-2 py-1 rounded text-xs font-semibold ${
                           row.passed === 'PASS' 
@@ -270,10 +270,10 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
 
           {/* Observations */}
           <div>
-            <h4 className="text-base font-semibold text-white mb-3">Observations</h4>
+            <h4 className="text-base font-semibold text-foreground mb-3">Observations</h4>
             <ul className="space-y-2">
               {observations.map((obs, index) => (
-                <li key={index} className="text-sm text-white/80 bg-background/40 p-3 rounded-lg">
+                <li key={index} className="text-sm text-foreground/80 bg-background/40 p-3 rounded-lg">
                   {index + 1}. {obs}
                 </li>
               ))}
@@ -282,10 +282,10 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
 
           {/* Recommendations */}
           <div>
-            <h4 className="text-base font-semibold text-white mb-3">Recommendations</h4>
+            <h4 className="text-base font-semibold text-foreground mb-3">Recommendations</h4>
             <ul className="space-y-2">
               {recommendations.map((rec, index) => (
-                <li key={index} className="text-sm text-white/80 bg-background/40 p-3 rounded-lg">
+                <li key={index} className="text-sm text-foreground/80 bg-background/40 p-3 rounded-lg">
                   {index + 1}. {rec}
                 </li>
               ))}
@@ -294,9 +294,9 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
 
           {/* Next Inspection */}
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-            <p className="text-sm text-white/70 mb-1">Next Inspection Recommended By:</p>
+            <p className="text-sm text-foreground/70 mb-1">Next Inspection Recommended By:</p>
             <p className="text-lg font-bold text-elec-yellow">{nextInspectionDate}</p>
-            <p className="text-xs text-white/60 mt-2">
+            <p className="text-xs text-foreground/60 mt-2">
               Based on BS 7671:2018+A2:2024 requirements for {progress.installationType} installations
             </p>
           </div>

@@ -1,43 +1,61 @@
+export type QuizMode = 'practice' | 'test' | 'study';
 
-import { QuizQuestion } from "@/data/unitQuizzes";
+export interface QuizQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+  category: string;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  regulation?: string; // BS7671 regulation reference
+  imageUrl?: string; // Optional image for visual questions
+}
 
-export interface QuizProps {
-  unitCode: string;
+export interface QuizAnswer {
+  questionId: string;
+  selectedAnswer: number;
+  isCorrect: boolean;
+  timeSpent: number;
+  viewedFeedback?: boolean;
+  bookmarked?: boolean;
+}
+
+export interface QuizSession {
+  id: string;
+  assessmentId: string;
   questions: QuizQuestion[];
-  onQuizComplete: (score: number, totalQuestions: number) => void;
-  questionCount?: number; // Default is now 30 in the UnitQuiz component
-  timeLimit?: number;
-  currentTime?: number;
-  isSubmitted?: boolean;
-}
-
-export interface QuizNavigationProps {
-  questionsCount: number;
-  activeQuestion: number;
-  userAnswers: (number | null)[];
-  onNavigate: (index: number) => void;
-}
-
-export interface QuestionProps {
-  question: QuizQuestion;
-  selectedAnswer: number | null;
-  isAnswered: boolean;
-  onAnswer: (index: number) => void;
-}
-
-export interface QuizResultsProps {
+  answers: QuizAnswer[];
+  startTime: Date;
+  endTime?: Date;
   score: number;
   totalQuestions: number;
-  questions: QuizQuestion[];
-  userAnswers: (number | null)[];
-  onRetry: () => void;
+  isCompleted: boolean;
+  mode: QuizMode;
+  allowReview?: boolean;
+  showFeedback?: boolean;
+  pausedAt?: Date;
 }
 
-export interface QuizControlsProps {
-  isAnswered: boolean;
-  isLastQuestion: boolean;
-  answeredCount: number;
+export interface Assessment {
+  id: string;
+  title: string;
+  description: string;
+  questions: number;
+  duration: number;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  score: number | null;
+  category: string;
+  color: string;
+  regulation?: string; // BS7671 regulation reference
+}
+
+export interface QuizResult {
+  score: number;
   totalQuestions: number;
-  onNext: () => void;
-  onSubmit: () => void;
+  percentage: number;
+  timeSpent: number;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  categoryBreakdown: Record<string, { correct: number; total: number }>;
 }

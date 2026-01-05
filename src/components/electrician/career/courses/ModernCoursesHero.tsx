@@ -33,12 +33,12 @@ const ModernCoursesHero = ({
               <div className="p-3 rounded-full bg-elec-yellow/20">
                 <Zap className="h-8 w-8 text-elec-yellow" />
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
                 Courses Hub
               </h1>
             </div>
             
-            <p className="text-base sm:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg text-foreground/90 max-w-3xl mx-auto leading-relaxed">
               Discover the latest electrical courses and certifications to enhance your career. 
               From essential updates to emerging technologies, find training that powers your professional growth.
             </p>
@@ -51,32 +51,32 @@ const ModernCoursesHero = ({
                 <div className="flex items-center justify-center mb-2">
                   <BookOpen className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-white">{analytics.totalCourses}</div>
-                <div className="text-xs sm:text-sm text-white/80">Courses</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">{analytics.totalCourses}</div>
+                <div className="text-xs sm:text-sm text-foreground/80">Courses</div>
               </div>
 
               <div className="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm border border-white/10">
                 <div className="flex items-center justify-center mb-2">
                   <Users className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-white">{analytics.totalProviders}</div>
-                <div className="text-xs sm:text-sm text-white/80">Providers</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">{analytics.totalProviders}</div>
+                <div className="text-xs sm:text-sm text-foreground/80">Providers</div>
               </div>
 
               <div className="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm border border-white/10">
                 <div className="flex items-center justify-center mb-2">
                   <Star className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-white">{analytics.averageRating.toFixed(1)}</div>
-                <div className="text-xs sm:text-sm text-white/80">Avg Rating</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">{analytics.averageRating.toFixed(1)}</div>
+                <div className="text-xs sm:text-sm text-foreground/80">Avg Rating</div>
               </div>
 
               <div className="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm border border-white/10">
                 <div className="flex items-center justify-center mb-2">
                   <TrendingUp className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-white">{analytics.highDemandCourses}</div>
-                <div className="text-xs sm:text-sm text-white/80">High Demand</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">{analytics.highDemandCourses}</div>
+                <div className="text-xs sm:text-sm text-foreground/80">High Demand</div>
               </div>
             </div>
           )}
@@ -117,7 +117,7 @@ const ModernCoursesHero = ({
 
           {/* Last Updated Info */}
           {lastUpdated && (
-            <div className="flex items-center justify-center gap-2 text-sm text-white/70">
+            <div className="flex items-center justify-center gap-2 text-sm text-foreground/70">
               <Clock className="h-4 w-4" />
               <span>Last updated: {new Date(lastUpdated).toLocaleString()}</span>
             </div>
@@ -126,13 +126,13 @@ const ModernCoursesHero = ({
           {/* Top Categories Preview */}
           {analytics?.topCategories && analytics.topCategories.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-lg font-semibold text-white text-center">Popular Categories</h3>
+              <h3 className="text-lg font-semibold text-foreground text-center">Popular Categories</h3>
               <div className="flex flex-wrap items-center justify-center gap-2">
                 {analytics.topCategories.slice(0, 6).map((category, index) => (
                   <Badge
                     key={category.name}
                     variant="secondary"
-                    className="bg-white/10 text-white border-white/20 hover:bg-elec-yellow/20 hover:text-elec-yellow transition-colors cursor-pointer"
+                    className="bg-white/10 text-foreground border-white/20 hover:bg-elec-yellow/20 hover:text-elec-yellow transition-colors cursor-pointer"
                   >
                     {category.name} ({category.count})
                   </Badge>

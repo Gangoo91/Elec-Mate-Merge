@@ -197,7 +197,7 @@ const GrowthTab = () => {
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <Target className="h-5 w-5 text-elec-yellow" />
             Growth Phase Strategy
           </CardTitle>
@@ -212,7 +212,7 @@ const GrowthTab = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h5 className="font-medium text-white mb-2">Key Strategies:</h5>
+                  <h5 className="font-medium text-foreground mb-2">Key Strategies:</h5>
                   <ul className="space-y-1">
                     {phase.strategies.map((strategy, strategyIndex) => (
                       <li key={strategyIndex} className="flex items-start gap-2 text-sm">
@@ -224,7 +224,7 @@ const GrowthTab = () => {
                 </div>
                 
                 <div>
-                  <h5 className="font-medium text-white mb-2">Success Targets:</h5>
+                  <h5 className="font-medium text-foreground mb-2">Success Targets:</h5>
                   <ul className="space-y-1">
                     {phase.targets.map((target, targetIndex) => (
                       <li key={targetIndex} className="flex items-start gap-2 text-sm">
@@ -243,7 +243,7 @@ const GrowthTab = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <MessageSquare className="h-5 w-5 text-elec-yellow" />
               Marketing Channels
             </CardTitle>
@@ -252,7 +252,7 @@ const GrowthTab = () => {
             {marketingChannels.map((channel, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-semibold text-white">{channel.channel}</h4>
+                  <h4 className="font-semibold text-foreground">{channel.channel}</h4>
                   <Badge className="bg-green-500/20 text-green-400">{channel.cost}</Badge>
                 </div>
                 <p className="text-sm text-muted-foreground mb-3">{channel.description}</p>
@@ -275,7 +275,7 @@ const GrowthTab = () => {
 
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <Zap className="h-5 w-5 text-elec-yellow" />
               Specialisation Opportunities
             </CardTitle>
@@ -284,7 +284,7 @@ const GrowthTab = () => {
             {specialisationAreas.map((area, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-semibold text-white">{area.area}</h4>
+                  <h4 className="font-semibold text-foreground">{area.area}</h4>
                   <Badge className={getGrowthColor(area.growth_potential)}>
                     {area.growth_potential}
                   </Badge>
@@ -304,7 +304,7 @@ const GrowthTab = () => {
                 <div className="space-y-2">
                   <div className="text-xs text-blue-400">Market: {area.market_demand}</div>
                   <div>
-                    <span className="text-xs font-medium text-white">Key Skills:</span>
+                    <span className="text-xs font-medium text-foreground">Key Skills:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {area.skills_needed.map((skill, skillIndex) => (
                         <Badge key={skillIndex} variant="outline" className="text-xs">
@@ -322,7 +322,7 @@ const GrowthTab = () => {
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <Users className="h-5 w-5 text-elec-yellow" />
             Team Building Strategy
           </CardTitle>
@@ -343,7 +343,7 @@ const GrowthTab = () => {
                   </div>
                   
                   <div>
-                    <div className="text-xs font-medium text-white mb-1">Benefits:</div>
+                    <div className="text-xs font-medium text-foreground mb-1">Benefits:</div>
                     <ul className="space-y-1">
                       {member.benefits.map((benefit, benefitIndex) => (
                         <li key={benefitIndex} className="flex items-start gap-1 text-xs">
@@ -355,7 +355,7 @@ const GrowthTab = () => {
                   </div>
                   
                   <div>
-                    <div className="text-xs font-medium text-white mb-1">Requirements:</div>
+                    <div className="text-xs font-medium text-foreground mb-1">Requirements:</div>
                     <ul className="space-y-1">
                       {member.requirements.map((req, reqIndex) => (
                         <li key={reqIndex} className="flex items-start gap-1 text-xs">

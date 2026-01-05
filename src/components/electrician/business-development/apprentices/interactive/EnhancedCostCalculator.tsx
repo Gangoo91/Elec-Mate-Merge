@@ -250,7 +250,7 @@ const EnhancedCostCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Row 1 - Basic Information */}
             <div className="space-y-3">
-              <Label htmlFor="age-range" className="text-white font-medium text-base">
+              <Label htmlFor="age-range" className="text-foreground font-medium text-base">
                 Apprentice Age Range
               </Label>
               <Select value={apprenticeAge} onValueChange={setApprenticeAge}>
@@ -266,7 +266,7 @@ const EnhancedCostCalculator = () => {
             </div>
 
             <div className="space-y-3">
-              <Label htmlFor="business-size" className="text-white font-medium text-base">
+              <Label htmlFor="business-size" className="text-foreground font-medium text-base">
                 Business Size
               </Label>
               <Select value={businessSize} onValueChange={setBusinessSize}>
@@ -282,7 +282,7 @@ const EnhancedCostCalculator = () => {
             </div>
 
             <div className="space-y-3">
-              <Label htmlFor="region" className="text-white font-medium text-base">
+              <Label htmlFor="region" className="text-foreground font-medium text-base">
                 Region
               </Label>
               <Select value={region} onValueChange={setRegion}>
@@ -305,7 +305,7 @@ const EnhancedCostCalculator = () => {
 
             {/* Row 2 - Training Details */}
             <div className="space-y-3">
-              <Label htmlFor="apprenticeship-level" className="text-white font-medium text-base">
+              <Label htmlFor="apprenticeship-level" className="text-foreground font-medium text-base">
                 Apprenticeship Level
               </Label>
               <Select value={apprenticeshipLevel} onValueChange={setApprenticeshipLevel}>
@@ -321,7 +321,7 @@ const EnhancedCostCalculator = () => {
             </div>
 
             <div className="space-y-3">
-              <Label htmlFor="training-provider" className="text-white font-medium text-base">
+              <Label htmlFor="training-provider" className="text-foreground font-medium text-base">
                 Training Provider Type
               </Label>
               <Select value={trainingProvider} onValueChange={setTrainingProvider}>
@@ -338,7 +338,7 @@ const EnhancedCostCalculator = () => {
             </div>
 
             <div className="space-y-3">
-              <Label htmlFor="sector" className="text-white font-medium text-base">
+              <Label htmlFor="sector" className="text-foreground font-medium text-base">
                 Sector Specialisation
               </Label>
               <Select value={sectorSpecialisation} onValueChange={setSectorSpecialisation}>
@@ -357,7 +357,7 @@ const EnhancedCostCalculator = () => {
 
             {/* Row 3 - Experience & Working Pattern */}
             <div className="space-y-3">
-              <Label htmlFor="experience" className="text-white font-medium text-base">
+              <Label htmlFor="experience" className="text-foreground font-medium text-base">
                 Previous Experience
               </Label>
               <Select value={previousExperience} onValueChange={setPreviousExperience}>
@@ -374,7 +374,7 @@ const EnhancedCostCalculator = () => {
             </div>
 
             <div className="space-y-3">
-              <Label htmlFor="working-pattern" className="text-white font-medium text-base">
+              <Label htmlFor="working-pattern" className="text-foreground font-medium text-base">
                 Working Pattern
               </Label>
               <Select value={workingPattern} onValueChange={setWorkingPattern}>
@@ -391,7 +391,7 @@ const EnhancedCostCalculator = () => {
             </div>
 
             <div className="space-y-3">
-              <Label htmlFor="apprentices" className="text-white font-medium text-base">
+              <Label htmlFor="apprentices" className="text-foreground font-medium text-base">
                 Number of Apprentices
               </Label>
               <Input
@@ -408,7 +408,7 @@ const EnhancedCostCalculator = () => {
 
           {/* Additional Benefits Section */}
           <div className="space-y-4">
-            <Label className="text-white font-medium text-base">Additional Benefits (Optional)</Label>
+            <Label className="text-foreground font-medium text-base">Additional Benefits (Optional)</Label>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {Object.entries(benefitsCosts).map(([benefit, cost]) => (
                 <div key={benefit} className="flex items-center space-x-2">
@@ -482,15 +482,15 @@ const EnhancedCostCalculator = () => {
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-purple-200">Regional Multiplier:</span>
-                      <span className="text-white font-medium">{calculatedResults.multiplier}x</span>
+                      <span className="text-foreground font-medium">{calculatedResults.multiplier}x</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-purple-200">Sector Demand:</span>
-                      <span className="text-white font-medium">{calculatedResults.sectorInfo.demandFactor}x</span>
+                      <span className="text-foreground font-medium">{calculatedResults.sectorInfo.demandFactor}x</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-purple-200">Hourly Rate:</span>
-                      <span className="text-white font-medium">£{calculatedResults.baseWage.toFixed(2)}</span>
+                      <span className="text-foreground font-medium">£{calculatedResults.baseWage.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
@@ -504,15 +504,15 @@ const EnhancedCostCalculator = () => {
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-amber-200">Level:</span>
-                      <span className="text-white font-medium">{calculatedResults.levelInfo.qualification}</span>
+                      <span className="text-foreground font-medium">{calculatedResults.levelInfo.qualification}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-amber-200">Supervision Cost:</span>
-                      <span className="text-white font-medium">£{calculatedResults.supervisionCost}</span>
+                      <span className="text-foreground font-medium">£{calculatedResults.supervisionCost}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-amber-200">Benefits Cost:</span>
-                      <span className="text-white font-medium">£{calculatedResults.benefitsCost}</span>
+                      <span className="text-foreground font-medium">£{calculatedResults.benefitsCost}</span>
                     </div>
                   </div>
                 </div>
@@ -520,7 +520,7 @@ const EnhancedCostCalculator = () => {
 
               {/* Enhanced Cash Flow Analysis */}
               <div className="space-y-3">
-                <h4 className="font-semibold text-white">Enhanced Cash Flow Analysis</h4>
+                <h4 className="font-semibold text-foreground">Enhanced Cash Flow Analysis</h4>
                 {calculatedResults.cashFlow.map((year, index) => (
                   <div key={index} className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/10">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -558,7 +558,7 @@ const EnhancedCostCalculator = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
                         <span className="text-green-200">Total Investment:</span>
-                        <div className="text-white font-bold">£{multiple.totalCost.toLocaleString()}</div>
+                        <div className="text-foreground font-bold">£{multiple.totalCost.toLocaleString()}</div>
                       </div>
                       <div>
                         <span className="text-green-200">Bulk Discount:</span>

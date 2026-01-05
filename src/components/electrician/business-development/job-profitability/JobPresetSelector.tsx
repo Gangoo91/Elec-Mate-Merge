@@ -31,7 +31,7 @@ export function JobPresetSelector({ onPresetSelected }: JobPresetSelectorProps) 
   return (
     <Card className="border-elec-yellow/20 bg-elec-card">
       <CardHeader>
-        <CardTitle className="text-white flex items-center gap-2">
+        <CardTitle className="text-foreground flex items-center gap-2">
           <Briefcase className="h-5 w-5 text-elec-yellow" />
           Job Type Presets
         </CardTitle>
@@ -58,7 +58,7 @@ export function JobPresetSelector({ onPresetSelected }: JobPresetSelectorProps) 
         {selectedPresetData && (
           <div className="bg-elec-dark/50 rounded-lg p-4 space-y-3">
             <div className="text-center">
-              <h4 className="text-white font-medium">{selectedPresetData.name}</h4>
+              <h4 className="text-foreground font-medium">{selectedPresetData.name}</h4>
             </div>
             <p className="text-sm text-elec-light/70">{selectedPresetData.description}</p>
             
@@ -67,26 +67,26 @@ export function JobPresetSelector({ onPresetSelected }: JobPresetSelectorProps) 
                 <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
                   <Clock className="h-3 w-3" />
                 </div>
-                <div className="text-white font-medium">{selectedPresetData.defaults.labourHours}h</div>
+                <div className="text-foreground font-medium">{selectedPresetData.defaults.labourHours}h</div>
               </div>
               <div className="text-center py-2">
                 <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
                   <PoundSterling className="h-3 w-3" />
                 </div>
-                <div className="text-white font-medium">£{selectedPresetData.defaults.hourlyRate}/h</div>
+                <div className="text-foreground font-medium">£{selectedPresetData.defaults.hourlyRate}/h</div>
               </div>
               <div className="text-center py-2">
                 <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
                   <TrendingUp className="h-3 w-3" />
                 </div>
-                <div className="text-white font-medium">{selectedPresetData.defaults.overheadPercentage}%</div>
+                <div className="text-foreground font-medium">{selectedPresetData.defaults.overheadPercentage}%</div>
                 <div className="text-xs text-elec-light/70">overhead</div>
               </div>
               <div className="text-center py-2">
                 <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
                   <TrendingUp className="h-3 w-3" />
                 </div>
-                <div className="text-white font-medium">{selectedPresetData.defaults.desiredProfitMargin}%</div>
+                <div className="text-foreground font-medium">{selectedPresetData.defaults.desiredProfitMargin}%</div>
                 <div className="text-xs text-elec-light/70">profit</div>
               </div>
             </div>

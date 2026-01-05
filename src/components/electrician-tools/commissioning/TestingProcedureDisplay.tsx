@@ -54,7 +54,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
       {procedure.visualInspection && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-semibold text-white flex items-center gap-2">
+            <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
               <CheckCircle2 className="h-6 w-6 text-purple-400" />
               Visual Inspection
             </h3>
@@ -72,7 +72,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                 <AlertTriangle className="h-5 w-5" />
                 Safety Notes
               </div>
-              <ul className="space-y-2 text-sm text-white leading-relaxed">
+              <ul className="space-y-2 text-sm text-foreground leading-relaxed">
                 {procedure.visualInspection.safetyNotes.map((note, i) => (
                   <li key={i} className="text-left">• {note}</li>
                 ))}
@@ -97,8 +97,8 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                       className="mt-1 min-w-[24px] min-h-[24px] touch-manipulation"
                     />
                     <label htmlFor={checkboxId} className="flex-1 cursor-pointer text-base leading-relaxed">
-                      <div className="font-semibold text-white mb-1">{checkpoint.item}</div>
-                      <div className="text-sm text-white/90">{checkpoint.requirement}</div>
+                      <div className="font-semibold text-foreground mb-1">{checkpoint.item}</div>
+                      <div className="text-sm text-foreground/90">{checkpoint.requirement}</div>
                       {checkpoint.reference && (
                         <div className="text-sm text-purple-400 mt-1">{checkpoint.reference}</div>
                       )}
@@ -113,7 +113,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
       {/* Dead Tests Section - ALL TESTS EXPANDED */}
       {procedure.deadTests && procedure.deadTests.length > 0 && (
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-white flex items-center gap-2">
+          <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
             <Zap className="h-6 w-6 text-red-400" />
             Dead Tests (Isolation Required)
           </h3>
@@ -125,8 +125,8 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                 <div className="flex items-start gap-3">
                   <Badge variant="outline" className="shrink-0 text-base px-3 py-1">{index + 1}</Badge>
                   <div className="flex-1">
-                    <div className="font-semibold text-white text-base mb-1">{test.testName}</div>
-                    <div className="text-sm text-white/90">{test.regulation}</div>
+                    <div className="font-semibold text-foreground text-base mb-1">{test.testName}</div>
+                    <div className="text-sm text-foreground/90">{test.regulation}</div>
                   </div>
                 </div>
               </div>
@@ -145,13 +145,13 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                     <CheckCircle2 className="h-5 w-5" />
                     Acceptance Criteria
                   </div>
-                  <p className="text-sm text-white leading-relaxed">{test.acceptanceCriteria}</p>
+                  <p className="text-sm text-foreground leading-relaxed">{test.acceptanceCriteria}</p>
                   {test.expectedResult && (
                     <div className="mt-3">
                       {typeof test.expectedResult === 'object' ? (
                         <div className="space-y-2">
                           {test.expectedResult.calculated && (
-                            <p className="text-sm text-white">
+                            <p className="text-sm text-foreground">
                               <span className="font-semibold">Calculated:</span> {test.expectedResult.calculated}
                             </p>
                           )}
@@ -161,7 +161,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                             </p>
                           )}
                           {test.expectedResult.maximumPermitted && (
-                            <p className="text-sm text-white">
+                            <p className="text-sm text-foreground">
                               <span className="font-semibold">Maximum:</span> {test.expectedResult.maximumPermitted}
                             </p>
                           )}
@@ -189,7 +189,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                 {/* Procedure Steps */}
                 {test.procedure && Array.isArray(test.procedure) && (
                   <div className="space-y-3">
-                    <div className="text-base font-semibold text-white mb-3">Procedure</div>
+                    <div className="text-base font-semibold text-foreground mb-3">Procedure</div>
                     {test.procedure.map((step, i) => (
                       <ProcedureStepCard
                         key={i}
@@ -209,7 +209,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
 
                 {/* Test Duration */}
                 {test.testDuration && (
-                  <div className="text-sm text-white/90 text-left">
+                  <div className="text-sm text-foreground/90 text-left">
                     <span className="font-semibold">⏱️ Estimated Time:</span> {test.testDuration}
                   </div>
                 )}
@@ -233,7 +233,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
       {/* Live Tests Section - ALL TESTS EXPANDED */}
       {procedure.liveTests && procedure.liveTests.length > 0 && (
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-white flex items-center gap-2">
+          <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
             <Zap className="h-6 w-6 text-yellow-400" />
             Live Tests
           </h3>
@@ -245,8 +245,8 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                 <div className="flex items-start gap-3">
                   <Badge variant="outline" className="shrink-0 text-base px-3 py-1">{index + 1}</Badge>
                   <div className="flex-1">
-                    <div className="font-semibold text-white text-base mb-1">{test.testName}</div>
-                    <div className="text-sm text-white/90">{test.regulation}</div>
+                    <div className="font-semibold text-foreground text-base mb-1">{test.testName}</div>
+                    <div className="text-sm text-foreground/90">{test.regulation}</div>
                   </div>
                 </div>
               </div>
@@ -265,7 +265,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                     <CheckCircle2 className="h-5 w-5" />
                     Acceptance Criteria
                   </div>
-                  <p className="text-sm text-white leading-relaxed">{test.acceptanceCriteria}</p>
+                  <p className="text-sm text-foreground leading-relaxed">{test.acceptanceCriteria}</p>
                 </div>
 
                 {/* Calculation Breakdown */}
@@ -280,10 +280,10 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                           <p className="text-sm text-purple-300 font-mono">{test.calculation.formula}</p>
                         )}
                         {test.calculation.Ze && (
-                          <p className="text-sm text-white">Ze = {test.calculation.Ze}</p>
+                          <p className="text-sm text-foreground">Ze = {test.calculation.Ze}</p>
                         )}
                         {test.calculation.R1R2 && (
-                          <p className="text-sm text-white">R1+R2 = {test.calculation.R1R2}</p>
+                          <p className="text-sm text-foreground">R1+R2 = {test.calculation.R1R2}</p>
                         )}
                         {test.calculation.expectedZs && (
                           <p className="text-sm text-purple-300 font-semibold">Expected Zs = {test.calculation.expectedZs}</p>
@@ -297,7 +297,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                 {test.calculation && typeof test.calculation === 'string' && (
                   <div className="bg-purple-500/10 border-2 border-purple-500/30 rounded-lg p-4">
                     <div className="text-base font-semibold text-purple-300 mb-2">Calculation</div>
-                    <p className="text-sm text-white font-mono leading-relaxed">{test.calculation}</p>
+                    <p className="text-sm text-foreground font-mono leading-relaxed">{test.calculation}</p>
                   </div>
                 )}
 
@@ -307,7 +307,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                 {/* Procedure Steps */}
                 {test.procedure && Array.isArray(test.procedure) && (
                   <div className="space-y-3">
-                    <div className="text-base font-semibold text-white mb-3">Procedure</div>
+                    <div className="text-base font-semibold text-foreground mb-3">Procedure</div>
                     {test.procedure.map((step, i) => (
                       <ProcedureStepCard
                         key={i}
@@ -327,7 +327,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
 
                 {/* Test Duration */}
                 {test.testDuration && (
-                  <div className="text-sm text-white/90 text-left">
+                  <div className="text-sm text-foreground/90 text-left">
                     <span className="font-semibold">⏱️ Estimated Time:</span> {test.testDuration}
                   </div>
                 )}

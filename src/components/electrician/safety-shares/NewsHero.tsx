@@ -85,7 +85,7 @@ const NewsHero = ({ article }: NewsHeroProps) => {
               )}
             </div>
             
-            <div className="flex items-center gap-4 text-xs text-white/90">
+            <div className="flex items-center gap-4 text-xs text-foreground/90">
               <div className="flex items-center gap-1">
                 <Eye className="h-3 w-3" />
                 <span>{article.view_count?.toLocaleString() || 0}</span>
@@ -119,17 +119,17 @@ const NewsHero = ({ article }: NewsHeroProps) => {
             {/* Content */}
             <div className="lg:col-span-7 order-1 lg:order-2">
               {/* Title */}
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-4 leading-tight tracking-tight">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-4 leading-tight tracking-tight">
                 {article.title}
               </h1>
 
               {/* Summary */}
-              <p className="text-sm sm:text-base text-white/90 mb-6 leading-relaxed font-light">
+              <p className="text-sm sm:text-base text-foreground/90 mb-6 leading-relaxed font-light">
                 {article.summary}
               </p>
 
               {/* Publication Details */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-white/80 mb-6">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/80 mb-6">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
                   <span className="font-medium">{format(new Date(article.date_published), 'EEEE, MMMM dd, yyyy')}</span>

@@ -295,6 +295,31 @@ const ConduitFillCalculator = () => {
                     <p>Pull tension: ~{result.pullTension}N</p>
                   </div>
 
+                  {/* How It Worked Out */}
+                  {conduitSize && cableSize && cableQuantity && (
+                    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 space-y-3">
+                      <div className="flex items-center gap-2 text-purple-200 font-semibold">
+                        <Calculator className="h-4 w-4 text-purple-400" />
+                        How It Worked Out
+                      </div>
+                      <div className="text-sm font-mono text-purple-300 space-y-2">
+                        <div className="text-xs text-purple-400">Step 1: Cable cross-sectional area</div>
+                        <div>A = π × (d/2)²</div>
+                        <div>A = π × ({cableData[cableSize as keyof typeof cableData].diameter/2})²</div>
+                        <div>A = <span className="text-purple-200 font-bold">{(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)).toFixed(1)}mm²</span></div>
+
+                        <div className="pt-2 border-t border-purple-500/20 text-xs text-purple-400">Step 2: Total cable area</div>
+                        <div>Total = A × qty = {(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)).toFixed(1)} × {cableQuantity}</div>
+                        <div>Total = <span className="text-purple-200 font-bold">{(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) * parseInt(cableQuantity)).toFixed(1)}mm²</span></div>
+
+                        <div className="pt-2 border-t border-purple-500/20 text-xs text-purple-400">Step 3: Fill percentage</div>
+                        <div>Fill = (Cable Area ÷ Conduit Area) × 100</div>
+                        <div>Fill = ({(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) * parseInt(cableQuantity)).toFixed(1)} ÷ {conduitData[conduitMaterial as keyof typeof conduitData][conduitSize as keyof typeof conduitData[keyof typeof conduitData]].area}) × 100</div>
+                        <div>Fill = <span className="text-purple-200 font-bold">{result.fillPercentage}%</span></div>
+                      </div>
+                    </div>
+                  )}
+
                   {result.warnings.length > 0 && (
                     <Alert className="border-orange-500/20 bg-orange-500/10">
                       <AlertTriangle className="h-4 w-4 text-orange-500" />

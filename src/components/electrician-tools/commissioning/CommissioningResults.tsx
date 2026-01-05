@@ -165,10 +165,10 @@ const CommissioningResults = ({
           <div className="flex items-start gap-3">
             <Zap className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
             <div className="flex-1">
-              <h3 className="text-sm font-semibold text-white/70 mb-2 uppercase tracking-wide">
+              <h3 className="text-sm font-semibold text-foreground/70 mb-2 uppercase tracking-wide">
                 Original Request
               </h3>
-              <p className="text-lg text-white leading-relaxed">
+              <p className="text-lg text-foreground leading-relaxed">
                 {originalQuery}
               </p>
             </div>
@@ -192,11 +192,11 @@ const CommissioningResults = ({
           <div className="flex items-center gap-3">
             <Clock className="h-5 w-5 text-elec-yellow" />
             <div>
-              <p className="text-sm font-semibold text-white">
+              <p className="text-sm font-semibold text-foreground">
                 Testing Progress: {completedTests}/{allTests.length} Tests
               </p>
               {progress && (
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-foreground/60">
                   Last saved: {new Date(progress.lastSaved).toLocaleTimeString()}
                 </p>
               )}
@@ -278,7 +278,7 @@ const CommissioningResults = ({
       {!results.structuredData && results.response && (
         <div className="bg-background/40 border-2 border-border/40 rounded-xl p-6">
           <div className="prose prose-invert prose-sm max-w-none">
-            <div className="whitespace-pre-wrap text-sm text-white">
+            <div className="whitespace-pre-wrap text-sm text-foreground">
               {results.response}
             </div>
           </div>

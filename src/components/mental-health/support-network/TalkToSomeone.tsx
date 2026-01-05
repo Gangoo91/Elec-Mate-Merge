@@ -46,7 +46,7 @@ const TalkToSomeone = () => {
           </Link>
           {!isRequestSubmitted ? (
             <Button 
-              className="w-full bg-purple-500 hover:bg-purple-600 text-white flex items-center justify-center gap-2"
+              className="w-full bg-purple-500 hover:bg-purple-600 text-foreground flex items-center justify-center gap-2"
               size="sm"
               onClick={handleCounselorRequest}
             >

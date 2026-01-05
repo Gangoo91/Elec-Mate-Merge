@@ -51,7 +51,7 @@ export const ChecklistItem = ({
         {/* Checkbox Circle */}
         <div className={cn(
           "shrink-0 mt-0.5",
-          checked ? "text-elec-yellow" : "text-white/40"
+          checked ? "text-elec-yellow" : "text-foreground/40"
         )}>
           {checked ? (
             <CheckCircle2 className="h-6 w-6" />
@@ -64,13 +64,13 @@ export const ChecklistItem = ({
         <div className="flex-1 space-y-1.5">
           <div className={cn(
             "text-base font-semibold",
-            checked ? "text-white/70 line-through" : "text-white"
+            checked ? "text-foreground/70 line-through" : "text-foreground"
           )}>
             {item}
           </div>
           <div className={cn(
             "text-sm leading-relaxed",
-            checked ? "text-white/50 line-through" : "text-white/90"
+            checked ? "text-foreground/50 line-through" : "text-foreground/90"
           )}>
             {requirement}
           </div>
@@ -98,7 +98,7 @@ export const ChecklistItem = ({
             size="sm"
             className={cn(
               "h-8 px-2",
-              showNotes ? "text-elec-yellow" : "text-white/50"
+              showNotes ? "text-elec-yellow" : "text-foreground/50"
             )}
           >
             <FileText className="h-4 w-4" />
@@ -109,12 +109,12 @@ export const ChecklistItem = ({
       {/* Notes Section */}
       {showNotes && (
         <div className="pt-3 mt-3 border-t border-elec-yellow/20" onClick={(e) => e.stopPropagation()}>
-          <label className="text-xs text-white/70 mb-2 block">Notes</label>
+          <label className="text-xs text-foreground/70 mb-2 block">Notes</label>
           <Textarea
             value={notes}
             onChange={(e) => handleNotesChange(e.target.value)}
             placeholder="Add notes about this checkpoint..."
-            className="bg-background/40 border-elec-yellow/30 text-white text-sm min-h-[80px]"
+            className="bg-background/40 border-elec-yellow/30 text-foreground text-sm min-h-[80px]"
           />
         </div>
       )}

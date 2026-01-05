@@ -38,7 +38,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
       "Professional Development": "bg-orange-500/20 border-orange-500/30 text-orange-300",
       "Business Skills": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getDemandColor = (demand: string) => {
@@ -47,7 +47,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
       "Medium": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
       "Low": "bg-green-500/20 border-green-500/30 text-green-300",
     };
-    return colors[demand as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[demand as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const handleExternalLink = () => {
@@ -65,7 +65,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
             variant="ghost"
             size="sm"
             onClick={() => onOpenChange(false)}
-            className="absolute right-4 top-4 h-8 w-8 p-0 text-white/60 hover:text-white hover:bg-white/10"
+            className="absolute right-4 top-4 h-8 w-8 p-0 text-foreground/60 hover:text-foreground hover:bg-white/10"
           >
             <X className="h-4 w-4" />
           </Button>
@@ -74,7 +74,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
           <div className="space-y-4 pr-8">
             {/* Title and Provider */}
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight mb-2">
+              <h2 className="text-2xl sm:text-3xl font-bold text-foreground leading-tight mb-2">
                 {course.title}
               </h2>
               <div className="flex items-center gap-3 text-elec-yellow">
@@ -87,7 +87,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 backdrop-blur-sm">
                 <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                <span className="text-white font-medium">{course.rating.toFixed(1)}</span>
+                <span className="text-foreground font-medium">{course.rating.toFixed(1)}</span>
               </div>
               
               <Badge className={cn("text-sm", getCategoryColor(course.category))}>
@@ -113,43 +113,43 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="h-4 w-4 text-elec-yellow" />
-                <span className="text-sm text-white/80">Duration</span>
+                <span className="text-sm text-foreground/80">Duration</span>
               </div>
-              <div className="font-semibold text-white">{course.duration}</div>
+              <div className="font-semibold text-foreground">{course.duration}</div>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <div className="flex items-center gap-2 mb-2">
                 <Zap className="h-4 w-4 text-elec-yellow" />
-                <span className="text-sm text-white/80">Level</span>
+                <span className="text-sm text-foreground/80">Level</span>
               </div>
-              <div className="font-semibold text-white">{course.level}</div>
+              <div className="font-semibold text-foreground">{course.level}</div>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="h-4 w-4 text-elec-yellow" />
-                <span className="text-sm text-white/80">Price</span>
+                <span className="text-sm text-foreground/80">Price</span>
               </div>
-              <div className="font-semibold text-white">{course.price}</div>
+              <div className="font-semibold text-foreground">{course.price}</div>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <div className="flex items-center gap-2 mb-2">
                 <Users className="h-4 w-4 text-elec-yellow" />
-                <span className="text-sm text-white/80">Format</span>
+                <span className="text-sm text-foreground/80">Format</span>
               </div>
-              <div className="font-semibold text-white text-sm">{course.format}</div>
+              <div className="font-semibold text-foreground text-sm">{course.format}</div>
             </div>
           </div>
 
           {/* Description */}
           <div className="space-y-3">
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+            <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
               <GraduationCap className="h-5 w-5 text-elec-yellow" />
               Course Description
             </h3>
-            <p className="text-white/90 leading-relaxed">{course.description}</p>
+            <p className="text-foreground/90 leading-relaxed">{course.description}</p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
@@ -158,13 +158,13 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
               {/* Course Outline */}
               {course.courseOutline && course.courseOutline.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
                     <CheckCircle className="h-5 w-5 text-elec-yellow" />
                     Course Content
                   </h3>
                   <div className="space-y-2">
                     {course.courseOutline.map((item, index) => (
-                      <div key={index} className="flex items-start gap-3 text-white/90">
+                      <div key={index} className="flex items-start gap-3 text-foreground/90">
                         <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                         <span className="text-sm leading-relaxed">{item}</span>
                       </div>
@@ -176,10 +176,10 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
               {/* Prerequisites */}
               {course.prerequisites && course.prerequisites.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="text-lg font-semibold text-white">Prerequisites</h3>
+                  <h3 className="text-lg font-semibold text-foreground">Prerequisites</h3>
                   <div className="space-y-2">
                     {course.prerequisites.map((prereq, index) => (
-                      <div key={index} className="flex items-start gap-3 text-white/90">
+                      <div key={index} className="flex items-start gap-3 text-foreground/90">
                         <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
                         <span className="text-sm leading-relaxed">{prereq}</span>
                       </div>
@@ -191,13 +191,13 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
               {/* Locations */}
               {course.locations && course.locations.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-elec-yellow" />
                     Locations
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {course.locations.map((location, index) => (
-                      <Badge key={index} variant="outline" className="border-white/20 text-white/80">
+                      <Badge key={index} variant="outline" className="border-white/20 text-foreground/80">
                         {location}
                       </Badge>
                     ))}
@@ -211,13 +211,13 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
               {/* Career Outcomes */}
               {course.careerOutcomes && course.careerOutcomes.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
                     <Award className="h-5 w-5 text-elec-yellow" />
                     Career Outcomes
                   </h3>
                   <div className="space-y-2">
                     {course.careerOutcomes.map((outcome, index) => (
-                      <div key={index} className="flex items-start gap-3 text-white/90">
+                      <div key={index} className="flex items-start gap-3 text-foreground/90">
                         <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                         <span className="text-sm leading-relaxed">{outcome}</span>
                       </div>
@@ -229,7 +229,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
               {/* Salary Impact */}
               {course.salaryImpact && (
                 <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 rounded-lg p-4 border border-elec-yellow/20">
-                  <h4 className="font-semibold text-white mb-2">Salary Impact</h4>
+                  <h4 className="font-semibold text-foreground mb-2">Salary Impact</h4>
                   <p className="text-elec-yellow font-medium">{course.salaryImpact}</p>
                 </div>
               )}
@@ -237,7 +237,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
               {/* Accreditation */}
               {course.accreditation && course.accreditation.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="text-lg font-semibold text-white">Accreditation</h3>
+                  <h3 className="text-lg font-semibold text-foreground">Accreditation</h3>
                   <div className="flex flex-wrap gap-2">
                     {course.accreditation.map((accred, index) => (
                       <Badge key={index} className="bg-blue-500/20 border-blue-500/30 text-blue-300">
@@ -251,13 +251,13 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
               {/* Next Dates */}
               {course.nextDates && course.nextDates.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
                     <Calendar className="h-5 w-5 text-elec-yellow" />
                     Upcoming Dates
                   </h3>
                   <div className="grid grid-cols-2 gap-2">
                     {course.nextDates.slice(0, 6).map((date, index) => (
-                      <Badge key={index} variant="outline" className="justify-center border-white/20 text-white/80 py-2">
+                      <Badge key={index} variant="outline" className="justify-center border-white/20 text-foreground/80 py-2">
                         {date}
                       </Badge>
                     ))}

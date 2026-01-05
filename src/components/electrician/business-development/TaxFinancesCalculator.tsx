@@ -117,7 +117,7 @@ const TaxFinancesCalculator = () => {
   const savingsPercentage = (monthlySavingsRate / monthlyNetIncome) * 100;
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white">
+    <div className="min-h-screen bg-elec-dark text-foreground">
       <div className="container mx-auto p-6 space-y-6">
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-3">
@@ -231,7 +231,7 @@ const TaxFinancesCalculator = () => {
                   id="businessType"
                   value={inputs.businessType}
                   onChange={(e) => updateInput("businessType", e.target.value)}
-                  className="w-full mt-1 p-2 bg-elec-dark border border-elec-yellow/30 rounded-md text-white"
+                  className="w-full mt-1 p-2 bg-elec-dark border border-elec-yellow/30 rounded-md text-foreground"
                 >
                   <option value="sole_trader">Sole Trader</option>
                   <option value="limited_company">Limited Company</option>

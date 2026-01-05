@@ -86,7 +86,7 @@ const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
           {resource.contact && (
             <Button 
               size="sm"
-              className="bg-red-500 hover:bg-red-600 text-white flex items-center justify-center gap-2 w-full"
+              className="bg-red-500 hover:bg-red-600 text-foreground flex items-center justify-center gap-2 w-full"
               onClick={() => handleCopyContact(resource.contact || '')}
             >
               <Phone className="h-4 w-4" /> Copy Contact

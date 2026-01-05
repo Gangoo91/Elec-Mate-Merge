@@ -40,7 +40,7 @@ const RegulationSources = ({ regulations, searchMethod }: RegulationSourcesProps
     <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-purple-500/30">
       <CardHeader className="p-4">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-base sm:text-lg flex items-center gap-2 text-white">
+          <CardTitle className="text-base sm:text-lg flex items-center gap-2 text-foreground">
             <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
               <Book className="h-4 w-4 text-purple-400" />
             </div>
@@ -62,7 +62,7 @@ const RegulationSources = ({ regulations, searchMethod }: RegulationSourcesProps
           return (
             <div 
               key={reg.id || index} 
-              className="p-3 sm:p-4 bg-neutral-800/40 rounded-lg border-l-4 border-purple-500/50 hover:bg-neutral-800/60 transition-colors"
+              className="p-3 sm:p-4 bg-card/40 rounded-lg border-l-4 border-purple-500/50 hover:bg-card/60 transition-colors"
             >
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex items-center gap-2">
@@ -91,7 +91,7 @@ const RegulationSources = ({ regulations, searchMethod }: RegulationSourcesProps
                 </Badge>
               </div>
               
-              <h4 className="text-white font-medium text-sm sm:text-base mb-2">
+              <h4 className="text-foreground font-medium text-sm sm:text-base mb-2">
                 {reg.section}
               </h4>
               

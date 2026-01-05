@@ -37,7 +37,7 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
       "News": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
       "Training": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getReadTime = (content: string) => {
@@ -64,10 +64,10 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
     <div className={cn("space-y-4", className)}>
       {/* Section Header */}
       <div className="space-y-1">
-        <h2 className="text-xl sm:text-2xl font-bold text-white">
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground">
           Featured News
         </h2>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-foreground/80">
           Latest industry updates and regulatory changes
         </p>
       </div>
@@ -116,7 +116,7 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
                 {/* Content */}
                 <div className="p-4 sm:p-5 space-y-3 flex flex-col h-[calc(100%-10rem)] sm:h-[calc(100%-12rem)]">
                   {/* Meta Info */}
-                  <div className="flex items-center justify-between text-xs text-white/80">
+                  <div className="flex items-center justify-between text-xs text-foreground/80">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
                         <Eye className="h-3 w-3" />
@@ -136,18 +136,18 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-semibold text-white line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
+                  <h3 className="font-semibold text-foreground line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
                     {article.title}
                   </h3>
 
                   {/* Summary */}
-                  <p className="text-white/90 text-xs sm:text-sm line-clamp-2 leading-relaxed flex-grow">
+                  <p className="text-foreground/90 text-xs sm:text-sm line-clamp-2 leading-relaxed flex-grow">
                     {article.summary}
                   </p>
 
                   {/* Footer */}
                   <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                    <div className="flex items-center gap-2 text-xs text-white/80">
+                    <div className="flex items-center gap-2 text-xs text-foreground/80">
                       <Calendar className="h-3 w-3" />
                       <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
                     </div>
@@ -174,7 +174,7 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
       </Carousel>
 
       {/* Mobile scroll hint */}
-      <div className="md:hidden flex items-center justify-center gap-2 text-xs text-white/60">
+      <div className="md:hidden flex items-center justify-center gap-2 text-xs text-foreground/60">
         <ChevronLeft className="h-3 w-3" />
         <span>Swipe to browse more articles</span>
         <ChevronRight className="h-3 w-3" />

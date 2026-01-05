@@ -1,13 +1,12 @@
 import React from "react";
 import { MobileInput } from "@/components/ui/mobile-input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Calculator, Settings, TrendingUp, RotateCw, AlertCircle, Info, Zap } from "lucide-react";
+import { Calculator, Settings, TrendingUp, RotateCw, Info, Zap, RotateCcw } from "lucide-react";
 
 interface RingCircuitFormProps {
   readings: {
@@ -81,20 +80,17 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <Label htmlFor="cable-type" className="text-sm font-medium">Cable Type</Label>
-                <Select value={cableType} onValueChange={onCableTypeChange}>
-                  <SelectTrigger className="mt-1 bg-elec-dark border-elec-yellow/20 h-11">
-                    <SelectValue placeholder="Select cable type" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-yellow/20 z-50">
-                    <SelectItem value="2.5mm-twin">2.5mm² Twin & Earth</SelectItem>
-                    <SelectItem value="4mm-twin">4.0mm² Twin & Earth</SelectItem>
-                    <SelectItem value="6mm-twin">6.0mm² Twin & Earth</SelectItem>
-                    <SelectItem value="10mm-twin">10.0mm² Twin & Earth</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <MobileSelect value={cableType} onValueChange={onCableTypeChange}>
+                <MobileSelectTrigger label="Cable Type">
+                  <MobileSelectValue placeholder="Select cable type" />
+                </MobileSelectTrigger>
+                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <MobileSelectItem value="2.5mm-twin">2.5mm² Twin & Earth</MobileSelectItem>
+                  <MobileSelectItem value="4mm-twin">4.0mm² Twin & Earth</MobileSelectItem>
+                  <MobileSelectItem value="6mm-twin">6.0mm² Twin & Earth</MobileSelectItem>
+                  <MobileSelectItem value="10mm-twin">10.0mm² Twin & Earth</MobileSelectItem>
+                </MobileSelectContent>
+              </MobileSelect>
               
               <div>
                 <MobileInput
@@ -237,23 +233,24 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-4">
-            <Button 
+          <div className="flex gap-2 pt-4">
+            <MobileButton
               onClick={handleCalculate}
               disabled={!hasAllReadings}
-              className="flex-1 h-11 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium"
+              variant="elec"
+              className="flex-1 min-h-[48px]"
             >
               <Calculator className="h-4 w-4 mr-2" />
               Calculate Ring Circuit
-            </Button>
+            </MobileButton>
             {hasResults && (
-              <Button 
-                variant="outline" 
+              <MobileButton
+                variant="elec-outline"
                 onClick={onReset}
-                className="sm:w-auto border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                className="min-h-[48px]"
               >
-                Reset Calculator
-              </Button>
+                <RotateCcw className="h-4 w-4" />
+              </MobileButton>
             )}
           </div>
         </CardContent>

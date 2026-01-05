@@ -239,7 +239,7 @@ const SupportResourcesTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className="text-xs font-medium text-white">{metric.metric}</div>
+              <div className="text-xs font-medium text-foreground">{metric.metric}</div>
               <div className="text-xs text-muted-foreground">{metric.data}</div>
             </div>
           </Card>
@@ -257,7 +257,7 @@ const SupportResourcesTab = () => {
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-white text-sm">{platform.platform}</h4>
+                      <h4 className="font-medium text-foreground text-sm">{platform.platform}</h4>
                       <Badge variant="outline" className="text-blue-300 border-blue-400/30 text-xs">
                         {platform.timing}
                       </Badge>
@@ -311,7 +311,7 @@ const SupportResourcesTab = () => {
                   </h4>
                   {category.services.map((service, serviceIndex) => (
                     <div key={serviceIndex} className="border border-green-500/20 rounded-lg p-3 space-y-2">
-                      <h5 className="font-medium text-white text-sm">{service.service}</h5>
+                      <h5 className="font-medium text-foreground text-sm">{service.service}</h5>
                       <p className="text-xs text-muted-foreground">{service.description}</p>
                       
                       <div>
@@ -351,7 +351,7 @@ const SupportResourcesTab = () => {
               {emergencyContactsModern.map((contact, index) => (
                 <div key={index} className="border border-red-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
-                    <h4 className="font-medium text-white text-sm">{contact.service}</h4>
+                    <h4 className="font-medium text-foreground text-sm">{contact.service}</h4>
                     <Badge variant="outline" className="text-red-300 border-red-400/30 w-fit text-xs">
                       {contact.contact}
                     </Badge>
@@ -392,7 +392,7 @@ const SupportResourcesTab = () => {
                   </h4>
                   {category.resources.map((resource, resourceIndex) => (
                     <div key={resourceIndex} className="border border-purple-500/20 rounded-lg p-3 space-y-2">
-                      <h5 className="font-medium text-white text-sm">{resource.name}</h5>
+                      <h5 className="font-medium text-foreground text-sm">{resource.name}</h5>
                       <p className="text-xs text-muted-foreground">{resource.description}</p>
                       
                       <div>

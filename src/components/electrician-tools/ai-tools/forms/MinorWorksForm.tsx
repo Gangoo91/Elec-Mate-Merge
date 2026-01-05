@@ -83,10 +83,10 @@ export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
           Work Details
         </h3>
         <div className="space-y-2">
-          <label className="text-sm font-medium text-white">Work Description</label>
+          <label className="text-sm font-medium text-foreground">Work Description</label>
           <Textarea
             placeholder="Describe the minor electrical work completed"
-            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={watchedValues.workDescription || ""}
             onChange={(e) => setValue("workDescription", e.target.value)}
           />
@@ -103,10 +103,10 @@ export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
           error={errors.circuitDetails?.message}
         />
         <div className="space-y-2">
-          <label className="text-sm font-medium text-white">Test Results</label>
+          <label className="text-sm font-medium text-foreground">Test Results</label>
           <Textarea
             placeholder="Enter test results (continuity, insulation resistance, etc.)"
-            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={watchedValues.testResults || ""}
             onChange={(e) => setValue("testResults", e.target.value)}
           />

@@ -90,7 +90,7 @@ const UKWholesalersDirectory = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-semibold text-white">UK Electrical Suppliers Directory</h2>
+          <h2 className="text-2xl font-semibold text-foreground">UK Electrical Suppliers Directory</h2>
           <p className="text-muted-foreground">Trusted suppliers with trade accounts and competitive pricing</p>
         </div>
         <Button variant="outline" size="sm" className="border-elec-yellow/30">
@@ -106,7 +106,7 @@ const UKWholesalersDirectory = () => {
                 <div className="flex items-center gap-3">
                   <div className="text-3xl">{supplier.logo}</div>
                   <div>
-                    <CardTitle className="text-lg text-white">{supplier.name}</CardTitle>
+                    <CardTitle className="text-lg text-foreground">{supplier.name}</CardTitle>
                     <p className="text-sm text-elec-yellow">{supplier.type}</p>
                   </div>
                 </div>
@@ -129,7 +129,7 @@ const UKWholesalersDirectory = () => {
               </div>
               
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-white">Specialties:</h4>
+                <h4 className="text-sm font-medium text-foreground">Specialties:</h4>
                 <div className="flex flex-wrap gap-1">
                   {supplier.specialties.slice(0, 3).map((specialty, idx) => (
                     <Badge key={idx} variant="outline" className="text-xs border-elec-yellow/30">
@@ -145,7 +145,7 @@ const UKWholesalersDirectory = () => {
               </div>
               
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-white">Benefits:</h4>
+                <h4 className="text-sm font-medium text-foreground">Benefits:</h4>
                 <div className="space-y-1">
                   {supplier.benefits.map((benefit, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-xs text-muted-foreground">

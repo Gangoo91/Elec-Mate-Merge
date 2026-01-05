@@ -204,7 +204,7 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
         <CardContent className="pt-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
-              <Shield className="h-7 w-7 text-white" />
+              <Shield className="h-7 w-7 text-foreground" />
             </div>
             <div className="flex-1">
               <h3 className="text-2xl font-bold text-foreground mb-1">Safety Documentation Results</h3>
@@ -255,7 +255,7 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
                   <Button
                     size="sm"
                     onClick={handleSaveRiskAssessment}
-                    className="bg-green-600 hover:bg-green-700 text-white"
+                    className="bg-green-600 hover:bg-green-700 text-foreground"
                   >
                     <Save className="h-4 w-4 mr-1" />
                     Save

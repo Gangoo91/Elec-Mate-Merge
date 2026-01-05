@@ -207,7 +207,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial, currentQuoteItems = [] }
                         <div className="space-y-4">
                           <div className="flex items-start justify-between gap-4">
                             <div className="flex items-center gap-2">
-                              <h4 className={`text-lg font-semibold ${alreadyInQuote ? 'text-slate-400' : 'text-white'}`}>
+                              <h4 className={`text-lg font-semibold ${alreadyInQuote ? 'text-slate-400' : 'text-foreground'}`}>
                                 {material.name}
                                 {alreadyInQuote && <span className="text-xs ml-2 text-slate-500">(In Quote)</span>}
                               </h4>
@@ -281,7 +281,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial, currentQuoteItems = [] }
                         <CardContent className="p-4">
                           <div className="flex justify-between items-center">
                             <div>
-                              <h4 className="font-medium text-white">{material.name}</h4>
+                              <h4 className="font-medium text-foreground">{material.name}</h4>
                               <p className="text-sm text-elec-light/80">{material.brand}</p>
                             </div>
                             <div className="text-lg font-bold text-elec-yellow">
@@ -305,7 +305,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial, currentQuoteItems = [] }
                 <div className="grid gap-4">
                   <Card className="bg-card/50 border-elec-yellow/20">
                     <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-white">
+                      <CardTitle className="flex items-center gap-2 text-foreground">
                         <Home className="h-5 w-5 text-elec-yellow" />
                         Kitchen Rewire Package
                       </CardTitle>
@@ -325,7 +325,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial, currentQuoteItems = [] }
 
                   <Card className="bg-card/50 border-elec-yellow/20">
                     <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-white">
+                      <CardTitle className="flex items-center gap-2 text-foreground">
                         <Zap className="h-5 w-5 text-elec-yellow" />
                         Living Room Lighting
                       </CardTitle>
@@ -345,7 +345,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial, currentQuoteItems = [] }
 
                   <Card className="bg-card/50 border-elec-yellow/20">
                     <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-white">
+                      <CardTitle className="flex items-center gap-2 text-foreground">
                         <Home className="h-5 w-5 text-elec-yellow" />
                         3-Bed House Rewire Kit
                       </CardTitle>
@@ -368,7 +368,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial, currentQuoteItems = [] }
 
                   <Card className="bg-card/50 border-elec-yellow/20">
                     <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-white">
+                      <CardTitle className="flex items-center gap-2 text-foreground">
                         <Settings className="h-5 w-5 text-elec-yellow" />
                         Garage Supply
                       </CardTitle>

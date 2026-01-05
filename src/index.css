@@ -36,12 +36,12 @@
     --radius: 0.5rem;
 
     /* Electrical theme colors */
-    --elec-dark: 0 0% 7%;
+    --elec-dark: 0 0% 0%;
     --elec-light: 0 0% 15%;
-    --elec-gray: 0 0% 16%;
+    --elec-gray: 0 0% 22%;
     --elec-yellow: 47 100% 50%;
-    --elec-card: 0 0% 14%;
-    --elec-grey: 0 0% 16%;
+    --elec-card: 0 0% 20%;
+    --elec-grey: 0 0% 22%;
     
     /* Mobile breakpoints */
     --mobile-xs: 320px;
@@ -73,6 +73,14 @@
     --eicr-fi-border: 47 60% 45%;
     --eicr-fi-text: 47 50% 80%;
 
+    /* Semantic colors for light mode */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+    --info: 199 89% 48%;
+    --info-foreground: 0 0% 100%;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 47 100% 50%;
@@ -84,41 +92,51 @@
   }
 
   .dark {
-    --background: 240 5.9% 7%;
-    --foreground: 210 40% 98%;
+    /* OUTER - Pure black for maximum contrast */
+    --background: 0 0% 3%;
+    --foreground: 0 0% 100%;
 
+    /* CARDS/MIDDLE - Dark grey for depth */
     --card: 0 0% 10%;
-    --card-foreground: 210 40% 98%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 240 5.9% 10%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
 
     --primary: 47 100% 50%;
-    --primary-foreground: 240 5.9% 10%;
+    --primary-foreground: 0 0% 3%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 75%;
 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 0 0% 18%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
     --ring: 47 100% 50%;
-    
-    /* Electrical theme colors */
-    --elec-dark: 0 0% 7%;
-    --elec-light: 210 40% 98%;
-    --elec-gray: 0 0% 16%;
+
+    /* Additional semantic colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+    --info: 199 89% 48%;
+    --info-foreground: 0 0% 100%;
+
+    /* Electrical theme colors - Updated for black/grey scheme */
+    --elec-dark: 0 0% 8%;
+    --elec-light: 0 0% 100%;
+    --elec-gray: 0 0% 18%;
     --elec-yellow: 47 100% 50%;
-    --elec-card: 0 0% 14%;
-    --elec-grey: 0 0% 16%;
+    --elec-card: 0 0% 16%;
+    --elec-grey: 0 0% 18%;
     
     /* Muted text colors for comfortable reading */
     --text-muted: 210 30% 85%;
@@ -473,12 +491,14 @@
     51%, 100% { opacity: 0; }
   }
 
-  .hide-scrollbar {
+  .hide-scrollbar,
+  .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
-  .hide-scrollbar::-webkit-scrollbar {
+
+  .hide-scrollbar::-webkit-scrollbar,
+  .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
 }

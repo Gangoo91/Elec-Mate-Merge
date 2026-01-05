@@ -43,7 +43,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">
             <span className="text-elec-yellow">Elec</span>
             <span className="text-elec-yellow">-</span>
-            <span className="text-white">Mate</span>
+            <span className="text-foreground">Mate</span>
           </h1>
           <RecordingIndicator className="mt-0.5" />
         </div>

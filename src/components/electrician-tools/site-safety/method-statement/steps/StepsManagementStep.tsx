@@ -404,7 +404,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                               <hazard.icon className="h-4 w-4 text-orange-400" />
                                             </div>
                                             <div>
-                                              <div className="font-medium text-white">{hazard.name}</div>
+                                              <div className="font-medium text-foreground">{hazard.name}</div>
                                               <div className="text-xs text-muted-foreground">{hazard.category}</div>
                                             </div>
                                           </div>
@@ -657,7 +657,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                               <div className="bg-slate-900/40 border border-elec-yellow/20 rounded-xl p-4 space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
                                   <Shield className="h-4 w-4 text-red-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-white">
+                                  <h4 className="text-sm font-medium text-foreground">
                                     Safety Requirements ({step.safetyRequirements.length})
                                   </h4>
                                 </div>
@@ -685,7 +685,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                               <div className="bg-slate-900/40 border border-elec-yellow/20 rounded-xl p-4 space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
                                   <Wrench className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-white">
+                                  <h4 className="text-sm font-medium text-foreground">
                                     Equipment ({step.equipmentNeeded.length})
                                   </h4>
                                 </div>
@@ -713,7 +713,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                               <div className="rounded-xl space-y-3 sm:col-span-2 lg:col-span-1">
                                 <div className="flex items-center gap-2 mb-3">
                                   <GraduationCap className="h-4 w-4 text-green-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-white">
+                                  <h4 className="text-sm font-medium text-foreground">
                                     Qualifications ({step.qualifications.length})
                                   </h4>
                                 </div>

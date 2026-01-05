@@ -1,0 +1,124 @@
+import { ArrowLeft, Cable, CheckCircle, Clock, BookOpen, Layers, Wifi, Package, Wrench, FileCheck, GraduationCap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Link } from 'react-router-dom';
+
+const DataCablingCourse = () => {
+  const modules = [
+    {
+      id: 1,
+      title: "Introduction to Structured Cabling Systems",
+      duration: "45 mins",
+      status: "available",
+      icon: BookOpen
+    },
+    {
+      id: 2,
+      title: "Copper Cabling Standards (Cat5e, Cat6, etc.)",
+      duration: "50 mins",
+      status: "available",
+      icon: Cable
+    },
+    {
+      id: 3,
+      title: "Fibre Optics: Types, Termination, and Testing",
+      duration: "60 mins",
+      status: "available",
+      icon: Wifi
+    },
+    {
+      id: 4,
+      title: "Containment, Labelling, and Installation Best Practices",
+      duration: "55 mins",
+      status: "available",
+      icon: Package
+    },
+    {
+      id: 5,
+      title: "Termination and Certification Procedures",
+      duration: "50 mins",
+      status: "available",
+      icon: Wrench
+    },
+    {
+      id: 6,
+      title: "TIA/EIA and ISO Cabling Standards Explained",
+      duration: "40 mins",
+      status: "available",
+      icon: FileCheck
+    },
+    {
+      id: "exam",
+      title: "Mock Exam",
+      duration: "75 mins",
+      status: "available",
+      icon: GraduationCap,
+      isExam: true
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="px-8 pt-8 pb-12">
+        <Link to="/electrician/upskilling">
+          <Button
+            variant="ghost"
+            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Courses
+          </Button>
+        </Link>
+        
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-4xl font-bold text-white mb-4">
+              Data & Communications Cabling
+            </h1>
+            <p className="text-xl text-white">
+              Structured cabling systems, fiber optics, and network infrastructure
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-fr">
+            {modules.map((module) => (
+              <Link 
+                key={module.id} 
+                to={module.isExam ? `../data-cabling-mock-exam` : `../data-cabling-module-${module.id}`}
+                className="h-full"
+              >
+                <Card className={`bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col ${module.isExam ? 'ring-2 ring-yellow-400/50' : ''}`}>
+                <CardContent className="text-center space-y-3 p-4 flex-grow flex flex-col justify-center">
+                  <div className="flex justify-center">
+                    <module.icon className="h-8 w-8 text-yellow-400" strokeWidth={2.5} />
+                  </div>
+                  
+                    <div className="flex justify-center">
+                      <Badge 
+                        variant="secondary" 
+                        className={`${module.isExam ? 'bg-yellow-600/40 text-yellow-400' : 'bg-yellow-400/10 text-yellow-400'} hover:bg-yellow-400/10 font-bold text-xs px-3 py-1 border-0`}
+                      >
+                        {module.isExam ? 'Mock Exam' : `Module ${module.id}`}
+                      </Badge>
+                    </div>
+                  
+                  <h3 className="text-lg font-bold text-white leading-tight group-hover:text-yellow-400 transition-colors duration-300">
+                    {module.title}
+                  </h3>
+                  
+                  <p className="text-white text-xs leading-relaxed">
+                    Duration: {module.duration}
+                  </p>
+                </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DataCablingCourse;

@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -95,11 +94,11 @@ const RCDDiscriminationCalculator = () => {
       trippingTime: 500, 
       description: "Time-delayed for discrimination" 
     },
-    { 
-      value: "g-type", 
-      label: "G-Type (General Use)", 
-      trippingTime: 10, 
-      description: "Ultra-fast response for specific applications" 
+    {
+      value: "type-ac-time-delayed",
+      label: "Type AC Time-Delayed",
+      trippingTime: 150,
+      description: "Time-delayed for reduced nuisance tripping"
     }
   ];
 
@@ -200,13 +199,20 @@ const RCDDiscriminationCalculator = () => {
         improvements.push("Ensure minimum 200ms time delay difference");
         improvements.push("Achieve minimum 3:1 current rating ratio");
       }
-    } else if (upstreamRCD.type === "g-type") {
-      // G-type analysis
-      discriminates = true;
-      complianceStatus = 'compliant';
-      riskLevel = 'low';
-      recommendation = "G-type RCD provides instantaneous earth fault protection. Suitable for specific applications only.";
-      regulatoryReference = "BS 7671:2018 Section 531 - Overcurrent protective devices";
+    } else if (upstreamRCD.type === "type-ac-time-delayed") {
+      // Time-delayed Type AC analysis
+      discriminates = timeDifference >= 100 && currentRatio >= 3;
+      if (discriminates) {
+        complianceStatus = 'compliant';
+        riskLevel = 'low';
+        recommendation = "Time-delayed Type AC provides adequate discrimination margin for standard installations.";
+        regulatoryReference = "BS 7671:2018 Section 531 - Protective devices";
+      } else {
+        complianceStatus = 'marginal';
+        riskLevel = 'medium';
+        recommendation = "Time delay provides some discrimination but may not be sufficient for all fault conditions.";
+        improvements.push("Consider using S-type RCD upstream for better discrimination");
+      }
     } else {
       // Standard RCD discrimination
       discriminates = timeDifference > 0 && currentRatio >= 3;
@@ -360,113 +366,92 @@ const RCDDiscriminationCalculator = () => {
             
             <div className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-3">
-                  <Label className="text-elec-light text-base font-medium">Rating (IΔn)</Label>
-                  <Select value={upstreamRCD.rating} onValueChange={(value) => 
-                    setUpstreamRCD(prev => ({ ...prev, rating: value }))
-                  }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
-                      <SelectValue placeholder="Select rating" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {rcdRatings.map(rating => (
-                        <SelectItem key={rating.value} value={rating.value}>
-                          <div className="flex flex-col">
-                            <span>{rating.label}</span>
-                            <span className="text-xs text-muted-foreground">{rating.application}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="space-y-3">
-                  <Label className="text-elec-light text-base font-medium">RCD Type</Label>
-                  <Select value={upstreamRCD.type} onValueChange={(value) => 
-                    setUpstreamRCD(prev => ({ ...prev, type: value }))
-                  }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {rcdTypes.map(type => (
-                        <SelectItem key={type.value} value={type.value}>
-                          <div className="flex flex-col">
-                            <span>{type.label}</span>
-                            <span className="text-xs text-muted-foreground">{type.description}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <MobileSelect value={upstreamRCD.rating} onValueChange={(value) =>
+                  setUpstreamRCD(prev => ({ ...prev, rating: value }))
+                }>
+                  <MobileSelectTrigger label="Rating (IΔn)">
+                    <MobileSelectValue placeholder="Select rating" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {rcdRatings.map(rating => (
+                      <MobileSelectItem key={rating.value} value={rating.value}>
+                        {rating.label} - {rating.application}
+                      </MobileSelectItem>
+                    ))}
+                  </MobileSelectContent>
+                </MobileSelect>
+
+                <MobileSelect value={upstreamRCD.type} onValueChange={(value) =>
+                  setUpstreamRCD(prev => ({ ...prev, type: value }))
+                }>
+                  <MobileSelectTrigger label="RCD Type">
+                    <MobileSelectValue placeholder="Select type" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {rcdTypes.map(type => (
+                      <MobileSelectItem key={type.value} value={type.value}>
+                        {type.label}
+                      </MobileSelectItem>
+                    ))}
+                  </MobileSelectContent>
+                </MobileSelect>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-3">
-                  <Label className="text-elec-light text-base font-medium">Installation Location</Label>
-                  <Select value={upstreamRCD.installationLocation} onValueChange={(value) => 
-                    setUpstreamRCD(prev => ({ ...prev, installationLocation: value }))
-                  }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
-                      <SelectValue placeholder="Select location" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {installationLocations.map(location => (
-                        <SelectItem key={location.value} value={location.value}>
-                          {location.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <MobileSelect value={upstreamRCD.installationLocation} onValueChange={(value) =>
+                  setUpstreamRCD(prev => ({ ...prev, installationLocation: value }))
+                }>
+                  <MobileSelectTrigger label="Installation Location">
+                    <MobileSelectValue placeholder="Select location" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {installationLocations.map(location => (
+                      <MobileSelectItem key={location.value} value={location.value}>
+                        {location.label}
+                      </MobileSelectItem>
+                    ))}
+                  </MobileSelectContent>
+                </MobileSelect>
 
-                <div className="space-y-3">
-                  <Label className="text-elec-light text-base font-medium">Earthing System</Label>
-                  <Select value={upstreamRCD.earthingSystem} onValueChange={(value) => 
-                    setUpstreamRCD(prev => ({ ...prev, earthingSystem: value }))
-                  }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
-                      <SelectValue placeholder="Select system" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {earthingSystems.map(system => (
-                        <SelectItem key={system.value} value={system.value}>
-                          {system.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <MobileSelect value={upstreamRCD.earthingSystem} onValueChange={(value) =>
+                  setUpstreamRCD(prev => ({ ...prev, earthingSystem: value }))
+                }>
+                  <MobileSelectTrigger label="Earthing System">
+                    <MobileSelectValue placeholder="Select system" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {earthingSystems.map(system => (
+                      <MobileSelectItem key={system.value} value={system.value}>
+                        {system.label}
+                      </MobileSelectItem>
+                    ))}
+                  </MobileSelectContent>
+                </MobileSelect>
               </div>
 
               <div className="flex items-center space-x-2">
-                <Checkbox 
+                <Checkbox
                   id="upstream-delay"
                   checked={upstreamRCD.hasTimeDelay}
-                  onCheckedChange={(checked) => 
+                  onCheckedChange={(checked) =>
                     setUpstreamRCD(prev => ({ ...prev, hasTimeDelay: !!checked }))
                   }
                 />
-                <Label htmlFor="upstream-delay" className="text-elec-light text-base font-medium">
+                <label htmlFor="upstream-delay" className="text-elec-light text-base font-medium">
                   Custom time delay
-                </Label>
+                </label>
               </div>
 
               {upstreamRCD.hasTimeDelay && (
-                <div className="space-y-3">
-                  <Label className="text-elec-light text-base font-medium">Trip Time (ms)</Label>
-                  <Input
-                    type="number"
-                    value={upstreamRCD.customTripTime}
-                    onChange={(e) => setUpstreamRCD(prev => ({ ...prev, customTripTime: e.target.value }))}
-                    placeholder="Enter trip time in milliseconds"
-                    className="bg-elec-dark border-elec-yellow/20 h-12 text-base"
-                    min="10"
-                    max="10000"
-                  />
-                </div>
+                <MobileInput
+                  label="Trip Time (ms)"
+                  type="number"
+                  inputMode="decimal"
+                  value={upstreamRCD.customTripTime}
+                  onChange={(e) => setUpstreamRCD(prev => ({ ...prev, customTripTime: e.target.value }))}
+                  placeholder="Enter trip time in milliseconds"
+                  unit="ms"
+                />
               )}
             </div>
           </div>
@@ -483,122 +468,97 @@ const RCDDiscriminationCalculator = () => {
             
             <div className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-3">
-                  <Label className="text-elec-light text-base font-medium">Rating (IΔn)</Label>
-                  <Select value={downstreamRCD.rating} onValueChange={(value) => 
-                    setDownstreamRCD(prev => ({ ...prev, rating: value }))
-                  }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
-                      <SelectValue placeholder="Select rating" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {rcdRatings.map(rating => (
-                        <SelectItem key={rating.value} value={rating.value}>
-                          <div className="flex flex-col">
-                            <span>{rating.label}</span>
-                            <span className="text-xs text-muted-foreground">{rating.application}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="space-y-3">
-                  <Label className="text-elec-light text-base font-medium">RCD Type</Label>
-                  <Select value={downstreamRCD.type} onValueChange={(value) => 
-                    setDownstreamRCD(prev => ({ ...prev, type: value }))
-                  }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {rcdTypes.map(type => (
-                        <SelectItem key={type.value} value={type.value}>
-                          <div className="flex flex-col">
-                            <span>{type.label}</span>
-                            <span className="text-xs text-muted-foreground">{type.description}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <MobileSelect value={downstreamRCD.rating} onValueChange={(value) =>
+                  setDownstreamRCD(prev => ({ ...prev, rating: value }))
+                }>
+                  <MobileSelectTrigger label="Rating (IΔn)">
+                    <MobileSelectValue placeholder="Select rating" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {rcdRatings.map(rating => (
+                      <MobileSelectItem key={rating.value} value={rating.value}>
+                        {rating.label} - {rating.application}
+                      </MobileSelectItem>
+                    ))}
+                  </MobileSelectContent>
+                </MobileSelect>
+
+                <MobileSelect value={downstreamRCD.type} onValueChange={(value) =>
+                  setDownstreamRCD(prev => ({ ...prev, type: value }))
+                }>
+                  <MobileSelectTrigger label="RCD Type">
+                    <MobileSelectValue placeholder="Select type" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {rcdTypes.map(type => (
+                      <MobileSelectItem key={type.value} value={type.value}>
+                        {type.label}
+                      </MobileSelectItem>
+                    ))}
+                  </MobileSelectContent>
+                </MobileSelect>
               </div>
 
-              <div className="space-y-3">
-                <Label className="text-elec-light text-base font-medium">Circuit Type</Label>
-                <Select value={downstreamRCD.circuitType} onValueChange={(value) => 
-                  setDownstreamRCD(prev => ({ ...prev, circuitType: value }))
-                }>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
-                    <SelectValue placeholder="Select circuit type" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    {circuitTypes.map(circuit => (
-                      <SelectItem key={circuit.value} value={circuit.value}>
-                        {circuit.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <MobileSelect value={downstreamRCD.circuitType} onValueChange={(value) =>
+                setDownstreamRCD(prev => ({ ...prev, circuitType: value }))
+              }>
+                <MobileSelectTrigger label="Circuit Type">
+                  <MobileSelectValue placeholder="Select circuit type" />
+                </MobileSelectTrigger>
+                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                  {circuitTypes.map(circuit => (
+                    <MobileSelectItem key={circuit.value} value={circuit.value}>
+                      {circuit.label}
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-3">
-                  <Label className="text-elec-light text-base font-medium">Load Current (A)</Label>
-                  <Input
-                    type="number"
-                    value={downstreamRCD.loadCurrent}
-                    onChange={(e) => setDownstreamRCD(prev => ({ ...prev, loadCurrent: e.target.value }))}
-                    placeholder="Enter load current"
-                    className="bg-elec-dark border-elec-yellow/20 h-12 text-base"
-                    min="0"
-                    max="100"
-                    step="0.1"
-                  />
-                </div>
+                <MobileInput
+                  label="Load Current (A)"
+                  type="number"
+                  inputMode="decimal"
+                  value={downstreamRCD.loadCurrent}
+                  onChange={(e) => setDownstreamRCD(prev => ({ ...prev, loadCurrent: e.target.value }))}
+                  placeholder="Enter load current"
+                  unit="A"
+                />
 
-                <div className="space-y-3">
-                  <Label className="text-elec-light text-base font-medium">Cable Length (m)</Label>
-                  <Input
-                    type="number"
-                    value={downstreamRCD.cableLength}
-                    onChange={(e) => setDownstreamRCD(prev => ({ ...prev, cableLength: e.target.value }))}
-                    placeholder="Enter cable length"
-                    className="bg-elec-dark border-elec-yellow/20 h-12 text-base"
-                    min="0"
-                    max="1000"
-                  />
-                </div>
+                <MobileInput
+                  label="Cable Length (m)"
+                  type="number"
+                  inputMode="decimal"
+                  value={downstreamRCD.cableLength}
+                  onChange={(e) => setDownstreamRCD(prev => ({ ...prev, cableLength: e.target.value }))}
+                  placeholder="Enter cable length"
+                  unit="m"
+                />
               </div>
 
               <div className="flex items-center space-x-2">
-                <Checkbox 
+                <Checkbox
                   id="downstream-delay"
                   checked={downstreamRCD.hasTimeDelay}
-                  onCheckedChange={(checked) => 
+                  onCheckedChange={(checked) =>
                     setDownstreamRCD(prev => ({ ...prev, hasTimeDelay: !!checked }))
                   }
                 />
-                <Label htmlFor="downstream-delay" className="text-elec-light text-base font-medium">
+                <label htmlFor="downstream-delay" className="text-elec-light text-base font-medium">
                   Custom time delay
-                </Label>
+                </label>
               </div>
 
               {downstreamRCD.hasTimeDelay && (
-                <div className="space-y-3">
-                  <Label className="text-elec-light text-base font-medium">Trip Time (ms)</Label>
-                  <Input
-                    type="number"
-                    value={downstreamRCD.customTripTime}
-                    onChange={(e) => setDownstreamRCD(prev => ({ ...prev, customTripTime: e.target.value }))}
-                    placeholder="Enter trip time in milliseconds"
-                    className="bg-elec-dark border-elec-yellow/20 h-12 text-base"
-                    min="10"
-                    max="10000"
-                  />
-                </div>
+                <MobileInput
+                  label="Trip Time (ms)"
+                  type="number"
+                  inputMode="decimal"
+                  value={downstreamRCD.customTripTime}
+                  onChange={(e) => setDownstreamRCD(prev => ({ ...prev, customTripTime: e.target.value }))}
+                  placeholder="Enter trip time in milliseconds"
+                  unit="ms"
+                />
               )}
             </div>
           </div>
@@ -606,17 +566,18 @@ const RCDDiscriminationCalculator = () => {
 
         {/* Control Buttons */}
         <div className="flex gap-3">
-          <Button 
-            onClick={calculateDiscrimination} 
-            className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11"
+          <MobileButton
+            onClick={calculateDiscrimination}
+            variant="elec"
+            className="flex-1 min-h-[48px]"
             disabled={!upstreamRCD.rating || !downstreamRCD.rating || !upstreamRCD.type || !downstreamRCD.type}
           >
             <Calculator className="mr-2 h-4 w-4" />
             Analyse Discrimination
-          </Button>
-          <Button variant="outline" onClick={resetCalculator} className="h-11">
+          </MobileButton>
+          <MobileButton variant="elec-outline" onClick={resetCalculator} className="min-h-[48px]">
             <RotateCcw className="h-4 w-4" />
-          </Button>
+          </MobileButton>
         </div>
 
         {/* Results Section */}

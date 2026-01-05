@@ -113,10 +113,10 @@ const FaultDiagnosisView = ({
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
               {isCompliantPhoto ? 'Photo Analysis' : eicrDefects && eicrDefects.length > 0 ? 'EICR Photo Analysis' : 'Fault Diagnosis'}
             </h1>
-            <p className="text-base text-white/90">
+            <p className="text-base text-foreground/90">
               {isCompliantPhoto ? 'Installation appears compliant' : eicrDefects && eicrDefects.length > 0 ? 'EICR defect coding with BS 7671 compliance' : 'Structured troubleshooting workflow'}
             </p>
           </div>
@@ -157,10 +157,10 @@ const FaultDiagnosisView = ({
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-6 w-6 text-red-400 flex-shrink-0 mt-1" />
               <div className="flex-1">
-                <h3 className="text-sm font-semibold text-white/70 mb-2 uppercase tracking-wide">
+                <h3 className="text-sm font-semibold text-foreground/70 mb-2 uppercase tracking-wide">
                   Reported Fault
                 </h3>
-                <p className="text-lg text-white leading-relaxed">
+                <p className="text-lg text-foreground leading-relaxed">
                   {originalQuery}
                 </p>
               </div>
@@ -187,7 +187,7 @@ const FaultDiagnosisView = ({
         {(imageUrls && imageUrls.length > 0) || imageUrl ? (
           <Card className="bg-elec-dark/80 border-2 border-blue-500/30 p-5 sm:p-6">
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-white flex items-center gap-2 text-left">
+              <h3 className="text-xl font-semibold text-foreground flex items-center gap-2 text-left">
                 <ImageIcon className="h-6 w-6 text-blue-400" />
                 Installation Photo{(imageUrls && imageUrls.length > 1) ? 's' : ''}
                 {imageUrls && imageUrls.length > 0 && (
@@ -207,7 +207,7 @@ const FaultDiagnosisView = ({
                         alt={`Installation photo ${index + 1}`} 
                         className="w-full h-auto aspect-video object-cover"
                       />
-                      <div className="absolute bottom-2 left-2 bg-black/70 px-2 py-1 rounded text-xs text-white font-medium">
+                      <div className="absolute bottom-2 left-2 bg-black/70 px-2 py-1 rounded text-xs text-foreground font-medium">
                         Photo #{index + 1}
                       </div>
                     </div>
@@ -235,20 +235,20 @@ const FaultDiagnosisView = ({
               </div>
               <div className="flex-1">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mb-3">
-                  <Badge className="bg-white/30 text-white border-none text-base px-4 py-1.5">
+                  <Badge className="bg-white/30 text-foreground border-none text-base px-4 py-1.5">
                     NO DEFECTS FOUND
                   </Badge>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white text-left">Installation Appears Compliant</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-foreground text-left">Installation Appears Compliant</h3>
                 </div>
-                <p className="text-base text-white mb-4 text-left leading-relaxed">
+                <p className="text-base text-foreground mb-4 text-left leading-relaxed">
                   {eicrDefects[0].compliantSummary || eicrDefects[0].defectSummary}
                 </p>
                 {eicrDefects[0].goodPracticeNotes && eicrDefects[0].goodPracticeNotes.length > 0 && (
                   <div className="space-y-2">
-                    <p className="text-sm font-semibold text-white text-left">Good Practice Observed:</p>
+                    <p className="text-sm font-semibold text-foreground text-left">Good Practice Observed:</p>
                     <ul className="space-y-2">
                       {eicrDefects[0].goodPracticeNotes.map((note: string, idx: number) => (
-                        <li key={idx} className="text-base text-white flex items-start gap-2 text-left leading-relaxed">
+                        <li key={idx} className="text-base text-foreground flex items-start gap-2 text-left leading-relaxed">
                           <CheckCircle2 className="h-5 w-5 text-green-300 flex-shrink-0 mt-0.5" />
                           <span>{note}</span>
                         </li>
@@ -257,7 +257,7 @@ const FaultDiagnosisView = ({
                   </div>
                 )}
                 <div className="mt-5 pt-4 border-t border-white/20">
-                  <p className="text-sm text-white/90 text-left leading-relaxed">
+                  <p className="text-sm text-foreground/90 text-left leading-relaxed">
                     This classification adds credibility to the AI system. If an installation is compliant, we'll say so.
                   </p>
                 </div>
@@ -283,8 +283,8 @@ const FaultDiagnosisView = ({
           <Card className="p-4 sm:p-5">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-white">Diagnostic Progress</span>
-                <span className="text-lg font-bold text-white">{completionPercentage}%</span>
+                <span className="text-sm font-medium text-foreground">Diagnostic Progress</span>
+                <span className="text-lg font-bold text-foreground">{completionPercentage}%</span>
               </div>
               <div className="w-full bg-background/50 rounded-full h-3">
                 <div 
@@ -309,14 +309,14 @@ const FaultDiagnosisView = ({
                 </div>
                 <div className="flex-1 w-full text-center sm:text-left">
                   <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-2 mb-4 sm:mb-3">
-                    <Badge className="bg-white/30 text-white border-none text-lg sm:text-base px-5 py-2 sm:px-4 sm:py-1.5 font-bold">
+                    <Badge className="bg-white/30 text-foreground border-none text-lg sm:text-base px-5 py-2 sm:px-4 sm:py-1.5 font-bold">
                       {diagnosis.faultSummary.safetyRisk} RISK
                     </Badge>
-                    <h3 className="text-2xl sm:text-xl font-bold text-white">Safety Critical Issue</h3>
+                    <h3 className="text-2xl sm:text-xl font-bold text-foreground">Safety Critical Issue</h3>
                   </div>
                   <div className="space-y-2">
-                    <p className="text-lg sm:text-base text-white font-bold">Immediate Action:</p>
-                    <p className="text-lg sm:text-base text-white leading-relaxed">
+                    <p className="text-lg sm:text-base text-foreground font-bold">Immediate Action:</p>
+                    <p className="text-lg sm:text-base text-foreground leading-relaxed">
                       {diagnosis.faultSummary.immediateAction}
                     </p>
                   </div>
@@ -331,7 +331,7 @@ const FaultDiagnosisView = ({
           <div className="space-y-5">
             <div className="flex items-center gap-3">
               <FileText className="h-7 w-7 text-blue-400" />
-              <h2 className="text-2xl font-bold text-white">EICR Defect Analysis</h2>
+              <h2 className="text-2xl font-bold text-foreground">EICR Defect Analysis</h2>
               <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/50 text-base px-4 py-1.5">
                 {eicrDefects.length} Defect{eicrDefects.length > 1 ? 's' : ''}
               </Badge>
@@ -354,16 +354,16 @@ const FaultDiagnosisView = ({
           <Card className="p-5 sm:p-6 bg-card border-border/40">
             <div className="space-y-4">
               <div>
-                <h3 className="text-xl font-bold text-white mb-3">Reported Symptom</h3>
-                <p className="text-base text-white leading-relaxed">{diagnosis.faultSummary.reportedSymptom}</p>
+                <h3 className="text-xl font-bold text-foreground mb-3">Reported Symptom</h3>
+                <p className="text-base text-foreground leading-relaxed">{diagnosis.faultSummary.reportedSymptom}</p>
               </div>
               
               {diagnosis.faultSummary.likelyRootCauses && diagnosis.faultSummary.likelyRootCauses.length > 0 && (
                 <div className="pt-4 border-t border-border/40">
-                  <h4 className="text-lg font-bold text-white mb-3">Likely Root Causes</h4>
+                  <h4 className="text-lg font-bold text-foreground mb-3">Likely Root Causes</h4>
                   <ol className="space-y-3 text-left">
                     {diagnosis.faultSummary.likelyRootCauses.map((cause, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
+                      <li key={idx} className="flex items-start gap-3 text-base text-foreground leading-relaxed">
                         <span className="flex-shrink-0 w-7 h-7 rounded-full bg-red-500/20 border-2 border-red-500/50 flex items-center justify-center text-sm font-bold text-red-300">
                           {idx + 1}
                         </span>

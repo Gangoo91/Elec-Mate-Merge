@@ -180,7 +180,7 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                 {/* Action Button */}
                 <Button
                   onClick={() => onSelectTemplate(template)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white h-10"
+                  className="w-full bg-green-600 hover:bg-green-700 text-foreground h-10"
                 >
                   Use This Template
                 </Button>

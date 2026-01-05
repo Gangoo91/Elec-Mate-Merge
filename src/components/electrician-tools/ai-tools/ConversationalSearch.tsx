@@ -346,7 +346,7 @@ export default function ConversationalSearch() {
                 AI Assistant
               </h1>
             </div>
-            <p className="text-white/90 text-sm md:text-base max-w-2xl mx-auto">
+            <p className="text-foreground/90 text-sm md:text-base max-w-2xl mx-auto">
               Instant BS 7671 answers · 18th Edition compliant
             </p>
           </motion.div>
@@ -358,7 +358,7 @@ export default function ConversationalSearch() {
             animate={{ opacity: 1 }}
             className="text-center"
           >
-            <p className="text-xs text-white/70">
+            <p className="text-xs text-foreground/70">
               💡 <span className="font-medium">Did you know?</span> {ELECTRICAL_FACTS[factIndex]}
             </p>
           </motion.div>
@@ -368,7 +368,7 @@ export default function ConversationalSearch() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-lg font-semibold text-white/90 mb-4 flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-foreground/90 mb-4 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-elec-yellow" />
               Quick Start Templates
             </h2>
@@ -430,7 +430,7 @@ export default function ConversationalSearch() {
                           transition={{ delay: 0.3 }}
                           className="space-y-2"
                         >
-                          <div className="flex items-center gap-2 text-xs text-white/60">
+                          <div className="flex items-center gap-2 text-xs text-foreground/60">
                             <Sparkles className="w-3 h-3" />
                             <span>You might also ask:</span>
                           </div>
@@ -444,7 +444,7 @@ export default function ConversationalSearch() {
                                   setInput(question);
                                   inputRef.current?.focus();
                                 }}
-                                className="text-xs px-3 py-2 rounded-lg bg-gradient-to-r from-elec-blue/20 to-elec-yellow/20 border border-elec-yellow/30 text-white/90 hover:border-elec-yellow/60 hover:bg-elec-yellow/10 transition-all text-left"
+                                className="text-xs px-3 py-2 rounded-lg bg-gradient-to-r from-elec-blue/20 to-elec-yellow/20 border border-elec-yellow/30 text-foreground/90 hover:border-elec-yellow/60 hover:bg-elec-yellow/10 transition-all text-left"
                               >
                                 💡 {question}
                               </motion.button>
@@ -487,11 +487,11 @@ export default function ConversationalSearch() {
       <div className="sticky bottom-0 z-20 px-4 md:px-6 pb-4 pt-2 bg-gradient-to-t from-elec-dark via-elec-dark to-transparent backdrop-blur-lg border-t border-border/30">
         {/* Conversation continuity indicator with inline clear */}
         {messages.length > 0 && (
-          <div className="flex items-center justify-between text-xs text-white/50 mb-2">
+          <div className="flex items-center justify-between text-xs text-foreground/50 mb-2">
             <span>💬 Continuing conversation • Ask follow-up questions</span>
             <button
               onClick={handleClearConversation}
-              className="text-white/40 hover:text-destructive transition-colors p-1 -mr-1"
+              className="text-foreground/40 hover:text-destructive transition-colors p-1 -mr-1"
               title="Clear conversation"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -510,7 +510,7 @@ export default function ConversationalSearch() {
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
                 placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
-                className="flex-1 bg-transparent border-none outline-none resize-none text-foreground placeholder:text-white/40 min-h-[48px] max-h-[120px] text-base"
+                className="flex-1 bg-transparent border-none outline-none resize-none text-foreground placeholder:text-foreground/40 min-h-[48px] max-h-[120px] text-base"
                 disabled={isStreaming}
                 rows={1}
                 style={{ fontSize: '16px' }}
@@ -531,7 +531,7 @@ export default function ConversationalSearch() {
               </motion.button>
             </div>
 
-            <div className="flex items-center justify-between mt-2 text-xs text-white/50">
+            <div className="flex items-center justify-between mt-2 text-xs text-foreground/50">
               <span>Press Enter to send, Shift+Enter for new line</span>
               {charCount > 0 && (
                 <motion.span

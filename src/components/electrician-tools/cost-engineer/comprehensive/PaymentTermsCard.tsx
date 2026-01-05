@@ -11,7 +11,7 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
           <PoundSterling className="h-5 w-5 text-elec-yellow" />
           Payment Terms
         </CardTitle>
@@ -20,21 +20,21 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
         {/* Deposit & Balance */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
-            <div className="text-base sm:text-sm text-white mb-1">Deposit ({paymentTerms.depositPercent}%)</div>
+            <div className="text-base sm:text-sm text-foreground mb-1">Deposit ({paymentTerms.depositPercent}%)</div>
             <div className="text-3xl sm:text-2xl font-bold text-elec-yellow">
               £{paymentTerms.depositAmount?.toFixed(2)}
             </div>
-            <div className="text-base sm:text-sm text-white/90 mt-1">
+            <div className="text-base sm:text-sm text-foreground/90 mt-1">
               Due before work starts
             </div>
           </div>
 
           <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
-            <div className="text-base sm:text-sm text-white mb-1">Balance</div>
-            <div className="text-3xl sm:text-2xl font-bold text-white">
+            <div className="text-base sm:text-sm text-foreground mb-1">Balance</div>
+            <div className="text-3xl sm:text-2xl font-bold text-foreground">
               £{paymentTerms.balanceAmount?.toFixed(2)}
             </div>
-            <div className="text-base sm:text-sm text-white/90 mt-1">
+            <div className="text-base sm:text-sm text-foreground/90 mt-1">
               Due on completion
             </div>
           </div>
@@ -43,24 +43,24 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
         {/* Payment Milestones */}
         {paymentTerms.paymentMilestones && paymentTerms.paymentMilestones.length > 0 && (
           <div>
-            <div className="text-base sm:text-sm font-medium text-white mb-2">Payment Milestones</div>
+            <div className="text-base sm:text-sm font-medium text-foreground mb-2">Payment Milestones</div>
             
             {/* Mobile: Stacked Cards */}
             <div className="space-y-3 sm:hidden">
               {paymentTerms.paymentMilestones.map((milestone: any, idx: number) => (
                 <div key={idx} className="p-4 rounded-lg bg-background/50 border border-border/30 text-left space-y-2">
-                  <div className="font-medium text-white text-base">
+                  <div className="font-medium text-foreground text-base">
                     {milestone.stage}
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-white/70 text-sm">Amount:</span>
-                    <span className="font-mono text-white text-base font-medium">
+                    <span className="text-foreground/70 text-sm">Amount:</span>
+                    <span className="font-mono text-foreground text-base font-medium">
                       £{milestone.amount.toFixed(2)} ({milestone.percentage}%)
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-white/70 text-sm">Trigger:</span>
-                    <span className="text-white text-sm flex-1">
+                    <span className="text-foreground/70 text-sm">Trigger:</span>
+                    <span className="text-foreground text-sm flex-1">
                       {milestone.trigger}
                     </span>
                   </div>
@@ -81,11 +81,11 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
                 <TableBody>
                   {paymentTerms.paymentMilestones.map((milestone: any, idx: number) => (
                     <TableRow key={idx}>
-                      <TableCell className="font-medium text-white text-base sm:text-sm">{milestone.stage}</TableCell>
-                      <TableCell className="text-right font-mono text-white text-base sm:text-sm">
+                      <TableCell className="font-medium text-foreground text-base sm:text-sm">{milestone.stage}</TableCell>
+                      <TableCell className="text-right font-mono text-foreground text-base sm:text-sm">
                         £{milestone.amount.toFixed(2)} ({milestone.percentage}%)
                       </TableCell>
-                      <TableCell className="text-base sm:text-sm text-white">
+                      <TableCell className="text-base sm:text-sm text-foreground">
                         {milestone.trigger}
                       </TableCell>
                     </TableRow>
@@ -99,8 +99,8 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
         {/* Terms */}
         {paymentTerms.terms && (
           <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
-            <div className="text-base sm:text-sm font-medium text-white mb-1">Payment Terms</div>
-            <p className="text-base sm:text-sm text-white">{paymentTerms.terms}</p>
+            <div className="text-base sm:text-sm font-medium text-foreground mb-1">Payment Terms</div>
+            <p className="text-base sm:text-sm text-foreground">{paymentTerms.terms}</p>
           </div>
         )}
 
@@ -108,7 +108,7 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
         {paymentTerms.lateFeePolicy && (
           <div className="p-4 sm:p-3 rounded-lg bg-red-500/10 border border-red-500/30">
             <div className="text-base sm:text-sm font-medium mb-1 text-red-500">Late Payment Policy</div>
-            <p className="text-base sm:text-sm text-white">{paymentTerms.lateFeePolicy}</p>
+            <p className="text-base sm:text-sm text-foreground">{paymentTerms.lateFeePolicy}</p>
           </div>
         )}
       </CardContent>

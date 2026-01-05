@@ -104,12 +104,12 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div className="flex items-center gap-1">
             <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
-            <span className="text-white font-medium">{option.rating}</span>
+            <span className="text-foreground font-medium">{option.rating}</span>
             <span className="text-muted-foreground">rating</span>
           </div>
           <div className="flex items-center gap-1">
             <Users className={`h-3 w-3 ${getEmploymentStatusColor(option.employmentRate)}`} />
-            <span className="text-white font-medium">{option.employmentRate}%</span>
+            <span className="text-foreground font-medium">{option.employmentRate}%</span>
             <span className="text-muted-foreground">employed</span>
           </div>
         </div>
@@ -159,7 +159,7 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
                 <Badge 
                   key={idx} 
                   variant="outline" 
-                  className="bg-elec-dark/50 text-white border-elec-yellow/20 text-xs"
+                  className="bg-elec-dark/50 text-foreground border-elec-yellow/20 text-xs"
                 >
                   {topic}
                 </Badge>

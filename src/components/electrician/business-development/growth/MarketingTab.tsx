@@ -380,7 +380,7 @@ export const MarketingTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -403,7 +403,7 @@ export const MarketingTab = () => {
                 <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
                       <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {strategy.timeline}
                       </Badge>
@@ -414,15 +414,15 @@ export const MarketingTab = () => {
                   <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
                     <div className="flex items-center gap-2">
                       <Calculator className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.investment}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{strategy.investment}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.roi}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{strategy.roi}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Shield className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.riskLevel}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{strategy.riskLevel}</span>
                     </div>
                   </div>
 
@@ -498,7 +498,7 @@ export const MarketingTab = () => {
                               </Badge>
                             </div>
                             <div className="text-center">
-                              <h5 className={`font-medium text-white ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                              <h5 className={`font-medium text-foreground ${isMobile ? 'text-xs' : 'text-sm'}`}>
                                 {benchmark.metric}
                               </h5>
                               <div className="flex items-center justify-center gap-2 mt-1">
@@ -597,7 +597,7 @@ export const MarketingTab = () => {
                         {metricCategory.kpis.map((kpi, kpiIndex) => (
                           <div key={kpiIndex} className="flex items-start gap-2 p-2 bg-elec-gray/30 rounded-lg">
                             <CheckCircle className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-                            <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                            <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                               {kpi}
                             </span>
                           </div>
@@ -628,19 +628,19 @@ export const MarketingTab = () => {
                     <ul className="space-y-2">
                       <li className="flex items-start gap-2">
                         <TrendingUp className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Effective marketing can increase your customer base by 200-400% within the first year
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <PoundSterling className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Proper digital presence reduces customer acquisition costs by 30-50%
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Star className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Strong brand reputation leads to premium pricing opportunities (15-25% higher rates)
                         </span>
                       </li>
@@ -652,19 +652,19 @@ export const MarketingTab = () => {
                     <ul className="space-y-2">
                       <li className="flex items-start gap-2">
                         <Target className="h-4 w-4 text-yellow-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Most electrical contractors still rely heavily on word-of-mouth, creating opportunities for digital-savvy businesses
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Globe className="h-4 w-4 text-yellow-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           78% of customers research electricians online before making contact, making digital presence crucial
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Users className="h-4 w-4 text-yellow-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Referral systems can generate 40-60% of new business for established electrical contractors
                         </span>
                       </li>
@@ -676,19 +676,19 @@ export const MarketingTab = () => {
                     <ul className="space-y-2">
                       <li className="flex items-start gap-2">
                         <Shield className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Consistent marketing creates business stability and reduces dependence on irregular work patterns
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Building className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Strong brand presence enables business scaling and potential expansion into new service areas
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Award className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Established marketing systems increase business value for potential sale or succession planning
                         </span>
                       </li>

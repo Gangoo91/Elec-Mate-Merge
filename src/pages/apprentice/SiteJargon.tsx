@@ -233,20 +233,20 @@ const SiteJargon = () => {
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Site Slang & Jargon Decoder</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+      <div className="flex flex-col items-center justify-center mb-4 sm:mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4 px-2">Site Slang & Jargon Decoder</h1>
+        <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4 px-2">
           Master the language of the trade and communicate confidently on any UK construction site
         </p>
         <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="terminology">Terminology</TabsTrigger>
-          <TabsTrigger value="phrases">Common Phrases</TabsTrigger>
-          <TabsTrigger value="regional">Regional Differences</TabsTrigger>
-          <TabsTrigger value="learning">Learning Tools</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
+          <TabsTrigger value="terminology" className="text-xs sm:text-sm py-2">Terminology</TabsTrigger>
+          <TabsTrigger value="phrases" className="text-xs sm:text-sm py-2">Phrases</TabsTrigger>
+          <TabsTrigger value="regional" className="text-xs sm:text-sm py-2">Regional</TabsTrigger>
+          <TabsTrigger value="learning" className="text-xs sm:text-sm py-2">Learning</TabsTrigger>
         </TabsList>
 
         <TabsContent value="terminology" className="space-y-6">
@@ -276,41 +276,41 @@ const SiteJargon = () => {
           </div>
 
           {/* Statistics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">{filteredTerms.length}</div>
-                <div className="text-sm text-muted-foreground">Terms Found</div>
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{filteredTerms.length}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Terms Found</div>
               </CardContent>
             </Card>
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-green-400">
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl font-bold text-green-400">
                   {filteredTerms.filter(t => t.difficulty === "beginner").length}
                 </div>
-                <div className="text-sm text-muted-foreground">Beginner</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Beginner</div>
               </CardContent>
             </Card>
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-yellow-400">
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl font-bold text-yellow-400">
                   {filteredTerms.filter(t => t.difficulty === "intermediate").length}
                 </div>
-                <div className="text-sm text-muted-foreground">Intermediate</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Intermediate</div>
               </CardContent>
             </Card>
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-red-400">
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl font-bold text-red-400">
                   {filteredTerms.filter(t => t.difficulty === "advanced").length}
                 </div>
-                <div className="text-sm text-muted-foreground">Advanced</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Advanced</div>
               </CardContent>
             </Card>
           </div>
 
           {/* Terms Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {filteredTerms.map((item, index) => (
               <Card key={index} className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors">
                 <CardHeader className="pb-2">
@@ -398,7 +398,7 @@ const SiteJargon = () => {
             </Select>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredRegionalTerms.map((region, index) => (
               <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
                 <CardHeader>
@@ -481,7 +481,7 @@ const SiteJargon = () => {
                 <h3 className="font-semibold text-white mb-3">Safety-Critical Terms (Learn These First!)</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {safetyTerms.map((term, index) => (
-                    <div key={index} className="p-3 border border-red-500/30 rounded-lg bg-red-500/10">
+                    <div key={index} className="p-3 border border-red-500/30 rounded-lg bg-card">
                       <div className="flex justify-between items-start">
                         <span className="font-medium text-red-300">{term.term}</span>
                         <Badge className={getDifficultyColor(term.difficulty)}>
@@ -499,7 +499,7 @@ const SiteJargon = () => {
       </Tabs>
 
       {/* Why This Matters Section */}
-      <Card className="border-green-500/50 bg-green-500/10">
+      <Card className="border-green-500/50 bg-card">
         <CardHeader>
           <CardTitle className="text-green-300">Why Understanding Site Language Matters</CardTitle>
         </CardHeader>

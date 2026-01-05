@@ -39,7 +39,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
       "HNC": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
       "HND": "bg-pink-500/20 border-pink-500/30 text-pink-300",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getLevelColor = (level: string) => {
@@ -50,7 +50,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
       "Level 6": "bg-red-500/20 border-red-500/30 text-red-300",
       "Level 7": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
     };
-    return colors[level as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[level as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getCategoryImage = (category: string) => {
@@ -91,10 +91,10 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
     <div className={cn("space-y-4", className)}>
       {/* Section Header */}
       <div className="space-y-1">
-        <h2 className="text-xl sm:text-2xl font-bold text-white">
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground">
           Featured Education Programmes
         </h2>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-foreground/80">
           Top-rated courses and qualifications for electrical professionals
         </p>
       </div>
@@ -151,7 +151,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
                 {/* Content */}
                 <div className="p-3 sm:p-4 space-y-2 flex flex-col h-[calc(100%-8rem)] sm:h-[calc(100%-9rem)]">
                   {/* Meta Info */}
-                  <div className="flex items-center justify-between text-xs text-white/80">
+                  <div className="flex items-center justify-between text-xs text-foreground/80">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
                         <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
@@ -169,7 +169,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-semibold text-white line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
+                  <h3 className="font-semibold text-foreground line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
                     {programme.title}
                   </h3>
 
@@ -179,7 +179,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
                   </p>
 
                   {/* Study Mode & Location */}
-                  <div className="text-white/80 text-xs space-y-1">
+                  <div className="text-foreground/80 text-xs space-y-1">
                     <div className="flex items-center gap-1">
                       <span className="font-medium">Mode:</span>
                       <span>{programme.studyMode}</span>
@@ -197,7 +197,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
 
                   {/* Footer */}
                   <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                    <div className="text-xs text-white/80">
+                    <div className="text-xs text-foreground/80">
                       <span className="font-medium">{programme.tuitionFees}</span>
                     </div>
                     
@@ -226,7 +226,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
       </Carousel>
 
       {/* Mobile scroll hint */}
-      <div className="md:hidden flex items-center justify-center gap-2 text-xs text-white/60">
+      <div className="md:hidden flex items-center justify-center gap-2 text-xs text-foreground/60">
         <ChevronLeft className="h-3 w-3" />
         <span>Swipe to browse more programmes</span>
         <ChevronRight className="h-3 w-3" />

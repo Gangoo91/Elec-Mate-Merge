@@ -26,7 +26,7 @@ export const TestingOverviewSection = ({ deadTests, liveTests }: TestingOverview
           <FlaskConical className="h-5 w-5 text-elec-yellow" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-white">Testing & Commissioning Procedures</h3>
+          <h3 className="text-lg font-semibold text-foreground">Testing & Commissioning Procedures</h3>
           <div className="flex items-center gap-2 mt-1">
             <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow/80">
               BS 7671 Part 6
@@ -41,7 +41,7 @@ export const TestingOverviewSection = ({ deadTests, liveTests }: TestingOverview
           <div className="space-y-3">
             <div className="flex items-center gap-2 pb-2 border-b border-elec-yellow/20">
               <FlaskConical className="h-5 w-5 text-elec-yellow" />
-              <h4 className="text-base font-semibold text-white">Dead Tests</h4>
+              <h4 className="text-base font-semibold text-foreground">Dead Tests</h4>
               <Badge variant="secondary" className="ml-auto">
                 {deadTests.length} {deadTests.length === 1 ? 'Test' : 'Tests'}
               </Badge>
@@ -59,7 +59,7 @@ export const TestingOverviewSection = ({ deadTests, liveTests }: TestingOverview
           <div className="space-y-3">
             <div className="flex items-center gap-2 pb-2 border-b border-elec-yellow/20">
               <Zap className="h-5 w-5 text-elec-yellow" />
-              <h4 className="text-base font-semibold text-white">Live Tests</h4>
+              <h4 className="text-base font-semibold text-foreground">Live Tests</h4>
               <Badge variant="secondary" className="ml-auto">
                 {liveTests.length} {liveTests.length === 1 ? 'Test' : 'Tests'}
               </Badge>
@@ -75,7 +75,7 @@ export const TestingOverviewSection = ({ deadTests, liveTests }: TestingOverview
 
       {/* Footer Note */}
       <div className="mt-6 pt-4 border-t border-elec-yellow/20">
-        <p className="text-xs text-white/60 text-center">
+        <p className="text-xs text-foreground/60 text-center">
           All testing procedures must comply with BS 7671:2018+A2:2022 regulations
         </p>
       </div>

@@ -48,16 +48,16 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
         </div>
         <div className="flex-1 space-y-3 w-full">
           <div className="flex items-center justify-start gap-3 flex-wrap">
-            <Badge className={`${conf.color} text-white border-none text-base px-3 py-1.5`}>
+            <Badge className={`${conf.color} text-foreground border-none text-base px-3 py-1.5`}>
               {conf.label}
             </Badge>
             <span className={`text-4xl font-bold ${conf.textColor}`}>
               {displayScore}%
             </span>
           </div>
-          <p className="text-base text-white leading-relaxed text-left">{conf.description}</p>
+          <p className="text-base text-foreground leading-relaxed text-left">{conf.description}</p>
           {reasoning && (
-            <p className="text-base text-white bg-elec-dark/80 rounded p-4 mt-3 leading-relaxed text-left">
+            <p className="text-base text-foreground bg-elec-dark/80 rounded p-4 mt-3 leading-relaxed text-left">
               {reasoning}
             </p>
           )}

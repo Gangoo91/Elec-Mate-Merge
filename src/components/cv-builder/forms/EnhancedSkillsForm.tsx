@@ -87,13 +87,13 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
     <div className="space-y-6">
       <div className="flex items-center gap-2 mb-6">
         <Sparkles className="h-5 w-5 text-elec-yellow" />
-        <h3 className="text-lg font-semibold text-white">Skills & Certifications</h3>
+        <h3 className="text-lg font-semibold text-foreground">Skills & Certifications</h3>
       </div>
 
       {/* Skills Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white">Skills</CardTitle>
+          <CardTitle className="text-foreground">Skills</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-2">
@@ -102,7 +102,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
               onChange={(e) => setNewSkill(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addSkill()}
               placeholder="Add a skill..."
-              className="bg-card border-elec-yellow/20 text-white min-h-[48px]"
+              className="bg-card border-elec-yellow/20 text-foreground min-h-[48px]"
             />
             <Button
               onClick={addSkill}
@@ -144,7 +144,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
           )}
 
           <div>
-            <Label className="text-white text-sm">Suggested Skills:</Label>
+            <Label className="text-foreground text-sm">Suggested Skills:</Label>
             <div className="flex flex-wrap gap-1 mt-2">
               {suggestedSkills
                 .filter(skill => !cvData.skills.includes(skill))
@@ -160,7 +160,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
                     }}
                     variant="outline"
                     size="sm"
-                    className="text-xs border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+                    className="text-xs border-elec-yellow/30 hover:bg-elec-yellow/10 text-foreground"
                   >
                     + {skill}
                   </Button>
@@ -173,7 +173,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
       {/* Certifications Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white">Certifications & Qualifications</CardTitle>
+          <CardTitle className="text-foreground">Certifications & Qualifications</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-2">
@@ -182,7 +182,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
               onChange={(e) => setNewCertification(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addCertification()}
               placeholder="Add a certification..."
-              className="bg-card border-elec-yellow/20 text-white min-h-[48px]"
+              className="bg-card border-elec-yellow/20 text-foreground min-h-[48px]"
             />
             <Button
               onClick={addCertification}
@@ -215,7 +215,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
           )}
 
           <div>
-            <Label className="text-white text-sm">Suggested Certifications:</Label>
+            <Label className="text-foreground text-sm">Suggested Certifications:</Label>
             <div className="flex flex-wrap gap-1 mt-2">
               {suggestedCertifications
                 .filter(cert => !cvData.certifications.includes(cert))
@@ -231,7 +231,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
                     }}
                     variant="outline"
                     size="sm"
-                    className="text-xs border-green-500/30 hover:bg-green-500/10 text-white"
+                    className="text-xs border-green-500/30 hover:bg-green-500/10 text-foreground"
                   >
                     + {cert}
                   </Button>

@@ -125,7 +125,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
               <Zap className="w-6 h-6 text-elec-yellow" />
             </div>
             <div className="flex-1">
-              <h2 className="text-xl font-semibold text-white">Generating RAMS Document</h2>
+              <h2 className="text-xl font-semibold text-foreground">Generating RAMS Document</h2>
               <p className="text-sm text-gray-400 mt-0.5">{currentStep}</p>
             </div>
           </div>
@@ -169,7 +169,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                 <button className="w-full flex items-center justify-between group touch-manipulation">
                   <div className="flex items-center gap-3">
                     <FileText className="h-5 w-5 text-blue-400" />
-                    <span className="font-semibold text-white">Your Job Description</span>
+                    <span className="font-semibold text-foreground">Your Job Description</span>
                   </div>
                   <ChevronDown className="h-4 w-4 text-gray-400 transition-transform group-data-[state=open]:rotate-180" />
                 </button>

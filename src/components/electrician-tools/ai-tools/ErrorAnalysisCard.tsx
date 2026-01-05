@@ -80,7 +80,7 @@ const ErrorAnalysisCard = ({ onRetry, possibleCauses = [] }: ErrorAnalysisCardPr
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <Button 
             onClick={onRetry} 
-            className="bg-amber-600 hover:bg-amber-700 text-white min-h-[48px] text-base"
+            className="bg-amber-600 hover:bg-amber-700 text-foreground min-h-[48px] text-base"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
             Try Again with Quick Mode

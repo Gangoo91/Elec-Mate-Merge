@@ -104,7 +104,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
       const discount = Math.round(((originalPrice - salePrice) / originalPrice) * 100);
       badges.push({ 
         text: `${discount}% OFF`, 
-        className: "bg-red-500 text-white text-xs px-2 py-1 rounded-full font-bold",
+        className: "bg-red-500 text-foreground text-xs px-2 py-1 rounded-full font-bold",
         position: "top-right" 
       });
     }
@@ -112,7 +112,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
     if (item.stockStatus === 'Low Stock') {
       badges.push({ 
         text: "Low Stock", 
-        className: "bg-amber-500 text-white text-xs px-2 py-1 rounded-full font-semibold",
+        className: "bg-amber-500 text-foreground text-xs px-2 py-1 rounded-full font-semibold",
         position: "top-left" 
       });
     }

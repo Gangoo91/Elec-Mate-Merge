@@ -72,7 +72,7 @@ export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestion
       animate={{ opacity: 1, y: 0 }}
       className="flex flex-col gap-3 mt-4 p-4 rounded-lg bg-gradient-to-r from-elec-dark/80 to-elec-grey/50 border border-elec-yellow/30"
     >
-      <div className="flex items-center gap-2 text-sm font-semibold text-white">
+      <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
         <Lightbulb className="h-4 w-4 text-elec-yellow" />
         <span>Who would you like to consult next?</span>
       </div>

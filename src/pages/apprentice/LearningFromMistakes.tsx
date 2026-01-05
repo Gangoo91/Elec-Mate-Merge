@@ -86,7 +86,7 @@ const LearningFromMistakes = () => {
             {safeMistakes.map((item, index) => (
               <div key={index} className={`border rounded-lg p-4 ${
                 item.severity === 'Dangerous' 
-                  ? 'border-red-500/50 bg-red-500/10' 
+                  ? 'border-red-500/50 bg-card' 
                   : 'border-elec-yellow/20 bg-elec-gray/50'
               }`}>
                 <div className="flex items-start justify-between mb-2">
@@ -170,7 +170,7 @@ const LearningFromMistakes = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-red-500/50 bg-red-500/10">
+      <Card className="border-red-500/50 bg-card">
         <CardHeader>
           <div className="flex items-center gap-2">
             <X className="h-6 w-6 text-red-400" />
@@ -197,7 +197,7 @@ const LearningFromMistakes = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-green-500/50 bg-green-500/10">
+      <Card className="border-green-500/50 bg-card">
         <CardHeader>
           <CardTitle className="text-green-300">The Bottom Line</CardTitle>
         </CardHeader>

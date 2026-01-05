@@ -70,7 +70,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
       {/* Skills Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white">Skills</CardTitle>
+          <CardTitle className="text-foreground">Skills</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-2">
@@ -79,7 +79,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
               onChange={(e) => setNewSkill(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addSkill()}
               placeholder="Add a skill..."
-              className="bg-elec-dark border-elec-yellow/20 text-white"
+              className="bg-elec-dark border-elec-yellow/20 text-foreground"
             />
             <Button
               onClick={addSkill}
@@ -112,7 +112,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
           )}
 
           <div>
-            <Label className="text-white text-sm">Suggested Skills:</Label>
+            <Label className="text-foreground text-sm">Suggested Skills:</Label>
             <div className="flex flex-wrap gap-1 mt-2">
               {suggestedSkills
                 .filter(skill => !cvData.skills.includes(skill))
@@ -128,7 +128,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
                     }}
                     variant="outline"
                     size="sm"
-                    className="text-xs border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+                    className="text-xs border-elec-yellow/30 hover:bg-elec-yellow/10 text-foreground"
                   >
                     + {skill}
                   </Button>
@@ -141,7 +141,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
       {/* Certifications Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white">Certifications & Qualifications</CardTitle>
+          <CardTitle className="text-foreground">Certifications & Qualifications</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-2">
@@ -150,7 +150,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
               onChange={(e) => setNewCertification(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addCertification()}
               placeholder="Add a certification..."
-              className="bg-elec-dark border-elec-yellow/20 text-white"
+              className="bg-elec-dark border-elec-yellow/20 text-foreground"
             />
             <Button
               onClick={addCertification}
@@ -183,7 +183,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
           )}
 
           <div>
-            <Label className="text-white text-sm">Suggested Certifications:</Label>
+            <Label className="text-foreground text-sm">Suggested Certifications:</Label>
             <div className="flex flex-wrap gap-1 mt-2">
               {suggestedCertifications
                 .filter(cert => !cvData.certifications.includes(cert))
@@ -199,7 +199,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
                     }}
                     variant="outline"
                     size="sm"
-                    className="text-xs border-green-500/30 hover:bg-green-500/10 text-white"
+                    className="text-xs border-green-500/30 hover:bg-green-500/10 text-foreground"
                   >
                     + {cert}
                   </Button>

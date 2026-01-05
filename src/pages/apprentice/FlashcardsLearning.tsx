@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BackButton from "@/components/common/BackButton";
-import { BookOpen, ChevronLeft, ChevronRight, Info } from "lucide-react";
+import { BookOpen, ChevronLeft, ChevronRight, Info, RotateCcw, Zap } from "lucide-react";
 import { useState } from "react";
 
 interface Flashcard {
@@ -21,52 +21,52 @@ interface FlashcardCategory {
 const FlashcardsLearning = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
-  
+
   const flashcardCategories: FlashcardCategory[] = [
     {
       id: "cable-colors",
-      title: "Cable Colors",
+      title: "Cable Colours",
       cards: [
         {
           id: "c1",
-          question: "What is the color for the Line/Phase conductor in a fixed wiring installation?",
+          question: "What is the colour for the Line/Phase conductor in a fixed wiring installation?",
           answer: "Brown"
         },
         {
           id: "c2",
-          question: "What is the color for the Neutral conductor in a fixed wiring installation?",
+          question: "What is the colour for the Neutral conductor in a fixed wiring installation?",
           answer: "Blue"
         },
         {
           id: "c3",
-          question: "What is the color for the Earth/CPC conductor in a fixed wiring installation?",
+          question: "What is the colour for the Earth/CPC conductor in a fixed wiring installation?",
           answer: "Green and Yellow"
         },
         {
           id: "c4",
-          question: "What was the old color for the Line/Phase conductor before harmonization?",
+          question: "What was the old colour for the Line/Phase conductor before harmonisation?",
           answer: "Red"
         },
         {
           id: "c5",
-          question: "What was the old color for the Neutral conductor before harmonization?",
+          question: "What was the old colour for the Neutral conductor before harmonisation?",
           answer: "Black"
         }
       ]
     },
     {
       id: "regs-references",
-      title: "Regulations References",
+      title: "Regulations",
       cards: [
         {
           id: "r1",
           question: "Maximum Earth Loop Impedance (Zs) for a 32A B type circuit breaker?",
-          answer: "1.44Ω"
+          answer: "1.44\u03A9"
         },
         {
           id: "r2",
           question: "Maximum Earth Loop Impedance (Zs) for a 20A B type circuit breaker?",
-          answer: "2.3Ω"
+          answer: "2.3\u03A9"
         },
         {
           id: "r3",
@@ -118,22 +118,22 @@ const FlashcardsLearning = () => {
     },
     {
       id: "ir-values",
-      title: "IR Test Values",
+      title: "IR Values",
       cards: [
         {
           id: "i1",
           question: "Minimum IR value for 230V circuits with test voltage of 500V DC?",
-          answer: "1.0 MΩ"
+          answer: "1.0 M\u03A9"
         },
         {
           id: "i2",
           question: "Minimum IR value for circuits up to 500V with test voltage of 500V DC?",
-          answer: "1.0 MΩ"
+          answer: "1.0 M\u03A9"
         },
         {
           id: "i3",
           question: "Minimum IR value for circuits above 500V with test voltage of 1000V DC?",
-          answer: "1.0 MΩ"
+          answer: "1.0 M\u03A9"
         },
         {
           id: "i4",
@@ -157,16 +157,20 @@ const FlashcardsLearning = () => {
 
   const handleNext = () => {
     if (flipped) setFlipped(false);
-    setCurrentCardIndex((prevIndex) => 
-      prevIndex === getCurrentCategoryCards().length - 1 ? 0 : prevIndex + 1
-    );
+    setTimeout(() => {
+      setCurrentCardIndex((prevIndex) =>
+        prevIndex === getCurrentCategoryCards().length - 1 ? 0 : prevIndex + 1
+      );
+    }, flipped ? 200 : 0);
   };
 
   const handlePrevious = () => {
     if (flipped) setFlipped(false);
-    setCurrentCardIndex((prevIndex) => 
-      prevIndex === 0 ? getCurrentCategoryCards().length - 1 : prevIndex - 1
-    );
+    setTimeout(() => {
+      setCurrentCardIndex((prevIndex) =>
+        prevIndex === 0 ? getCurrentCategoryCards().length - 1 : prevIndex - 1
+      );
+    }, flipped ? 200 : 0);
   };
 
   const handleFlip = () => {
@@ -183,111 +187,170 @@ const FlashcardsLearning = () => {
   const currentCard = currentCards[currentCardIndex];
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col md:flex-row items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold tracking-tight">Flashcards & Microlearning</h1>
+    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in px-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Flashcards</h1>
+          <p className="text-muted-foreground text-sm mt-1">Quick revision for key electrical concepts</p>
+        </div>
         <BackButton customUrl="/apprentice/on-job-tools" label="Back to Tools" />
       </div>
-      
-      <div className="bg-elec-gray p-4 sm:p-6 rounded-lg border border-elec-yellow/20">
-        <div className="flex flex-col md:flex-row gap-6 items-start">
-          <div className="bg-elec-yellow/10 p-3 rounded-md">
-            <BookOpen size={36} className="text-elec-yellow" />
+
+      {/* Header Card */}
+      <div className="bg-gradient-to-br from-elec-gray to-elec-gray/80 p-4 sm:p-6 rounded-xl border border-elec-yellow/20">
+        <div className="flex gap-4 items-start">
+          <div className="bg-elec-yellow/20 p-3 rounded-lg shrink-0">
+            <Zap className="h-6 w-6 text-elec-yellow" />
           </div>
-          <div className="flex-1">
-            <h2 className="text-xl font-semibold mb-2">Quick Revision Cards</h2>
-            <p className="text-muted-foreground">
-              Swipeable, quick-fire revision flashcards for cable colors, regulations references, EICR codes, and minimum IR test values. 
-              Perfect for site tasks or exam preparation.
+          <div>
+            <h2 className="text-lg font-semibold mb-1">Quick Revision Cards</h2>
+            <p className="text-muted-foreground text-sm">
+              Tap cards to flip. Use these during breaks for effective microlearning.
             </p>
           </div>
         </div>
       </div>
 
       <Tabs defaultValue={currentCategory} onValueChange={handleTabChange} className="w-full">
-        <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-6">
+        <TabsList className="grid grid-cols-2 sm:grid-cols-4 h-auto gap-1 bg-elec-gray p-1">
           {flashcardCategories.map((category) => (
-            <TabsTrigger key={category.id} value={category.id}>
+            <TabsTrigger
+              key={category.id}
+              value={category.id}
+              className="text-xs sm:text-sm py-2 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow"
+            >
               {category.title}
             </TabsTrigger>
           ))}
         </TabsList>
-        
+
         {flashcardCategories.map((category) => (
-          <TabsContent key={category.id} value={category.id} className="mt-0">
+          <TabsContent key={category.id} value={category.id} className="mt-6">
             <div className="flex flex-col items-center">
-              <div 
-                className="w-full max-w-md h-64 md:h-80 cursor-pointer perspective-1000 my-6"
+              {/* Flashcard Container */}
+              <div
+                className="w-full max-w-lg cursor-pointer select-none"
                 onClick={handleFlip}
+                style={{ perspective: '1000px' }}
               >
-                <div className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${flipped ? 'rotate-y-180' : ''}`}>
-                  {/* Front of card */}
-                  <Card className={`absolute w-full h-full backface-hidden border-elec-yellow/20 bg-elec-gray flex flex-col justify-center items-center p-6 ${flipped ? 'invisible' : ''}`}>
-                    <CardContent className="flex flex-col justify-center items-center h-full w-full p-0">
-                      <div className="text-center space-y-4">
-                        <p className="text-xl font-medium">{currentCard?.question}</p>
-                        <div className="mt-auto pt-6 text-muted-foreground text-sm">
-                          <p>Tap to reveal answer</p>
-                        </div>
+                <div
+                  className="relative w-full transition-transform duration-500"
+                  style={{
+                    minHeight: '280px',
+                    transformStyle: 'preserve-3d',
+                    transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
+                  }}
+                >
+                  {/* Front of card (Question) */}
+                  <Card
+                    className="absolute inset-0 border-elec-yellow/30 bg-gradient-to-br from-elec-gray via-elec-gray to-elec-yellow/5 shadow-lg"
+                    style={{ backfaceVisibility: 'hidden' }}
+                  >
+                    <CardContent className="flex flex-col justify-between h-full p-6">
+                      <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
+                        <span className="bg-elec-yellow/10 px-2 py-1 rounded text-elec-yellow">
+                          Question
+                        </span>
+                        <span>{currentCardIndex + 1} / {currentCards.length}</span>
+                      </div>
+                      <div className="flex-1 flex items-center justify-center">
+                        <p className="text-lg sm:text-xl font-medium text-center leading-relaxed">
+                          {currentCard?.question}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-center gap-2 text-muted-foreground text-sm mt-4">
+                        <RotateCcw className="h-4 w-4" />
+                        <span>Tap to reveal answer</span>
                       </div>
                     </CardContent>
                   </Card>
-                  
-                  {/* Back of card */}
-                  <Card className={`absolute w-full h-full backface-hidden rotate-y-180 border-elec-yellow/20 bg-elec-yellow/10 flex flex-col justify-center items-center p-6 ${!flipped ? 'invisible' : ''}`}>
-                    <CardContent className="flex flex-col justify-center items-center h-full w-full p-0">
-                      <div className="text-center space-y-4">
-                        <p className="text-xl font-medium text-elec-yellow">{currentCard?.answer}</p>
-                        <div className="mt-auto pt-6 text-muted-foreground text-sm">
-                          <p>Tap to see question</p>
-                        </div>
+
+                  {/* Back of card (Answer) */}
+                  <Card
+                    className="absolute inset-0 border-elec-yellow/50 bg-gradient-to-br from-elec-yellow/20 via-elec-gray to-elec-gray shadow-lg"
+                    style={{
+                      backfaceVisibility: 'hidden',
+                      transform: 'rotateY(180deg)'
+                    }}
+                  >
+                    <CardContent className="flex flex-col justify-between h-full p-6">
+                      <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
+                        <span className="bg-green-500/20 px-2 py-1 rounded text-green-400">
+                          Answer
+                        </span>
+                        <span>{currentCardIndex + 1} / {currentCards.length}</span>
+                      </div>
+                      <div className="flex-1 flex items-center justify-center">
+                        <p className="text-xl sm:text-2xl font-bold text-center text-elec-yellow leading-relaxed">
+                          {currentCard?.answer}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-center gap-2 text-muted-foreground text-sm mt-4">
+                        <RotateCcw className="h-4 w-4" />
+                        <span>Tap to see question</span>
                       </div>
                     </CardContent>
                   </Card>
                 </div>
               </div>
-              
-              <div className="flex justify-between w-full max-w-md mt-4">
-                <Button 
-                  variant="outline" 
+
+              {/* Navigation Buttons */}
+              <div className="flex gap-3 w-full max-w-lg mt-6">
+                <Button
+                  variant="outline"
                   onClick={handlePrevious}
-                  className="flex-1 mr-2"
+                  className="flex-1 h-12 border-elec-yellow/30 hover:bg-elec-yellow/10"
                 >
-                  <ChevronLeft className="mr-2 h-4 w-4" />
+                  <ChevronLeft className="mr-2 h-5 w-5" />
                   Previous
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={handleNext}
-                  className="flex-1 ml-2"
+                  className="flex-1 h-12 border-elec-yellow/30 hover:bg-elec-yellow/10"
                 >
                   Next
-                  <ChevronRight className="ml-2 h-4 w-4" />
+                  <ChevronRight className="ml-2 h-5 w-5" />
                 </Button>
               </div>
-              <div className="text-center mt-4 text-muted-foreground">
-                {currentCardIndex + 1} of {currentCards.length}
+
+              {/* Progress Indicator */}
+              <div className="flex gap-1.5 mt-4">
+                {currentCards.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      index === currentCardIndex
+                        ? 'w-6 bg-elec-yellow'
+                        : 'w-2 bg-elec-yellow/30'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </TabsContent>
         ))}
       </Tabs>
-      
-      <div className="bg-blue-950/20 border border-blue-500/30 rounded-md p-6">
-        <div className="flex items-start gap-4">
-          <Info className="h-5 w-5 text-blue-400 flex-shrink-0 mt-1" />
-          <div>
-            <h3 className="text-lg font-semibold text-blue-300 mb-2">Study Tips</h3>
-            <ul className="text-sm text-blue-200/90 space-y-2 list-disc pl-4">
-              <li>Test yourself daily with these flashcards to build memory retention</li>
-              <li>Review any cards you struggle with more frequently</li>
-              <li>Try to explain the answer in your own words before revealing it</li>
-              <li>Create your own flashcards for topics you find challenging</li>
-              <li>Use these flashcards during short breaks on site for effective microlearning</li>
-            </ul>
+
+      {/* Study Tips */}
+      <Card className="border-blue-500/30 bg-gradient-to-r from-blue-500/10 to-blue-500/5">
+        <CardContent className="p-4 sm:p-6">
+          <div className="flex items-start gap-3">
+            <div className="bg-blue-500/20 p-2 rounded-lg shrink-0">
+              <Info className="h-5 w-5 text-blue-400" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-blue-300 mb-2">Study Tips</h3>
+              <ul className="text-sm text-blue-200/80 space-y-1.5">
+                <li>- Test yourself daily to build memory retention</li>
+                <li>- Review cards you struggle with more frequently</li>
+                <li>- Try explaining answers before revealing them</li>
+                <li>- Use during short breaks on site for microlearning</li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

@@ -1,10 +1,9 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileInput } from "@/components/ui/mobile-input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Zap, RotateCcw, AlertTriangle, Info, Shield, BookOpen, CheckCircle, XCircle, Calculator, Target } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -37,17 +36,15 @@ const PFCCalculator = () => {
     const zs = ze + r1r2;
     
     // Calculate PFC using Ohm's law
+    // For earth fault loop impedance, we use phase voltage (Uo = 230V)
+    // regardless of single-phase or three-phase, as the fault path is phase-to-earth
+    // BS 7671: Ipf = Uo / Zs where Uo is nominal voltage to earth (230V)
     let pfcValue: number;
-    
-    if (systemType === "single-phase") {
-      pfcValue = supplyVoltage / zs;
-    } else if (systemType === "three-phase") {
-      // For 3-phase systems, use line voltage and account for √3 factor
-      const lineVoltage = supplyVoltage * Math.sqrt(3);
-      pfcValue = lineVoltage / zs;
-    } else {
-      pfcValue = supplyVoltage / zs;
-    }
+
+    // Use phase voltage (230V) for earth fault calculations
+    // Even for 3-phase systems, earth faults occur phase-to-earth at 230V
+    const phaseVoltage = systemType === "three-phase" ? 230 : supplyVoltage;
+    pfcValue = phaseVoltage / zs;
 
     // Assess the PFC level and provide recommendations
     let assessmentLevel: string;
@@ -130,18 +127,15 @@ const PFCCalculator = () => {
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold">System Parameters</h3>
                 
-                <div className="space-y-2">
-                  <Label htmlFor="system-type">System Type</Label>
-                  <Select value={systemType} onValueChange={setSystemType}>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                      <SelectValue placeholder="Select system type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="single-phase">Single Phase (230V)</SelectItem>
-                      <SelectItem value="three-phase">Three Phase (400V)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <MobileSelect value={systemType} onValueChange={setSystemType}>
+                  <MobileSelectTrigger label="System Type">
+                    <MobileSelectValue placeholder="Select system type" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    <MobileSelectItem value="single-phase">Single Phase (230V)</MobileSelectItem>
+                    <MobileSelectItem value="three-phase">Three Phase (400V)</MobileSelectItem>
+                  </MobileSelectContent>
+                </MobileSelect>
 
                 <div className="space-y-2">
                   <MobileInput
@@ -182,12 +176,13 @@ const PFCCalculator = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button onClick={calculatePFC} className="flex-1">
+                  <MobileButton onClick={calculatePFC} variant="elec" className="flex-1 min-h-[48px]">
+                    <Calculator className="mr-2 h-4 w-4" />
                     Calculate PFC
-                  </Button>
-                  <Button onClick={resetCalculator} variant="outline">
+                  </MobileButton>
+                  <MobileButton onClick={resetCalculator} variant="elec-outline" className="min-h-[48px]">
                     <RotateCcw className="h-4 w-4" />
-                  </Button>
+                  </MobileButton>
                 </div>
               </div>
 

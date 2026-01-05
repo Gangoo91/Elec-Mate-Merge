@@ -23,7 +23,7 @@ const BackButton = ({ customUrl, label = "Back" }: BackButtonProps) => {
     <Button 
       variant="outline" 
       onClick={handleBack}
-      className="bg-elec-gray/50 border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+      className="bg-elec-gray/50 border-elec-yellow/30 hover:bg-elec-yellow/10 text-foreground"
     >
       <ArrowLeft className="mr-2 h-4 w-4" />
       {label}

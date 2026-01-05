@@ -152,7 +152,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-2">
           <Package className="h-6 w-6 text-elec-yellow" />
-          <h3 className="text-2xl font-bold text-white">Intelligent Material Search</h3>
+          <h3 className="text-2xl font-bold text-foreground">Intelligent Material Search</h3>
         </div>
         <p className="text-muted-foreground">
           Search across <span className="text-elec-yellow font-semibold">43,371 materials</span> with AI-powered matching
@@ -254,7 +254,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
-              Found <span className="font-semibold text-white">{searchResults.length}</span> materials
+              Found <span className="font-semibold text-foreground">{searchResults.length}</span> materials
               {searchMethod && (
                 <span className="ml-2 text-xs text-elec-yellow">
                   ({searchMethod === 'fast_keyword' ? 'Fast PostgreSQL' : 'Keyword'} search)
@@ -269,7 +269,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                 <div className="p-4 space-y-3">
                   {/* Material Name */}
                   <div className="space-y-1">
-                    <h4 className="font-semibold text-white line-clamp-2 text-sm">
+                    <h4 className="font-semibold text-foreground line-clamp-2 text-sm">
                       {material.name}
                     </h4>
                     {material.brand && (

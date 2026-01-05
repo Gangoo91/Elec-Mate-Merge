@@ -71,7 +71,7 @@ export const FaultDiagnosisStepCard = ({
             <div className="space-y-4">
               {/* Title & Regulation */}
               <div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight text-left mb-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-foreground leading-tight text-left mb-2">
                   {step.stepTitle}
                 </h3>
                 {step.regulation && (
@@ -94,7 +94,7 @@ export const FaultDiagnosisStepCard = ({
                   >
                     <div className="flex items-center gap-2">
                       <Wrench className="h-5 w-5 text-blue-400" />
-                      <h4 className="font-bold text-base text-white">Action</h4>
+                      <h4 className="font-bold text-base text-foreground">Action</h4>
                     </div>
                     <ChevronDown className={cn(
                       "h-5 w-5 transition-transform",
@@ -110,10 +110,10 @@ export const FaultDiagnosisStepCard = ({
                         transition={{ duration: 0.2 }}
                       >
                         <div className="p-4 bg-blue-500/5">
-                          <p className="text-base text-white leading-relaxed text-left mb-3">{step.action}</p>
+                          <p className="text-base text-foreground leading-relaxed text-left mb-3">{step.action}</p>
                           <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
                             <p className="text-sm font-semibold text-blue-300 mb-1">What to Test:</p>
-                            <p className="text-sm text-white">{step.whatToTest}</p>
+                            <p className="text-sm text-foreground">{step.whatToTest}</p>
                           </div>
                         </div>
                       </motion.div>
@@ -133,7 +133,7 @@ export const FaultDiagnosisStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <Zap className="h-5 w-5 text-purple-400" />
-                        <h4 className="font-bold text-base text-white">Measurement Details</h4>
+                        <h4 className="font-bold text-base text-foreground">Measurement Details</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -152,25 +152,25 @@ export const FaultDiagnosisStepCard = ({
                             {step.whatToMeasure && (
                               <div>
                                 <p className="text-sm font-semibold text-purple-300 mb-1">What to Measure:</p>
-                                <p className="text-base text-white">{step.whatToMeasure}</p>
+                                <p className="text-base text-foreground">{step.whatToMeasure}</p>
                               </div>
                             )}
                             {step.leadPlacement && (
                               <div>
                                 <p className="text-sm font-semibold text-purple-300 mb-1">Lead Placement:</p>
-                                <p className="text-base text-white">{step.leadPlacement}</p>
+                                <p className="text-base text-foreground">{step.leadPlacement}</p>
                               </div>
                             )}
                             {step.expectedReading && (
                               <div className="bg-purple-500/20 border border-purple-500/40 rounded p-3">
                                 <p className="text-sm font-semibold text-purple-200 mb-1">Expected Reading:</p>
-                                <p className="text-base text-white font-mono">{step.expectedReading}</p>
+                                <p className="text-base text-foreground font-mono">{step.expectedReading}</p>
                               </div>
                             )}
                             {step.acceptableRange && (
                               <div>
                                 <p className="text-sm font-semibold text-purple-300 mb-1">Acceptable Range:</p>
-                                <p className="text-base text-white">{step.acceptableRange}</p>
+                                <p className="text-base text-foreground">{step.acceptableRange}</p>
                               </div>
                             )}
                           </div>
@@ -192,7 +192,7 @@ export const FaultDiagnosisStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <Wrench className="h-5 w-5 text-cyan-400" />
-                        <h4 className="font-bold text-base text-white">Instrument Setup</h4>
+                        <h4 className="font-bold text-base text-foreground">Instrument Setup</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -207,7 +207,7 @@ export const FaultDiagnosisStepCard = ({
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="p-4 bg-cyan-500/5 text-base text-white leading-relaxed text-left">
+                          <div className="p-4 bg-cyan-500/5 text-base text-foreground leading-relaxed text-left">
                             {step.instrumentSetup}
                           </div>
                         </motion.div>
@@ -228,7 +228,7 @@ export const FaultDiagnosisStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <AlertTriangle className="h-5 w-5 text-red-400" />
-                        <h4 className="font-bold text-base text-white">Safety Warnings</h4>
+                        <h4 className="font-bold text-base text-foreground">Safety Warnings</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -246,7 +246,7 @@ export const FaultDiagnosisStepCard = ({
                           <div className="p-4 bg-red-500/5">
                             <ul className="space-y-2 text-left">
                               {step.safetyWarnings.map((warning, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
+                                <li key={idx} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
                                   <AlertTriangle className="h-4 w-4 text-red-400 mt-1 flex-shrink-0" />
                                   <span>{warning}</span>
                                 </li>
@@ -271,7 +271,7 @@ export const FaultDiagnosisStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <AlertTriangle className="h-5 w-5 text-amber-400" />
-                        <h4 className="font-bold text-base text-white">If Test Fails</h4>
+                        <h4 className="font-bold text-base text-foreground">If Test Fails</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -286,7 +286,7 @@ export const FaultDiagnosisStepCard = ({
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="p-4 bg-amber-500/5 text-base text-white leading-relaxed text-left">
+                          <div className="p-4 bg-amber-500/5 text-base text-foreground leading-relaxed text-left">
                             {step.ifFailed}
                           </div>
                         </motion.div>

@@ -330,7 +330,7 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
           <div className="text-center mb-6">
             <div className="flex items-center justify-center gap-2 mb-2">
               <FileText className="h-6 w-6 text-elec-yellow" />
-              <h1 className="text-2xl font-bold text-white">AI Report Writer</h1>
+              <h1 className="text-2xl font-bold text-foreground">AI Report Writer</h1>
             </div>
             <p className="text-muted-foreground">
               Generate professional electrical reports and certificates using AI
@@ -346,7 +346,7 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
                 setSelectedTemplate(value);
                 setFormData(null); // Reset form data when template changes
               }}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/30 text-white">
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/30 text-foreground">
                   <SelectValue placeholder="Select a report template" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/30">
@@ -354,7 +354,7 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
                     <SelectItem 
                       key={template.id} 
                       value={template.id}
-                      className="text-white hover:bg-elec-yellow/10 focus:bg-elec-yellow/10"
+                      className="text-foreground hover:bg-elec-yellow/10 focus:bg-elec-yellow/10"
                     >
                       {template.name}
                     </SelectItem>
@@ -413,7 +413,7 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
                 <Textarea
                   ref={textareaRef}
                   placeholder="Add any additional notes or specific requirements for the report..."
-                  className="min-h-[80px] max-h-32 resize-none bg-elec-dark border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/50"
+                  className="min-h-[80px] max-h-32 resize-none bg-elec-dark border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/50"
                   value={reportPrompt}
                   onChange={(e) => setReportPrompt(e.target.value)}
                 />

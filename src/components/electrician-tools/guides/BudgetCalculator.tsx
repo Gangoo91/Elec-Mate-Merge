@@ -71,7 +71,7 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
     <div className="space-y-6">
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <Calculator className="h-5 w-5 text-elec-yellow" />
             Professional Tool Budget Calculator
           </CardTitle>
@@ -80,7 +80,7 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
-                <label className="text-sm font-medium text-white mb-2 block">
+                <label className="text-sm font-medium text-foreground mb-2 block">
                   Total Budget: £{budget[0]}
                 </label>
                 <Slider
@@ -98,7 +98,7 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
               </div>
 
               <div>
-                <label className="text-sm font-medium text-white mb-2 block">
+                <label className="text-sm font-medium text-foreground mb-2 block">
                   Timeline: {timeline[0]} months
                 </label>
                 <Slider
@@ -116,7 +116,7 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
               </div>
 
               <div>
-                <label className="text-sm font-medium text-white mb-2 block">Experience Level</label>
+                <label className="text-sm font-medium text-foreground mb-2 block">Experience Level</label>
                 <div className="grid grid-cols-3 gap-2">
                   {Object.entries(experienceLevels).map(([key, level]) => (
                     <Button
@@ -136,7 +136,7 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
               </div>
 
               <div>
-                <label className="text-sm font-medium text-white mb-2 block">Primary Work Type</label>
+                <label className="text-sm font-medium text-foreground mb-2 block">Primary Work Type</label>
                 <div className="grid grid-cols-3 gap-2">
                   {Object.entries(workTypes).map(([key, type]) => (
                     <Button
@@ -162,11 +162,11 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Total Budget:</span>
-                    <span className="text-white font-medium">£{calculation.totalBudget}</span>
+                    <span className="text-foreground font-medium">£{calculation.totalBudget}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Monthly Budget:</span>
-                    <span className="text-white font-medium">£{Math.round(calculation.monthlyBudget)}</span>
+                    <span className="text-foreground font-medium">£{Math.round(calculation.monthlyBudget)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Estimated Total Cost:</span>
@@ -174,7 +174,7 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Time to Complete:</span>
-                    <span className="text-white font-medium">{calculation.monthsToComplete} months</span>
+                    <span className="text-foreground font-medium">{calculation.monthsToComplete} months</span>
                   </div>
                 </div>
                 
@@ -205,7 +205,7 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Best Investment:</span>
-                    <span className="text-white font-medium">
+                    <span className="text-foreground font-medium">
                       {calculation.recommendations.reduce((best, rec) => 
                         rec.roiMonths < best.roiMonths ? rec : best
                       ).category}
@@ -220,7 +220,7 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white">Recommended Purchase Order</CardTitle>
+          <CardTitle className="text-foreground">Recommended Purchase Order</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
@@ -238,7 +238,7 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
                         {index + 1}
                       </Badge>
                       <div>
-                        <h4 className="text-white font-medium text-sm">{rec.category}</h4>
+                        <h4 className="text-foreground font-medium text-sm">{rec.category}</h4>
                         <p className="text-xs text-muted-foreground">
                           ROI: {rec.roiMonths} months | Purchase by month {rec.timeline}
                         </p>

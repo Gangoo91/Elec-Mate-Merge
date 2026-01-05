@@ -1,11 +1,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Lightbulb, Info, Calculator, RotateCcw, CheckCircle, AlertTriangle, XCircle, Zap, BookOpen } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -157,18 +156,15 @@ const LEDDriverCalculator = () => {
         <div className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <div>
-                <Label htmlFor="calculation-type">Calculation Type</Label>
-                <Select value={calculationType} onValueChange={setCalculationType}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    <SelectItem value="driver-sizing">Driver Sizing</SelectItem>
-                    <SelectItem value="array-design">Array Design</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <MobileSelect value={calculationType} onValueChange={setCalculationType}>
+                <MobileSelectTrigger label="Calculation Type">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <MobileSelectItem value="driver-sizing">Driver Sizing</MobileSelectItem>
+                  <MobileSelectItem value="array-design">Array Design</MobileSelectItem>
+                </MobileSelectContent>
+              </MobileSelect>
 
               <div>
                 <MobileInput
@@ -209,18 +205,15 @@ const LEDDriverCalculator = () => {
                 />
               </div>
 
-              <div>
-                <Label htmlFor="connection-type">Connection Type</Label>
-                <Select value={connectionType} onValueChange={setConnectionType}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    <SelectItem value="series">Series</SelectItem>
-                    <SelectItem value="parallel">Parallel</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <MobileSelect value={connectionType} onValueChange={setConnectionType}>
+                <MobileSelectTrigger label="Connection Type">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <MobileSelectItem value="series">Series</MobileSelectItem>
+                  <MobileSelectItem value="parallel">Parallel</MobileSelectItem>
+                </MobileSelectContent>
+              </MobileSelect>
 
               <div>
                 <MobileInput
@@ -250,13 +243,13 @@ const LEDDriverCalculator = () => {
               </div>
 
               <div className="flex gap-2">
-                <Button onClick={calculateLEDDriver} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                <MobileButton onClick={calculateLEDDriver} variant="elec" className="flex-1 min-h-[48px]">
                   <Calculator className="h-4 w-4 mr-2" />
                   Calculate
-                </Button>
-                <Button variant="outline" onClick={reset}>
+                </MobileButton>
+                <MobileButton variant="elec-outline" onClick={reset} className="min-h-[48px]">
                   <RotateCcw className="h-4 w-4" />
-                </Button>
+                </MobileButton>
               </div>
             </div>
 
@@ -364,19 +357,110 @@ const LEDDriverCalculator = () => {
           </div>
 
           {result && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <InfoBox
-                title="Why This Matters"
-                icon={<Zap className="h-5 w-5 text-elec-yellow" />}
-                as="section"
-                points={[
-                  "Proper driver sizing prevents LED thermal runaway and premature failure",
-                  "Voltage headroom ensures stable constant current operation across temperature variations",
-                  "Efficiency affects running costs - low efficiency drivers waste energy as heat",
-                  "Connection type impacts reliability - series provides consistent current, parallel needs balancing",
-                  "Safety margins account for component tolerances and ensure long-term reliability"
-                ]}
-              />
+            <>
+              {/* How It Worked Out - Step-by-step calculation breakdown */}
+              <Card className="border-purple-500/30 bg-purple-500/5">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-purple-300 text-base flex items-center gap-2">
+                    <Calculator className="h-4 w-4" />
+                    How It Worked Out
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4 text-sm">
+                  {/* Step 1: Input values */}
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 1: Your LED Specifications</p>
+                    <div className="bg-purple-500/10 rounded p-3 space-y-1 text-purple-100 font-mono text-xs">
+                      <p>LED Forward Voltage (Vf): {ledVoltage}V</p>
+                      <p>LED Forward Current (If): {ledCurrent}mA = {(parseFloat(ledCurrent) / 1000).toFixed(3)}A</p>
+                      <p>Number of LEDs: {numLeds}</p>
+                      <p>Connection: {connectionType === "series" ? "Series" : "Parallel"}</p>
+                      <p>Supply Voltage: {supplyVoltage}V</p>
+                      <p>Driver Efficiency: {(parseFloat(efficiency) * 100).toFixed(0)}%</p>
+                    </div>
+                  </div>
+
+                  {/* Step 2: Total voltage and current */}
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 2: Array Voltage & Current</p>
+                    <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs space-y-1">
+                      {connectionType === "series" ? (
+                        <>
+                          <p className="text-purple-300 mb-1">Series Connection:</p>
+                          <p>V_total = Vf × n = {ledVoltage} × {numLeds} = {result.totalVoltage.toFixed(1)}V</p>
+                          <p>I_total = If = {ledCurrent}mA (same through all LEDs)</p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-purple-300 mb-1">Parallel Connection:</p>
+                          <p>V_total = Vf = {ledVoltage}V (same across all LEDs)</p>
+                          <p>I_total = If × n = {ledCurrent} × {numLeds} = {result.totalCurrent.toFixed(0)}mA</p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Step 3: LED array power */}
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 3: LED Array Power</p>
+                    <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs">
+                      <p>P_LED = V × I = {result.totalVoltage.toFixed(1)} × {(result.totalCurrent / 1000).toFixed(3)}</p>
+                      <p className="text-purple-300">P_LED = {result.totalPower.toFixed(2)}W</p>
+                    </div>
+                  </div>
+
+                  {/* Step 4: Driver power calculation */}
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 4: Driver Power (accounting for efficiency)</p>
+                    <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs space-y-1">
+                      <p>P_driver = P_LED / η = {result.totalPower.toFixed(2)} / {efficiency}</p>
+                      <p className="text-purple-300">P_driver = {result.driverPower.toFixed(2)}W</p>
+                      <p className="mt-2">Power Loss = P_driver - P_LED = {result.driverPower.toFixed(2)} - {result.totalPower.toFixed(2)}</p>
+                      <p className="text-amber-400">Power Loss = {result.powerLoss.toFixed(2)}W (dissipated as heat)</p>
+                    </div>
+                  </div>
+
+                  {/* Step 5: Driver sizing with safety margin */}
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 5: Recommended Driver (with 20% safety margin)</p>
+                    <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs space-y-1">
+                      <p>Recommended = P_driver × 1.2 = {result.driverPower.toFixed(2)} × 1.2</p>
+                      <p className="text-purple-300">Recommended = {result.recommendations.recommendedDriverPower.toFixed(1)}W</p>
+                      <p className="text-green-400 mt-1">→ Select {result.recommendations.nearestStandardDriver} driver (next standard size up)</p>
+                    </div>
+                  </div>
+
+                  {/* Voltage headroom check */}
+                  {connectionType === "series" && (
+                    <div className="bg-purple-500/10 rounded p-3 border border-purple-500/30">
+                      <p className="text-purple-200 font-medium mb-2">Voltage Headroom Check:</p>
+                      <p className="text-purple-100 font-mono text-xs">
+                        Headroom = V_supply - V_total = {supplyVoltage} - {result.totalVoltage.toFixed(1)} = {(parseFloat(supplyVoltage) - result.totalVoltage).toFixed(1)}V
+                      </p>
+                      <p className="text-purple-100 font-mono text-xs">
+                        Headroom % = {(((parseFloat(supplyVoltage) - result.totalVoltage) / parseFloat(supplyVoltage)) * 100).toFixed(1)}%
+                      </p>
+                      <p className={`text-xs mt-1 ${parseFloat(supplyVoltage) - result.totalVoltage > parseFloat(supplyVoltage) * 0.1 ? "text-green-400" : "text-amber-400"}`}>
+                        {parseFloat(supplyVoltage) - result.totalVoltage > parseFloat(supplyVoltage) * 0.1 ? "✓ Sufficient headroom for constant current operation" : "⚠ Limited headroom - consider higher supply voltage"}
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <InfoBox
+                  title="Why This Matters"
+                  icon={<Zap className="h-5 w-5 text-elec-yellow" />}
+                  as="section"
+                  points={[
+                    "Proper driver sizing prevents LED thermal runaway and premature failure",
+                    "Voltage headroom ensures stable constant current operation across temperature variations",
+                    "Efficiency affects running costs - low efficiency drivers waste energy as heat",
+                    "Connection type impacts reliability - series provides consistent current, parallel needs balancing",
+                    "Safety margins account for component tolerances and ensure long-term reliability"
+                  ]}
+                />
               
               <InfoBox
                 title="Regulations & Good Practice"
@@ -385,13 +469,14 @@ const LEDDriverCalculator = () => {
                 points={[
                   "BS 7671:2018 Section 559 - Luminaires and lighting installations requirements",
                   "IET Guidance Note 1 - Selection and erection of equipment",
-                  "BS EN 61347 series - LED driver safety and performance standards", 
+                  "BS EN 61347 series - LED driver safety and performance standards",
                   "Consider IP ratings for environmental protection requirements",
                   "Ensure thermal management meets manufacturer specifications",
                   "Use drivers with appropriate dimming compatibility if required"
                 ]}
               />
-            </div>
+              </div>
+            </>
           )}
         </div>
       </CardContent>

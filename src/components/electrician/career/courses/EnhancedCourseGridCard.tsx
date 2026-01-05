@@ -50,7 +50,7 @@ const EnhancedCourseGridCard = ({ course, onClick }: EnhancedCourseGridCardProps
         </div>
 
         {/* Course title */}
-        <CardTitle className="text-base text-white leading-tight line-clamp-2 group-hover:text-elec-yellow transition-colors mb-1">
+        <CardTitle className="text-base text-foreground leading-tight line-clamp-2 group-hover:text-elec-yellow transition-colors mb-1">
           {course.title}
         </CardTitle>
         
@@ -92,7 +92,7 @@ const EnhancedCourseGridCard = ({ course, onClick }: EnhancedCourseGridCardProps
             <div className="flex justify-center mb-1.5">
               <Clock className="h-4 w-4 text-elec-yellow" />
             </div>
-            <div className="font-medium text-white text-xs leading-tight">{course.duration}</div>
+            <div className="font-medium text-foreground text-xs leading-tight">{course.duration}</div>
             <div className="text-xs text-slate-500 mt-0.5">Duration</div>
           </div>
 
@@ -100,7 +100,7 @@ const EnhancedCourseGridCard = ({ course, onClick }: EnhancedCourseGridCardProps
             <div className="flex justify-center mb-1.5">
               <Users className="h-4 w-4 text-elec-yellow" />
             </div>
-            <div className="font-medium text-white text-xs leading-tight line-clamp-1">{course.level}</div>
+            <div className="font-medium text-foreground text-xs leading-tight line-clamp-1">{course.level}</div>
             <div className="text-xs text-slate-500 mt-0.5">Level</div>
           </div>
 
@@ -108,7 +108,7 @@ const EnhancedCourseGridCard = ({ course, onClick }: EnhancedCourseGridCardProps
             <div className="flex justify-center mb-1.5">
               <PoundSterling className="h-4 w-4 text-elec-yellow" />
             </div>
-            <div className="font-medium text-white text-xs leading-tight">{course.price.split(' - ')[0]}</div>
+            <div className="font-medium text-foreground text-xs leading-tight">{course.price.split(' - ')[0]}</div>
             <div className="text-xs text-slate-500 mt-0.5">Price</div>
           </div>
 
@@ -116,7 +116,7 @@ const EnhancedCourseGridCard = ({ course, onClick }: EnhancedCourseGridCardProps
             <div className="flex justify-center mb-1.5">
               <MapPin className="h-4 w-4 text-elec-yellow" />
             </div>
-            <div className="font-medium text-white text-xs leading-tight line-clamp-1">{course.format}</div>
+            <div className="font-medium text-foreground text-xs leading-tight line-clamp-1">{course.format}</div>
             <div className="text-xs text-slate-500 mt-0.5">Format</div>
           </div>
         </div>

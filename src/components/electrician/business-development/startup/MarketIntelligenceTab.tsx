@@ -130,7 +130,7 @@ const MarketIntelligenceTab = () => {
           {marketTrends.map((trend, index) => (
             <div key={index} className="flex items-center justify-between p-4 bg-green-500/5 rounded-lg border border-green-500/20">
               <div className="flex-1">
-                <h4 className="font-medium text-white">{trend.trend}</h4>
+                <h4 className="font-medium text-foreground">{trend.trend}</h4>
                 <p className="text-sm text-muted-foreground">{trend.description}</p>
               </div>
               <div className="flex items-center gap-2 ml-4">
@@ -161,7 +161,7 @@ const MarketIntelligenceTab = () => {
           {regionalData.map((region, index) => (
             <div key={index} className="p-4 bg-blue-500/5 rounded-lg border border-blue-500/20">
               <div className="flex items-start justify-between mb-3">
-                <h4 className="font-medium text-white">{region.region}</h4>
+                <h4 className="font-medium text-foreground">{region.region}</h4>
                 <div className="text-right">
                   <div className="text-blue-300 font-medium">{region.avgHourlyRate}</div>
                   <div className="text-xs text-muted-foreground">per hour</div>
@@ -221,7 +221,7 @@ const MarketIntelligenceTab = () => {
           {competitorAnalysis.map((competitor, index) => (
             <div key={index} className="p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
               <div className="flex items-start justify-between mb-3">
-                <h4 className="font-medium text-white">{competitor.type}</h4>
+                <h4 className="font-medium text-foreground">{competitor.type}</h4>
                 <Badge className="bg-purple-500/20 text-purple-300">{competitor.marketShare}</Badge>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -262,7 +262,7 @@ const MarketIntelligenceTab = () => {
           {nichesOpportunities.map((niche, index) => (
             <div key={index} className="p-4 bg-elec-dark/30 rounded-lg">
               <div className="flex items-start justify-between mb-3">
-                <h4 className="font-medium text-white">{niche.niche}</h4>
+                <h4 className="font-medium text-foreground">{niche.niche}</h4>
                 <div className="text-right">
                   <div className="text-elec-yellow font-medium">{niche.investment}</div>
                   <div className="text-xs text-muted-foreground">initial investment</div>

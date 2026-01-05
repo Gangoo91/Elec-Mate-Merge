@@ -35,7 +35,7 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
         <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-elec-yellow to-yellow-400 bg-clip-text text-transparent">
           Choose Design Mode
         </h2>
-        <p className="text-white/80 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+        <p className="text-foreground/80 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
           Select your installation type to get started with professional electrical design and BS 7671 compliance.
         </p>
       </div>
@@ -63,17 +63,17 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
             </div>
             <div className="space-y-3">
               <h3 className={`font-bold text-lg sm:text-xl transition-colors duration-300 ${
-                currentMode === "single" ? 'text-elec-yellow' : 'text-white group-hover:text-elec-yellow'
+                currentMode === "single" ? 'text-elec-yellow' : 'text-foreground group-hover:text-elec-yellow'
               }`}>
                 Single Circuit
               </h3>
-              <p className="text-sm sm:text-base text-white/70 leading-relaxed">
+              <p className="text-sm sm:text-base text-foreground/70 leading-relaxed">
                 Individual appliance or circuit design
               </p>
               <div className={`text-xs px-3 py-1 rounded-full border inline-block transition-all duration-300 ${
                 currentMode === "single" 
                   ? 'text-elec-yellow bg-elec-yellow/10 border-elec-yellow/30' 
-                  : 'text-white/60 border-white/20 group-hover:text-elec-yellow group-hover:border-elec-yellow/30'
+                  : 'text-foreground/60 border-white/20 group-hover:text-elec-yellow group-hover:border-elec-yellow/30'
               }`}>
                 Fast & Simple
               </div>
@@ -102,17 +102,17 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
             </div>
             <div className="space-y-3">
               <h3 className={`font-bold text-lg sm:text-xl transition-colors duration-300 ${
-                currentMode === "multi" ? 'text-elec-yellow' : 'text-white group-hover:text-elec-yellow'
+                currentMode === "multi" ? 'text-elec-yellow' : 'text-foreground group-hover:text-elec-yellow'
               }`}>
                 Multi-Circuit
               </h3>
-              <p className="text-sm sm:text-base text-white/70 leading-relaxed">
+              <p className="text-sm sm:text-base text-foreground/70 leading-relaxed">
                 Complete installation system design
               </p>
               <div className={`text-xs px-3 py-1 rounded-full border inline-block transition-all duration-300 ${
                 currentMode === "multi" 
                   ? 'text-elec-yellow bg-elec-yellow/10 border-elec-yellow/30' 
-                  : 'text-white/60 border-white/20 group-hover:text-elec-yellow group-hover:border-elec-yellow/30'
+                  : 'text-foreground/60 border-white/20 group-hover:text-elec-yellow group-hover:border-elec-yellow/30'
               }`}>
                 Comprehensive
               </div>
@@ -142,7 +142,7 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                           <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                           <p className="font-semibold text-elec-yellow">Ideal for:</p>
                         </div>
-                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                        <p className="text-foreground/80 text-sm leading-relaxed pl-4">
                           Individual appliances, socket circuits, lighting circuits, or simple upgrades.
                         </p>
                       </div>
@@ -151,7 +151,7 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                           <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                           <p className="font-semibold text-elec-yellow">Features:</p>
                         </div>
-                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                        <p className="text-foreground/80 text-sm leading-relaxed pl-4">
                           Fast cable sizing, protection calculations, and BS 7671 compliance checking.
                         </p>
                       </div>
@@ -160,7 +160,7 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                           <p className="font-semibold text-green-400">Time Estimate:</p>
                         </div>
-                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                        <p className="text-foreground/80 text-sm leading-relaxed pl-4">
                           Complete in 2-3 minutes
                         </p>
                       </div>
@@ -172,7 +172,7 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                           <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                           <p className="font-semibold text-elec-yellow">Ideal for:</p>
                         </div>
-                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                        <p className="text-foreground/80 text-sm leading-relaxed pl-4">
                           New builds, rewires, commercial installations, or complex multi-zone systems.
                         </p>
                       </div>
@@ -181,7 +181,7 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                           <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                           <p className="font-semibold text-elec-yellow">Features:</p>
                         </div>
-                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                        <p className="text-foreground/80 text-sm leading-relaxed pl-4">
                           System-wide analysis, diversity calculations, supply sizing, and environmental zoning.
                         </p>
                       </div>
@@ -190,7 +190,7 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                           <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                           <p className="font-semibold text-elec-yellow">Benefits:</p>
                         </div>
-                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                        <p className="text-foreground/80 text-sm leading-relaxed pl-4">
                           Optimised load balancing, consumer unit selection, and comprehensive compliance documentation.
                         </p>
                       </div>

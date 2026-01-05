@@ -87,7 +87,7 @@ const QuickActionToolbar: React.FC<QuickActionToolbarProps> = ({
                 variant="outline"
                 size="sm"
                 onClick={onShare}
-                className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+                className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10"
               >
                 <Share2 className="h-4 w-4 mr-2" />
                 Share
@@ -99,7 +99,7 @@ const QuickActionToolbar: React.FC<QuickActionToolbarProps> = ({
                 variant="outline"
                 size="sm"
                 onClick={onCopyToClipboard}
-                className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+                className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10"
               >
                 <Copy className="h-4 w-4 mr-2" />
                 Copy Link

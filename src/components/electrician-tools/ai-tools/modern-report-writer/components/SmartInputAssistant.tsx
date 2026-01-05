@@ -106,7 +106,7 @@ const SmartInputAssistant: React.FC<SmartInputAssistantProps> = ({
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <Lightbulb className="h-4 w-4 text-elec-yellow" />
-          <span className="text-sm font-medium text-white">Smart Suggestions</span>
+          <span className="text-sm font-medium text-foreground">Smart Suggestions</span>
           <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
             AI Powered
           </Badge>
@@ -118,7 +118,7 @@ const SmartInputAssistant: React.FC<SmartInputAssistantProps> = ({
             setShowSuggestions(false);
             onDismiss?.();
           }}
-          className="h-6 w-6 p-0 text-muted-foreground hover:text-white"
+          className="h-6 w-6 p-0 text-muted-foreground hover:text-foreground"
         >
           <X className="h-4 w-4" />
         </Button>
@@ -138,7 +138,7 @@ const SmartInputAssistant: React.FC<SmartInputAssistantProps> = ({
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <IconComponent className="h-4 w-4 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm text-white font-medium truncate">
+                    <div className="text-sm text-foreground font-medium truncate">
                       {suggestion.value}
                     </div>
                     <div className="text-xs text-muted-foreground">
@@ -169,7 +169,7 @@ const SmartInputAssistant: React.FC<SmartInputAssistantProps> = ({
             placeholder="Type custom value..."
             value={customValue}
             onChange={(e) => setCustomValue(e.target.value)}
-            className="flex-1 bg-elec-dark border-elec-yellow/30 text-white text-sm"
+            className="flex-1 bg-elec-dark border-elec-yellow/30 text-foreground text-sm"
           />
           <Button
             size="sm"

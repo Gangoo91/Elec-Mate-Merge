@@ -90,19 +90,19 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
     <div className="space-y-4">
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 h-4 w-4" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground/60 h-4 w-4" />
         <Input
           placeholder="Search programmes, institutions, or topics..."
           value={filters.searchTerm}
           onChange={(e) => handleFilterChange("searchTerm", e.target.value)}
-          className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+          className="pl-10 bg-white/10 border-white/20 text-foreground placeholder:text-foreground/60 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
         />
         {filters.searchTerm && (
           <Button
             variant="ghost"
             size="sm"
             onClick={() => clearFilter("searchTerm")}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 text-white/60 hover:text-white hover:bg-white/10"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 text-foreground/60 hover:text-foreground hover:bg-white/10"
           >
             <X className="h-3 w-3" />
           </Button>
@@ -114,7 +114,7 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
         <div className="flex items-center gap-3">
           <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
             <CollapsibleTrigger asChild>
-              <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 hover:border-elec-yellow/30">
+              <Button variant="outline" className="border-white/20 text-foreground hover:bg-white/10 hover:border-elec-yellow/30">
                 <SlidersHorizontal className="h-4 w-4 mr-2" />
                 Filters
                 {activeFiltersCount > 0 && (
@@ -128,7 +128,7 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
 
           {/* Sort By */}
           <Select value={filters.sortBy} onValueChange={(value) => handleFilterChange("sortBy", value)}>
-            <SelectTrigger className="w-48 bg-white/10 border-white/20 text-white">
+            <SelectTrigger className="w-48 bg-white/10 border-white/20 text-foreground">
               <SelectValue placeholder="Sort by..." />
             </SelectTrigger>
             <SelectContent className="bg-background border-border">
@@ -142,7 +142,7 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
         </div>
 
         {/* Results Count */}
-        <div className="text-sm text-white/80">
+        <div className="text-sm text-foreground/80">
           <span className="font-medium">{resultCount}</span> {resultCount === 1 ? 'programme' : 'programmes'}
         </div>
       </div>
@@ -153,9 +153,9 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
             {/* Category Filter */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Category</label>
+              <label className="text-sm font-medium text-foreground">Category</label>
               <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
-                <SelectTrigger className="bg-white/10 border-white/20 text-white text-sm">
+                <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border">
@@ -169,9 +169,9 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
 
             {/* Level Filter */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Level</label>
+              <label className="text-sm font-medium text-foreground">Level</label>
               <Select value={filters.level} onValueChange={(value) => handleFilterChange("level", value)}>
-                <SelectTrigger className="bg-white/10 border-white/20 text-white text-sm">
+                <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Levels" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border">
@@ -185,9 +185,9 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
 
             {/* Study Mode Filter */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Study Mode</label>
+              <label className="text-sm font-medium text-foreground">Study Mode</label>
               <Select value={filters.studyMode} onValueChange={(value) => handleFilterChange("studyMode", value)}>
-                <SelectTrigger className="bg-white/10 border-white/20 text-white text-sm">
+                <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Modes" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border">
@@ -201,9 +201,9 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
 
             {/* Location Filter */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Location</label>
+              <label className="text-sm font-medium text-foreground">Location</label>
               <Select value={filters.location} onValueChange={(value) => handleFilterChange("location", value)}>
-                <SelectTrigger className="bg-white/10 border-white/20 text-white text-sm">
+                <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Locations" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border max-h-48">
@@ -219,7 +219,7 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
           {/* Active Filters Display */}
           {activeFiltersCount > 0 && (
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-sm text-white/80">Active filters:</span>
+              <span className="text-sm text-foreground/80">Active filters:</span>
               {filters.category && (
                 <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
                   Category: {filters.category}
@@ -276,7 +276,7 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
                 variant="ghost"
                 size="sm"
                 onClick={clearAllFilters}
-                className="text-white/60 hover:text-white hover:bg-white/10"
+                className="text-foreground/60 hover:text-foreground hover:bg-white/10"
               >
                 Clear all
               </Button>

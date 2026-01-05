@@ -76,24 +76,24 @@ export const RAMSQuickAdd: React.FC = () => {
           <Zap className="h-5 w-5" />
           Quick Add to RAMS
         </CardTitle>
-        <CardDescription className="text-white/70 text-sm">
+        <CardDescription className="text-foreground/70 text-sm">
           Search and select from realistic electrical hazards with detailed control measures
         </CardDescription>
         
         {/* Search Input */}
         <div className="relative mt-3">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/50" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground/50" />
           <Input
             placeholder="Search hazards, activities, or controls..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-green-500/10 border-white/20 text-white placeholder:text-white/50 focus:border-green-500/50 h-10"
+            className="pl-10 bg-green-500/10 border-white/20 text-foreground placeholder:text-foreground/50 focus:border-green-500/50 h-10"
           />
         </div>
         
         <Button 
           onClick={handleAddAll}
-          className="w-full bg-green-600 text-white hover:bg-green-700 mt-3"
+          className="w-full bg-green-600 text-foreground hover:bg-green-700 mt-3"
         >
           <Plus className="h-4 w-4 mr-1" />
           Add All ({filteredTemplates.length} items)
@@ -117,13 +117,13 @@ export const RAMSQuickAdd: React.FC = () => {
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-start gap-2 mb-2">
                         <div className="flex-1">
-                          <h4 className="font-medium text-white text-sm leading-tight">{template.specificActivity}</h4>
-                          <p className="text-xs text-white/60 mt-1">{template.hazard}</p>
+                          <h4 className="font-medium text-foreground text-sm leading-tight">{template.specificActivity}</h4>
+                          <p className="text-xs text-foreground/60 mt-1">{template.hazard}</p>
                         </div>
                         <Button
                           size="sm"
                           onClick={() => handleAddTemplate(template)}
-                          className="bg-green-600 text-white hover:bg-green-700 text-xs px-2 py-1 h-6 flex-shrink-0"
+                          className="bg-green-600 text-foreground hover:bg-green-700 text-xs px-2 py-1 h-6 flex-shrink-0"
                         >
                           <Plus className="h-3 w-3 mr-1" />
                           Add
@@ -134,13 +134,13 @@ export const RAMSQuickAdd: React.FC = () => {
                         <span className={`text-xs px-2 py-1 rounded border ${getRiskLevelColor(template.likelihood, template.severity)}`}>
                           Risk: {template.likelihood * template.severity}
                         </span>
-                        <span className="text-xs text-white/50">|</span>
-                        <span className="text-xs text-white/70">{template.category}</span>
+                        <span className="text-xs text-foreground/50">|</span>
+                        <span className="text-xs text-foreground/70">{template.category}</span>
                       </div>
                       
                       {/* Quick Controls Preview */}
-                      <div className="text-xs text-white/80 mb-2">
-                        <span className="font-medium text-white">Key Controls: </span>
+                      <div className="text-xs text-foreground/80 mb-2">
+                        <span className="font-medium text-foreground">Key Controls: </span>
                         <span>{template.detailedControls.slice(0, 2).join(', ')}</span>
                         {template.detailedControls.length > 2 && '...'}
                       </div>
@@ -150,7 +150,7 @@ export const RAMSQuickAdd: React.FC = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => toggleExpanded(template.id)}
-                        className="h-6 px-2 text-xs text-white/60 hover:text-white hover:bg-white/5"
+                        className="h-6 px-2 text-xs text-foreground/60 hover:text-foreground hover:bg-white/5"
                       >
                         {isExpanded ? (
                           <>
@@ -173,7 +173,7 @@ export const RAMSQuickAdd: React.FC = () => {
                             <h5 className="text-xs font-medium text-green-300 mb-2">Control Measures:</h5>
                             <ul className="space-y-1">
                               {template.detailedControls.map((control, index) => (
-                                <li key={index} className="text-xs text-white/80 flex items-start gap-2">
+                                <li key={index} className="text-xs text-foreground/80 flex items-start gap-2">
                                   <span className="text-green-300 mt-0.5">•</span>
                                   <span>{control}</span>
                                 </li>

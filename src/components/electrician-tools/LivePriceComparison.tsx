@@ -66,7 +66,7 @@ const LivePriceComparison = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-semibold text-white">Live Price Comparison</h2>
+          <h2 className="text-2xl font-semibold text-foreground">Live Price Comparison</h2>
           <p className="text-muted-foreground">Real-time pricing from UK suppliers</p>
         </div>
         <Button variant="outline" size="sm" className="border-elec-yellow/30">
@@ -81,7 +81,7 @@ const LivePriceComparison = () => {
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="text-lg text-white">{comparison.tool}</CardTitle>
+                  <CardTitle className="text-lg text-foreground">{comparison.tool}</CardTitle>
                   <p className="text-sm text-elec-yellow capitalize">{comparison.category} pricing</p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -115,7 +115,7 @@ const LivePriceComparison = () => {
                   >
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-white">{price.supplier}</span>
+                        <span className="font-medium text-foreground">{price.supplier}</span>
                         {priceIndex === 0 && (
                           <Badge className="bg-green-500/20 text-green-400 text-xs">
                             Best Price

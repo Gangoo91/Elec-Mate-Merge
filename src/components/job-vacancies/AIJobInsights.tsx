@@ -81,7 +81,7 @@ const AIJobInsights: React.FC<AIJobInsightsProps> = ({ insights, isLoading }) =>
               <Users className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm font-medium">Jobs Analyzed</span>
             </div>
-            <div className="text-xl font-bold text-white">
+            <div className="text-xl font-bold text-foreground">
               {insights.totalProcessed || 0}
             </div>
           </div>
@@ -91,7 +91,7 @@ const AIJobInsights: React.FC<AIJobInsightsProps> = ({ insights, isLoading }) =>
               <MapPin className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm font-medium">Salary Range</span>
             </div>
-            <div className="text-sm font-bold text-white">
+            <div className="text-sm font-bold text-foreground">
               {insights.salaryRange?.min && insights.salaryRange?.max ? 
                 `${formatSalary(insights.salaryRange.min)} - ${formatSalary(insights.salaryRange.max)}` :
                 'N/A'
@@ -124,8 +124,8 @@ const AIJobInsights: React.FC<AIJobInsightsProps> = ({ insights, isLoading }) =>
         {/* Market Trends */}
         {insights.marketTrends && insights.marketTrends.length > 0 && (
           <div>
-            <h4 className="font-medium mb-2 text-white">Market Trends</h4>
-            <ul className="text-sm text-white space-y-1">
+            <h4 className="font-medium mb-2 text-foreground">Market Trends</h4>
+            <ul className="text-sm text-foreground space-y-1">
               {insights.marketTrends.map((trend, index) => (
                 <li key={index} className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -139,7 +139,7 @@ const AIJobInsights: React.FC<AIJobInsightsProps> = ({ insights, isLoading }) =>
         {/* High Demand Areas */}
         {insights.demandAreas && insights.demandAreas.length > 0 && (
           <div>
-            <h4 className="font-medium mb-2 text-white">High Demand Areas</h4>
+            <h4 className="font-medium mb-2 text-foreground">High Demand Areas</h4>
             <div className="flex flex-wrap gap-1">
               {insights.demandAreas.map((area, index) => (
                 <Badge key={index} variant="outline" className="text-xs">

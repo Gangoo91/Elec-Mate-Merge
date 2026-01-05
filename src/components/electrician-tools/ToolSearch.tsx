@@ -78,8 +78,8 @@ const ToolSearch = () => {
             <div className="mt-4 p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="text-sm font-medium text-white mb-2 block">Category</label>
-                  <select className="w-full p-2 bg-elec-dark border border-elec-yellow/30 rounded text-white">
+                  <label className="text-sm font-medium text-foreground mb-2 block">Category</label>
+                  <select className="w-full p-2 bg-elec-dark border border-elec-yellow/30 rounded text-foreground">
                     <option>All Categories</option>
                     <option>Testing Equipment</option>
                     <option>Power Tools</option>
@@ -89,8 +89,8 @@ const ToolSearch = () => {
                 </div>
                 
                 <div>
-                  <label className="text-sm font-medium text-white mb-2 block">Price Range</label>
-                  <select className="w-full p-2 bg-elec-dark border border-elec-yellow/30 rounded text-white">
+                  <label className="text-sm font-medium text-foreground mb-2 block">Price Range</label>
+                  <select className="w-full p-2 bg-elec-dark border border-elec-yellow/30 rounded text-foreground">
                     <option>Any Price</option>
                     <option>Under £50</option>
                     <option>£50 - £200</option>
@@ -100,8 +100,8 @@ const ToolSearch = () => {
                 </div>
                 
                 <div>
-                  <label className="text-sm font-medium text-white mb-2 block">Supplier</label>
-                  <select className="w-full p-2 bg-elec-dark border border-elec-yellow/30 rounded text-white">
+                  <label className="text-sm font-medium text-foreground mb-2 block">Supplier</label>
+                  <select className="w-full p-2 bg-elec-dark border border-elec-yellow/30 rounded text-foreground">
                     <option>All Suppliers</option>
                     <option>Screwfix</option>
                     <option>Toolstation</option>
@@ -150,7 +150,7 @@ const ToolSearch = () => {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-xs text-muted-foreground">Sort by:</span>
-            <select className="text-xs bg-elec-dark border border-elec-yellow/30 rounded px-2 py-1 text-white">
+            <select className="text-xs bg-elec-dark border border-elec-yellow/30 rounded px-2 py-1 text-foreground">
               <option>Best Match</option>
               <option>Price: Low to High</option>
               <option>Price: High to Low</option>

@@ -24,7 +24,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
       "Compliance": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
       "Testing": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getDemandColor = (demand: string) => {
@@ -33,7 +33,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
       "Medium": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
       "Low": "bg-red-500/20 border-red-500/30 text-red-300",
     };
-    return colors[demand as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[demand as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getCategoryImages = (category: string) => {
@@ -143,7 +143,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
       {/* Content */}
       <div className="p-4 sm:p-5 lg:p-6 space-y-3 sm:space-y-4 flex flex-col h-[calc(100%-8rem)] sm:h-[calc(100%-9rem)] lg:h-[calc(100%-10rem)]">
         {/* Meta Info */}
-        <div className="flex items-center justify-between text-xs text-white/80">
+        <div className="flex items-center justify-between text-xs text-foreground/80">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
               <Clock className="h-3 w-3" />
@@ -163,7 +163,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
         </div>
 
         {/* Title */}
-        <h3 className="font-semibold text-white line-clamp-2 text-sm sm:text-base lg:text-lg leading-tight">
+        <h3 className="font-semibold text-foreground line-clamp-2 text-sm sm:text-base lg:text-lg leading-tight">
           {course.title}
         </h3>
 
@@ -173,12 +173,12 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
         </p>
 
         {/* Description */}
-        <p className="text-white/90 text-xs sm:text-sm line-clamp-3 lg:line-clamp-2 leading-relaxed flex-grow">
+        <p className="text-foreground/90 text-xs sm:text-sm line-clamp-3 lg:line-clamp-2 leading-relaxed flex-grow">
           {course.description}
         </p>
 
         {/* Location */}
-        <div className="flex items-center gap-2 text-xs text-white/80">
+        <div className="flex items-center gap-2 text-xs text-foreground/80">
           <MapPin className="h-3 w-3" />
           <span className="line-clamp-1">
             {course.locations.slice(0, 2).join(", ")}
@@ -188,7 +188,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
 
         {/* Footer */}
         <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-          <div className="flex items-center gap-2 text-xs text-white/80">
+          <div className="flex items-center gap-2 text-xs text-foreground/80">
             {course.nextDates && course.nextDates.length > 0 && (
               <>
                 <Calendar className="h-3 w-3" />

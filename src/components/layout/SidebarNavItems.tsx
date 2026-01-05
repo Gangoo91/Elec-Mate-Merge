@@ -1,12 +1,15 @@
-
-import { 
-  Home, 
-  GraduationCap, 
-  Wrench, 
-  CreditCard, 
+import {
+  Home,
+  GraduationCap,
+  Wrench,
+  CreditCard,
   Settings,
   Heart,
-  Database
+  Briefcase,
+  Database,
+  BookOpen,
+  Zap,
+  School
 } from "lucide-react";
 
 export type NavItem = {
@@ -32,8 +35,26 @@ export const mainNavItems: NavItem[] = [
   {
     name: "Electrical Hub",
     path: "/electrician",
-    icon: <Wrench className="h-5 w-5" />,
-    roles: ["visitor", "electrician", "employer", "admin"],
+    icon: <Zap className="h-5 w-5" />,
+    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
+  },
+  {
+    name: "Employer Hub",
+    path: "/employer",
+    icon: <Briefcase className="h-5 w-5" />,
+    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
+  },
+  {
+    name: "College Hub",
+    path: "/college",
+    icon: <School className="h-5 w-5" />,
+    roles: ["visitor", "apprentice", "electrician", "employer", "college", "tutor", "admin"],
+  },
+  {
+    name: "Study Centre",
+    path: "/study-centre",
+    icon: <BookOpen className="h-5 w-5" />,
+    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
   },
   {
     name: "Mental Health Hub",
@@ -60,4 +81,3 @@ export const mainNavItems: NavItem[] = [
     roles: ["admin"],
   },
 ];
-

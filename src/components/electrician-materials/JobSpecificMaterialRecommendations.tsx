@@ -12,19 +12,19 @@ const JobSpecificMaterialRecommendations = () => {
       id: "domestic",
       icon: Home,
       title: "Domestic Work",
-      color: "bg-green-600/90 text-white border-green-400"
+      color: "bg-green-600/90 text-foreground border-green-400"
     },
     {
       id: "commercial",
       icon: Building,
       title: "Commercial",
-      color: "bg-blue-600/90 text-white border-blue-400"
+      color: "bg-blue-600/90 text-foreground border-blue-400"
     },
     {
       id: "industrial",
       icon: Factory,
       title: "Industrial",
-      color: "bg-orange-600/90 text-white border-orange-400"
+      color: "bg-orange-600/90 text-foreground border-orange-400"
     }
   ];
 
@@ -106,10 +106,10 @@ const JobSpecificMaterialRecommendations = () => {
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "Critical": return "bg-red-600/90 text-white border-red-400";
-      case "Essential": return "bg-orange-600/90 text-white border-orange-400";
-      case "Recommended": return "bg-green-600/90 text-white border-green-400";
-      default: return "bg-blue-600/90 text-white border-blue-400";
+      case "Critical": return "bg-red-600/90 text-foreground border-red-400";
+      case "Essential": return "bg-orange-600/90 text-foreground border-orange-400";
+      case "Recommended": return "bg-green-600/90 text-foreground border-green-400";
+      default: return "bg-blue-600/90 text-foreground border-blue-400";
     }
   };
 
@@ -133,8 +133,8 @@ const JobSpecificMaterialRecommendations = () => {
             <Package className="h-6 w-6" />
           </div>
           <div>
-            <CardTitle className="text-white">Job-Specific Material Lists</CardTitle>
-            <p className="text-white/80 text-sm">Essential materials for different types of electrical installations</p>
+            <CardTitle className="text-foreground">Job-Specific Material Lists</CardTitle>
+            <p className="text-foreground/80 text-sm">Essential materials for different types of electrical installations</p>
           </div>
         </div>
       </CardHeader>
@@ -148,8 +148,8 @@ const JobSpecificMaterialRecommendations = () => {
               onClick={() => setSelectedJob(job.id)}
               className={`h-auto p-4 flex flex-col items-center gap-2 ${
                 selectedJob === job.id 
-                  ? 'bg-purple-600 hover:bg-purple-700 text-white' 
-                  : 'border-white/20 text-white hover:border-purple-500/50 hover:bg-purple-500/10'
+                  ? 'bg-purple-600 hover:bg-purple-700 text-foreground' 
+                  : 'border-white/20 text-foreground hover:border-purple-500/50 hover:bg-purple-500/10'
               }`}
             >
               <job.icon className="h-6 w-6" />
@@ -169,21 +169,21 @@ const JobSpecificMaterialRecommendations = () => {
                   <DollarSign className="h-4 w-4" />
                   <span className="text-sm">Estimated Cost</span>
                 </div>
-                <div className="text-white font-semibold">£{Math.round(totalCost)}</div>
+                <div className="text-foreground font-semibold">£{Math.round(totalCost)}</div>
               </div>
               <div>
                 <div className="flex items-center justify-center gap-1 text-purple-400 mb-1">
                   <Clock className="h-4 w-4" />
                   <span className="text-sm">Sourcing Time</span>
                 </div>
-                <div className="text-white font-semibold">1-5 Days</div>
+                <div className="text-foreground font-semibold">1-5 Days</div>
               </div>
               <div>
                 <div className="flex items-center justify-center gap-1 text-purple-400 mb-1">
                   <CheckCircle className="h-4 w-4" />
                   <span className="text-sm">Total Items</span>
                 </div>
-                <div className="text-white font-semibold">
+                <div className="text-foreground font-semibold">
                   {selectedJobData.reduce((total, cat) => total + cat.materials.length, 0)}
                 </div>
               </div>
@@ -197,8 +197,8 @@ const JobSpecificMaterialRecommendations = () => {
             <Card key={index} className="bg-elec-card/30 border-white/10">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg text-white">{category.category}</CardTitle>
-                  <div className="flex items-center gap-3 text-sm text-white/80">
+                  <CardTitle className="text-lg text-foreground">{category.category}</CardTitle>
+                  <div className="flex items-center gap-3 text-sm text-foreground/80">
                     <div className="flex items-center gap-1">
                       <DollarSign className="h-4 w-4" />
                       {category.estimatedCost}
@@ -216,9 +216,9 @@ const JobSpecificMaterialRecommendations = () => {
                     <div className="flex items-center gap-3">
                       <CheckCircle className="h-4 w-4 text-green-400" />
                       <div>
-                        <div className="font-medium text-white">{material.name}</div>
-                        <div className="text-sm text-white/60">{material.spec}</div>
-                        <div className="text-sm text-white/80">{material.price}</div>
+                        <div className="font-medium text-foreground">{material.name}</div>
+                        <div className="text-sm text-foreground/60">{material.spec}</div>
+                        <div className="text-sm text-foreground/80">{material.price}</div>
                       </div>
                     </div>
                     <Badge className={getPriorityColor(material.priority)}>
@@ -236,8 +236,8 @@ const JobSpecificMaterialRecommendations = () => {
           <div className="flex items-start gap-3">
             <CheckCircle className="h-5 w-5 text-purple-400 mt-0.5" />
             <div>
-              <h5 className="font-medium text-white mb-1">BS 7671 18th Edition Compliance</h5>
-              <p className="text-sm text-white/80">
+              <h5 className="font-medium text-foreground mb-1">BS 7671 18th Edition Compliance</h5>
+              <p className="text-sm text-foreground/80">
                 All recommended materials comply with current UK wiring regulations. 
                 Ensure proper installation practices and testing procedures are followed for full compliance.
               </p>

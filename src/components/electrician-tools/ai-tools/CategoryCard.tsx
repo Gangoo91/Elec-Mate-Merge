@@ -30,15 +30,15 @@ export default function CategoryCard({
         {/* Icon & Title */}
         <div className="flex items-center gap-3">
           <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
-            <Icon className="w-5 h-5 text-white" />
+            <Icon className="w-5 h-5 text-foreground" />
           </div>
-          <h3 className="text-sm font-bold text-white group-hover:text-elec-yellow transition-colors">
+          <h3 className="text-sm font-bold text-foreground group-hover:text-elec-yellow transition-colors">
             {title}
           </h3>
         </div>
         
         {/* Description - visible on all screens but smaller on mobile */}
-        <p className="text-xs text-white/60 line-clamp-2 min-h-[2rem]">
+        <p className="text-xs text-foreground/60 line-clamp-2 min-h-[2rem]">
           {description}
         </p>
 
@@ -48,7 +48,7 @@ export default function CategoryCard({
             e.stopPropagation();
             onClick(examples[0]);
           }}
-          className="w-full text-left text-xs font-medium text-white/80 hover:text-elec-yellow transition-all py-2 px-3 rounded-lg bg-elec-yellow/10 hover:bg-elec-yellow/20 border border-elec-yellow/20 hover:border-elec-yellow/40 flex items-center gap-2 group/btn"
+          className="w-full text-left text-xs font-medium text-foreground/80 hover:text-elec-yellow transition-all py-2 px-3 rounded-lg bg-elec-yellow/10 hover:bg-elec-yellow/20 border border-elec-yellow/20 hover:border-elec-yellow/40 flex items-center gap-2 group/btn"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow flex-shrink-0 group-hover/btn:animate-pulse" />
           <span className="line-clamp-1 flex-1">{examples[0]}</span>

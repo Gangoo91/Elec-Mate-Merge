@@ -343,7 +343,7 @@ const LegalOptionsTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -360,7 +360,7 @@ const LegalOptionsTab = () => {
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{option.option}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{option.option}</h4>
                       <Badge variant="outline" className={`text-purple-300 border-purple-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {option.cost}
                       </Badge>
@@ -406,7 +406,7 @@ const LegalOptionsTab = () => {
             {enforcementMethods.map((method, index) => (
                 <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{method.method}</h4>
+                    <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{method.method}</h4>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{method.description}</p>
                   </div>
 
@@ -435,7 +435,7 @@ const LegalOptionsTab = () => {
             {costConsiderations.map((consideration, index) => (
                 <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{consideration.factor}</h4>
+                    <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{consideration.factor}</h4>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{consideration.details}</p>
                   </div>
 
@@ -456,7 +456,7 @@ const LegalOptionsTab = () => {
             {legalPreparationRequirements.map((category, index) => (
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
+                    <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-300 italic`}>{category.importance}</p>
                   </div>
 
@@ -485,7 +485,7 @@ const LegalOptionsTab = () => {
                 <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.strategy}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.strategy}</h4>
                       <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {strategy.cost}
                       </Badge>
@@ -534,7 +534,7 @@ const LegalOptionsTab = () => {
             {postJudgmentRecovery.map((method, index) => (
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{method.method}</h4>
+                    <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{method.method}</h4>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{method.description}</p>
                   </div>
 
@@ -579,7 +579,7 @@ const LegalOptionsTab = () => {
             {complianceConsiderations.map((compliance, index) => (
                 <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{compliance.aspect}</h4>
+                    <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{compliance.aspect}</h4>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-300 italic`}>{compliance.importance}</p>
                   </div>
 

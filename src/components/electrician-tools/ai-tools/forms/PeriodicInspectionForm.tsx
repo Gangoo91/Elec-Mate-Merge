@@ -103,19 +103,19 @@ export const PeriodicInspectionForm = ({ onFormChange }: PeriodicInspectionFormP
           error={errors.overallCondition?.message}
         />
         <div className="space-y-2">
-          <label className="text-sm font-medium text-white">Observations Found</label>
+          <label className="text-sm font-medium text-foreground">Observations Found</label>
           <Textarea
             placeholder="Describe any observations or issues found during inspection"
-            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={watchedValues.observationsFound || ""}
             onChange={(e) => setValue("observationsFound", e.target.value)}
           />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium text-white">Recommended Actions</label>
+          <label className="text-sm font-medium text-foreground">Recommended Actions</label>
           <Textarea
             placeholder="Enter recommended actions or remedial work required"
-            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={watchedValues.recommendedActions || ""}
             onChange={(e) => setValue("recommendedActions", e.target.value)}
           />

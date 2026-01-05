@@ -10,19 +10,11 @@ import { Navigate } from "react-router-dom";
 import ProjectManagement from "@/pages/electrician-tools/ProjectManagement";
 import ProjectDetails from "@/components/project-management/ProjectDetails";
 import CableSizingCalculator from "@/pages/electrician-tools/cable-sizing";
-import EICRReports from "@/pages/electrician-tools/EICRReports";
-import EICRInstallationDetails from "@/pages/electrician-tools/eicr/EICRInstallationDetails";
-import EICRInspectorDetails from "@/pages/electrician-tools/eicr/EICRInspectorDetails";
-import EICRCircuits from "@/pages/electrician-tools/eicr/EICRCircuits";
-import EICRInspection from "@/pages/electrician-tools/eicr/EICRInspection";
-import EICRTesting from "@/pages/electrician-tools/eicr/EICRTesting";
-import EICRSummary from "@/pages/electrician-tools/eicr/EICRSummary";
 import StaffManagement from "@/pages/electrician-tools/StaffManagement";
 import ScheduleManager from "@/pages/electrician-tools/ScheduleManager";
 import BusinessAnalytics from "@/pages/electrician-tools/BusinessAnalytics";
 import FinancialTools from "@/pages/electrician-tools/FinancialTools";
 import CareerProgression from "@/pages/electrician/CareerProgression";
-import EnhancedTestingGrid from "@/components/inspection-testing/schedule-of-results/EnhancedTestingGrid";
 import AssistantPage from "@/pages/electrician-tools/ai-tools/AssistantPage";
 import VisualAnalysisPage from "@/pages/electrician-tools/ai-tools/VisualAnalysisPage";
 import ReportWriterPage from "@/pages/electrician-tools/ai-tools/ReportWriterPage";
@@ -57,14 +49,6 @@ const ElectricianRoutes = () => (
     
     <Route path="project-management" element={<ProjectManagement />} />
     <Route path="project-management/project/:projectId" element={<ProjectDetails />} />
-    <Route path="inspection-testing/enhanced-testing-grid" element={<EnhancedTestingGrid />} />
-    <Route path="eicr-reports" element={<EICRReports />} />
-    <Route path="eicr/installation-details" element={<EICRInstallationDetails />} />
-    <Route path="eicr/inspector-details" element={<EICRInspectorDetails />} />
-    <Route path="eicr/circuits" element={<EICRCircuits />} />
-    <Route path="eicr/inspection" element={<EICRInspection />} />
-    <Route path="eicr/testing" element={<EICRTesting />} />
-    <Route path="eicr/summary" element={<EICRSummary />} />
     <Route path="staff-management" element={<StaffManagement />} />
     <Route path="schedule" element={<ScheduleManager />} />
     <Route path="business-analytics" element={<BusinessAnalytics />} />

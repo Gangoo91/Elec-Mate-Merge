@@ -264,7 +264,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                   value={formData.title}
                   onChange={(e) => handleInputChange("title", e.target.value)}
                   placeholder="e.g., BS 7671 18th Edition Update Course"
-                  className="bg-elec-dark border-elec-yellow/20 text-white"
+                  className="bg-elec-dark border-elec-yellow/20 text-foreground"
                   required
                 />
               </div>
@@ -307,7 +307,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                   value={formData.hours}
                   onChange={(e) => handleInputChange("hours", e.target.value)}
                   placeholder="e.g., 3.5"
-                  className="bg-elec-dark border-elec-yellow/20 text-white"
+                  className="bg-elec-dark border-elec-yellow/20 text-foreground"
                   required
                 />
               </div>
@@ -316,7 +316,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
               <div className="space-y-2">
                 <Label>Category *</Label>
                 <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)} required>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-foreground">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -331,7 +331,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
               <div className="space-y-2 md:col-span-1">
                 <Label>Activity Type *</Label>
                 <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)} required>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-foreground">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -351,7 +351,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                 value={formData.description}
                 onChange={(e) => handleInputChange("description", e.target.value)}
                 placeholder="Brief description of the activity and what was covered..."
-                className="bg-elec-dark border-elec-yellow/20 text-white"
+                className="bg-elec-dark border-elec-yellow/20 text-foreground"
                 rows={3}
               />
             </div>
@@ -364,7 +364,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                 value={formData.learningOutcomes}
                 onChange={(e) => handleInputChange("learningOutcomes", e.target.value)}
                 placeholder="What did you learn? How will this benefit your professional development?"
-                className="bg-elec-dark border-elec-yellow/20 text-white"
+                className="bg-elec-dark border-elec-yellow/20 text-foreground"
                 rows={3}
               />
             </div>
@@ -386,14 +386,14 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
               {/* Show uploaded files */}
               {evidenceFiles.length > 0 && (
                 <div className="space-y-2 mt-4">
-                  <div className="text-sm font-medium text-white">Evidence Files:</div>
+                  <div className="text-sm font-medium text-foreground">Evidence Files:</div>
                   <div className="space-y-2">
                     {evidenceFiles.map((evidenceFile) => (
                       <div key={evidenceFile.id} className="flex items-center justify-between p-3 bg-elec-dark/50 rounded border border-elec-yellow/10">
                         <div className="flex items-center space-x-3">
                           <FileText className="h-4 w-4 text-elec-yellow" />
                           <div>
-                            <div className="text-sm font-medium text-white">{evidenceFile.file.name}</div>
+                            <div className="text-sm font-medium text-foreground">{evidenceFile.file.name}</div>
                             <div className="text-xs text-muted-foreground">
                               {(evidenceFile.file.size / 1024 / 1024).toFixed(2)} MB • {evidenceFile.type}
                             </div>

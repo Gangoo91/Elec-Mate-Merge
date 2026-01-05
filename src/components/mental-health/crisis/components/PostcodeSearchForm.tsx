@@ -48,7 +48,7 @@ const PostcodeSearchForm = ({ isSearching, onSearch }: PostcodeSearchFormProps) 
                   />
                   <Button 
                     type="submit"
-                    className="bg-red-500 hover:bg-red-600 text-white sm:w-auto"
+                    className="bg-red-500 hover:bg-red-600 text-foreground sm:w-auto"
                     disabled={isSearching}
                   >
                     {isSearching ? (

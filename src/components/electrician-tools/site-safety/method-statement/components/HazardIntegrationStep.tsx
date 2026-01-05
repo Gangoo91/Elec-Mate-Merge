@@ -53,7 +53,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
       {linkedHazardObjects.length > 0 && (
         <Card className="border-green-500/20 bg-elec-gray/60">
           <CardHeader>
-            <CardTitle className="text-white text-lg">Linked Hazards ({linkedHazardObjects.length})</CardTitle>
+            <CardTitle className="text-foreground text-lg">Linked Hazards ({linkedHazardObjects.length})</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {linkedHazardObjects.map((hazard) => {
@@ -69,13 +69,13 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                           </div>
                         )}
                         <div className="flex-1">
-                          <h4 className="font-medium text-white mb-1">{hazard?.name}</h4>
+                          <h4 className="font-medium text-foreground mb-1">{hazard?.name}</h4>
                           <p className="text-sm text-muted-foreground mb-2">{hazard?.description}</p>
                           <div className="flex flex-wrap gap-2">
                             <Badge variant="outline" className="border-elec-yellow/30 text-muted-foreground text-xs">
                               {hazard?.category}
                             </Badge>
-                            <Badge className={`${getRiskColor(hazard?.riskLevel || '')} text-white text-xs`}>
+                            <Badge className={`${getRiskColor(hazard?.riskLevel || '')} text-foreground text-xs`}>
                               {hazard?.riskLevel} Risk
                             </Badge>
                           </div>
@@ -101,7 +101,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
       {/* Hazard Database Browser */}
       <Card className="border-elec-yellow/20 bg-elec-gray/60">
         <CardHeader>
-          <CardTitle className="text-white">Hazard Database</CardTitle>
+          <CardTitle className="text-foreground">Hazard Database</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Search and Filter */}
@@ -112,7 +112,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                 placeholder="Search hazards..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                className="pl-10 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
               />
             </div>
             
@@ -155,12 +155,12 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                             <IconComponent className="h-5 w-5 text-primary" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-medium text-white text-base mb-2">{hazard.name}</h4>
+                            <h4 className="font-medium text-foreground text-base mb-2">{hazard.name}</h4>
                             <div className="flex flex-wrap gap-2">
                               <Badge variant="outline" className="text-xs border-primary/30 text-muted-foreground">
                                 {hazard.category}
                               </Badge>
-                              <Badge className={`${getRiskColor(hazard.riskLevel)} text-white text-xs`}>
+                              <Badge className={`${getRiskColor(hazard.riskLevel)} text-foreground text-xs`}>
                                 {hazard.riskLevel}
                               </Badge>
                             </div>
@@ -185,7 +185,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                       {/* Control Measures */}
                       <div className="pt-2 border-t border-border/20">
                         <p className="text-xs text-muted-foreground">
-                          <span className="font-medium text-white">Control measures:</span> {hazard.commonControls.slice(0, 2).join(', ')}
+                          <span className="font-medium text-foreground">Control measures:</span> {hazard.commonControls.slice(0, 2).join(', ')}
                           {hazard.commonControls.length > 2 && '...'}
                         </p>
                       </div>

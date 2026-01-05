@@ -35,7 +35,7 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
       {/* Auto-detected conditions - Mobile Optimized */}
       <div className="p-3 md:p-4 rounded-lg bg-green-500/10 border border-green-500/30">
         <div className="flex items-center gap-2 mb-2 md:mb-3">
-          <Badge className="bg-green-500 text-white text-xs">Auto-Detected</Badge>
+          <Badge className="bg-green-500 text-foreground text-xs">Auto-Detected</Badge>
           <span className="text-xs md:text-sm text-foreground/80">Based on your installation type</span>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 text-xs md:text-sm">

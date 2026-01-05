@@ -103,7 +103,7 @@ export const WorkerManager = ({
   return (
     <Card className="border-elec-yellow/20 bg-elec-card">
       <CardHeader className="pb-4">
-        <CardTitle className="text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <CardTitle className="text-foreground flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <Users className="h-5 w-5 text-elec-yellow flex-shrink-0" />
             <span className="text-base sm:text-lg">

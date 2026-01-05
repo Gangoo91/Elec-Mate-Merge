@@ -84,7 +84,7 @@ const SafetyAlertsCard = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Latest Safety Alerts</h2>
+          <h2 className="text-2xl font-bold text-foreground">Latest Safety Alerts</h2>
           <p className="text-muted-foreground">Critical safety warnings and updates from industry bodies</p>
         </div>
         <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
@@ -106,11 +106,11 @@ const SafetyAlertsCard = () => {
                     <Badge className={getSeverityColor(alert.severity)}>
                       {alert.severity.toUpperCase()}
                     </Badge>
-                    <Badge variant="outline" className="border-elec-yellow/30 text-white">
+                    <Badge variant="outline" className="border-elec-yellow/30 text-foreground">
                       {alert.category}
                     </Badge>
                   </div>
-                  <CardTitle className="text-white text-lg mb-2">
+                  <CardTitle className="text-foreground text-lg mb-2">
                     {alert.title}
                   </CardTitle>
                   <p className="text-gray-300 text-sm mb-3">
@@ -144,7 +144,7 @@ const SafetyAlertsCard = () => {
       </div>
 
       <div className="text-center pt-4">
-        <Button variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
+        <Button variant="outline" className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10">
           Load More Alerts
         </Button>
       </div>

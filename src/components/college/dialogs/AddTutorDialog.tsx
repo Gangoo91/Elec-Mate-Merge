@@ -1,0 +1,336 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useCollege } from "@/contexts/CollegeContext";
+import { UserPlus, Loader2 } from "lucide-react";
+import type { StaffRole } from "@/data/collegeMockData";
+
+interface AddTutorDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+const DEPARTMENTS = [
+  "Electrical Installation",
+  "Electrical Engineering",
+  "Building Services",
+  "Plumbing",
+  "Construction",
+  "Health & Safety",
+  "General Studies",
+];
+
+const SPECIALIZATIONS = [
+  "18th Edition",
+  "Inspection & Testing",
+  "Installation",
+  "Domestic",
+  "Commercial",
+  "Industrial",
+  "Solar PV",
+  "EV Charging",
+  "Fire Alarms",
+  "Emergency Lighting",
+  "PAT Testing",
+];
+
+export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
+  const { addStaff } = useCollege();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    role: "tutor" as StaffRole,
+    department: "",
+    employmentType: "Full-time" as "Full-time" | "Part-time" | "Agency" | "Contractor",
+    startDate: new Date().toISOString().split('T')[0],
+    maxTeachingHours: "",
+    teachingQual: "",
+    assessorQual: "",
+    specializations: [] as string[],
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Generate avatar initials from name
+      const nameParts = formData.name.trim().split(' ');
+      const avatarInitials = nameParts.length >= 2
+        ? `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`.toUpperCase()
+        : formData.name.substring(0, 2).toUpperCase();
+
+      addStaff({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        role: formData.role,
+        department: formData.department,
+        status: 'Active',
+        specializations: formData.specializations,
+        qualifications: [],
+        avatarInitials,
+        employmentType: formData.employmentType,
+        startDate: formData.startDate,
+        maxTeachingHours: formData.maxTeachingHours ? parseInt(formData.maxTeachingHours) : undefined,
+        teachingQual: formData.teachingQual || undefined,
+        assessorQual: formData.assessorQual || undefined,
+      });
+
+      // Reset form and close dialog
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        role: "tutor",
+        department: "",
+        employmentType: "Full-time",
+        startDate: new Date().toISOString().split('T')[0],
+        maxTeachingHours: "",
+        teachingQual: "",
+        assessorQual: "",
+        specializations: [],
+      });
+      onOpenChange(false);
+    } catch (error) {
+      console.error("Failed to add tutor:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const toggleSpecialization = (spec: string) => {
+    setFormData(prev => ({
+      ...prev,
+      specializations: prev.specializations.includes(spec)
+        ? prev.specializations.filter(s => s !== spec)
+        : [...prev.specializations, spec]
+    }));
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <UserPlus className="h-5 w-5 text-elec-yellow" />
+            Add New Tutor
+          </DialogTitle>
+          <DialogDescription>
+            Add a new tutor or staff member to the system. All fields marked with * are required.
+          </DialogDescription>
+        </DialogHeader>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Personal Information */}
+          <div className="space-y-3">
+            <div>
+              <Label htmlFor="name">Full Name *</Label>
+              <Input
+                id="name"
+                value={formData.name}
+                onChange={(e) => handleChange("name", e.target.value)}
+                placeholder="John Smith"
+                required
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label htmlFor="email">Email *</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => handleChange("email", e.target.value)}
+                  placeholder="john.smith@college.ac.uk"
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="phone">Phone *</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => handleChange("phone", e.target.value)}
+                  placeholder="07XXX XXXXXX"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Role & Department */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label htmlFor="role">Role *</Label>
+              <Select
+                value={formData.role}
+                onValueChange={(value) => handleChange("role", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="tutor">Tutor</SelectItem>
+                  <SelectItem value="assessor">Assessor</SelectItem>
+                  <SelectItem value="head_of_department">Head of Department</SelectItem>
+                  <SelectItem value="support">Support Staff</SelectItem>
+                  <SelectItem value="admin">Admin</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="department">Department *</Label>
+              <Select
+                value={formData.department}
+                onValueChange={(value) => handleChange("department", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select department" />
+                </SelectTrigger>
+                <SelectContent>
+                  {DEPARTMENTS.map((dept) => (
+                    <SelectItem key={dept} value={dept}>
+                      {dept}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Employment */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label htmlFor="employmentType">Employment Type *</Label>
+              <Select
+                value={formData.employmentType}
+                onValueChange={(value) => handleChange("employmentType", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Full-time">Full-time</SelectItem>
+                  <SelectItem value="Part-time">Part-time</SelectItem>
+                  <SelectItem value="Agency">Agency</SelectItem>
+                  <SelectItem value="Contractor">Contractor</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="startDate">Start Date *</Label>
+              <Input
+                id="startDate"
+                type="date"
+                value={formData.startDate}
+                onChange={(e) => handleChange("startDate", e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          {/* Teaching Details */}
+          <div className="grid grid-cols-3 gap-3">
+            <div>
+              <Label htmlFor="maxTeachingHours">Max Hours/Week</Label>
+              <Input
+                id="maxTeachingHours"
+                type="number"
+                min="0"
+                max="40"
+                value={formData.maxTeachingHours}
+                onChange={(e) => handleChange("maxTeachingHours", e.target.value)}
+                placeholder="35"
+              />
+            </div>
+            <div>
+              <Label htmlFor="teachingQual">Teaching Qual</Label>
+              <Input
+                id="teachingQual"
+                value={formData.teachingQual}
+                onChange={(e) => handleChange("teachingQual", e.target.value)}
+                placeholder="PGCE, AET"
+              />
+            </div>
+            <div>
+              <Label htmlFor="assessorQual">Assessor Qual</Label>
+              <Input
+                id="assessorQual"
+                value={formData.assessorQual}
+                onChange={(e) => handleChange("assessorQual", e.target.value)}
+                placeholder="L3 TAQA"
+              />
+            </div>
+          </div>
+
+          {/* Specializations */}
+          <div>
+            <Label>Specializations</Label>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {SPECIALIZATIONS.map((spec) => (
+                <Button
+                  key={spec}
+                  type="button"
+                  variant={formData.specializations.includes(spec) ? "default" : "outline"}
+                  size="sm"
+                  className={formData.specializations.includes(spec) ? "bg-elec-yellow hover:bg-elec-yellow/90 text-black" : ""}
+                  onClick={() => toggleSpecialization(spec)}
+                >
+                  {spec}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              disabled={isSubmitting}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={isSubmitting || !formData.name || !formData.email || !formData.department}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Adding...
+                </>
+              ) : (
+                "Add Tutor"
+              )}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}

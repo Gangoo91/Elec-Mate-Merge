@@ -200,7 +200,7 @@ const HazardDatabase = () => {
                     </div>
                     
                     <div className="flex-1">
-                      <h3 className="font-semibold text-lg text-white mb-2">{hazard.name}</h3>
+                      <h3 className="font-semibold text-lg text-foreground mb-2">{hazard.name}</h3>
                       <div className="flex flex-wrap items-center gap-2">
                         <Badge 
                           variant="outline" 
@@ -228,7 +228,7 @@ const HazardDatabase = () => {
                 {/* Clean Content Grid */}
                 <div className="space-y-4 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
                   <div>
-                    <h4 className="font-medium text-white mb-3 text-sm">Control Measures</h4>
+                    <h4 className="font-medium text-foreground mb-3 text-sm">Control Measures</h4>
                     <ul className="space-y-2">
                       {hazard.commonControls.map((control, index) => (
                         <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -240,7 +240,7 @@ const HazardDatabase = () => {
                   </div>
                   
                   <div>
-                    <h4 className="font-medium text-white mb-3 text-sm">Regulations</h4>
+                    <h4 className="font-medium text-foreground mb-3 text-sm">Regulations</h4>
                     <div className="flex flex-wrap gap-2">
                       {hazard.regulations.map((regulation, index) => (
                         <Badge 

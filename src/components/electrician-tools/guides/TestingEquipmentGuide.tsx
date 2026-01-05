@@ -82,7 +82,7 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <h3 className="text-lg font-medium text-white mb-3">What's your budget range?</h3>
+                <h3 className="text-lg font-medium text-foreground mb-3">What's your budget range?</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {budgetRanges.map((range) => (
                     <Card 
@@ -95,7 +95,7 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                       onClick={() => setSelectedBudget(range.id)}
                     >
                       <CardContent className="p-4">
-                        <h4 className="font-medium text-white">{range.label}</h4>
+                        <h4 className="font-medium text-foreground">{range.label}</h4>
                         <p className="text-sm text-muted-foreground">{range.description}</p>
                       </CardContent>
                     </Card>
@@ -104,7 +104,7 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
               </div>
 
               <div>
-                <h3 className="text-lg font-medium text-white mb-3">What's your experience level?</h3>
+                <h3 className="text-lg font-medium text-foreground mb-3">What's your experience level?</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {userLevels.map((level) => (
                     <Card 
@@ -117,7 +117,7 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                       onClick={() => setUserLevel(level.id)}
                     >
                       <CardContent className="p-4">
-                        <h4 className="font-medium text-white">{level.label}</h4>
+                        <h4 className="font-medium text-foreground">{level.label}</h4>
                         <p className="text-sm text-muted-foreground">{level.description}</p>
                       </CardContent>
                     </Card>
@@ -134,7 +134,7 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                     </div>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
-                        <h4 className="text-xl font-bold text-white">{getRecommendation().primary}</h4>
+                        <h4 className="text-xl font-bold text-foreground">{getRecommendation().primary}</h4>
                         <Badge className="bg-elec-yellow/20 text-elec-yellow text-lg px-3 py-1">
                           {getRecommendation().price}
                         </Badge>
@@ -161,16 +161,16 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-elec-yellow/20">
-                      <th className="text-left p-3 text-white">Model</th>
-                      <th className="text-left p-3 text-white">Price</th>
-                      <th className="text-left p-3 text-white">Tests</th>
-                      <th className="text-left p-3 text-white">Rating</th>
-                      <th className="text-left p-3 text-white">Best For</th>
+                      <th className="text-left p-3 text-foreground">Model</th>
+                      <th className="text-left p-3 text-foreground">Price</th>
+                      <th className="text-left p-3 text-foreground">Tests</th>
+                      <th className="text-left p-3 text-foreground">Rating</th>
+                      <th className="text-left p-3 text-foreground">Best For</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className="border-b border-elec-yellow/10">
-                      <td className="p-3 font-medium text-white">Fluke 1663</td>
+                      <td className="p-3 font-medium text-foreground">Fluke 1663</td>
                       <td className="p-3 text-elec-yellow">£649.99</td>
                       <td className="p-3 text-muted-foreground">All 17th/18th Ed tests</td>
                       <td className="p-3">
@@ -182,7 +182,7 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                       <td className="p-3 text-muted-foreground">Professional electricians</td>
                     </tr>
                     <tr className="border-b border-elec-yellow/10">
-                      <td className="p-3 font-medium text-white">Kewtech KT65DL</td>
+                      <td className="p-3 font-medium text-foreground">Kewtech KT65DL</td>
                       <td className="p-3 text-elec-yellow">£299.99</td>
                       <td className="p-3 text-muted-foreground">Essential tests + RCD</td>
                       <td className="p-3">
@@ -194,7 +194,7 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                       <td className="p-3 text-muted-foreground">Apprentices & budget</td>
                     </tr>
                     <tr className="border-b border-elec-yellow/10">
-                      <td className="p-3 font-medium text-white">Megger MFT1741</td>
+                      <td className="p-3 font-medium text-foreground">Megger MFT1741</td>
                       <td className="p-3 text-elec-yellow">£999.99</td>
                       <td className="p-3 text-muted-foreground">Advanced + Download</td>
                       <td className="p-3">
@@ -231,7 +231,7 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 bg-elec-dark/50 rounded-lg">
-                  <h4 className="font-medium text-white mb-2">Calibration Schedule</h4>
+                  <h4 className="font-medium text-foreground mb-2">Calibration Schedule</h4>
                   <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>• Annual calibration required</li>
                     <li>• Heavy use: Consider 6-monthly</li>
@@ -241,7 +241,7 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                 </div>
                 
                 <div className="p-4 bg-elec-dark/50 rounded-lg">
-                  <h4 className="font-medium text-white mb-2">Typical Costs</h4>
+                  <h4 className="font-medium text-foreground mb-2">Typical Costs</h4>
                   <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>• Basic MFT: £80-120</li>
                     <li>• Advanced MFT: £120-180</li>
@@ -264,21 +264,21 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                 <div className="flex items-start gap-3">
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Buy from authorised dealers</h4>
+                    <h4 className="font-medium text-foreground">Buy from authorised dealers</h4>
                     <p className="text-sm text-muted-foreground">Ensures warranty and calibration services</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Consider lease options</h4>
+                    <h4 className="font-medium text-foreground">Consider lease options</h4>
                     <p className="text-sm text-muted-foreground">Spread costs and include calibration</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Check software updates</h4>
+                    <h4 className="font-medium text-foreground">Check software updates</h4>
                     <p className="text-sm text-muted-foreground">Ensure compliance with latest standards</p>
                   </div>
                 </div>
@@ -293,21 +293,21 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-5 w-5 text-red-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Buying cheap imports</h4>
+                    <h4 className="font-medium text-foreground">Buying cheap imports</h4>
                     <p className="text-sm text-muted-foreground">May not meet UK standards or have support</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-5 w-5 text-red-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Ignoring calibration costs</h4>
+                    <h4 className="font-medium text-foreground">Ignoring calibration costs</h4>
                     <p className="text-sm text-muted-foreground">Budget £100-200 annually for calibration</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-5 w-5 text-red-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Not checking warranty</h4>
+                    <h4 className="font-medium text-foreground">Not checking warranty</h4>
                     <p className="text-sm text-muted-foreground">Ensure comprehensive warranty coverage</p>
                   </div>
                 </div>

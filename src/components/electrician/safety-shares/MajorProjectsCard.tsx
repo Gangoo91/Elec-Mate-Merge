@@ -337,7 +337,7 @@ const MajorProjectsCard = () => {
   const ProjectDetailModal = ({ project }: { project: MajorProject }) => (
     <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
       <DialogHeader>
-        <DialogTitle className="text-xl font-bold text-white">{project.project_name}</DialogTitle>
+        <DialogTitle className="text-xl font-bold text-foreground">{project.project_name}</DialogTitle>
       </DialogHeader>
       
       <div className="space-y-6">
@@ -355,7 +355,7 @@ const MajorProjectsCard = () => {
 
         {/* Project Summary */}
         <div>
-          <h3 className="text-lg font-semibold text-white mb-2">Project Overview</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-2">Project Overview</h3>
           <p className="text-gray-300">{project.description}</p>
         </div>
 
@@ -363,22 +363,22 @@ const MajorProjectsCard = () => {
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Client</p>
-            <p className="text-white font-medium">{project.client}</p>
+            <p className="text-foreground font-medium">{project.client}</p>
           </div>
           
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Contract Value</p>
-            <p className="text-white font-medium">{project.contract_value ? formatCurrency(project.contract_value) : 'TBC'}</p>
+            <p className="text-foreground font-medium">{project.contract_value ? formatCurrency(project.contract_value) : 'TBC'}</p>
           </div>
           
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Location</p>
-            <p className="text-white font-medium">{project.location || 'UK'}</p>
+            <p className="text-foreground font-medium">{project.location || 'UK'}</p>
           </div>
           
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Duration</p>
-            <p className="text-white font-medium">
+            <p className="text-foreground font-medium">
               {(() => {
                 if (project.duration && project.duration.includes('T') && project.duration.includes('to')) {
                   // Parse timestamp range like "2025-07-21T00:00:00+01:00 to 2026-07-20T23:59:59+01:00"
@@ -413,7 +413,7 @@ const MajorProjectsCard = () => {
           
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Start Date</p>
-            <p className="text-white font-medium">
+            <p className="text-foreground font-medium">
               {project.start_date 
                 ? new Date(project.start_date).toLocaleDateString('en-GB')
                 : 'TBC'
@@ -423,7 +423,7 @@ const MajorProjectsCard = () => {
           
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Contractors</p>
-            <p className="text-white font-medium">{project.contractors || 'TBC'}</p>
+            <p className="text-foreground font-medium">{project.contractors || 'TBC'}</p>
           </div>
         </div>
 
@@ -528,7 +528,7 @@ const MajorProjectsCard = () => {
               </div>
               
               {/* Project Title - Bold and centered */}
-              <CardTitle className="text-xl font-bold text-center text-white mb-3 line-clamp-2">
+              <CardTitle className="text-xl font-bold text-center text-foreground mb-3 line-clamp-2">
                 {project.project_name}
               </CardTitle>
               
@@ -552,7 +552,7 @@ const MajorProjectsCard = () => {
                   <div className="flex justify-center mb-1">
                     <PoundSterling className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <div className="text-white font-medium text-sm">{formatCurrency(project.contract_value)}</div>
+                  <div className="text-foreground font-medium text-sm">{formatCurrency(project.contract_value)}</div>
                   <div className="text-xs text-muted-foreground">Contract Value</div>
                 </div>
                 
@@ -560,7 +560,7 @@ const MajorProjectsCard = () => {
                   <div className="flex justify-center mb-1">
                     <Clock className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <div className="text-white font-medium text-sm">
+                  <div className="text-foreground font-medium text-sm">
                     {project.duration ? formatDuration(project.duration) : '18 months'}
                   </div>
                   <div className="text-xs text-muted-foreground">Duration</div>
@@ -570,7 +570,7 @@ const MajorProjectsCard = () => {
                   <div className="flex justify-center mb-1">
                     <MapPin className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <div className="text-white font-medium text-sm">
+                  <div className="text-foreground font-medium text-sm">
                     {(project.location || 'UK').split(' ').map(word => 
                       word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
                     ).join(' ')}
@@ -582,7 +582,7 @@ const MajorProjectsCard = () => {
                   <div className="flex justify-center mb-1">
                     <Users className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <div className="text-white font-medium text-sm">
+                  <div className="text-foreground font-medium text-sm">
                     {project.contractors ? 
                       `${project.contractors.split(", ").length} contractor${project.contractors.split(", ").length !== 1 ? 's' : ''}` 
                       : 'TBC'}
@@ -637,7 +637,7 @@ const MajorProjectsCard = () => {
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  className="border-elec-dark bg-elec-dark text-white hover:bg-elec-dark/80 font-medium w-full sm:w-auto text-xs sm:text-sm"
+                  className="border-elec-dark bg-elec-dark text-foreground hover:bg-elec-dark/80 font-medium w-full sm:w-auto text-xs sm:text-sm"
                   onClick={() => handleViewProject(project)}
                 >
                   <ExternalLink className="h-4 w-4 mr-1 sm:mr-2" />
@@ -653,7 +653,7 @@ const MajorProjectsCard = () => {
       <div className="text-center pt-4">
         <Button 
           variant="outline" 
-          className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+          className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10"
           onClick={() => navigate('/electrician/safety-shares/projects')}
         >
           View All Projects ({projects.length})

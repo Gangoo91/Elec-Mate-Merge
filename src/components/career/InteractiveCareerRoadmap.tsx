@@ -107,7 +107,7 @@ const InteractiveCareerRoadmap: React.FC = () => {
                     <div className="space-y-3">
                       {/* Header */}
                       <div className="flex items-center gap-3">
-                        <h3 className="text-lg font-semibold text-white">{stage.title}</h3>
+                        <h3 className="text-lg font-semibold text-foreground">{stage.title}</h3>
                         <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow">
                           {stage.timeframe}
                         </Badge>
@@ -139,7 +139,7 @@ const InteractiveCareerRoadmap: React.FC = () => {
                       {/* Requirements and Achievements */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                         <div>
-                          <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-1">
+                          <h4 className="text-sm font-medium text-foreground mb-2 flex items-center gap-1">
                             <Calendar className="h-3 w-3" />
                             Requirements
                           </h4>
@@ -154,7 +154,7 @@ const InteractiveCareerRoadmap: React.FC = () => {
                         </div>
                         
                         <div>
-                          <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-1">
+                          <h4 className="text-sm font-medium text-foreground mb-2 flex items-center gap-1">
                             <Award className="h-3 w-3" />
                             Achievements
                           </h4>

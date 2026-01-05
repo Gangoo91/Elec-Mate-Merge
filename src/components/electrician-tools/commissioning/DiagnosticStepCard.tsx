@@ -62,10 +62,10 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                   </Badge>
                 )}
               </div>
-              <h4 className="text-base sm:text-lg font-semibold text-white mb-1">
+              <h4 className="text-base sm:text-lg font-semibold text-foreground mb-1">
                 {step.stepTitle}
               </h4>
-              <p className="text-sm text-white/70 line-clamp-2">
+              <p className="text-sm text-foreground/70 line-clamp-2">
                 {step.action}
               </p>
             </div>
@@ -78,18 +78,18 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Wrench className="h-4 w-4 text-blue-400" />
-                <h5 className="text-sm font-semibold text-white">Action Required</h5>
+                <h5 className="text-sm font-semibold text-foreground">Action Required</h5>
               </div>
-              <p className="text-sm text-white/80 ml-6">{step.action}</p>
+              <p className="text-sm text-foreground/80 ml-6">{step.action}</p>
             </div>
 
             {/* What to Test */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <ClipboardCheck className="h-4 w-4 text-blue-400" />
-                <h5 className="text-sm font-semibold text-white">What to Test</h5>
+                <h5 className="text-sm font-semibold text-foreground">What to Test</h5>
               </div>
-              <p className="text-sm text-white/80 ml-6">{step.whatToTest}</p>
+              <p className="text-sm text-foreground/80 ml-6">{step.whatToTest}</p>
             </div>
 
             {/* Lead Placement */}
@@ -99,29 +99,29 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                   <Zap className="h-4 w-4 text-blue-400" />
                   <h5 className="text-sm font-semibold text-blue-300">Lead Placement</h5>
                 </div>
-                <p className="text-sm text-white/80">{step.leadPlacement}</p>
+                <p className="text-sm text-foreground/80">{step.leadPlacement}</p>
               </div>
             )}
 
             {/* Expected Readings */}
             {(step.whatToMeasure || step.expectedReading || step.acceptableRange) && (
               <div className="bg-elec-dark/50 rounded-lg p-4 space-y-2">
-                <h5 className="text-sm font-semibold text-white mb-2">Expected Readings</h5>
+                <h5 className="text-sm font-semibold text-foreground mb-2">Expected Readings</h5>
                 {step.whatToMeasure && (
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                    <span className="text-xs text-white/60 sm:min-w-[120px]">Measurement:</span>
-                    <span className="text-sm text-white font-mono">{step.whatToMeasure}</span>
+                    <span className="text-xs text-foreground/60 sm:min-w-[120px]">Measurement:</span>
+                    <span className="text-sm text-foreground font-mono">{step.whatToMeasure}</span>
                   </div>
                 )}
                 {step.expectedReading && (
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                    <span className="text-xs text-white/60 sm:min-w-[120px]">Expected:</span>
+                    <span className="text-xs text-foreground/60 sm:min-w-[120px]">Expected:</span>
                     <span className="text-sm text-green-400 font-mono font-semibold">{step.expectedReading}</span>
                   </div>
                 )}
                 {step.acceptableRange && (
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                    <span className="text-xs text-white/60 sm:min-w-[120px]">Acceptable Range:</span>
+                    <span className="text-xs text-foreground/60 sm:min-w-[120px]">Acceptable Range:</span>
                     <span className="text-sm text-blue-400 font-mono">{step.acceptableRange}</span>
                   </div>
                 )}
@@ -131,14 +131,14 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
             {/* Instrument Setup */}
             {(step.instrumentSetup || step.instrumentModel) && (
               <div className="space-y-2">
-                <h5 className="text-sm font-semibold text-white">Instrument Setup</h5>
+                <h5 className="text-sm font-semibold text-foreground">Instrument Setup</h5>
                 {step.instrumentModel && (
                   <Badge variant="outline" className="text-blue-300 border-blue-500/50 mb-2">
                     {step.instrumentModel}
                   </Badge>
                 )}
                 {step.instrumentSetup && (
-                  <p className="text-sm text-white/80 bg-elec-dark/50 rounded-lg p-3 font-mono text-xs">
+                  <p className="text-sm text-foreground/80 bg-elec-dark/50 rounded-lg p-3 font-mono text-xs">
                     {step.instrumentSetup}
                   </p>
                 )}
@@ -152,7 +152,7 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                   <AlertCircle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <h5 className="text-xs font-semibold text-amber-300 mb-1">Temperature Effects</h5>
-                    <p className="text-xs text-white/80">{step.temperatureNotes}</p>
+                    <p className="text-xs text-foreground/80">{step.temperatureNotes}</p>
                   </div>
                 </div>
               </div>
@@ -170,7 +170,7 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                   </div>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="pt-2">
-                  <p className="text-sm text-white/80 italic">{step.realWorldExample}</p>
+                  <p className="text-sm text-foreground/80 italic">{step.realWorldExample}</p>
                 </CollapsibleContent>
               </Collapsible>
             )}
@@ -182,7 +182,7 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                   <BookOpen className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <h5 className="text-xs font-semibold text-purple-300 mb-1">Client Explanation</h5>
-                    <p className="text-sm text-white/80">{step.clientExplanation}</p>
+                    <p className="text-sm text-foreground/80">{step.clientExplanation}</p>
                   </div>
                 </div>
               </div>
@@ -212,7 +212,7 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                 <h5 className="text-sm font-semibold text-amber-300">If This Step Fails</h5>
                 <ol className="space-y-2 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                   {step.troubleshootingSequence.map((sequence, idx) => (
-                    <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                    <li key={idx} className="text-sm text-foreground/80 flex items-start gap-2">
                       <span className="text-amber-400 font-bold">{idx + 1}.</span>
                       <span className="text-left">{sequence}</span>
                     </li>
@@ -225,7 +225,7 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
             {step.ifFailed && (
               <div className="space-y-2">
                 <h5 className="text-sm font-semibold text-amber-300">If Check Fails</h5>
-                <p className="text-sm text-white/80 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+                <p className="text-sm text-foreground/80 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                   {step.ifFailed}
                 </p>
               </div>

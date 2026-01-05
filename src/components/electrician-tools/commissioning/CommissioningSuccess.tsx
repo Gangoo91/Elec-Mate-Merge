@@ -80,14 +80,14 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
         <DialogHeader className="text-center pb-4">
           <div className="flex justify-center mb-4">
             <div className="bg-gradient-to-br from-purple-400 to-purple-600 p-8 sm:p-6 rounded-full shadow-xl shadow-purple-500/50 animate-bounce-subtle">
-              <CheckCircle2 className="h-16 w-16 sm:h-12 sm:w-12 text-white" />
+              <CheckCircle2 className="h-16 w-16 sm:h-12 sm:w-12 text-foreground" />
             </div>
           </div>
           
           <DialogTitle className="text-3xl sm:text-3xl lg:text-4xl font-bold text-foreground">
             Test Procedure Complete!
           </DialogTitle>
-          <DialogDescription className="text-base sm:text-sm text-white/80 mt-2">
+          <DialogDescription className="text-base sm:text-sm text-foreground/80 mt-2">
             Your electrical commissioning documentation has been generated successfully
           </DialogDescription>
         </DialogHeader>
@@ -96,7 +96,7 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-6">
           <div className="bg-elec-dark/80 backdrop-blur-sm rounded-lg p-5 sm:p-4 text-center border border-purple-500/30 hover:border-purple-500/50 transition-all">
             <div className="text-4xl sm:text-3xl font-bold text-purple-400 mb-1">{totalTests}</div>
-            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+            <div className="text-base sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
               <Zap className="h-4 w-4" />
               <span>Tests</span>
             </div>
@@ -106,7 +106,7 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
             <div className="text-4xl sm:text-3xl font-bold text-purple-400 mb-1">
               {estimatedDuration.toFixed(1)}<span className="text-xl">h</span>
             </div>
-            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+            <div className="text-base sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
               <Clock className="h-4 w-4" />
               <span>Duration</span>
             </div>
@@ -116,7 +116,7 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
             <div className="text-4xl sm:text-3xl font-bold text-purple-400 mb-1">
               {maxZs}<span className="text-xl">Ω</span>
             </div>
-            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+            <div className="text-base sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
               <Activity className="h-4 w-4" />
               <span>Max Zs</span>
             </div>
@@ -126,7 +126,7 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
             <div className="text-4xl sm:text-3xl font-bold text-purple-400 mb-1 truncate">
               {certificateType.replace('BS 7671 Electrical Installation Certificate (EIC) and Schedule of Test Results', 'BS 7671 EIC').replace('BS 7671 Electrical Installation Condition Report (EICR)', 'BS 7671 EICR').replace('BS 7671 Minor Electrical Installation Works Certificate (MWC)', 'BS 7671 MWC')}
             </div>
-            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+            <div className="text-base sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
               <FileText className="h-4 w-4" />
               <span>Certificate</span>
             </div>
@@ -139,7 +139,7 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
             <Timer className="h-5 w-5" />
             <span className="text-base sm:text-sm font-semibold">Time Saved: ~{timeSaved} minutes</span>
           </div>
-          <p className="text-sm sm:text-xs text-white/80 mt-1 text-center">
+          <p className="text-sm sm:text-xs text-foreground/80 mt-1 text-center">
             Compared to manual BS 7671 lookup and procedure writing
           </p>
         </div>
@@ -150,14 +150,14 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
               onViewResults();
               onOpenChange(false);
             }}
-            className="w-full bg-gradient-to-r from-purple-400 to-purple-600 hover:from-purple-500 hover:to-purple-700 text-white h-12 touch-manipulation text-base shadow-lg shadow-purple-500/20"
+            className="w-full bg-gradient-to-r from-purple-400 to-purple-600 hover:from-purple-500 hover:to-purple-700 text-foreground h-12 touch-manipulation text-base shadow-lg shadow-purple-500/20"
           >
             <FileText className="mr-2 h-4 w-4" />
             View Results
           </Button>
         </DialogFooter>
 
-        <p className="text-sm sm:text-xs text-white/70 text-center mt-2">
+        <p className="text-sm sm:text-xs text-foreground/70 text-center mt-2">
           Generated in {generationTime}s
         </p>
       </DialogContent>

@@ -113,7 +113,7 @@ const ProjectTypeSelector = ({ selectedType, onTypeChange, onExampleSelect }: Pr
               </div>
               
               {/* Description - wraps properly */}
-              <span className={`text-xs leading-relaxed line-clamp-2 whitespace-normal ${isSelected ? 'text-elec-dark/70' : 'text-white'}`}>
+              <span className={`text-xs leading-relaxed line-clamp-2 whitespace-normal ${isSelected ? 'text-elec-dark/70' : 'text-foreground'}`}>
                 {type.description}
               </span>
               

@@ -165,7 +165,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
       <Card className="bg-elec-gray border-elec-yellow/30 p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-white mb-2">Inspection & Findings</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-2">Inspection & Findings</h2>
             <p className="text-muted-foreground">
               Document your inspection findings and observations
             </p>
@@ -188,7 +188,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
       <Card className="bg-elec-gray border-elec-yellow/30 p-6">
         <div className="flex items-center gap-2 mb-4">
           <Eye className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg font-medium text-white">Inspection Scope</h3>
+          <h3 className="text-lg font-medium text-foreground">Inspection Scope</h3>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -212,10 +212,10 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
         </div>
 
         <div className="mt-4 space-y-2">
-          <label className="text-sm font-medium text-white">Limitations</label>
+          <label className="text-sm font-medium text-foreground">Limitations</label>
           <Textarea
             placeholder="Enter any limitations encountered during inspection (e.g., areas not accessible, equipment not tested)"
-            className="min-h-[80px] bg-elec-dark border border-primary/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[80px] bg-elec-dark border border-primary/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={formData.limitations || ""}
             onChange={(e) => updateField('limitations', e.target.value)}
           />
@@ -227,7 +227,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
         <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
           <div className="flex items-center gap-2">
             <FileWarning className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg font-medium text-white">Faults & Observations</h3>
+            <h3 className="text-lg font-medium text-foreground">Faults & Observations</h3>
           </div>
           <Button
             variant="outline"
@@ -258,7 +258,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
                         {fault.location}
                       </span>
                     </div>
-                    <p className="text-sm text-white mb-1">{fault.description}</p>
+                    <p className="text-sm text-foreground mb-1">{fault.description}</p>
                     {fault.recommendation && (
                       <p className="text-xs text-muted-foreground">
                         Recommendation: {fault.recommendation}
@@ -280,7 +280,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
         ) : (
           <div className="text-center py-8 border-2 border-dashed border-elec-yellow/20 rounded-lg">
             <CheckCircle2 className="h-8 w-8 text-green-500 mx-auto mb-2" />
-            <p className="text-white font-medium">No faults recorded</p>
+            <p className="text-foreground font-medium">No faults recorded</p>
             <p className="text-sm text-muted-foreground">
               Add any faults or observations found during inspection
             </p>
@@ -291,7 +291,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
         {showingFaultForm && (
           <Card className="bg-elec-dark border-elec-yellow/30 p-4">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-white font-medium">Add New Fault</h4>
+              <h4 className="text-foreground font-medium">Add New Fault</h4>
               <Button
                 variant="ghost"
                 size="sm"
@@ -322,20 +322,20 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
             </div>
             
             <div className="mt-4 space-y-2">
-              <label className="text-sm font-medium text-white">Description</label>
+              <label className="text-sm font-medium text-foreground">Description</label>
               <Textarea
                 placeholder="Describe the fault or observation in detail"
-                className="bg-elec-gray border border-primary/30 text-white"
+                className="bg-elec-gray border border-primary/30 text-foreground"
                 value={newFault.description || ""}
                 onChange={(e) => setNewFault(prev => ({ ...prev, description: e.target.value }))}
               />
             </div>
             
             <div className="mt-4 space-y-2">
-              <label className="text-sm font-medium text-white">Recommendation</label>
+              <label className="text-sm font-medium text-foreground">Recommendation</label>
               <Textarea
                 placeholder="Recommended action to address this fault"
-                className="bg-elec-gray border border-primary/30 text-white"
+                className="bg-elec-gray border border-primary/30 text-foreground"
                 value={newFault.recommendation || ""}
                 onChange={(e) => setNewFault(prev => ({ ...prev, recommendation: e.target.value }))}
               />
@@ -346,7 +346,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
                 variant="outline"
                 size="sm"
                 onClick={() => setShowingFaultForm(false)}
-                className="border-elec-yellow/30 text-white"
+                className="border-elec-yellow/30 text-foreground"
               >
                 Cancel
               </Button>
@@ -367,7 +367,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
       <Card className="bg-elec-gray border-elec-yellow/30 p-6">
         <div className="flex items-center gap-2 mb-4">
           <TestTube className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg font-medium text-white">Overall Assessment</h3>
+          <h3 className="text-lg font-medium text-foreground">Overall Assessment</h3>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -400,10 +400,10 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
         </div>
 
         <div className="mt-4 space-y-2">
-          <label className="text-sm font-medium text-white">Recommended Actions</label>
+          <label className="text-sm font-medium text-foreground">Recommended Actions</label>
           <Textarea
             placeholder="Enter any recommended actions or improvements"
-            className="min-h-[80px] bg-elec-dark border border-primary/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[80px] bg-elec-dark border border-primary/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={formData.recommendedActions || ""}
             onChange={(e) => updateField('recommendedActions', e.target.value)}
           />
@@ -415,7 +415,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
         <Card className="bg-elec-gray border-elec-yellow/30 p-6">
           <div className="flex items-center gap-2 mb-4">
             <Lightbulb className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg font-medium text-white">Inspector Details</h3>
+            <h3 className="text-lg font-medium text-foreground">Inspector Details</h3>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -462,7 +462,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
           <Button
             variant="outline"
             onClick={onBack}
-            className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 w-full sm:w-auto"
+            className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10 w-full sm:w-auto"
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
             Back to Client Details

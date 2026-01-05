@@ -159,7 +159,7 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
                           <Badge variant="outline" className="text-xs">
                             {hazard.category}
                           </Badge>
-                          <Badge className={`${getBadgeRiskColor(hazard.riskLevel)} text-white text-xs`}>
+                          <Badge className={`${getBadgeRiskColor(hazard.riskLevel)} text-foreground text-xs`}>
                             {hazard.riskLevel} Risk
                           </Badge>
                         </div>

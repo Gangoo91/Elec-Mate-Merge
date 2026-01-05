@@ -44,12 +44,12 @@ const QuoteHeroCard = ({
         <div className="text-center space-y-6">
           {/* Header */}
           <div className="space-y-2">
-            <p className="text-base sm:text-sm text-white font-medium uppercase tracking-wide">
+            <p className="text-base sm:text-sm text-foreground font-medium uppercase tracking-wide">
               💰 Recommended Quote
             </p>
             
             {/* Main Price - HUGE on mobile */}
-            <div className="text-6xl sm:text-5xl md:text-6xl font-bold text-white drop-shadow-lg">
+            <div className="text-6xl sm:text-5xl md:text-6xl font-bold text-foreground drop-shadow-lg">
               {formatCurrency(amount)}
             </div>
             
@@ -67,7 +67,7 @@ const QuoteHeroCard = ({
             <div className="bg-background/30 rounded-lg p-3 sm:p-4 border border-green-500/30">
               <div className="flex items-center justify-center gap-2 mb-1">
                 <CheckCircle2 className="h-4 w-4 text-green-400" />
-                <span className="text-xs text-white">Profit</span>
+                <span className="text-xs text-foreground">Profit</span>
               </div>
               <p className="text-3xl sm:text-2xl font-bold text-green-400">
                 {formatCurrency(profit)}
@@ -78,7 +78,7 @@ const QuoteHeroCard = ({
             <div className="bg-background/30 rounded-lg p-3 sm:p-4 border border-primary/30">
               <div className="flex items-center justify-center gap-2 mb-1">
                 <TrendingUp className="h-4 w-4 text-primary" />
-                <span className="text-xs text-white">Margin</span>
+                <span className="text-xs text-foreground">Margin</span>
               </div>
               <p className="text-3xl sm:text-2xl font-bold text-primary">
                 {margin.toFixed(1)}%
@@ -88,7 +88,7 @@ const QuoteHeroCard = ({
             {/* Profit Per Hour */}
             <div className="bg-background/30 rounded-lg p-3 sm:p-4 border border-green-500/30">
               <div className="flex items-center justify-center gap-2 mb-1">
-                <span className="text-xs text-white">Per Hour</span>
+                <span className="text-xs text-foreground">Per Hour</span>
               </div>
               <p className="text-2xl sm:text-xl font-bold text-green-400">
                 {formatCurrency(profitPerHour)}/hr
@@ -98,7 +98,7 @@ const QuoteHeroCard = ({
             {/* Confidence */}
             <div className="bg-background/30 rounded-lg p-3 sm:p-4 border border-blue-500/30">
               <div className="flex items-center justify-center gap-2 mb-1">
-                <span className="text-xs text-white">Confidence</span>
+                <span className="text-xs text-foreground">Confidence</span>
               </div>
               <p className="text-2xl sm:text-xl font-bold text-blue-400">
                 {confidence}%
@@ -108,7 +108,7 @@ const QuoteHeroCard = ({
 
           {/* Quick Explanation */}
           <div className="pt-2">
-            <p className="text-base sm:text-sm text-white leading-relaxed">
+            <p className="text-base sm:text-sm text-foreground leading-relaxed">
               Based on <span className="font-bold text-primary">{totalLabourHours.toFixed(1)} hours</span> labour + materials
             </p>
           </div>

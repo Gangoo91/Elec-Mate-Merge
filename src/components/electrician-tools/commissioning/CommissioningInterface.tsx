@@ -242,8 +242,8 @@ const CommissioningInterface = () => {
         <div className="space-y-6">
           <div className="flex flex-col items-center justify-center p-12 bg-card border border-border rounded-lg">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-elec-yellow mb-4" />
-            <h3 className="text-lg font-semibold text-white mb-2">Analysing photo...</h3>
-            <p className="text-sm text-white/70 text-center max-w-md">
+            <h3 className="text-lg font-semibold text-foreground mb-2">Analysing photo...</h3>
+            <p className="text-sm text-foreground/70 text-center max-w-md">
               Scanning your EICR photo for defect codes
             </p>
           </div>
@@ -282,7 +282,7 @@ const CommissioningInterface = () => {
   if (job?.status === 'complete' && !responseMode) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-white">Preparing results...</div>
+        <div className="text-foreground">Preparing results...</div>
       </div>
     );
   }

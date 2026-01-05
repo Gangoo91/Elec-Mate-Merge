@@ -171,7 +171,7 @@ const ComplianceDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: Compl
       {reminders.filter(r => r.priority === 'high').map(reminder => (
         <Alert key={reminder.id} className="border-red-500/30 bg-red-500/5">
           <AlertTriangle className="h-4 w-4" />
-          <AlertDescription className="text-white">
+          <AlertDescription className="text-foreground">
             <strong>{reminder.title}:</strong> {reminder.message}
           </AlertDescription>
         </Alert>

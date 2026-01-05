@@ -59,19 +59,19 @@ export const WiringSchematicPreview = ({ schematic, circuitName }: WiringSchemat
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div className="p-2 rounded bg-elec-card border border-elec-yellow/10">
-                <div className="text-white/60 text-xs">Cable</div>
+                <div className="text-foreground/60 text-xs">Cable</div>
                 <div className="font-semibold text-foreground">{schematic.circuit_spec.cableType || 'TBC'}</div>
               </div>
               <div className="p-2 rounded bg-elec-card border border-elec-yellow/10">
-                <div className="text-white/60 text-xs">Size</div>
+                <div className="text-foreground/60 text-xs">Size</div>
                 <div className="font-semibold text-foreground">{schematic.circuit_spec.cableSize || 'TBC'}mm²</div>
               </div>
               <div className="p-2 rounded bg-elec-card border border-elec-yellow/10">
-                <div className="text-white/60 text-xs">Protection</div>
+                <div className="text-foreground/60 text-xs">Protection</div>
                 <div className="font-semibold text-foreground">{schematic.circuit_spec.protectionDevice || 'TBC'}</div>
               </div>
               <div className="p-2 rounded bg-elec-card border border-elec-yellow/10">
-                <div className="text-white/60 text-xs">RCD</div>
+                <div className="text-foreground/60 text-xs">RCD</div>
                 <div className="font-semibold text-foreground">
                   {schematic.circuit_spec.rcdRequired ? `${schematic.circuit_spec.rcdRating || 30}mA` : 'Not Required'}
                 </div>
@@ -109,9 +109,9 @@ export const WiringSchematicPreview = ({ schematic, circuitName }: WiringSchemat
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-white/80">{step.instruction}</p>
+                      <p className="text-sm text-foreground/80">{step.instruction}</p>
                       {step.bs7671_reference && (
-                        <p className="text-xs text-white/60 mt-1">BS 7671 Reg {step.bs7671_reference}</p>
+                        <p className="text-xs text-foreground/60 mt-1">BS 7671 Reg {step.bs7671_reference}</p>
                       )}
                       {step.ppe_required && step.ppe_required.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
@@ -146,9 +146,9 @@ export const WiringSchematicPreview = ({ schematic, circuitName }: WiringSchemat
                     <span className="text-sm text-foreground">{conn.connection_point}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-white/70">Wire: {conn.wire_colour}</span>
+                    <span className="text-xs text-foreground/70">Wire: {conn.wire_colour}</span>
                     {conn.torque_setting && (
-                      <span className="text-xs text-white/60">Torque: {conn.torque_setting}</span>
+                      <span className="text-xs text-foreground/60">Torque: {conn.torque_setting}</span>
                     )}
                   </div>
                 </div>
@@ -170,7 +170,7 @@ export const WiringSchematicPreview = ({ schematic, circuitName }: WiringSchemat
           <CardContent>
             <ul className="space-y-2">
               {schematic.testing_requirements.map((test: string, idx: number) => (
-                <li key={idx} className="flex items-start gap-2 text-sm text-white/80">
+                <li key={idx} className="flex items-start gap-2 text-sm text-foreground/80">
                   <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
                   {test}
                 </li>
@@ -192,7 +192,7 @@ export const WiringSchematicPreview = ({ schematic, circuitName }: WiringSchemat
           <CardContent>
             <ul className="space-y-2">
               {schematic.safety_warnings.map((warning: string, idx: number) => (
-                <li key={idx} className="flex items-start gap-2 text-sm text-white/80">
+                <li key={idx} className="flex items-start gap-2 text-sm text-foreground/80">
                   <AlertTriangle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
                   {warning}
                 </li>
@@ -204,7 +204,7 @@ export const WiringSchematicPreview = ({ schematic, circuitName }: WiringSchemat
 
       {/* RAG Source Verification */}
       {schematic?.rag_sources && (
-        <div className="text-xs text-white/60 p-3 bg-elec-dark/50 rounded border border-elec-yellow/10">
+        <div className="text-xs text-foreground/60 p-3 bg-elec-dark/50 rounded border border-elec-yellow/10">
           <div className="flex items-center gap-2">
             <Badge variant="outline" className="text-xs">RAG Verified</Badge>
             <span>

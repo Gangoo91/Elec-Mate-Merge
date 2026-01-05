@@ -296,7 +296,7 @@ const ProjectManagerInterface = () => {
           type="submit"
           size="lg"
           disabled={!prompt.trim() || isLoading}
-          className="w-full bg-gradient-to-r from-pink-400 to-pink-600 hover:from-pink-500 hover:to-pink-700 text-white h-12 sm:h-14 touch-manipulation text-base sm:text-lg font-semibold"
+          className="w-full bg-gradient-to-r from-pink-400 to-pink-600 hover:from-pink-500 hover:to-pink-700 text-foreground h-12 sm:h-14 touch-manipulation text-base sm:text-lg font-semibold"
         >
           <Clipboard className="h-5 w-5 mr-2" />
           Generate Project Plan

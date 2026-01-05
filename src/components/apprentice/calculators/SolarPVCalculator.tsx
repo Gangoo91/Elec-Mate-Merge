@@ -635,7 +635,41 @@ const SolarPVCalculator = () => {
                   </div>
                   
                   <Separator className="bg-elec-yellow/20" />
-                  
+
+                  {/* How It Worked Out */}
+                  <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 space-y-3">
+                    <div className="flex items-center gap-2 text-purple-200 font-semibold">
+                      <Calculator className="h-4 w-4 text-purple-400" />
+                      How It Worked Out
+                    </div>
+                    <div className="text-sm font-mono text-purple-300 space-y-2">
+                      <div className="text-xs text-purple-400">Step 1: System factors</div>
+                      <div>Orientation: {roofOrientation} = {result.orientationFactor}%</div>
+                      <div>Tilt: {roofTilt}° vs 35° optimal = {result.tiltFactor}%</div>
+                      <div>Panel: {panelEfficiency}% × 0.85 (losses) = <span className="text-purple-200 font-bold">{result.systemEfficiency}%</span></div>
+
+                      <div className="pt-2 border-t border-purple-500/20 text-xs text-purple-400">Step 2: Annual generation</div>
+                      <div>E = Size × Irradiance × Factors</div>
+                      <div>E = {systemSize}kW × {UK_LOCATIONS.find(l => l.name === location)?.irradiance} × {result.orientationFactor/100} × {result.tiltFactor/100} × {result.systemEfficiency/100}</div>
+                      <div>E = <span className="text-purple-200 font-bold">{result.annualGeneration.toLocaleString()} kWh/year</span></div>
+
+                      <div className="pt-2 border-t border-purple-500/20 text-xs text-purple-400">Step 3: Annual savings</div>
+                      <div>Self-consumed: {result.annualGeneration} × {parseFloat(selfConsumptionRate)/100} = {Math.round(result.annualGeneration * parseFloat(selfConsumptionRate)/100)} kWh</div>
+                      <div>Savings: {Math.round(result.annualGeneration * parseFloat(selfConsumptionRate)/100)} × £{electricityRate} = £{Math.round(result.annualGeneration * parseFloat(selfConsumptionRate)/100 * parseFloat(electricityRate))}</div>
+                      <div>Export: {Math.round(result.annualGeneration * (1 - parseFloat(selfConsumptionRate)/100))} × £{exportRate} = £{Math.round(result.annualGeneration * (1 - parseFloat(selfConsumptionRate)/100) * parseFloat(exportRate))}</div>
+                      <div>Total: <span className="text-purple-200 font-bold">£{result.annualSavings}/year</span></div>
+
+                      <div className="pt-2 border-t border-purple-500/20 text-xs text-purple-400">Step 4: Payback period</div>
+                      <div>Payback = Cost ÷ Annual Savings</div>
+                      <div>Payback = £{result.costEstimate.totalCost.toLocaleString()} ÷ £{result.annualSavings}</div>
+                      <div>Payback = <span className="text-purple-200 font-bold">{result.paybackPeriod} years</span></div>
+
+                      <div className="pt-2 border-t border-purple-500/20 text-xs text-purple-400">Step 5: CO₂ savings</div>
+                      <div>CO₂ = {result.annualGeneration} kWh × 0.233 kg/kWh</div>
+                      <div>CO₂ = <span className="text-purple-200 font-bold">{result.co2Savings} kg/year</span></div>
+                    </div>
+                  </div>
+
                   <div className="text-xs text-white/60 bg-elec-gray/20 p-3 rounded">
                     <p className="font-medium text-white/80 mb-1">Calculation Details:</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">

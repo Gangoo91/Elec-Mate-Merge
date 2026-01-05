@@ -49,7 +49,7 @@ export const CommissioningTestStepCard = ({
               "rounded-full flex items-center justify-center font-black transition-all duration-200",
               isMobile ? "w-[72px] h-[72px] text-2xl" : "w-16 h-16 text-2xl",
               isCompleted 
-                ? "bg-success text-white shadow-lg" 
+                ? "bg-success text-foreground shadow-lg" 
                 : "bg-elec-yellow text-black shadow-lg"
             )}>
               {isCompleted ? <CheckCircle2 className="h-8 w-8" /> : stepNumber}
@@ -60,7 +60,7 @@ export const CommissioningTestStepCard = ({
             <div className="space-y-4">
               {/* Title & Regulation */}
               <div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight text-left mb-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-foreground leading-tight text-left mb-2">
                   {step.testName}
                 </h3>
                 {step.regulation && (
@@ -103,7 +103,7 @@ export const CommissioningTestStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <Settings className="h-5 w-5 text-purple-400" />
-                        <h4 className="font-bold text-base text-white">Instrument Setup</h4>
+                        <h4 className="font-bold text-base text-foreground">Instrument Setup</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -118,7 +118,7 @@ export const CommissioningTestStepCard = ({
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="p-4 bg-purple-500/5 text-base text-white leading-relaxed text-left">
+                          <div className="p-4 bg-purple-500/5 text-base text-foreground leading-relaxed text-left">
                             {step.instrumentSetup}
                           </div>
                         </motion.div>
@@ -139,7 +139,7 @@ export const CommissioningTestStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <ClipboardList className="h-5 w-5 text-blue-400" />
-                        <h4 className="font-bold text-base text-white">Procedure</h4>
+                        <h4 className="font-bold text-base text-foreground">Procedure</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -157,7 +157,7 @@ export const CommissioningTestStepCard = ({
                           <div className="p-4 bg-blue-500/5">
                             <ol className="space-y-3 text-left">
                               {step.procedure.map((procedureStep, idx) => (
-                                <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
+                                <li key={idx} className="flex items-start gap-3 text-base text-foreground leading-relaxed">
                                   <span className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-500/20 border-2 border-blue-500/50 flex items-center justify-center text-sm font-bold text-blue-300">
                                     {idx + 1}
                                   </span>
@@ -184,7 +184,7 @@ export const CommissioningTestStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-5 w-5 text-green-400" />
-                        <h4 className="font-bold text-base text-white">Pass Criteria</h4>
+                        <h4 className="font-bold text-base text-foreground">Pass Criteria</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -199,7 +199,7 @@ export const CommissioningTestStepCard = ({
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="p-4 bg-green-500/5 text-base text-white leading-relaxed text-left">
+                          <div className="p-4 bg-green-500/5 text-base text-foreground leading-relaxed text-left">
                             {step.acceptanceCriteria}
                           </div>
                         </motion.div>
@@ -220,7 +220,7 @@ export const CommissioningTestStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <Zap className="h-5 w-5 text-cyan-400" />
-                        <h4 className="font-bold text-base text-white">Expected Result</h4>
+                        <h4 className="font-bold text-base text-foreground">Expected Result</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -235,7 +235,7 @@ export const CommissioningTestStepCard = ({
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="p-4 bg-cyan-500/5 text-base text-white leading-relaxed text-left">
+                          <div className="p-4 bg-cyan-500/5 text-base text-foreground leading-relaxed text-left">
                             {typeof step.expectedResult === 'string' 
                               ? step.expectedResult 
                               : JSON.stringify(step.expectedResult, null, 2)}
@@ -258,7 +258,7 @@ export const CommissioningTestStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <BookOpen className="h-5 w-5 text-orange-400" />
-                        <h4 className="font-bold text-base text-white">Calculation</h4>
+                        <h4 className="font-bold text-base text-foreground">Calculation</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -274,7 +274,7 @@ export const CommissioningTestStepCard = ({
                           transition={{ duration: 0.2 }}
                         >
                           <div className="p-4 bg-orange-500/5">
-                            <pre className="text-sm text-white font-mono overflow-x-auto text-left whitespace-pre-wrap">
+                            <pre className="text-sm text-foreground font-mono overflow-x-auto text-left whitespace-pre-wrap">
                               {typeof step.calculation === 'string'
                                 ? step.calculation
                                 : JSON.stringify(step.calculation, null, 2)}
@@ -298,7 +298,7 @@ export const CommissioningTestStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <AlertTriangle className="h-5 w-5 text-yellow-400" />
-                        <h4 className="font-bold text-base text-white">If Test Fails</h4>
+                        <h4 className="font-bold text-base text-foreground">If Test Fails</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -316,7 +316,7 @@ export const CommissioningTestStepCard = ({
                           <div className="p-4 bg-yellow-500/5">
                             <ul className="space-y-2 text-left">
                               {step.troubleshooting.map((tip, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
+                                <li key={idx} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
                                   <span className="text-yellow-400 mt-1">•</span>
                                   <span>{tip}</span>
                                 </li>
@@ -341,7 +341,7 @@ export const CommissioningTestStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <Lightbulb className="h-5 w-5 text-indigo-400" />
-                        <h4 className="font-bold text-base text-white">Pro Tips</h4>
+                        <h4 className="font-bold text-base text-foreground">Pro Tips</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -359,7 +359,7 @@ export const CommissioningTestStepCard = ({
                           <div className="p-4 bg-indigo-500/5">
                             <ul className="space-y-2 text-left">
                               {step.proTips.map((tip, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
+                                <li key={idx} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
                                   <Lightbulb className="h-4 w-4 text-indigo-400 mt-1 flex-shrink-0" />
                                   <span>{tip}</span>
                                 </li>
@@ -384,7 +384,7 @@ export const CommissioningTestStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <AlertTriangle className="h-5 w-5 text-red-400" />
-                        <h4 className="font-bold text-base text-white">Common Mistakes</h4>
+                        <h4 className="font-bold text-base text-foreground">Common Mistakes</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -402,7 +402,7 @@ export const CommissioningTestStepCard = ({
                           <div className="p-4 bg-red-500/5">
                             <ul className="space-y-2 text-left">
                               {step.commonMistakes.map((mistake, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
+                                <li key={idx} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
                                   <AlertTriangle className="h-4 w-4 text-red-400 mt-1 flex-shrink-0" />
                                   <span>{mistake}</span>
                                 </li>

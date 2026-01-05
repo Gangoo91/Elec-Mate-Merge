@@ -222,7 +222,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                     disabled={markingPaidId === invoice.id}
                     variant="default"
                     size="sm"
-                    className="col-span-2 bg-green-600 hover:bg-green-700 text-white"
+                    className="col-span-2 bg-green-600 hover:bg-green-700 text-foreground"
                   >
                     <CheckCircle className="h-4 w-4 mr-2" />
                     {markingPaidId === invoice.id ? 'Updating...' : 'Mark as Paid'}

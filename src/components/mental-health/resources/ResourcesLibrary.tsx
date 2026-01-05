@@ -86,7 +86,7 @@ const ResourcesLibrary = () => {
                 placeholder="Search for resources..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-elec-yellow/20 bg-elec-dark text-white placeholder-gray-400 focus:outline-none focus:border-elec-yellow"
+                className="w-full px-4 py-2 rounded-lg border border-elec-yellow/20 bg-elec-dark text-foreground placeholder-gray-400 focus:outline-none focus:border-elec-yellow"
               />
             </div>
             <div className="flex flex-wrap gap-2">
@@ -158,7 +158,7 @@ const ResourcesLibrary = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="border border-elec-yellow/20 rounded-lg p-4 text-center">
               <FileText className="h-8 w-8 text-blue-400 mx-auto mb-3" />
-              <h4 className="font-semibold text-white mb-2">Guides & Articles</h4>
+              <h4 className="font-semibold text-foreground mb-2">Guides & Articles</h4>
               <p className="text-sm text-muted-foreground mb-3">
                 In-depth written resources covering all aspects of mental health
               </p>
@@ -167,7 +167,7 @@ const ResourcesLibrary = () => {
             
             <div className="border border-elec-yellow/20 rounded-lg p-4 text-center">
               <Video className="h-8 w-8 text-green-400 mx-auto mb-3" />
-              <h4 className="font-semibold text-white mb-2">Video Content</h4>
+              <h4 className="font-semibold text-foreground mb-2">Video Content</h4>
               <p className="text-sm text-muted-foreground mb-3">
                 Educational videos and demonstrations for visual learners
               </p>
@@ -176,7 +176,7 @@ const ResourcesLibrary = () => {
             
             <div className="border border-elec-yellow/20 rounded-lg p-4 text-center">
               <Headphones className="h-8 w-8 text-purple-400 mx-auto mb-3" />
-              <h4 className="font-semibold text-white mb-2">Audio Resources</h4>
+              <h4 className="font-semibold text-foreground mb-2">Audio Resources</h4>
               <p className="text-sm text-muted-foreground mb-3">
                 Podcasts and guided meditations for on-the-go learning
               </p>

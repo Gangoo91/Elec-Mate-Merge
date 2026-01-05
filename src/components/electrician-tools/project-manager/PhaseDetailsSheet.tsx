@@ -62,7 +62,7 @@ export const PhaseDetailsSheet = ({ open, onOpenChange, phase, phaseNumber }: Ph
               <div className="flex items-center gap-3 mb-2">
                 <div className={`flex items-center justify-center w-10 h-10 rounded-full text-sm font-bold ${
                   isCritical 
-                    ? 'bg-gradient-to-br from-pink-500 to-pink-600 text-white' 
+                    ? 'bg-gradient-to-br from-pink-500 to-pink-600 text-foreground' 
                     : 'bg-gradient-to-br from-elec-yellow to-yellow-400 text-gray-900'
                 }`}>
                   {phaseNumber}

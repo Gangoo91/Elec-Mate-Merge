@@ -139,7 +139,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
       <CardContent className="p-4 space-y-4">
         <div className="flex items-center gap-2 mb-3">
           <PenTool className="h-4 w-4 text-elec-yellow" />
-          <Label className="text-white font-medium">{label}</Label>
+          <Label className="text-foreground font-medium">{label}</Label>
         </div>
 
         {/* Name and Date inputs */}
@@ -154,7 +154,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
               value={name}
               onChange={(e) => onNameChange(e.target.value)}
               placeholder="Enter full name"
-              className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+              className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
             />
           </div>
           <div>
@@ -167,7 +167,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
                 type="date"
                 value={date}
                 onChange={(e) => onDateChange(e.target.value)}
-                className="bg-elec-dark/50 border-elec-yellow/20 text-white"
+                className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
               />
               <Button
                 type="button"

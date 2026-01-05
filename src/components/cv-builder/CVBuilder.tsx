@@ -87,7 +87,7 @@ const CVBuilder = () => {
             <div className="flex items-center gap-2 min-w-0">
               <FileText className="h-5 w-5 md:h-6 md:w-6 text-elec-yellow flex-shrink-0" />
               <div className="min-w-0">
-                <CardTitle className="text-lg md:text-xl text-white truncate">AI-Powered CV Builder</CardTitle>
+                <CardTitle className="text-lg md:text-xl text-foreground truncate">AI-Powered CV Builder</CardTitle>
                 <p className="text-xs md:text-sm text-gray-400 hidden md:block">Create professional electrical CVs with intelligent content generation</p>
               </div>
             </div>

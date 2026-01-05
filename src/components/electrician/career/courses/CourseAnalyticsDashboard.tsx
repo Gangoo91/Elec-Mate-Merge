@@ -53,8 +53,8 @@ const CourseAnalyticsDashboard = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/60 text-sm">Total Courses</p>
-                <p className="text-2xl font-bold text-white">{courseAnalytics.totalCourses}</p>
+                <p className="text-foreground/60 text-sm">Total Courses</p>
+                <p className="text-2xl font-bold text-foreground">{courseAnalytics.totalCourses}</p>
               </div>
               <BookOpen className="h-8 w-8 text-elec-yellow" />
             </div>
@@ -65,9 +65,9 @@ const CourseAnalyticsDashboard = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/60 text-sm">Average Rating</p>
+                <p className="text-foreground/60 text-sm">Average Rating</p>
                 <div className="flex items-center gap-1">
-                  <p className="text-2xl font-bold text-white">{courseAnalytics.averageRating}</p>
+                  <p className="text-2xl font-bold text-foreground">{courseAnalytics.averageRating}</p>
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                 </div>
               </div>
@@ -80,8 +80,8 @@ const CourseAnalyticsDashboard = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/60 text-sm">Average Price</p>
-                <p className="text-2xl font-bold text-white">{courseAnalytics.averagePrice}</p>
+                <p className="text-foreground/60 text-sm">Average Price</p>
+                <p className="text-2xl font-bold text-foreground">{courseAnalytics.averagePrice}</p>
               </div>
               <PoundSterling className="h-8 w-8 text-elec-yellow" />
             </div>
@@ -92,8 +92,8 @@ const CourseAnalyticsDashboard = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/60 text-sm">Average Duration</p>
-                <p className="text-2xl font-bold text-white">{courseAnalytics.averageDuration}</p>
+                <p className="text-foreground/60 text-sm">Average Duration</p>
+                <p className="text-2xl font-bold text-foreground">{courseAnalytics.averageDuration}</p>
               </div>
               <Clock className="h-8 w-8 text-elec-yellow" />
             </div>
@@ -106,7 +106,7 @@ const CourseAnalyticsDashboard = () => {
         {/* Popular Categories */}
         <Card className="bg-elec-card border-elec-yellow/10">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
+            <CardTitle className="flex items-center gap-2 text-foreground">
               <TrendingUp className="h-5 w-5 text-elec-yellow" />
               Popular Categories
             </CardTitle>
@@ -115,8 +115,8 @@ const CourseAnalyticsDashboard = () => {
             {courseAnalytics.topCategories.map((category, index) => (
               <div key={index} className="flex items-center justify-between p-3 bg-background/20 rounded-lg">
                 <div>
-                  <p className="font-medium text-white">{category.name}</p>
-                  <p className="text-sm text-white/60">{category.count} courses</p>
+                  <p className="font-medium text-foreground">{category.name}</p>
+                  <p className="text-sm text-foreground/60">{category.count} courses</p>
                 </div>
                 <Badge className="bg-green-500/10 text-green-400 border-green-500/20">
                   {category.growth}
@@ -129,7 +129,7 @@ const CourseAnalyticsDashboard = () => {
         {/* Top Training Providers */}
         <Card className="bg-elec-card border-elec-yellow/10">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
+            <CardTitle className="flex items-center gap-2 text-foreground">
               <Users className="h-5 w-5 text-elec-yellow" />
               Top Training Providers
             </CardTitle>
@@ -138,12 +138,12 @@ const CourseAnalyticsDashboard = () => {
             {courseAnalytics.topProviders.map((provider, index) => (
               <div key={index} className="flex items-center justify-between p-3 bg-background/20 rounded-lg">
                 <div>
-                  <p className="font-medium text-white">{provider.name}</p>
-                  <p className="text-sm text-white/60">{provider.courses} courses</p>
+                  <p className="font-medium text-foreground">{provider.name}</p>
+                  <p className="text-sm text-foreground/60">{provider.courses} courses</p>
                 </div>
                 <div className="flex items-center gap-1">
                   <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                  <span className="text-sm text-white">{provider.rating}</span>
+                  <span className="text-sm text-foreground">{provider.rating}</span>
                 </div>
               </div>
             ))}
@@ -156,7 +156,7 @@ const CourseAnalyticsDashboard = () => {
         {/* Industry Trends */}
         <Card className="bg-elec-card border-elec-yellow/10">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
+            <CardTitle className="flex items-center gap-2 text-foreground">
               <TrendingUp className="h-5 w-5 text-elec-yellow" />
               Industry Trends
             </CardTitle>
@@ -164,7 +164,7 @@ const CourseAnalyticsDashboard = () => {
           <CardContent className="space-y-4">
             {courseAnalytics.industryTrends.map((trend, index) => (
               <div key={index} className="p-3 bg-background/20 rounded-lg">
-                <h4 className="font-medium text-white mb-1">{trend.trend}</h4>
+                <h4 className="font-medium text-foreground mb-1">{trend.trend}</h4>
                 <p className="text-sm text-elec-yellow">{trend.impact}</p>
               </div>
             ))}
@@ -174,7 +174,7 @@ const CourseAnalyticsDashboard = () => {
         {/* Success Metrics */}
         <Card className="bg-elec-card border-elec-yellow/10">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
+            <CardTitle className="flex items-center gap-2 text-foreground">
               <Award className="h-5 w-5 text-elec-yellow" />
               Course Success Metrics
             </CardTitle>
@@ -182,8 +182,8 @@ const CourseAnalyticsDashboard = () => {
           <CardContent className="space-y-4">
             <div className="p-3 bg-background/20 rounded-lg">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-white/60">Course Completion Rate</span>
-                <span className="text-white font-medium">{courseAnalytics.completionRate}%</span>
+                <span className="text-foreground/60">Course Completion Rate</span>
+                <span className="text-foreground font-medium">{courseAnalytics.completionRate}%</span>
               </div>
               <div className="w-full bg-background/30 rounded-full h-2">
                 <div 
@@ -195,8 +195,8 @@ const CourseAnalyticsDashboard = () => {
 
             <div className="p-3 bg-background/20 rounded-lg">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-white/60">Employment Rate</span>
-                <span className="text-white font-medium">{courseAnalytics.employmentRate}%</span>
+                <span className="text-foreground/60">Employment Rate</span>
+                <span className="text-foreground font-medium">{courseAnalytics.employmentRate}%</span>
               </div>
               <div className="w-full bg-background/30 rounded-full h-2">
                 <div 
@@ -207,9 +207,9 @@ const CourseAnalyticsDashboard = () => {
             </div>
 
             <div className="p-3 bg-background/20 rounded-lg">
-              <span className="text-white/60 block mb-1">Average Salary Increase</span>
+              <span className="text-foreground/60 block mb-1">Average Salary Increase</span>
               <span className="text-elec-yellow font-semibold text-lg">{courseAnalytics.salaryIncrease}</span>
-              <p className="text-xs text-white/60 mt-1">Per year after course completion</p>
+              <p className="text-xs text-foreground/60 mt-1">Per year after course completion</p>
             </div>
           </CardContent>
         </Card>

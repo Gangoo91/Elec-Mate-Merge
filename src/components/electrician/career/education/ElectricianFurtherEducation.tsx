@@ -173,8 +173,8 @@ const ElectricianFurtherEducation = () => {
         <div className="flex flex-col items-center justify-center py-16 space-y-4">
           <Loader2 className="h-12 w-12 animate-spin text-elec-yellow" />
           <div className="text-center space-y-3">
-            <span className="text-lg font-medium text-white">Fetching live education data...</span>
-            <div className="text-sm text-white/80 max-w-md mx-auto leading-relaxed">
+            <span className="text-lg font-medium text-foreground">Fetching live education data...</span>
+            <div className="text-sm text-foreground/80 max-w-md mx-auto leading-relaxed">
               Gathering latest programmes from universities, colleges, and training providers
             </div>
           </div>
@@ -225,7 +225,7 @@ const ElectricianFurtherEducation = () => {
                 <div className="space-y-6">
                   <div className="flex items-center gap-3">
                     <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-                    <h3 className="text-xl font-semibold text-white px-4">
+                    <h3 className="text-xl font-semibold text-foreground px-4">
                       {featuredProgrammes.length > 0 ? 'More Education Programmes' : 'All Programmes'}
                     </h3>
                     <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
@@ -267,31 +267,31 @@ const ElectricianFurtherEducation = () => {
               </div>
               <div className="space-y-4">
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Advanced Learner Loan (19+)
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     Available for Level 3-6 qualifications. No upfront fees, only repay when earning £25,000+. 
                     9% of income above threshold.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Student Finance England
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on household income. 
                     Repayment at 9% above £27,295.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Postgraduate Loan
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as undergraduate loans.
                   </p>
                 </div>
@@ -306,29 +306,29 @@ const ElectricianFurtherEducation = () => {
               </div>
               <div className="space-y-4">
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Apprenticeship Levy
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund degree apprenticeships.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Professional Body Grants
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries for electrical study.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Career Development Loans
                   </h5>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     Bank loans for vocational training. Government pays interest during study and one month after.
                   </p>
                 </div>

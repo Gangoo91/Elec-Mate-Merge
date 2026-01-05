@@ -5,7 +5,7 @@ import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Zap, RotateCcw, Info, AlertTriangle, BookOpen, Activity } from "lucide-react";
+import { Zap, RotateCcw, Info, AlertTriangle, BookOpen, Activity, Calculator } from "lucide-react";
 
 const BasicACCircuitCalculator = () => {
   const [circuitType, setCircuitType] = useState("");
@@ -356,6 +356,103 @@ const BasicACCircuitCalculator = () => {
               </CardContent>
             </Card>
             
+            {/* How It Worked Out - Step-by-step calculation breakdown */}
+            <Card className="border-purple-500/30 bg-purple-500/5">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-purple-300 text-base flex items-center gap-2">
+                  <Calculator className="h-4 w-4" />
+                  How It Worked Out
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 text-sm">
+                {/* Step 1: Input values */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step 1: Your Input Values</p>
+                  <div className="bg-purple-500/10 rounded p-3 space-y-1 text-purple-100 font-mono text-xs">
+                    <p>Voltage (V): {voltage}V RMS at {frequency}Hz</p>
+                    <p>Resistance (R): {resistance || "0"}Ω</p>
+                    {inductance && <p>Inductance (L): {inductance}mH</p>}
+                    {capacitance && <p>Capacitance (C): {capacitance}µF</p>}
+                    {reactance && !inductance && !capacitance && <p>Reactance (X): {reactance}Ω</p>}
+                  </div>
+                </div>
+
+                {/* Step 2: Reactance calculation */}
+                {(inductance || capacitance) && (
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 2: Reactance Calculation</p>
+                    <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs space-y-1">
+                      {inductance && (
+                        <p>XL = 2πfL = 2 × π × {frequency} × ({inductance}/1000) = {(2 * Math.PI * parseFloat(frequency) * parseFloat(inductance) / 1000).toFixed(2)}Ω</p>
+                      )}
+                      {capacitance && (
+                        <p>XC = 1/(2πfC) = 1/(2 × π × {frequency} × ({capacitance}/1000000)) = {(1 / (2 * Math.PI * parseFloat(frequency) * parseFloat(capacitance) / 1000000)).toFixed(2)}Ω</p>
+                      )}
+                      {inductance && capacitance && (
+                        <p className="text-purple-300 mt-1">Net X = XL - XC = {((2 * Math.PI * parseFloat(frequency) * parseFloat(inductance) / 1000) - (1 / (2 * Math.PI * parseFloat(frequency) * parseFloat(capacitance) / 1000000))).toFixed(2)}Ω</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 3: Impedance calculation */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step {inductance || capacitance ? "3" : "2"}: Impedance Calculation</p>
+                  <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs">
+                    <p>Z = √(R² + X²)</p>
+                    <p>Z = √({resistance || "0"}² + {Math.abs(results.phaseAngle! > 0 ?
+                      (parseFloat(resistance || "0") * Math.tan(results.phaseAngle! * Math.PI / 180)) :
+                      (parseFloat(resistance || "0") * Math.tan(Math.abs(results.phaseAngle!) * Math.PI / 180))
+                    ).toFixed(2)}²)</p>
+                    <p className="text-purple-300">Z = {results.impedance?.toFixed(2)}Ω</p>
+                  </div>
+                </div>
+
+                {/* Step 4: Current calculation */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step {inductance || capacitance ? "4" : "3"}: Current Calculation (Ohm's Law)</p>
+                  <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs">
+                    <p>I = V / Z</p>
+                    <p>I = {voltage} / {results.impedance?.toFixed(2)}</p>
+                    <p className="text-purple-300">I = {results.current?.toFixed(3)}A</p>
+                  </div>
+                </div>
+
+                {/* Step 5: Phase angle */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step {inductance || capacitance ? "5" : "4"}: Phase Angle</p>
+                  <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs">
+                    <p>φ = tan⁻¹(X / R)</p>
+                    <p className="text-purple-300">φ = {results.phaseAngle?.toFixed(1)}° ({results.leadLag})</p>
+                  </div>
+                </div>
+
+                {/* Step 6: Power calculations */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step {inductance || capacitance ? "6" : "5"}: Power Calculations</p>
+                  <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs space-y-1">
+                    <p>P = I²R = {results.current?.toFixed(3)}² × {resistance || "0"} = {results.activePower?.toFixed(2)}W (Active)</p>
+                    <p>Q = I²X = {results.current?.toFixed(3)}² × X = {results.reactivePower?.toFixed(2)}VAr (Reactive)</p>
+                    <p>S = V × I = {voltage} × {results.current?.toFixed(3)} = {results.apparentPower?.toFixed(2)}VA (Apparent)</p>
+                    <p className="text-purple-300 mt-1">PF = cos(φ) = cos({results.phaseAngle?.toFixed(1)}°) = {results.powerFactor?.toFixed(3)}</p>
+                  </div>
+                </div>
+
+                {/* Resonance info for RLC */}
+                {results.resonantFreq && results.resonantFreq > 0 && (
+                  <div className="bg-purple-500/10 rounded p-3 border border-purple-500/30">
+                    <p className="text-purple-200 font-medium mb-2">Resonant Frequency (RLC Circuit):</p>
+                    <p className="text-purple-100 font-mono text-xs">
+                      fr = 1 / (2π√LC) = {results.resonantFreq.toFixed(1)}Hz
+                    </p>
+                    {Math.abs(parseFloat(frequency) - results.resonantFreq) < 10 && (
+                      <p className="text-red-400 text-xs mt-1">⚠️ Operating near resonance - high currents possible!</p>
+                    )}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
             {/* What this means panel */}
             <Card className="border-blue-500/30 bg-blue-500/5">
               <CardHeader>

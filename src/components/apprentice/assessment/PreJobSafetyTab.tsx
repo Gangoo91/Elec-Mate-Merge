@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckSquare, Shield, AlertTriangle, Download, Clock, User, FileText } from "lucide-react";
@@ -203,11 +203,14 @@ const PreJobSafetyTab = () => {
           <CardTitle className="text-white">Additional Notes & Observations</CardTitle>
         </CardHeader>
         <CardContent>
-          <Textarea
+          <MobileInput
+            label="Safety Notes"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Record any specific site conditions, hazards identified, or additional safety measures required..."
-            className="min-h-24 mb-4"
+            multiline
+            rows={4}
+            className="mb-4"
           />
           <div className="flex gap-2">
             <Button className="flex-1">

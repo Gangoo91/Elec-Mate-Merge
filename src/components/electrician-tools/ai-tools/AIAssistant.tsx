@@ -175,14 +175,14 @@ const AIAssistant = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="max-w-7xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-6">
         {/* Hero Section */}
         <div className="text-center space-y-3 sm:space-y-4">
           <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-elec-yellow/30 to-yellow-500/30 rounded-xl border border-elec-yellow/30">
             <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
             Intelligent Search
           </h1>
           <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
@@ -198,7 +198,7 @@ const AIAssistant = () => {
             <div className="space-y-3 sm:space-y-4">
               <Textarea
                 placeholder="e.g. 'What are the RCD requirements for bathrooms?' or 'Cable sizing for 32A ring circuit'"
-                className="min-h-[120px] sm:min-h-[160px] bg-neutral-700/50 border-2 border-elec-yellow/40 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 text-white placeholder:text-gray-400 resize-none text-sm sm:text-base font-medium rounded-xl p-4 sm:p-5 leading-relaxed transition-all duration-200"
+                className="min-h-[120px] sm:min-h-[160px] bg-muted/50 border-2 border-elec-yellow/40 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 text-foreground placeholder:text-gray-400 resize-none text-sm sm:text-base font-medium rounded-xl p-4 sm:p-5 leading-relaxed transition-all duration-200"
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 onKeyDown={(e) => {
@@ -237,7 +237,7 @@ const AIAssistant = () => {
                     <button
                       key={idx}
                       onClick={() => setPrompt(example)}
-                      className="text-xs px-3 py-1.5 bg-neutral-700/50 hover:bg-neutral-600/50 border border-elec-yellow/20 hover:border-elec-yellow/40 rounded-full text-gray-300 hover:text-white transition-all"
+                      className="text-xs px-3 py-1.5 bg-muted/50 hover:bg-neutral-600/50 border border-elec-yellow/20 hover:border-elec-yellow/40 rounded-full text-gray-300 hover:text-foreground transition-all"
                     >
                       {example}
                     </button>
@@ -253,7 +253,7 @@ const AIAssistant = () => {
           <Card className="bg-gradient-to-br from-neutral-800/90 to-neutral-900/90 border-2 border-elec-yellow/30 backdrop-blur-sm shadow-2xl max-w-6xl mx-auto">
             <CardHeader className="pb-3 sm:pb-4">
               <div className="flex items-center justify-between gap-3">
-                <CardTitle className="text-lg sm:text-2xl font-bold text-white flex items-center gap-2 sm:gap-3">
+                <CardTitle className="text-lg sm:text-2xl font-bold text-foreground flex items-center gap-2 sm:gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 bg-elec-yellow/20 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Sparkles className="h-4 w-4 sm:h-6 sm:w-6 text-elec-yellow animate-pulse" />
                   </div>
@@ -263,7 +263,7 @@ const AIAssistant = () => {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="text-gray-400 hover:text-white hover:bg-white/10 h-8 sm:h-9"
+                  className="text-gray-400 hover:text-foreground hover:bg-white/10 h-8 sm:h-9"
                   onClick={handleCopyResponse}
                 >
                   <Copy className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
@@ -286,7 +286,7 @@ const AIAssistant = () => {
                       </h3>
                       <CollapsibleContent>
               <div 
-                className="text-white text-sm sm:text-base leading-relaxed text-left"
+                className="text-foreground text-sm sm:text-base leading-relaxed text-left"
                 dangerouslySetInnerHTML={{ 
                   __html: aiResponse.quick_answer
                     // Only highlight regulation numbers
@@ -309,7 +309,7 @@ const AIAssistant = () => {
 
               {/* Tabbed Content */}
               <Tabs defaultValue="technical" className="w-full">
-                <TabsList className="grid w-full grid-cols-3 bg-neutral-800/50 border border-elec-yellow/20 rounded-lg p-1.5 h-auto gap-2">
+                <TabsList className="grid w-full grid-cols-3 bg-card/50 border border-elec-yellow/20 rounded-lg p-1.5 h-auto gap-2">
                   <TabsTrigger 
                     value="technical" 
                     className="data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-400 data-[state=active]:border-blue-500/40 data-[state=active]:shadow-lg text-xs sm:text-sm py-3 sm:py-3.5 px-3 sm:px-4 flex items-center justify-center gap-2 rounded-md border border-transparent transition-all duration-200"
@@ -365,7 +365,7 @@ const AIAssistant = () => {
                 </div>
                 
                 <div className="text-center space-y-2">
-                  <p className="text-white font-semibold text-sm sm:text-lg">
+                  <p className="text-foreground font-semibold text-sm sm:text-lg">
                     {progressStage === 'parsing' && 'Understanding Your Query...'}
                     {progressStage === 'searching' && 'Searching BS 7671 Regulations...'}
                     {progressStage === 'analyzing' && 'Analyzing Requirements...'}
@@ -387,7 +387,7 @@ const AIAssistant = () => {
                   <div className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg transition-all ${
                     progressStage === 'parsing' ? 'bg-blue-500/20 border border-blue-500/40' : 
                     ['searching', 'analyzing', 'formatting'].includes(progressStage || '') ? 'bg-green-500/10 border border-green-500/30' : 
-                    'bg-neutral-800/50 border border-neutral-700'
+                    'bg-card/50 border border-border'
                   }`}>
                     <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                       progressStage === 'parsing' ? 'bg-blue-500 animate-pulse' :
@@ -395,7 +395,7 @@ const AIAssistant = () => {
                       'bg-neutral-600'
                     }`}>
                       {['searching', 'analyzing', 'formatting'].includes(progressStage || '') ? (
-                        <Check className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                        <Check className="h-3 w-3 sm:h-4 sm:w-4 text-foreground" />
                       ) : (
                         <div className="w-2 h-2 bg-white rounded-full"></div>
                       )}
@@ -413,7 +413,7 @@ const AIAssistant = () => {
                   <div className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg transition-all ${
                     progressStage === 'searching' ? 'bg-blue-500/20 border border-blue-500/40' : 
                     ['analyzing', 'formatting'].includes(progressStage || '') ? 'bg-green-500/10 border border-green-500/30' : 
-                    'bg-neutral-800/50 border border-neutral-700'
+                    'bg-card/50 border border-border'
                   }`}>
                     <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                       progressStage === 'searching' ? 'bg-blue-500 animate-pulse' :
@@ -421,7 +421,7 @@ const AIAssistant = () => {
                       'bg-neutral-600'
                     }`}>
                       {['analyzing', 'formatting'].includes(progressStage || '') ? (
-                        <Check className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                        <Check className="h-3 w-3 sm:h-4 sm:w-4 text-foreground" />
                       ) : (
                         <div className="w-2 h-2 bg-white rounded-full"></div>
                       )}
@@ -439,7 +439,7 @@ const AIAssistant = () => {
                   <div className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg transition-all ${
                     progressStage === 'analyzing' ? 'bg-blue-500/20 border border-blue-500/40' : 
                     progressStage === 'formatting' ? 'bg-green-500/10 border border-green-500/30' : 
-                    'bg-neutral-800/50 border border-neutral-700'
+                    'bg-card/50 border border-border'
                   }`}>
                     <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                       progressStage === 'analyzing' ? 'bg-blue-500 animate-pulse' :
@@ -447,7 +447,7 @@ const AIAssistant = () => {
                       'bg-neutral-600'
                     }`}>
                       {progressStage === 'formatting' ? (
-                        <Check className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                        <Check className="h-3 w-3 sm:h-4 sm:w-4 text-foreground" />
                       ) : (
                         <div className="w-2 h-2 bg-white rounded-full"></div>
                       )}
@@ -464,7 +464,7 @@ const AIAssistant = () => {
                   {/* Stage 4: Formatting */}
                   <div className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg transition-all ${
                     progressStage === 'formatting' ? 'bg-blue-500/20 border border-blue-500/40' : 
-                    'bg-neutral-800/50 border border-neutral-700'
+                    'bg-card/50 border border-border'
                   }`}>
                     <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                       progressStage === 'formatting' ? 'bg-blue-500 animate-pulse' :

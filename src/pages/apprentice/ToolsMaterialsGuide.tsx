@@ -94,14 +94,14 @@ const ToolsMaterialsGuide = () => {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6 animate-fade-in p-4">
-      <div className="text-center mb-8">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <Wrench className="h-8 w-8 text-elec-yellow" />
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-elec-yellow">
+      <div className="text-center mb-6 sm:mb-8">
+        <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-elec-yellow">
             Tools & Materials Guide
           </h1>
         </div>
-        <p className="text-muted-foreground text-base md:text-lg max-w-3xl mx-auto mb-6">
+        <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto mb-4 sm:mb-6 px-2">
           Essential tools, equipment and materials for professional electrical installations. 
           Complete guide to building your electrical toolkit for UK installations.
         </p>
@@ -109,7 +109,7 @@ const ToolsMaterialsGuide = () => {
       </div>
 
       {/* Essential Tools Overview */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <Card className="border-elec-yellow/30 bg-elec-gray">
           <CardHeader>
             <div className="flex items-center gap-2">

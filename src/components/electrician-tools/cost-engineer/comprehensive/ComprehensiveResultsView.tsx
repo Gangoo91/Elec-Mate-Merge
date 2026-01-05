@@ -184,7 +184,7 @@ const ComprehensiveResultsView = ({
           <div className="flex items-center gap-2">
             <h3 className="text-lg sm:text-base font-semibold text-green-400">💰 Immediate Upsells - Add to This Job</h3>
           </div>
-          <p className="text-sm text-white">Premium add-ons and upgrades the client is likely to accept</p>
+          <p className="text-sm text-foreground">Premium add-ons and upgrades the client is likely to accept</p>
           <UpsellOpportunitiesCard upsells={structuredData.upsells} />
         </div>
       )}
@@ -195,7 +195,7 @@ const ComprehensiveResultsView = ({
           <div className="flex items-center gap-2">
             <h3 className="text-lg sm:text-base font-semibold text-blue-400">🎯 Future Work Pipeline</h3>
           </div>
-          <p className="text-sm text-white">Potential future jobs based on property and client discussions</p>
+          <p className="text-sm text-foreground">Potential future jobs based on property and client discussions</p>
           <FutureWorkPipelineCard pipeline={structuredData.pipeline} />
         </div>
       )}

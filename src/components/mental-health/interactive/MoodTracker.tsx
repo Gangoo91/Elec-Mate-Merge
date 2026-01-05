@@ -127,11 +127,11 @@ const MoodTracker = () => {
           <div className="pt-4 border-t border-elec-yellow/20">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <div className="text-lg font-semibold text-white">{moodHistory.length}</div>
+                <div className="text-lg font-semibold text-foreground">{moodHistory.length}</div>
                 <div className="text-xs text-muted-foreground">Days tracked</div>
               </div>
               <div>
-                <div className="text-lg font-semibold text-white">{getAverageMood()}</div>
+                <div className="text-lg font-semibold text-foreground">{getAverageMood()}</div>
                 <div className="text-xs text-muted-foreground">Average mood</div>
               </div>
               <div>

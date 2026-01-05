@@ -1,110 +1,93 @@
-import React, { useState } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { LucideIcon } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import React, { useState } from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
+import { LucideIcon } from 'lucide-react';
 
 export interface DropdownTab {
   value: string;
   label: string;
-  icon?: LucideIcon;
-  content: React.ReactNode;
+  icon?: React.ReactNode | LucideIcon;
+  content?: React.ReactNode;
 }
 
 interface DropdownTabsProps {
   tabs: DropdownTab[];
+  value?: string;
   defaultValue?: string;
-  placeholder?: string;
+  onValueChange?: (value: string) => void;
   className?: string;
   triggerClassName?: string;
-  onValueChange?: (value: string) => void;
+  placeholder?: string;
 }
 
-export const DropdownTabs: React.FC<DropdownTabsProps> = ({
+// Helper to render icon - handles both ReactNode and LucideIcon component types
+const renderIcon = (icon: React.ReactNode | LucideIcon | undefined) => {
+  if (!icon) return null;
+
+  // Check if it's a component type (function) vs already rendered element
+  if (typeof icon === 'function') {
+    const IconComponent = icon as LucideIcon;
+    return <IconComponent className="h-4 w-4" />;
+  }
+
+  // It's already a ReactNode
+  return icon;
+};
+
+export const DropdownTabs = ({
   tabs,
+  value: controlledValue,
   defaultValue,
-  placeholder = "Select option",
-  className = "",
+  onValueChange,
+  className,
   triggerClassName,
-  onValueChange
-}) => {
-  const [activeTab, setActiveTab] = useState(defaultValue || tabs[0]?.value || "");
-  const isMobile = useIsMobile();
+  placeholder = "Select a section..."
+}: DropdownTabsProps) => {
+  const [internalValue, setInternalValue] = useState(defaultValue || tabs[0]?.value || '');
 
-  // Update activeTab when defaultValue changes externally
-  React.useEffect(() => {
-    if (defaultValue && defaultValue !== activeTab) {
-      setActiveTab(defaultValue);
+  // Use controlled value if provided, otherwise use internal state
+  const currentValue = controlledValue !== undefined ? controlledValue : internalValue;
+
+  const handleValueChange = (newValue: string) => {
+    if (controlledValue === undefined) {
+      setInternalValue(newValue);
     }
-  }, [defaultValue]);
-
-  const handleValueChange = (value: string) => {
-    setActiveTab(value);
-    onValueChange?.(value);
+    onValueChange?.(newValue);
   };
 
-  const activeTabData = tabs.find(tab => tab.value === activeTab);
-
-  // Mobile-optimized trigger styling
-  const defaultTriggerClassName = isMobile 
-    ? "w-full max-w-sm h-12 text-base bg-background border-border" 
-    : "w-[280px] md:w-[320px] bg-background border-border";
+  const selectedTab = tabs.find(tab => tab.value === currentValue);
 
   return (
-    <div className={`w-full space-y-6 ${className}`}>
-      <div className={`flex ${isMobile ? '' : 'justify-center'}`}>
-        <Select value={activeTab} onValueChange={handleValueChange}>
-          <SelectTrigger className={triggerClassName || defaultTriggerClassName}>
-            <SelectValue placeholder={placeholder}>
-              <div className="flex items-center gap-2">
-                {(() => {
-                  const currentTab = tabs.find(tab => tab.value === activeTab);
-                  const IconComponent = currentTab?.icon;
-                  return (
-                    <>
-                      {IconComponent && (
-                        <IconComponent className={`${isMobile ? 'h-5 w-5' : 'h-4 w-4'}`} />
-                      )}
-                      <span className={isMobile ? 'text-base font-medium' : ''}>
-                        {currentTab?.label}
-                      </span>
-                    </>
-                  );
-                })()}
+    <div className={cn("space-y-4", className)}>
+      <Select value={currentValue} onValueChange={handleValueChange}>
+        <SelectTrigger className={cn("w-full h-9 bg-muted text-foreground border-border focus:ring-1 focus:ring-elec-yellow focus:border-elec-yellow text-sm", triggerClassName)}>
+          <SelectValue placeholder={placeholder}>
+            {selectedTab && (
+              <div className="flex items-center gap-2 text-sm">
+                {renderIcon(selectedTab.icon)}
+                <span className="font-medium">{selectedTab.label}</span>
               </div>
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent 
-            position="popper"
-            side="bottom"
-            sideOffset={8}
-            className={`${isMobile ? 'w-[calc(100vw-2rem)] max-h-[70vh]' : 'max-h-[80vh]'} bg-background border border-border shadow-2xl rounded-lg overflow-y-auto z-50`}
-          >
-            {tabs.map((tab) => {
-              const IconComponent = tab.icon;
-              return (
-                <SelectItem 
-                  key={tab.value} 
-                  value={tab.value}
-                  className={`${isMobile ? 'h-12 px-4 text-base' : ''} hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground`}
-                >
-                  <div className="flex items-center gap-2">
-                    {IconComponent && (
-                      <IconComponent className={`${isMobile ? 'h-5 w-5' : 'h-4 w-4'}`} />
-                    )}
-                    <span className={isMobile ? 'text-base' : ''}>
-                      {tab.label}
-                    </span>
-                  </div>
-                </SelectItem>
-              );
-            })}
-          </SelectContent>
-        </Select>
-      </div>
+            )}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent className="bg-muted text-foreground border-border z-[100]">
+          {tabs.map((tab) => (
+            <SelectItem key={tab.value} value={tab.value} className="min-h-[36px] py-2 cursor-pointer text-foreground text-sm data-[highlighted]:bg-neutral-600 data-[state=checked]:bg-neutral-600 focus:bg-neutral-600 focus:text-foreground">
+              <div className="flex items-center gap-2 text-sm">
+                {renderIcon(tab.icon)}
+                <span>{tab.label}</span>
+              </div>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
-      <div className="w-full animate-fade-in">
-        {activeTabData?.content}
-      </div>
+      {/* Render content of selected tab */}
+      {selectedTab?.content && (
+        <div className="animate-fade-in">
+          {selectedTab.content}
+        </div>
+      )}
     </div>
   );
 };

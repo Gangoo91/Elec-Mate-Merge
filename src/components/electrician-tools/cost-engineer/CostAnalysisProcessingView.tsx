@@ -126,15 +126,15 @@ const CostAnalysisProcessingView = ({ progress: agentProgress, onCancel }: CostA
           </div>
 
           <div className="space-y-3 sm:space-y-4">
-            <CardTitle className="text-2xl sm:text-3xl font-bold text-white">
+            <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground">
               AI Cost Analysis
             </CardTitle>
             
-            <p className="text-xl text-white font-semibold">
+            <p className="text-xl text-foreground font-semibold">
               ⏱️ Estimated Time: 3 minutes
             </p>
             
-            <p className="text-base text-white/90 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base text-foreground/90 leading-relaxed max-w-2xl mx-auto">
               Searching 45,000+ UK pricing items for accurate quotes
             </p>
             
@@ -147,7 +147,7 @@ const CostAnalysisProcessingView = ({ progress: agentProgress, onCancel }: CostA
 
           <div className="space-y-4 sm:space-y-5 mt-6 px-2 sm:px-4">
             <div className="flex justify-between items-baseline gap-4">
-              <span className="text-base sm:text-lg text-white font-semibold">
+              <span className="text-base sm:text-lg text-foreground font-semibold">
                 Overall Progress
               </span>
               <span className="text-4xl sm:text-5xl font-bold text-elec-yellow tabular-nums">
@@ -159,8 +159,8 @@ const CostAnalysisProcessingView = ({ progress: agentProgress, onCancel }: CostA
             
             <div className="flex flex-col xs:flex-row xs:justify-between xs:items-center gap-3 xs:gap-4">
               <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-white shrink-0" />
-                <span className="text-sm sm:text-base text-white font-semibold tabular-nums">
+                <Clock className="h-5 w-5 text-foreground shrink-0" />
+                <span className="text-sm sm:text-base text-foreground font-semibold tabular-nums">
                   Elapsed: {formatTime(elapsedTime)}
                 </span>
               </div>
@@ -169,7 +169,7 @@ const CostAnalysisProcessingView = ({ progress: agentProgress, onCancel }: CostA
                   Still processing...
                 </span>
               ) : (
-                <span className="text-sm sm:text-base text-white font-semibold tabular-nums">
+                <span className="text-sm sm:text-base text-foreground font-semibold tabular-nums">
                   ~{formatTime(Math.max(0, totalDuration - elapsedTime))} remaining
                 </span>
               )}
@@ -222,7 +222,7 @@ const CostAnalysisProcessingView = ({ progress: agentProgress, onCancel }: CostA
                         </div>
                       ) : (
                         <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-elec-grey/50 flex items-center justify-center">
-                          <Icon className="h-8 w-8 sm:h-9 sm:w-9 text-white" />
+                          <Icon className="h-8 w-8 sm:h-9 sm:w-9 text-foreground" />
                         </div>
                       )}
                     </div>
@@ -233,7 +233,7 @@ const CostAnalysisProcessingView = ({ progress: agentProgress, onCancel }: CostA
                       <h3 className={`text-lg sm:text-xl font-bold ${
                         isActive ? 'text-elec-yellow' : 
                         isComplete ? 'text-green-400' : 
-                        'text-white'
+                        'text-foreground'
                       }`}>
                         {stage.title}
                       </h3>
@@ -256,7 +256,7 @@ const CostAnalysisProcessingView = ({ progress: agentProgress, onCancel }: CostA
 
                       {/* Description - Full width, better spacing */}
                       {isActive && (
-                        <p className="text-base sm:text-lg text-white leading-relaxed pt-1 font-medium">
+                        <p className="text-base sm:text-lg text-foreground leading-relaxed pt-1 font-medium">
                           {stage.substeps[currentSubstep]}
                         </p>
                       )}

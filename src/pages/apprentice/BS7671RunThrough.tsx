@@ -73,12 +73,12 @@ const BS7671RunThrough = () => {
               <h4 className="font-medium text-blue-300 text-sm">MFT Settings</h4>
               <p className="text-xs text-blue-200">Detailed test equipment configuration</p>
             </div>
-            <div className="text-center p-3 bg-green-500/10 rounded border border-green-500/30">
+            <div className="text-center p-3 bg-card rounded border border-green-500/30">
               <CheckSquare className="h-6 w-6 text-green-400 mx-auto mb-2" />
               <h4 className="font-medium text-green-300 text-sm">Connection Guides</h4>
               <p className="text-xs text-green-200">Step-by-step wiring instructions</p>
             </div>
-            <div className="text-center p-3 bg-yellow-500/10 rounded border border-yellow-500/30">
+            <div className="text-center p-3 bg-card rounded border border-yellow-500/30">
               <AlertTriangle className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
               <h4 className="font-medium text-yellow-300 text-sm">Troubleshooting</h4>
               <p className="text-xs text-yellow-200">Common issues and solutions</p>

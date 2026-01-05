@@ -116,7 +116,7 @@ const EmergencyProcedures = () => {
                       <div className="inline-flex items-center justify-center w-8 h-8 bg-elec-yellow/20 rounded-full mb-3">
                         <span className="text-sm font-bold text-elec-yellow">#{index + 1}</span>
                       </div>
-                      <h4 className="font-semibold text-white text-lg mb-4 group-hover:text-elec-yellow transition-colors">{contact.service}</h4>
+                      <h4 className="font-semibold text-foreground text-lg mb-4 group-hover:text-elec-yellow transition-colors">{contact.service}</h4>
                       <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/40 rounded-xl p-4 mb-4 shadow-inner">
                         <span className="text-3xl font-bold text-elec-yellow tracking-wider">{contact.number}</span>
                       </div>
@@ -151,7 +151,7 @@ const EmergencyProcedures = () => {
                   <ol className="space-y-2">
                     {evacuationProcedures.map((step, index) => (
                       <li key={index} className="flex items-start gap-3 text-left">
-                        <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        <span className="bg-red-500 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">
                           {index + 1}
                         </span>
                         <span className="text-sm">{step}</span>
@@ -200,7 +200,7 @@ const EmergencyProcedures = () => {
                   <ol className="space-y-3">
                     {firstAidProcedures.map((step, index) => (
                       <li key={index} className="flex items-start gap-3 text-left">
-                        <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
+                        <span className="bg-green-500 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                           {index + 1}
                         </span>
                         <span className="text-sm leading-relaxed">{step}</span>
@@ -276,7 +276,7 @@ const EmergencyProcedures = () => {
             <CardContent>
               <div className="space-y-4">
                 <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
-                  <h4 className="font-medium text-white mb-3">Before Starting Work</h4>
+                  <h4 className="font-medium text-foreground mb-3">Before Starting Work</h4>
                   <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow mt-1">•</span>
@@ -301,7 +301,7 @@ const EmergencyProcedures = () => {
                   </ul>
                 </div>
                 <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
-                  <h4 className="font-medium text-white mb-3">During Emergencies</h4>
+                  <h4 className="font-medium text-foreground mb-3">During Emergencies</h4>
                   <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow mt-1">•</span>

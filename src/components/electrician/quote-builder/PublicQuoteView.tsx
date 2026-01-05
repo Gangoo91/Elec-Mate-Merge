@@ -314,7 +314,7 @@ const PublicQuoteView = () => {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="bg-elec-gray/95 backdrop-blur-sm rounded-lg overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-elec-blue to-elec-blue/80 text-white p-6">
+          <div className="bg-gradient-to-r from-elec-blue to-elec-blue/80 text-foreground p-6">
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-bold">Quote #{quote.quoteNumber}</h1>

@@ -50,8 +50,8 @@ export const InstallationGuidanceDisplay = ({
                     )}
                   />
                   <div className="space-y-2 text-left flex-1">
-                    <p className="font-semibold text-sm text-left text-white">{safety.consideration}</p>
-                    <div className="flex flex-wrap gap-2 text-xs text-white/70">
+                    <p className="font-semibold text-sm text-left text-foreground">{safety.consideration}</p>
+                    <div className="flex flex-wrap gap-2 text-xs text-foreground/70">
                       {safety.bsReference && (
                         <span className="inline-flex items-center gap-1">
                           <FileText className="h-3 w-3" /> BS 7671: {safety.bsReference}
@@ -92,12 +92,12 @@ export const InstallationGuidanceDisplay = ({
                   <Package className="h-4 w-4 text-blue-500" />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
-                  <p className="font-medium text-sm text-left text-white">{material.item}</p>
-                  <p className="text-xs text-white/70 text-left mt-0.5">
+                  <p className="font-medium text-sm text-left text-foreground">{material.item}</p>
+                  <p className="text-xs text-foreground/70 text-left mt-0.5">
                     {material.specification}
                   </p>
                   {material.source && (
-                    <p className="text-xs text-white/70 text-left mt-0.5">
+                    <p className="text-xs text-foreground/70 text-left mt-0.5">
                       Source: {material.source}
                     </p>
                   )}
@@ -133,8 +133,8 @@ export const InstallationGuidanceDisplay = ({
                 >
                   <Wrench className="h-4 w-4 text-purple-500 shrink-0 mt-0.5" />
                   <div className="flex-1 text-left">
-                    <p className="font-medium text-sm text-left text-white">{tool.tool}</p>
-                    <p className="text-xs text-white/70 text-left">{tool.purpose}</p>
+                    <p className="font-medium text-sm text-left text-foreground">{tool.tool}</p>
+                    <p className="text-xs text-foreground/70 text-left">{tool.purpose}</p>
                     <Badge variant="secondary" className="mt-1.5 text-xs">
                       {tool.category}
                     </Badge>
@@ -166,15 +166,15 @@ export const InstallationGuidanceDisplay = ({
                       {idx + 1}
                     </div>
                     <div className="flex-1 space-y-1">
-                      <p className="text-sm font-medium text-white">{route.step}</p>
-                      <p className="text-xs text-white/70">Method: {route.method}</p>
+                      <p className="text-sm font-medium text-foreground">{route.step}</p>
+                      <p className="text-xs text-foreground/70">Method: {route.method}</p>
                       {route.bsReference && (
                         <Badge variant="outline" className="text-xs">
                           {route.bsReference}
                         </Badge>
                       )}
                       {route.notes && (
-                        <p className="text-xs text-white/70 italic">{route.notes}</p>
+                        <p className="text-xs text-foreground/70 italic">{route.notes}</p>
                       )}
                     </div>
                   </div>
@@ -200,10 +200,10 @@ export const InstallationGuidanceDisplay = ({
             <div className="space-y-3">
               {installationGuidance.terminationRequirements.map((term, idx) => (
                 <div key={idx} className="p-3 bg-background/30 rounded-lg">
-                  <p className="text-sm font-semibold mb-1 text-white">{term.location}</p>
-                  <p className="text-sm text-white/70 mb-2">{term.procedure}</p>
+                  <p className="text-sm font-semibold mb-1 text-foreground">{term.location}</p>
+                  <p className="text-sm text-foreground/70 mb-2">{term.procedure}</p>
                   <div className="flex flex-wrap gap-2 items-center">
-                    <span className="text-xs text-white/70">Tools:</span>
+                    <span className="text-xs text-foreground/70">Tools:</span>
                     {term.toolsNeeded.map((tool, toolIdx) => (
                       <Badge key={toolIdx} variant="secondary" className="text-xs">
                         {tool}
@@ -211,12 +211,12 @@ export const InstallationGuidanceDisplay = ({
                     ))}
                   </div>
                   {term.torqueSettings && (
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-foreground/70 mt-1">
                       Torque: {term.torqueSettings}
                     </p>
                   )}
                   {term.bsReference && (
-                    <p className="text-xs text-white/70 mt-1">Ref: {term.bsReference}</p>
+                    <p className="text-xs text-foreground/70 mt-1">Ref: {term.bsReference}</p>
                   )}
                 </div>
               ))}
@@ -252,8 +252,8 @@ export const InstallationGuidanceDisplay = ({
 
                     {/* Content */}
                     <div className="flex-1 pb-4 text-left">
-                      <p className="font-semibold text-sm text-left text-white">{step.title}</p>
-                      <p className="text-sm text-white/70 mt-1 leading-relaxed text-left">
+                      <p className="font-semibold text-sm text-left text-foreground">{step.title}</p>
+                      <p className="text-sm text-foreground/70 mt-1 leading-relaxed text-left">
                         {step.description}
                       </p>
 
@@ -295,7 +295,7 @@ export const InstallationGuidanceDisplay = ({
               Testing Requirements
             </CardTitle>
             {testingRequirements.intro && (
-              <p className="text-sm text-white/70 text-left">{testingRequirements.intro}</p>
+              <p className="text-sm text-foreground/70 text-left">{testingRequirements.intro}</p>
             )}
           </CardHeader>
           <CardContent className="space-y-3">
@@ -310,21 +310,21 @@ export const InstallationGuidanceDisplay = ({
                   </div>
                   <div className="flex-1 text-left">
                     <div className="flex items-start justify-between gap-2">
-                      <p className="font-semibold text-sm text-left text-white">{test.testName}</p>
+                      <p className="font-semibold text-sm text-left text-foreground">{test.testName}</p>
                       <Badge variant="outline" className="text-xs shrink-0">
                         {test.regulation}
                       </Badge>
                     </div>
-                    <p className="text-sm text-white/70 mt-1 text-left">{test.procedure}</p>
+                    <p className="text-sm text-foreground/70 mt-1 text-left">{test.procedure}</p>
 
                     <div className="mt-3 p-2 rounded bg-background/50 text-left">
                       <div className="grid grid-cols-1 gap-1 text-xs">
                         {test.expectedReading && (
-                          <p className="text-left text-white/80">
-                            <span className="font-medium text-white">Expected:</span> {test.expectedReading}
+                          <p className="text-left text-foreground/80">
+                            <span className="font-medium text-foreground">Expected:</span> {test.expectedReading}
                           </p>
                         )}
-                        <p className="text-left text-white/80">
+                        <p className="text-left text-foreground/80">
                           <span className="font-medium text-green-500">Pass:</span>{' '}
                           {test.acceptanceCriteria}
                         </p>
@@ -345,7 +345,7 @@ export const InstallationGuidanceDisplay = ({
               </div>
             ))}
             {testingRequirements.recordingNote && (
-              <p className="text-xs text-white/70 italic text-left p-2 bg-primary/10 rounded mt-3">
+              <p className="text-xs text-foreground/70 italic text-left p-2 bg-primary/10 rounded mt-3">
                 {testingRequirements.recordingNote}
               </p>
             )}

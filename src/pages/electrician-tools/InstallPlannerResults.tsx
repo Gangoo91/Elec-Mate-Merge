@@ -368,7 +368,7 @@ const InstallPlannerResults = () => {
             </div>
 
             {!requiredFieldsFilled && (
-              <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 text-sm text-yellow-200">
+              <div className="bg-card border border-yellow-500/30 rounded-lg p-3 text-sm text-yellow-200">
                 ⚠️ Complete all required fields in "Project Details" tab to enable PDF download
               </div>
             )}

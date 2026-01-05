@@ -85,10 +85,10 @@ const MaterialTips = () => {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Beginner": return "bg-green-600/90 text-white border-green-400";
-      case "Intermediate": return "bg-orange-600/90 text-white border-orange-400";
-      case "Advanced": return "bg-red-600/90 text-white border-red-400";
-      default: return "bg-blue-600/90 text-white border-blue-400";
+      case "Beginner": return "bg-green-600/90 text-foreground border-green-400";
+      case "Intermediate": return "bg-orange-600/90 text-foreground border-orange-400";
+      case "Advanced": return "bg-red-600/90 text-foreground border-red-400";
+      default: return "bg-blue-600/90 text-foreground border-blue-400";
     }
   };
 
@@ -101,8 +101,8 @@ const MaterialTips = () => {
               <BookOpen className="h-6 w-6" />
             </div>
             <div>
-              <CardTitle className="text-white">Professional Material Tips</CardTitle>
-              <p className="text-white/80 text-sm">Essential guidance for material selection and installation practices</p>
+              <CardTitle className="text-foreground">Professional Material Tips</CardTitle>
+              <p className="text-foreground/80 text-sm">Essential guidance for material selection and installation practices</p>
             </div>
           </div>
         </CardHeader>
@@ -118,7 +118,7 @@ const MaterialTips = () => {
                         <IconComponent className="h-5 w-5" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-white">{tip.title}</h4>
+                        <h4 className="font-semibold text-foreground">{tip.title}</h4>
                         <p className="text-xs text-blue-400">{tip.category}</p>
                       </div>
                     </div>
@@ -127,14 +127,14 @@ const MaterialTips = () => {
                         <Star 
                           key={i} 
                           className={`h-3 w-3 ${
-                            i < tip.rating ? 'fill-elec-yellow text-elec-yellow' : 'text-white/30'
+                            i < tip.rating ? 'fill-elec-yellow text-elec-yellow' : 'text-foreground/30'
                           }`} 
                         />
                       ))}
                     </div>
                   </div>
                   
-                  <p className="text-white/80 text-sm leading-relaxed">{tip.content}</p>
+                  <p className="text-foreground/80 text-sm leading-relaxed">{tip.content}</p>
                   
                   <div className="flex flex-wrap gap-2">
                     {tip.highlights.map((highlight, index) => (
@@ -149,7 +149,7 @@ const MaterialTips = () => {
                       <Badge className={getDifficultyColor(tip.difficulty)}>
                         {tip.difficulty}
                       </Badge>
-                      <div className="flex items-center gap-1 text-white/60">
+                      <div className="flex items-center gap-1 text-foreground/60">
                         <Clock className="h-3 w-3" />
                         <span className="text-xs">{tip.timeToRead}</span>
                       </div>
@@ -170,8 +170,8 @@ const MaterialTips = () => {
               <AlertTriangle className="h-5 w-5" />
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-2">Safety Reminder</h4>
-              <p className="text-white/80 text-sm leading-relaxed">
+              <h4 className="font-semibold text-foreground mb-2">Safety Reminder</h4>
+              <p className="text-foreground/80 text-sm leading-relaxed">
                 Always ensure materials meet BS 7671 18th Edition requirements. When in doubt, consult the IET Wiring Regulations 
                 or seek advice from a qualified electrical engineer. Safety is paramount in all electrical installations.
               </p>

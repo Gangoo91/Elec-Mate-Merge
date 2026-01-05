@@ -22,7 +22,7 @@ const ProfileSummary = ({ profile, getInitials, onEdit }: ProfileSummaryProps) =
         <Button 
           size="icon" 
           variant="ghost" 
-          className="absolute top-2 right-2 h-8 w-8 rounded-full bg-black/20 hover:bg-black/40 text-white"
+          className="absolute top-2 right-2 h-8 w-8 rounded-full bg-black/20 hover:bg-black/40 text-foreground"
         >
           <Camera className="h-4 w-4" />
         </Button>

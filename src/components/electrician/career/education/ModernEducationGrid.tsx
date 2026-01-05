@@ -26,7 +26,7 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
       "HNC": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
       "HND": "bg-pink-500/20 border-pink-500/30 text-pink-300",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getLevelColor = (level: string) => {
@@ -37,7 +37,7 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
       "Level 6": "bg-red-500/20 border-red-500/30 text-red-300",
       "Level 7": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
     };
-    return colors[level as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[level as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getCategoryImage = (category: string) => {
@@ -83,8 +83,8 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
         <div className="w-16 h-16 rounded-full bg-elec-yellow/10 flex items-center justify-center mx-auto mb-4">
           <GraduationCap className="h-8 w-8 text-elec-yellow" />
         </div>
-        <h3 className="text-lg font-semibold text-white mb-2">No Programmes Found</h3>
-        <p className="text-white/90">Try adjusting your search or filter criteria.</p>
+        <h3 className="text-lg font-semibold text-foreground mb-2">No Programmes Found</h3>
+        <p className="text-foreground/90">Try adjusting your search or filter criteria.</p>
       </div>
     );
   }
@@ -145,7 +145,7 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
             {/* Content */}
             <div className="p-3 sm:p-4 space-y-2 flex flex-col h-[calc(100%-8rem)] sm:h-[calc(100%-9rem)]">
               {/* Meta Info */}
-              <div className="flex items-center justify-between text-xs text-white/80">
+              <div className="flex items-center justify-between text-xs text-foreground/80">
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1">
                     <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
@@ -163,7 +163,7 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
               </div>
 
               {/* Title */}
-              <h3 className="font-semibold text-white line-clamp-2 leading-tight flex-grow text-sm sm:text-base" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+              <h3 className="font-semibold text-foreground line-clamp-2 leading-tight flex-grow text-sm sm:text-base" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                 {programme.title}
               </h3>
 
@@ -173,12 +173,12 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
               </p>
 
               {/* Description */}
-              <p className="text-white/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
+              <p className="text-foreground/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
                 {programme.description}
               </p>
 
               {/* Study Details */}
-              <div className="text-white/80 text-xs space-y-1">
+              <div className="text-foreground/80 text-xs space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="font-medium">Mode:</span>
                   <span>{programme.studyMode}</span>
@@ -196,7 +196,7 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
 
               {/* Footer */}
               <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                <div className="text-xs text-white/80">
+                <div className="text-xs text-foreground/80">
                   <span className="font-medium">{programme.tuitionFees}</span>
                 </div>
                 

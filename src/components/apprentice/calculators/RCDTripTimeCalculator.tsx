@@ -2,12 +2,11 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Clock, Calculator, RotateCcw, Shield, Info, AlertTriangle, CheckCircle, XCircle, Zap, BookOpen } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
 import InfoBox from "@/components/common/InfoBox";
 
@@ -128,18 +127,17 @@ const RCDTripTimeCalculator = () => {
                 <h3 className="text-lg font-semibold text-elec-light">RCD Parameters</h3>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="rcd-type" className="text-elec-light">RCD Type</Label>
-                  <Select value={rcdType} onValueChange={setRcdType}>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-11">
-                      <SelectValue placeholder="Select RCD type" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      <SelectItem value="general">General Purpose RCD</SelectItem>
-                      <SelectItem value="socket">Socket Outlet RCD</SelectItem>
-                      <SelectItem value="rcbo">RCBO</SelectItem>
-                      <SelectItem value="main">Main Switch RCD</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelect value={rcdType} onValueChange={setRcdType}>
+                    <MobileSelectTrigger label="RCD Type">
+                      <MobileSelectValue placeholder="Select RCD type" />
+                    </MobileSelectTrigger>
+                    <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <MobileSelectItem value="general">General Purpose RCD</MobileSelectItem>
+                      <MobileSelectItem value="socket">Socket Outlet RCD</MobileSelectItem>
+                      <MobileSelectItem value="rcbo">RCBO</MobileSelectItem>
+                      <MobileSelectItem value="main">Main Switch RCD</MobileSelectItem>
+                    </MobileSelectContent>
+                  </MobileSelect>
                   {rcdType && (
                     <p className="text-xs text-muted-foreground mt-1">
                       {rcdTypeDescriptions[rcdType as keyof typeof rcdTypeDescriptions]}
@@ -147,31 +145,27 @@ const RCDTripTimeCalculator = () => {
                   )}
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="rcd-rating" className="text-elec-light">RCD Rating (IΔn)</Label>
-                  <Select value={rcdRating} onValueChange={setRcdRating}>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-11">
-                      <SelectValue placeholder="Select RCD sensitivity rating" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      <SelectItem value="30mA">30mA - Personal Protection</SelectItem>
-                      <SelectItem value="100mA">100mA - Fire Protection</SelectItem>
-                      <SelectItem value="300mA">300mA - Fire Protection (Industrial)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <MobileSelect value={rcdRating} onValueChange={setRcdRating}>
+                  <MobileSelectTrigger label="RCD Rating (IΔn)">
+                    <MobileSelectValue placeholder="Select RCD sensitivity rating" />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    <MobileSelectItem value="30mA">30mA - Personal Protection</MobileSelectItem>
+                    <MobileSelectItem value="100mA">100mA - Fire Protection</MobileSelectItem>
+                    <MobileSelectItem value="300mA">300mA - Fire Protection (Industrial)</MobileSelectItem>
+                  </MobileSelectContent>
+                </MobileSelect>
 
                 <div className="space-y-2">
-                  <Label htmlFor="test-current" className="text-elec-light">Test Current</Label>
-                  <Select value={testCurrent} onValueChange={setTestCurrent}>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-11">
-                      <SelectValue placeholder="Select test current multiplier" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      <SelectItem value="1x">1× Rated Current (IΔn) - Sensitivity Test</SelectItem>
-                      <SelectItem value="5x">5× Rated Current (5×IΔn) - Fast Trip Test</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelect value={testCurrent} onValueChange={setTestCurrent}>
+                    <MobileSelectTrigger label="Test Current">
+                      <MobileSelectValue placeholder="Select test current multiplier" />
+                    </MobileSelectTrigger>
+                    <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <MobileSelectItem value="1x">1× Rated Current (IΔn) - Sensitivity Test</MobileSelectItem>
+                      <MobileSelectItem value="5x">5× Rated Current (5×IΔn) - Fast Trip Test</MobileSelectItem>
+                    </MobileSelectContent>
+                  </MobileSelect>
                   {testCurrent && rcdRating && (
                     <p className="text-xs text-elec-yellow mt-1">
                       {getTestDescription(rcdRating, testCurrent)}
@@ -194,17 +188,18 @@ const RCDTripTimeCalculator = () => {
                 </div>
 
                 <div className="flex gap-2 pt-2">
-                  <Button 
+                  <MobileButton
                     onClick={calculateTripTime}
-                    className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11"
+                    variant="elec"
+                    className="flex-1 min-h-[48px]"
                     disabled={!rcdRating || !testCurrent}
                   >
                     <Calculator className="mr-2 h-4 w-4" />
                     Get Requirements
-                  </Button>
-                  <Button variant="outline" onClick={resetCalculator} className="h-11">
+                  </MobileButton>
+                  <MobileButton variant="elec-outline" onClick={resetCalculator} className="min-h-[48px]">
                     <RotateCcw className="h-4 w-4" />
-                  </Button>
+                  </MobileButton>
                 </div>
               </div>
 

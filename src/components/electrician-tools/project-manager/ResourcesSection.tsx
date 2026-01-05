@@ -42,8 +42,8 @@ const ResourcesSection = ({ resources }: ResourcesSectionProps) => {
                     key={idx} 
                     className="flex items-center justify-between text-sm bg-muted/30 p-3 rounded-lg"
                   >
-                    <span className="font-medium text-white">{role}</span>
-                    <span className="text-white/70">
+                    <span className="font-medium text-foreground">{role}</span>
+                    <span className="text-foreground/70">
                       {quantity} {parseInt(quantity) === 1 ? 'person' : 'people'}{duration}
                     </span>
                   </div>
@@ -66,8 +66,8 @@ const ResourcesSection = ({ resources }: ResourcesSectionProps) => {
                     key={idx} 
                     className="flex items-center justify-between text-sm bg-muted/30 p-3 rounded-lg"
                   >
-                    <span className="text-white">{description}</span>
-                    <span className="text-white/70">{quantity}</span>
+                    <span className="text-foreground">{description}</span>
+                    <span className="text-foreground/70">{quantity}</span>
                   </div>
                 );
               })}
@@ -82,7 +82,7 @@ const ResourcesSection = ({ resources }: ResourcesSectionProps) => {
               {resources.equipment!.map((item: string, idx: number) => (
                 <div 
                   key={idx}
-                  className="text-xs bg-muted/30 px-3 py-2 rounded-lg text-white"
+                  className="text-xs bg-muted/30 px-3 py-2 rounded-lg text-foreground"
                 >
                   {item}
                 </div>

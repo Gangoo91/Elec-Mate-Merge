@@ -26,7 +26,7 @@ const AndysManClub = () => {
             </div>
           </div>
           <Button 
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white text-sm flex items-center gap-2"
+            className="w-full bg-purple-600 hover:bg-purple-700 text-foreground text-sm flex items-center gap-2"
             onClick={() => window.open("https://andysmanclub.co.uk/find-your-nearest-group/", "_blank")}
           >
             <MapPin className="h-4 w-4" />

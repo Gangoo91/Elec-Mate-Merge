@@ -54,7 +54,7 @@ export const PriceStats = ({
       <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-gray/80 shadow-lg">
         <CardHeader className="pb-4">
           <div className="flex flex-col space-y-3 md:flex-row md:items-center md:justify-between md:space-y-0">
-            <CardTitle className="text-white text-lg md:text-xl font-semibold">
+            <CardTitle className="text-foreground text-lg md:text-xl font-semibold">
               Price Comparison Results
             </CardTitle>
             <div className="flex gap-2">

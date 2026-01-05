@@ -137,13 +137,13 @@ const DigitalSkillsAnalyser = () => {
 
           {/* Recommendation */}
           <div className="p-4 bg-elec-gray border border-elec-yellow/20 rounded-lg mb-6">
-            <h4 className="font-semibold text-white mb-2">Recommendation</h4>
+            <h4 className="font-semibold text-foreground mb-2">Recommendation</h4>
             <p className="text-muted-foreground">{results.recommendation}</p>
           </div>
 
           {/* Training Focus Areas */}
           <div className="mb-6">
-            <h4 className="font-semibold text-white mb-3">Recommended Training Focus</h4>
+            <h4 className="font-semibold text-foreground mb-3">Recommended Training Focus</h4>
             <div className="flex flex-wrap gap-2">
               {results.trainingFocus.map((focus, index) => (
                 <Badge key={index} variant="outline" className="text-blue-300 border-blue-400/30">
@@ -155,11 +155,11 @@ const DigitalSkillsAnalyser = () => {
 
           {/* Individual Category Breakdown */}
           <div className="mb-6">
-            <h4 className="font-semibold text-white mb-3">Category Breakdown</h4>
+            <h4 className="font-semibold text-foreground mb-3">Category Breakdown</h4>
             <div className="space-y-3">
               {skillsQuestions.map((question, index) => (
                 <div key={index} className="flex justify-between items-center p-3 bg-elec-dark/50 rounded">
-                  <span className="text-white">{question.category}</span>
+                  <span className="text-foreground">{question.category}</span>
                   <div className="flex items-center gap-2">
                     <Progress value={((answers[index] || 0) / 4) * 100} className="w-20" />
                     <span className="text-sm text-muted-foreground">{answers[index] || 0}/4</span>
@@ -202,7 +202,7 @@ const DigitalSkillsAnalyser = () => {
         <h3 className="text-blue-300 text-base font-bold mb-1">
           {skillsQuestions[currentQuestion].category}
         </h3>
-        <p className="text-white text-xs leading-snug">
+        <p className="text-foreground text-xs leading-snug">
           {skillsQuestions[currentQuestion].question}
         </p>
       </div>

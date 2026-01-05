@@ -47,7 +47,7 @@ export const FormattedTextDisplay = ({
             style={{ marginLeft: `${Math.max(indent * 0.5, 0.5)}rem` }}
           >
             <span className="text-primary mt-0.5 flex-shrink-0">•</span>
-            <span className="text-sm text-white" dangerouslySetInnerHTML={{ 
+            <span className="text-sm text-foreground" dangerouslySetInnerHTML={{ 
               __html: processInlineFormatting(content) 
             }} />
           </div>
@@ -59,7 +59,7 @@ export const FormattedTextDisplay = ({
       elements.push(
         <p 
           key={`line-${key++}`} 
-          className="text-sm text-white text-left"
+          className="text-sm text-foreground text-left"
           dangerouslySetInnerHTML={{ __html: processInlineFormatting(line) }}
         />
       );

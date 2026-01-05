@@ -71,7 +71,7 @@ export const ukQualifications: UKQualification[] = [
     cost: "£300-£500",
     awarding_body: "City & Guilds, NICEIC, NAPIT",
     description: "Wiring regulations qualification",
-    renewal: "Stay current with BS 7671 A2:2022 updates"
+    renewal: "Stay current with BS 7671:2018+A3:2024 updates"
   },
   {
     level: "Level 3",
@@ -112,11 +112,11 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[3]  // 18th Edition
     ],
     salary_ranges: {
-      london: "£18,000 - £25,000",
-      south_east: "£16,000 - £23,000",
-      midlands: "£15,000 - £21,000",
-      north: "£14,000 - £20,000",
-      scotland_wales: "£14,000 - £20,000"
+      london: "£19,000 - £27,000",
+      south_east: "£17,000 - £25,000",
+      midlands: "£16,000 - £23,000",
+      north: "£15,000 - £22,000",
+      scotland_wales: "£15,000 - £22,000"
     },
     progression_timeline: "4 years typical apprenticeship duration",
     time_to_achieve: "0–4 years",
@@ -154,11 +154,11 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[3]  // 18th Edition
     ],
     salary_ranges: {
-      london: "£25,000 - £32,000",
-      south_east: "£23,000 - £30,000",
-      midlands: "£21,000 - £28,000",
-      north: "£20,000 - £26,000",
-      scotland_wales: "£20,000 - £26,000"
+      london: "£27,000 - £35,000",
+      south_east: "£25,000 - £33,000",
+      midlands: "£23,000 - £30,000",
+      north: "£22,000 - £28,000",
+      scotland_wales: "£22,000 - £28,000"
     },
     progression_timeline: "1-2 years between apprentice and approved status",
     time_to_achieve: "~1–2 years from Apprentice",
@@ -167,7 +167,7 @@ export const ukCareerLevels: UKCareerLevel[] = [
       { name: "18th Edition (recommended)", code: "2382-22", mandatory: false },
       { name: "ECS Health & Safety Assessment", code: "ECS H&S", mandatory: true }
     ],
-    day_rates: { employed: "£100–£150/day equivalent", contractor: "£120–£180/day" },
+    day_rates: { employed: "£110–£165/day equivalent", contractor: "£130–£195/day" },
     cpd: { interval: "Ongoing", requirements: ["Toolbox talks", "Manufacturer briefings"] },
     branches: [],
     portfolio_evidence: ["Second-fix installations", "Test results witnessed", "RAMS participation"],
@@ -197,11 +197,11 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[3]  // 18th Edition
     ],
     salary_ranges: {
-      london: "£32,000 - £42,000",
-      south_east: "£30,000 - £40,000",
-      midlands: "£27,000 - £37,000",
-      north: "£25,000 - £35,000",
-      scotland_wales: "£25,000 - £35,000"
+      london: "£35,000 - £46,000",
+      south_east: "£33,000 - £44,000",
+      midlands: "£29,000 - £40,000",
+      north: "£27,000 - £38,000",
+      scotland_wales: "£27,000 - £38,000"
     },
     progression_timeline: "Achieved after NVQ3 + AM2 (Gold Card)",
     time_to_achieve: "Typically 4–7 years total",
@@ -210,7 +210,7 @@ export const ukCareerLevels: UKCareerLevel[] = [
       { name: "AM2/AM2S practical assessment", code: "AM2/AM2S", mandatory: true, awarding_body: "JIB/ECS" },
       { name: "18th Edition BS 7671", code: "2382-22", mandatory: true }
     ],
-    day_rates: { employed: "£150–£220/day equivalent", contractor: "£180–£280/day" },
+    day_rates: { employed: "£165–£240/day equivalent", contractor: "£195–£305/day" },
     cpd: { interval: "Annual (recommended)", requirements: ["BS 7671 amendment updates", "Manufacturer CPD"] },
     branches: [
       { id: "qs", title: "Qualified Supervisor (NICEIC/NAPIT)", description: "Take responsibility for compliance and certification" },
@@ -244,11 +244,11 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[4]  // 2391
     ],
     salary_ranges: {
-      london: "£35,000 - £45,000",
-      south_east: "£32,000 - £42,000",
-      midlands: "£28,000 - £38,000",
-      north: "£26,000 - £36,000",
-      scotland_wales: "£26,000 - £36,000"
+      london: "£38,000 - £49,000",
+      south_east: "£35,000 - £46,000",
+      midlands: "£30,000 - £41,000",
+      north: "£28,000 - £39,000",
+      scotland_wales: "£28,000 - £39,000"
     },
     progression_timeline: "1-3 years from Electrician with 2391 and experience",
     time_to_achieve: "~1–3 years from Electrician",
@@ -256,7 +256,7 @@ export const ukCareerLevels: UKCareerLevel[] = [
       { name: "Inspection & Testing", code: "2391-52", mandatory: true, awarding_body: "City & Guilds/EAL" },
       { name: "Demonstrable installation/testing experience", mandatory: true }
     ],
-    day_rates: { employed: "£170–£240/day equivalent", contractor: "£200–£300/day" },
+    day_rates: { employed: "£185–£260/day equivalent", contractor: "£220–£330/day" },
     cpd: { interval: "Annual", requirements: ["BS 7671 updates", "Scheme technical updates"] },
     branches: [
       { id: "tech", title: "Technician (JIB)", description: "Advanced technical responsibilities" },
@@ -290,15 +290,15 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[5]  // HNC
     ],
     salary_ranges: {
-      london: "£45,000 - £65,000",
-      south_east: "£42,000 - £60,000",
-      midlands: "£38,000 - £55,000",
-      north: "£35,000 - £50,000",
-      scotland_wales: "£35,000 - £50,000"
+      london: "£49,000 - £72,000",
+      south_east: "£46,000 - £66,000",
+      midlands: "£41,000 - £60,000",
+      north: "£38,000 - £55,000",
+      scotland_wales: "£38,000 - £55,000"
     },
     progression_timeline: "2-4 years from Approved with leadership experience",
     time_to_achieve: "~2–4 years from Approved",
-    day_rates: { employed: "£220–£320/day equivalent", contractor: "£260–£380/day" },
+    day_rates: { employed: "£240–£355/day equivalent", contractor: "£285–£420/day" },
     cpd: { interval: "Annual", requirements: ["Management H&S (SMSTS/SSSTS)", "Manufacturer leadership briefings"] },
     portfolio_evidence: ["Project programmes", "RAMS & permits", "Budget reports", "Team training records"],
     typical_responsibilities: [
@@ -326,11 +326,11 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[4]  // 2391
     ],
     salary_ranges: {
-      london: "£40,000 - £80,000+",
-      south_east: "£35,000 - £70,000+",
-      midlands: "£30,000 - £60,000+",
-      north: "£28,000 - £55,000+",
-      scotland_wales: "£28,000 - £55,000+"
+      london: "£45,000 - £90,000+",
+      south_east: "£40,000 - £80,000+",
+      midlands: "£35,000 - £70,000+",
+      north: "£32,000 - £65,000+",
+      scotland_wales: "£32,000 - £65,000+"
     },
     progression_timeline: "Can start after approved status with business setup",
     time_to_achieve: "Varies — depends on business setup",
@@ -339,7 +339,7 @@ export const ukCareerLevels: UKCareerLevel[] = [
       { name: "Public liability & professional indemnity insurance", mandatory: true },
       { name: "Certification scheme membership (NICEIC/NAPIT)", mandatory: false }
     ],
-    day_rates: { employed: "N/A", contractor: "£200–£450+/day" },
+    day_rates: { employed: "N/A", contractor: "£220–£500+/day" },
     cpd: { interval: "Annual", requirements: ["Scheme assessment", "Regulatory updates", "Accounts & H&S compliance"] },
     branches: [
       { id: "di", title: "Domestic Installer", description: "Part P domestic scope" },
@@ -364,117 +364,147 @@ export const ukCareerLevels: UKCareerLevel[] = [
   }
 ];
 
+// 2026 UK Work Sectors with updated pay rates
 export const ukWorkSectors = [
   {
     name: "Domestic",
     description: "Residential electrical work including new builds, rewiring, and maintenance",
-    typical_pay: "£150-£300/day",
+    typical_pay: "£165-£330/day",
     growth_outlook: "Stable",
-    key_skills: ["Consumer unit installation", "Fault finding", "PAT testing", "Solar PV"]
+    key_skills: ["Consumer unit installation", "Fault finding", "PAT testing", "Solar PV", "EV charging"]
   },
   {
     name: "Commercial",
     description: "Office buildings, retail spaces, and commercial facilities",
-    typical_pay: "£180-£350/day",
+    typical_pay: "£195-£385/day",
     growth_outlook: "Growing",
-    key_skills: ["Three-phase systems", "Fire alarms", "Emergency lighting", "Data cabling"]
+    key_skills: ["Three-phase systems", "Fire alarms", "Emergency lighting", "Data cabling", "LED retrofit"]
   },
   {
     name: "Industrial",
     description: "Manufacturing plants, warehouses, and heavy industry",
-    typical_pay: "£200-£400/day",
+    typical_pay: "£220-£440/day",
     growth_outlook: "Strong",
-    key_skills: ["Motor control", "PLCs", "High voltage", "Automation systems"]
+    key_skills: ["Motor control", "PLCs", "High voltage", "Automation systems", "Energy monitoring"]
   },
   {
     name: "Construction",
     description: "New build residential and commercial construction projects",
-    typical_pay: "£170-£320/day",
+    typical_pay: "£185-£355/day",
     growth_outlook: "Cyclical",
-    key_skills: ["First fix", "Second fix", "Temporary supplies", "Site safety"]
+    key_skills: ["First fix", "Second fix", "Temporary supplies", "Site safety", "Smart home pre-wire"]
   },
   {
     name: "Maintenance",
     description: "Ongoing maintenance contracts for various types of properties",
-    typical_pay: "£160-£280/day",
+    typical_pay: "£175-£310/day",
     growth_outlook: "Stable",
-    key_skills: ["Fault diagnosis", "Preventive maintenance", "Emergency repairs", "Testing"]
+    key_skills: ["Fault diagnosis", "Preventive maintenance", "Emergency repairs", "Testing", "CAFM systems"]
   },
   {
     name: "Renewable Energy",
     description: "Solar PV, wind, and other renewable energy installations",
-    typical_pay: "£200-£450/day",
+    typical_pay: "£220-£495/day",
     growth_outlook: "Rapid growth",
-    key_skills: ["Solar PV design", "Battery storage", "Grid connection", "MCS certification"]
+    key_skills: ["Solar PV design", "Battery storage", "Grid connection", "MCS certification", "Hybrid systems"]
   },
   {
     name: "Data/Telecoms",
     description: "Network cabling, telecommunications, and IT infrastructure",
-    typical_pay: "£180-£350/day",
+    typical_pay: "£195-£385/day",
     growth_outlook: "Strong",
-    key_skills: ["Fibre optics", "Cat6/7 cabling", "Network testing", "Wireless systems"]
+    key_skills: ["Fibre optics", "Cat6/7 cabling", "Network testing", "Wireless systems", "5G infrastructure"]
+  },
+  {
+    name: "Battery Energy Storage (BESS)",
+    description: "Battery storage systems for grid stabilisation and renewable energy integration",
+    typical_pay: "£275-£450/day",
+    growth_outlook: "Very High - Major growth sector",
+    key_skills: ["DC systems", "Battery management", "Grid connection", "High voltage safety", "BESS-specific training"]
+  },
+  {
+    name: "Heat Pump Installation",
+    description: "Air source and ground source heat pump electrical systems",
+    typical_pay: "£240-£390/day",
+    growth_outlook: "Very High - Government Net Zero push",
+    key_skills: ["Heat pump controls", "Three-phase connections", "C&G 2399-40", "MCS certification", "Renewable integration"]
+  },
+  {
+    name: "Smart Meter Installation",
+    description: "Smart meter rollout and advanced metering infrastructure",
+    typical_pay: "£195-£310/day",
+    growth_outlook: "High - National rollout continuing",
+    key_skills: ["SMETS2 installation", "WAN/HAN communications", "Smart Metering Technical Expert (SMTE)", "Customer interface"]
+  },
+  {
+    name: "Electric Vehicle (EV) Charging",
+    description: "EV charging infrastructure installation for domestic, commercial and public use",
+    typical_pay: "£220-£420/day",
+    growth_outlook: "Very High - 2035 ICE ban driving demand",
+    key_skills: ["C&G 2919", "DC rapid charging", "Load management", "OZEV scheme compliance", "Network integration"]
   }
 ];
 
+// 2026 UK Regional Job Markets with updated rates
 export const regionalJobMarkets = [
   {
     region: "London",
     job_availability: "High",
-    average_rates: "£200-£400/day",
+    average_rates: "£220-£450/day",
     cost_of_living: "Very High",
     transport_links: "Excellent",
     key_sectors: ["Commercial", "High-end residential", "Infrastructure", "Data centres"],
     major_employers: ["Balfour Beatty", "VINCI", "Skanska", "ISG"],
-    growth_areas: ["Electric vehicle charging", "Smart buildings", "Renewable energy"]
+    growth_areas: ["Electric vehicle charging", "Smart buildings", "Renewable energy", "BESS"]
   },
   {
     region: "South East",
     job_availability: "High",
-    average_rates: "£180-£350/day",
+    average_rates: "£195-£385/day",
     cost_of_living: "High",
     transport_links: "Good",
     key_sectors: ["Residential", "Commercial", "Industrial", "Marine"],
     major_employers: ["Bouygues", "Morgan Sindall", "Kier", "Local contractors"],
-    growth_areas: ["Offshore wind", "Data centres", "Housing developments"]
+    growth_areas: ["Offshore wind", "Data centres", "Housing developments", "Heat pumps"]
   },
   {
     region: "Midlands",
     job_availability: "Good",
-    average_rates: "£160-£300/day",
+    average_rates: "£175-£330/day",
     cost_of_living: "Medium",
     transport_links: "Good",
     key_sectors: ["Manufacturing", "Automotive", "Logistics", "Commercial"],
     major_employers: ["JLR", "BMW", "Amazon", "Regional contractors"],
-    growth_areas: ["Electric vehicle manufacturing", "Automation", "Warehousing"]
+    growth_areas: ["Electric vehicle manufacturing", "Automation", "Warehousing", "Gigafactories"]
   },
   {
     region: "North England",
     job_availability: "Good",
-    average_rates: "£150-£280/day",
+    average_rates: "£165-£310/day",
     cost_of_living: "Low-Medium",
     transport_links: "Good",
     key_sectors: ["Industrial", "Energy", "Transport", "Commercial"],
     major_employers: ["Sellafield", "Nuclear sector", "Transport for the North"],
-    growth_areas: ["Nuclear power", "Offshore wind", "HS2 infrastructure"]
+    growth_areas: ["Nuclear power", "Offshore wind", "HS2 infrastructure", "Hydrogen"]
   },
   {
     region: "Scotland",
     job_availability: "Good",
-    average_rates: "£150-£290/day",
+    average_rates: "£165-£320/day",
     cost_of_living: "Medium",
     transport_links: "Good",
     key_sectors: ["Oil & Gas", "Renewable energy", "Whisky industry", "Marine"],
     major_employers: ["SSE", "ScottishPower", "Wood Group", "Offshore operators"],
-    growth_areas: ["Offshore wind", "Green hydrogen", "Energy storage"]
+    growth_areas: ["Offshore wind", "Green hydrogen", "Energy storage", "Decommissioning"]
   },
   {
     region: "Wales",
     job_availability: "Moderate",
-    average_rates: "£140-£270/day",
+    average_rates: "£155-£295/day",
     cost_of_living: "Low-Medium",
     transport_links: "Good",
     key_sectors: ["Manufacturing", "Energy", "Tourism", "Agriculture"],
     major_employers: ["Airbus", "Ford", "Tata Steel", "Local authorities"],
-    growth_areas: ["Renewable energy", "Electric vehicle components", "Data centres"]
+    growth_areas: ["Renewable energy", "Electric vehicle components", "Data centres", "Tidal energy"]
   }
 ];

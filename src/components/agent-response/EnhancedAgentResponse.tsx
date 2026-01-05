@@ -75,16 +75,16 @@ export const EnhancedAgentResponse = ({
             {response.regulations.map((reg: any, idx: number) => (
               <div key={idx} className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
                 <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-semibold text-white">{reg.number}</h4>
+                  <h4 className="font-semibold text-foreground">{reg.number}</h4>
                   {reg.confidence && (
                     <ConfidenceBadge confidence={reg.confidence.overall} />
                   )}
                 </div>
                 <div className="space-y-2 text-sm">
-                  <p className="text-gray-300"><strong className="text-white">What:</strong> {reg.what}</p>
-                  <p className="text-gray-300"><strong className="text-white">Why:</strong> {reg.why}</p>
+                  <p className="text-gray-300"><strong className="text-foreground">What:</strong> {reg.what}</p>
+                  <p className="text-gray-300"><strong className="text-foreground">Why:</strong> {reg.why}</p>
                   {reg.consequence && (
-                    <p className="text-red-400"><strong className="text-white">Consequence if ignored:</strong> {reg.consequence}</p>
+                    <p className="text-red-400"><strong className="text-foreground">Consequence if ignored:</strong> {reg.consequence}</p>
                   )}
                 </div>
               </div>
@@ -99,7 +99,7 @@ export const EnhancedAgentResponse = ({
           <div className="space-y-4">
             {response.practicalGuidance.installation && response.practicalGuidance.installation.length > 0 && (
               <div>
-                <h4 className="font-semibold text-white mb-2">Installation:</h4>
+                <h4 className="font-semibold text-foreground mb-2">Installation:</h4>
                 <ul className="space-y-1 text-gray-300">
                   {response.practicalGuidance.installation.map((tip: string, i: number) => (
                     <li key={i}>• {tip}</li>
@@ -109,7 +109,7 @@ export const EnhancedAgentResponse = ({
             )}
             {response.practicalGuidance.testing && response.practicalGuidance.testing.length > 0 && (
               <div>
-                <h4 className="font-semibold text-white mb-2">Testing:</h4>
+                <h4 className="font-semibold text-foreground mb-2">Testing:</h4>
                 <ul className="space-y-1 text-gray-300">
                   {response.practicalGuidance.testing.map((tip: string, i: number) => (
                     <li key={i}>• {tip}</li>
@@ -119,7 +119,7 @@ export const EnhancedAgentResponse = ({
             )}
             {response.practicalGuidance.commonMistakes && response.practicalGuidance.commonMistakes.length > 0 && (
               <div>
-                <h4 className="font-semibold text-white mb-2">Common Mistakes to Avoid:</h4>
+                <h4 className="font-semibold text-foreground mb-2">Common Mistakes to Avoid:</h4>
                 <ul className="space-y-1 text-red-300">
                   {response.practicalGuidance.commonMistakes.map((mistake: string, i: number) => (
                     <li key={i}>• {mistake}</li>

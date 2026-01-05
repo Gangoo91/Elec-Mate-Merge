@@ -65,7 +65,7 @@ const MaterialCategoryBrowser = () => {
     <div className="space-y-8">
       <div className="text-center space-y-3">
         <div className="flex items-center justify-center gap-3">
-          <h2 className="text-3xl font-bold text-white">Browse by Category</h2>
+          <h2 className="text-3xl font-bold text-foreground">Browse by Category</h2>
           {!isLoading && (
             <Button
               variant="ghost"
@@ -123,7 +123,7 @@ const MaterialCategoryBrowser = () => {
                         <IconComponent className="h-6 w-6 text-elec-yellow" />
                       </div>
                       <div>
-                        <CardTitle className="text-lg text-white">{category.title}</CardTitle>
+                        <CardTitle className="text-lg text-foreground">{category.title}</CardTitle>
                         <p className="text-sm text-muted-foreground">{category.productCount} products</p>
                       </div>
                     </div>
@@ -145,18 +145,18 @@ const MaterialCategoryBrowser = () => {
                   </div>
 
                   <div>
-                    <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                    <h4 className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
                       <Award className="h-4 w-4" />
                       Top Brands:
                     </h4>
                     <div className="flex flex-wrap gap-1">
                       {category.topBrands.slice(0, 3).map((brand) => (
-                        <Badge key={brand} variant="outline" className="text-xs border-elec-yellow/30 text-white">
+                        <Badge key={brand} variant="outline" className="text-xs border-elec-yellow/30 text-foreground">
                           {brand}
                         </Badge>
                       ))}
                       {category.topBrands.length > 3 && (
-                        <Badge variant="outline" className="text-xs border-elec-yellow/30 text-white">
+                        <Badge variant="outline" className="text-xs border-elec-yellow/30 text-foreground">
                           +{category.topBrands.length - 3}
                         </Badge>
                       )}

@@ -69,7 +69,7 @@ export const DesignProcessingViewDesktop = ({
                 <Zap className="w-6 h-6 text-elec-yellow" />
               </div>
               <div className="flex-1">
-                <h2 className="text-xl font-semibold text-white">AI Circuit Design</h2>
+                <h2 className="text-xl font-semibold text-foreground">AI Circuit Design</h2>
                 <p className="text-sm text-gray-200 mt-0.5">{stageDetails[currentStage]?.description}</p>
               </div>
             </div>
@@ -182,13 +182,13 @@ export const DesignProcessingViewDesktop = ({
           </Card>
           <Card className="border-elec-yellow/20">
             <CardContent className="p-4 text-center">
-              <div className="text-3xl font-bold text-white">{estimatedCompleted}/{totalCircuits}</div>
+              <div className="text-3xl font-bold text-foreground">{estimatedCompleted}/{totalCircuits}</div>
               <div className="text-xs text-gray-200 mt-1">Circuits Designed</div>
             </CardContent>
           </Card>
           <Card className="border-elec-yellow/20">
             <CardContent className="p-4 text-center">
-              <div className="text-3xl font-bold text-white">{formatTime(elapsedTime)}</div>
+              <div className="text-3xl font-bold text-foreground">{formatTime(elapsedTime)}</div>
               <div className="text-xs text-gray-200 mt-1">Time Elapsed</div>
             </CardContent>
           </Card>

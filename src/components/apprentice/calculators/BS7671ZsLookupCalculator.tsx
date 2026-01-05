@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Zap, Search } from "lucide-react";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { Zap, Search, RotateCcw } from "lucide-react";
 import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -267,18 +266,19 @@ const BS7671ZsLookupCalculator = () => {
                 )}
 
                 <div className="flex gap-2">
-                  <Button 
+                  <MobileButton
                     onClick={performLookup}
-                    className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                    variant="elec"
+                    className="flex-1 min-h-[48px]"
                     disabled={searchType === "device" ? !deviceType : !measuredZs}
                   >
                     <Search className="mr-2 h-4 w-4" />
                     {searchType === "device" ? "Show Values" : "Check Compliance"}
-                  </Button>
-                  
-                  <Button variant="outline" onClick={resetCalculator}>
-                    Reset
-                  </Button>
+                  </MobileButton>
+
+                  <MobileButton variant="elec-outline" onClick={resetCalculator} className="min-h-[48px]">
+                    <RotateCcw className="h-4 w-4" />
+                  </MobileButton>
                 </div>
               </div>
 

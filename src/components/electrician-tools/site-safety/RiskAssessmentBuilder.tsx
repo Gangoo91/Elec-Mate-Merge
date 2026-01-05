@@ -184,7 +184,7 @@ const RiskAssessmentBuilder = () => {
             <div className="space-y-4">
               {/* Hazard Template Selection */}
               <div>
-                <Label className="text-white text-sm font-medium">Hazard Template (Optional)</Label>
+                <Label className="text-foreground text-sm font-medium">Hazard Template (Optional)</Label>
                 <Select 
                   onValueChange={(value) => {
                     const template = hazardTemplates.find(t => t.category === value);
@@ -213,7 +213,7 @@ const RiskAssessmentBuilder = () => {
 
               {/* Risk Category */}
               <div>
-                <Label htmlFor="category" className="text-white text-sm font-medium">Risk Category</Label>
+                <Label htmlFor="category" className="text-foreground text-sm font-medium">Risk Category</Label>
                 <Select 
                   value={currentRisk.category} 
                   onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, category: value }))}
@@ -231,7 +231,7 @@ const RiskAssessmentBuilder = () => {
 
               {/* Hazard Selection */}
               <div>
-                <Label className="text-white text-sm font-medium">Specific Hazard</Label>
+                <Label className="text-foreground text-sm font-medium">Specific Hazard</Label>
                 <HazardSelect
                   value={currentRisk.description || ""}
                   onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, description: value }))}
@@ -244,7 +244,7 @@ const RiskAssessmentBuilder = () => {
               {/* Likelihood and Severity - Side by Side on Larger Screens */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="likelihood" className="text-white text-sm font-medium">Likelihood (1-5)</Label>
+                  <Label htmlFor="likelihood" className="text-foreground text-sm font-medium">Likelihood (1-5)</Label>
                   <Select 
                     value={currentRisk.likelihood?.toString()} 
                     onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, likelihood: parseInt(value) }))}
@@ -262,7 +262,7 @@ const RiskAssessmentBuilder = () => {
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="severity" className="text-white text-sm font-medium">Severity (1-5)</Label>
+                  <Label htmlFor="severity" className="text-foreground text-sm font-medium">Severity (1-5)</Label>
                   <Select 
                     value={currentRisk.severity?.toString()} 
                     onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, severity: parseInt(value) }))}
@@ -286,7 +286,7 @@ const RiskAssessmentBuilder = () => {
                 <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                     <span className="text-sm text-muted-foreground">Risk Level:</span>
-                    <Badge className={`${calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).color} text-white`}>
+                    <Badge className={`${calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).color} text-foreground`}>
                       {calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).level}
                     </Badge>
                     <span className="text-sm text-muted-foreground">
@@ -353,11 +353,11 @@ const RiskAssessmentBuilder = () => {
                               >
                                 {risk.category}
                               </Badge>
-                              <Badge className={`${riskLevel.color} text-white text-xs`}>
+                              <Badge className={`${riskLevel.color} text-foreground text-xs`}>
                                 {risk.riskLevel}
                               </Badge>
                             </div>
-                            <p className="text-sm sm:text-base font-medium text-white leading-relaxed">
+                            <p className="text-sm sm:text-base font-medium text-foreground leading-relaxed">
                               {risk.description}
                             </p>
                           </div>
@@ -376,11 +376,11 @@ const RiskAssessmentBuilder = () => {
                         <div className="grid grid-cols-3 gap-4 p-3 bg-elec-dark/30 rounded-lg">
                           <div className="text-center">
                             <div className="text-sm font-medium text-muted-foreground">Likelihood</div>
-                            <div className="text-lg font-bold text-white">{risk.likelihood}/5</div>
+                            <div className="text-lg font-bold text-foreground">{risk.likelihood}/5</div>
                           </div>
                           <div className="text-center">
                             <div className="text-sm font-medium text-muted-foreground">Severity</div>
-                            <div className="text-lg font-bold text-white">{risk.severity}/5</div>
+                            <div className="text-lg font-bold text-foreground">{risk.severity}/5</div>
                           </div>
                           <div className="text-center">
                             <div className="text-sm font-medium text-muted-foreground">Score</div>

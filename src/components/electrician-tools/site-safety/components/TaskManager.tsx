@@ -157,7 +157,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <Label className="text-white">Task Title *</Label>
+          <Label className="text-foreground">Task Title *</Label>
           <Input
             ref={titleInputRef}
             key={`title-input-${editingTask || 'new'}`}
@@ -166,14 +166,14 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
             onBlur={(e) => e.preventDefault()}
             onFocus={(e) => e.stopPropagation()}
             placeholder="Enter task title"
-            className="bg-elec-dark/50 border-elec-yellow/20 text-white"
+            className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
             autoComplete="off"
           />
         </div>
         <div>
-          <Label className="text-white">Category *</Label>
+          <Label className="text-foreground">Category *</Label>
           <Select value={newTask.category} onValueChange={handleCategoryChange}>
-            <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-white">
+            <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-foreground">
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
             <SelectContent>
@@ -189,20 +189,20 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
       </div>
       
       <div>
-        <Label className="text-white">Description</Label>
+        <Label className="text-foreground">Description</Label>
         <Textarea
           value={newTask.description}
           onChange={handleDescriptionChange}
           placeholder="Enter task description"
-          className="bg-elec-dark/50 border-elec-yellow/20 text-white"
+          className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
         />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
-          <Label className="text-white">Risk Level</Label>
+          <Label className="text-foreground">Risk Level</Label>
           <Select value={newTask.riskLevel} onValueChange={handleRiskLevelChange}>
-            <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-white">
+            <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-foreground">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -213,21 +213,21 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
           </Select>
         </div>
         <div>
-          <Label className="text-white">Duration</Label>
+          <Label className="text-foreground">Duration</Label>
           <Input
             value={newTask.estimatedDuration}
             onChange={handleDurationChange}
             placeholder="e.g. 2 hours"
-            className="bg-elec-dark/50 border-elec-yellow/20 text-white"
+            className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
           />
         </div>
         <div>
-          <Label className="text-white">Responsible Person</Label>
+          <Label className="text-foreground">Responsible Person</Label>
           <Input
             value={newTask.responsiblePerson}
             onChange={handleResponsiblePersonChange}
             placeholder="Enter name"
-            className="bg-elec-dark/50 border-elec-yellow/20 text-white"
+            className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
           />
         </div>
       </div>
@@ -255,7 +255,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
     <Card className="border-elec-yellow/20 bg-elec-gray/60">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-white">Tasks ({tasks.length})</CardTitle>
+          <CardTitle className="text-foreground">Tasks ({tasks.length})</CardTitle>
           {!showAddTask && !editingTask && (
             <Button
               onClick={() => setShowAddTask(true)}
@@ -279,7 +279,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                   {/* Header Section with Title and Actions */}
                   <div className="flex items-start justify-between p-4 pb-3 border-b border-elec-yellow/10">
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-white text-lg mb-1 truncate group-hover:text-elec-yellow transition-colors">
+                      <h4 className="font-semibold text-foreground text-lg mb-1 truncate group-hover:text-elec-yellow transition-colors">
                         {task.title}
                       </h4>
                       <div className="flex items-center gap-2 mb-2 pt-3">
@@ -289,11 +289,11 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                         >
                           {task.category}
                         </Badge>
-                        <Badge className={`${getRiskLevelColor(task.riskLevel)} text-white text-xs font-medium px-2 py-1 rounded-full border-0 shadow-sm`}>
+                        <Badge className={`${getRiskLevelColor(task.riskLevel)} text-foreground text-xs font-medium px-2 py-1 rounded-full border-0 shadow-sm`}>
                           {task.riskLevel}
                         </Badge>
                         <Badge 
-                          className={`${getStatusColor(task.status)} text-white text-xs font-medium px-2 py-1 rounded-full border-0 shadow-sm capitalize`}
+                          className={`${getStatusColor(task.status)} text-foreground text-xs font-medium px-2 py-1 rounded-full border-0 shadow-sm capitalize`}
                         >
                           {task.status.replace('-', ' ')}
                         </Badge>

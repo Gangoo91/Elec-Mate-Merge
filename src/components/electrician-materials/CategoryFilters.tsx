@@ -101,7 +101,7 @@ const CategoryFilters = ({ categoryId, filters, onFiltersChange, productsCount }
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <Sliders className="h-4 w-4 text-elec-yellow/60" />
-        <h4 className="text-sm font-semibold text-white">{title}</h4>
+        <h4 className="text-sm font-semibold text-foreground">{title}</h4>
       </div>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => {
@@ -136,7 +136,7 @@ const CategoryFilters = ({ categoryId, filters, onFiltersChange, productsCount }
                   <Filter className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-semibold text-white text-base">Filter Products</span>
+                  <span className="font-semibold text-foreground text-base">Filter Products</span>
                   <span className="text-xs text-muted-foreground">Refine your search results</span>
                 </div>
                 {activeFilterCount > 0 && (
@@ -160,7 +160,7 @@ const CategoryFilters = ({ categoryId, filters, onFiltersChange, productsCount }
               <div className="flex items-center justify-between p-4 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 rounded-xl border border-elec-yellow/20">
                 <div className="flex items-center gap-3">
                   <div className="h-2 w-2 rounded-full bg-elec-yellow animate-pulse"></div>
-                  <span className="text-sm font-medium text-white">
+                  <span className="text-sm font-medium text-foreground">
                     Showing {productsCount} filtered results
                   </span>
                 </div>

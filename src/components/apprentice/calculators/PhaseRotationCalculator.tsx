@@ -1,8 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Badge } from "@/components/ui/badge";
 import { RotateCw, AlertTriangle, CheckCircle, XCircle, Info, Zap, Eye, AlertCircle, Calculator, Lightbulb } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -95,26 +94,22 @@ const PhaseRotationCalculator = () => {
                 </div>
                 
                 <div className="space-y-3">
-                  <Label htmlFor="test-method" className="flex items-center gap-2">
-                    Select Testing Method
-                    {errors.testMethod && <AlertCircle className="h-3 w-3 text-destructive" />}
-                  </Label>
-                  <Select 
-                    value={testMethod} 
+                  <MobileSelect
+                    value={testMethod}
                     onValueChange={(value) => {
                       setTestMethod(value);
                       clearError('testMethod');
                     }}
                   >
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                      <SelectValue placeholder="Choose test method" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-                      <SelectItem value="phase-rotation-meter">Phase Rotation Meter</SelectItem>
-                      <SelectItem value="voltage-measurement">Voltage Measurement</SelectItem>
-                      <SelectItem value="motor-behaviour">Motor Rotation Test</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    <MobileSelectTrigger label="Select Testing Method">
+                      <MobileSelectValue placeholder="Choose test method" />
+                    </MobileSelectTrigger>
+                    <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <MobileSelectItem value="phase-rotation-meter">Phase Rotation Meter</MobileSelectItem>
+                      <MobileSelectItem value="voltage-measurement">Voltage Measurement</MobileSelectItem>
+                      <MobileSelectItem value="motor-behaviour">Motor Rotation Test</MobileSelectItem>
+                    </MobileSelectContent>
+                  </MobileSelect>
                   {errors.testMethod && (
                     <p className="text-xs text-destructive">{errors.testMethod}</p>
                   )}
@@ -124,25 +119,21 @@ const PhaseRotationCalculator = () => {
                   <div className="space-y-4 p-4 border border-elec-yellow/20 rounded-lg">
                     <h4 className="font-medium text-elec-yellow">Phase Rotation Meter Reading</h4>
                     <div className="space-y-3">
-                      <Label htmlFor="phase-meter" className="flex items-center gap-2 text-sm">
-                        Meter Indication
-                        {errors.phaseRotationMeter && <AlertCircle className="h-3 w-3 text-destructive" />}
-                      </Label>
-                      <Select 
-                        value={phaseRotationMeter} 
+                      <MobileSelect
+                        value={phaseRotationMeter}
                         onValueChange={(value) => {
                           setPhaseRotationMeter(value);
                           clearError('phaseRotationMeter');
                         }}
                       >
-                        <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/30">
-                          <SelectValue placeholder="Select meter reading" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-                          <SelectItem value="l1-l2-l3">L1-L2-L3 (Clockwise)</SelectItem>
-                          <SelectItem value="l1-l3-l2">L1-L3-L2 (Anti-clockwise)</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        <MobileSelectTrigger label="Meter Indication">
+                          <MobileSelectValue placeholder="Select meter reading" />
+                        </MobileSelectTrigger>
+                        <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                          <MobileSelectItem value="l1-l2-l3">L1-L2-L3 (Clockwise)</MobileSelectItem>
+                          <MobileSelectItem value="l1-l3-l2">L1-L3-L2 (Anti-clockwise)</MobileSelectItem>
+                        </MobileSelectContent>
+                      </MobileSelect>
                       {errors.phaseRotationMeter && (
                         <p className="text-xs text-destructive mt-1">{errors.phaseRotationMeter}</p>
                       )}
@@ -203,25 +194,21 @@ const PhaseRotationCalculator = () => {
                   <div className="space-y-4 p-4 border border-elec-yellow/20 rounded-lg">
                     <h4 className="font-medium text-elec-yellow">Motor Rotation Test</h4>
                     <div className="space-y-3">
-                      <Label htmlFor="motor-rotation" className="flex items-center gap-2 text-sm">
-                        Observed Motor Rotation
-                        {errors.motorBehaviour && <AlertCircle className="h-3 w-3 text-destructive" />}
-                      </Label>
-                      <Select 
-                        value={motorBehaviour} 
+                      <MobileSelect
+                        value={motorBehaviour}
                         onValueChange={(value) => {
                           setMotorBehaviour(value);
                           clearError('motorBehaviour');
                         }}
                       >
-                        <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/30">
-                          <SelectValue placeholder="Select rotation direction" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-                          <SelectItem value="clockwise">Clockwise (Expected for standard motors)</SelectItem>
-                          <SelectItem value="anticlockwise">Anti-clockwise (Reversed sequence)</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        <MobileSelectTrigger label="Observed Motor Rotation">
+                          <MobileSelectValue placeholder="Select rotation direction" />
+                        </MobileSelectTrigger>
+                        <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                          <MobileSelectItem value="clockwise">Clockwise (Expected for standard motors)</MobileSelectItem>
+                          <MobileSelectItem value="anticlockwise">Anti-clockwise (Reversed sequence)</MobileSelectItem>
+                        </MobileSelectContent>
+                      </MobileSelect>
                       {errors.motorBehaviour && (
                         <p className="text-xs text-destructive mt-1">{errors.motorBehaviour}</p>
                       )}
@@ -236,28 +223,27 @@ const PhaseRotationCalculator = () => {
                 )}
 
                 <div className="pt-4 border-t border-elec-yellow/20">
-                  <Button 
+                  <MobileButton
                     onClick={calculatePhaseSequence}
                     disabled={!canCalculate()}
-                    className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium"
-                    size="lg"
+                    variant="elec"
+                    className="w-full min-h-[52px]"
                   >
                     <Calculator className="h-5 w-5 mr-2" />
                     Analyse Phase Sequence
-                  </Button>
+                  </MobileButton>
                   {!canCalculate() && (
                     <p className="text-sm text-muted-foreground mt-2 text-center">
                       {!testMethod ? "Select a test method first" : "Complete all required fields"}
                     </p>
                   )}
-                  <Button 
-                    variant="outline" 
+                  <MobileButton
+                    variant="elec-outline"
                     onClick={resetCalculator}
-                    className="w-full mt-2 border-elec-yellow/20"
-                    size="sm"
+                    className="w-full mt-2 min-h-[44px]"
                   >
                     Reset Calculator
-                  </Button>
+                  </MobileButton>
                 </div>
               </div>
 

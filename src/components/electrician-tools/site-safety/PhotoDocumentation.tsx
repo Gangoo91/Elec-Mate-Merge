@@ -649,7 +649,7 @@ const PhotoDocumentation = () => {
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="pb-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <CardTitle className="text-white flex items-center gap-2 text-lg">
+            <CardTitle className="text-foreground flex items-center gap-2 text-lg">
               <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
               Photo Gallery
             </CardTitle>
@@ -711,7 +711,7 @@ const PhotoDocumentation = () => {
                       </AspectRatio>
                       <div className="absolute top-3 left-3">
                         <Badge 
-                          className={`${getCategoryColor(photo.category)} text-white text-xs font-medium px-2 py-1`}
+                          className={`${getCategoryColor(photo.category)} text-foreground text-xs font-medium px-2 py-1`}
                         >
                           {photo.category}
                         </Badge>
@@ -743,7 +743,7 @@ const PhotoDocumentation = () => {
                       {isMobile && (
                         <div className="absolute bottom-3 left-3 right-3">
                           <div className="bg-black/50 backdrop-blur-sm rounded-lg px-3 py-2">
-                            <p className="text-white text-sm font-medium truncate">
+                            <p className="text-foreground text-sm font-medium truncate">
                               {photo.description}
                             </p>
                           </div>

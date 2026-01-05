@@ -612,7 +612,7 @@ const SectionRenderer = memo(({ section, agentId, highlightTerms = [], highlight
     case 'citation':
       return (
         <div className="px-4 py-2 border-l-2 border-muted-foreground/30 bg-muted/20 rounded-r">
-          <p className="text-sm text-white/70 italic">
+          <p className="text-sm text-foreground/70 italic">
             {section.content}
           </p>
         </div>

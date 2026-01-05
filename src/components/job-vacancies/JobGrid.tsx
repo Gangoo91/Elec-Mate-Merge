@@ -48,9 +48,9 @@ const JobGrid: React.FC<JobGridProps> = ({
   if (jobs.length === 0) {
     return (
       <div className="bg-gradient-to-br from-white/5 via-white/2 to-transparent border border-white/10 rounded-xl p-8 text-center backdrop-blur-sm">
-        <FileText className="h-16 w-16 text-white/40 mx-auto mb-4" />
-        <h3 className="text-lg font-medium text-white mb-2">No matching jobs found</h3>
-        <p className="text-white/80 mt-1">Try adjusting your filters or check back later for new opportunities</p>
+        <FileText className="h-16 w-16 text-foreground/40 mx-auto mb-4" />
+        <h3 className="text-lg font-medium text-foreground mb-2">No matching jobs found</h3>
+        <p className="text-foreground/80 mt-1">Try adjusting your filters or check back later for new opportunities</p>
         <Button 
           onClick={resetFilters} 
           variant="outline" 

@@ -33,7 +33,7 @@ const IndustrialComplianceRequirements = () => {
           <FileCheck className="h-6 w-6 text-red-400" />
           <CardTitle className="text-red-300">Essential Compliance Standards</CardTitle>
         </div>
-        <p className="text-muted-foreground">Mandatory standards for industrial installations</p>
+        <p className="text-neutral-300">Mandatory standards for industrial installations</p>
       </CardHeader>
       <CardContent className="space-y-3">
         {complianceRequirements.map((req, index) => (
@@ -41,7 +41,7 @@ const IndustrialComplianceRequirements = () => {
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1">
                 <h4 className="font-medium text-red-200 mb-1">{req.standard}</h4>
-                <p className="text-sm text-muted-foreground mb-2">{req.description}</p>
+                <p className="text-sm text-neutral-300 mb-2">{req.description}</p>
                 <p className="text-xs text-orange-300">Application: {req.application}</p>
               </div>
               <Shield className="h-5 w-5 text-red-400 flex-shrink-0 mt-1" />

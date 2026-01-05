@@ -308,7 +308,7 @@ const SampleDataLoader = () => {
         </div>
 
         <div className="text-center border-t border-elec-yellow/20 pt-4">
-          <div className="text-lg font-semibold text-white mb-2">
+          <div className="text-lg font-semibold text-foreground mb-2">
             Total Records: {totalRecords}
           </div>
           

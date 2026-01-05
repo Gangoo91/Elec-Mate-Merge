@@ -1,9 +1,9 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Zap, Info, Calculator, RotateCcw, AlertTriangle, CheckCircle2, Lightbulb } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -240,33 +240,27 @@ const MotorStartingCurrentCalculator = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="text-base font-medium block mb-2">Supply Voltage</label>
-              <Select value={voltage} onValueChange={setVoltage}>
-                <SelectTrigger className="bg-card border-elec-yellow/20 h-12">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-elec-yellow/20">
-                  <SelectItem value="230">230V (Single Phase)</SelectItem>
-                  <SelectItem value="400">400V (3-Phase)</SelectItem>
-                  <SelectItem value="415">415V (3-Phase)</SelectItem>
-                  <SelectItem value="690">690V (3-Phase)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={voltage} onValueChange={setVoltage}>
+              <MobileSelectTrigger label="Supply Voltage">
+                <MobileSelectValue />
+              </MobileSelectTrigger>
+              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                <MobileSelectItem value="230">230V (Single Phase)</MobileSelectItem>
+                <MobileSelectItem value="400">400V (3-Phase)</MobileSelectItem>
+                <MobileSelectItem value="415">415V (3-Phase)</MobileSelectItem>
+                <MobileSelectItem value="690">690V (3-Phase)</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
 
-            <div>
-              <label className="text-base font-medium block mb-2">Phases</label>
-              <Select value={phases} onValueChange={setPhases}>
-                <SelectTrigger className="bg-card border-elec-yellow/20 h-12">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-elec-yellow/20">
-                  <SelectItem value="1">Single Phase</SelectItem>
-                  <SelectItem value="3">Three Phase</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={phases} onValueChange={setPhases}>
+              <MobileSelectTrigger label="Phases">
+                <MobileSelectValue />
+              </MobileSelectTrigger>
+              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                <MobileSelectItem value="1">Single Phase</MobileSelectItem>
+                <MobileSelectItem value="3">Three Phase</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -298,36 +292,30 @@ const MotorStartingCurrentCalculator = () => {
           <h3 className="text-lg font-semibold text-foreground">Starting & Protection</h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="text-base font-medium block mb-2">Starting Method</label>
-              <Select value={startingMethod} onValueChange={setStartingMethod}>
-                <SelectTrigger className="bg-card border-elec-yellow/20 h-12">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-elec-yellow/20">
-                  <SelectItem value="direct">Direct On Line (DOL)</SelectItem>
-                  <SelectItem value="star-delta">Star-Delta</SelectItem>
-                  <SelectItem value="soft-starter">Soft Starter</SelectItem>
-                  <SelectItem value="vfd">Variable Frequency Drive</SelectItem>
-                  <SelectItem value="autotransformer">Auto-transformer</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={startingMethod} onValueChange={setStartingMethod}>
+              <MobileSelectTrigger label="Starting Method">
+                <MobileSelectValue />
+              </MobileSelectTrigger>
+              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                <MobileSelectItem value="direct">Direct On Line (DOL)</MobileSelectItem>
+                <MobileSelectItem value="star-delta">Star-Delta</MobileSelectItem>
+                <MobileSelectItem value="soft-starter">Soft Starter</MobileSelectItem>
+                <MobileSelectItem value="vfd">Variable Frequency Drive</MobileSelectItem>
+                <MobileSelectItem value="autotransformer">Auto-transformer</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
 
-            <div>
-              <label className="text-base font-medium block mb-2">Load Type</label>
-              <Select value={loadType} onValueChange={setLoadType}>
-                <SelectTrigger className="bg-card border-elec-yellow/20 h-12">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-elec-yellow/20">
-                  <SelectItem value="standard">Standard Load</SelectItem>
-                  <SelectItem value="high-torque">High Torque (Conveyors)</SelectItem>
-                  <SelectItem value="low-torque">Low Torque (Fans)</SelectItem>
-                  <SelectItem value="centrifugal">Centrifugal Pumps</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={loadType} onValueChange={setLoadType}>
+              <MobileSelectTrigger label="Load Type">
+                <MobileSelectValue />
+              </MobileSelectTrigger>
+              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                <MobileSelectItem value="standard">Standard Load</MobileSelectItem>
+                <MobileSelectItem value="high-torque">High Torque (Conveyors)</MobileSelectItem>
+                <MobileSelectItem value="low-torque">Low Torque (Fans)</MobileSelectItem>
+                <MobileSelectItem value="centrifugal">Centrifugal Pumps</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -413,21 +401,18 @@ const MotorStartingCurrentCalculator = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="text-base font-medium block mb-2">Installation Method</label>
-              <Select value={installationMethod} onValueChange={setInstallationMethod}>
-                <SelectTrigger className="bg-card border-elec-yellow/20 h-12">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-elec-yellow/20">
-                  <SelectItem value="clipped">Clipped Direct</SelectItem>
-                  <SelectItem value="conduit">In Conduit</SelectItem>
-                  <SelectItem value="trunking">In Trunking</SelectItem>
-                  <SelectItem value="underground">Underground</SelectItem>
-                  <SelectItem value="tray">Cable Tray</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={installationMethod} onValueChange={setInstallationMethod}>
+              <MobileSelectTrigger label="Installation Method">
+                <MobileSelectValue />
+              </MobileSelectTrigger>
+              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                <MobileSelectItem value="clipped">Clipped Direct</MobileSelectItem>
+                <MobileSelectItem value="conduit">In Conduit</MobileSelectItem>
+                <MobileSelectItem value="trunking">In Trunking</MobileSelectItem>
+                <MobileSelectItem value="underground">Underground</MobileSelectItem>
+                <MobileSelectItem value="tray">Cable Tray</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
 
             <MobileOptimizedInput
               id="groupingFactor"
@@ -442,13 +427,13 @@ const MotorStartingCurrentCalculator = () => {
           </div>
 
           <div className="flex gap-2 pt-4">
-            <Button onClick={calculateStartingCurrent} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12">
+            <MobileButton onClick={calculateStartingCurrent} variant="elec" className="flex-1 min-h-[48px]">
               <Calculator className="h-4 w-4 mr-2" />
               Calculate Starting Current
-            </Button>
-            <Button variant="outline" onClick={reset} className="h-12 px-4">
+            </MobileButton>
+            <MobileButton variant="elec-outline" onClick={reset} className="min-h-[48px] px-4">
               <RotateCcw className="h-4 w-4" />
-            </Button>
+            </MobileButton>
           </div>
         </div>
 

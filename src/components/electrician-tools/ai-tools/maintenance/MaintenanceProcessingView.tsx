@@ -88,10 +88,10 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
             <Zap className="h-8 w-8 text-elec-yellow" />
           </div>
           <div className="flex-1">
-            <h3 className="text-2xl sm:text-3xl font-bold text-white">
+            <h3 className="text-2xl sm:text-3xl font-bold text-foreground">
               AI Maintenance Specialist
             </h3>
-            <p className="text-base text-white mt-1">
+            <p className="text-base text-foreground mt-1">
               Searching BS 7671 regulations...
             </p>
           </div>
@@ -100,7 +100,7 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
         {/* Progress Section */}
         <div className="mb-6">
           <div className="flex justify-between items-center mb-3">
-            <span className="text-base font-semibold text-white">Progress</span>
+            <span className="text-base font-semibold text-foreground">Progress</span>
             <span className="text-lg font-bold text-elec-yellow">{Math.round(progressPercent)}%</span>
           </div>
           <Progress 
@@ -111,7 +111,7 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
 
         {/* Current Step */}
         <div className="mb-8">
-          <p className="text-base text-white">
+          <p className="text-base text-foreground">
             <span className="inline-block w-2 h-2 bg-elec-yellow rounded-full mr-2 animate-pulse"></span>
             {currentStepText}
           </p>
@@ -121,16 +121,16 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
         <div className="border border-elec-yellow/20 rounded-lg p-5 mb-8">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <div className="text-sm text-white mb-2">Elapsed Time</div>
+              <div className="text-sm text-foreground mb-2">Elapsed Time</div>
               <div className="text-2xl font-bold text-elec-yellow">{formatTime(elapsedTime)}</div>
             </div>
             <div>
-              <div className="text-sm text-white mb-2">Estimated Remaining</div>
-              <div className="text-2xl font-bold text-white">{formatTime(remainingTime)}</div>
+              <div className="text-sm text-foreground mb-2">Estimated Remaining</div>
+              <div className="text-2xl font-bold text-foreground">{formatTime(remainingTime)}</div>
             </div>
             <div>
-              <div className="text-sm text-white mb-2">Total Estimate</div>
-              <div className="text-2xl font-bold text-white/80">{formatTime(dynamicTotalTime)}</div>
+              <div className="text-sm text-foreground mb-2">Total Estimate</div>
+              <div className="text-2xl font-bold text-foreground/80">{formatTime(dynamicTotalTime)}</div>
             </div>
           </div>
         </div>
@@ -139,7 +139,7 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
         <div>
           <div className="flex items-center gap-2 mb-5">
             <Zap className="h-5 w-5 text-elec-yellow" />
-            <h4 className="text-lg font-semibold text-white">What's Happening?</h4>
+            <h4 className="text-lg font-semibold text-foreground">What's Happening?</h4>
           </div>
           <div className="space-y-4">
             {WHAT_HAPPENING_STAGES.map((stage) => {
@@ -163,17 +163,17 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
                       ) : isActive ? (
                         <StageIcon className="h-6 w-6 text-elec-yellow" />
                       ) : (
-                        <StageIcon className="h-6 w-6 text-white/30" />
+                        <StageIcon className="h-6 w-6 text-foreground/30" />
                       )}
                     </div>
                     <div className="flex-1">
                       <div
                         className={`text-base font-semibold mb-1 ${
                           isActive
-                            ? 'text-white'
+                            ? 'text-foreground'
                             : isComplete
-                            ? 'text-white/80'
-                            : 'text-white/50'
+                            ? 'text-foreground/80'
+                            : 'text-foreground/50'
                         }`}
                       >
                         {stage.title}
@@ -181,10 +181,10 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
                       <div
                         className={`text-sm ${
                           isActive
-                            ? 'text-white'
+                            ? 'text-foreground'
                             : isComplete
-                            ? 'text-white/70'
-                            : 'text-white/40'
+                            ? 'text-foreground/70'
+                            : 'text-foreground/40'
                         }`}
                       >
                         {stage.description}

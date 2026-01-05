@@ -1,9 +1,8 @@
 import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Shield, Calculator, CheckCircle, XCircle, AlertTriangle } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { cn } from "@/lib/utils";
 import { zsValues, curveTypes, fuseTypes, fuseRatings } from "./zs-values/ZsValuesData";
 import { MobileInput } from "@/components/ui/mobile-input";
@@ -172,24 +171,24 @@ const EarthFaultLoopCalculator = () => {
         <CardContent className="space-y-4 sm:space-y-6">
           {/* Earthing System Selection */}
           <div className="space-y-3">
-            <Label className="text-elec-light font-medium">Earthing System</Label>
+            <span className="text-elec-light font-medium block">Earthing System</span>
             <div className="grid grid-cols-2 gap-3">
-              <Button
+              <MobileButton
                 type="button"
-                variant={earthingSystem === "tn" ? "default" : "outline"}
+                variant={earthingSystem === "tn" ? "elec" : "elec-outline"}
                 onClick={() => setEarthingSystem("tn")}
-                className="justify-start"
+                className="justify-start min-h-[48px]"
               >
                 TN System
-              </Button>
-              <Button
+              </MobileButton>
+              <MobileButton
                 type="button"
-                variant={earthingSystem === "tt" ? "default" : "outline"}
+                variant={earthingSystem === "tt" ? "elec" : "elec-outline"}
                 onClick={() => setEarthingSystem("tt")}
-                className="justify-start"
+                className="justify-start min-h-[48px]"
               >
                 TT System
-              </Button>
+              </MobileButton>
             </div>
           </div>
 
@@ -197,24 +196,24 @@ const EarthFaultLoopCalculator = () => {
             <>
               {/* Measurement Mode Selection */}
               <div className="space-y-3">
-                <Label className="text-elec-light font-medium">Measurement Method</Label>
+                <span className="text-elec-light font-medium block">Measurement Method</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <Button
+                  <MobileButton
                     type="button"
-                    variant={measurementMode === "calculated" ? "default" : "outline"}
+                    variant={measurementMode === "calculated" ? "elec" : "elec-outline"}
                     onClick={() => setMeasurementMode("calculated")}
-                    className="justify-start text-sm"
+                    className="justify-start text-sm min-h-[48px]"
                   >
                     Calculate: Ze + (R1 + R2)
-                  </Button>
-                  <Button
+                  </MobileButton>
+                  <MobileButton
                     type="button"
-                    variant={measurementMode === "measured" ? "default" : "outline"}
+                    variant={measurementMode === "measured" ? "elec" : "elec-outline"}
                     onClick={() => setMeasurementMode("measured")}
-                    className="justify-start text-sm"
+                    className="justify-start text-sm min-h-[48px]"
                   >
                     Direct Zs Measurement
-                  </Button>
+                  </MobileButton>
                 </div>
               </div>
 
@@ -261,79 +260,67 @@ const EarthFaultLoopCalculator = () => {
               {/* Protection Device Selection */}
               <div className="space-y-4 border-t border-elec-yellow/20 pt-4">
                 <h4 className="text-elec-light font-medium">Protection Device (for compliance check)</h4>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <Label className="text-elec-light text-sm">Device Type</Label>
-                    <Select value={deviceType} onValueChange={(value: DeviceType) => {
-                      setDeviceType(value);
-                      setCurveType("");
-                      setFuseType("");
-                      setRating("");
-                    }}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-elec-light">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                        <SelectItem value="mcb">MCB</SelectItem>
-                        <SelectItem value="rcbo">RCBO</SelectItem>
-                        <SelectItem value="fuse">Fuse</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <MobileSelect value={deviceType} onValueChange={(value: DeviceType) => {
+                    setDeviceType(value);
+                    setCurveType("");
+                    setFuseType("");
+                    setRating("");
+                  }}>
+                    <MobileSelectTrigger label="Device Type">
+                      <MobileSelectValue />
+                    </MobileSelectTrigger>
+                    <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <MobileSelectItem value="mcb">MCB</MobileSelectItem>
+                      <MobileSelectItem value="rcbo">RCBO</MobileSelectItem>
+                      <MobileSelectItem value="fuse">Fuse</MobileSelectItem>
+                    </MobileSelectContent>
+                  </MobileSelect>
 
                   {(deviceType === "mcb" || deviceType === "rcbo") && (
-                    <div>
-                      <Label className="text-elec-light text-sm">Curve Type</Label>
-                      <Select value={curveType} onValueChange={(value) => {
-                        setCurveType(value);
-                        setRating("");
-                      }}>
-                        <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-elec-light">
-                          <SelectValue placeholder="Select curve" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                          <SelectItem value="type-b">Type B (3-5×In)</SelectItem>
-                          <SelectItem value="type-c">Type C (5-10×In)</SelectItem>
-                          <SelectItem value="type-d">Type D (10-20×In)</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                    <MobileSelect value={curveType} onValueChange={(value) => {
+                      setCurveType(value);
+                      setRating("");
+                    }}>
+                      <MobileSelectTrigger label="Curve Type">
+                        <MobileSelectValue placeholder="Select curve" />
+                      </MobileSelectTrigger>
+                      <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                        <MobileSelectItem value="type-b">Type B (3-5×In)</MobileSelectItem>
+                        <MobileSelectItem value="type-c">Type C (5-10×In)</MobileSelectItem>
+                        <MobileSelectItem value="type-d">Type D (10-20×In)</MobileSelectItem>
+                      </MobileSelectContent>
+                    </MobileSelect>
                   )}
 
                   {deviceType === "fuse" && (
-                    <div>
-                      <Label className="text-elec-light text-sm">Fuse Type</Label>
-                      <Select value={fuseType} onValueChange={(value) => {
-                        setFuseType(value);
-                        setRating("");
-                      }}>
-                        <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-elec-light">
-                          <SelectValue placeholder="Select fuse type" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                          {Object.entries(fuseTypes).map(([key, label]) => (
-                            <SelectItem key={key} value={key}>{label}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                    <MobileSelect value={fuseType} onValueChange={(value) => {
+                      setFuseType(value);
+                      setRating("");
+                    }}>
+                      <MobileSelectTrigger label="Fuse Type">
+                        <MobileSelectValue placeholder="Select fuse type" />
+                      </MobileSelectTrigger>
+                      <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                        {Object.entries(fuseTypes).map(([key, label]) => (
+                          <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
+                        ))}
+                      </MobileSelectContent>
+                    </MobileSelect>
                   )}
 
                   {((deviceType === "mcb" || deviceType === "rcbo") && curveType) || (deviceType === "fuse" && fuseType) ? (
-                    <div>
-                      <Label className="text-elec-light text-sm">Rating</Label>
-                      <Select value={rating} onValueChange={setRating}>
-                        <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-elec-light">
-                          <SelectValue placeholder="Select rating" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                          {availableRatings.map((r) => (
-                            <SelectItem key={r} value={r.toString()}>{r}A</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                    <MobileSelect value={rating} onValueChange={setRating}>
+                      <MobileSelectTrigger label="Rating">
+                        <MobileSelectValue placeholder="Select rating" />
+                      </MobileSelectTrigger>
+                      <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                        {availableRatings.map((r) => (
+                          <MobileSelectItem key={r} value={r.toString()}>{r}A</MobileSelectItem>
+                        ))}
+                      </MobileSelectContent>
+                    </MobileSelect>
                   ) : null}
                 </div>
               </div>
@@ -368,33 +355,33 @@ const EarthFaultLoopCalculator = () => {
                       hint="RCD sensitivity"
                     />
                     <div className="flex gap-2 mt-2">
-                      <Button
+                      <MobileButton
                         type="button"
-                        variant="outline"
+                        variant="elec-outline"
                         size="sm"
                         onClick={() => setIDeltaN("0.03")}
-                        className="text-xs"
+                        className="text-xs min-h-[36px]"
                       >
                         30mA
-                      </Button>
-                      <Button
+                      </MobileButton>
+                      <MobileButton
                         type="button"
-                        variant="outline"
+                        variant="elec-outline"
                         size="sm"
                         onClick={() => setIDeltaN("0.1")}
-                        className="text-xs"
+                        className="text-xs min-h-[36px]"
                       >
                         100mA
-                      </Button>
-                      <Button
+                      </MobileButton>
+                      <MobileButton
                         type="button"
-                        variant="outline"
+                        variant="elec-outline"
                         size="sm"
                         onClick={() => setIDeltaN("0.3")}
-                        className="text-xs"
+                        className="text-xs min-h-[36px]"
                       >
                         300mA
-                      </Button>
+                      </MobileButton>
                     </div>
                   </div>
                 </div>
@@ -404,18 +391,18 @@ const EarthFaultLoopCalculator = () => {
 
           {/* Calculate Button */}
           <div className="pt-4 border-t border-elec-yellow/20">
-            <Button
+            <MobileButton
               onClick={() => setShowResults(true)}
               disabled={!canCalculate}
-              className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
-              size="lg"
+              variant="elec"
+              className="w-full min-h-[52px]"
             >
               <Calculator className="mr-2 h-5 w-5" />
               Calculate {earthingSystem === "tn" ? "Zs" : "RA × IΔn"}
-            </Button>
+            </MobileButton>
             {!canCalculate && (
               <p className="text-sm text-muted-foreground mt-2 text-center">
-                {earthingSystem === "tn" 
+                {earthingSystem === "tn"
                   ? (measurementMode === "calculated" ? "Enter Ze and R1+R2 values" : "Enter measured Zs value")
                   : "Enter RA and IΔn values"
                 }

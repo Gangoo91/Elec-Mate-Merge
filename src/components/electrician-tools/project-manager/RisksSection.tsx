@@ -52,8 +52,8 @@ const RisksSection = ({ risks }: RisksSectionProps) => {
             </div>
             {risk.mitigation && (
               <div className="text-xs bg-muted/50 p-2 rounded">
-                <span className="font-semibold text-white">Mitigation: </span>
-                <span className="text-white/80">{risk.mitigation}</span>
+                <span className="font-semibold text-foreground">Mitigation: </span>
+                <span className="text-foreground/80">{risk.mitigation}</span>
               </div>
             )}
           </div>

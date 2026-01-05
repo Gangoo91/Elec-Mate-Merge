@@ -1495,8 +1495,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 <div className="flex items-center gap-3 flex-1">
                   <Percent className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
                   <div className="text-left">
-                    <h3 className="text-sm sm:text-base font-semibold text-white">Load Diversity Breakdown</h3>
-                    <p className="text-xs sm:text-sm text-white/70 mt-0.5">
+                    <h3 className="text-sm sm:text-base font-semibold text-foreground">Load Diversity Breakdown</h3>
+                    <p className="text-xs sm:text-sm text-foreground/70 mt-0.5">
                       {fmt(design.diversityBreakdown.totalConnectedLoad / 1000, 1)}kW → {fmt(design.diversityBreakdown.diversifiedLoad / 1000, 1)}kW 
                       <Badge variant="secondary" className="ml-2">
                         {design.diversityBreakdown.overallDiversityFactor 
@@ -1511,37 +1511,37 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 <div className="space-y-4">
                   {/* Overall Calculation */}
                   <div className="flex items-center justify-between py-2 px-3 bg-primary/10 rounded-lg">
-                    <span className="text-sm text-white/80">Total Connected Load:</span>
-                    <span className="font-bold text-white">{fmt(design.diversityBreakdown.totalConnectedLoad / 1000, 1)}kW</span>
+                    <span className="text-sm text-foreground/80">Total Connected Load:</span>
+                    <span className="font-bold text-foreground">{fmt(design.diversityBreakdown.totalConnectedLoad / 1000, 1)}kW</span>
                   </div>
                   <div className="flex items-center justify-between py-2 px-3 bg-primary/10 rounded-lg">
-                    <span className="text-sm text-white/80">Diversity Factor:</span>
-                    <span className="font-bold text-white">
+                    <span className="text-sm text-foreground/80">Diversity Factor:</span>
+                    <span className="font-bold text-foreground">
                       {design.diversityBreakdown.overallDiversityFactor 
                         ? `${(design.diversityBreakdown.overallDiversityFactor * 100).toFixed(1)}%`
                         : 'Not specified'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between py-2 px-3 bg-green-500/20 rounded-lg border border-green-500/30">
-                    <span className="text-sm font-semibold text-white">After Diversity:</span>
-                    <span className="font-bold text-lg text-white">{fmt(design.diversityBreakdown.diversifiedLoad / 1000, 1)}kW</span>
+                    <span className="text-sm font-semibold text-foreground">After Diversity:</span>
+                    <span className="font-bold text-lg text-foreground">{fmt(design.diversityBreakdown.diversifiedLoad / 1000, 1)}kW</span>
                   </div>
 
                   {/* Per-Circuit Breakdown */}
                   {design.diversityBreakdown.circuitDiversity && design.diversityBreakdown.circuitDiversity.length > 0 && (
                     <div className="space-y-2 mt-4">
-                      <p className="text-xs font-semibold text-white/70 uppercase tracking-wide">Per-Circuit Breakdown:</p>
+                      <p className="text-xs font-semibold text-foreground/70 uppercase tracking-wide">Per-Circuit Breakdown:</p>
                       <div className="space-y-2">
                         {design.diversityBreakdown.circuitDiversity.map((cd, idx) => (
                           <div key={idx} className="py-2 px-3 bg-background/30 rounded-lg">
                             <div className="flex items-center justify-between mb-1">
-                              <span className="font-medium text-white text-sm">{cd.circuitName}</span>
+                              <span className="font-medium text-foreground text-sm">{cd.circuitName}</span>
                               <Badge variant="outline" className="text-xs">{fmt(cd.diversityFactorApplied * 100, 0)}%</Badge>
                             </div>
-                            <div className="text-xs text-white/60">
+                            <div className="text-xs text-foreground/60">
                               {fmt(cd.connectedLoad, 1)}kW × {cd.diversityFactorApplied} = {fmt(cd.diversifiedLoad, 1)}kW
                             </div>
-                            <div className="text-xs text-white/50 italic mt-1">{cd.justification}</div>
+                            <div className="text-xs text-foreground/50 italic mt-1">{cd.justification}</div>
                           </div>
                         ))}
                       </div>
@@ -1551,7 +1551,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   {/* Reasoning */}
                   <div className="py-3 px-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                     <p className="text-xs font-medium text-blue-400 mb-1">BS 7671 Reference:</p>
-                    <p className="text-sm text-white/80 leading-relaxed">{design.diversityBreakdown.reasoning}</p>
+                    <p className="text-sm text-foreground/80 leading-relaxed">{design.diversityBreakdown.reasoning}</p>
                     <Badge variant="outline" className="mt-2 text-xs text-blue-400 border-blue-400/30">
                       {design.diversityBreakdown.bs7671Reference}
                     </Badge>
@@ -1760,12 +1760,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       <Badge variant="outline" className="text-amber-400 border-amber-400/30 font-mono text-xs">
                         {currentCircuit.specialLocationCompliance.regulation}
                       </Badge>
-                      <span className="font-semibold text-white">
+                      <span className="font-semibold text-foreground">
                         {currentCircuit.specialLocationCompliance.locationType}
                       </span>
                     </div>
                     
-                    <ul className="space-y-1.5 text-sm text-white">
+                    <ul className="space-y-1.5 text-sm text-foreground">
                       {currentCircuit.specialLocationCompliance.requirements.map((req, idx) => (
                         <li key={idx} className="flex items-start gap-2 text-left">
                           <span className="flex-shrink-0">•</span>
@@ -1777,7 +1777,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     {currentCircuit.specialLocationCompliance.zonesApplicable && (
                       <div className="py-2 px-3 bg-amber-500/10 rounded border border-amber-500/20">
                         <p className="text-xs font-medium text-amber-400">Zones Applicable:</p>
-                        <p className="text-sm text-white text-left">{currentCircuit.specialLocationCompliance.zonesApplicable}</p>
+                        <p className="text-sm text-foreground text-left">{currentCircuit.specialLocationCompliance.zonesApplicable}</p>
                       </div>
                     )}
                   </div>
@@ -1790,28 +1790,28 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               {/* Load Details Card */}
               <Card className="bg-card/30 border-white/10">
                 <div className="p-3 sm:p-4 space-y-2.5 sm:space-y-3">
-                  <div className="flex items-center gap-2 text-sm sm:text-base font-semibold text-white">
+                  <div className="flex items-center gap-2 text-sm sm:text-base font-semibold text-foreground">
                     <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     Load Details
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80 min-w-[120px]">Power:</span>
-                      <span className="font-medium text-white">{currentCircuit.loadPower}W ({fmt(currentCircuit.loadPower / 1000, 1)}kW)</span>
+                      <span className="text-sm text-foreground/80 min-w-[120px]">Power:</span>
+                      <span className="font-medium text-foreground">{currentCircuit.loadPower}W ({fmt(currentCircuit.loadPower / 1000, 1)}kW)</span>
                     </div>
                     {currentCircuit.socketCount && (
                       <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
-                        <span className="text-sm text-white/80 min-w-[120px]">Sockets:</span>
-                        <span className="font-medium text-white">{currentCircuit.socketCount} outlets</span>
+                        <span className="text-sm text-foreground/80 min-w-[120px]">Sockets:</span>
+                        <span className="font-medium text-foreground">{currentCircuit.socketCount} outlets</span>
                       </div>
                     )}
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80 min-w-[120px]">Design Current (Ib):</span>
-                      <span className="font-medium text-white">{fmt(currentCircuit.calculations?.Ib, 1)}A</span>
+                      <span className="text-sm text-foreground/80 min-w-[120px]">Design Current (Ib):</span>
+                      <span className="font-medium text-foreground">{fmt(currentCircuit.calculations?.Ib, 1)}A</span>
                     </div>
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80 min-w-[120px]">Phases:</span>
-                      <span className="font-medium text-white capitalize">{currentCircuit.phases}</span>
+                      <span className="text-sm text-foreground/80 min-w-[120px]">Phases:</span>
+                      <span className="font-medium text-foreground capitalize">{currentCircuit.phases}</span>
                     </div>
                   </div>
                 </div>
@@ -1820,7 +1820,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               {/* Cable Specification Card */}
               <Card className="bg-card/30 border-white/10">
                 <div className="p-3 sm:p-4 space-y-2.5 sm:space-y-3">
-                  <div className="flex items-center gap-2 text-sm sm:text-base font-semibold text-white">
+                  <div className="flex items-center gap-2 text-sm sm:text-base font-semibold text-foreground">
                     <Cable className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     Cable Specification
                   </div>
@@ -1828,27 +1828,27 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   {/* Cable Type Description - Full Width */}
                   {currentCircuit.cableType && (
                     <div className="py-2 px-3 bg-background/30 rounded-lg">
-                      <p className="text-sm text-white/80 leading-relaxed">{currentCircuit.cableType}</p>
+                      <p className="text-sm text-foreground/80 leading-relaxed">{currentCircuit.cableType}</p>
                     </div>
                   )}
                   
                   {/* Cable Details Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80 min-w-[120px]">Live Conductor:</span>
-                      <span className="font-medium text-white">{currentCircuit.cableSize ?? 'N/A'}mm²</span>
+                      <span className="text-sm text-foreground/80 min-w-[120px]">Live Conductor:</span>
+                      <span className="font-medium text-foreground">{currentCircuit.cableSize ?? 'N/A'}mm²</span>
                     </div>
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80 min-w-[120px]">CPC:</span>
-                      <span className="font-medium text-white">{currentCircuit.cpcSize ?? 'N/A'}mm²</span>
+                      <span className="text-sm text-foreground/80 min-w-[120px]">CPC:</span>
+                      <span className="font-medium text-foreground">{currentCircuit.cpcSize ?? 'N/A'}mm²</span>
                     </div>
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80 min-w-[120px]">Length:</span>
-                      <span className="font-medium text-white">{currentCircuit.cableLength}m</span>
+                      <span className="text-sm text-foreground/80 min-w-[120px]">Length:</span>
+                      <span className="font-medium text-foreground">{currentCircuit.cableLength}m</span>
                     </div>
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80 min-w-[120px]">Method:</span>
-                      <span className="font-medium text-white">
+                      <span className="text-sm text-foreground/80 min-w-[120px]">Method:</span>
+                      <span className="font-medium text-foreground">
                         {currentCircuit.installationMethod || 'Not specified'}
                       </span>
                     </div>
@@ -1859,7 +1859,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               {/* Protection Device Card */}
               <Card className="bg-card/30 border-white/10">
                 <div className="p-3 sm:p-4 space-y-2.5 sm:space-y-3">
-                  <div className="flex items-center gap-2 text-sm sm:text-base font-semibold text-white">
+                  <div className="flex items-center gap-2 text-sm sm:text-base font-semibold text-foreground">
                     <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     Protection Device
                   </div>
@@ -1867,15 +1867,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   {/* Device Specification */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div className="flex items-center justify-between sm:justify-start sm:gap-4 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80">Type:</span>
-                      <span className="font-medium text-white">{currentCircuit.protectionDevice?.type ?? 'MCB'}</span>
+                      <span className="text-sm text-foreground/80">Type:</span>
+                      <span className="font-medium text-foreground">{currentCircuit.protectionDevice?.type ?? 'MCB'}</span>
                     </div>
                     <div className="flex items-center justify-between sm:justify-start sm:gap-4 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80">Rating:</span>
-                      <span className="font-medium text-white">{currentCircuit.protectionDevice?.rating ?? 'N/A'}A Type {currentCircuit.protectionDevice?.curve ?? 'B'}</span>
+                      <span className="text-sm text-foreground/80">Rating:</span>
+                      <span className="font-medium text-foreground">{currentCircuit.protectionDevice?.rating ?? 'N/A'}A Type {currentCircuit.protectionDevice?.curve ?? 'B'}</span>
                     </div>
                     <div className="flex items-center justify-between sm:justify-start sm:gap-4 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80">Breaking Capacity:</span>
+                      <span className="text-sm text-foreground/80">Breaking Capacity:</span>
                       <Badge variant="secondary" className="font-medium">{currentCircuit.protectionDevice?.kaRating ?? 6}kA</Badge>
                     </div>
                   </div>
@@ -1894,7 +1894,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                         <FileText className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                         <div className="space-y-1 flex-1">
                           <p className="text-xs font-semibold text-blue-400 uppercase tracking-wide">Selection Justification</p>
-                          <p className="text-sm text-white/90 leading-relaxed">
+                          <p className="text-sm text-foreground/90 leading-relaxed">
                             {currentCircuit.justifications.protection}
                           </p>
                         </div>
@@ -1923,7 +1923,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   <p className="text-lg font-bold">
                     {fmt(currentCircuit.calculations?.voltageDrop?.percent, 2)}%
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-foreground/60">
                     {fmt(currentCircuit.calculations?.voltageDrop?.volts, 2)}V (Max: {currentCircuit.calculations?.voltageDrop?.limit || 3}%)
                   </p>
                 </div>
@@ -1944,7 +1944,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                         }
                       </div>
                       <p className="text-lg font-bold">{fmt(zsValue, 3)}Ω</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-foreground/60">
                         Max: {fmt(maxZs, 3)}Ω
                       </p>
                     </div>
@@ -1964,7 +1964,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             {/* Justifications */}
             <div className="space-y-2.5 sm:space-y-3 bg-card/50 p-3 sm:p-4 rounded-lg border border-primary/10">
               <div className="flex items-center justify-between gap-2">
-                <h4 className="text-sm sm:text-base font-semibold text-white">Design Justification</h4>
+                <h4 className="text-sm sm:text-base font-semibold text-foreground">Design Justification</h4>
                 {isPlaceholderJustification(currentCircuit) && (
                   <Button
                     variant="outline"
@@ -1986,17 +1986,17 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </div>
               <div className="space-y-2 text-sm">
                 <div>
-                  <p className="font-medium text-white mb-1">Cable Sizing:</p>
-                  <p className="text-white/70">{currentCircuit.justifications?.cableSize ?? 'No justification provided'}</p>
+                  <p className="font-medium text-foreground mb-1">Cable Sizing:</p>
+                  <p className="text-foreground/70">{currentCircuit.justifications?.cableSize ?? 'No justification provided'}</p>
                 </div>
                 <div>
-                  <p className="font-medium text-white mb-1">Protection:</p>
-                  <p className="text-white/70">{currentCircuit.justifications?.protection ?? 'No justification provided'}</p>
+                  <p className="font-medium text-foreground mb-1">Protection:</p>
+                  <p className="text-foreground/70">{currentCircuit.justifications?.protection ?? 'No justification provided'}</p>
                 </div>
                 {currentCircuit.justifications?.rcd && (
                   <div>
-                    <p className="font-medium text-white mb-1">RCD Protection:</p>
-                    <p className="text-white/70">{currentCircuit.justifications.rcd}</p>
+                    <p className="font-medium text-foreground mb-1">RCD Protection:</p>
+                    <p className="text-foreground/70">{currentCircuit.justifications.rcd}</p>
                   </div>
                 )}
               </div>
@@ -2006,13 +2006,13 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             {currentCircuit.diversityFactor !== undefined && (
               <div className="space-y-3 bg-card/50 p-4 rounded-lg border border-primary/10">
                 <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-white flex items-center gap-2">
+                  <h4 className="font-semibold text-foreground flex items-center gap-2">
                     <Percent className="h-4 w-4 text-primary" />
                     Diversity Applied
                   </h4>
                   <Badge variant="secondary">{fmt(currentCircuit.diversityFactor * 100, 0)}%</Badge>
                 </div>
-                <p className="text-sm text-white/70">{currentCircuit.diversityJustification}</p>
+                <p className="text-sm text-foreground/70">{currentCircuit.diversityJustification}</p>
               </div>
             )}
 
@@ -2021,23 +2021,23 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               <div className="space-y-3 bg-card/50 p-4 rounded-lg border border-primary/10">
                 <div className="flex items-center gap-2">
                   <Gauge className="h-4 w-4 text-primary" />
-                  <h4 className="font-semibold text-white">Fault Current Analysis</h4>
+                  <h4 className="font-semibold text-foreground">Fault Current Analysis</h4>
                 </div>
                 <div className="grid md:grid-cols-2 gap-3">
                   <div>
-                    <p className="text-xs text-white/60 mb-1">PSCC at Circuit</p>
-                    <p className="text-lg font-bold text-white">{fmt(currentCircuit.faultCurrentAnalysis?.psccAtCircuit, 2)}kA</p>
+                    <p className="text-xs text-foreground/60 mb-1">PSCC at Circuit</p>
+                    <p className="text-lg font-bold text-foreground">{fmt(currentCircuit.faultCurrentAnalysis?.psccAtCircuit, 2)}kA</p>
                   </div>
                   <div>
-                    <p className="text-xs text-white/60 mb-1">Device Breaking Capacity</p>
-                    <p className="text-lg font-bold text-white">{currentCircuit.faultCurrentAnalysis.deviceBreakingCapacity}kA</p>
+                    <p className="text-xs text-foreground/60 mb-1">Device Breaking Capacity</p>
+                    <p className="text-lg font-bold text-foreground">{currentCircuit.faultCurrentAnalysis.deviceBreakingCapacity}kA</p>
                   </div>
                 </div>
                 <div className={`flex items-center gap-2 p-2 rounded ${currentCircuit.faultCurrentAnalysis.compliant ? 'bg-green-500/10 text-green-600' : 'bg-red-500/10 text-red-600'}`}>
                   {currentCircuit.faultCurrentAnalysis.compliant ? <CheckCircle2 className="h-4 w-4" /> : <AlertTriangle className="h-4 w-4" />}
                   <span className="text-sm font-medium">{currentCircuit.faultCurrentAnalysis.marginOfSafety}</span>
                 </div>
-                <p className="text-xs text-white/60">{currentCircuit.faultCurrentAnalysis.regulation}</p>
+                <p className="text-xs text-foreground/60">{currentCircuit.faultCurrentAnalysis.regulation}</p>
               </div>
             )}
 
@@ -2046,25 +2046,25 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               <div className="space-y-3 bg-card/50 p-4 rounded-lg border border-primary/10">
                 <div className="flex items-center gap-2">
                   <Shield className="h-4 w-4 text-primary" />
-                  <h4 className="font-semibold text-white">Earthing & Bonding</h4>
+                  <h4 className="font-semibold text-foreground">Earthing & Bonding</h4>
                 </div>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   <div>
-                    <p className="text-white/60">CPC Size</p>
-                    <p className="font-medium text-white">{currentCircuit.earthingRequirements.cpcSize}</p>
+                    <p className="text-foreground/60">CPC Size</p>
+                    <p className="font-medium text-foreground">{currentCircuit.earthingRequirements.cpcSize}</p>
                   </div>
                   <div>
-                    <p className="text-white/60">Supplementary Bonding</p>
-                    <p className="font-medium text-white">{currentCircuit.earthingRequirements.supplementaryBonding ? 'Required' : 'Not Required'}</p>
+                    <p className="text-foreground/60">Supplementary Bonding</p>
+                    <p className="font-medium text-foreground">{currentCircuit.earthingRequirements.supplementaryBonding ? 'Required' : 'Not Required'}</p>
                   </div>
                   {currentCircuit.earthingRequirements.bondingConductorSize && (
                     <div className="md:col-span-2">
-                      <p className="text-white/60">Bonding Conductor Size</p>
-                      <p className="font-medium text-white">{currentCircuit.earthingRequirements.bondingConductorSize}</p>
+                      <p className="text-foreground/60">Bonding Conductor Size</p>
+                      <p className="font-medium text-foreground">{currentCircuit.earthingRequirements.bondingConductorSize}</p>
                     </div>
                   )}
                 </div>
-                <p className="text-sm text-white/70">{currentCircuit.earthingRequirements.justification}</p>
+                <p className="text-sm text-foreground/70">{currentCircuit.earthingRequirements.justification}</p>
                 <Badge variant="outline" className="text-xs">{currentCircuit.earthingRequirements.regulation}</Badge>
               </div>
             )}
@@ -2074,28 +2074,28 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               <div className="space-y-3 bg-card/50 p-4 rounded-lg border border-primary/10">
                 <div className="flex items-center gap-2">
                   <TrendingDown className="h-4 w-4 text-primary" />
-                  <h4 className="font-semibold text-white">Derating Factors</h4>
+                  <h4 className="font-semibold text-foreground">Derating Factors</h4>
                 </div>
                 <div className="grid grid-cols-4 gap-2 text-center">
                   <div className="bg-primary/10 p-2 rounded">
-                    <p className="text-xs text-white/60">Ca</p>
-                    <p className="text-lg font-bold text-white">{fmt(currentCircuit.deratingFactors?.Ca, 2)}</p>
+                    <p className="text-xs text-foreground/60">Ca</p>
+                    <p className="text-lg font-bold text-foreground">{fmt(currentCircuit.deratingFactors?.Ca, 2)}</p>
                   </div>
                   <div className="bg-primary/10 p-2 rounded">
-                    <p className="text-xs text-white/60">Cg</p>
-                    <p className="text-lg font-bold text-white">{fmt(currentCircuit.deratingFactors?.Cg, 2)}</p>
+                    <p className="text-xs text-foreground/60">Cg</p>
+                    <p className="text-lg font-bold text-foreground">{fmt(currentCircuit.deratingFactors?.Cg, 2)}</p>
                   </div>
                   <div className="bg-primary/10 p-2 rounded">
-                    <p className="text-xs text-white/60">Ci</p>
-                    <p className="text-lg font-bold text-white">{fmt(currentCircuit.deratingFactors?.Ci, 2)}</p>
+                    <p className="text-xs text-foreground/60">Ci</p>
+                    <p className="text-lg font-bold text-foreground">{fmt(currentCircuit.deratingFactors?.Ci, 2)}</p>
                   </div>
                   <div className="bg-primary/5 p-2 rounded border border-primary/30">
-                    <p className="text-xs text-white/60">Overall</p>
+                    <p className="text-xs text-foreground/60">Overall</p>
                     <p className="text-lg font-bold text-primary">{fmt(currentCircuit.deratingFactors?.overall, 2)}</p>
                   </div>
                 </div>
-                <p className="text-sm text-white/70">{currentCircuit.deratingFactors.explanation}</p>
-                <p className="text-xs text-white/60">{currentCircuit.deratingFactors.tableReferences}</p>
+                <p className="text-sm text-foreground/70">{currentCircuit.deratingFactors.explanation}</p>
+                <p className="text-xs text-foreground/60">{currentCircuit.deratingFactors.tableReferences}</p>
               </div>
             )}
 
@@ -2118,10 +2118,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   {currentCircuit.specialLocationCompliance.locationType}
                 </Badge>
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-white text-left">Requirements:</p>
+                  <p className="text-sm font-medium text-foreground text-left">Requirements:</p>
                   <ul className="space-y-1">
                     {currentCircuit.specialLocationCompliance.requirements.map((req, idx) => (
-                      <li key={idx} className="text-sm text-white flex items-start gap-2">
+                      <li key={idx} className="text-sm text-foreground flex items-start gap-2">
                         <CheckCircle2 className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
                         <span>{req}</span>
                       </li>
@@ -2129,7 +2129,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </ul>
                 </div>
                 {currentCircuit.specialLocationCompliance.zonesApplicable && (
-                  <p className="text-sm text-white text-left pl-6">{currentCircuit.specialLocationCompliance.zonesApplicable}</p>
+                  <p className="text-sm text-foreground text-left pl-6">{currentCircuit.specialLocationCompliance.zonesApplicable}</p>
                 )}
                 <Badge variant="outline" className="text-xs border-amber-500/30">{currentCircuit.specialLocationCompliance.regulation}</Badge>
               </div>
@@ -2141,7 +2141,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <ClipboardCheck className="h-4 w-4 text-primary" />
-                    <h4 className="font-semibold text-white">Expected Test Results</h4>
+                    <h4 className="font-semibold text-foreground">Expected Test Results</h4>
                   </div>
                   <Badge variant="outline" className="text-xs">
                     <FileText className="h-3 w-3 mr-1" />
@@ -2158,20 +2158,20 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                           <span className="text-blue-400 font-bold text-sm">R₁+R₂</span>
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-white">Earth Continuity</p>
-                          <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 643.2.2</p>
+                          <p className="text-sm font-semibold text-foreground">Earth Continuity</p>
+                          <p className="text-xs text-foreground/50">BS 7671:2018+A3:2024 Reg 643.2.2</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 flex-wrap">
-                        <Badge className="bg-blue-500/20 text-white border-blue-500/30 hover:bg-blue-500/30">
+                        <Badge className="bg-blue-500/20 text-foreground border-blue-500/30 hover:bg-blue-500/30">
                           At 20°C: {currentCircuit.expectedTests.r1r2?.at20C?.toFixed(4)}Ω
                         </Badge>
-                        <Badge className="bg-blue-500/20 text-white border-blue-500/30 hover:bg-blue-500/30">
+                        <Badge className="bg-blue-500/20 text-foreground border-blue-500/30 hover:bg-blue-500/30">
                           At 70°C: {currentCircuit.expectedTests.r1r2?.at70C?.toFixed(4)}Ω
                         </Badge>
                       </div>
                     </div>
-                    <p className="text-xs text-white/60 mt-2">
+                    <p className="text-xs text-foreground/60 mt-2">
                       {currentCircuit.expectedTests.r1r2?.regulation}
                     </p>
                   </div>
@@ -2196,8 +2196,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                           }`}>Zs</span>
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-white">Earth Fault Loop Impedance</p>
-                          <p className="text-xs text-white/50">{currentCircuit.expectedTests.zs?.regulation}</p>
+                          <p className="text-sm font-semibold text-foreground">Earth Fault Loop Impedance</p>
+                          <p className="text-xs text-foreground/50">{currentCircuit.expectedTests.zs?.regulation}</p>
                         </div>
                         {currentCircuit.expectedTests.zs?.compliant ? (
                           <CheckCircle2 className="h-5 w-5 text-green-400" />
@@ -2207,14 +2207,14 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       </div>
                       <div className="flex items-center gap-3 flex-wrap">
                         <Badge className={currentCircuit.expectedTests.zs?.compliant 
-                          ? 'bg-green-500/20 text-white border-green-500/30 hover:bg-green-500/30' 
-                          : 'bg-red-500/20 text-white border-red-500/30 hover:bg-red-500/30'
+                          ? 'bg-green-500/20 text-foreground border-green-500/30 hover:bg-green-500/30' 
+                          : 'bg-red-500/20 text-foreground border-red-500/30 hover:bg-red-500/30'
                         }>
                           Calculated: {currentCircuit.expectedTests.zs?.expected?.toFixed(3)}Ω
                         </Badge>
                         <Badge className={currentCircuit.expectedTests.zs?.compliant 
-                          ? 'bg-green-500/20 text-white border-green-500/30 hover:bg-green-500/30' 
-                          : 'bg-red-500/20 text-white border-red-500/30 hover:bg-red-500/30'
+                          ? 'bg-green-500/20 text-foreground border-green-500/30 hover:bg-green-500/30' 
+                          : 'bg-red-500/20 text-foreground border-red-500/30 hover:bg-red-500/30'
                         }>
                           Max: {currentCircuit.expectedTests.zs?.maxPermitted?.toFixed(3)}Ω
                         </Badge>
@@ -2239,15 +2239,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                           <span className="text-purple-400 font-bold text-sm">IR</span>
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-white">Insulation Resistance</p>
-                          <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 643.3.1</p>
+                          <p className="text-sm font-semibold text-foreground">Insulation Resistance</p>
+                          <p className="text-xs text-foreground/50">BS 7671:2018+A3:2024 Reg 643.3.1</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 flex-wrap">
-                        <Badge className="bg-purple-500/20 text-white border-purple-500/30 hover:bg-purple-500/30">
+                        <Badge className="bg-purple-500/20 text-foreground border-purple-500/30 hover:bg-purple-500/30">
                           Test: {currentCircuit.expectedTests.insulationResistance?.testVoltage}
                         </Badge>
-                        <Badge className="bg-purple-500/20 text-white border-purple-500/30 hover:bg-purple-500/30">
+                        <Badge className="bg-purple-500/20 text-foreground border-purple-500/30 hover:bg-purple-500/30">
                           Min: {currentCircuit.expectedTests.insulationResistance?.minResistance}
                         </Badge>
                       </div>
@@ -2261,9 +2261,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                         <span className="text-amber-400 font-bold text-sm">P</span>
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm font-semibold text-white mb-1">Polarity Test</p>
-                        <p className="text-xs text-white/50 mb-2">BS 7671:2018+A3:2024 Reg 643.4</p>
-                        <p className="text-sm text-white/90 leading-relaxed">
+                        <p className="text-sm font-semibold text-foreground mb-1">Polarity Test</p>
+                        <p className="text-xs text-foreground/50 mb-2">BS 7671:2018+A3:2024 Reg 643.4</p>
+                        <p className="text-sm text-foreground/90 leading-relaxed">
                           Verify correct polarity - all single-pole switching and protective devices in phase conductor only
                         </p>
                       </div>
@@ -2279,15 +2279,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                             <span className="text-cyan-400 font-bold text-sm">RCD</span>
                           </div>
                           <div>
-                            <p className="text-sm font-semibold text-white">RCD Trip Times</p>
-                            <p className="text-xs text-white/60">{currentCircuit.expectedTests.rcd?.regulation}</p>
+                            <p className="text-sm font-semibold text-foreground">RCD Trip Times</p>
+                            <p className="text-xs text-foreground/60">{currentCircuit.expectedTests.rcd?.regulation}</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3 flex-wrap">
-                          <Badge className="bg-cyan-500/20 text-white border-cyan-500/30 hover:bg-cyan-500/30">
+                          <Badge className="bg-cyan-500/20 text-foreground border-cyan-500/30 hover:bg-cyan-500/30">
                             Rating: {currentCircuit.expectedTests.rcd?.ratingmA}mA
                           </Badge>
-                          <Badge className="bg-cyan-500/20 text-white border-cyan-500/30 hover:bg-cyan-500/30">
+                          <Badge className="bg-cyan-500/20 text-foreground border-cyan-500/30 hover:bg-cyan-500/30">
                             Max Trip: &lt;{currentCircuit.expectedTests.rcd?.maxTripTimeMs}ms at 1×IΔn
                           </Badge>
                         </div>
@@ -2307,7 +2307,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 </h4>
                 <ul className="space-y-1">
                   {currentCircuit.warnings.map((warning, idx) => (
-                    <li key={idx} className="text-sm text-white text-left flex items-start gap-2">
+                    <li key={idx} className="text-sm text-foreground text-left flex items-start gap-2">
                       <span className="flex-shrink-0">•</span>
                       <span>{warning}</span>
                     </li>

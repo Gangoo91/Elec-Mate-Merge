@@ -342,7 +342,7 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
                       variant="outline"
                       size="sm"
                       onClick={() => handleQuickSearch(loc)}
-                      className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow mobile-interactive touch-target"
+                      className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10 hover:border-elec-yellow mobile-interactive touch-target"
                     >
                       {loc}
                     </Button>
@@ -359,7 +359,7 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
                       variant="outline"
                       size="sm"
                       onClick={() => handleQuickSearch(job)}
-                      className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow mobile-interactive touch-target"
+                      className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10 hover:border-elec-yellow mobile-interactive touch-target"
                     >
                       {job}
                     </Button>

@@ -1263,7 +1263,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <Sparkles className="h-4 w-4 text-elec-yellow" />
-            <h2 className="font-semibold text-sm md:text-base text-white">AI Design</h2>
+            <h2 className="font-semibold text-sm md:text-base text-foreground">AI Design</h2>
           </div>
           <div className="flex items-center gap-2">
             <Button
@@ -1307,7 +1307,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 <Card className="p-4 bg-elec-card border-elec-yellow/20">
                   <div className="flex items-center gap-3">
                     <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
-                    <span className="text-sm font-medium text-white">Processing your design...</span>
+                    <span className="text-sm font-medium text-foreground">Processing your design...</span>
                   </div>
                 </Card>
               </div>
@@ -1354,7 +1354,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 className={`${message.role === 'user' ? 'max-w-[95%] md:max-w-[90%]' : 'max-w-full w-full'} rounded-2xl shadow-sm ${
                   message.role === 'user'
                     ? 'bg-elec-yellow text-elec-dark px-5 py-3'
-                    : 'bg-elec-card text-white px-5 py-4'
+                    : 'bg-elec-card text-foreground px-5 py-4'
                 }`}
               >
                 {/* Agent Name Badge for assistant messages */}
@@ -1420,13 +1420,13 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                   <Card className="bg-elec-grey/20 border-elec-yellow/30 p-3">
                     <div className="flex items-center gap-2">
                       <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
-                      <span className="text-sm text-white">{message.thinkingMessage}</span>
+                      <span className="text-sm text-foreground">{message.thinkingMessage}</span>
                     </div>
                   </Card>
                 )}
 
                 {message.role === 'assistant' && message.isTyping && !message.isThinking && (
-                  <p className="text-[15px] text-white/70 text-left italic leading-[1.7]">
+                  <p className="text-[15px] text-foreground/70 text-left italic leading-[1.7]">
                     {message.content}
                   </p>
                 )}
@@ -1440,7 +1440,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 {/* Error with retry button */}
                 {message.role === 'assistant' && message.hasError && (
                   <>
-                    <p className="text-[15px] text-white/95 leading-[1.7] text-left mb-3">
+                    <p className="text-[15px] text-foreground/95 leading-[1.7] text-left mb-3">
                       {message.content}
                     </p>
                     <Button
@@ -1586,12 +1586,12 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               <button onClick={() => setInput("9.5kW shower, 15m from board")}
                 className="h-7 px-3 text-xs rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors flex items-center gap-1.5 flex-1">
                 <Sparkles className="h-3 w-3 text-elec-yellow" />
-                <span className="truncate text-white">Shower</span>
+                <span className="truncate text-foreground">Shower</span>
               </button>
               <button onClick={() => setInput("Full rewire 3-bed house")}
                 className="h-7 px-3 text-xs rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors flex items-center gap-1.5 flex-1">
                 <Sparkles className="h-3 w-3 text-elec-yellow" />
-                <span className="truncate text-white">Rewire</span>
+                <span className="truncate text-foreground">Rewire</span>
               </button>
             </div>
           )}
@@ -1646,7 +1646,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               placeholder="Type your message..."
               disabled={isLoading}
               rows={1}
-              className="!min-h-[44px] sm:!min-h-[44px] md:!min-h-[44px] lg:!min-h-[44px] max-h-[88px] resize-none overflow-y-auto w-full text-base font-medium rounded-xl px-3 py-2 bg-white/5 border border-white/10 text-white placeholder:text-white/80 leading-tight transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 focus-visible:outline-none"
+              className="!min-h-[44px] sm:!min-h-[44px] md:!min-h-[44px] lg:!min-h-[44px] max-h-[88px] resize-none overflow-y-auto w-full text-base font-medium rounded-xl px-3 py-2 bg-white/5 border border-white/10 text-foreground placeholder:text-foreground/80 leading-tight transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 focus-visible:outline-none"
               style={{ fontSize: '16px', height: '44px' }}
             />
 

@@ -190,7 +190,7 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
               <div key={index} className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-white">{result.productName}</h4>
+                    <h4 className="font-medium text-foreground">{result.productName}</h4>
                     <p className="text-sm text-muted-foreground">{result.supplier}</p>
                   </div>
                   <div className="text-right">
@@ -226,8 +226,8 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
                     <tbody>
                       {result.quantities.map((qty, idx) => (
                         <tr key={idx} className="border-b border-elec-yellow/10">
-                          <td className="py-2 text-white font-medium">{qty.quantity}</td>
-                          <td className="py-2 text-right text-white">
+                          <td className="py-2 text-foreground font-medium">{qty.quantity}</td>
+                          <td className="py-2 text-right text-foreground">
                             {formatPrice(qty.unitPrice)}
                             {qty.unitPrice < result.unitPrice && (
                               <TrendingDown className="inline h-3 w-3 ml-1 text-green-400" />

@@ -79,7 +79,7 @@ const EICRCriticalAlertBanner = ({
               stroke="currentColor"
               strokeWidth="6"
               fill="none"
-              className="text-white/10"
+              className="text-foreground/10"
             />
             {/* Progress circle */}
             <circle
@@ -100,7 +100,7 @@ const EICRCriticalAlertBanner = ({
             <span className={`text-3xl sm:text-4xl font-bold ${conf.textColor}`}>
               {confidenceScore}
             </span>
-            <span className="text-xs text-white/60">/ 100</span>
+            <span className="text-xs text-foreground/60">/ 100</span>
           </div>
         </div>
 
@@ -113,11 +113,11 @@ const EICRCriticalAlertBanner = ({
             </Badge>
           </div>
           
-          <h3 className="text-lg sm:text-xl font-semibold text-white leading-tight line-clamp-2">
+          <h3 className="text-lg sm:text-xl font-semibold text-foreground leading-tight line-clamp-2">
             {primaryDefect}
           </h3>
           
-          <div className="flex items-center gap-2 text-sm text-white">
+          <div className="flex items-center gap-2 text-sm text-foreground">
             <AlertTriangle className="h-4 w-4" />
             <span>{urgency}</span>
           </div>

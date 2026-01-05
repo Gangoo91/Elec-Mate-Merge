@@ -1043,7 +1043,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 <Button
                   onClick={handleSaveToLibrary}
                   disabled={isGenerating || localIsSaving}
-                  className="gap-2 flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-500"
+                  className="gap-2 flex-1 bg-gradient-to-r from-green-500 to-green-600 text-foreground hover:from-green-600 hover:to-green-500"
                   size="lg"
                 >
                   {localIsSaving ? (
@@ -1076,7 +1076,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               <Button
                 onClick={handleSaveToLibrary}
                 disabled={isGenerating || localIsSaving}
-                className="w-full gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-500"
+                className="w-full gap-2 bg-gradient-to-r from-green-500 to-green-600 text-foreground hover:from-green-600 hover:to-green-500"
                 size="lg"
               >
                 {localIsSaving ? (

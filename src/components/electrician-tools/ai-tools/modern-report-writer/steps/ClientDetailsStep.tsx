@@ -162,7 +162,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
       <Card className="bg-elec-gray border-elec-yellow/30 p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-white mb-2">Client & Installation Details</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-2">Client & Installation Details</h2>
             <p className="text-muted-foreground">
               Provide the basic information for your {template?.name}
             </p>
@@ -188,7 +188,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
         <Card className="bg-elec-gray border-elec-yellow/30 p-6">
           <div className="flex items-center gap-2 mb-4">
             <User className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg font-medium text-white">Client Information</h3>
+            <h3 className="text-lg font-medium text-foreground">Client Information</h3>
           </div>
           
           <div className="space-y-4">
@@ -238,7 +238,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
         <Card className="bg-elec-gray border-elec-yellow/30 p-6">
           <div className="flex items-center gap-2 mb-4">
             <MapPin className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg font-medium text-white">Installation Details</h3>
+            <h3 className="text-lg font-medium text-foreground">Installation Details</h3>
           </div>
           
           <div className="space-y-4">
@@ -284,7 +284,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
         <Card className="bg-elec-gray border-elec-yellow/30 p-6">
           <div className="flex items-center gap-2 mb-4">
             <Lightbulb className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg font-medium text-white">Technical Specifications</h3>
+            <h3 className="text-lg font-medium text-foreground">Technical Specifications</h3>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -339,7 +339,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
           <Button
             variant="outline"
             onClick={onBack}
-            className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 w-full sm:w-auto"
+            className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10 w-full sm:w-auto"
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
             Back to Templates

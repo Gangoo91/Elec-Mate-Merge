@@ -294,18 +294,18 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
         </CardHeader>
         <CardContent>
           <div className="text-center py-6 md:py-8">
-            <p className="text-white/70 text-sm md:text-base mb-4">No circuit design data available.</p>
+            <p className="text-foreground/70 text-sm md:text-base mb-4">No circuit design data available.</p>
             
             {designerMessageCount > 0 ? (
               <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 text-sm text-left max-w-md mx-auto">
                 <p className="font-semibold mb-2 text-yellow-500">⚠️ Designer responded but data couldn't be parsed.</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-foreground/60">
                   Found {designerMessageCount} designer message(s). 
                   The circuit parser may need updating to match the designer's output format.
                 </p>
               </div>
             ) : (
-              <p className="text-xs md:text-sm text-white/60">The Circuit Designer agent must be consulted first.</p>
+              <p className="text-xs md:text-sm text-foreground/60">The Circuit Designer agent must be consulted first.</p>
             )}
           </div>
         </CardContent>
@@ -350,8 +350,8 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
         </CardHeader>
         <CardContent>
           <div className="bg-muted/50 p-3 md:p-4 rounded-lg border border-border">
-            <h3 className="font-semibold text-sm mb-2 text-white">About These Drawings</h3>
-            <div className="flex flex-col gap-1 text-xs md:text-sm text-white/90">
+            <h3 className="font-semibold text-sm mb-2 text-foreground">About These Drawings</h3>
+            <div className="flex flex-col gap-1 text-xs md:text-sm text-foreground/90">
               <span>✓ BS 7671:2018+A3:2024 compliant</span>
               <span>✓ Professional single-line diagrams</span>
               <span>✓ Ready for Building Control</span>

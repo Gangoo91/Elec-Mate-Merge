@@ -113,16 +113,16 @@ const CareerPathways = () => {
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Electrical Career Progression Pathways</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+      <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">Electrical Career Progression Pathways</h1>
+        <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
           Explore comprehensive career paths in the UK electrical industry, from apprentice to senior management roles. 
           Each pathway shows typical progression times, salary ranges, and requirements specific to UK electrical professionals.
         </p>
         <BackButton customUrl="/apprentice/professional-development" label="Back to Professional Development" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {careerPaths.map((path, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all duration-300">
             <CardHeader>
@@ -182,9 +182,9 @@ const CareerPathways = () => {
           <p className="text-muted-foreground mb-4">
             To become an Approved Electrician in the UK, you'll need to register with one of these competent person schemes:
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {certificationBodies.map((body, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-3 sm:p-4">
                 <h4 className="font-semibold text-white mb-2">{body.name}</h4>
                 <p className="text-muted-foreground text-sm mb-3">{body.description}</p>
                 <ul className="space-y-1">
@@ -206,7 +206,7 @@ const CareerPathways = () => {
           <CardTitle className="text-elec-yellow">Planning Your Electrical Career Journey</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-sm">
             <div>
               <h4 className="font-semibold text-white mb-3">Years 1-3: Foundation Building</h4>
               <ul className="space-y-2 text-muted-foreground">

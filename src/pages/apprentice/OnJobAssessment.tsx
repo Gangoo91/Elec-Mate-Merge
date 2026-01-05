@@ -65,7 +65,7 @@ const OnJobAssessment = () => {
         </TabsContent>
       </Tabs>
 
-      <Card className="border-green-500/50 bg-green-500/10">
+      <Card className="border-green-500/50 bg-card">
         <CardHeader>
           <CardTitle className="text-green-300 flex items-center gap-2">
             <Shield className="h-5 w-5" />

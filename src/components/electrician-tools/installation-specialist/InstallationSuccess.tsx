@@ -79,7 +79,7 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full blur-xl opacity-50 animate-pulse" />
               <div className="relative bg-gradient-to-br from-blue-400 to-blue-600 rounded-full p-6 sm:p-6 shadow-xl shadow-blue-500/50 animate-bounce-subtle">
-                <Wrench className="h-12 w-12 sm:h-12 sm:w-12 text-white" />
+                <Wrench className="h-12 w-12 sm:h-12 sm:w-12 text-foreground" />
               </div>
             </div>
           </div>
@@ -89,7 +89,7 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600">
               Installation Method Ready! 🎉
             </h2>
-            <p className="text-sm sm:text-sm text-white/80 max-w-md mx-auto px-2">
+            <p className="text-sm sm:text-sm text-foreground/80 max-w-md mx-auto px-2">
               Your comprehensive BS 7671-compliant method statement has been generated
             </p>
           </div>
@@ -99,7 +99,7 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
             <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-blue-500/30 hover:border-blue-500/50 transition-all">
               <div className="flex flex-col items-center gap-1">
                 <div className="text-3xl sm:text-3xl font-bold text-blue-400 mb-1">{totalSteps}</div>
-                <div className="text-xs sm:text-sm text-white/80 flex items-center justify-center gap-1">
+                <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
                   <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4" />
                   Steps
                 </div>
@@ -111,7 +111,7 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
                 <div className="text-3xl sm:text-3xl font-bold text-blue-400 mb-1 truncate w-full text-center" title={estimatedDuration}>
                   {estimatedDuration?.split(' ')[0] || 'N/A'}
                 </div>
-                <div className="text-xs sm:text-sm text-white/80 flex items-center justify-center gap-1">
+                <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
                   <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
                   Duration
                 </div>
@@ -121,7 +121,7 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
             <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-amber-500/30 hover:border-amber-500/50 transition-all">
               <div className="flex flex-col items-center gap-1">
                 <div className="text-3xl sm:text-3xl font-bold text-amber-400 mb-1">{hazardsCount}</div>
-                <div className="text-xs sm:text-sm text-white/80 flex items-center justify-center gap-1">
+                <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
                   <AlertTriangle className="h-3 w-3 sm:h-4 sm:w-4" />
                   Hazards
                 </div>
@@ -131,7 +131,7 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
             <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-green-500/30 hover:border-green-500/50 transition-all">
               <div className="flex flex-col items-center gap-1">
                 <div className="text-3xl sm:text-3xl font-bold text-green-400 mb-1 uppercase">{riskLevel}</div>
-                <div className="text-xs sm:text-sm text-white/80 flex items-center justify-center gap-1">
+                <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
                   <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
                   Risk Level
                 </div>
@@ -144,16 +144,16 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
             <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
               <div className="flex items-center gap-2">
                 <Hammer className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
-                <span className="text-xs sm:text-sm font-semibold text-white/90">
+                <span className="text-xs sm:text-sm font-semibold text-foreground/90">
                   {toolsCount} tools identified
                 </span>
               </div>
-              <span className="hidden sm:inline text-white/50">•</span>
-              <span className="text-xs sm:text-sm font-semibold text-white/90">
+              <span className="hidden sm:inline text-foreground/50">•</span>
+              <span className="text-xs sm:text-sm font-semibold text-foreground/90">
                 ~{timeSaved} minutes saved
               </span>
             </div>
-            <p className="text-xs text-white/80 mt-1 text-center">
+            <p className="text-xs text-foreground/80 mt-1 text-center">
               Complete with step-by-step instructions and safety guidance
             </p>
           </div>
@@ -165,14 +165,14 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
               onOpenChange(false);
             }}
             size="lg"
-            className="w-full bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white h-12 touch-manipulation text-sm sm:text-base shadow-lg shadow-blue-500/20"
+            className="w-full bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-foreground h-12 touch-manipulation text-sm sm:text-base shadow-lg shadow-blue-500/20"
           >
             <Wrench className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
             View Method Statement
           </Button>
 
           {/* Footer */}
-          <p className="text-xs text-white/70">
+          <p className="text-xs text-foreground/70">
             Generated in {generationTime}s • BS 7671:2018+A3:2024 Compliant
           </p>
         </div>

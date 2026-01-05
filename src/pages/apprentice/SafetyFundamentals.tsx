@@ -76,15 +76,15 @@ const SafetyFundamentals = () => {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Safety Fundamentals</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+      <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">Safety Fundamentals</h1>
+        <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
           Critical safety information for electrical work - your life depends on following these rules
         </p>
         <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
       </div>
 
-      <Card className="border-red-500/50 bg-red-500/10">
+      <Card className="border-red-500/50 bg-card">
         <CardHeader>
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-6 w-6 text-red-400" />
@@ -118,7 +118,7 @@ const SafetyFundamentals = () => {
                 
                 <p className="text-muted-foreground mb-4">{rule.description}</p>
                 
-                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-4">
+                <div className="bg-card border border-red-500/30 rounded-lg p-4 mb-4">
                   <p className="text-sm text-muted-foreground">
                     <strong className="text-red-300">Why this matters:</strong> {rule.why}
                   </p>
@@ -175,7 +175,7 @@ const SafetyFundamentals = () => {
         <CardContent>
           <div className="space-y-6">
             {emergencyProcedures.map((emergency, index) => (
-              <div key={index} className="border border-red-500/30 rounded-lg p-6 bg-red-500/5">
+              <div key={index} className="border border-red-500/30 rounded-lg p-6 bg-card">
                 <div className="mb-4">
                   <h4 className="font-semibold text-white text-lg mb-2">{emergency.situation}</h4>
                   <p className="text-red-300 font-medium">{emergency.action}</p>
@@ -220,7 +220,7 @@ const SafetyFundamentals = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-green-500/50 bg-green-500/10">
+      <Card className="border-green-500/50 bg-card">
         <CardHeader>
           <div className="flex items-center gap-2">
             <CheckCircle className="h-6 w-6 text-green-400" />

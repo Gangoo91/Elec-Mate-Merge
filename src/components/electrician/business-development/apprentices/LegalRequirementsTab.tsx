@@ -267,7 +267,7 @@ const LegalRequirementsTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className="text-xs font-medium text-white">{metric.metric}</div>
+              <div className="text-xs font-medium text-foreground">{metric.metric}</div>
               <div className="text-xs text-muted-foreground">{metric.data}</div>
             </div>
           </Card>
@@ -285,7 +285,7 @@ const LegalRequirementsTab = () => {
                 <div key={index} className="border border-red-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-white text-sm">{framework.category}</h4>
+                      <h4 className="font-medium text-foreground text-sm">{framework.category}</h4>
                       <Badge variant="outline" className="text-red-300 border-red-400/30 text-xs">
                         {framework.timing}
                       </Badge>
@@ -339,7 +339,7 @@ const LegalRequirementsTab = () => {
                   </h4>
                   {priority.requirements.map((req, reqIndex) => (
                     <div key={reqIndex} className="border border-blue-500/20 rounded-lg p-3 space-y-2">
-                      <h5 className="font-medium text-white text-sm">{req.item}</h5>
+                      <h5 className="font-medium text-foreground text-sm">{req.item}</h5>
                       <p className="text-xs text-muted-foreground">{req.description}</p>
                       
                       <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
@@ -373,7 +373,7 @@ const LegalRequirementsTab = () => {
                   {category.details.map((detail, detailIndex) => (
                     <div key={detailIndex} className="border border-green-500/20 rounded-lg p-3 space-y-2">
                       <div className="flex items-center justify-between">
-                        <h5 className="font-medium text-white text-sm">{detail.service}</h5>
+                        <h5 className="font-medium text-foreground text-sm">{detail.service}</h5>
                         <Badge variant="outline" className="text-green-300 border-green-400/30 text-xs">
                           {detail.cost}
                         </Badge>
@@ -401,7 +401,7 @@ const LegalRequirementsTab = () => {
               {regionalCompliance.map((region, index) => (
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-medium text-white text-sm">{region.region}</h4>
+                    <h4 className="font-medium text-foreground text-sm">{region.region}</h4>
                     <Badge variant="outline" className="text-purple-300 border-purple-400/30 text-xs">
                       {region.authority}
                     </Badge>

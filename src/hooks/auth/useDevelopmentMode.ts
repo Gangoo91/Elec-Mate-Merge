@@ -1,28 +1,24 @@
-
-import { useState, useEffect } from 'react';
-import { useToast } from '@/components/ui/use-toast';
-
+/**
+ * Development mode hook - DISABLED for security
+ *
+ * Previously allowed bypassing subscription checks via localStorage.
+ * This has been disabled to prevent security bypass.
+ *
+ * Development mode is now ONLY available when:
+ * 1. Running in actual development environment (import.meta.env.DEV)
+ * 2. Cannot be toggled by users in production
+ */
 export function useDevelopmentMode() {
-  const [isDevelopmentMode, setIsDevelopmentMode] = useState(false);
-  const { toast } = useToast();
+  // Development mode is ONLY enabled in actual dev environment
+  // Cannot be toggled via localStorage or UI in production
+  const isDevelopmentMode = import.meta.env.DEV === true;
 
-  // Initialize development mode from localStorage
-  useEffect(() => {
-    const savedMode = localStorage.getItem('elecmate-dev-mode');
-    setIsDevelopmentMode(savedMode === 'true');
-  }, []);
-
-  // Toggle development mode function
+  // Toggle is a no-op in production for security
   const toggleDevelopmentMode = () => {
-    const newMode = !isDevelopmentMode;
-    setIsDevelopmentMode(newMode);
-    localStorage.setItem('elecmate-dev-mode', newMode.toString());
-    toast({
-      title: newMode ? "Development Mode Enabled" : "Development Mode Disabled",
-      description: newMode 
-        ? "Subscription restrictions have been bypassed for development." 
-        : "Subscription restrictions are now active.",
-    });
+    if (import.meta.env.DEV) {
+      console.log('[Dev Mode] Toggle requested - only affects dev environment');
+    }
+    // No-op: Cannot toggle in production
   };
 
   return {

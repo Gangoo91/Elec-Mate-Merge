@@ -39,7 +39,7 @@ export const ReasoningPanel = ({ steps, isVisible }: ReasoningPanelProps) => {
     <Card className="bg-elec-card/50 border-elec-yellow/20 p-4 mb-4">
       <div className="flex items-center gap-2 mb-3">
         <Brain className="h-4 w-4 text-elec-yellow" />
-        <h3 className="text-sm font-semibold text-white">AI Reasoning Process</h3>
+        <h3 className="text-sm font-semibold text-foreground">AI Reasoning Process</h3>
       </div>
       
       <div className="space-y-2">
@@ -63,7 +63,7 @@ export const ReasoningPanel = ({ steps, isVisible }: ReasoningPanelProps) => {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-base">{agentIcons[step.agent] || '🤖'}</span>
-                <span className="text-sm font-medium text-white">
+                <span className="text-sm font-medium text-foreground">
                   {agentNames[step.agent] || step.agent}
                 </span>
                 <Badge 

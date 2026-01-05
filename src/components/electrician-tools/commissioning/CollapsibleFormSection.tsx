@@ -35,13 +35,13 @@ export const CollapsibleFormSection = ({
             <div className="flex-1 min-w-0 text-left">
               <h3 className="text-base sm:text-lg font-semibold">{title}</h3>
               {subtitle && (
-                <p className="text-xs sm:text-sm text-white mt-0.5">{subtitle}</p>
+                <p className="text-xs sm:text-sm text-foreground mt-0.5">{subtitle}</p>
               )}
             </div>
             {badge && (
               <span className={cn(
                 "text-xs px-2 py-1 rounded-md flex-shrink-0 hidden xs:inline-block",
-                badge === 'optional' && "bg-muted text-white",
+                badge === 'optional' && "bg-muted text-foreground",
                 badge === 'configured' && "bg-purple-500/10 text-purple-400 border border-purple-500/20"
               )}>
                 {badgeText || (badge === 'optional' ? 'Optional' : '✓ Active')}
@@ -49,7 +49,7 @@ export const CollapsibleFormSection = ({
             )}
           </div>
           <ChevronDown className={cn(
-            "h-5 w-5 text-white transition-transform duration-200 flex-shrink-0 ml-2",
+            "h-5 w-5 text-foreground transition-transform duration-200 flex-shrink-0 ml-2",
             isOpen && "rotate-180"
           )} />
         </CollapsibleTrigger>

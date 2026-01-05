@@ -381,7 +381,7 @@ const AIEnhancedToolPriceComparison = ({
   return (
     <div className="space-y-6">
       <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold text-white">AI-Powered Tool Price Comparison</h2>
+        <h2 className="text-3xl font-bold text-foreground">AI-Powered Tool Price Comparison</h2>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
           Compare tool prices across multiple suppliers with intelligent voltage compatibility and professional recommendations
         </p>

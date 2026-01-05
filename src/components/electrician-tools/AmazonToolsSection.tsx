@@ -44,7 +44,7 @@ const AmazonToolsSection = () => {
   return (
     <Card className="border-amber-500/20 bg-gradient-to-br from-amber-500/5 to-blue-500/5">
       <CardHeader>
-        <CardTitle className="text-lg text-white flex items-center gap-2">
+        <CardTitle className="text-lg text-foreground flex items-center gap-2">
           <Package className="h-5 w-5 text-amber-400" />
           Amazon Business
           <Badge className="bg-amber-500/20 text-amber-400">Prime</Badge>
@@ -60,7 +60,7 @@ const AmazonToolsSection = () => {
             <div className="flex items-start gap-3">
               <div className="text-2xl">{deal.image}</div>
               <div className="flex-1 min-w-0">
-                <h4 className="font-medium text-white text-sm leading-tight mb-1">
+                <h4 className="font-medium text-foreground text-sm leading-tight mb-1">
                   {deal.title}
                 </h4>
                 

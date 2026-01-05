@@ -556,6 +556,111 @@ const ThreePhasePowerCalculator = () => {
               )}
             </div>
 
+            {/* How It Worked Out - Step-by-step calculation breakdown */}
+            {result && (
+              <Card className="border-purple-500/30 bg-purple-500/5">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-purple-300 text-base flex items-center gap-2">
+                    <Calculator className="h-4 w-4" />
+                    How It Worked Out
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4 text-sm">
+                  {/* Step 1: Input values */}
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 1: Your Input Values</p>
+                    <div className="bg-purple-500/10 rounded p-3 space-y-1 text-purple-100 font-mono text-xs">
+                      <p>Connection: {connection === "star" ? "Star (Y)" : "Delta (Δ)"}</p>
+                      <p>Voltage: {voltage}V ({voltageType === "line-line" ? "Line-to-Line" : "Line-to-Neutral"})</p>
+                      <p>Current: {current}A ({currentType === "line" ? "Line" : "Phase"})</p>
+                      <p>Power Factor: {powerFactor} {pfType}</p>
+                      <p>Frequency: {frequency}Hz</p>
+                    </div>
+                  </div>
+
+                  {/* Step 2: Normalize to line values */}
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 2: Normalize to Line Values</p>
+                    <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs space-y-1">
+                      {voltageType === "line-neutral" ? (
+                        <p>VLL = VLN × √3 = {voltage} × 1.732 = {result.lineVoltage.toFixed(1)}V</p>
+                      ) : (
+                        <p>VLL = {voltage}V (already line-to-line)</p>
+                      )}
+                      {currentType === "phase" && connection === "delta" ? (
+                        <p>IL = IP × √3 = {current} × 1.732 = {result.lineCurrent.toFixed(2)}A</p>
+                      ) : (
+                        <p>IL = {current}A (line current)</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Step 3: Calculate apparent power */}
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 3: Three-Phase Apparent Power</p>
+                    <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs">
+                      <p>S = √3 × VLL × IL</p>
+                      <p>S = 1.732 × {result.lineVoltage.toFixed(1)} × {result.lineCurrent.toFixed(2)}</p>
+                      <p className="text-purple-300">S = {(result.apparentPower * 1000).toFixed(0)}VA = {result.apparentPower.toFixed(2)} kVA</p>
+                    </div>
+                  </div>
+
+                  {/* Step 4: Calculate active and reactive power */}
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 4: Power Triangle</p>
+                    <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs space-y-1">
+                      <p>P = S × cos(φ) = {result.apparentPower.toFixed(2)} × {powerFactor}</p>
+                      <p className="text-purple-300">P = {result.activePower.toFixed(2)} kW (Active Power)</p>
+                      <p className="mt-2">Q = S × sin(φ) = {result.apparentPower.toFixed(2)} × sin({result.phaseAngle.toFixed(1)}°)</p>
+                      <p className="text-purple-300">Q = {Math.abs(result.reactivePower).toFixed(2)} kVAR (Reactive Power)</p>
+                    </div>
+                  </div>
+
+                  {/* Step 5: Per-phase values */}
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 5: Per-Phase Values ({connection === "star" ? "Star" : "Delta"})</p>
+                    <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs space-y-1">
+                      {connection === "star" ? (
+                        <>
+                          <p>VP = VLL / √3 = {result.lineVoltage.toFixed(1)} / 1.732 = {result.phaseVoltage.toFixed(1)}V</p>
+                          <p>IP = IL = {result.phaseCurrent.toFixed(2)}A (Star: line = phase current)</p>
+                        </>
+                      ) : (
+                        <>
+                          <p>VP = VLL = {result.phaseVoltage.toFixed(1)}V (Delta: line = phase voltage)</p>
+                          <p>IP = IL / √3 = {result.lineCurrent.toFixed(2)} / 1.732 = {result.phaseCurrent.toFixed(2)}A</p>
+                        </>
+                      )}
+                      <p className="text-purple-300 mt-1">Power per phase = {result.perPhase.power.toFixed(2)} kW</p>
+                    </div>
+                  </div>
+
+                  {/* Power factor correction if applicable */}
+                  {result.correctionCapacitor && (
+                    <div className="space-y-2">
+                      <p className="text-purple-200 font-medium">Step 6: Power Factor Correction</p>
+                      <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs">
+                        <p>Qc = P × (tan(φ1) - tan(φ2))</p>
+                        <p>Qc = {result.activePower.toFixed(2)} × (tan({result.phaseAngle.toFixed(1)}°) - tan({(Math.acos(parseFloat(targetPf)) * 180 / Math.PI).toFixed(1)}°))</p>
+                        <p className="text-green-400">Capacitor needed: {result.correctionCapacitor.toFixed(2)} kVAR</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Verification */}
+                  <div className="bg-purple-500/10 rounded p-3 border border-purple-500/30">
+                    <p className="text-purple-200 font-medium mb-2">Power Triangle Verification:</p>
+                    <p className="text-purple-100 font-mono text-xs">
+                      S² = P² + Q² → {result.apparentPower.toFixed(2)}² = {result.activePower.toFixed(2)}² + {Math.abs(result.reactivePower).toFixed(2)}²
+                    </p>
+                    <p className="text-purple-100 font-mono text-xs">
+                      {(result.apparentPower * result.apparentPower).toFixed(2)} ≈ {(result.activePower * result.activePower + result.reactivePower * result.reactivePower).toFixed(2)} ✓
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* BS 7671 Guidance */}
             <div className="space-y-4">
               <Alert className="border-blue-500/20 bg-blue-500/10">

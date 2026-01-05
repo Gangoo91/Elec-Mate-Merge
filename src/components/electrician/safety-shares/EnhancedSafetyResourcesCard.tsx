@@ -138,7 +138,7 @@ const EnhancedSafetyResourcesCard = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Enhanced Safety Resources</h2>
+          <h2 className="text-2xl font-bold text-foreground">Enhanced Safety Resources</h2>
           <p className="text-muted-foreground">Interactive safety resources with ratings, bookmarks, and download tracking</p>
         </div>
         <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
@@ -207,7 +207,7 @@ const EnhancedSafetyResourcesCard = () => {
                       <Badge className={getTypeColor(resource.type)}>
                         {resource.type.replace("-", " ").toUpperCase()}
                       </Badge>
-                      <Badge variant="outline" className="border-elec-yellow/30 text-white">
+                      <Badge variant="outline" className="border-elec-yellow/30 text-foreground">
                         {resource.category}
                       </Badge>
                       <div className="flex items-center gap-1">
@@ -215,7 +215,7 @@ const EnhancedSafetyResourcesCard = () => {
                         <span className="text-xs text-muted-foreground ml-1">({resource.rating})</span>
                       </div>
                     </div>
-                    <CardTitle className="text-white text-lg mb-2">
+                    <CardTitle className="text-foreground text-lg mb-2">
                       {resource.title}
                     </CardTitle>
                     <p className="text-gray-300 text-sm">
@@ -278,7 +278,7 @@ const EnhancedSafetyResourcesCard = () => {
       )}
 
       <div className="text-center pt-4">
-        <Button variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
+        <Button variant="outline" className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10">
           Browse All Resources
         </Button>
       </div>

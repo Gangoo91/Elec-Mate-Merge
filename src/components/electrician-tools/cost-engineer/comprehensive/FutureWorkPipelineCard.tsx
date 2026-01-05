@@ -22,7 +22,7 @@ const FutureWorkPipelineCard = ({ pipeline }: FutureWorkPipelineCardProps) => {
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+          <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
             <Target className="h-5 w-5 text-elec-yellow" />
             Future Work Pipeline
           </CardTitle>
@@ -36,7 +36,7 @@ const FutureWorkPipelineCard = ({ pipeline }: FutureWorkPipelineCardProps) => {
           {pipeline.map((item, idx) => (
             <div key={idx} className="p-4 rounded-lg bg-background/30 border border-border/30 text-left space-y-3">
               <div className="flex items-start justify-between gap-3">
-                <div className="font-medium text-white text-base leading-snug flex-1">
+                <div className="font-medium text-foreground text-base leading-snug flex-1">
                   {item.opportunity}
                 </div>
                 <Badge className={getPriorityColor(item.priority)}>
@@ -44,11 +44,11 @@ const FutureWorkPipelineCard = ({ pipeline }: FutureWorkPipelineCardProps) => {
                 </Badge>
               </div>
               
-              <div className="text-base text-white leading-relaxed">
+              <div className="text-base text-foreground leading-relaxed">
                 {item.description}
               </div>
               
-              <div className="space-y-2 text-sm text-white">
+              <div className="space-y-2 text-sm text-foreground">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                   <span>{item.timing}</span>
@@ -62,8 +62,8 @@ const FutureWorkPipelineCard = ({ pipeline }: FutureWorkPipelineCardProps) => {
                 
                 {item.trigger && (
                   <div className="flex items-start gap-2 pt-1">
-                    <span className="text-white/70 flex-shrink-0">Trigger:</span>
-                    <span className="text-white">{item.trigger}</span>
+                    <span className="text-foreground/70 flex-shrink-0">Trigger:</span>
+                    <span className="text-foreground">{item.trigger}</span>
                   </div>
                 )}
               </div>

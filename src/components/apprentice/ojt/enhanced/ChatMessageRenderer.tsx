@@ -13,155 +13,218 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
     }
 
     // Split into lines and process each one
-    const lines = text.split('\n').filter(line => line.trim().length > 0);
-    
+    const lines = text.split('\n');
+
     return lines.map((line, index) => {
       const trimmed = line.trim();
-      
-      if (!trimmed) return null;
-      
-      // Enhanced regex patterns for better detection
-      const technicalTerms = /\b(RCD|RCBO|MCB|MCCB|RCM|AFDD|SPD|CU|DB|EICR|PIR|EIC|PAT|Zs|Ze|Zdb|PFC|PSCC|TN-S|TN-C-S|TT|IT|IP\d{2}|CSA|CPC|PME|SWA|MICC|FP200|XLPE|PVC|LSZH|BS\s*7671|IET|Part\s*P)\b/gi;
+
+      // Empty lines create spacing
+      if (!trimmed) {
+        return <div key={index} className="h-2" />;
+      }
+
+      // Enhanced regex patterns
+      const technicalTerms = /\b(RCD|RCBO|MCB|MCCB|RCM|AFDD|SPD|CU|DB|EICR|PIR|EIC|PAT|Zs|Ze|Zdb|PFC|PSCC|TN-S|TN-C-S|TT|IT|IP\d{2}|CSA|CPC|PME|SWA|MICC|FP200|XLPE|PVC|LSZH|BS\s*7671|IET|Part\s*P|SELV|PELV|FELV)\b/gi;
       const measurements = /\b(\d+(?:\.\d+)?)\s*(A|mA|V|kV|W|kW|VA|kVA|Ω|mΩ|mm²?|m|cm|Hz|°C|lx|lm|cd)\b/g;
-      const regulationNumbers = /\b(\d{3}\.\d+(?:\.\d+)?)\b/g;
-      
-      // Detect section headers with emojis (like "⚡ Key Points:")
+      const regulationNumbers = /\b(\d{3}\.\d+(?:\.\d+)?(?:\.\d+)?)\b/g;
+
+      // Process markdown-style bold **text**
+      const processBold = (text: string) => {
+        return text.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-elec-yellow font-semibold">$1</strong>');
+      };
+
+      // Horizontal rule ---
+      if (trimmed === '---' || trimmed === '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━') {
+        return <hr key={index} className="border-elec-yellow/30 my-4" />;
+      }
+
+      // Main headers with ###
+      if (trimmed.startsWith('### ')) {
+        const headerText = trimmed.replace('### ', '');
+        return (
+          <h3 key={index} className="text-lg font-bold text-elec-yellow mt-4 mb-2 flex items-center gap-2">
+            {headerText}
+          </h3>
+        );
+      }
+
+      // Sub headers with **Header**
+      if (trimmed.match(/^\*\*[^*]+\*\*\s*[-–]?\s*$/)) {
+        const headerText = trimmed.replace(/\*\*/g, '').replace(/[-–]\s*$/, '').trim();
+        return (
+          <h4 key={index} className="text-base font-semibold text-white mt-4 mb-2 border-l-2 border-elec-yellow pl-3">
+            {headerText}
+          </h4>
+        );
+      }
+
+      // Regulation headers: **Regulation 411.3.2** - Title
+      if (trimmed.match(/^\*\*Regulation\s+[\d.]+\*\*/i)) {
+        const processed = processBold(trimmed);
+        return (
+          <div key={index} className="mt-4 mb-2 p-3 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border-l-4 border-purple-500 rounded-r-lg">
+            <p className="font-semibold text-white" dangerouslySetInnerHTML={{ __html: processed }} />
+          </div>
+        );
+      }
+
+      // Step headers: **Step 1: Action**
+      if (trimmed.match(/^\*\*Step\s+\d+:/i)) {
+        const processed = processBold(trimmed);
+        return (
+          <div key={index} className="mt-3 mb-1">
+            <p className="font-semibold text-elec-yellow" dangerouslySetInnerHTML={{ __html: processed }} />
+          </div>
+        );
+      }
+
+      // Blockquotes > text
+      if (trimmed.startsWith('> ')) {
+        const quoteText = trimmed.replace('> ', '');
+        return (
+          <blockquote key={index} className="border-l-4 border-elec-yellow/50 pl-4 py-2 my-2 bg-elec-yellow/5 rounded-r italic text-gray-300">
+            {quoteText}
+          </blockquote>
+        );
+      }
+
+      // Section headers with emoji (like ⚡ Key Points:)
       if (trimmed.match(/^[⚡🔧⚠️📋💡🎯📖🔍✅❓🚨📊🎓💪🛠️⭐]\s+[A-Z][^:]*:/)) {
         return (
-          <div key={index} className="mb-4 mt-6 first:mt-0">
-            <h4 className="text-elec-yellow font-semibold text-lg mb-3 flex items-center gap-2 border-b border-elec-yellow/20 pb-2">
+          <div key={index} className="mb-3 mt-5 first:mt-0">
+            <h4 className="text-elec-yellow font-semibold text-base flex items-center gap-2 border-b border-elec-yellow/20 pb-2">
               {trimmed}
             </h4>
           </div>
         );
       }
-      
-      // Detect main section headers (ANALYSIS, REGULATIONS, etc.)
-      if (trimmed.match(/^(ANALYSIS|REGULATIONS?|TECHNICAL|COMPLIANCE|CALCULATION|SIZING|ASSESSMENT|RECOMMENDATION):?$/i)) {
+
+      // Warning/Important boxes with ⚠️
+      if (trimmed.startsWith('**⚠️') || (trimmed.includes('⚠️') && trimmed.includes('Important'))) {
+        const warningText = trimmed.replace(/\*\*/g, '').replace('⚠️', '').trim();
         return (
-          <div key={index} className="mb-4 mt-6 first:mt-0">
-            <h3 className="text-elec-yellow font-bold text-xl mb-4 flex items-center gap-2 border-l-4 border-elec-yellow pl-4">
-              {trimmed.includes('ANALYSIS') && '🔍'}
-              {trimmed.includes('REGULATION') && '📖'}
-              {trimmed.includes('TECHNICAL') && '⚡'}
-              {trimmed.includes('COMPLIANCE') && '✅'}
-              {trimmed.includes('CALCULATION') && '📊'}
-              {trimmed.includes('SIZING') && '📏'}
-              {trimmed.includes('ASSESSMENT') && '🎯'}
-              {trimmed.includes('RECOMMENDATION') && '💡'}
-              <span className="ml-2">{trimmed}</span>
-            </h3>
+          <div key={index} className="my-3 p-3 bg-gradient-to-r from-amber-500/15 to-orange-500/15 border border-amber-500/40 rounded-lg">
+            <div className="flex items-start gap-2">
+              <span className="text-amber-400 text-lg shrink-0">⚠️</span>
+              <p className="text-amber-100 font-medium text-sm">{warningText}</p>
+            </div>
           </div>
         );
       }
-      
-      // Detect numbered steps (1. 2. 3. etc.)
+
+      // Key requirements header
+      if (trimmed.match(/^\*\*Key requirements:\*\*$/i)) {
+        return (
+          <p key={index} className="text-sm font-semibold text-gray-400 mt-3 mb-2 uppercase tracking-wide">
+            Key Requirements
+          </p>
+        );
+      }
+
+      // Numbered steps (1. 2. 3.)
       if (trimmed.match(/^\d+\.\s+/)) {
+        const stepNum = trimmed.match(/^(\d+)\./)?.[1];
         const stepText = trimmed.replace(/^\d+\.\s+/, '');
-        const processedText = stepText
-          .replace(technicalTerms, '<span class="px-1.5 py-0.5 bg-blue-500/20 text-blue-200 rounded font-medium">$&</span>')
-          .replace(measurements, '<span class="px-1 py-0.5 bg-green-500/20 text-green-200 rounded text-sm font-mono">$&</span>')
-          .replace(regulationNumbers, '<span class="px-1.5 py-0.5 bg-purple-500/20 text-purple-200 rounded font-semibold">$&</span>');
-        
+        let processed = processBold(stepText);
+        processed = processed
+          .replace(technicalTerms, '<span class="px-1 py-0.5 bg-blue-500/20 text-blue-300 rounded text-sm font-medium">$&</span>')
+          .replace(measurements, '<span class="px-1 py-0.5 bg-green-500/20 text-green-300 rounded text-xs font-mono">$&</span>');
+
         return (
-          <div key={index} className="mb-4 ml-4 p-3 bg-gray-800/50 rounded-lg border border-gray-600/30">
-            <div className="leading-relaxed text-gray-100 flex items-start gap-3">
-              <span className="text-elec-yellow font-bold text-lg min-w-fit bg-elec-yellow/10 px-2 py-1 rounded">
-                {trimmed.match(/^\d+\./)?.[0]}
-              </span>
-              <span dangerouslySetInnerHTML={{ __html: processedText }} className="flex-1" />
+          <div key={index} className="mb-2 flex items-start gap-3">
+            <span className="text-elec-yellow font-bold text-sm bg-elec-yellow/10 w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+              {stepNum}
+            </span>
+            <span className="text-gray-200 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
+          </div>
+        );
+      }
+
+      // Bullet points (- or • or *)
+      if (trimmed.match(/^[-•*]\s+/)) {
+        const bulletText = trimmed.replace(/^[-•*]\s+/, '');
+        let processed = processBold(bulletText);
+        processed = processed
+          .replace(technicalTerms, '<span class="px-1 py-0.5 bg-blue-500/20 text-blue-300 rounded text-sm font-medium">$&</span>')
+          .replace(measurements, '<span class="px-1 py-0.5 bg-green-500/20 text-green-300 rounded text-xs font-mono">$&</span>')
+          .replace(regulationNumbers, '<span class="px-1 py-0.5 bg-purple-500/20 text-purple-300 rounded text-xs font-semibold">$&</span>');
+
+        return (
+          <div key={index} className="mb-1.5 flex items-start gap-2 ml-1">
+            <span className="text-elec-yellow text-xs mt-1.5">●</span>
+            <span className="text-gray-200 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
+          </div>
+        );
+      }
+
+      // Follow-up questions (usually at the end, starts with question words or contains ?)
+      if ((trimmed.match(/^(Does|Do|Have|Has|Is|Are|What|Would|Could|Can|Should|Want|Did)\s/i) || trimmed.endsWith('?')) && index > lines.length - 5) {
+        return (
+          <div key={index} className="mt-4 p-3 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-lg">
+            <div className="flex items-start gap-2">
+              <span className="text-amber-400 text-base shrink-0">💬</span>
+              <p className="text-amber-100 text-sm italic">{trimmed}</p>
             </div>
           </div>
         );
       }
-      
-      // Detect bullet points (- or • )
-      if (trimmed.match(/^[-•]\s+/)) {
-        const bulletText = trimmed.replace(/^[-•]\s+/, '');
-        const processedText = bulletText
-          .replace(technicalTerms, '<span class="px-1.5 py-0.5 bg-blue-500/20 text-blue-200 rounded font-medium">$&</span>')
-          .replace(measurements, '<span class="px-1 py-0.5 bg-green-500/20 text-green-200 rounded text-sm font-mono">$&</span>')
-          .replace(regulationNumbers, '<span class="px-1.5 py-0.5 bg-purple-500/20 text-purple-200 rounded font-semibold">$&</span>');
-        
+
+      // Regulations/code references in text
+      if (trimmed.match(/BS\s*7671|regulation\s+\d|clause|Section\s*\d+/i)) {
+        let processed = processBold(trimmed);
+        processed = processed
+          .replace(regulationNumbers, '<span class="px-1.5 py-0.5 bg-purple-500/25 text-purple-300 rounded font-semibold">$&</span>')
+          .replace(/BS\s*7671/gi, '<span class="px-1.5 py-0.5 bg-blue-500/25 text-blue-300 rounded font-semibold">$&</span>');
+
         return (
-          <div key={index} className="mb-2 ml-4">
-            <div className="leading-relaxed text-gray-100 flex items-start gap-3 p-2 hover:bg-gray-800/30 rounded">
-              <span className="text-elec-yellow text-lg">•</span>
-              <span dangerouslySetInnerHTML={{ __html: processedText }} className="flex-1" />
-            </div>
+          <p key={index} className="mb-2 text-sm text-gray-200 leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
+        );
+      }
+
+      // Checkmarks and X marks
+      if (trimmed.startsWith('✅') || trimmed.startsWith('✓')) {
+        return (
+          <div key={index} className="mb-1.5 flex items-start gap-2 ml-1">
+            <span className="text-green-400 text-sm shrink-0">✓</span>
+            <span className="text-gray-200 text-sm">{trimmed.replace(/^[✅✓]\s*/, '')}</span>
           </div>
         );
       }
-      
-      // Detect safety warnings (lines with ⚠️ but not headers)
-      if (trimmed.includes('⚠️') && !trimmed.match(/^⚠️\s+[A-Z][^:]*:/)) {
+
+      if (trimmed.startsWith('❌') || trimmed.startsWith('✗')) {
         return (
-          <div key={index} className="mb-4 p-4 bg-gradient-to-r from-orange-500/15 to-red-500/15 border border-orange-500/40 rounded-lg shadow-lg">
-            <div className="flex items-start gap-3">
-              <span className="text-orange-400 text-xl">⚠️</span>
-              <p className="leading-relaxed text-orange-100 font-medium flex-1">
-                {trimmed.replace('⚠️', '').trim()}
-              </p>
-            </div>
+          <div key={index} className="mb-1.5 flex items-start gap-2 ml-1">
+            <span className="text-red-400 text-sm shrink-0">✗</span>
+            <span className="text-gray-200 text-sm">{trimmed.replace(/^[❌✗]\s*/, '')}</span>
           </div>
         );
       }
-      
-      // Detect regulations/code references
-      if (trimmed.match(/BS\s*7671|regulation|clause|IET|Part\s*\d+|Chapter\s*\d+|Section\s*\d+|Appendix\s*\d+/i)) {
-        const processedText = trimmed
-          .replace(regulationNumbers, '<span class="px-2 py-1 bg-purple-500/30 text-purple-200 rounded font-bold">$&</span>')
-          .replace(/BS\s*7671/gi, '<span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded font-bold">$&</span>')
-          .replace(/(Part|Chapter|Section|Appendix)\s*(\d+)/gi, '<span class="px-2 py-1 bg-indigo-500/30 text-indigo-200 rounded font-semibold">$&</span>');
-        
-        return (
-          <div key={index} className="mb-3 p-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/30 rounded-lg">
-            <div className="flex items-start gap-3">
-              <span className="text-blue-400 text-lg">📖</span>
-              <p className="leading-relaxed text-blue-100 text-sm w-full" dangerouslySetInnerHTML={{ __html: processedText }} />
-            </div>
-          </div>
-        );
-      }
-      
-      // Detect calculations and formulas
-      if (trimmed.match(/[=×÷+\-]\s*\d+|formula|equation|calculate/i) || trimmed.includes('=')) {
-        return (
-          <div key={index} className="mb-3 p-4 bg-gradient-to-r from-green-500/10 to-teal-500/10 border border-green-500/30 rounded-lg">
-            <div className="flex items-start gap-3">
-              <span className="text-green-400 text-lg">🧮</span>
-              <p className="leading-relaxed text-green-100 font-mono text-sm w-full">
-                {trimmed}
-              </p>
-            </div>
-          </div>
-        );
-      }
-      
+
       // Regular paragraphs with enhanced formatting
-      const processedText = trimmed
-        .replace(technicalTerms, '<span class="px-1.5 py-0.5 bg-blue-500/20 text-blue-200 rounded font-medium">$&</span>')
-        .replace(measurements, '<span class="px-1 py-0.5 bg-green-500/20 text-green-200 rounded text-sm font-mono">$&</span>')
-        .replace(regulationNumbers, '<span class="px-1.5 py-0.5 bg-purple-500/20 text-purple-200 rounded font-semibold">$&</span>');
-      
+      let processed = processBold(trimmed);
+      processed = processed
+        .replace(technicalTerms, '<span class="px-1 py-0.5 bg-blue-500/15 text-blue-300 rounded text-sm">$&</span>')
+        .replace(measurements, '<span class="px-1 py-0.5 bg-green-500/15 text-green-300 rounded text-xs font-mono">$&</span>')
+        .replace(regulationNumbers, '<span class="px-1 py-0.5 bg-purple-500/15 text-purple-300 rounded text-xs font-medium">$&</span>');
+
       return (
-        <p key={index} className="mb-4 last:mb-0 leading-relaxed text-gray-100" dangerouslySetInnerHTML={{ __html: processedText }} />
+        <p key={index} className="mb-2 text-sm text-gray-200 leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
       );
     }).filter(Boolean);
   };
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-6`}>
-      <div className={`max-w-[85%] rounded-xl p-5 ${
-        isUser 
-          ? 'bg-elec-yellow text-elec-gray ml-4 shadow-lg' 
-          : 'bg-gradient-to-br from-elec-gray to-gray-800 border border-gray-600 mr-4 shadow-xl'
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
+      <div className={`max-w-[90%] rounded-xl ${
+        isUser
+          ? 'bg-elec-yellow text-elec-gray px-4 py-3 shadow-lg'
+          : 'bg-gradient-to-br from-gray-800/90 to-gray-900/90 border border-gray-700/50 px-4 py-4 shadow-xl'
       }`}>
         <div className={`${isUser ? 'text-elec-gray' : 'text-white'}`}>
           {isUser ? (
-            <p className="leading-relaxed font-medium">{content}</p>
+            <p className="leading-relaxed text-sm font-medium">{content}</p>
           ) : (
-            <div className="space-y-1">
+            <div className="space-y-0">
               {formatContent(content)}
             </div>
           )}

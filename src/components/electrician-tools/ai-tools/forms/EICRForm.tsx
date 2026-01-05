@@ -235,10 +235,10 @@ export const EICRForm = ({ onFormChange }: EICRFormProps) => {
           error={errors.extentOfInspection?.message}
         />
         <div className="space-y-2">
-          <label className="text-sm font-medium text-white">Limitations</label>
+          <label className="text-sm font-medium text-foreground">Limitations</label>
           <Textarea
             placeholder="Enter any limitations encountered during inspection"
-            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={watchedValues.limitations || ""}
             onChange={(e) => setValue("limitations", e.target.value)}
           />
@@ -261,10 +261,10 @@ export const EICRForm = ({ onFormChange }: EICRFormProps) => {
         
         {watchedValues.faultsFound === "c1-only" || watchedValues.faultsFound === "mixed" ? (
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">C1 Faults (Danger Present)</label>
+            <label className="text-sm font-medium text-foreground">C1 Faults (Danger Present)</label>
             <Textarea
               placeholder="Describe C1 faults found"
-              className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+              className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
               value={watchedValues.c1Faults || ""}
               onChange={(e) => setValue("c1Faults", e.target.value)}
             />
@@ -273,10 +273,10 @@ export const EICRForm = ({ onFormChange }: EICRFormProps) => {
 
         {watchedValues.faultsFound === "c2-only" || watchedValues.faultsFound === "mixed" ? (
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">C2 Faults (Potentially Dangerous)</label>
+            <label className="text-sm font-medium text-foreground">C2 Faults (Potentially Dangerous)</label>
             <Textarea
               placeholder="Describe C2 faults found"
-              className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+              className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
               value={watchedValues.c2Faults || ""}
               onChange={(e) => setValue("c2Faults", e.target.value)}
             />
@@ -285,10 +285,10 @@ export const EICRForm = ({ onFormChange }: EICRFormProps) => {
 
         {watchedValues.faultsFound === "c3-only" || watchedValues.faultsFound === "mixed" ? (
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">C3 Faults (Improvement Recommended)</label>
+            <label className="text-sm font-medium text-foreground">C3 Faults (Improvement Recommended)</label>
             <Textarea
               placeholder="Describe C3 faults found"
-              className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+              className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
               value={watchedValues.c3Faults || ""}
               onChange={(e) => setValue("c3Faults", e.target.value)}
             />
@@ -297,10 +297,10 @@ export const EICRForm = ({ onFormChange }: EICRFormProps) => {
 
         {watchedValues.faultsFound === "fi-only" || watchedValues.faultsFound === "mixed" ? (
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">FI (Further Investigation)</label>
+            <label className="text-sm font-medium text-foreground">FI (Further Investigation)</label>
             <Textarea
               placeholder="Describe areas requiring further investigation"
-              className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+              className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
               value={watchedValues.fiImprovements || ""}
               onChange={(e) => setValue("fiImprovements", e.target.value)}
             />

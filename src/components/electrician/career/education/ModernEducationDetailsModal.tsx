@@ -25,7 +25,7 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
       "HNC": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
       "HND": "bg-pink-500/20 border-pink-500/30 text-pink-300",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getLevelColor = (level: string) => {
@@ -36,7 +36,7 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
       "Level 6": "bg-red-500/20 border-red-500/30 text-red-300",
       "Level 7": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
     };
-    return colors[level as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[level as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getCategoryImage = (category: string) => {
@@ -91,7 +91,7 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-elec-card to-elec-card/80 border-elec-yellow/20 text-white">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-elec-card to-elec-card/80 border-elec-yellow/20 text-foreground">
         <DialogHeader className="sr-only">
           <h2>Programme Details</h2>
         </DialogHeader>
@@ -100,7 +100,7 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
         <Button
           variant="ghost"
           size="sm"
-          className="absolute right-4 top-4 text-white/80 hover:text-white hover:bg-white/10 z-10"
+          className="absolute right-4 top-4 text-foreground/80 hover:text-foreground hover:bg-white/10 z-10"
           onClick={() => onOpenChange(false)}
         >
           <X className="h-4 w-4" />
@@ -128,7 +128,7 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
 
             {/* Title & Institution */}
             <div className="absolute bottom-4 left-4 right-4">
-              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2 leading-tight">
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 leading-tight">
                 {programme.title}
               </h1>
               <p className="text-elec-yellow text-lg font-semibold">
@@ -142,23 +142,23 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
           <div className="bg-white/5 rounded-lg p-4 text-center">
             <Star className="h-5 w-5 fill-yellow-400 text-yellow-400 mx-auto mb-2" />
-            <div className="text-xl font-bold text-white">{programme.rating.toFixed(1)}</div>
-            <div className="text-xs text-white/80">Rating</div>
+            <div className="text-xl font-bold text-foreground">{programme.rating.toFixed(1)}</div>
+            <div className="text-xs text-foreground/80">Rating</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 text-center">
             <GraduationCap className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
-            <div className="text-xl font-bold text-white">{programme.employmentRate}%</div>
-            <div className="text-xs text-white/80">Employment</div>
+            <div className="text-xl font-bold text-foreground">{programme.employmentRate}%</div>
+            <div className="text-xs text-foreground/80">Employment</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 text-center">
             <Clock className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
-            <div className="text-lg font-bold text-white">{formatDuration(programme.duration)}</div>
-            <div className="text-xs text-white/80">Duration</div>
+            <div className="text-lg font-bold text-foreground">{formatDuration(programme.duration)}</div>
+            <div className="text-xs text-foreground/80">Duration</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 text-center">
             <BookOpen className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
-            <div className="text-lg font-bold text-white">{programme.studyMode}</div>
-            <div className="text-xs text-white/80">Study Mode</div>
+            <div className="text-lg font-bold text-foreground">{programme.studyMode}</div>
+            <div className="text-xs text-foreground/80">Study Mode</div>
           </div>
         </div>
 
@@ -168,17 +168,17 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
           <div className="lg:col-span-2 space-y-6">
             {/* Description */}
             <div>
-              <h3 className="text-lg font-semibold text-white mb-3">Programme Overview</h3>
-              <p className="text-white/90 leading-relaxed">{programme.description}</p>
+              <h3 className="text-lg font-semibold text-foreground mb-3">Programme Overview</h3>
+              <p className="text-foreground/90 leading-relaxed">{programme.description}</p>
             </div>
 
             {/* Key Topics */}
             {programme.keyTopics.length > 0 && (
               <div>
-                <h3 className="text-lg font-semibold text-white mb-3">Key Topics Covered</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-3">Key Topics Covered</h3>
                 <div className="flex flex-wrap gap-2">
                   {programme.keyTopics.map((topic, index) => (
-                    <Badge key={index} variant="outline" className="text-white/80 border-white/20">
+                    <Badge key={index} variant="outline" className="text-foreground/80 border-white/20">
                       {topic}
                     </Badge>
                   ))}
@@ -189,10 +189,10 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
             {/* Requirements */}
             {programme.entryRequirements.length > 0 && (
               <div>
-                <h3 className="text-lg font-semibold text-white mb-3">Entry Requirements</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-3">Entry Requirements</h3>
                 <ul className="space-y-2">
                   {programme.entryRequirements.map((requirement, index) => (
-                    <li key={index} className="flex items-start gap-2 text-white/90">
+                    <li key={index} className="flex items-start gap-2 text-foreground/90">
                       <ArrowRight className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>{requirement}</span>
                     </li>
@@ -204,13 +204,13 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
             {/* Career Outcomes / Progression Options */}
             {programme.progressionOptions.length > 0 && (
               <div>
-                <h3 className="text-lg font-semibold text-white mb-3">Progression Opportunities</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-3">Progression Opportunities</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {programme.progressionOptions.map((option, index) => (
                     <div key={index} className="bg-white/5 rounded-lg p-3">
                       <div className="flex items-center gap-2">
                         <TrendingUp className="h-4 w-4 text-elec-yellow" />
-                        <span className="text-white/90 text-sm">{option}</span>
+                        <span className="text-foreground/90 text-sm">{option}</span>
                       </div>
                     </div>
                   ))}
@@ -223,15 +223,15 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
           <div className="space-y-6">
             {/* Cost & Financial Info */}
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-white mb-3">Financial Information</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-3">Financial Information</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-white/80">Tuition Fees:</span>
-                  <span className="text-white font-semibold">{programme.tuitionFees}</span>
+                  <span className="text-foreground/80">Tuition Fees:</span>
+                  <span className="text-foreground font-semibold">{programme.tuitionFees}</span>
                 </div>
                 {programme.averageStartingSalary && (
                   <div className="flex justify-between">
-                    <span className="text-white/80">Starting Salary:</span>
+                    <span className="text-foreground/80">Starting Salary:</span>
                     <span className="text-elec-yellow font-semibold">{programme.averageStartingSalary}</span>
                   </div>
                 )}
@@ -241,10 +241,10 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
             {/* Locations */}
             {programme.locations.length > 0 && (
               <div className="bg-white/5 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-white mb-3">Study Locations</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-3">Study Locations</h3>
                 <div className="space-y-2">
                   {programme.locations.map((location, index) => (
-                    <div key={index} className="flex items-center gap-2 text-white/90">
+                    <div key={index} className="flex items-center gap-2 text-foreground/90">
                       <MapPin className="h-4 w-4 text-elec-yellow" />
                       <span className="text-sm">{location}</span>
                     </div>
@@ -256,8 +256,8 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
             {/* Next Intake */}
             {programme.nextIntake && (
               <div className="bg-white/5 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-white mb-3">Next Intake</h3>
-                <div className="flex items-center gap-2 text-white/90">
+                <h3 className="text-lg font-semibold text-foreground mb-3">Next Intake</h3>
+                <div className="flex items-center gap-2 text-foreground/90">
                   <Calendar className="h-4 w-4 text-elec-yellow" />
                   <span className="text-sm">{programme.nextIntake}</span>
                 </div>
@@ -267,10 +267,10 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
             {/* Funding Options */}
             {programme.fundingOptions.length > 0 && (
               <div className="bg-white/5 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-white mb-3">Funding Options</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-3">Funding Options</h3>
                 <div className="space-y-2">
                   {programme.fundingOptions.map((option, index) => (
-                    <div key={index} className="flex items-center gap-2 text-white/90">
+                    <div key={index} className="flex items-center gap-2 text-foreground/90">
                       <ArrowRight className="h-4 w-4 text-elec-yellow" />
                       <span className="text-sm">{option}</span>
                     </div>

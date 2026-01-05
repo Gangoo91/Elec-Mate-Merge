@@ -114,7 +114,7 @@ const FundingOptionsTab = () => {
           {governmentSchemes.map((scheme, index) => (
             <div key={index} className="p-4 bg-elec-dark/50 rounded-lg space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-white">{scheme.name}</h4>
+                <h4 className="font-semibold text-foreground">{scheme.name}</h4>
                 <div className="flex items-center gap-2">
                   <Badge className="bg-green-500/20 text-green-300">
                     {scheme.amount}
@@ -156,7 +156,7 @@ const FundingOptionsTab = () => {
           {bankLoans.map((loan, index) => (
             <div key={index} className="p-4 bg-elec-dark/50 rounded-lg">
               <div className="flex items-center justify-between mb-3">
-                <h4 className="font-semibold text-white">{loan.bank}</h4>
+                <h4 className="font-semibold text-foreground">{loan.bank}</h4>
                 <Badge className="bg-blue-500/20 text-blue-300">
                   {loan.typical_rate}
                 </Badge>
@@ -187,7 +187,7 @@ const FundingOptionsTab = () => {
           {alternativeFunding.map((option, index) => (
             <div key={index} className="p-4 bg-elec-dark/50 rounded-lg space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-white">{option.type}</h4>
+                <h4 className="font-semibold text-foreground">{option.type}</h4>
                 <Badge className="bg-purple-500/20 text-purple-300">
                   {option.typical_range}
                 </Badge>
@@ -235,7 +235,7 @@ const FundingOptionsTab = () => {
           {grantOpportunities.map((grant, index) => (
             <div key={index} className="p-3 bg-elec-dark/50 rounded-lg">
               <div className="flex items-center justify-between mb-2">
-                <h4 className="font-medium text-white">{grant.name}</h4>
+                <h4 className="font-medium text-foreground">{grant.name}</h4>
                 <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
                   {grant.amount}
                 </Badge>
@@ -254,19 +254,19 @@ const FundingOptionsTab = () => {
         <CardContent>
           <div className="space-y-3">
             <div className="p-3 bg-elec-dark/30 rounded-md">
-              <h4 className="font-medium text-white mb-2">1. Start Small, Scale Up</h4>
+              <h4 className="font-medium text-foreground mb-2">1. Start Small, Scale Up</h4>
               <p className="text-sm text-muted-foreground">
                 Begin with personal savings and small loans. Build credit history and business track record before seeking larger funding.
               </p>
             </div>
             <div className="p-3 bg-elec-dark/30 rounded-md">
-              <h4 className="font-medium text-white mb-2">2. Diversify Funding Sources</h4>
+              <h4 className="font-medium text-foreground mb-2">2. Diversify Funding Sources</h4>
               <p className="text-sm text-muted-foreground">
                 Don't rely on a single funding source. Combine grants, loans, and retained earnings for financial stability.
               </p>
             </div>
             <div className="p-3 bg-elec-dark/30 rounded-md">
-              <h4 className="font-medium text-white mb-2">3. Maintain Strong Credit</h4>
+              <h4 className="font-medium text-foreground mb-2">3. Maintain Strong Credit</h4>
               <p className="text-sm text-muted-foreground">
                 Keep personal and business credit scores high. This opens more funding options and better interest rates.
               </p>

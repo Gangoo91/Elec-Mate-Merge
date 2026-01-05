@@ -49,7 +49,7 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+          <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
             <Package className="h-5 w-5 text-elec-yellow" />
             Materials Breakdown
           </CardTitle>
@@ -95,19 +95,19 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
         <div className="space-y-3 sm:hidden">
           {currentItems.map((item, idx) => (
             <div key={idx} className="p-4 rounded-lg bg-background/50 border border-border/30">
-              <div className="font-medium text-white text-base mb-1 leading-snug">
+              <div className="font-medium text-foreground text-base mb-1 leading-snug">
                 {item.item || item.description}
               </div>
               {item.supplier && (
-                <div className="text-sm text-white/70 mb-3">{item.supplier}</div>
+                <div className="text-sm text-foreground/70 mb-3">{item.supplier}</div>
               )}
               <div className="grid grid-cols-3 gap-2 text-center mt-3">
                 <div className="p-2.5 rounded bg-background/50">
-                  <div className="text-xs text-white/70 mb-1">Qty</div>
-                  <div className="font-mono text-white text-sm">{item.quantity} {item.unit}</div>
+                  <div className="text-xs text-foreground/70 mb-1">Qty</div>
+                  <div className="font-mono text-foreground text-sm">{item.quantity} {item.unit}</div>
                 </div>
                 <div className="p-2.5 rounded bg-background/50">
-                  <div className="text-xs text-white/70 mb-1">Unit</div>
+                  <div className="text-xs text-foreground/70 mb-1">Unit</div>
                   {isEditMode ? (
                     <Input
                       type="number"
@@ -118,11 +118,11 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
                       className="h-7 text-center font-mono text-sm p-1"
                     />
                   ) : (
-                    <div className="font-mono text-white text-sm">£{item.unitPrice?.toFixed(2)}</div>
+                    <div className="font-mono text-foreground text-sm">£{item.unitPrice?.toFixed(2)}</div>
                   )}
                 </div>
                 <div className="p-2.5 rounded bg-background/50">
-                  <div className="text-xs text-white/70 mb-1">Total</div>
+                  <div className="text-xs text-foreground/70 mb-1">Total</div>
                   <div className="font-mono text-elec-yellow font-bold text-sm">£{item.total?.toFixed(0)}</div>
                 </div>
               </div>
@@ -131,7 +131,7 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
           {/* Total row */}
           <div className="p-4 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
             <div className="flex justify-between items-center">
-              <span className="font-bold text-white">Total Materials</span>
+              <span className="font-bold text-foreground">Total Materials</span>
               <span className="text-xl font-bold text-elec-yellow">£{total.toFixed(2)}</span>
             </div>
           </div>
@@ -142,30 +142,30 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-left text-white font-semibold text-base sm:text-sm">Description</TableHead>
-                <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Qty</TableHead>
-                <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Unit Price</TableHead>
-                <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Total</TableHead>
+                <TableHead className="text-left text-foreground font-semibold text-base sm:text-sm">Description</TableHead>
+                <TableHead className="text-right text-foreground font-semibold text-base sm:text-sm">Qty</TableHead>
+                <TableHead className="text-right text-foreground font-semibold text-base sm:text-sm">Unit Price</TableHead>
+                <TableHead className="text-right text-foreground font-semibold text-base sm:text-sm">Total</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {currentItems.map((item, idx) => (
                 <TableRow key={idx}>
-                  <TableCell className="font-medium text-base sm:text-sm text-white text-left py-4">
+                  <TableCell className="font-medium text-base sm:text-sm text-foreground text-left py-4">
                     {item.item || item.description}
                     {item.supplier && (
-                      <div className="text-sm text-white text-left">
+                      <div className="text-sm text-foreground text-left">
                         {item.supplier}
                       </div>
                     )}
                   </TableCell>
-                  <TableCell className="text-right text-base sm:text-sm text-white">
+                  <TableCell className="text-right text-base sm:text-sm text-foreground">
                     {item.quantity} {item.unit}
                   </TableCell>
-                  <TableCell className="text-right font-mono text-base sm:text-sm text-white">
+                  <TableCell className="text-right font-mono text-base sm:text-sm text-foreground">
                     {isEditMode ? (
                       <div className="flex items-center justify-end gap-1">
-                        <span className="text-white">£</span>
+                        <span className="text-foreground">£</span>
                         <Input
                           type="number"
                           step="0.01"
@@ -179,14 +179,14 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
                       `£${item.unitPrice?.toFixed(2)}`
                     )}
                   </TableCell>
-                  <TableCell className="text-right font-mono font-medium text-base sm:text-sm text-white">
+                  <TableCell className="text-right font-mono font-medium text-base sm:text-sm text-foreground">
                     £{item.total?.toFixed(2)}
                   </TableCell>
                 </TableRow>
               ))}
               <TableRow className="bg-elec-yellow/10 font-bold border-t-2 border-elec-yellow/30">
-                <TableCell colSpan={3} className="text-right text-white">Total Materials:</TableCell>
-                <TableCell className="text-right font-mono text-white text-lg sm:text-base">£{total.toFixed(2)}</TableCell>
+                <TableCell colSpan={3} className="text-right text-foreground">Total Materials:</TableCell>
+                <TableCell className="text-right font-mono text-foreground text-lg sm:text-base">£{total.toFixed(2)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>

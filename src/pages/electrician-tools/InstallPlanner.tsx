@@ -377,7 +377,7 @@ const InstallPlanner = () => {
 
           {/* Mobile completion summary - Enhanced for touch */}
           {currentStep === steps.length && (
-            <Card className="border-green-500/30 bg-green-500/5 shadow-lg">
+            <Card className="border-green-500/30 bg-card shadow-lg">
               <CardContent className="p-6 sm:p-8">
                 <div className="text-center space-y-4">
                   <div className="text-4xl sm:text-5xl mb-4">🎉</div>

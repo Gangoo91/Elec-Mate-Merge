@@ -145,19 +145,19 @@ const MentalHealthResources = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center border border-red-500/20 rounded-lg p-4 bg-red-500/5">
                 <h4 className="font-semibold text-red-400 mb-2">🚨 Emergency</h4>
-                <p className="text-2xl font-bold text-white mb-1">999</p>
+                <a href="tel:999" className="text-2xl font-bold text-white mb-1 block underline hover:text-red-400 transition-colors">999</a>
                 <p className="text-xs text-muted-foreground">Immediate danger or serious mental health crisis</p>
               </div>
-              
+
               <div className="text-center border border-orange-500/20 rounded-lg p-4 bg-orange-500/5">
                 <h4 className="font-semibold text-orange-400 mb-2">📞 Crisis Support</h4>
-                <p className="text-lg font-bold text-white mb-1">116 123</p>
+                <a href="tel:116123" className="text-lg font-bold text-white mb-1 block underline hover:text-orange-400 transition-colors">116 123</a>
                 <p className="text-xs text-muted-foreground">Samaritans - Free 24/7 emotional support</p>
               </div>
-              
+
               <div className="text-center border border-blue-500/20 rounded-lg p-4 bg-blue-500/5">
                 <h4 className="font-semibold text-blue-400 mb-2">💬 Text Support</h4>
-                <p className="text-lg font-bold text-white mb-1">Text SHOUT to 85258</p>
+                <a href="sms:85258?body=SHOUT" className="text-lg font-bold text-white mb-1 block underline hover:text-blue-400 transition-colors">Text SHOUT to 85258</a>
                 <p className="text-xs text-muted-foreground">Free 24/7 crisis text line</p>
               </div>
             </div>

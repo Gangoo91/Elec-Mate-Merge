@@ -45,19 +45,19 @@ export const TerminalConnectionCard = ({
         </div>
 
         {/* Wire Colour Name */}
-        <div className="text-base font-semibold text-white">
+        <div className="text-base font-semibold text-foreground">
           {wireColour}
         </div>
 
         {/* Connection Description */}
-        <div className="text-sm text-white/80 leading-relaxed">
+        <div className="text-sm text-foreground/80 leading-relaxed">
           {connectionPoint}
         </div>
 
         {/* Technical Notes */}
         {notes && (
           <div className="pt-2 border-t border-border/30">
-            <p className="text-sm text-white/70 italic leading-relaxed">
+            <p className="text-sm text-foreground/70 italic leading-relaxed">
               ℹ️ {notes}
             </p>
           </div>

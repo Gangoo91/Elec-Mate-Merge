@@ -52,7 +52,7 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({ cvData, onChange
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-white">Work Experience</h3>
+        <h3 className="text-lg font-semibold text-foreground">Work Experience</h3>
         <Button
           onClick={addExperience}
           className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
@@ -65,7 +65,7 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({ cvData, onChange
       {cvData.experience.map((exp, index) => (
         <Card key={exp.id} className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-white">Experience {index + 1}</CardTitle>
+            <CardTitle className="text-foreground">Experience {index + 1}</CardTitle>
             <Button
               onClick={() => removeExperience(exp.id)}
               variant="outline"
@@ -78,57 +78,57 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({ cvData, onChange
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor={`jobTitle-${exp.id}`} className="text-white">Job Title *</Label>
+                <Label htmlFor={`jobTitle-${exp.id}`} className="text-foreground">Job Title *</Label>
                 <Input
                   id={`jobTitle-${exp.id}`}
                   value={exp.jobTitle}
                   onChange={(e) => updateExperience(exp.id, 'jobTitle', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white"
+                  className="bg-elec-dark border-elec-yellow/20 text-foreground"
                   placeholder="Electrical Apprentice"
                 />
               </div>
 
               <div>
-                <Label htmlFor={`company-${exp.id}`} className="text-white">Company *</Label>
+                <Label htmlFor={`company-${exp.id}`} className="text-foreground">Company *</Label>
                 <Input
                   id={`company-${exp.id}`}
                   value={exp.company}
                   onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white"
+                  className="bg-elec-dark border-elec-yellow/20 text-foreground"
                   placeholder="ABC Electrical Ltd"
                 />
               </div>
 
               <div>
-                <Label htmlFor={`location-${exp.id}`} className="text-white">Location</Label>
+                <Label htmlFor={`location-${exp.id}`} className="text-foreground">Location</Label>
                 <Input
                   id={`location-${exp.id}`}
                   value={exp.location}
                   onChange={(e) => updateExperience(exp.id, 'location', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white"
+                  className="bg-elec-dark border-elec-yellow/20 text-foreground"
                   placeholder="London, UK"
                 />
               </div>
 
               <div>
-                <Label htmlFor={`startDate-${exp.id}`} className="text-white">Start Date</Label>
+                <Label htmlFor={`startDate-${exp.id}`} className="text-foreground">Start Date</Label>
                 <Input
                   id={`startDate-${exp.id}`}
                   type="month"
                   value={exp.startDate}
                   onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white"
+                  className="bg-elec-dark border-elec-yellow/20 text-foreground"
                 />
               </div>
 
               <div>
-                <Label htmlFor={`endDate-${exp.id}`} className="text-white">End Date</Label>
+                <Label htmlFor={`endDate-${exp.id}`} className="text-foreground">End Date</Label>
                 <Input
                   id={`endDate-${exp.id}`}
                   type="month"
                   value={exp.endDate}
                   onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white"
+                  className="bg-elec-dark border-elec-yellow/20 text-foreground"
                   disabled={exp.current}
                 />
               </div>
@@ -144,17 +144,17 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({ cvData, onChange
                     }
                   }}
                 />
-                <Label htmlFor={`current-${exp.id}`} className="text-white">Current Position</Label>
+                <Label htmlFor={`current-${exp.id}`} className="text-foreground">Current Position</Label>
               </div>
             </div>
 
             <div>
-              <Label htmlFor={`description-${exp.id}`} className="text-white">Job Description</Label>
+              <Label htmlFor={`description-${exp.id}`} className="text-foreground">Job Description</Label>
               <Textarea
                 id={`description-${exp.id}`}
                 value={exp.description}
                 onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
-                className="bg-elec-dark border-elec-yellow/20 text-white min-h-24"
+                className="bg-elec-dark border-elec-yellow/20 text-foreground min-h-24"
                 placeholder="Describe your key responsibilities, achievements, and skills used..."
               />
             </div>

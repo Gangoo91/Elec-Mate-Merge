@@ -5,7 +5,7 @@ import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Activity, Calculator, RotateCcw, TrendingUp, AlertCircle, Zap, Shield, BookOpen, Target } from "lucide-react";
 import { calculatePowerQuality, type PowerQualityInputs, type PowerQualityResults } from "@/lib/powerquality";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
@@ -145,32 +145,26 @@ const PowerQualityCalculator = () => {
               <h3 className="text-lg font-medium text-elec-yellow">System Configuration</h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm text-muted-foreground">System Type</label>
-                  <Select value={systemType} onValueChange={(value: 'single-phase' | 'three-phase') => setSystemType(value)}>
-                    <SelectTrigger className="bg-background/50">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="single-phase">Single Phase</SelectItem>
-                      <SelectItem value="three-phase">Three Phase</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="text-sm text-muted-foreground">Load Type</label>
-                  <Select value={loadType} onValueChange={(value: 'linear' | 'non-linear' | 'mixed') => setLoadType(value)}>
-                    <SelectTrigger className="bg-background/50">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="linear">Linear Loads</SelectItem>
-                      <SelectItem value="non-linear">Non-Linear Loads</SelectItem>
-                      <SelectItem value="mixed">Mixed Loads</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <MobileSelect value={systemType} onValueChange={(value: 'single-phase' | 'three-phase') => setSystemType(value)}>
+                  <MobileSelectTrigger label="System Type">
+                    <MobileSelectValue />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    <MobileSelectItem value="single-phase">Single Phase</MobileSelectItem>
+                    <MobileSelectItem value="three-phase">Three Phase</MobileSelectItem>
+                  </MobileSelectContent>
+                </MobileSelect>
+
+                <MobileSelect value={loadType} onValueChange={(value: 'linear' | 'non-linear' | 'mixed') => setLoadType(value)}>
+                  <MobileSelectTrigger label="Load Type">
+                    <MobileSelectValue />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    <MobileSelectItem value="linear">Linear Loads</MobileSelectItem>
+                    <MobileSelectItem value="non-linear">Non-Linear Loads</MobileSelectItem>
+                    <MobileSelectItem value="mixed">Mixed Loads</MobileSelectItem>
+                  </MobileSelectContent>
+                </MobileSelect>
               </div>
             </div>
 

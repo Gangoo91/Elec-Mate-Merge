@@ -132,7 +132,7 @@ const MarketingStrategyTab = () => {
           {digitalStrategies.map((strategy, index) => (
             <div key={index} className="p-4 bg-elec-dark/50 rounded-lg space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-white">{strategy.platform}</h4>
+                <h4 className="font-semibold text-foreground">{strategy.platform}</h4>
                 <div className="flex items-center gap-2">
                   <Badge className={strategy.importance === "Critical" ? "bg-red-500/20 text-red-300" : 
                                    strategy.importance === "Essential" ? "bg-orange-500/20 text-orange-300" :
@@ -187,7 +187,7 @@ const MarketingStrategyTab = () => {
           {traditionalMarketing.map((method, index) => (
             <div key={index} className="p-4 bg-elec-dark/50 rounded-lg space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-white">{method.method}</h4>
+                <h4 className="font-semibold text-foreground">{method.method}</h4>
                 <Badge className="bg-green-500/20 text-green-300">
                   {method.cost_range}
                 </Badge>
@@ -222,7 +222,7 @@ const MarketingStrategyTab = () => {
           {networkingOpportunities.map((opportunity, index) => (
             <div key={index} className="p-4 bg-elec-dark/50 rounded-lg space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-white">{opportunity.type}</h4>
+                <h4 className="font-semibold text-foreground">{opportunity.type}</h4>
                 <Badge variant="outline" className="border-purple-400/30 text-purple-300">
                   {opportunity.frequency}
                 </Badge>
@@ -253,7 +253,7 @@ const MarketingStrategyTab = () => {
         <CardContent className="space-y-4">
           {pricingStrategies.map((strategy, index) => (
             <div key={index} className="p-4 bg-elec-dark/50 rounded-lg space-y-3">
-              <h4 className="font-semibold text-white">{strategy.strategy}</h4>
+              <h4 className="font-semibold text-foreground">{strategy.strategy}</h4>
               <p className="text-muted-foreground">{strategy.description}</p>
               <div className="space-y-2">
                 <div className="text-sm">
@@ -281,7 +281,7 @@ const MarketingStrategyTab = () => {
           {customerRetention.map((retention, index) => (
             <div key={index} className="p-4 bg-elec-dark/50 rounded-lg space-y-2">
               <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-white">{retention.tactic}</h4>
+                <h4 className="font-semibold text-foreground">{retention.tactic}</h4>
                 <Badge variant="outline" className="border-amber-400/30 text-amber-300">
                   {retention.timeline}
                 </Badge>
@@ -304,17 +304,17 @@ const MarketingStrategyTab = () => {
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-3 bg-elec-dark/30 rounded-md text-center">
-                <h4 className="font-medium text-white mb-1">Year 1</h4>
+                <h4 className="font-medium text-foreground mb-1">Year 1</h4>
                 <p className="text-2xl font-bold text-elec-yellow">5-8%</p>
                 <p className="text-xs text-muted-foreground">of projected revenue</p>
               </div>
               <div className="p-3 bg-elec-dark/30 rounded-md text-center">
-                <h4 className="font-medium text-white mb-1">Year 2-3</h4>
+                <h4 className="font-medium text-foreground mb-1">Year 2-3</h4>
                 <p className="text-2xl font-bold text-elec-yellow">3-5%</p>
                 <p className="text-xs text-muted-foreground">of actual revenue</p>
               </div>
               <div className="p-3 bg-elec-dark/30 rounded-md text-center">
-                <h4 className="font-medium text-white mb-1">Established</h4>
+                <h4 className="font-medium text-foreground mb-1">Established</h4>
                 <p className="text-2xl font-bold text-elec-yellow">2-3%</p>
                 <p className="text-xs text-muted-foreground">maintenance level</p>
               </div>

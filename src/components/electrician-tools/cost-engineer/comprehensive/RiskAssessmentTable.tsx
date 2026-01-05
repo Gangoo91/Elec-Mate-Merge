@@ -30,7 +30,7 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
           <AlertTriangle className="h-5 w-5 text-elec-yellow" />
           Risk Assessment
         </CardTitle>
@@ -43,18 +43,18 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
               <div className="flex items-start gap-3 mb-3">
                 <span className="text-2xl flex-shrink-0">{getRiskDot(risk.severity)}</span>
                 <div className="flex-1">
-                  <div className="font-medium text-white text-base leading-snug">{risk.risk}</div>
+                  <div className="font-medium text-foreground text-base leading-snug">{risk.risk}</div>
                   <div className="flex flex-wrap items-center gap-2 mt-2">
                     <span className={`px-2 py-0.5 rounded text-sm ${getCategoryBadge(risk.category)}`}>
                       {risk.category}
                     </span>
-                    <span className="text-sm text-white/70">{risk.likelihood} likelihood</span>
+                    <span className="text-sm text-foreground/70">{risk.likelihood} likelihood</span>
                   </div>
                 </div>
               </div>
               <div className="pt-3 border-t border-border/30">
-                <div className="text-sm text-white/70 mb-1">Mitigation:</div>
-                <div className="text-base text-white leading-relaxed">{risk.mitigation}</div>
+                <div className="text-sm text-foreground/70 mb-1">Mitigation:</div>
+                <div className="text-base text-foreground leading-relaxed">{risk.mitigation}</div>
                 {risk.contingency && risk.contingency > 0 && (
                   <div className="mt-2 text-sm text-orange-400 font-medium">
                     +£{risk.contingency} contingency if occurs
@@ -70,10 +70,10 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-12 text-white font-semibold text-base sm:text-sm"></TableHead>
-                <TableHead className="text-white font-semibold text-base sm:text-sm">Risk</TableHead>
-                <TableHead className="text-white font-semibold text-base sm:text-sm">Category</TableHead>
-                <TableHead className="text-white font-semibold text-base sm:text-sm">Mitigation</TableHead>
+                <TableHead className="w-12 text-foreground font-semibold text-base sm:text-sm"></TableHead>
+                <TableHead className="text-foreground font-semibold text-base sm:text-sm">Risk</TableHead>
+                <TableHead className="text-foreground font-semibold text-base sm:text-sm">Category</TableHead>
+                <TableHead className="text-foreground font-semibold text-base sm:text-sm">Mitigation</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -82,9 +82,9 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
                   <TableCell className="text-center text-xl">
                     {getRiskDot(risk.severity)}
                   </TableCell>
-                  <TableCell className="font-medium text-white">
+                  <TableCell className="font-medium text-foreground">
                     <span className="text-base sm:text-sm">{risk.risk}</span>
-                    <div className="text-sm text-white mt-1">
+                    <div className="text-sm text-foreground mt-1">
                       {risk.likelihood} likelihood
                       {risk.contingency && risk.contingency > 0 && (
                         <span> • +£{risk.contingency} if occurs</span>
@@ -96,7 +96,7 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
                       {risk.category}
                     </span>
                   </TableCell>
-                  <TableCell className="text-base sm:text-sm text-white">
+                  <TableCell className="text-base sm:text-sm text-foreground">
                     {risk.mitigation}
                   </TableCell>
                 </TableRow>

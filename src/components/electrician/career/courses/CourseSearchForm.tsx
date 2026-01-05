@@ -74,12 +74,12 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
       <CardContent className="p-6 space-y-4">
         {/* Search Bar */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 h-4 w-4" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground/60 h-4 w-4" />
           <Input
             placeholder="Search courses, providers, or keywords..."
             value={filters.searchTerm}
             onChange={(e) => handleFilterChange('searchTerm', e.target.value)}
-            className="pl-10 bg-background/50 border-elec-yellow/20 text-white placeholder-white/60"
+            className="pl-10 bg-background/50 border-elec-yellow/20 text-foreground placeholder-white/60"
           />
         </div>
 
@@ -149,7 +149,7 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
                     variant="ghost"
                     size="sm"
                     onClick={handleReset}
-                    className="text-white/60 hover:text-white p-1"
+                    className="text-foreground/60 hover:text-foreground p-1"
                   >
                     <X className="h-4 w-4" />
                   </Button>

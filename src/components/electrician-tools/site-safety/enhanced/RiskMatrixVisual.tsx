@@ -72,7 +72,7 @@ export const RiskMatrixVisual = ({ hazards, onRiskLevelClick }: RiskMatrixVisual
                         ${isSelected ? 'ring-2 ring-elec-yellow ring-offset-2 ring-offset-background' : ''}
                         aspect-square rounded border-2 flex items-center justify-center
                         transition-all hover:scale-105 cursor-pointer
-                        font-semibold text-white
+                        font-semibold text-foreground
                       `}
                     >
                       <div className="text-center">

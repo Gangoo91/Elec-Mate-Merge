@@ -38,7 +38,7 @@ export const InputCardSection = ({
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="text-base sm:text-lg font-bold text-white">{title}</h3>
+                  <h3 className="text-base sm:text-lg font-bold text-foreground">{title}</h3>
                   {badge && (
                     <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/30">
                       {badge}
@@ -46,7 +46,7 @@ export const InputCardSection = ({
                   )}
                 </div>
                 {subtitle && (
-                  <p className="text-xs sm:text-sm text-white/80 mt-0.5">
+                  <p className="text-xs sm:text-sm text-foreground/80 mt-0.5">
                     {subtitle}
                   </p>
                 )}

@@ -110,7 +110,7 @@ const DrillDownSection = ({ type, query, available }: DrillDownSectionProps) => 
           
           {content.map((item, idx) => (
             <div key={idx} className="space-y-2">
-              <h4 className="font-semibold text-white text-base">{item.topic}</h4>
+              <h4 className="font-semibold text-foreground text-base">{item.topic}</h4>
               <p className="text-neutral-300 leading-relaxed text-sm">
                 {item.content}
               </p>

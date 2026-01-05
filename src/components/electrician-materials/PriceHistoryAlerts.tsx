@@ -338,34 +338,34 @@ const PriceHistoryAlerts = ({ categoryId, selectedProduct, currentUserId = "demo
                     placeholder="0.00"
                     value={alertForm.targetPrice}
                     onChange={(e) => setAlertForm(prev => ({ ...prev, targetPrice: e.target.value }))}
-                    className="bg-elec-dark border-elec-yellow/20 text-white"
+                    className="bg-elec-dark border-elec-yellow/20 text-foreground"
                   />
                 </div>
                 <div>
                   <label className="text-xs text-muted-foreground">Alert Type</label>
                   <Select value={alertForm.alertType} onValueChange={(value: any) => setAlertForm(prev => ({ ...prev, alertType: value }))}>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-foreground">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-                      <SelectItem value="below" className="text-white">Price drops below</SelectItem>
-                      <SelectItem value="above" className="text-white">Price rises above</SelectItem>
-                      <SelectItem value="change" className="text-white">Any price change</SelectItem>
+                      <SelectItem value="below" className="text-foreground">Price drops below</SelectItem>
+                      <SelectItem value="above" className="text-foreground">Price rises above</SelectItem>
+                      <SelectItem value="change" className="text-foreground">Any price change</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
                   <label className="text-xs text-muted-foreground">Supplier</label>
                   <Select value={alertForm.supplier} onValueChange={(value) => setAlertForm(prev => ({ ...prev, supplier: value }))}>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-foreground">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-                      <SelectItem value="Any" className="text-white">Any Supplier</SelectItem>
-                      <SelectItem value="Screwfix" className="text-white">Screwfix</SelectItem>
-                      <SelectItem value="CEF" className="text-white">CEF</SelectItem>
-                      <SelectItem value="RS Components" className="text-white">RS Components</SelectItem>
-                      <SelectItem value="Toolstation" className="text-white">Toolstation</SelectItem>
+                      <SelectItem value="Any" className="text-foreground">Any Supplier</SelectItem>
+                      <SelectItem value="Screwfix" className="text-foreground">Screwfix</SelectItem>
+                      <SelectItem value="CEF" className="text-foreground">CEF</SelectItem>
+                      <SelectItem value="RS Components" className="text-foreground">RS Components</SelectItem>
+                      <SelectItem value="Toolstation" className="text-foreground">Toolstation</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

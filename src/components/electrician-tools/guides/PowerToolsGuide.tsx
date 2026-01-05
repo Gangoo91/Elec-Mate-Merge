@@ -105,7 +105,7 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                             #{item.priority}
                           </Badge>
                           <div>
-                            <h3 className="font-bold text-white text-lg">{item.tool}</h3>
+                            <h3 className="font-bold text-foreground text-lg">{item.tool}</h3>
                             <p className="text-elec-yellow font-medium">{item.price}</p>
                           </div>
                         </div>
@@ -180,7 +180,7 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                     <CardTitle className="text-elec-yellow">{brand.brand}</CardTitle>
                     <div className="flex items-center gap-1">
                       <Star className="h-4 w-4 text-amber-400 fill-current" />
-                      <span className="text-white">{brand.rating}</span>
+                      <span className="text-foreground">{brand.rating}</span>
                     </div>
                   </div>
                   <Badge variant="outline" className="w-fit">{brand.priceRange}</Badge>
@@ -207,7 +207,7 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                     </div>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-white mb-1">Best For</h4>
+                    <h4 className="text-sm font-medium text-foreground mb-1">Best For</h4>
                     <p className="text-sm text-muted-foreground">{brand.bestFor}</p>
                   </div>
                 </CardContent>
@@ -291,7 +291,7 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="p-4 bg-elec-dark/50 rounded-lg">
-                  <h4 className="font-medium text-white mb-2">18V Systems</h4>
+                  <h4 className="font-medium text-foreground mb-2">18V Systems</h4>
                   <p className="text-sm text-muted-foreground mb-2">Best for most electrical work</p>
                   <ul className="text-xs text-muted-foreground space-y-1">
                     <li>• DeWalt XR</li>
@@ -302,7 +302,7 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                 </div>
                 
                 <div className="p-4 bg-elec-dark/50 rounded-lg">
-                  <h4 className="font-medium text-white mb-2">12V Systems</h4>
+                  <h4 className="font-medium text-foreground mb-2">12V Systems</h4>
                   <p className="text-sm text-muted-foreground mb-2">Compact tools for tight spaces</p>
                   <ul className="text-xs text-muted-foreground space-y-1">
                     <li>• DeWalt MAX</li>
@@ -313,7 +313,7 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                 </div>
                 
                 <div className="p-4 bg-elec-dark/50 rounded-lg">
-                  <h4 className="font-medium text-white mb-2">54V/FlexVolt</h4>
+                  <h4 className="font-medium text-foreground mb-2">54V/FlexVolt</h4>
                   <p className="text-sm text-muted-foreground mb-2">Heavy-duty applications</p>
                   <ul className="text-xs text-muted-foreground space-y-1">
                     <li>• DeWalt FlexVolt</li>
@@ -336,21 +336,21 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                 <div className="flex items-start gap-3">
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Clean after use</h4>
+                    <h4 className="font-medium text-foreground">Clean after use</h4>
                     <p className="text-sm text-muted-foreground">Remove dust and debris with compressed air</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Check for damage</h4>
+                    <h4 className="font-medium text-foreground">Check for damage</h4>
                     <p className="text-sm text-muted-foreground">Inspect cords, cases, and chuck condition</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Store properly</h4>
+                    <h4 className="font-medium text-foreground">Store properly</h4>
                     <p className="text-sm text-muted-foreground">Use cases and avoid extreme temperatures</p>
                   </div>
                 </div>
@@ -365,21 +365,21 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                 <div className="flex items-start gap-3">
                   <Battery className="h-5 w-5 text-blue-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Proper charging</h4>
+                    <h4 className="font-medium text-foreground">Proper charging</h4>
                     <p className="text-sm text-muted-foreground">Use manufacturer's chargers only</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Battery className="h-5 w-5 text-blue-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Storage charge</h4>
+                    <h4 className="font-medium text-foreground">Storage charge</h4>
                     <p className="text-sm text-muted-foreground">Store at 40-60% charge for longevity</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Battery className="h-5 w-5 text-blue-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white">Temperature control</h4>
+                    <h4 className="font-medium text-foreground">Temperature control</h4>
                     <p className="text-sm text-muted-foreground">Avoid extreme hot or cold conditions</p>
                   </div>
                 </div>

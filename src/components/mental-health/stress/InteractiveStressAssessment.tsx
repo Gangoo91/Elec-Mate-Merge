@@ -131,7 +131,7 @@ const InteractiveStressAssessment = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-3">
-            <h4 className="font-semibold text-white">Personalised Recommendations:</h4>
+            <h4 className="font-semibold text-foreground">Personalised Recommendations:</h4>
             <ul className="space-y-2">
               {getRecommendations().map((rec, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -170,7 +170,7 @@ const InteractiveStressAssessment = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <h3 className="text-lg font-medium text-white">
+          <h3 className="text-lg font-medium text-foreground">
             {questions[currentQuestion].text}
           </h3>
           

@@ -379,7 +379,7 @@ export const PricingStrategiesTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -402,7 +402,7 @@ export const PricingStrategiesTab = () => {
                 <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
                       <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {strategy.timeline}
                       </Badge>
@@ -413,15 +413,15 @@ export const PricingStrategiesTab = () => {
                   <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
                     <div className="flex items-center gap-2">
                       <Calculator className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.investment}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{strategy.investment}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.roi}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{strategy.roi}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Shield className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.riskLevel}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>{strategy.riskLevel}</span>
                     </div>
                   </div>
 
@@ -498,7 +498,7 @@ export const PricingStrategiesTab = () => {
                         {category.benchmarks.map((benchmark, benchmarkIndex) => (
                           <div key={benchmarkIndex} className="bg-elec-gray/50 border border-blue-500/20 rounded-lg p-3">
                             <div className="flex justify-between items-center mb-2">
-                              <span className={`font-medium text-white ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                              <span className={`font-medium text-foreground ${isMobile ? 'text-xs' : 'text-sm'}`}>
                                 {benchmark.metric}
                               </span>
                               <Badge variant="outline" className="text-green-300 border-green-400/30">
@@ -602,7 +602,7 @@ export const PricingStrategiesTab = () => {
                         {metricCategory.kpis.map((kpi, kpiIndex) => (
                           <div key={kpiIndex} className="flex items-start gap-2 p-2 bg-elec-gray/50 rounded-lg">
                             <CheckCircle className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-                            <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                            <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                               {kpi}
                             </span>
                           </div>
@@ -636,19 +636,19 @@ export const PricingStrategiesTab = () => {
                     <div className="space-y-2">
                       <div className="flex items-start gap-2">
                         <Timer className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Complete comprehensive cost analysis and overhead calculation
                         </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <Calculator className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Research competitor pricing and market positioning
                         </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <Target className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Set profit margin targets and pricing objectives
                         </span>
                       </div>
@@ -662,19 +662,19 @@ export const PricingStrategiesTab = () => {
                     <div className="space-y-2">
                       <div className="flex items-start gap-2">
                         <Settings className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Implement new pricing structure and quote templates
                         </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <Users className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Train team on value communication and pricing justification
                         </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <BarChart3 className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                           Monitor quote success rates and customer feedback
                         </span>
                       </div>

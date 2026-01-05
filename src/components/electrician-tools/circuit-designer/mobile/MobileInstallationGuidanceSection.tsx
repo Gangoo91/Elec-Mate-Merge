@@ -37,14 +37,14 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
         <CardContent className="p-4 text-center text-sm">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Wrench className="h-4 w-4 text-elec-yellow" />
-            <span className="font-semibold text-white">Installation Guidance</span>
+            <span className="font-semibold text-foreground">Installation Guidance</span>
           </div>
           {typeof circuit.installationGuidance === 'string' ? (
-            <p className="text-white leading-relaxed text-left whitespace-pre-line">
+            <p className="text-foreground leading-relaxed text-left whitespace-pre-line">
               {circuit.installationGuidance}
             </p>
           ) : (
-            <p className="text-white/70">
+            <p className="text-foreground/70">
               Installation guidance not yet available. Regenerate this circuit to get practical installation advice.
             </p>
           )}
@@ -65,9 +65,9 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
               <div className="p-2 rounded-lg bg-elec-yellow/20">
                 <FileText className="h-5 w-5 text-elec-yellow" />
               </div>
-              <h3 className="font-bold text-white text-lg">Installation Overview</h3>
+              <h3 className="font-bold text-foreground text-lg">Installation Overview</h3>
             </div>
-            <p className="text-sm text-white leading-relaxed text-left">
+            <p className="text-sm text-foreground leading-relaxed text-left">
               {guidance.executiveSummary}
             </p>
           </CardContent>
@@ -80,13 +80,13 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
           <Card className="bg-elec-card border-elec-yellow/20">
             <CollapsibleTrigger asChild>
               <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[52px] touch-manipulation pb-3">
-                <CardTitle className="text-sm font-bold flex items-center justify-between text-white">
+                <CardTitle className="text-sm font-bold flex items-center justify-between text-foreground">
                   <span className="flex items-center gap-2">
                     <AlertTriangle className="h-5 w-5 text-red-500" />
                     Safety Considerations ({guidance.safetyConsiderations.length})
                   </span>
                   <ChevronDown className={cn(
-                    "h-5 w-5 transition-transform text-white",
+                    "h-5 w-5 transition-transform text-foreground",
                     openSections.safety && "rotate-180"
                   )} />
                 </CardTitle>
@@ -114,11 +114,11 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                         )}
                       />
                       <div className="space-y-2 text-left flex-1">
-                        <p className="font-semibold text-sm text-left text-white leading-relaxed">
+                        <p className="font-semibold text-sm text-left text-foreground leading-relaxed">
                           {safety.consideration}
                         </p>
                         {(safety.bsReference || (safety.toolsRequired && safety.toolsRequired.length > 0)) && (
-                          <div className="flex flex-wrap gap-2 text-xs text-white/70">
+                          <div className="flex flex-wrap gap-2 text-xs text-foreground/70">
                             {safety.bsReference && (
                               <span className="inline-flex items-center gap-1">
                                 <FileText className="h-3 w-3" /> BS 7671: {safety.bsReference}
@@ -147,13 +147,13 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
           <Card className="bg-elec-card border-elec-yellow/20">
             <CollapsibleTrigger asChild>
               <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[52px] touch-manipulation pb-3">
-                <CardTitle className="text-sm font-bold flex items-center justify-between text-white">
+                <CardTitle className="text-sm font-bold flex items-center justify-between text-foreground">
                   <span className="flex items-center gap-2">
                     <Package className="h-5 w-5 text-elec-yellow" />
                     Materials Required ({guidance.materialsRequired.length})
                   </span>
                   <ChevronDown className={cn(
-                    "h-5 w-5 transition-transform text-white",
+                    "h-5 w-5 transition-transform text-foreground",
                     openSections.materials && "rotate-180"
                   )} />
                 </CardTitle>
@@ -170,12 +170,12 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                       <Package className="h-4 w-4 text-elec-yellow" />
                     </div>
                     <div className="flex-1 min-w-0 text-left">
-                      <p className="font-medium text-sm text-left text-white">{material.item}</p>
-                      <p className="text-xs text-white/70 text-left mt-0.5 leading-relaxed">
+                      <p className="font-medium text-sm text-left text-foreground">{material.item}</p>
+                      <p className="text-xs text-foreground/70 text-left mt-0.5 leading-relaxed">
                         {material.specification}
                       </p>
                       {material.source && (
-                        <p className="text-xs text-white/70 text-left mt-0.5">
+                        <p className="text-xs text-foreground/70 text-left mt-0.5">
                           Source: {material.source}
                         </p>
                       )}
@@ -197,13 +197,13 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
           <Card className="bg-elec-card border-elec-yellow/20">
             <CollapsibleTrigger asChild>
               <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[52px] touch-manipulation pb-3">
-                <CardTitle className="text-sm font-bold flex items-center justify-between text-white">
+                <CardTitle className="text-sm font-bold flex items-center justify-between text-foreground">
                   <span className="flex items-center gap-2">
                     <Wrench className="h-5 w-5 text-purple-500" />
                     Tools Required ({guidance.toolsRequired.length})
                   </span>
                   <ChevronDown className={cn(
-                    "h-5 w-5 transition-transform text-white",
+                    "h-5 w-5 transition-transform text-foreground",
                     openSections.tools && "rotate-180"
                   )} />
                 </CardTitle>
@@ -218,8 +218,8 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                   >
                     <Wrench className="h-4 w-4 text-purple-500 shrink-0 mt-0.5" />
                     <div className="flex-1 text-left">
-                      <p className="font-medium text-sm text-left text-white">{tool.tool}</p>
-                      <p className="text-xs text-white/70 text-left leading-relaxed">{tool.purpose}</p>
+                      <p className="font-medium text-sm text-left text-foreground">{tool.tool}</p>
+                      <p className="text-xs text-foreground/70 text-left leading-relaxed">{tool.purpose}</p>
                       <Badge variant="secondary" className="mt-1.5 text-xs">
                         {tool.category}
                       </Badge>
@@ -238,13 +238,13 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
           <Card className="bg-elec-card border-elec-yellow/20">
             <CollapsibleTrigger asChild>
               <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[52px] touch-manipulation pb-3">
-                <CardTitle className="text-sm font-bold flex items-center justify-between text-white">
+                <CardTitle className="text-sm font-bold flex items-center justify-between text-foreground">
                   <span className="flex items-center gap-2">
                     <CheckCircle2 className="h-5 w-5 text-green-500" />
                     Installation Procedure ({guidance.installationProcedure.length} steps)
                   </span>
                   <ChevronDown className={cn(
-                    "h-5 w-5 transition-transform text-white",
+                    "h-5 w-5 transition-transform text-foreground",
                     openSections.procedure && "rotate-180"
                   )} />
                 </CardTitle>
@@ -267,10 +267,10 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
 
                       {/* Content */}
                       <div className="flex-1 pb-2 text-left">
-                        <p className="font-semibold text-sm text-left text-white leading-relaxed">
+                        <p className="font-semibold text-sm text-left text-foreground leading-relaxed">
                           {step.title}
                         </p>
-                        <p className="text-xs text-white/70 mt-1 leading-relaxed text-left">
+                        <p className="text-xs text-foreground/70 mt-1 leading-relaxed text-left">
                           {step.description}
                         </p>
 
@@ -308,13 +308,13 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
           <Card className="bg-elec-card border-elec-yellow/20">
             <CollapsibleTrigger asChild>
               <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[52px] touch-manipulation pb-3">
-                <CardTitle className="text-sm font-bold flex items-center justify-between text-white">
+                <CardTitle className="text-sm font-bold flex items-center justify-between text-foreground">
                   <span className="flex items-center gap-2">
                     <TestTube2 className="h-5 w-5 text-teal-500" />
                     Testing Requirements ({guidance.testingRequirements.tests.length})
                   </span>
                   <ChevronDown className={cn(
-                    "h-5 w-5 transition-transform text-white",
+                    "h-5 w-5 transition-transform text-foreground",
                     openSections.testing && "rotate-180"
                   )} />
                 </CardTitle>
@@ -324,7 +324,7 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
               <CardContent className="space-y-3 pt-0">
                 {guidance.testingRequirements.intro && (
                   <>
-                    <p className="text-sm text-white text-left leading-relaxed">{guidance.testingRequirements.intro}</p>
+                    <p className="text-sm text-foreground text-left leading-relaxed">{guidance.testingRequirements.intro}</p>
                     <Separator className="my-2" />
                   </>
                 )}
@@ -339,25 +339,25 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                       </div>
                       <div className="flex-1 text-left">
                         <div className="flex items-start justify-between gap-2 mb-1">
-                          <p className="font-semibold text-sm text-left text-white leading-relaxed">
+                          <p className="font-semibold text-sm text-left text-foreground leading-relaxed">
                             {test.testName}
                           </p>
                           <Badge variant="outline" className="text-xs shrink-0">
                             {test.regulation}
                           </Badge>
                         </div>
-                        <p className="text-xs text-white/70 text-left leading-relaxed">
+                        <p className="text-xs text-foreground/70 text-left leading-relaxed">
                           {test.procedure}
                         </p>
 
                         <div className="mt-3 p-2 rounded bg-background/30 text-left">
                           <div className="space-y-1 text-xs">
                             {test.expectedReading && (
-                              <p className="text-left text-white/80">
-                                <span className="font-medium text-white">Expected:</span> {test.expectedReading}
+                              <p className="text-left text-foreground/80">
+                                <span className="font-medium text-foreground">Expected:</span> {test.expectedReading}
                               </p>
                             )}
-                            <p className="text-left text-white/80">
+                            <p className="text-left text-foreground/80">
                               <span className="font-medium text-green-500">Pass:</span>{' '}
                               {test.acceptanceCriteria}
                             </p>
@@ -380,7 +380,7 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                 {guidance.testingRequirements.recordingNote && (
                   <>
                     <Separator className="my-2" />
-                    <p className="text-xs text-white/70 italic text-left p-3 bg-elec-yellow/10 rounded border border-elec-yellow/20">
+                    <p className="text-xs text-foreground/70 italic text-left p-3 bg-elec-yellow/10 rounded border border-elec-yellow/20">
                       {guidance.testingRequirements.recordingNote}
                     </p>
                   </>

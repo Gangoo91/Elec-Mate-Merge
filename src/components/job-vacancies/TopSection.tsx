@@ -15,7 +15,7 @@ const TopSection: React.FC = () => {
         
         {/* Job Listings Fetcher component */}
         <div className="bg-gray-900 rounded-lg p-6 flex flex-col">
-          <h3 className="text-xl font-semibold text-white mb-2">Job Listings Automation</h3>
+          <h3 className="text-xl font-semibold text-foreground mb-2">Job Listings Automation</h3>
           
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">

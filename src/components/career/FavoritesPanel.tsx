@@ -80,7 +80,7 @@ const FavoritesPanel: React.FC<FavoritesPanelProps> = ({ onSelectPath }) => {
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <h4 className="font-medium text-white capitalize">{pathDetails.title}</h4>
+                    <h4 className="font-medium text-foreground capitalize">{pathDetails.title}</h4>
                     <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow text-xs">
                       {pathDetails.category}
                     </Badge>

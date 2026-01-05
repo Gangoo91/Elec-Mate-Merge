@@ -48,7 +48,7 @@ const ElectricianProfessionalAccreditation = () => {
           <Award className="h-6 w-6 text-elec-yellow" />
           Professional Accreditations for Electricians
         </h2>
-        <p className="text-white">
+        <p className="text-foreground">
           Advance your electrical career with recognised professional accreditations. From industry memberships 
           to specialist certifications, discover the credentials that will enhance your professional standing 
           and open new opportunities in the electrical industry.
@@ -63,7 +63,7 @@ const ElectricianProfessionalAccreditation = () => {
       <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'} items-start`}>
         <Card className="border-elec-yellow/30 bg-elec-grey shadow-md hover:shadow-lg transition-all duration-300 h-full">
           <CardHeader className="pb-3 border-b border-elec-yellow/20">
-            <CardTitle className="text-lg font-semibold flex items-center gap-3 text-white">
+            <CardTitle className="text-lg font-semibold flex items-center gap-3 text-foreground">
               <div className="p-1.5 rounded-lg bg-elec-yellow/20 border border-elec-yellow/40">
                 <Target className="h-5 w-5 text-elec-yellow" />
               </div>
@@ -75,32 +75,32 @@ const ElectricianProfessionalAccreditation = () => {
               <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
                 <div className="w-2 h-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-white text-sm mb-1">Professional Recognition</h4>
-                  <p className="text-white/85 text-xs leading-relaxed">Demonstrate expertise and gain credibility with employers through recognised qualifications.</p>
+                  <h4 className="font-semibold text-foreground text-sm mb-1">Professional Recognition</h4>
+                  <p className="text-foreground/85 text-xs leading-relaxed">Demonstrate expertise and gain credibility with employers through recognised qualifications.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
                 <div className="w-2 h-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-white text-sm mb-1">Career Advancement</h4>
-                  <p className="text-white/85 text-xs leading-relaxed">Access senior positions and <span className="text-elec-yellow font-semibold">15-25% higher</span> earning potential.</p>
+                  <h4 className="font-semibold text-foreground text-sm mb-1">Career Advancement</h4>
+                  <p className="text-foreground/85 text-xs leading-relaxed">Access senior positions and <span className="text-elec-yellow font-semibold">15-25% higher</span> earning potential.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
                 <div className="w-2 h-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-white text-sm mb-1">Regulatory Compliance</h4>
-                  <p className="text-white/85 text-xs leading-relaxed">Meet <span className="text-elec-yellow font-semibold">BS 7671</span> and Part P regulations.</p>
+                  <h4 className="font-semibold text-foreground text-sm mb-1">Regulatory Compliance</h4>
+                  <p className="text-foreground/85 text-xs leading-relaxed">Meet <span className="text-elec-yellow font-semibold">BS 7671</span> and Part P regulations.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
                 <div className="w-2 h-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-white text-sm mb-1">Industry Network</h4>
-                  <p className="text-white/85 text-xs leading-relaxed">Connect with professionals and access CPD events.</p>
+                  <h4 className="font-semibold text-foreground text-sm mb-1">Industry Network</h4>
+                  <p className="text-foreground/85 text-xs leading-relaxed">Connect with professionals and access CPD events.</p>
                 </div>
               </div>
             </div>
@@ -109,7 +109,7 @@ const ElectricianProfessionalAccreditation = () => {
 
         <Card className="border-elec-yellow/30 bg-elec-grey shadow-md hover:shadow-lg transition-all duration-300 h-full">
           <CardHeader className="pb-3 border-b border-elec-yellow/20">
-            <CardTitle className="text-lg font-semibold flex items-center gap-3 text-white">
+            <CardTitle className="text-lg font-semibold flex items-center gap-3 text-foreground">
               <div className="p-1.5 rounded-lg bg-elec-yellow/20 border border-elec-yellow/40">
                 <Info className="h-5 w-5 text-elec-yellow" />
               </div>
@@ -121,32 +121,32 @@ const ElectricianProfessionalAccreditation = () => {
               <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
                 <div className="w-2 h-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-white text-sm mb-1">Assess Your Experience</h4>
-                  <p className="text-white/85 text-xs leading-relaxed">Most accreditations require <span className="text-elec-yellow font-semibold">2-5 years</span> of electrical installation experience.</p>
+                  <h4 className="font-semibold text-foreground text-sm mb-1">Assess Your Experience</h4>
+                  <p className="text-foreground/85 text-xs leading-relaxed">Most accreditations require <span className="text-elec-yellow font-semibold">2-5 years</span> of electrical installation experience.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
                 <div className="w-2 h-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-white text-sm mb-1">Check Prerequisites</h4>
-                  <p className="text-white/85 text-xs leading-relaxed">Typically need <span className="text-elec-yellow font-semibold">Level 3 electrical qualifications, AM2</span>.</p>
+                  <h4 className="font-semibold text-foreground text-sm mb-1">Check Prerequisites</h4>
+                  <p className="text-foreground/85 text-xs leading-relaxed">Typically need <span className="text-elec-yellow font-semibold">Level 3 electrical qualifications, AM2</span>.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
                 <div className="w-2 h-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-white text-sm mb-1">Plan Investment</h4>
-                  <p className="text-white/85 text-xs leading-relaxed">Initial costs range from <span className="text-elec-yellow font-semibold">£200-£1,500</span> plus annual fees.</p>
+                  <h4 className="font-semibold text-foreground text-sm mb-1">Plan Investment</h4>
+                  <p className="text-foreground/85 text-xs leading-relaxed">Initial costs range from <span className="text-elec-yellow font-semibold">£200-£1,500</span> plus annual fees.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
                 <div className="w-2 h-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-white text-sm mb-1">Start Early</h4>
-                  <p className="text-white/85 text-xs leading-relaxed">Begin applications <span className="text-elec-yellow font-semibold">3-6 months</span> before target date.</p>
+                  <h4 className="font-semibold text-foreground text-sm mb-1">Start Early</h4>
+                  <p className="text-foreground/85 text-xs leading-relaxed">Begin applications <span className="text-elec-yellow font-semibold">3-6 months</span> before target date.</p>
                 </div>
               </div>
             </div>

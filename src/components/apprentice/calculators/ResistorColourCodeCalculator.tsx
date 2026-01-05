@@ -1,10 +1,9 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { ResultCard } from "@/components/ui/result-card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Sigma, Info } from "lucide-react";
 
 // Define proper types for color values
@@ -144,72 +143,60 @@ const ResistorColourCodeCalculator = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           <div className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="text-sm font-medium mb-2 block">1st Band (First Digit)</label>
-                <Select value={band1} onValueChange={setBand1}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
-                    <SelectValue placeholder="Select colour" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    {Object.entries(colorValues).slice(1, 10).map(([name]) => (
-                      <SelectItem key={name} value={name}>
-                        <ColorOption color={colorValues[name].color} name={name} />
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <MobileSelect value={band1} onValueChange={setBand1}>
+                <MobileSelectTrigger label="1st Band (First Digit)">
+                  <MobileSelectValue placeholder="Select colour" />
+                </MobileSelectTrigger>
+                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                  {Object.entries(colorValues).slice(1, 10).map(([name]) => (
+                    <MobileSelectItem key={name} value={name}>
+                      <ColorOption color={colorValues[name].color} name={name} />
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
 
-              <div>
-                <label className="text-sm font-medium mb-2 block">2nd Band (Second Digit)</label>
-                <Select value={band2} onValueChange={setBand2}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
-                    <SelectValue placeholder="Select colour" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    {Object.entries(colorValues).slice(0, 10).map(([name]) => (
-                      <SelectItem key={name} value={name}>
-                        <ColorOption color={colorValues[name].color} name={name} />
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <MobileSelect value={band2} onValueChange={setBand2}>
+                <MobileSelectTrigger label="2nd Band (Second Digit)">
+                  <MobileSelectValue placeholder="Select colour" />
+                </MobileSelectTrigger>
+                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                  {Object.entries(colorValues).slice(0, 10).map(([name]) => (
+                    <MobileSelectItem key={name} value={name}>
+                      <ColorOption color={colorValues[name].color} name={name} />
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
 
-              <div>
-                <label className="text-sm font-medium mb-2 block">3rd Band (Multiplier)</label>
-                <Select value={band3} onValueChange={setBand3}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
-                    <SelectValue placeholder="Select colour" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    {Object.entries(colorValues).map(([name]) => (
-                      <SelectItem key={name} value={name}>
-                        <ColorOption color={colorValues[name].color} name={name} />
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <MobileSelect value={band3} onValueChange={setBand3}>
+                <MobileSelectTrigger label="3rd Band (Multiplier)">
+                  <MobileSelectValue placeholder="Select colour" />
+                </MobileSelectTrigger>
+                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                  {Object.entries(colorValues).map(([name]) => (
+                    <MobileSelectItem key={name} value={name}>
+                      <ColorOption color={colorValues[name].color} name={name} />
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
 
-              <div>
-                <label className="text-sm font-medium mb-2 block">4th Band (Tolerance)</label>
-                <Select value={band4} onValueChange={setBand4}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
-                    <SelectValue placeholder="Select colour" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    {Object.entries(toleranceColors).map(([name, tolerance]) => (
-                      <SelectItem key={name} value={name}>
-                        <div className="flex items-center justify-between w-full">
-                          <ColorOption color={colorValues[name].color} name={name} />
-                          <span className="text-xs text-muted-foreground ml-2">{tolerance}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <MobileSelect value={band4} onValueChange={setBand4}>
+                <MobileSelectTrigger label="4th Band (Tolerance)">
+                  <MobileSelectValue placeholder="Select colour" />
+                </MobileSelectTrigger>
+                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                  {Object.entries(toleranceColors).map(([name, tolerance]) => (
+                    <MobileSelectItem key={name} value={name}>
+                      <div className="flex items-center justify-between w-full">
+                        <ColorOption color={colorValues[name].color} name={name} />
+                        <span className="text-xs text-muted-foreground ml-2">{tolerance}</span>
+                      </div>
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">

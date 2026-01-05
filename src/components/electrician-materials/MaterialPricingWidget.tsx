@@ -110,7 +110,7 @@ const MaterialPricingWidget = () => {
     <Card className="border-elec-yellow/20 bg-elec-gray h-full">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-xl flex items-center gap-2 text-white">
+          <CardTitle className="text-xl flex items-center gap-2 text-foreground">
             <Activity className="h-5 w-5 text-elec-yellow" />
             Live Material Prices
           </CardTitle>
@@ -128,7 +128,7 @@ const MaterialPricingWidget = () => {
           <div key={item.id} className="border border-elec-yellow/10 rounded-lg p-3 bg-elec-dark/30">
             <div className="flex justify-between items-start mb-2">
               <div className="flex-1 min-w-0">
-                <h4 className="text-sm font-medium text-white truncate">{item.name}</h4>
+                <h4 className="text-sm font-medium text-foreground truncate">{item.name}</h4>
                 <div className="flex items-center gap-2 mt-1">
                   <span className="text-xs text-muted-foreground">{item.supplier}</span>
                   <Badge className={`text-xs ${getAvailabilityColor(item.availability)}`}>
@@ -140,7 +140,7 @@ const MaterialPricingWidget = () => {
             
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
-                <span className="font-semibold text-white">{item.currentPrice}</span>
+                <span className="font-semibold text-foreground">{item.currentPrice}</span>
                 <span className={`flex items-center text-xs px-2 py-1 rounded ${
                   item.trending === "up" 
                     ? "text-red-400 bg-red-500/20" 
@@ -161,13 +161,13 @@ const MaterialPricingWidget = () => {
         ))}
         
         <div className="border-t border-elec-yellow/20 pt-4 space-y-3">
-          <Button variant="outline" size="sm" className="w-full border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
+          <Button variant="outline" size="sm" className="w-full border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10">
             <Bell className="h-4 w-4 mr-2" />
             Set Price Alerts
           </Button>
           
           <Link to="/electrician/materials-price-tracker" className="block">
-            <Button variant="outline" size="sm" className="w-full border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
+            <Button variant="outline" size="sm" className="w-full border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10">
               View Full Price Tracker
             </Button>
           </Link>

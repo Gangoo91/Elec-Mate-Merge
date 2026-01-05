@@ -14,7 +14,7 @@ const JIBGradingScheme = () => {
     {
       grade: "Apprentice",
       color: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-      hourlyRate: "£7.55 minimum (2025)",
+      hourlyRate: "£8.00 minimum (2026)",
       dayRate: "£60-65/day typical",
       requirements: [
         "Enrolled on approved Level 3 apprenticeship programme", 
@@ -25,7 +25,7 @@ const JIBGradingScheme = () => {
         "DBS check (Basic level) for some sites"
       ],
       benefits: [
-        "Apprentice minimum wage protection (£7.55/hr minimum)",
+        "Apprentice minimum wage protection (£8.00/hr minimum)",
         "Structured 4-year training pathway with portfolio building", 
         "Industry recognition and ECS Apprentice card eligibility",
         "Government funding support (up to £18,000 per apprentice)",
@@ -57,7 +57,7 @@ const JIBGradingScheme = () => {
     {
       grade: "Improver",
       color: "bg-purple-500/20 text-purple-400 border-purple-500/30", 
-      hourlyRate: "£15-20/hr typical (2025)",
+      hourlyRate: "£16-22/hr typical (2026)",
       dayRate: "£160-220/day London premium",
       requirements: [
         "Level 3 NVQ Diploma (2357/5357) completed",
@@ -100,7 +100,7 @@ const JIBGradingScheme = () => {
     {
       grade: "Electrician (Gold Card)",
       color: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-      hourlyRate: "£22-28/hr base (2025)",
+      hourlyRate: "£24-30/hr base (2026)",
       dayRate: "£200-320/day + regional premiums",
       requirements: [
         "Level 3 NVQ Diploma (2357/5357) completed",
@@ -129,7 +129,7 @@ const JIBGradingScheme = () => {
         "Supervision of junior electricians and apprentices"
       ],
       cpd: [
-        "18th Edition Amendment updates (A3 expected 2026)",
+        "18th Edition Amendment 3 (A3:2024) - Current Standard",
         "2391-52 Inspection, Testing and Certification (essential)",
         "Specialist manufacturer training (Schneider, ABB, Legrand, Hager)",
         "Smart building systems, IoT integration and BMS",
@@ -143,7 +143,7 @@ const JIBGradingScheme = () => {
     {
       grade: "Approved Electrician (JIB)",
       color: "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
-      hourlyRate: "£23-28/hr enhanced (2025)",
+      hourlyRate: "£25-32/hr enhanced (2026)",
       requirements: [
         "All Electrician (Gold Card) requirements met",
         "2391-52 Inspection & Testing qualification",
@@ -177,7 +177,7 @@ const JIBGradingScheme = () => {
     {
       grade: "Technician Electrician (JIB)",
       color: "bg-green-500/20 text-green-400 border-green-500/30",
-      hourlyRate: "£26-32/hr premium (2025)",
+      hourlyRate: "£28-36/hr premium (2026)",
       requirements: [
         "Approved Electrician status established",
         "HNC/HND Electrical Engineering preferred",
@@ -211,7 +211,7 @@ const JIBGradingScheme = () => {
     {
       grade: "Supervisor",
       color: "bg-red-500/20 text-red-400 border-red-500/30",
-      hourlyRate: "£30-40/hr management (2025)",
+      hourlyRate: "£32-45/hr management (2026)",
       requirements: [
         "Approved Electrician or Technician Electrician status",
         "SSSTS/SMSTS (Site Supervisor/Manager Training Scheme)",
@@ -262,7 +262,7 @@ const JIBGradingScheme = () => {
             <div className="text-center space-y-3">
               <h3 className="text-lg font-semibold text-elec-yellow flex items-center justify-center gap-2">
                 <TrendingUp className="h-5 w-5" />
-                2025 Industry Update
+                2026 Industry Update
               </h3>
               <p className="text-white text-sm max-w-3xl mx-auto leading-relaxed">
                 Record skills shortage pushing rates up 15-20% year-on-year. Net Zero targets creating unprecedented 
@@ -271,7 +271,7 @@ const JIBGradingScheme = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
                 <div className="bg-elec-gray/50 rounded-lg p-3 border border-elec-yellow/10">
                   <div className="text-green-400 font-semibold text-sm flex items-center gap-1">
-                    <Zap className="h-3 w-3" /> High Demand 2025
+                    <Zap className="h-3 w-3" /> High Demand 2026
                   </div>
                   <div className="text-white text-xs">EV Charging • Data Centres • Heat Pumps • Smart Buildings</div>
                 </div>
@@ -279,7 +279,7 @@ const JIBGradingScheme = () => {
                   <div className="text-blue-400 font-semibold text-sm flex items-center gap-1">
                     <DollarSign className="h-3 w-3" /> Rate Premiums
                   </div>
-                  <div className="text-white text-xs">+£25-50/day vs 2024 • Specialists +£100/day</div>
+                  <div className="text-white text-xs">+£25-50/day vs 2025 • Specialists +£100/day</div>
                 </div>
                 <div className="bg-elec-gray/50 rounded-lg p-3 border border-elec-yellow/10">
                   <div className="text-purple-400 font-semibold text-sm flex items-center gap-1">
@@ -319,7 +319,7 @@ const JIBGradingScheme = () => {
           <MobileAccordion type="multiple" className="space-y-4">
             {/* Quick Rate Calculator */}
             <MobileAccordionItem value="calculator">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Calculator className="h-4 w-4 text-blue-400" />}>Quick Rate Calculator (2025)</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Calculator className="h-4 w-4 text-blue-400" />}>Quick Rate Calculator (2026)</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-3">
@@ -370,7 +370,7 @@ const JIBGradingScheme = () => {
 
             {/* Industry Trends 2025 */}
             <MobileAccordionItem value="trends">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<TrendingUp className="h-4 w-4 text-green-400" />}>2025 Industry Trends & Opportunities</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<TrendingUp className="h-4 w-4 text-green-400" />}>2026 Industry Trends & Opportunities</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="rounded border border-green-400/20 bg-green-500/5 p-3">
@@ -613,10 +613,10 @@ const JIBGradingScheme = () => {
 
             {/* ECS cards */}
             <MobileAccordionItem value="ecs">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Shield className="h-4 w-4 text-green-400" />}>ECS Cards & Categories (2025)</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Shield className="h-4 w-4 text-green-400" />}>ECS Cards & Categories (2026)</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="mb-4 p-3 bg-elec-yellow/10 rounded border border-elec-yellow/20">
-                  <h4 className="text-sm font-medium text-elec-yellow mb-2">2025 Application Fees (Current)</h4>
+                  <h4 className="text-sm font-medium text-elec-yellow mb-2">2026 Application Fees (Current)</h4>
                   <div className="grid grid-cols-2 gap-2 text-xs text-white">
                     <div>• Apprentice: £36</div>
                     <div>• Gold Card: £42</div>
@@ -639,7 +639,7 @@ const JIBGradingScheme = () => {
                     </div>
                   </div>
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
-                    <div className="text-base font-medium mb-1">2025 Specialist Categories</div>
+                    <div className="text-base font-medium mb-1">2026 Specialist Categories</div>
                     <div className="text-sm space-y-2">
                       <div className="flex flex-wrap gap-2">
                         {["EV Charging","Smart Buildings","Data Centres","Fire & Security","Network Cabling","Solar PV","Heat Pumps","H.V. Authorised","Energy Storage"].map((t) => (
@@ -650,7 +650,7 @@ const JIBGradingScheme = () => {
                     </div>
                   </div>
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
-                    <div className="text-base font-medium mb-1">Digital-First Process (2025)</div>
+                    <div className="text-base font-medium mb-1">Digital-First Process (2026)</div>
                     <div className="text-xs space-y-1">
                       <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Create MyECS account (digital verification)</div>
                       <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Upload qualifications (PDF format accepted)</div>
@@ -665,12 +665,12 @@ const JIBGradingScheme = () => {
 
             {/* Pay & allowances */}
             <MobileAccordionItem value="pay">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Banknote className="h-4 w-4 text-green-400" />}>2025 Pay Rates & Regional Breakdown</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Banknote className="h-4 w-4 text-green-400" />}>2026 Pay Rates & Regional Breakdown</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="mb-4 p-3 bg-green-500/10 rounded border border-green-400/20">
                   <h4 className="text-sm font-medium text-green-400 mb-2 flex items-center gap-2">
                     <TrendingUp className="h-3 w-3" />
-                    2025 Rate Increases: +15-20% YoY
+                    2026 Rate Increases: +10-15% YoY
                   </h4>
                   <p className="text-xs text-white">Skills shortage driving unprecedented rate growth. Specialist roles commanding significant premiums.</p>
                 </div>
@@ -679,7 +679,7 @@ const JIBGradingScheme = () => {
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
                     <div className="text-base font-medium mb-1 flex items-center gap-2">
                       <Calculator className="h-4 w-4 text-elec-yellow" />
-                      2025 Day Rates by Region
+                      2026 Day Rates by Region
                     </div>
                     <div className="space-y-2 text-xs">
                       <div className="bg-elec-gray/50 p-2 rounded">
@@ -704,7 +704,7 @@ const JIBGradingScheme = () => {
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
                     <div className="text-base font-medium mb-1 flex items-center gap-2">
                       <Building className="h-4 w-4 text-blue-400" />
-                      Project Type Premiums (2025)
+                      Project Type Premiums (2026)
                     </div>
                     <div className="text-xs space-y-2">
                       <div className="flex justify-between">

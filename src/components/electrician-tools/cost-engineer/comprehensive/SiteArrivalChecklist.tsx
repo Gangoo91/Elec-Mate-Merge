@@ -27,7 +27,7 @@ const SiteArrivalChecklist = ({ checklist }: SiteArrivalChecklistProps) => {
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
           <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
           Site Arrival Checklist
         </CardTitle>
@@ -35,14 +35,14 @@ const SiteArrivalChecklist = ({ checklist }: SiteArrivalChecklistProps) => {
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-4">
         {/* Progress Indicator */}
         <div className="flex items-center justify-between p-3 sm:p-2.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-          <span className="text-white font-medium text-base sm:text-sm">Progress</span>
+          <span className="text-foreground font-medium text-base sm:text-sm">Progress</span>
           <span className="text-elec-yellow font-bold text-base sm:text-sm">{checkedItems.size} of {totalItems} complete</span>
         </div>
 
         {/* Critical Checks */}
         {checklist.critical && checklist.critical.length > 0 && (
           <div>
-            <div className="text-base sm:text-sm font-medium text-white mb-2 flex items-center gap-2">
+            <div className="text-base sm:text-sm font-medium text-foreground mb-2 flex items-center gap-2">
               🔴 Critical (Must-Do Before Starting)
             </div>
             <div className="space-y-2">
@@ -64,8 +64,8 @@ const SiteArrivalChecklist = ({ checklist }: SiteArrivalChecklistProps) => {
                   />
                   <label
                     htmlFor={`critical-${idx}`}
-                    className={`text-base sm:text-sm text-white flex-1 leading-relaxed pointer-events-none ${
-                      checkedItems.has(`critical-${idx}`) ? 'line-through text-white/60' : ''
+                    className={`text-base sm:text-sm text-foreground flex-1 leading-relaxed pointer-events-none ${
+                      checkedItems.has(`critical-${idx}`) ? 'line-through text-foreground/60' : ''
                     }`}
                   >
                     {item}
@@ -82,7 +82,7 @@ const SiteArrivalChecklist = ({ checklist }: SiteArrivalChecklistProps) => {
         {/* Important Checks */}
         {checklist.important && checklist.important.length > 0 && (
           <div>
-            <div className="text-base sm:text-sm font-medium text-white mb-2 flex items-center gap-2">
+            <div className="text-base sm:text-sm font-medium text-foreground mb-2 flex items-center gap-2">
               🟡 Important Considerations
             </div>
             <div className="space-y-2">
@@ -104,8 +104,8 @@ const SiteArrivalChecklist = ({ checklist }: SiteArrivalChecklistProps) => {
                   />
                   <label
                     htmlFor={`important-${idx}`}
-                    className={`text-base sm:text-sm text-white flex-1 leading-relaxed pointer-events-none ${
-                      checkedItems.has(`important-${idx}`) ? 'line-through text-white/60' : ''
+                    className={`text-base sm:text-sm text-foreground flex-1 leading-relaxed pointer-events-none ${
+                      checkedItems.has(`important-${idx}`) ? 'line-through text-foreground/60' : ''
                     }`}
                   >
                     {item}

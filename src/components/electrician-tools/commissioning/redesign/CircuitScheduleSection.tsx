@@ -28,9 +28,9 @@ export const CircuitScheduleSection = ({ circuits }: CircuitScheduleSectionProps
         <div className="p-4 sm:p-5">
           <div className="flex items-center gap-3">
             <Zap className="h-5 w-5 text-elec-yellow shrink-0" />
-            <h2 className="text-lg sm:text-xl font-bold text-white">Circuit Schedule</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-foreground">Circuit Schedule</h2>
           </div>
-          <p className="text-sm text-white/70 mt-2">
+          <p className="text-sm text-foreground/70 mt-2">
             {circuits.length} circuits to test
           </p>
         </div>
@@ -63,7 +63,7 @@ export const CircuitScheduleSection = ({ circuits }: CircuitScheduleSectionProps
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-white text-sm sm:text-base">
+                  <h3 className="font-semibold text-foreground text-sm sm:text-base">
                     {circuit.circuitName || 'Unnamed Circuit'}
                   </h3>
                   <div className="flex flex-wrap gap-1.5 mt-1">
@@ -80,7 +80,7 @@ export const CircuitScheduleSection = ({ circuits }: CircuitScheduleSectionProps
                   </div>
                 </div>
 
-                <div className="text-white/40 shrink-0">
+                <div className="text-foreground/40 shrink-0">
                   {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
                 </div>
               </button>
@@ -89,22 +89,22 @@ export const CircuitScheduleSection = ({ circuits }: CircuitScheduleSectionProps
                 <div className="px-4 pb-4 space-y-3 border-t border-elec-yellow/20">
                   {circuit.expectedR1R2 && (
                     <div className="flex justify-between items-start pt-3">
-                      <span className="text-sm text-white/60">Expected R1+R2:</span>
-                      <span className="text-sm text-white font-medium text-right">{circuit.expectedR1R2}</span>
+                      <span className="text-sm text-foreground/60">Expected R1+R2:</span>
+                      <span className="text-sm text-foreground font-medium text-right">{circuit.expectedR1R2}</span>
                     </div>
                   )}
                   
                   {circuit.maxZs && (
                     <div className="flex justify-between items-start">
-                      <span className="text-sm text-white/60">Max Zs:</span>
+                      <span className="text-sm text-foreground/60">Max Zs:</span>
                       <span className="text-sm text-elec-yellow font-medium text-right">{circuit.maxZs}</span>
                     </div>
                   )}
                   
                   {circuit.testMethod && (
                     <div className="bg-background/50 rounded-lg p-3 mt-2">
-                      <div className="text-xs text-white/60 mb-1">Test Method:</div>
-                      <div className="text-sm text-white">{circuit.testMethod}</div>
+                      <div className="text-xs text-foreground/60 mb-1">Test Method:</div>
+                      <div className="text-sm text-foreground">{circuit.testMethod}</div>
                     </div>
                   )}
                 </div>

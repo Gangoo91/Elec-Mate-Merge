@@ -284,7 +284,7 @@ const RAMSGenerator: React.FC = () => {
       {/* Project Information */}
       <Card className="border-elec-yellow/20 bg-elec-gray/60">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <Building className="h-5 w-5" />
             Project Information
           </CardTitle>
@@ -292,43 +292,43 @@ const RAMSGenerator: React.FC = () => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <Label htmlFor="projectName" className="text-white">Project Name *</Label>
+              <Label htmlFor="projectName" className="text-foreground">Project Name *</Label>
               <Input
                 id="projectName"
                 value={ramsData.projectName}
                 onChange={(e) => updateProjectInfo({ projectName: e.target.value })}
                 placeholder="Enter project name"
-                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
               />
             </div>
             <div>
-              <Label htmlFor="location" className="text-white">Location *</Label>
+              <Label htmlFor="location" className="text-foreground">Location *</Label>
               <Input
                 id="location"
                 value={ramsData.location}
                 onChange={(e) => updateProjectInfo({ location: e.target.value })}
                 placeholder="Enter project location"
-                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
               />
             </div>
             <div>
-              <Label htmlFor="assessor" className="text-white">Assessor *</Label>
+              <Label htmlFor="assessor" className="text-foreground">Assessor *</Label>
               <Input
                 id="assessor"
                 value={ramsData.assessor}
                 onChange={(e) => updateProjectInfo({ assessor: e.target.value })}
                 placeholder="Enter assessor name"
-                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
               />
             </div>
             <div>
-              <Label htmlFor="date" className="text-white">Assessment Date *</Label>
+              <Label htmlFor="date" className="text-foreground">Assessment Date *</Label>
               <Input
                 id="date"
                 type="date"
                 value={ramsData.date}
                 onChange={(e) => updateProjectInfo({ date: e.target.value })}
-                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
               />
             </div>
           </div>
@@ -347,7 +347,7 @@ const RAMSGenerator: React.FC = () => {
       {ramsData.activities.length > 0 && (
         <Card className="border-elec-yellow/20 bg-elec-gray/60">
           <CardHeader>
-            <CardTitle className="text-white">Legacy Activities ({ramsData.activities.length})</CardTitle>
+            <CardTitle className="text-foreground">Legacy Activities ({ramsData.activities.length})</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:gap-2">
@@ -355,7 +355,7 @@ const RAMSGenerator: React.FC = () => {
                 value={newActivity}
                 onChange={(e) => setNewActivity(e.target.value)}
                 placeholder="Enter work activity"
-                className="bg-elec-dark/50 border-elec-yellow/20 text-white flex-1 h-12 text-base"
+                className="bg-elec-dark/50 border-elec-yellow/20 text-foreground flex-1 h-12 text-base"
                 onKeyPress={(e) => e.key === 'Enter' && handleAddActivity()}
               />
               <Button
@@ -371,7 +371,7 @@ const RAMSGenerator: React.FC = () => {
               <div className="space-y-2">
                 {ramsData.activities.map((activity, index) => (
                   <div key={index} className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg">
-                    <span className="text-white text-sm leading-relaxed flex-1 break-words">
+                    <span className="text-foreground text-sm leading-relaxed flex-1 break-words">
                       {index + 1}. {activity}
                     </span>
                     <Button
@@ -393,7 +393,7 @@ const RAMSGenerator: React.FC = () => {
       {/* Risk Assessment Summary */}
       <Card className="border-elec-yellow/20 bg-elec-gray/60">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <Shield className="h-5 w-5" />
             Risk Assessment Summary
           </CardTitle>
@@ -439,12 +439,12 @@ const RAMSGenerator: React.FC = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
-              <h4 className="font-medium text-white">Risk Assessment</h4>
+              <h4 className="font-medium text-foreground">Risk Assessment</h4>
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button
                   onClick={() => setShowHazardSelector(true)}
                   size="sm"
-                  className="bg-orange-500 text-white hover:bg-orange-600"
+                  className="bg-orange-500 text-foreground hover:bg-orange-600"
                 >
                   <Shield className="h-4 w-4 mr-2" />
                   Add from Database
@@ -462,7 +462,7 @@ const RAMSGenerator: React.FC = () => {
 
             {ramsData.risks.length > 0 && (
             <div className="space-y-3">
-              <h4 className="font-medium text-white">Identified Risks ({ramsData.risks.length})</h4>
+              <h4 className="font-medium text-foreground">Identified Risks ({ramsData.risks.length})</h4>
               {ramsData.risks.map((risk) => (
                 <Card key={risk.id} className="border-elec-yellow/30 bg-elec-dark/20">
                   <CardContent className="p-3 sm:p-4">
@@ -470,12 +470,12 @@ const RAMSGenerator: React.FC = () => {
                       // Edit Mode
                       <div className="space-y-4">
                         <div className="flex items-center justify-between mb-3">
-                          <h5 className="font-medium text-white">Edit Risk Assessment</h5>
+                          <h5 className="font-medium text-foreground">Edit Risk Assessment</h5>
                           <div className="flex gap-2">
                             <Button
                               onClick={handleSaveEdit}
                               size="sm"
-                              className="bg-green-600 text-white hover:bg-green-700"
+                              className="bg-green-600 text-foreground hover:bg-green-700"
                               disabled={!editRiskData.hazard || !editRiskData.risk}
                             >
                               Save
@@ -493,26 +493,26 @@ const RAMSGenerator: React.FC = () => {
                         
                         <div className="space-y-3">
                           <div>
-                            <Label className="text-white text-sm">Hazard</Label>
+                            <Label className="text-foreground text-sm">Hazard</Label>
                             <Input
                               value={editRiskData.hazard}
                               onChange={(e) => setEditRiskData(prev => ({ ...prev, hazard: e.target.value }))}
-                              className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                              className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
                             />
                           </div>
                           
                           <div>
-                            <Label className="text-white text-sm">Risk/Consequence</Label>
+                            <Label className="text-foreground text-sm">Risk/Consequence</Label>
                             <Input
                               value={editRiskData.risk}
                               onChange={(e) => setEditRiskData(prev => ({ ...prev, risk: e.target.value }))}
-                              className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                              className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
                             />
                           </div>
                           
                           <div className="grid grid-cols-1 gap-3">
                             <div>
-                              <Label className="text-white text-sm">Likelihood (1-5)</Label>
+                              <Label className="text-foreground text-sm">Likelihood (1-5)</Label>
                               <Select
                                 value={editRiskData.likelihood.toString()}
                                 onValueChange={(value) => setEditRiskData(prev => ({ ...prev, likelihood: parseInt(value) }))}
@@ -531,7 +531,7 @@ const RAMSGenerator: React.FC = () => {
                             </div>
                             
                             <div>
-                              <Label className="text-white text-sm">Severity (1-5)</Label>
+                              <Label className="text-foreground text-sm">Severity (1-5)</Label>
                               <Select
                                 value={editRiskData.severity.toString()}
                                 onValueChange={(value) => setEditRiskData(prev => ({ ...prev, severity: parseInt(value) }))}
@@ -551,11 +551,11 @@ const RAMSGenerator: React.FC = () => {
                           </div>
                           
                           <div>
-                            <Label className="text-white text-sm">Control Measures</Label>
+                            <Label className="text-foreground text-sm">Control Measures</Label>
                             <Textarea
                               value={editRiskData.controls}
                               onChange={(e) => setEditRiskData(prev => ({ ...prev, controls: e.target.value }))}
-                              className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                              className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
                               rows={2}
                             />
                           </div>
@@ -564,7 +564,7 @@ const RAMSGenerator: React.FC = () => {
                             <div className="p-3 bg-elec-gray/30 rounded-lg">
                               <div className="flex items-center gap-2">
                                 <span className="text-sm text-muted-foreground">Risk Level:</span>
-                                <Badge className={`${getRiskLevelColor(editRiskData.likelihood * editRiskData.severity)} text-white`}>
+                                <Badge className={`${getRiskLevelColor(editRiskData.likelihood * editRiskData.severity)} text-foreground`}>
                                   {getRiskLevelText(editRiskData.likelihood * editRiskData.severity)} ({editRiskData.likelihood * editRiskData.severity})
                                 </Badge>
                               </div>
@@ -578,12 +578,12 @@ const RAMSGenerator: React.FC = () => {
                         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                           <div className="flex-1 space-y-2">
                             <div className="flex flex-wrap items-center gap-2">
-                              <Badge className={`${getRiskLevelColor(risk.riskRating)} text-white text-xs`}>
+                              <Badge className={`${getRiskLevelColor(risk.riskRating)} text-foreground text-xs`}>
                                 {getRiskLevelText(risk.riskRating)} ({risk.riskRating})
                               </Badge>
                             </div>
                             <div>
-                              <h5 className="font-medium text-white text-sm sm:text-base break-words leading-tight">
+                              <h5 className="font-medium text-foreground text-sm sm:text-base break-words leading-tight">
                                 {risk.hazard}
                               </h5>
                               <p className="text-xs sm:text-sm text-muted-foreground break-words leading-relaxed mt-1">
@@ -641,27 +641,27 @@ const RAMSGenerator: React.FC = () => {
       <Accordion type="single" collapsible className="space-y-4">
         {/* Branding Section */}
         <AccordionItem value="branding" className="border-elec-yellow/20 bg-elec-gray/60 rounded-lg px-4">
-          <AccordionTrigger className="text-white hover:text-elec-yellow">
+          <AccordionTrigger className="text-foreground hover:text-elec-yellow">
             Company Branding (Optional)
           </AccordionTrigger>
           <AccordionContent className="space-y-4 pt-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-2">
               <div>
-                <Label className="text-white">Company Name</Label>
+                <Label className="text-foreground">Company Name</Label>
                 <Input
                   value={reportOptions.companyName || ''}
                   onChange={(e) => setBranding({ companyName: e.target.value })}
                   placeholder="Enter company name"
-                  className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                  className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
                 />
               </div>
               <div>
-                <Label className="text-white">Logo URL</Label>
+                <Label className="text-foreground">Logo URL</Label>
                 <Input
                   value={reportOptions.logoUrl || ''}
                   onChange={(e) => setBranding({ logoUrl: e.target.value })}
                   placeholder="Enter logo URL (optional)"
-                  className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                  className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
                 />
               </div>
             </div>
@@ -670,7 +670,7 @@ const RAMSGenerator: React.FC = () => {
 
         {/* Electronic Signatures */}
         <AccordionItem value="signatures" className="border-elec-yellow/20 bg-elec-gray/60 rounded-lg px-4">
-          <AccordionTrigger className="text-white hover:text-elec-yellow">
+          <AccordionTrigger className="text-foreground hover:text-elec-yellow">
             Electronic Signatures (Optional)
           </AccordionTrigger>
           <AccordionContent className="space-y-6 pt-4">
@@ -789,35 +789,35 @@ const RAMSGenerator: React.FC = () => {
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-white mb-1">Hazard</label>
+                <label className="block text-sm font-medium text-foreground mb-1">Hazard</label>
                 <Input
                   value={newRisk.hazard}
                   onChange={(e) => setNewRisk({ ...newRisk, hazard: e.target.value })}
                   placeholder="e.g., Live electrical conductors"
-                  className="bg-elec-gray border-elec-yellow/20 text-white"
+                  className="bg-elec-gray border-elec-yellow/20 text-foreground"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-white mb-1">Risk</label>
+                <label className="block text-sm font-medium text-foreground mb-1">Risk</label>
                 <Input
                   value={newRisk.risk}
                   onChange={(e) => setNewRisk({ ...newRisk, risk: e.target.value })}
                   placeholder="e.g., Electric shock"
-                  className="bg-elec-gray border-elec-yellow/20 text-white"
+                  className="bg-elec-gray border-elec-yellow/20 text-foreground"
                 />
               </div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-white mb-1">Likelihood (1-5)</label>
+                <label className="block text-sm font-medium text-foreground mb-1">Likelihood (1-5)</label>
                 <Select value={newRisk.likelihood.toString()} onValueChange={(value) => setNewRisk({ ...newRisk, likelihood: parseInt(value) })}>
-                  <SelectTrigger className="bg-elec-gray border-elec-yellow/20 text-white">
+                  <SelectTrigger className="bg-elec-gray border-elec-yellow/20 text-foreground">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-dark border-elec-yellow/20">
                     {[1, 2, 3, 4, 5].map((value) => (
-                      <SelectItem key={value} value={value.toString()} className="text-white hover:bg-elec-yellow/10">
+                      <SelectItem key={value} value={value.toString()} className="text-foreground hover:bg-elec-yellow/10">
                         {value} - {['Very Unlikely', 'Unlikely', 'Possible', 'Likely', 'Very Likely'][value - 1]}
                       </SelectItem>
                     ))}
@@ -825,14 +825,14 @@ const RAMSGenerator: React.FC = () => {
                 </Select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-white mb-1">Severity (1-5)</label>
+                <label className="block text-sm font-medium text-foreground mb-1">Severity (1-5)</label>
                 <Select value={newRisk.severity.toString()} onValueChange={(value) => setNewRisk({ ...newRisk, severity: parseInt(value) })}>
-                  <SelectTrigger className="bg-elec-gray border-elec-yellow/20 text-white">
+                  <SelectTrigger className="bg-elec-gray border-elec-yellow/20 text-foreground">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-dark border-elec-yellow/20">
                     {[1, 2, 3, 4, 5].map((value) => (
-                      <SelectItem key={value} value={value.toString()} className="text-white hover:bg-elec-yellow/10">
+                      <SelectItem key={value} value={value.toString()} className="text-foreground hover:bg-elec-yellow/10">
                         {value} - {['Negligible', 'Minor', 'Moderate', 'Major', 'Catastrophic'][value - 1]}
                       </SelectItem>
                     ))}
@@ -842,12 +842,12 @@ const RAMSGenerator: React.FC = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-white mb-1">Control Measures</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Control Measures</label>
               <textarea
                 value={newRisk.controls}
                 onChange={(e) => setNewRisk({ ...newRisk, controls: e.target.value })}
                 placeholder="Describe the control measures to mitigate this risk..."
-                className="w-full p-3 bg-elec-gray border border-elec-yellow/20 rounded-md text-white placeholder-gray-400 resize-none"
+                className="w-full p-3 bg-elec-gray border border-elec-yellow/20 rounded-md text-foreground placeholder-gray-400 resize-none"
                 rows={3}
               />
             </div>

@@ -435,7 +435,7 @@ export const GrowthStrategiesTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -459,7 +459,7 @@ export const GrowthStrategiesTab = () => {
                 <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
                       <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {strategy.timeline}
                       </Badge>
@@ -601,7 +601,7 @@ export const GrowthStrategiesTab = () => {
                         {category.benchmarks.map((benchmark, benchmarkIndex) => (
                           <div key={benchmarkIndex} className="border border-blue-500/20 rounded-lg p-3">
                             <div className="flex justify-between items-center mb-2">
-                              <span className={`font-medium text-white ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                              <span className={`font-medium text-foreground ${isMobile ? 'text-xs' : 'text-sm'}`}>
                                 {benchmark.metric}
                               </span>
                               <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
@@ -703,7 +703,7 @@ export const GrowthStrategiesTab = () => {
                         {metricCategory.kpis.map((kpi, kpiIndex) => (
                           <div key={kpiIndex} className="flex items-start gap-2 p-2 bg-elec-gray/30 rounded-lg">
                             <CheckCircle className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-                            <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                            <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                               {kpi}
                             </span>
                           </div>

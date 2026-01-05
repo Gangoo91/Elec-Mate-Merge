@@ -181,7 +181,7 @@ const OutdoorPlanningSection = () => {
             <ClipboardList className="h-6 w-6 text-blue-400" />
             <CardTitle className="text-blue-300">Outdoor Installation Planning Phases</CardTitle>
           </div>
-          <p className="text-muted-foreground">Systematic approach to outdoor electrical projects</p>
+          <p className="text-neutral-300">Systematic approach to outdoor electrical projects</p>
         </CardHeader>
         <CardContent className="space-y-4">
           {planningPhases.map((phase, index) => (
@@ -196,7 +196,7 @@ const OutdoorPlanningSection = () => {
                 {phase.tasks.map((task, taskIndex) => (
                   <div key={taskIndex} className="flex items-center gap-2 text-sm">
                     <div className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0" />
-                    <span className="text-muted-foreground">{task}</span>
+                    <span className="text-neutral-300">{task}</span>
                   </div>
                 ))}
               </div>
@@ -212,7 +212,7 @@ const OutdoorPlanningSection = () => {
             <Eye className="h-6 w-6 text-purple-400" />
             <CardTitle className="text-purple-300">Critical Design Considerations</CardTitle>
           </div>
-          <p className="text-muted-foreground">Key factors for outdoor electrical design</p>
+          <p className="text-neutral-300">Key factors for outdoor electrical design</p>
         </CardHeader>
         <CardContent className="space-y-4">
           {designConsiderations.map((item, index) => (
@@ -225,7 +225,7 @@ const OutdoorPlanningSection = () => {
                 {item.considerations.map((consideration, conIndex) => (
                   <div key={conIndex} className="flex items-start gap-2 text-sm">
                     <Zap className="h-3 w-3 text-purple-400 mt-1 flex-shrink-0" />
-                    <span className="text-muted-foreground">{consideration}</span>
+                    <span className="text-neutral-300">{consideration}</span>
                   </div>
                 ))}
               </div>
@@ -241,7 +241,7 @@ const OutdoorPlanningSection = () => {
             <Cloud className="h-6 w-6 text-green-400" />
             <CardTitle className="text-green-300">Environmental Adaptation Strategies</CardTitle>
           </div>
-          <p className="text-muted-foreground">Location-specific planning considerations</p>
+          <p className="text-neutral-300">Location-specific planning considerations</p>
         </CardHeader>
         <CardContent className="space-y-4">
           {environmentalFactors.map((env, index) => (
@@ -254,7 +254,7 @@ const OutdoorPlanningSection = () => {
                     {env.challenges.map((challenge, cIndex) => (
                       <div key={cIndex} className="flex items-center gap-2 text-sm">
                         <AlertTriangle className="h-3 w-3 text-orange-400 flex-shrink-0" />
-                        <span className="text-muted-foreground">{challenge}</span>
+                        <span className="text-neutral-300">{challenge}</span>
                       </div>
                     ))}
                   </div>
@@ -265,7 +265,7 @@ const OutdoorPlanningSection = () => {
                     {env.solutions.map((solution, sIndex) => (
                       <div key={sIndex} className="flex items-center gap-2 text-sm">
                         <Shield className="h-3 w-3 text-green-400 flex-shrink-0" />
-                        <span className="text-muted-foreground">{solution}</span>
+                        <span className="text-neutral-300">{solution}</span>
                       </div>
                     ))}
                   </div>
@@ -283,7 +283,7 @@ const OutdoorPlanningSection = () => {
             <HardHat className="h-6 w-6 text-red-400" />
             <CardTitle className="text-red-300">Regulatory Compliance Requirements</CardTitle>
           </div>
-          <p className="text-muted-foreground">Essential approvals and permits for outdoor installations</p>
+          <p className="text-neutral-300">Essential approvals and permits for outdoor installations</p>
         </CardHeader>
         <CardContent className="space-y-4">
           {regulatoryRequirements.map((reg, index) => (
@@ -293,7 +293,7 @@ const OutdoorPlanningSection = () => {
                 {reg.requirements.map((requirement, reqIndex) => (
                   <div key={reqIndex} className="flex items-center gap-2 text-sm">
                     <div className="w-2 h-2 bg-red-400 rounded-full flex-shrink-0" />
-                    <span className="text-muted-foreground">{requirement}</span>
+                    <span className="text-neutral-300">{requirement}</span>
                   </div>
                 ))}
               </div>

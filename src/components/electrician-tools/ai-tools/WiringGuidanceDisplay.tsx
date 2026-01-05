@@ -130,7 +130,7 @@ const WiringGuidanceDisplay = ({
             </div>
             <div className="flex-1 min-w-0 text-left">
               <p className="text-xs font-semibold text-green-400 uppercase tracking-wide">BS 7671 Compliant</p>
-              <p className="text-base font-semibold text-white mt-1">{componentName}</p>
+              <p className="text-base font-semibold text-foreground mt-1">{componentName}</p>
             </div>
           </div>
         </CardContent>
@@ -150,7 +150,7 @@ const WiringGuidanceDisplay = ({
           <CardHeader className="p-4">
             <CardTitle className="text-base flex items-center gap-2 text-left">
               <Clipboard className="h-5 w-5 text-blue-400" />
-              <span className="text-white">Pre-Installation Checklist</span>
+              <span className="text-foreground">Pre-Installation Checklist</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4">
@@ -160,8 +160,8 @@ const WiringGuidanceDisplay = ({
                   <div className="flex items-start gap-3">
                     <Checkbox className="mt-1" />
                     <div className="flex-1 min-w-0 text-left">
-                      <h4 className="font-semibold text-sm text-white">{task.task}</h4>
-                      <p className="text-sm text-white/80 mt-1.5 leading-relaxed">{task.description}</p>
+                      <h4 className="font-semibold text-sm text-foreground">{task.task}</h4>
+                      <p className="text-sm text-foreground/80 mt-1.5 leading-relaxed">{task.description}</p>
                       {task.why && (
                         <p className="text-sm text-blue-400 mt-2 flex items-start gap-1.5">
                           <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
@@ -171,7 +171,7 @@ const WiringGuidanceDisplay = ({
                       {task.tools_needed && task.tools_needed.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 mt-2">
                           {task.tools_needed.map((tool, i) => (
-                            <Badge key={i} variant="outline" className="text-xs bg-background/50 text-white/90">
+                            <Badge key={i} variant="outline" className="text-xs bg-background/50 text-foreground/90">
                               {tool}
                             </Badge>
                           ))}
@@ -192,7 +192,7 @@ const WiringGuidanceDisplay = ({
           <CardHeader className="p-4">
             <CardTitle className="text-base flex items-center gap-2 text-left">
               <LayoutGrid className="h-5 w-5 text-purple-400" />
-              <span className="text-white">Board Layout & Termination Strategy</span>
+              <span className="text-foreground">Board Layout & Termination Strategy</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4 space-y-4">
@@ -202,7 +202,7 @@ const WiringGuidanceDisplay = ({
                 <Grid3x3 className="h-4 w-4" />
                 MCB Arrangement
               </h4>
-              <p className="text-sm text-white leading-relaxed text-left">{boardLayoutGuide.mcb_arrangement}</p>
+              <p className="text-sm text-foreground leading-relaxed text-left">{boardLayoutGuide.mcb_arrangement}</p>
             </div>
 
             {/* Earth/Neutral Bar Strategy - Stack on Mobile */}
@@ -211,13 +211,13 @@ const WiringGuidanceDisplay = ({
                 <h4 className="font-semibold text-sm text-green-400 mb-2 text-left">
                   Earth Bar Numbering
                 </h4>
-                <p className="text-sm text-white/90 leading-relaxed text-left">{boardLayoutGuide.earth_bar_numbering}</p>
+                <p className="text-sm text-foreground/90 leading-relaxed text-left">{boardLayoutGuide.earth_bar_numbering}</p>
               </div>
               <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
                 <h4 className="font-semibold text-sm text-blue-400 mb-2 text-left">
                   Neutral Bar Numbering
                 </h4>
-                <p className="text-sm text-white/90 leading-relaxed text-left">{boardLayoutGuide.neutral_bar_numbering}</p>
+                <p className="text-sm text-foreground/90 leading-relaxed text-left">{boardLayoutGuide.neutral_bar_numbering}</p>
               </div>
             </div>
 
@@ -231,11 +231,11 @@ const WiringGuidanceDisplay = ({
                       <span className="flex-shrink-0 w-6 h-6 bg-purple-500/20 rounded-full flex items-center justify-center text-xs font-bold text-purple-300">
                         {idx + 1}
                       </span>
-                      <span className="text-white">{step}</span>
+                      <span className="text-foreground">{step}</span>
                     </li>
                   ))}
                 </ol>
-                <p className="text-sm text-white/80 mt-3 p-3 bg-purple-500/10 rounded border border-purple-500/20 italic leading-relaxed text-left">
+                <p className="text-sm text-foreground/80 mt-3 p-3 bg-purple-500/10 rounded border border-purple-500/20 italic leading-relaxed text-left">
                   💡 {wiringSequenceStrategy.rationale}
                 </p>
               </div>
@@ -261,7 +261,7 @@ const WiringGuidanceDisplay = ({
                   {practicalTips.map((tip, idx) => (
                     <li key={idx} className="flex items-start gap-2.5 text-sm p-3 bg-background/50 rounded-lg border border-green-500/20 text-left">
                       <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-white leading-relaxed">{cleanMarkdown(tip)}</span>
+                      <span className="text-foreground leading-relaxed">{cleanMarkdown(tip)}</span>
                     </li>
                   ))}
                 </ul>
@@ -283,7 +283,7 @@ const WiringGuidanceDisplay = ({
                   {commonMistakes.map((mistake, idx) => (
                     <li key={idx} className="flex items-start gap-2.5 text-sm p-3 bg-background/50 rounded-lg border border-orange-500/20 text-left">
                       <XCircle className="h-4 w-4 text-orange-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-white leading-relaxed">{cleanMarkdown(mistake)}</span>
+                      <span className="text-foreground leading-relaxed">{cleanMarkdown(mistake)}</span>
                     </li>
                   ))}
                 </ul>
@@ -296,10 +296,10 @@ const WiringGuidanceDisplay = ({
       {/* Component Details */}
       <Card className="bg-card/50 border-border">
         <CardHeader className="p-4">
-          <CardTitle className="text-base text-white text-left">Component Identified</CardTitle>
+          <CardTitle className="text-base text-foreground text-left">Component Identified</CardTitle>
         </CardHeader>
         <CardContent className="px-4 pb-4">
-          <div className="text-sm text-white leading-relaxed space-y-3 text-left">
+          <div className="text-sm text-foreground leading-relaxed space-y-3 text-left">
             {componentDetails.split('\n\n').map((paragraph, idx) => {
               // Handle numbered lists
               if (/^\d+\./.test(paragraph.trim())) {
@@ -313,13 +313,13 @@ const WiringGuidanceDisplay = ({
                       if (parts.length > 1) {
                         return (
                           <li key={i} className="text-sm leading-relaxed pl-2 text-left">
-                            <strong className="font-semibold text-white">{parts[0]}:</strong>
-                            <span className="text-white/90">{parts.slice(1).join(':')}</span>
+                            <strong className="font-semibold text-foreground">{parts[0]}:</strong>
+                            <span className="text-foreground/90">{parts.slice(1).join(':')}</span>
                           </li>
                         );
                       }
                       return (
-                        <li key={i} className="text-sm leading-relaxed pl-2 text-white text-left">
+                        <li key={i} className="text-sm leading-relaxed pl-2 text-foreground text-left">
                           {text}
                         </li>
                       );
@@ -338,7 +338,7 @@ const WiringGuidanceDisplay = ({
                       return (
                         <li key={i} className="flex items-start gap-2.5 text-sm leading-relaxed text-left">
                           <span className="text-elec-yellow mt-1 flex-shrink-0">•</span>
-                          <span className="flex-1 text-white">{text}</span>
+                          <span className="flex-1 text-foreground">{text}</span>
                         </li>
                       );
                     })}
@@ -351,7 +351,7 @@ const WiringGuidanceDisplay = ({
               if (!cleanText) return null;
               
               return (
-                <p key={idx} className="text-sm leading-relaxed text-white text-left">
+                <p key={idx} className="text-sm leading-relaxed text-foreground text-left">
                   {cleanText}
                 </p>
               );
@@ -363,7 +363,7 @@ const WiringGuidanceDisplay = ({
       {/* Terminal Connections */}
       <Card className="bg-card border-border">
         <CardHeader className="p-4">
-          <CardTitle className="text-base text-white text-left">Terminal Connections</CardTitle>
+          <CardTitle className="text-base text-foreground text-left">Terminal Connections</CardTitle>
         </CardHeader>
         <CardContent className="px-4 pb-4">
           <div className="space-y-3">
@@ -384,7 +384,7 @@ const WiringGuidanceDisplay = ({
       <Card className="bg-card border-border">
         <CardHeader className="p-4">
           <CardTitle className="text-base flex items-center justify-between text-left">
-            <span className="text-white">Step-by-Step Wiring Procedure</span>
+            <span className="text-foreground">Step-by-Step Wiring Procedure</span>
             {completedCount > 0 && (
               <Badge variant="secondary" className="text-xs">
                 {completedCount}/{wiringSteps.length}
@@ -412,24 +412,24 @@ const WiringGuidanceDisplay = ({
                 >
                   <div className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-base transition-all shadow-md ${
                     step.safety_critical 
-                      ? 'bg-red-500 text-white' 
+                      ? 'bg-red-500 text-foreground' 
                       : completedSteps[step.step]
-                      ? 'bg-green-500 text-white'
-                      : 'bg-muted text-white border-2 border-border'
+                      ? 'bg-green-500 text-foreground'
+                      : 'bg-muted text-foreground border-2 border-border'
                   }`}>
                     {completedSteps[step.step] ? '✓' : step.step}
                   </div>
                 </button>
                 <div className="flex-1 min-w-0 space-y-3 text-left">
                   <div className="flex items-start justify-between gap-2">
-                    <h4 className="text-base font-bold text-white leading-tight flex-1">{step.title}</h4>
+                    <h4 className="text-base font-bold text-foreground leading-tight flex-1">{step.title}</h4>
                     {step.safety_critical && (
                       <AlertTriangle className="h-5 w-5 text-red-500 flex-shrink-0 animate-pulse" />
                     )}
                   </div>
                   
                   {/* Main Instruction */}
-                  <p className="text-sm text-white leading-relaxed">
+                  <p className="text-sm text-foreground leading-relaxed">
                     {cleanMarkdown(step.instruction)}
                   </p>
                   
@@ -437,7 +437,7 @@ const WiringGuidanceDisplay = ({
                   {step.what_to_check && (
                     <div className="bg-background/50 border border-border/30 rounded-lg p-3">
                       <p className="text-xs font-semibold text-green-400 mb-1">✓ What to Check:</p>
-                      <p className="text-sm text-white/90 leading-relaxed">{cleanMarkdown(step.what_to_check)}</p>
+                      <p className="text-sm text-foreground/90 leading-relaxed">{cleanMarkdown(step.what_to_check)}</p>
                     </div>
                   )}
                   
@@ -445,12 +445,12 @@ const WiringGuidanceDisplay = ({
                   {step.common_mistakes && (
                     <div className="bg-background/50 border border-orange-500/30 rounded-lg p-3">
                       <p className="text-xs font-semibold text-orange-400 mb-1">⚠️ Common Mistakes:</p>
-                      <p className="text-sm text-white/90 leading-relaxed">{cleanMarkdown(step.common_mistakes)}</p>
+                      <p className="text-sm text-foreground/90 leading-relaxed">{cleanMarkdown(step.common_mistakes)}</p>
                     </div>
                   )}
                   
                   {/* BS 7671 Reference */}
-                  <div className="text-xs text-white/60 font-mono">
+                  <div className="text-xs text-foreground/60 font-mono">
                     BS 7671: {step.bs7671_reference}
                   </div>
                 </div>
@@ -467,11 +467,11 @@ const WiringGuidanceDisplay = ({
             <CollapsibleTrigger className="w-full">
               <CardHeader className="p-4">
                 <CardTitle className="text-base flex items-center justify-between text-left">
-                  <span className="flex items-center gap-2 text-white">
-                    <BookOpen className="h-5 w-5 text-white/60" />
+                  <span className="flex items-center gap-2 text-foreground">
+                    <BookOpen className="h-5 w-5 text-foreground/60" />
                     BS 7671 Regulations Referenced
                   </span>
-                  {showAllRegulations ? <ChevronUp className="h-5 w-5 text-white" /> : <ChevronDown className="h-5 w-5 text-white" />}
+                  {showAllRegulations ? <ChevronUp className="h-5 w-5 text-foreground" /> : <ChevronDown className="h-5 w-5 text-foreground" />}
                 </CardTitle>
               </CardHeader>
             </CollapsibleTrigger>
@@ -479,7 +479,7 @@ const WiringGuidanceDisplay = ({
               <CardContent className="px-4 pb-4">
                 <div className="grid grid-cols-2 gap-2">
                   {allRegulations.map((reg, idx) => (
-                    <div key={idx} className="text-xs font-mono p-2 bg-muted/50 rounded border border-border/30 text-white/80">
+                    <div key={idx} className="text-xs font-mono p-2 bg-muted/50 rounded border border-border/30 text-foreground/80">
                       {reg}
                     </div>
                   ))}
@@ -503,7 +503,7 @@ const WiringGuidanceDisplay = ({
             {requiredTests.map((test, idx) => (
               <li key={idx} className="flex items-start gap-3 text-sm p-3 bg-background/50 rounded-lg border border-green-500/20 min-h-[44px] text-left">
                 <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                <span className="text-white leading-relaxed">{cleanMarkdown(test)}</span>
+                <span className="text-foreground leading-relaxed">{cleanMarkdown(test)}</span>
               </li>
             ))}
           </ul>

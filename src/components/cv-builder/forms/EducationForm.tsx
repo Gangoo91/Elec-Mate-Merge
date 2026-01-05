@@ -50,7 +50,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-white">Education</h3>
+        <h3 className="text-lg font-semibold text-foreground">Education</h3>
         <Button
           onClick={addEducation}
           className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
@@ -63,7 +63,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
       {cvData.education.map((edu, index) => (
         <Card key={edu.id} className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-white">Education {index + 1}</CardTitle>
+            <CardTitle className="text-foreground">Education {index + 1}</CardTitle>
             <Button
               onClick={() => removeEducation(edu.id)}
               variant="outline"
@@ -76,68 +76,68 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor={`qualification-${edu.id}`} className="text-white">Qualification *</Label>
+                <Label htmlFor={`qualification-${edu.id}`} className="text-foreground">Qualification *</Label>
                 <Input
                   id={`qualification-${edu.id}`}
                   value={edu.qualification}
                   onChange={(e) => updateEducation(edu.id, 'qualification', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-foreground min-h-[48px] mt-2"
                   placeholder="Level 3 Electrical Installation"
                 />
               </div>
 
               <div>
-                <Label htmlFor={`institution-${edu.id}`} className="text-white">Institution *</Label>
+                <Label htmlFor={`institution-${edu.id}`} className="text-foreground">Institution *</Label>
                 <Input
                   id={`institution-${edu.id}`}
                   value={edu.institution}
                   onChange={(e) => updateEducation(edu.id, 'institution', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-foreground min-h-[48px] mt-2"
                   placeholder="Local College"
                 />
               </div>
 
               <div>
-                <Label htmlFor={`location-${edu.id}`} className="text-white">Location</Label>
+                <Label htmlFor={`location-${edu.id}`} className="text-foreground">Location</Label>
                 <Input
                   id={`location-${edu.id}`}
                   value={edu.location}
                   onChange={(e) => updateEducation(edu.id, 'location', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-foreground min-h-[48px] mt-2"
                   placeholder="London, UK"
                 />
               </div>
 
               <div>
-                <Label htmlFor={`grade-${edu.id}`} className="text-white">Grade</Label>
+                <Label htmlFor={`grade-${edu.id}`} className="text-foreground">Grade</Label>
                 <Input
                   id={`grade-${edu.id}`}
                   value={edu.grade}
                   onChange={(e) => updateEducation(edu.id, 'grade', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-foreground min-h-[48px] mt-2"
                   placeholder="Merit / Distinction"
                 />
               </div>
 
               <div>
-                <Label htmlFor={`startDate-${edu.id}`} className="text-white">Start Date</Label>
+                <Label htmlFor={`startDate-${edu.id}`} className="text-foreground">Start Date</Label>
                 <Input
                   id={`startDate-${edu.id}`}
                   type="month"
                   value={edu.startDate}
                   onChange={(e) => updateEducation(edu.id, 'startDate', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-foreground min-h-[48px] mt-2"
                 />
               </div>
 
               <div>
-                <Label htmlFor={`endDate-${edu.id}`} className="text-white">End Date</Label>
+                <Label htmlFor={`endDate-${edu.id}`} className="text-foreground">End Date</Label>
                 <Input
                   id={`endDate-${edu.id}`}
                   type="month"
                   value={edu.endDate}
                   onChange={(e) => updateEducation(edu.id, 'endDate', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-foreground min-h-[48px] mt-2"
                   disabled={edu.current}
                 />
               </div>
@@ -153,7 +153,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
                     }
                   }}
                 />
-                <Label htmlFor={`current-${edu.id}`} className="text-white">Currently Studying</Label>
+                <Label htmlFor={`current-${edu.id}`} className="text-foreground">Currently Studying</Label>
               </div>
             </div>
           </CardContent>

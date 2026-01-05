@@ -36,7 +36,7 @@ export const InlineInstallationTypeSelector = ({
               className={cn(
                 "h-11 touch-manipulation transition-all font-medium",
                 isActive 
-                  ? "bg-gradient-to-r from-blue-400 to-blue-600 text-white hover:from-blue-500 hover:to-blue-700 shadow-md" 
+                  ? "bg-gradient-to-r from-blue-400 to-blue-600 text-foreground hover:from-blue-500 hover:to-blue-700 shadow-md" 
                   : "border-blue-400/30 text-blue-400 hover:bg-blue-400/10 hover:border-blue-400/50"
               )}
             >

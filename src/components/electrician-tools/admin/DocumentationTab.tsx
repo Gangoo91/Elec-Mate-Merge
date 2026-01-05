@@ -70,7 +70,7 @@ const DocumentationTab = () => {
               <Link key={index} to={action.link}>
                 <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors cursor-pointer">
                   <CardContent className="p-4 text-center">
-                    <h4 className="font-semibold text-white text-sm mb-1">{action.action}</h4>
+                    <h4 className="font-semibold text-foreground text-sm mb-1">{action.action}</h4>
                     <p className="text-xs text-muted-foreground">{action.description}</p>
                   </CardContent>
                 </Card>
@@ -85,7 +85,7 @@ const DocumentationTab = () => {
           <Card key={categoryIndex} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-white text-lg">{category.category}</CardTitle>
+                <CardTitle className="text-foreground text-lg">{category.category}</CardTitle>
                 <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow">
                   {category.count} docs
                 </Badge>
@@ -97,7 +97,7 @@ const DocumentationTab = () => {
                   <div key={docIndex} className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <h4 className="font-medium text-white text-sm">{doc.name}</h4>
+                        <h4 className="font-medium text-foreground text-sm">{doc.name}</h4>
                         {doc.popular && <Star className="h-3 w-3 text-elec-yellow fill-current" />}
                       </div>
                       <p className="text-xs text-muted-foreground">{doc.type}</p>

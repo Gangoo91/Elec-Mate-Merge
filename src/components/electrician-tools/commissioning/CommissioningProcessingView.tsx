@@ -69,7 +69,7 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
           </div>
           <div className="flex-1">
             <h3 className="text-xl font-semibold mb-1">AI Testing & Commissioning Specialist</h3>
-            <p className="text-sm text-white">
+            <p className="text-sm text-foreground">
               {progress?.message || 'Analysing testing requirements...'}
             </p>
           </div>
@@ -78,14 +78,14 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
         {/* Progress Bar */}
         <div className="space-y-2 mb-6">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-white">Progress</span>
+            <span className="text-foreground">Progress</span>
             <span className="font-semibold text-elec-yellow">{animatedProgress}%</span>
           </div>
           <Progress 
             value={animatedProgress} 
             className="h-2 transition-all duration-1000 ease-out"
           />
-          <p className="text-xs text-white">
+          <p className="text-xs text-foreground">
             • {timeBasedStage.message}
           </p>
         </div>
@@ -93,16 +93,16 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
         {/* Generation Timeline */}
         <div className="grid grid-cols-3 gap-4 p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
           <div className="text-center">
-            <div className="text-xs text-white mb-1">Elapsed Time</div>
+            <div className="text-xs text-foreground mb-1">Elapsed Time</div>
             <div className="text-lg font-semibold text-elec-yellow">{formatTime(elapsedTime)}</div>
           </div>
           <div className="text-center border-x border-elec-yellow/10">
-            <div className="text-xs text-white mb-1">Estimated Remaining</div>
+            <div className="text-xs text-foreground mb-1">Estimated Remaining</div>
             <div className="text-lg font-semibold text-foreground">{formatTime(remaining)}</div>
           </div>
           <div className="text-center">
-            <div className="text-xs text-white mb-1">Total Estimate</div>
-            <div className="text-lg font-semibold text-white">{formatTime(estimatedTotal)}</div>
+            <div className="text-xs text-foreground mb-1">Total Estimate</div>
+            <div className="text-lg font-semibold text-foreground">{formatTime(estimatedTotal)}</div>
           </div>
         </div>
       </Card>
@@ -122,11 +122,11 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
             <Search className={`h-4 w-4 mt-0.5 ${
               progress?.stage === 'parsing' || progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
                 ? 'text-elec-yellow'
-                : 'text-white'
+                : 'text-foreground'
             }`} />
             <div className="text-left">
               <div className="font-medium text-sm">Searching BS 7671 testing requirements</div>
-              <div className="text-xs text-white mt-1">
+              <div className="text-xs text-foreground mt-1">
                 Finding relevant test procedures, acceptance criteria, and regulations
               </div>
             </div>
@@ -140,11 +140,11 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
             <Zap className={`h-4 w-4 mt-0.5 ${
               progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
                 ? 'text-elec-yellow'
-                : 'text-white'
+                : 'text-foreground'
             }`} />
             <div className="text-left">
               <div className="font-medium text-sm">Calculating expected Zs values and test criteria</div>
-              <div className="text-xs text-white mt-1">
+              <div className="text-xs text-foreground mt-1">
                 Generating expected results and maximum permitted values
               </div>
             </div>
@@ -158,11 +158,11 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
             <CheckCircle2 className={`h-4 w-4 mt-0.5 ${
               progress?.stage === 'validation' || progress?.stage === 'complete'
                 ? 'text-elec-yellow'
-                : 'text-white'
+                : 'text-foreground'
             }`} />
             <div className="text-left">
               <div className="font-medium text-sm">Generating step-by-step procedures</div>
-              <div className="text-xs text-white mt-1">
+              <div className="text-xs text-foreground mt-1">
                 Creating detailed testing instructions with instrument setup
               </div>
             </div>
@@ -176,11 +176,11 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
             <Shield className={`h-4 w-4 mt-0.5 ${
               progress?.stage === 'complete'
                 ? 'text-elec-yellow'
-                : 'text-white'
+                : 'text-foreground'
             }`} />
             <div className="text-left">
               <div className="font-medium text-sm">Verifying regulation compliance</div>
-              <div className="text-xs text-white mt-1">
+              <div className="text-xs text-foreground mt-1">
                 Cross-checking with BS 7671 requirements and certification needs
               </div>
             </div>

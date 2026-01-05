@@ -262,7 +262,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="projectName" className="text-white">Project Name *</Label>
+          <Label htmlFor="projectName" className="text-foreground">Project Name *</Label>
           <Input
             id="projectName"
             value={ramsData.projectName}
@@ -272,7 +272,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
           />
         </div>
         <div>
-          <Label htmlFor="location" className="text-white">Location *</Label>
+          <Label htmlFor="location" className="text-foreground">Location *</Label>
           <Input
             id="location"
             value={ramsData.location}
@@ -282,7 +282,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
           />
         </div>
         <div>
-          <Label htmlFor="assessor" className="text-white">Assessor *</Label>
+          <Label htmlFor="assessor" className="text-foreground">Assessor *</Label>
           <Input
             id="assessor"
             value={ramsData.assessor}
@@ -292,7 +292,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
           />
         </div>
         <div>
-          <Label htmlFor="date" className="text-white">Assessment Date *</Label>
+          <Label htmlFor="date" className="text-foreground">Assessment Date *</Label>
           <Input
             id="date"
             type="date"
@@ -305,7 +305,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="contractor" className="text-white">Contractor *</Label>
+          <Label htmlFor="contractor" className="text-foreground">Contractor *</Label>
           <Input
             id="contractor"
             value={methodData.contractor}
@@ -315,7 +315,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
           />
         </div>
         <div>
-          <Label htmlFor="supervisor" className="text-white">Supervisor *</Label>
+          <Label htmlFor="supervisor" className="text-foreground">Supervisor *</Label>
           <Input
             id="supervisor"
             value={methodData.supervisor}
@@ -325,7 +325,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
           />
         </div>
         <div>
-          <Label htmlFor="workType" className="text-white">Work Type *</Label>
+          <Label htmlFor="workType" className="text-foreground">Work Type *</Label>
           <Input
             id="workType"
             value={methodData.workType}
@@ -335,7 +335,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
           />
         </div>
         <div>
-          <Label htmlFor="teamSize" className="text-white">Team Size</Label>
+          <Label htmlFor="teamSize" className="text-foreground">Team Size</Label>
           <Input
             id="teamSize"
             value={methodData.teamSize}
@@ -347,7 +347,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
       </div>
 
       <div>
-        <Label htmlFor="description" className="text-white">Work Description</Label>
+        <Label htmlFor="description" className="text-foreground">Work Description</Label>
         <Textarea
           id="description"
           value={methodData.description}
@@ -456,7 +456,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
                       <h5 className="font-medium text-foreground">{risk.hazard}</h5>
                       <p className="text-sm text-muted-foreground mt-1">{risk.risk}</p>
                     </div>
-                    <Badge className={`${getRiskLevelColor(risk.riskRating)} text-white`}>
+                    <Badge className={`${getRiskLevelColor(risk.riskRating)} text-foreground`}>
                       Risk: {risk.riskRating}
                     </Badge>
                   </div>
@@ -671,7 +671,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
                 
                 return (
                   <div key={step.id} className="flex flex-col items-center gap-2">
-                    <div className={`p-2 rounded-full ${isActive ? 'bg-primary text-primary-foreground' : isCompleted ? 'bg-green-500 text-white' : 'bg-muted text-muted-foreground'}`}>
+                    <div className={`p-2 rounded-full ${isActive ? 'bg-primary text-primary-foreground' : isCompleted ? 'bg-green-500 text-foreground' : 'bg-muted text-muted-foreground'}`}>
                       <IconComponent className="h-4 w-4" />
                     </div>
                     <span className="text-xs text-center">{step.title}</span>

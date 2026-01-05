@@ -62,7 +62,6 @@ import QuoteInvoiceDashboard from "@/pages/electrician/QuoteInvoiceDashboard";
 import Calculations from "@/pages/electrician-tools/Calculations";
 import InstallPlannerV2 from "@/pages/electrician-tools/InstallPlannerV2";
 import InstallPlannerResults from "@/pages/electrician-tools/InstallPlannerResults";
-import InspectionTesting from "@/pages/electrician-tools/InspectionTesting";
 import SiteSafety from "@/pages/electrician-tools/SiteSafety";
 import AgentSelectorPage from "@/pages/electrician-tools/AgentSelectorPage";
 import CircuitDesigner from "@/pages/electrician-tools/CircuitDesigner";
@@ -154,7 +153,6 @@ const ElectricianHubRoutes = () => (
     <Route path="calculations" element={<Calculations />} />
     <Route path="install-planner" element={<InstallPlannerV2 />} />
     <Route path="install-planner/results/:conversationId?" element={<InstallPlannerResults />} />
-    <Route path="inspection-testing" element={<InspectionTesting />} />
     <Route path="site-safety" element={<SiteSafety />} />
   </Routes>
 );

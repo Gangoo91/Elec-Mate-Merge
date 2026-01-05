@@ -217,7 +217,7 @@ const RecruitmentTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -235,7 +235,7 @@ const RecruitmentTab = () => {
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.strategy}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.strategy}</h4>
                       <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {strategy.timeline}
                       </Badge>
@@ -290,7 +290,7 @@ const RecruitmentTab = () => {
                   {category.platforms.map((platform, platformIndex) => (
                     <div key={platformIndex} className="border border-purple-500/20 rounded-lg p-3 space-y-2">
                       <div className="flex items-center justify-between">
-                        <h5 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{platform.name}</h5>
+                        <h5 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{platform.name}</h5>
                         <Badge variant="outline" className={`text-purple-300 border-purple-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                           {platform.cost}
                         </Badge>
@@ -329,7 +329,7 @@ const RecruitmentTab = () => {
                 <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{stage.stage}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{stage.stage}</h4>
                       <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {stage.timing}
                       </Badge>
@@ -379,7 +379,7 @@ const RecruitmentTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {costInvestmentAnalysis.map((category, index) => (
                 <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
+                  <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
                   
                   {category.costs && (
                     <div>
@@ -444,7 +444,7 @@ const RecruitmentTab = () => {
                 >
                   <Search className="h-4 w-4 mr-3 text-green-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
-                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white truncate`}>Find an Apprenticeship</div>
+                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-foreground truncate`}>Find an Apprenticeship</div>
                     <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}>Post vacancies and find candidates</div>
                   </div>
                 </Button>
@@ -456,7 +456,7 @@ const RecruitmentTab = () => {
                 >
                   <Award className="h-4 w-4 mr-3 text-blue-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
-                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white truncate`}>CITB Support & Funding</div>
+                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-foreground truncate`}>CITB Support & Funding</div>
                     <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}>Training grants and apprentice support</div>
                   </div>
                 </Button>
@@ -468,7 +468,7 @@ const RecruitmentTab = () => {
                 >
                   <Brain className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
-                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white truncate`}>Employer Apprenticeship Service</div>
+                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-foreground truncate`}>Employer Apprenticeship Service</div>
                     <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}>Manage vacancies and funding</div>
                   </div>
                 </Button>

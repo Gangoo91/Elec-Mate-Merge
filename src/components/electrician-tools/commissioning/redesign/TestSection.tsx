@@ -23,7 +23,7 @@ export const TestSection = ({
             <div className="text-elec-yellow shrink-0">
               {icon}
             </div>
-            <h2 className="text-lg sm:text-xl font-bold text-white">{title}</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-foreground">{title}</h2>
           </div>
         </div>
       </Card>

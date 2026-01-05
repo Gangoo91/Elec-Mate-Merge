@@ -45,7 +45,7 @@ const EnhancedCourseCard = ({ course, onViewDetails, onSaveToFavorites, isFavori
                 </Badge>
               )}
             </div>
-            <h3 className="font-semibold text-lg text-white group-hover:text-elec-yellow transition-colors line-clamp-2">
+            <h3 className="font-semibold text-lg text-foreground group-hover:text-elec-yellow transition-colors line-clamp-2">
               {course.title}
             </h3>
             <p className="text-elec-yellow font-medium mt-1">
@@ -54,7 +54,7 @@ const EnhancedCourseCard = ({ course, onViewDetails, onSaveToFavorites, isFavori
           </div>
           <div className="flex items-center gap-1 text-xs">
             <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-            <span className="text-white font-medium">
+            <span className="text-foreground font-medium">
               {course.rating ? course.rating.toFixed(1) : '4.0'}
             </span>
           </div>
@@ -62,7 +62,7 @@ const EnhancedCourseCard = ({ course, onViewDetails, onSaveToFavorites, isFavori
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <p className="text-white/80 text-sm line-clamp-2 leading-relaxed">
+        <p className="text-foreground/80 text-sm line-clamp-2 leading-relaxed">
           {course.description}
         </p>
 
@@ -76,36 +76,36 @@ const EnhancedCourseCard = ({ course, onViewDetails, onSaveToFavorites, isFavori
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-elec-yellow flex-shrink-0" />
             <div>
-              <div className="text-white/60 text-xs">Duration</div>
-              <div className="text-white font-medium">{course.duration}</div>
+              <div className="text-foreground/60 text-xs">Duration</div>
+              <div className="text-foreground font-medium">{course.duration}</div>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <Users className="h-4 w-4 text-elec-yellow flex-shrink-0" />
             <div>
-              <div className="text-white/60 text-xs">Level</div>
-              <div className="text-white font-medium">{course.level}</div>
+              <div className="text-foreground/60 text-xs">Level</div>
+              <div className="text-foreground font-medium">{course.level}</div>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <PoundSterling className="h-4 w-4 text-elec-yellow flex-shrink-0" />
             <div>
-              <div className="text-white/60 text-xs">Price</div>
-              <div className="text-white font-medium">{course.price}</div>
+              <div className="text-foreground/60 text-xs">Price</div>
+              <div className="text-foreground font-medium">{course.price}</div>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <MapPin className="h-4 w-4 text-elec-yellow flex-shrink-0" />
             <div>
-              <div className="text-white/60 text-xs">Format</div>
-              <div className="text-white font-medium">{course.format}</div>
+              <div className="text-foreground/60 text-xs">Format</div>
+              <div className="text-foreground font-medium">{course.format}</div>
             </div>
           </div>
         </div>
 
         {course.careerOutcomes && course.careerOutcomes.length > 0 && (
           <div className="space-y-2">
-            <h4 className="text-sm font-medium text-white">Career Outcomes:</h4>
+            <h4 className="text-sm font-medium text-foreground">Career Outcomes:</h4>
             <div className="flex flex-wrap gap-1">
               {course.careerOutcomes.slice(0, 3).map((outcome, index) => (
                 <Badge key={index} variant="outline" className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
@@ -113,7 +113,7 @@ const EnhancedCourseCard = ({ course, onViewDetails, onSaveToFavorites, isFavori
                 </Badge>
               ))}
               {course.careerOutcomes.length > 3 && (
-                <Badge variant="outline" className="text-xs text-white/60">
+                <Badge variant="outline" className="text-xs text-foreground/60">
                   +{course.careerOutcomes.length - 3} more
                 </Badge>
               )}
@@ -123,7 +123,7 @@ const EnhancedCourseCard = ({ course, onViewDetails, onSaveToFavorites, isFavori
 
         {course.salaryImpact && (
           <div className="bg-background/30 rounded-lg p-3 border border-elec-yellow/10">
-            <div className="text-xs text-white/60 mb-1">Starting Salary</div>
+            <div className="text-xs text-foreground/60 mb-1">Starting Salary</div>
             <div className="text-elec-yellow font-semibold">{course.salaryImpact}</div>
           </div>
         )}
@@ -143,7 +143,7 @@ const EnhancedCourseCard = ({ course, onViewDetails, onSaveToFavorites, isFavori
               onClick={() => onSaveToFavorites(String(course.id))}
               className="ml-2 p-2"
             >
-              <Heart className={`h-4 w-4 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-white/60'}`} />
+              <Heart className={`h-4 w-4 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-foreground/60'}`} />
             </Button>
           )}
         </div>

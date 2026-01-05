@@ -141,7 +141,7 @@ const InstallPlannerStep = ({ initialData, onPlanUpdate }: InstallPlannerStepPro
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-white">
+              <h1 className="text-2xl font-bold text-foreground">
                 {steps[currentStep].title}
               </h1>
               <p className="text-elec-light/70 mt-1">

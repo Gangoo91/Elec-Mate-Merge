@@ -226,7 +226,7 @@ const OutdoorTestingGuide = () => {
             <TestTube className="h-6 w-6 text-blue-400" />
             <CardTitle className="text-blue-300">Outdoor Testing & Certification Overview</CardTitle>
           </div>
-          <p className="text-muted-foreground">
+          <p className="text-neutral-300">
             Outdoor electrical installations require specialised testing procedures due to environmental exposure, 
             weather conditions, and public safety considerations. All equipment must meet enhanced protection standards 
             and testing must account for variable environmental conditions.
@@ -241,7 +241,7 @@ const OutdoorTestingGuide = () => {
             <CheckCircle className="h-6 w-6 text-purple-400" />
             <CardTitle className="text-purple-300">Outdoor Testing Sequence</CardTitle>
           </div>
-          <p className="text-muted-foreground">Comprehensive testing protocol for outdoor installations</p>
+          <p className="text-neutral-300">Comprehensive testing protocol for outdoor installations</p>
         </CardHeader>
         <CardContent className="space-y-4">
           {testingSequence.map((test, index) => (
@@ -254,14 +254,14 @@ const OutdoorTestingGuide = () => {
                     </Badge>
                     <h3 className="font-semibold text-purple-300">{test.step}</h3>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{test.description}</p>
+                  <p className="text-sm text-neutral-300 mb-3">{test.description}</p>
                   
                   <div className="space-y-2">
                     <h4 className="text-sm font-medium text-purple-200">Requirements:</h4>
                     {test.requirements.map((req, reqIndex) => (
                       <div key={reqIndex} className="flex items-start gap-2 text-sm">
                         <Zap className="h-3 w-3 text-purple-400 mt-1 flex-shrink-0" />
-                        <span className="text-muted-foreground">{req}</span>
+                        <span className="text-neutral-300">{req}</span>
                       </div>
                     ))}
                   </div>
@@ -287,7 +287,7 @@ const OutdoorTestingGuide = () => {
             <Cloud className="h-6 w-6 text-cyan-400" />
             <CardTitle className="text-cyan-300">Weather & Environmental Testing Considerations</CardTitle>
           </div>
-          <p className="text-muted-foreground">Critical environmental factors affecting outdoor testing</p>
+          <p className="text-neutral-300">Critical environmental factors affecting outdoor testing</p>
         </CardHeader>
         <CardContent className="space-y-4">
           {weatherConsiderations.map((weather, index) => (
@@ -297,7 +297,7 @@ const OutdoorTestingGuide = () => {
                 {weather.precautions.map((precaution, precIndex) => (
                   <div key={precIndex} className="flex items-start gap-2 text-sm">
                     <AlertTriangle className="h-3 w-3 text-cyan-400 mt-1 flex-shrink-0" />
-                    <span className="text-muted-foreground">{precaution}</span>
+                    <span className="text-neutral-300">{precaution}</span>
                   </div>
                 ))}
               </div>
@@ -313,18 +313,18 @@ const OutdoorTestingGuide = () => {
             <Zap className="h-6 w-6 text-yellow-400" />
             <CardTitle className="text-yellow-300">Specialised Outdoor Tests</CardTitle>
           </div>
-          <p className="text-muted-foreground">Additional testing requirements for specific outdoor applications</p>
+          <p className="text-neutral-300">Additional testing requirements for specific outdoor applications</p>
         </CardHeader>
         <CardContent className="space-y-4">
           {specialTests.map((test, index) => (
             <div key={index} className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20">
               <h3 className="font-semibold text-yellow-300 mb-2">{test.test}</h3>
-              <p className="text-sm text-muted-foreground mb-3">{test.description}</p>
+              <p className="text-sm text-neutral-300 mb-3">{test.description}</p>
               <div className="space-y-2">
                 {test.requirements.map((req, reqIndex) => (
                   <div key={reqIndex} className="flex items-start gap-2 text-sm">
                     <CheckCircle className="h-3 w-3 text-yellow-400 mt-1 flex-shrink-0" />
-                    <span className="text-muted-foreground">{req}</span>
+                    <span className="text-neutral-300">{req}</span>
                   </div>
                 ))}
               </div>
@@ -340,18 +340,18 @@ const OutdoorTestingGuide = () => {
             <FileCheck className="h-6 w-6 text-green-400" />
             <CardTitle className="text-green-300">Outdoor Certification Requirements</CardTitle>
           </div>
-          <p className="text-muted-foreground">Essential certification documentation for outdoor installations</p>
+          <p className="text-neutral-300">Essential certification documentation for outdoor installations</p>
         </CardHeader>
         <CardContent className="space-y-4">
           {certificationRequirements.map((cert, index) => (
             <div key={index} className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
               <h3 className="font-semibold text-green-300 mb-2">{cert.certificate}</h3>
-              <p className="text-sm text-muted-foreground mb-3">{cert.description}</p>
+              <p className="text-sm text-neutral-300 mb-3">{cert.description}</p>
               <div className="space-y-2">
                 {cert.requirements.map((req, reqIndex) => (
                   <div key={reqIndex} className="flex items-start gap-2 text-sm">
                     <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                    <span className="text-muted-foreground">{req}</span>
+                    <span className="text-neutral-300">{req}</span>
                   </div>
                 ))}
               </div>
@@ -369,7 +369,7 @@ const OutdoorTestingGuide = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4">
-          <div className="space-y-3 text-sm text-muted-foreground">
+          <div className="space-y-3 text-sm text-neutral-300">
             <p>
               <strong className="text-red-300">Weather Protection:</strong> All testing equipment must have appropriate 
               IP ratings for outdoor use. Postpone testing during adverse weather conditions including heavy rain, 

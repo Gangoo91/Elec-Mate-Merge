@@ -205,7 +205,7 @@ const OutdoorReferenceGuide = () => {
             <Book className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Outdoor Installation Reference</CardTitle>
           </div>
-          <p className="text-muted-foreground">Comprehensive standards, design criteria, and maintenance procedures</p>
+          <p className="text-neutral-300">Comprehensive standards, design criteria, and maintenance procedures</p>
         </CardHeader>
       </Card>
 
@@ -235,7 +235,7 @@ const OutdoorReferenceGuide = () => {
                         {standard.scope}
                       </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground">{standard.title}</p>
+                    <p className="text-sm text-neutral-300">{standard.title}</p>
                   </div>
                 ))}
               </CardContent>
@@ -250,7 +250,7 @@ const OutdoorReferenceGuide = () => {
                 <Sun className="h-6 w-6 text-purple-400" />
                 <CardTitle className="text-purple-300">Lighting Design Criteria</CardTitle>
               </div>
-              <p className="text-muted-foreground">BS 5489 photometric requirements by road classification</p>
+              <p className="text-neutral-300">BS 5489 photometric requirements by road classification</p>
             </CardHeader>
             <CardContent className="space-y-4">
               {lightingDesignCriteria.map((criteria, index) => (
@@ -259,23 +259,23 @@ const OutdoorReferenceGuide = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 text-sm">
                     <div>
                       <span className="text-purple-300 font-medium">Average Lux: </span>
-                      <span className="text-muted-foreground">{criteria.averageLux}</span>
+                      <span className="text-neutral-300">{criteria.averageLux}</span>
                     </div>
                     <div>
                       <span className="text-purple-300 font-medium">Uniformity: </span>
-                      <span className="text-muted-foreground">{criteria.uniformity}</span>
+                      <span className="text-neutral-300">{criteria.uniformity}</span>
                     </div>
                     <div>
                       <span className="text-purple-300 font-medium">Glare Rating: </span>
-                      <span className="text-muted-foreground">{criteria.glareRating}</span>
+                      <span className="text-neutral-300">{criteria.glareRating}</span>
                     </div>
                     <div>
                       <span className="text-purple-300 font-medium">Color Ra: </span>
-                      <span className="text-muted-foreground">{criteria.colorRendering}</span>
+                      <span className="text-neutral-300">{criteria.colorRendering}</span>
                     </div>
                     <div className="md:col-span-1">
                       <span className="text-purple-300 font-medium">Notes: </span>
-                      <span className="text-muted-foreground">{criteria.notes}</span>
+                      <span className="text-neutral-300">{criteria.notes}</span>
                     </div>
                   </div>
                 </div>
@@ -299,19 +299,19 @@ const OutdoorReferenceGuide = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
                     <div>
                       <span className="text-green-300 font-medium">Equipment: </span>
-                      <span className="text-muted-foreground">{test.equipment}</span>
+                      <span className="text-neutral-300">{test.equipment}</span>
                     </div>
                     <div>
                       <span className="text-green-300 font-medium">Procedure: </span>
-                      <span className="text-muted-foreground">{test.procedure}</span>
+                      <span className="text-neutral-300">{test.procedure}</span>
                     </div>
                     <div>
                       <span className="text-green-300 font-medium">Acceptance: </span>
-                      <span className="text-muted-foreground">{test.acceptance}</span>
+                      <span className="text-neutral-300">{test.acceptance}</span>
                     </div>
                     <div>
                       <span className="text-green-300 font-medium">Frequency: </span>
-                      <span className="text-muted-foreground">{test.frequency}</span>
+                      <span className="text-neutral-300">{test.frequency}</span>
                     </div>
                   </div>
                 </div>
@@ -334,7 +334,7 @@ const OutdoorReferenceGuide = () => {
                     {schedule.tasks.map((task, taskIndex) => (
                       <div key={taskIndex} className="flex items-center gap-2 text-sm">
                         <div className="w-2 h-2 bg-cyan-400 rounded-full flex-shrink-0" />
-                        <span className="text-muted-foreground">{task}</span>
+                        <span className="text-neutral-300">{task}</span>
                       </div>
                     ))}
                   </div>
@@ -363,7 +363,7 @@ const OutdoorReferenceGuide = () => {
                         {fault.possibleCauses.map((cause, causeIndex) => (
                           <div key={causeIndex} className="flex items-center gap-2 text-sm">
                             <div className="w-2 h-2 bg-red-400 rounded-full flex-shrink-0" />
-                            <span className="text-muted-foreground">{cause}</span>
+                            <span className="text-neutral-300">{cause}</span>
                           </div>
                         ))}
                       </div>
@@ -374,7 +374,7 @@ const OutdoorReferenceGuide = () => {
                         {fault.diagnosticSteps.map((step, stepIndex) => (
                           <div key={stepIndex} className="flex items-center gap-2 text-sm">
                             <span className="text-red-300 font-bold text-xs">{stepIndex + 1}.</span>
-                            <span className="text-muted-foreground">{step}</span>
+                            <span className="text-neutral-300">{step}</span>
                           </div>
                         ))}
                       </div>

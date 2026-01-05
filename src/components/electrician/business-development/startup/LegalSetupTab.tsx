@@ -109,7 +109,7 @@ const LegalSetupTab = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <Shield className="h-5 w-5 text-elec-yellow" />
               Essential Legal Steps
             </CardTitle>
@@ -118,7 +118,7 @@ const LegalSetupTab = () => {
             {legalSteps.map((step) => (
               <div key={step.id} className="border border-elec-yellow/20 rounded-lg p-4">
                 <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-semibold text-white">{step.title}</h4>
+                  <h4 className="font-semibold text-foreground">{step.title}</h4>
                   <Badge className={getStatusColor(step.status)}>
                     {step.status}
                   </Badge>
@@ -135,7 +135,7 @@ const LegalSetupTab = () => {
 
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <Users className="h-5 w-5 text-elec-yellow" />
               Industry Compliance
             </CardTitle>
@@ -144,7 +144,7 @@ const LegalSetupTab = () => {
             {complianceItems.map((item, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-semibold text-white">{item.title}</h4>
+                  <h4 className="font-semibold text-foreground">{item.title}</h4>
                   <Badge className={getPriorityColor(item.priority)}>
                     {item.priority}
                   </Badge>

@@ -414,7 +414,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
 
       {/* Debug info overlay */}
       {process.env.NODE_ENV === 'development' && (
-        <div className="absolute top-2 right-2 bg-black/80 text-white p-2 rounded text-xs z-[1000]">
+        <div className="absolute top-2 right-2 bg-black/80 text-foreground p-2 rounded text-xs z-[1000]">
           Providers: {nearbyProviders.length} | Markers: {markers.length}
           {userCoordinates && <div>User: {userCoordinates.lat.toFixed(4)}, {userCoordinates.lng.toFixed(4)}</div>}
           {selectedProvider && <div>Selected: {selectedProvider.name}</div>}

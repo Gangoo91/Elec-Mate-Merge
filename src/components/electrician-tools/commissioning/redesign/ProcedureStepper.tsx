@@ -68,7 +68,7 @@ export const ProcedureStepper = ({ steps }: ProcedureStepperProps) => {
               <div className="flex-1 space-y-2">
                 <p className={cn(
                   "text-sm leading-relaxed",
-                  isCompleted ? "text-white/60 line-through" : "text-white"
+                  isCompleted ? "text-foreground/60 line-through" : "text-foreground"
                 )}>
                   {stepText}
                 </p>
@@ -84,7 +84,7 @@ export const ProcedureStepper = ({ steps }: ProcedureStepperProps) => {
 
               {/* Completion Indicator */}
               {!isCompleted && (
-                <Circle className="h-5 w-5 text-white/30 shrink-0 mt-0.5" />
+                <Circle className="h-5 w-5 text-foreground/30 shrink-0 mt-0.5" />
               )}
             </div>
           </button>

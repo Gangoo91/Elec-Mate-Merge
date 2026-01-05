@@ -46,7 +46,7 @@ const EventsList = ({ events }: EventsListProps) => {
             </div>
             <Button 
               size="sm" 
-              className="bg-purple-500 hover:bg-purple-600 text-white w-full sm:w-auto flex items-center gap-2"
+              className="bg-purple-500 hover:bg-purple-600 text-foreground w-full sm:w-auto flex items-center gap-2"
               onClick={() => handleRegister(event)}
             >
               Register

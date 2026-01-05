@@ -80,7 +80,7 @@ const ElectricianCPDTracker = () => {
             <div className="flex items-center gap-3">
               <Clock className="h-6 w-6 text-elec-yellow" />
               <div>
-                <h1 className="text-lg font-bold text-white">Electrician CPD Tracker</h1>
+                <h1 className="text-lg font-bold text-foreground">Electrician CPD Tracker</h1>
                 <p className="text-xs text-muted-foreground">Professional Development</p>
               </div>
             </div>
@@ -98,7 +98,7 @@ const ElectricianCPDTracker = () => {
           <div className="mx-4 mt-4 relative bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-elec-yellow/40 rounded-lg p-4">
             <button
               onClick={() => setShowComingSoonBanner(false)}
-              className="absolute top-2 right-2 text-muted-foreground hover:text-white transition-colors"
+              className="absolute top-2 right-2 text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Dismiss banner"
             >
               ✕
@@ -106,7 +106,7 @@ const ElectricianCPDTracker = () => {
             <div className="flex items-start gap-3 pr-6">
               <Construction className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
               <div>
-                <h3 className="text-lg font-bold text-white mb-1">
+                <h3 className="text-lg font-bold text-foreground mb-1">
                   Coming Soon
                 </h3>
                 <p className="text-sm text-muted-foreground">
@@ -129,7 +129,7 @@ const ElectricianCPDTracker = () => {
           {activeTab === "log-activity" && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-white">Add CPD Entry</h2>
+                <h2 className="text-lg font-semibold text-foreground">Add CPD Entry</h2>
                 <button 
                   onClick={() => setActiveTab("compliance")}
                   className="text-elec-yellow text-sm"
@@ -143,7 +143,7 @@ const ElectricianCPDTracker = () => {
           {activeTab === "history" && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-white">CPD History</h2>
+                <h2 className="text-lg font-semibold text-foreground">CPD History</h2>
                 <button 
                   onClick={() => setActiveTab("compliance")}
                   className="text-elec-yellow text-sm"
@@ -157,7 +157,7 @@ const ElectricianCPDTracker = () => {
           {activeTab === "goals" && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-white">CPD Goals</h2>
+                <h2 className="text-lg font-semibold text-foreground">CPD Goals</h2>
                 <button 
                   onClick={() => setActiveTab("compliance")}
                   className="text-elec-yellow text-sm"
@@ -171,7 +171,7 @@ const ElectricianCPDTracker = () => {
           {activeTab === "settings" && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-white">Professional Body Settings</h2>
+                <h2 className="text-lg font-semibold text-foreground">Professional Body Settings</h2>
                 <button 
                   onClick={() => setActiveTab("compliance")}
                   className="text-elec-yellow text-sm"
@@ -185,7 +185,7 @@ const ElectricianCPDTracker = () => {
           {activeTab === "settings" && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-white">Professional Body Settings</h2>
+                <h2 className="text-lg font-semibold text-foreground">Professional Body Settings</h2>
                 <button 
                   onClick={() => setActiveTab("compliance")}
                   className="text-elec-yellow text-sm"
@@ -208,10 +208,10 @@ const ElectricianCPDTracker = () => {
         <div className="bg-elec-gray rounded-lg border border-elec-yellow/20 w-full max-w-4xl max-h-[90vh] overflow-auto">
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">Professional Body Settings</h2>
+              <h2 className="text-2xl font-bold text-foreground">Professional Body Settings</h2>
               <button
                 onClick={() => setShowProfessionalBodyManager(false)}
-                className="text-muted-foreground hover:text-white"
+                className="text-muted-foreground hover:text-foreground"
               >
                 ✕
               </button>
@@ -281,7 +281,7 @@ const ElectricianCPDTracker = () => {
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
           <Clock className="h-8 w-8 text-elec-yellow" />
-          <h1 className="text-3xl font-bold text-white">Enhanced CPD Tracker</h1>
+          <h1 className="text-3xl font-bold text-foreground">Enhanced CPD Tracker</h1>
         </div>
         <p className="text-muted-foreground max-w-2xl mx-auto">
           Professional-grade CPD tracking with compliance monitoring, evidence management, 
@@ -303,7 +303,7 @@ const ElectricianCPDTracker = () => {
         <div className="relative bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-elec-yellow/40 rounded-lg p-6">
           <button
             onClick={() => setShowComingSoonBanner(false)}
-            className="absolute top-2 right-2 text-muted-foreground hover:text-white transition-colors"
+            className="absolute top-2 right-2 text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Dismiss banner"
           >
             ✕
@@ -311,7 +311,7 @@ const ElectricianCPDTracker = () => {
           <div className="flex items-start gap-4 pr-6">
             <Construction className="h-8 w-8 text-elec-yellow flex-shrink-0 mt-1" />
             <div>
-              <h3 className="text-xl font-bold text-white mb-1">
+              <h3 className="text-xl font-bold text-foreground mb-1">
                 Coming Soon
               </h3>
               <p className="text-base text-muted-foreground">

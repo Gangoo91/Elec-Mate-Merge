@@ -43,7 +43,7 @@ export const CorrectiveActionStepCard = ({
           {/* Step number - Touch optimized */}
           <div className="relative flex-shrink-0">
             <div className={cn(
-              "rounded-full flex items-center justify-center font-black bg-green-500 text-white shadow-lg",
+              "rounded-full flex items-center justify-center font-black bg-green-500 text-foreground shadow-lg",
               isMobile ? "w-[72px] h-[72px] text-2xl" : "w-16 h-16 text-2xl"
             )}>
               {stepNumber}
@@ -54,10 +54,10 @@ export const CorrectiveActionStepCard = ({
             <div className="space-y-4">
               {/* Title & Badges */}
               <div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight text-left mb-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-foreground leading-tight text-left mb-2">
                   {action.forSymptom}
                 </h3>
-                <p className="text-base text-white/90 mb-3 text-left">{action.action}</p>
+                <p className="text-base text-foreground/90 mb-3 text-left">{action.action}</p>
                 <div className="flex flex-wrap gap-2">
                   {action.skillLevel && (
                     <Badge className={skillLevelColors[action.skillLevel]}>
@@ -98,7 +98,7 @@ export const CorrectiveActionStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <BookOpen className="h-5 w-5 text-blue-400" />
-                        <h4 className="font-bold text-base text-white">Detailed Procedure</h4>
+                        <h4 className="font-bold text-base text-foreground">Detailed Procedure</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -116,7 +116,7 @@ export const CorrectiveActionStepCard = ({
                           <div className="p-4 bg-blue-500/5">
                             <div className="space-y-3 text-left">
                               {action.detailedProcedure.map((para, idx) => (
-                                <p key={idx} className="text-base text-white leading-relaxed">
+                                <p key={idx} className="text-base text-foreground leading-relaxed">
                                   {para}
                                 </p>
                               ))}
@@ -140,7 +140,7 @@ export const CorrectiveActionStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <Wrench className="h-5 w-5 text-green-400" />
-                        <h4 className="font-bold text-base text-white">Step-by-Step Instructions</h4>
+                        <h4 className="font-bold text-base text-foreground">Step-by-Step Instructions</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -158,7 +158,7 @@ export const CorrectiveActionStepCard = ({
                           <div className="p-4 bg-green-500/5">
                             <ol className="space-y-3 text-left">
                               {action.stepByStepFix.map((step, idx) => (
-                                <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
+                                <li key={idx} className="flex items-start gap-3 text-base text-foreground leading-relaxed">
                                   <span className="flex-shrink-0 w-7 h-7 rounded-full bg-green-500/20 border-2 border-green-500/50 flex items-center justify-center text-sm font-bold text-green-300">
                                     {idx + 1}
                                   </span>
@@ -185,7 +185,7 @@ export const CorrectiveActionStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <Wrench className="h-5 w-5 text-purple-400" />
-                        <h4 className="font-bold text-base text-white">Tools & Materials Required</h4>
+                        <h4 className="font-bold text-base text-foreground">Tools & Materials Required</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -203,7 +203,7 @@ export const CorrectiveActionStepCard = ({
                           <div className="p-4 bg-purple-500/5">
                             <ul className="space-y-2 text-left">
                               {action.tools.map((tool, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
+                                <li key={idx} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
                                   <span className="text-purple-400 mt-1">•</span>
                                   <span>{tool}</span>
                                 </li>
@@ -211,10 +211,10 @@ export const CorrectiveActionStepCard = ({
                             </ul>
                             {action.partNumbers && action.partNumbers.length > 0 && (
                               <div className="mt-3 pt-3 border-t border-purple-500/20">
-                                <p className="text-sm font-semibold text-white mb-1">Part Numbers:</p>
+                                <p className="text-sm font-semibold text-foreground mb-1">Part Numbers:</p>
                                 <ul className="space-y-1">
                                   {action.partNumbers.map((part, idx) => (
-                                    <li key={idx} className="text-sm text-white/80 font-mono">
+                                    <li key={idx} className="text-sm text-foreground/80 font-mono">
                                       {part}
                                     </li>
                                   ))}
@@ -240,7 +240,7 @@ export const CorrectiveActionStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <Lightbulb className="h-5 w-5 text-cyan-400" />
-                        <h4 className="font-bold text-base text-white">Technical Explanation</h4>
+                        <h4 className="font-bold text-base text-foreground">Technical Explanation</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -255,7 +255,7 @@ export const CorrectiveActionStepCard = ({
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="p-4 bg-cyan-500/5 text-base text-white leading-relaxed text-left">
+                          <div className="p-4 bg-cyan-500/5 text-base text-foreground leading-relaxed text-left">
                             {action.whyThisWorks}
                           </div>
                         </motion.div>
@@ -276,7 +276,7 @@ export const CorrectiveActionStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <Lightbulb className="h-5 w-5 text-indigo-400" />
-                        <h4 className="font-bold text-base text-white">Alternative Approaches</h4>
+                        <h4 className="font-bold text-base text-foreground">Alternative Approaches</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -294,7 +294,7 @@ export const CorrectiveActionStepCard = ({
                           <div className="p-4 bg-indigo-500/5">
                             <ul className="space-y-2 text-left">
                               {action.alternativeMethods.map((method, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
+                                <li key={idx} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
                                   <Lightbulb className="h-4 w-4 text-indigo-400 mt-1 flex-shrink-0" />
                                   <span>{method}</span>
                                 </li>
@@ -319,7 +319,7 @@ export const CorrectiveActionStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <AlertTriangle className="h-5 w-5 text-red-400" />
-                        <h4 className="font-bold text-base text-white">⚠️ Safety Notes</h4>
+                        <h4 className="font-bold text-base text-foreground">⚠️ Safety Notes</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -337,7 +337,7 @@ export const CorrectiveActionStepCard = ({
                           <div className="p-4 bg-red-500/10">
                             <ul className="space-y-2 text-left">
                               {action.safetyNotes.map((note, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
+                                <li key={idx} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
                                   <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                                   <span>{note}</span>
                                 </li>
@@ -355,7 +355,7 @@ export const CorrectiveActionStepCard = ({
               {action.verificationTest && (
                 <div className="mt-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
                   <p className="text-sm font-semibold text-green-300 mb-1">Verification Test:</p>
-                  <p className="text-sm text-white">{action.verificationTest}</p>
+                  <p className="text-sm text-foreground">{action.verificationTest}</p>
                 </div>
               )}
             </div>

@@ -20,9 +20,9 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
   if (filteredCourses.length === 0) {
     return (
       <div className="text-center py-12">
-        <Zap className="h-16 w-16 text-white/40 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-white mb-2">No courses found</h3>
-        <p className="text-white/80">Try adjusting your search criteria or explore different categories.</p>
+        <Zap className="h-16 w-16 text-foreground/40 mx-auto mb-4" />
+        <h3 className="text-xl font-semibold text-foreground mb-2">No courses found</h3>
+        <p className="text-foreground/80">Try adjusting your search criteria or explore different categories.</p>
       </div>
     );
   }
@@ -36,7 +36,7 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
       "Professional Development": "bg-orange-500/20 border-orange-500/30 text-orange-300",
       "Business Skills": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getDemandColor = (demand: string) => {
@@ -45,7 +45,7 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
       "Medium": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
       "Low": "bg-green-500/20 border-green-500/30 text-green-300",
     };
-    return colors[demand as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[demand as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getCategoryImages = (category: string) => {
@@ -178,7 +178,7 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
           {/* Content */}
           <div className="p-3 sm:p-4 space-y-2 flex flex-col h-[calc(100%-8rem)] sm:h-[calc(100%-9rem)]">
             {/* Meta Info */}
-            <div className="flex items-center justify-between text-xs text-white/80">
+            <div className="flex items-center justify-between text-xs text-foreground/80">
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1">
                   <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
@@ -196,7 +196,7 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
             </div>
 
             {/* Title */}
-            <h3 className="font-semibold text-white line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
+            <h3 className="font-semibold text-foreground line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
               {course.title}
             </h3>
 
@@ -206,7 +206,7 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
             </p>
 
             {/* Format & Locations */}
-            <div className="text-white/80 text-xs space-y-1">
+            <div className="text-foreground/80 text-xs space-y-1">
               <div className="flex items-center gap-1">
                 <span className="font-medium">Format:</span>
                 <span>{course.format}</span>
@@ -224,7 +224,7 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
 
             {/* Footer */}
             <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-              <div className="text-xs text-white/80">
+              <div className="text-xs text-foreground/80">
                 <span className="font-medium">{course.price}</span>
               </div>
               

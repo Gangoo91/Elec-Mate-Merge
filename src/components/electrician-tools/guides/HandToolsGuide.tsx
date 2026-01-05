@@ -138,7 +138,7 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
               {handToolCategories.map((category, index) => (
                 <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
                   <CardHeader>
-                    <CardTitle className="text-white flex items-center gap-2">
+                    <CardTitle className="text-foreground flex items-center gap-2">
                       <Wrench className="h-5 w-5 text-elec-yellow" />
                       {category.category}
                     </CardTitle>
@@ -151,7 +151,7 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
                           <div className="flex items-start gap-3">
                             <div className="text-2xl">{tool.image}</div>
                             <div className="flex-1">
-                              <h4 className="font-medium text-white">{tool.name}</h4>
+                              <h4 className="font-medium text-foreground">{tool.name}</h4>
                               <div className="flex items-center gap-2 my-2">
                                 <span className="text-elec-yellow font-bold">{tool.price}</span>
                                 <div className="flex items-center gap-1">
@@ -192,11 +192,11 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
             <div className="space-y-4">
               <Card className="border-elec-yellow/20 bg-elec-gray">
                 <CardHeader>
-                  <CardTitle className="text-white text-lg">Quick Buy Guide</CardTitle>
+                  <CardTitle className="text-foreground text-lg">Quick Buy Guide</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <h4 className="text-sm font-medium text-white mb-2">For Apprentices (£200-500)</h4>
+                    <h4 className="text-sm font-medium text-foreground mb-2">For Apprentices (£200-500)</h4>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• Start with Wiha VDE screwdriver set</li>
                       <li>• Add basic Knipex side cutters</li>
@@ -205,7 +205,7 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-white mb-2">For Professionals (£1000+)</h4>
+                    <h4 className="text-sm font-medium text-foreground mb-2">For Professionals (£1000+)</h4>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• Invest in premium German tools</li>
                       <li>• Complete sets over individual tools</li>
@@ -218,7 +218,7 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
 
               <Card className="border-elec-yellow/20 bg-elec-gray">
                 <CardHeader>
-                  <CardTitle className="text-white text-lg">Top Brands</CardTitle>
+                  <CardTitle className="text-foreground text-lg">Top Brands</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -230,7 +230,7 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
                     ].map((brand, index) => (
                       <div key={index} className="flex justify-between items-center">
                         <div>
-                          <p className="text-white text-sm font-medium">{brand.name}</p>
+                          <p className="text-foreground text-sm font-medium">{brand.name}</p>
                           <p className="text-xs text-muted-foreground">{brand.specialty}</p>
                         </div>
                         <div className="flex items-center gap-1">
@@ -249,14 +249,14 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
         <TabsContent value="calculator" className="space-y-6">
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
+              <CardTitle className="text-foreground flex items-center gap-2">
                 <Calculator className="h-5 w-5 text-elec-yellow" />
                 Budget Calculator & Recommendations
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <h3 className="text-white font-medium mb-3">Select Your Budget Range:</h3>
+                <h3 className="text-foreground font-medium mb-3">Select Your Budget Range:</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {Object.entries(budgetTiers).map(([key, tier]) => (
                     <Button
@@ -278,13 +278,13 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="text-white font-medium mb-3">Recommended Kit for {budget.label}</h3>
+                  <h3 className="text-foreground font-medium mb-3">Recommended Kit for {budget.label}</h3>
                   <div className="space-y-3">
                     {recommendations.map((rec, index) => (
                       <div key={index} className="p-3 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
                         <div className="flex justify-between items-start">
                           <div>
-                            <p className="text-white text-sm font-medium">{rec.recommendedTool.name}</p>
+                            <p className="text-foreground text-sm font-medium">{rec.recommendedTool.name}</p>
                             <p className="text-xs text-muted-foreground">{rec.category}</p>
                           </div>
                           <span className="text-elec-yellow font-medium text-sm">
@@ -297,7 +297,7 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
                 </div>
 
                 <div>
-                  <h3 className="text-white font-medium mb-3">Budget Summary</h3>
+                  <h3 className="text-foreground font-medium mb-3">Budget Summary</h3>
                   <div className="p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
                     <div className="space-y-2">
                       <div className="flex justify-between">
@@ -306,7 +306,7 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Budget Range:</span>
-                        <span className="text-white">£{budget.min}-{budget.max}</span>
+                        <span className="text-foreground">£{budget.min}-{budget.max}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Remaining Budget:</span>
@@ -318,7 +318,7 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
                   </div>
 
                   <div className="mt-4 space-y-2">
-                    <h4 className="text-white text-sm font-medium">Budget Tips:</h4>
+                    <h4 className="text-foreground text-sm font-medium">Budget Tips:</h4>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• Buy quality tools that will last your entire career</li>
                       <li>• Consider sets over individual tools for better value</li>
@@ -335,24 +335,24 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
         <TabsContent value="comparison" className="space-y-6">
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-white">Tool Comparison Matrix</CardTitle>
+              <CardTitle className="text-foreground">Tool Comparison Matrix</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-elec-yellow/20">
-                      <th className="text-left text-white p-2">Tool</th>
-                      <th className="text-left text-white p-2">Price</th>
-                      <th className="text-left text-white p-2">Rating</th>
-                      <th className="text-left text-white p-2">Warranty</th>
-                      <th className="text-left text-white p-2">Best For</th>
+                      <th className="text-left text-foreground p-2">Tool</th>
+                      <th className="text-left text-foreground p-2">Price</th>
+                      <th className="text-left text-foreground p-2">Rating</th>
+                      <th className="text-left text-foreground p-2">Warranty</th>
+                      <th className="text-left text-foreground p-2">Best For</th>
                     </tr>
                   </thead>
                   <tbody>
                     {handToolCategories.flatMap(cat => cat.tools).map((tool, index) => (
                       <tr key={index} className="border-b border-elec-yellow/10">
-                        <td className="p-2 text-white">{tool.name}</td>
+                        <td className="p-2 text-foreground">{tool.name}</td>
                         <td className="p-2 text-elec-yellow">{tool.price}</td>
                         <td className="p-2">
                           <div className="flex items-center gap-1">
@@ -378,7 +378,7 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
+                <CardTitle className="text-foreground flex items-center gap-2">
                   <Users className="h-5 w-5 text-elec-yellow" />
                   Electrician Reviews
                 </CardTitle>
@@ -416,7 +416,7 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-white text-sm font-medium">{review.name}</span>
+                          <span className="text-foreground text-sm font-medium">{review.name}</span>
                           <div className="flex">
                             {[...Array(review.rating)].map((_, i) => (
                               <Star key={i} className="h-3 w-3 text-amber-400 fill-current" />
@@ -437,7 +437,7 @@ const HandToolsGuide = ({ onBack }: HandToolsGuideProps) => {
 
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
-                <CardTitle className="text-white">Professional Tips</CardTitle>
+                <CardTitle className="text-foreground">Professional Tips</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">

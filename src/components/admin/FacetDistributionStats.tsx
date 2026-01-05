@@ -228,7 +228,7 @@ export const FacetDistributionStats = () => {
                     style={{ width: `${barWidth}%` }}
                   >
                     {barWidth > 15 && (
-                      <span className="text-xs font-bold text-white">
+                      <span className="text-xs font-bold text-foreground">
                         {range.count}
                       </span>
                     )}

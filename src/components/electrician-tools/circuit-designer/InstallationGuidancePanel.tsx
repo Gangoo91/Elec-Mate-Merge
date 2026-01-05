@@ -38,7 +38,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm leading-relaxed text-white text-left">
+            <p className="text-sm leading-relaxed text-foreground text-left">
               {guidance.executiveSummary}
             </p>
           </CardContent>
@@ -81,8 +81,8 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                       )}
                     />
                     <div className="space-y-2 text-left flex-1">
-                      <p className="font-semibold text-sm text-left text-white">{safety.consideration}</p>
-                      <div className="flex flex-wrap gap-2 text-xs text-white/70">
+                      <p className="font-semibold text-sm text-left text-foreground">{safety.consideration}</p>
+                      <div className="flex flex-wrap gap-2 text-xs text-foreground/70">
                         {safety.bsReference && (
                           <span className="inline-flex items-center gap-1">
                             <FileText className="h-3 w-3" /> BS 7671: {safety.bsReference}
@@ -129,17 +129,17 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                     <div className="shrink-0 w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
                       <Package className="h-3 w-3 text-blue-500" />
                     </div>
-                    <p className="font-medium text-sm text-white">{material.item}</p>
+                    <p className="font-medium text-sm text-foreground">{material.item}</p>
                   </div>
                   {/* Row 2: Quantity badge */}
                   <Badge variant="secondary" className="font-mono text-xs ml-9">
                     {material.quantity}
                   </Badge>
                   {/* Row 3: Specification */}
-                  <p className="text-xs text-white/70 ml-9">{material.specification}</p>
+                  <p className="text-xs text-foreground/70 ml-9">{material.specification}</p>
                   {/* Row 4: Source */}
                   {material.source && (
-                    <p className="text-xs text-white/70 ml-9">Source: {material.source}</p>
+                    <p className="text-xs text-foreground/70 ml-9">Source: {material.source}</p>
                   )}
                 </div>
               ))}
@@ -172,8 +172,8 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                   >
                   <Wrench className="h-4 w-4 text-purple-500 shrink-0 mt-0.5" />
                   <div className="flex-1 text-left">
-                    <p className="font-medium text-sm text-left text-white">{tool.tool}</p>
-                    <p className="text-xs text-white/70 text-left">{tool.purpose}</p>
+                    <p className="font-medium text-sm text-left text-foreground">{tool.tool}</p>
+                    <p className="text-xs text-foreground/70 text-left">{tool.purpose}</p>
                     <Badge variant="secondary" className="mt-1.5 text-xs">
                       {tool.category}
                     </Badge>
@@ -217,8 +217,8 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
 
                     {/* Content */}
                     <div className="flex-1 pb-4 text-left">
-                      <p className="font-semibold text-sm text-left text-white">{step.title}</p>
-                      <p className="text-sm text-white/70 mt-1 leading-relaxed text-left">
+                      <p className="font-semibold text-sm text-left text-foreground">{step.title}</p>
+                      <p className="text-sm text-foreground/70 mt-1 leading-relaxed text-left">
                         {step.description}
                       </p>
 
@@ -267,7 +267,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
             <CardContent className="space-y-3">
               {guidance.testingRequirements?.intro && (
                 <>
-                  <p className="text-sm text-white text-left">{guidance.testingRequirements.intro}</p>
+                  <p className="text-sm text-foreground text-left">{guidance.testingRequirements.intro}</p>
                   <Separator />
                 </>
               )}
@@ -282,21 +282,21 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                     </div>
                     <div className="flex-1 text-left">
                       <div className="flex items-start justify-between gap-2">
-                        <p className="font-semibold text-sm text-left text-white">{test.testName}</p>
+                        <p className="font-semibold text-sm text-left text-foreground">{test.testName}</p>
                         <Badge variant="outline" className="text-xs shrink-0">
                           {test.regulation}
                         </Badge>
                       </div>
-                      <p className="text-sm text-white/70 mt-1 text-left">{test.procedure}</p>
+                      <p className="text-sm text-foreground/70 mt-1 text-left">{test.procedure}</p>
 
                       <div className="mt-3 p-2 rounded bg-background/50 text-left">
                         <div className="grid grid-cols-1 gap-1 text-xs">
                           {test.expectedReading && (
-                            <p className="text-left text-white/80">
+                            <p className="text-left text-foreground/80">
                               <span className="font-medium">Expected:</span> {test.expectedReading}
                             </p>
                           )}
-                          <p className="text-left text-white/80">
+                          <p className="text-left text-foreground/80">
                             <span className="font-medium text-green-500">Pass:</span>{' '}
                             {test.acceptanceCriteria}
                           </p>
@@ -319,7 +319,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
               {guidance.testingRequirements?.recordingNote && (
                 <>
                   <Separator />
-                  <p className="text-xs text-white/70 italic text-left p-2 bg-primary/10 rounded">
+                  <p className="text-xs text-foreground/70 italic text-left p-2 bg-primary/10 rounded">
                     {guidance.testingRequirements.recordingNote}
                   </p>
                 </>

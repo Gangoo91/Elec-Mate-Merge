@@ -141,10 +141,10 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
           Testing & Compliance
         </h3>
         <div className="space-y-2">
-          <label className="text-sm font-medium text-white">Test Results</label>
+          <label className="text-sm font-medium text-foreground">Test Results</label>
           <Textarea
             placeholder="Enter test results (earth fault loop impedance, RCD operation, etc.)"
-            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={watchedValues.testResults || ""}
             onChange={(e) => setValue("testResults", e.target.value)}
           />
@@ -161,10 +161,10 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
           error={errors.installationCompliant?.message}
         />
         <div className="space-y-2">
-          <label className="text-sm font-medium text-white">Special Requirements</label>
+          <label className="text-sm font-medium text-foreground">Special Requirements</label>
           <Textarea
             placeholder="Any special requirements or additional notes"
-            className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={watchedValues.specialRequirements || ""}
             onChange={(e) => setValue("specialRequirements", e.target.value)}
           />

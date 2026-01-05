@@ -192,7 +192,7 @@ const OhmsLawCalculator = () => {
               <h3 className="text-lg font-semibold mb-4 text-elec-yellow">Result</h3>
               {result ? (
                 <div className="space-y-2">
-                  <div className="text-2xl font-bold text-white">{result}</div>
+                  <div className="text-2xl font-bold text-foreground">{result}</div>
                   <div className="text-sm text-muted-foreground">
                     Using Ohm's Law: V = I × R
                   </div>

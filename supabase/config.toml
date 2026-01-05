@@ -250,8 +250,3 @@ timeout_sec = 30
 verify_jwt = false
 timeout_sec = 120
 
-# Project Management PDF Generation
-[functions.generate-project-management-pdf]
-verify_jwt = false
-timeout_sec = 120
-

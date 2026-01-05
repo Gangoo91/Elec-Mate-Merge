@@ -62,8 +62,8 @@ const SimpleJobKits = () => {
             <Briefcase className="h-6 w-6" />
           </div>
           <div>
-            <CardTitle className="text-white">Job-Specific Kits</CardTitle>
-            <p className="text-white/80 text-sm">Ready-made tool lists for common jobs</p>
+            <CardTitle className="text-foreground">Job-Specific Kits</CardTitle>
+            <p className="text-foreground/80 text-sm">Ready-made tool lists for common jobs</p>
           </div>
         </div>
       </CardHeader>
@@ -87,8 +87,8 @@ const SimpleJobKits = () => {
                           <Icon className="h-5 w-5 text-purple-400" />
                         </div>
                         <div>
-                          <h4 className="font-semibold text-white">{kit.title}</h4>
-                          <p className="text-sm text-white/70">{kit.description}</p>
+                          <h4 className="font-semibold text-foreground">{kit.title}</h4>
+                          <p className="text-sm text-foreground/70">{kit.description}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
@@ -96,7 +96,7 @@ const SimpleJobKits = () => {
                           {kit.toolCount} tools • {kit.estCost}
                         </Badge>
                         <ChevronDown 
-                          className={`h-5 w-5 text-white/60 transition-transform ${
+                          className={`h-5 w-5 text-foreground/60 transition-transform ${
                             isOpen ? 'rotate-180' : ''
                           }`} 
                         />
@@ -111,7 +111,7 @@ const SimpleJobKits = () => {
                       {kit.tools.map((tool, index) => (
                         <div 
                           key={index} 
-                          className="flex items-center gap-2 text-sm text-white/80 p-2 rounded bg-elec-dark/40"
+                          className="flex items-center gap-2 text-sm text-foreground/80 p-2 rounded bg-elec-dark/40"
                         >
                           <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
                           {tool}
@@ -126,7 +126,7 @@ const SimpleJobKits = () => {
         })}
 
         <div className="p-3 rounded-lg bg-purple-600/10 border border-purple-500/20">
-          <p className="text-sm text-white/80">
+          <p className="text-sm text-foreground/80">
             <span className="font-medium text-purple-400">Pro Tip:</span> Start with the essential kit for your main work type, then expand based on specific job requirements.
           </p>
         </div>

@@ -55,8 +55,8 @@ const TestingSummaryStats = ({ results }: TestingSummaryStatsProps) => {
             <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">
               {totalTestItems}
             </div>
-            <div className="text-xs text-white">Test Items</div>
-            <div className="text-xs text-white mt-1">
+            <div className="text-xs text-foreground">Test Items</div>
+            <div className="text-xs text-foreground mt-1">
               {visualCheckpoints}V + {deadTests}D + {liveTests}L
             </div>
           </div>
@@ -69,8 +69,8 @@ const TestingSummaryStats = ({ results }: TestingSummaryStatsProps) => {
             <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">
               {estimatedDuration.toFixed(1)}h
             </div>
-            <div className="text-xs text-white">Expected Duration</div>
-            <div className="text-xs text-white mt-1">
+            <div className="text-xs text-foreground">Expected Duration</div>
+            <div className="text-xs text-foreground mt-1">
               ~{Math.round(estimatedDuration * 60)} minutes
             </div>
           </div>
@@ -83,8 +83,8 @@ const TestingSummaryStats = ({ results }: TestingSummaryStatsProps) => {
             <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">
               {maxZs === 'N/A' ? 'N/A' : `${maxZs}Ω`}
             </div>
-            <div className="text-xs text-white">Highest Zs Value</div>
-            <div className="text-xs text-white mt-1">
+            <div className="text-xs text-foreground">Highest Zs Value</div>
+            <div className="text-xs text-foreground mt-1">
               {circuitCount > 0 
                 ? `${circuitCount} circuit${circuitCount === 1 ? '' : 's'}`
                 : 'No circuits tested'}
@@ -99,8 +99,8 @@ const TestingSummaryStats = ({ results }: TestingSummaryStatsProps) => {
             <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">
               {certificateAbbreviation}
             </div>
-            <div className="text-xs text-white">Certificate Required</div>
-            <div className="text-xs text-white mt-1">
+            <div className="text-xs text-foreground">Certificate Required</div>
+            <div className="text-xs text-foreground mt-1">
               {results.structuredData?.certification?.requiredSchedules?.length || 0} schedules
             </div>
           </div>

@@ -22,7 +22,7 @@ const PricingConfidenceCard = ({ confidence }: PricingConfidenceCardProps) => {
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
           <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
           Pricing Confidence
         </CardTitle>
@@ -32,19 +32,19 @@ const PricingConfidenceCard = ({ confidence }: PricingConfidenceCardProps) => {
         {confidence.materials && (
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-lg sm:text-base font-medium text-white">Materials</span>
+              <span className="text-lg sm:text-base font-medium text-foreground">Materials</span>
               <span className={`text-lg sm:text-base font-bold ${getConfidenceColor(confidence.materials.level)}`}>
                 {confidence.materials.level}%
               </span>
             </div>
             <Progress value={confidence.materials.level} className="h-2" />
-            <p className="text-base sm:text-sm text-white mt-1">
+            <p className="text-base sm:text-sm text-foreground mt-1">
               {confidence.materials.reason}
             </p>
             {confidence.materials.factors && (
               <ul className="mt-2 space-y-2 text-left">
                 {confidence.materials.factors.map((factor: string, idx: number) => (
-                  <li key={idx} className="text-base sm:text-sm text-white flex items-start gap-2">
+                  <li key={idx} className="text-base sm:text-sm text-foreground flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>{factor}</span>
                   </li>
@@ -58,19 +58,19 @@ const PricingConfidenceCard = ({ confidence }: PricingConfidenceCardProps) => {
         {confidence.labour && (
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-lg sm:text-base font-medium text-white">Labour</span>
+              <span className="text-lg sm:text-base font-medium text-foreground">Labour</span>
               <span className={`text-lg sm:text-base font-bold ${getConfidenceColor(confidence.labour.level)}`}>
                 {confidence.labour.level}%
               </span>
             </div>
             <Progress value={confidence.labour.level} className="h-2" />
-            <p className="text-base sm:text-sm text-white mt-1">
+            <p className="text-base sm:text-sm text-foreground mt-1">
               {confidence.labour.reason}
             </p>
             {confidence.labour.factors && (
               <ul className="mt-2 space-y-2 text-left">
                 {confidence.labour.factors.map((factor: string, idx: number) => (
-                  <li key={idx} className="text-base sm:text-sm text-white flex items-start gap-2">
+                  <li key={idx} className="text-base sm:text-sm text-foreground flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>{factor}</span>
                   </li>
@@ -84,12 +84,12 @@ const PricingConfidenceCard = ({ confidence }: PricingConfidenceCardProps) => {
         {confidence.contingency && (
           <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
             <div className="flex items-center justify-between">
-              <span className="text-lg sm:text-base font-medium text-white">Contingency Buffer</span>
+              <span className="text-lg sm:text-base font-medium text-foreground">Contingency Buffer</span>
               <span className="text-lg sm:text-base font-bold text-elec-yellow">
                 {confidence.contingency.percentage}%
               </span>
             </div>
-            <p className="text-base sm:text-sm text-white mt-1">
+            <p className="text-base sm:text-sm text-foreground mt-1">
               {confidence.contingency.reason}
             </p>
           </div>

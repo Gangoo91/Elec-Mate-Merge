@@ -218,7 +218,7 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
             <div className="text-xs md:text-sm text-foreground mb-1">
               {result.voltageDrop.toFixed(2)}V drop
             </div>
-            <Badge className={result.voltageDropPercent <= 3 ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}>
+            <Badge className={result.voltageDropPercent <= 3 ? 'bg-green-500 text-foreground' : 'bg-amber-500 text-foreground'}>
               {result.voltageDropPercent <= 3 ? 'Within limits' : 'Review required'}
             </Badge>
           </CardContent>

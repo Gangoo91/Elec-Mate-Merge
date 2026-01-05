@@ -284,7 +284,7 @@ const TrainingDevelopmentTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className="text-xs font-medium text-white">{metric.metric}</div>
+              <div className="text-xs font-medium text-foreground">{metric.metric}</div>
               <div className="text-xs text-muted-foreground">{metric.data}</div>
             </div>
           </Card>
@@ -302,7 +302,7 @@ const TrainingDevelopmentTab = () => {
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-white text-sm">{phase.phase}</h4>
+                      <h4 className="font-medium text-foreground text-sm">{phase.phase}</h4>
                       <Badge variant="outline" className="text-blue-300 border-blue-400/30 text-xs">
                         {phase.timing}
                       </Badge>
@@ -357,7 +357,7 @@ const TrainingDevelopmentTab = () => {
                   {category.providers.map((provider, providerIndex) => (
                     <div key={providerIndex} className="border border-green-500/20 rounded-lg p-3 space-y-2">
                       <div className="flex items-center justify-between">
-                        <h5 className="font-medium text-white text-sm">{provider.name}</h5>
+                        <h5 className="font-medium text-foreground text-sm">{provider.name}</h5>
                         <Badge variant="outline" className="text-green-300 border-green-400/30 text-xs">
                           {provider.cost}
                         </Badge>
@@ -394,7 +394,7 @@ const TrainingDevelopmentTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {skillsProgressionFramework.map((competency, index) => (
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
-                  <h4 className="font-medium text-white text-sm border-b border-purple-500/20 pb-1">
+                  <h4 className="font-medium text-foreground text-sm border-b border-purple-500/20 pb-1">
                     {competency.competency}
                   </h4>
                   {competency.progression.map((level, levelIndex) => (
@@ -438,7 +438,7 @@ const TrainingDevelopmentTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {modernMentoringApproach.map((approach, index) => (
                 <div key={index} className="border border-amber-500/20 rounded-lg p-3 space-y-3">
-                  <h4 className="font-medium text-white text-sm">{approach.approach}</h4>
+                  <h4 className="font-medium text-foreground text-sm">{approach.approach}</h4>
                   <p className="text-xs text-muted-foreground">{approach.description}</p>
                   
                   <div>
@@ -482,7 +482,7 @@ const TrainingDevelopmentTab = () => {
                   {category.costs.map((cost, costIndex) => (
                     <div key={costIndex} className="border border-yellow-500/20 rounded-lg p-3 space-y-2">
                       <div className="flex items-center justify-between">
-                        <h5 className="font-medium text-white text-sm">{cost.item}</h5>
+                        <h5 className="font-medium text-foreground text-sm">{cost.item}</h5>
                         <Badge variant="outline" className="text-yellow-300 border-yellow-400/30 text-xs">
                           {cost.amount}
                         </Badge>

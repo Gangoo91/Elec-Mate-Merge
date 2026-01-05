@@ -72,10 +72,10 @@ const VisualAnalysisResults: React.FC<VisualAnalysisResultsProps> = ({
 
   const getEicrCodeColor = (code: string) => {
     switch (code) {
-      case 'C1': return 'bg-red-500 text-white';
-      case 'C2': return 'bg-amber-500 text-white';
-      case 'C3': return 'bg-blue-500 text-white';
-      case 'FI': return 'bg-slate-500 text-white';
+      case 'C1': return 'bg-red-500 text-foreground';
+      case 'C2': return 'bg-amber-500 text-foreground';
+      case 'C3': return 'bg-blue-500 text-foreground';
+      case 'FI': return 'bg-slate-500 text-foreground';
       default: return 'bg-muted text-muted-foreground';
     }
   };

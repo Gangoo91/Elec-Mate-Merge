@@ -51,11 +51,11 @@ export const StructuredDesignSections = ({ sections }: StructuredDesignSectionsP
               </h4>
               <div className="prose prose-invert prose-sm max-w-none">
                 {hasContent ? (
-                  <p className="text-sm sm:text-base text-white whitespace-pre-wrap leading-relaxed text-left">
+                  <p className="text-sm sm:text-base text-foreground whitespace-pre-wrap leading-relaxed text-left">
                     {content}
                   </p>
                 ) : (
-                  <p className="text-sm text-white/50 italic">
+                  <p className="text-sm text-foreground/50 italic">
                     Content not available - this section may need regeneration
                   </p>
                 )}

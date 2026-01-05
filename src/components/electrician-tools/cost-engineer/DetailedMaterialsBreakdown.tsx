@@ -114,7 +114,7 @@ export const DetailedMaterialsBreakdown = ({
                     <div className="min-w-[200px]">
                       <p className="font-medium text-foreground">{material.description}</p>
                       {material.supplierCode && (
-                        <p className="text-xs text-white mt-1">
+                        <p className="text-xs text-foreground mt-1">
                           Code: {material.supplierCode}
                         </p>
                       )}
@@ -123,7 +123,7 @@ export const DetailedMaterialsBreakdown = ({
                   <TableCell className="text-right">
                     {material.quantity} {material.unit}
                   </TableCell>
-                  <TableCell className="text-right text-white">
+                  <TableCell className="text-right text-foreground">
                     £{material.wholesalePrice.toFixed(2)}
                   </TableCell>
                   <TableCell className="text-right text-emerald-600 dark:text-emerald-400">
@@ -168,7 +168,7 @@ export const DetailedMaterialsBreakdown = ({
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1">
                     <p className="font-semibold text-foreground">{material.description}</p>
-                    <p className="text-sm text-white mt-1">
+                    <p className="text-sm text-foreground mt-1">
                       {material.quantity} {material.unit} × £{material.unitPrice.toFixed(2)}
                     </p>
                   </div>
@@ -179,11 +179,11 @@ export const DetailedMaterialsBreakdown = ({
 
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div className="flex justify-between px-2 py-1 rounded bg-muted/50">
-                    <span className="text-white">Wholesale</span>
+                    <span className="text-foreground">Wholesale</span>
                     <span className="font-medium">£{material.wholesalePrice.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between px-2 py-1 rounded bg-emerald-500/10">
-                    <span className="text-white">Markup</span>
+                    <span className="text-foreground">Markup</span>
                     <span className="font-medium text-emerald-600 dark:text-emerald-400">
                       +£{material.markupAmount.toFixed(2)}
                     </span>
@@ -192,11 +192,11 @@ export const DetailedMaterialsBreakdown = ({
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-white">
+                    <span className="text-sm font-medium text-foreground">
                       {material.supplier}
                     </span>
                     {material.supplierCode && (
-                      <span className="text-xs text-white">
+                      <span className="text-xs text-foreground">
                         #{material.supplierCode}
                       </span>
                     )}
@@ -214,7 +214,7 @@ export const DetailedMaterialsBreakdown = ({
                     <CollapsibleContent className="mt-2 space-y-1">
                       {material.alternativeSuppliers.map((alt, altIdx) => (
                         <div key={altIdx} className="flex items-center justify-between px-3 py-2 rounded bg-muted/30 text-sm">
-                          <span className="text-white">{alt.name}</span>
+                          <span className="text-foreground">{alt.name}</span>
                           <div className="flex items-center gap-2">
                             <span className="font-medium">£{alt.price.toFixed(2)}</span>
                             {alt.inStock ? (
@@ -236,11 +236,11 @@ export const DetailedMaterialsBreakdown = ({
         {/* Summary Totals */}
         <div className="space-y-2 pt-4 border-t">
           <div className="flex items-center justify-between px-4 py-2 rounded bg-muted/30">
-            <span className="text-sm text-white">Wholesale Cost</span>
+            <span className="text-sm text-foreground">Wholesale Cost</span>
             <span className="font-semibold text-foreground">£{wholesaleTotal.toFixed(2)}</span>
           </div>
           <div className="flex items-center justify-between px-4 py-2 rounded bg-emerald-500/10">
-            <span className="text-sm text-white">Your Markup</span>
+            <span className="text-sm text-foreground">Your Markup</span>
             <span className="font-semibold text-emerald-600 dark:text-emerald-400">
               +£{markupTotal.toFixed(2)}
             </span>
@@ -251,7 +251,7 @@ export const DetailedMaterialsBreakdown = ({
           </div>
           {wastageAmount > 0 && (
             <div className="flex items-center justify-between px-4 py-2 rounded bg-muted/30">
-              <span className="text-sm text-white">
+              <span className="text-sm text-foreground">
                 Wastage Allowance ({wastagePercent}%)
               </span>
               <span className="font-semibold text-foreground">+£{wastageAmount.toFixed(2)}</span>

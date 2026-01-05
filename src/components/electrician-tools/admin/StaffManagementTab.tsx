@@ -104,8 +104,8 @@ const StaffManagementTab = () => {
               <Card key={index} className={`border-elec-yellow/20 bg-elec-gray ${metric.color}`}>
                 <CardContent className="p-4 text-center">
                   <div className="flex justify-center mb-2">{metric.icon}</div>
-                  <div className="text-2xl font-bold text-white mb-1">{metric.value}</div>
-                  <p className="text-sm text-white mb-1">{metric.title}</p>
+                  <div className="text-2xl font-bold text-foreground mb-1">{metric.value}</div>
+                  <p className="text-sm text-foreground mb-1">{metric.title}</p>
                   <p className="text-xs text-muted-foreground">{metric.subtitle}</p>
                 </CardContent>
               </Card>
@@ -124,7 +124,7 @@ const StaffManagementTab = () => {
               {staffOverview.map((member, index) => (
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-white text-sm">{member.name}</h4>
+                    <h4 className="font-medium text-foreground text-sm">{member.name}</h4>
                     <Badge variant="outline" className={getStatusColor(member.status)}>
                       {member.status}
                     </Badge>
@@ -166,7 +166,7 @@ const StaffManagementTab = () => {
               {trainingRequirements.map((requirement, index) => (
                 <div key={index} className="border border-orange-500/20 rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-white text-sm">{requirement.course}</h4>
+                    <h4 className="font-medium text-foreground text-sm">{requirement.course}</h4>
                     <Badge variant="outline" className={getPriorityColor(requirement.priority)}>
                       {requirement.priority}
                     </Badge>
@@ -186,7 +186,7 @@ const StaffManagementTab = () => {
         <Card className="border-green-500/20 bg-green-500/10 text-center">
           <CardContent className="p-4">
             <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
-            <h4 className="font-semibold text-white mb-1">Compliance Tracking</h4>
+            <h4 className="font-semibold text-foreground mb-1">Compliance Tracking</h4>
             <p className="text-xs text-muted-foreground">Monitor certification expiry dates and renewal requirements</p>
           </CardContent>
         </Card>
@@ -194,7 +194,7 @@ const StaffManagementTab = () => {
         <Card className="border-purple-500/20 bg-purple-500/10 text-center">
           <CardContent className="p-4">
             <Clock className="h-8 w-8 text-purple-400 mx-auto mb-2" />
-            <h4 className="font-semibold text-white mb-1">Time Tracking</h4>
+            <h4 className="font-semibold text-foreground mb-1">Time Tracking</h4>
             <p className="text-xs text-muted-foreground">Record working hours and track productivity across projects</p>
           </CardContent>
         </Card>
@@ -202,7 +202,7 @@ const StaffManagementTab = () => {
         <Card className="border-red-500/20 bg-red-500/10 text-center">
           <CardContent className="p-4">
             <AlertTriangle className="h-8 w-8 text-red-400 mx-auto mb-2" />
-            <h4 className="font-semibold text-white mb-1">Safety Monitoring</h4>
+            <h4 className="font-semibold text-foreground mb-1">Safety Monitoring</h4>
             <p className="text-xs text-muted-foreground">Track safety incidents and ensure compliance with regulations</p>
           </CardContent>
         </Card>

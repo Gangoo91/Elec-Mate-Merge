@@ -1,4 +1,4 @@
-import { Copy } from "lucide-react";
+import { Copy, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,6 +7,20 @@ import { useToast } from "@/hooks/use-toast";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
 import InfoBox from "@/components/common/InfoBox";
 import { Info, AlertTriangle, CheckCircle, XCircle } from "lucide-react";
+
+// Resistance values at 20°C (mΩ/m) - needed for "How It Worked Out"
+const copperResistance20C: { [key: string]: number } = {
+  "1.0": 18.1, "1.5": 12.1, "2.5": 7.41, "4.0": 4.61, "6.0": 3.08,
+  "10.0": 1.83, "16.0": 1.15, "25.0": 0.727, "35.0": 0.524, "50.0": 0.387,
+  "70.0": 0.268, "95.0": 0.193, "120.0": 0.153, "150.0": 0.124, "185.0": 0.0991,
+  "240.0": 0.0754, "300.0": 0.0601
+};
+
+const aluminiumResistance20C: { [key: string]: number } = {
+  "16.0": 1.91, "25.0": 1.20, "35.0": 0.868, "50.0": 0.641, "70.0": 0.443,
+  "95.0": 0.320, "120.0": 0.253, "150.0": 0.206, "185.0": 0.164, "240.0": 0.125,
+  "300.0": 0.100
+};
 
 interface R1R2ResultProps {
   result: {
@@ -246,6 +260,153 @@ const R1R2Result = ({ result, measuredValue }: R1R2ResultProps) => {
               </div>
             </div>
           )}
+        </CardContent>
+      </Card>
+
+      {/* How It Worked Out - Step-by-step calculation breakdown */}
+      <Card className="border-purple-500/30 bg-purple-500/5">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-purple-300 text-base flex items-center gap-2">
+            <Calculator className="h-4 w-4" />
+            How It Worked Out
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-sm">
+          {(() => {
+            const resistanceData = result.conductorMaterial === "copper" ? copperResistance20C : aluminiumResistance20C;
+            const r20Line = resistanceData[result.lineConductorCSA];
+            const r20CPC = resistanceData[result.cpcConductorCSA];
+            const tempConstant = result.conductorMaterial === "copper" ? 234.5 : 228;
+            const tempCorrection = (tempConstant + result.temperature) / (tempConstant + 20);
+
+            return (
+              <>
+                {/* Step 1: Look up base resistance values */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step 1: Look up base resistance values from BS EN 60228</p>
+                  <div className="font-mono text-xs bg-purple-500/10 rounded-lg p-3 border border-purple-500/20 space-y-1">
+                    <p className="text-purple-200">
+                      <span className="text-purple-400">Line conductor ({result.lineConductorCSA}mm² {result.conductorMaterial}):</span> r₁₂₀ = {r20Line} mΩ/m
+                    </p>
+                    <p className="text-purple-200">
+                      <span className="text-purple-400">CPC ({result.cpcConductorCSA}mm² {result.conductorMaterial}):</span> r₂₂₀ = {r20CPC} mΩ/m
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 2: Calculate temperature correction factor */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step 2: Calculate temperature correction factor</p>
+                  <div className="font-mono text-xs bg-purple-500/10 rounded-lg p-3 border border-purple-500/20 space-y-1">
+                    <p className="text-purple-200">
+                      <span className="text-purple-400">Formula ({result.conductorMaterial}):</span> Ct = ({tempConstant} + T) ÷ ({tempConstant} + 20)
+                    </p>
+                    <p className="text-purple-200">
+                      <span className="text-purple-400">Calculation:</span> Ct = ({tempConstant} + {result.temperature}) ÷ ({tempConstant} + 20)
+                    </p>
+                    <p className="text-purple-200">
+                      <span className="text-purple-400">Result:</span> Ct = {(tempConstant + result.temperature).toFixed(1)} ÷ {(tempConstant + 20).toFixed(1)} = <span className="text-green-300">{tempCorrection.toFixed(4)}</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 3: Calculate R1 */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step 3: Calculate R1 (line conductor resistance)</p>
+                  <div className="font-mono text-xs bg-purple-500/10 rounded-lg p-3 border border-purple-500/20 space-y-1">
+                    <p className="text-purple-200">
+                      <span className="text-purple-400">Formula:</span> R1 = (r₁₂₀ × L × Ct) ÷ 1000
+                    </p>
+                    <p className="text-purple-200">
+                      <span className="text-purple-400">Calculation:</span> R1 = ({r20Line} × {result.cableLength} × {tempCorrection.toFixed(4)}) ÷ 1000
+                    </p>
+                    <p className="text-purple-200">
+                      <span className="text-purple-400">Result:</span> R1 = {(r20Line * result.cableLength * tempCorrection).toFixed(4)} ÷ 1000 = <span className="text-blue-300">{result.r1.toFixed(4)} Ω</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 4: Calculate R2 */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step 4: Calculate R2 (CPC resistance)</p>
+                  <div className="font-mono text-xs bg-purple-500/10 rounded-lg p-3 border border-purple-500/20 space-y-1">
+                    <p className="text-purple-200">
+                      <span className="text-purple-400">Formula:</span> R2 = (r₂₂₀ × L × Ct) ÷ 1000
+                    </p>
+                    <p className="text-purple-200">
+                      <span className="text-purple-400">Calculation:</span> R2 = ({r20CPC} × {result.cableLength} × {tempCorrection.toFixed(4)}) ÷ 1000
+                    </p>
+                    <p className="text-purple-200">
+                      <span className="text-purple-400">Result:</span> R2 = {(r20CPC * result.cableLength * tempCorrection).toFixed(4)} ÷ 1000 = <span className="text-purple-300">{result.r2.toFixed(4)} Ω</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 5: Calculate R1+R2 */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step 5: Calculate R1+R2 total</p>
+                  <div className="font-mono text-xs bg-green-500/10 rounded-lg p-3 border border-green-500/20 space-y-1">
+                    <p className="text-green-200">
+                      <span className="text-green-400">Formula:</span> R1+R2 = R1 + R2
+                    </p>
+                    <p className="text-green-200">
+                      <span className="text-green-400">Calculation:</span> R1+R2 = {result.r1.toFixed(4)} + {result.r2.toFixed(4)}
+                    </p>
+                    <p className="text-green-200">
+                      <span className="text-green-400">Result:</span> R1+R2 = <span className="text-green-300 font-bold">{result.r1r2.toFixed(4)} Ω</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 6: Calculate test limit */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step 6: Calculate test limit (for ambient temperature testing)</p>
+                  <div className="font-mono text-xs bg-yellow-500/10 rounded-lg p-3 border border-yellow-500/20 space-y-1">
+                    <p className="text-yellow-200">
+                      <span className="text-yellow-400">Why 1.67?</span> When testing at ~20°C ambient, multiply by 1.67 to get the maximum acceptable value at operating temperature
+                    </p>
+                    <p className="text-yellow-200">
+                      <span className="text-yellow-400">Formula:</span> Test limit = R1+R2 × 1.67
+                    </p>
+                    <p className="text-yellow-200">
+                      <span className="text-yellow-400">Calculation:</span> Test limit = {result.r1r2.toFixed(4)} × 1.67
+                    </p>
+                    <p className="text-yellow-200">
+                      <span className="text-yellow-400">Result:</span> Test limit = <span className="text-yellow-300 font-bold">{result.continuityLimit.toFixed(4)} Ω</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Test comparison if provided */}
+                {measuredValue && testStatus && (
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 7: Compare with measured value</p>
+                    <div className={`font-mono text-xs rounded-lg p-3 border space-y-1 ${testStatus.status.includes('Fail') ? 'bg-red-500/10 border-red-500/20' : 'bg-green-500/10 border-green-500/20'}`}>
+                      <p className={testStatus.status.includes('Fail') ? 'text-red-200' : 'text-green-200'}>
+                        <span className={testStatus.status.includes('Fail') ? 'text-red-400' : 'text-green-400'}>Measured:</span> {parseFloat(measuredValue).toFixed(4)} Ω
+                      </p>
+                      <p className={testStatus.status.includes('Fail') ? 'text-red-200' : 'text-green-200'}>
+                        <span className={testStatus.status.includes('Fail') ? 'text-red-400' : 'text-green-400'}>Limit:</span> {result.continuityLimit.toFixed(4)} Ω
+                      </p>
+                      <p className={testStatus.status.includes('Fail') ? 'text-red-200' : 'text-green-200'}>
+                        <span className={testStatus.status.includes('Fail') ? 'text-red-400' : 'text-green-400'}>Check:</span> {parseFloat(measuredValue).toFixed(4)} {parseFloat(measuredValue) <= result.continuityLimit ? '≤' : '>'} {result.continuityLimit.toFixed(4)}
+                      </p>
+                      <p className={`font-bold ${testStatus.status.includes('Fail') ? 'text-red-300' : 'text-green-300'}`}>
+                        Result: {testStatus.status.toUpperCase()}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </>
+            );
+          })()}
+
+          {/* Key for symbols */}
+          <div className="border-t border-purple-500/20 pt-3 mt-3">
+            <p className="text-xs text-purple-300/70">
+              <strong>Key:</strong> r₁₂₀ = Line conductor resistance at 20°C (mΩ/m) | r₂₂₀ = CPC resistance at 20°C (mΩ/m) | L = Cable length (m) | Ct = Temperature correction factor | T = Operating temperature (°C)
+            </p>
+          </div>
         </CardContent>
       </Card>
 

@@ -16,15 +16,15 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
 
   const getCategoryColor = (category: string) => {
     const colors = {
-      "Hand Tools": "bg-blue-600/90 border-blue-400 text-white",
-      "Power Tools": "bg-orange-600/90 border-orange-400 text-white",
-      "Testing Equipment": "bg-purple-600/90 border-purple-400 text-white",
-      "Safety Equipment": "bg-red-600/90 border-red-400 text-white",
-      "Cable & Wire": "bg-green-600/90 border-green-400 text-white",
-      "Electrical Components": "bg-cyan-600/90 border-cyan-400 text-white",
+      "Hand Tools": "bg-blue-600/90 border-blue-400 text-foreground",
+      "Power Tools": "bg-orange-600/90 border-orange-400 text-foreground",
+      "Testing Equipment": "bg-purple-600/90 border-purple-400 text-foreground",
+      "Safety Equipment": "bg-red-600/90 border-red-400 text-foreground",
+      "Cable & Wire": "bg-green-600/90 border-green-400 text-foreground",
+      "Electrical Components": "bg-cyan-600/90 border-cyan-400 text-foreground",
       "Tools": "bg-yellow-600/90 border-yellow-400 text-elec-dark",
     };
-    return colors[category as keyof typeof colors] || "bg-elec-light/90 border-white/30 text-white";
+    return colors[category as keyof typeof colors] || "bg-elec-light/90 border-white/30 text-foreground";
   };
 
   const getToolImage = (tool: ToolItem) => {
@@ -50,7 +50,7 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
       case 'out of stock':
         return 'text-red-300';
       default:
-        return 'text-white/80';
+        return 'text-foreground/80';
     }
   };
 
@@ -69,8 +69,8 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
         <div className="w-16 h-16 rounded-full bg-elec-yellow/10 flex items-center justify-center mx-auto mb-4">
           <ShoppingCart className="h-8 w-8 text-elec-yellow" />
         </div>
-        <h3 className="text-lg font-semibold text-white mb-2">No Tools Found</h3>
-        <p className="text-white/90">Try adjusting your search or filter criteria.</p>
+        <h3 className="text-lg font-semibold text-foreground mb-2">No Tools Found</h3>
+        <p className="text-foreground/90">Try adjusting your search or filter criteria.</p>
       </div>
     );
   }
@@ -119,7 +119,7 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
                       {discount > 0 ? `${discount}% OFF` : "DEAL"}
                     </Badge>
                   ) : (
-                    <Badge variant="outline" className="border-white/30 bg-elec-dark/90 text-white text-xs shadow-lg backdrop-blur-sm">
+                    <Badge variant="outline" className="border-white/30 bg-elec-dark/90 text-foreground text-xs shadow-lg backdrop-blur-sm">
                       {tool.supplier || "Screwfix"}
                     </Badge>
                   )}
@@ -129,7 +129,7 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
               {/* Content */}
               <div className="p-4 sm:p-5 space-y-3 flex flex-col h-[calc(100%-10rem)] sm:h-[calc(100%-12rem)]">
                 {/* Meta Info */}
-                <div className="flex items-center justify-between text-xs text-white/80">
+                <div className="flex items-center justify-between text-xs text-foreground/80">
                   <div className="flex items-center gap-3">
                     <div className="flex items-center gap-1">
                       <DollarSign className="h-3 w-3" />
@@ -148,7 +148,7 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
                 </div>
 
                 {/* Title */}
-                <h3 className="font-semibold text-white line-clamp-2 leading-tight flex-grow text-sm sm:text-base" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                <h3 className="font-semibold text-foreground line-clamp-2 leading-tight flex-grow text-sm sm:text-base" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                   {tool.name}
                 </h3>
 
@@ -156,14 +156,14 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
                 <div className="space-y-1 flex-grow">
                   <div className="flex items-center gap-2">
                     {tool.salePrice && (
-                      <span className="text-white/60 line-through text-xs">{tool.price}</span>
+                      <span className="text-foreground/60 line-through text-xs">{tool.price}</span>
                     )}
                     <span className="text-elec-yellow font-medium text-sm">
                       {tool.salePrice || tool.price}
                     </span>
                   </div>
                   {tool.highlights && tool.highlights.length > 0 && (
-                    <p className="text-white/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
+                    <p className="text-foreground/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
                       {tool.highlights[0]}
                     </p>
                   )}
@@ -171,7 +171,7 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
 
                 {/* Footer */}
                 <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                  <div className="flex items-center gap-2 text-xs text-white/80">
+                  <div className="flex items-center gap-2 text-xs text-foreground/80">
                     <ShoppingCart className="h-3 w-3" />
                     <span>Order today</span>
                   </div>

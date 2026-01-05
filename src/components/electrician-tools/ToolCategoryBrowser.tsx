@@ -101,7 +101,7 @@ const ToolCategoryBrowser = () => {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-semibold text-white">Browse by Category</h2>
+        <h2 className="text-2xl font-semibold text-foreground">Browse by Category</h2>
         <p className="text-muted-foreground">
           Explore our comprehensive range of electrical tools organised by category
         </p>
@@ -117,7 +117,7 @@ const ToolCategoryBrowser = () => {
                     <category.icon className="h-6 w-6 text-elec-yellow" />
                   </div>
                   <div>
-                    <CardTitle className="text-lg text-white">{category.title}</CardTitle>
+                    <CardTitle className="text-lg text-foreground">{category.title}</CardTitle>
                     <p className="text-sm text-muted-foreground">{category.productCount} products</p>
                   </div>
                 </div>
@@ -139,7 +139,7 @@ const ToolCategoryBrowser = () => {
               </div>
 
               <div>
-                <h4 className="text-sm font-medium text-white mb-2">Popular Brands:</h4>
+                <h4 className="text-sm font-medium text-foreground mb-2">Popular Brands:</h4>
                 <div className="flex flex-wrap gap-1">
                   {category.topBrands.slice(0, 3).map((brand) => (
                     <Badge key={brand} variant="outline" className="text-xs border-elec-yellow/30">
@@ -155,12 +155,12 @@ const ToolCategoryBrowser = () => {
               </div>
 
               <div>
-                <h4 className="text-sm font-medium text-white mb-2">Top Sellers:</h4>
+                <h4 className="text-sm font-medium text-foreground mb-2">Top Sellers:</h4>
                 <div className="space-y-2">
                   {category.popularItems.slice(0, 2).map((item, index) => (
                     <div key={index} className="flex justify-between items-center text-xs">
                       <div className="flex-1 min-w-0">
-                        <p className="text-white truncate">{item.name}</p>
+                        <p className="text-foreground truncate">{item.name}</p>
                         <div className="flex items-center gap-1">
                           <Star className="h-3 w-3 text-amber-400 fill-current" />
                           <span className="text-muted-foreground">{item.rating}</span>

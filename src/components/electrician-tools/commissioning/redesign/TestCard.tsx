@@ -102,9 +102,9 @@ ${test.acceptanceCriteria || 'Not specified'}`;
                 {index + 1}
               </span>
             </div>
-            <h3 className="text-lg font-bold text-white">{test.testName || 'Test Procedure'}</h3>
+            <h3 className="text-lg font-bold text-foreground">{test.testName || 'Test Procedure'}</h3>
           </div>
-          <div className="flex items-center gap-2 text-sm text-white/70">
+          <div className="flex items-center gap-2 text-sm text-foreground/70">
             <BookOpen className="h-3 w-3 text-elec-yellow" />
             {test.regulation || 'BS 7671'}
           </div>
@@ -112,7 +112,7 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {expanded ? (
             <ChevronUp className="h-5 w-5 text-elec-yellow shrink-0" />
           ) : (
-            <ChevronDown className="h-5 w-5 text-white/50 shrink-0" />
+            <ChevronDown className="h-5 w-5 text-foreground/50 shrink-0" />
           )}
         </div>
       </button>
@@ -125,17 +125,17 @@ ${test.acceptanceCriteria || 'Not specified'}`;
             <div className="pt-5 flex flex-wrap gap-2">
               {test.testSequence && (
                 <div className="px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
-                  <span className="text-xs text-white font-medium">Test #{test.testSequence}</span>
+                  <span className="text-xs text-foreground font-medium">Test #{test.testSequence}</span>
                 </div>
               )}
               {test.testDuration && (
                 <div className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30">
-                  <span className="text-xs text-white font-medium">⏱ {test.testDuration}</span>
+                  <span className="text-xs text-foreground font-medium">⏱ {test.testDuration}</span>
                 </div>
               )}
               {Array.isArray(test.prerequisiteTests) && test.prerequisiteTests.length > 0 && (
                 <div className="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30">
-                  <span className="text-xs text-white font-medium">⚠ Requires: {test.prerequisiteTests.join(', ')}</span>
+                  <span className="text-xs text-foreground font-medium">⚠ Requires: {test.prerequisiteTests.join(', ')}</span>
                 </div>
               )}
             </div>
@@ -143,11 +143,11 @@ ${test.acceptanceCriteria || 'Not specified'}`;
 
           {/* Acceptance Criteria */}
           <div className={test.testDuration || test.prerequisiteTests?.length ? "" : "pt-5"}>
-            <div className="flex items-center gap-2 text-white text-base font-semibold mb-3">
+            <div className="flex items-center gap-2 text-foreground text-base font-semibold mb-3">
               <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
               Acceptance Criteria
             </div>
-            <p className="text-sm text-white/90 leading-relaxed bg-elec-yellow/5 border-l-4 border-elec-yellow/50 p-4 rounded-lg">
+            <p className="text-sm text-foreground/90 leading-relaxed bg-elec-yellow/5 border-l-4 border-elec-yellow/50 p-4 rounded-lg">
               {test.acceptanceCriteria}
             </p>
           </div>
@@ -155,10 +155,10 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {/* Expected Result */}
           {test.expectedResult && (
             <div>
-              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+              <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
                 <span className="text-green-400">📊 Expected Result</span>
               </h4>
-              <div className="text-sm text-white/80 bg-green-500/5 border-l-4 border-green-500/50 p-3 rounded-lg">
+              <div className="text-sm text-foreground/80 bg-green-500/5 border-l-4 border-green-500/50 p-3 rounded-lg">
                 {typeof test.expectedResult === 'string' ? (
                   <p>{test.expectedResult}</p>
                 ) : (
@@ -176,10 +176,10 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {/* Calculation Breakdown */}
           {test.calculation && (
             <div>
-              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+              <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
                 <span className="text-cyan-400">🧮 Calculation</span>
               </h4>
-              <div className="text-sm text-white/80 bg-cyan-500/5 border-l-4 border-cyan-500/50 p-3 rounded-lg font-mono">
+              <div className="text-sm text-foreground/80 bg-cyan-500/5 border-l-4 border-cyan-500/50 p-3 rounded-lg font-mono">
                 {typeof test.calculation === 'string' ? (
                   <p>{test.calculation}</p>
                 ) : (
@@ -197,10 +197,10 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {/* Lead Placement */}
           {test.leadPlacement && (
             <div>
-              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+              <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
                 <span className="text-pink-400">🔌 Lead Placement</span>
               </h4>
-              <p className="text-sm text-white/80 bg-pink-500/5 border-l-4 border-pink-500/50 p-3 rounded-lg">
+              <p className="text-sm text-foreground/80 bg-pink-500/5 border-l-4 border-pink-500/50 p-3 rounded-lg">
                 {test.leadPlacement}
               </p>
             </div>
@@ -214,12 +214,12 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {/* Instrument Notes */}
           {Array.isArray(test.instrumentNotes) && test.instrumentNotes.length > 0 && (
             <div>
-              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+              <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
                 <span className="text-orange-400">🔧 Instrument Notes</span>
               </h4>
               <div className="space-y-2">
                 {test.instrumentNotes.map((note, idx) => (
-                  <div key={idx} className="text-sm text-white/80 bg-orange-500/5 border-l-4 border-orange-500/50 p-3 rounded-lg">
+                  <div key={idx} className="text-sm text-foreground/80 bg-orange-500/5 border-l-4 border-orange-500/50 p-3 rounded-lg">
                     {note}
                   </div>
                 ))}
@@ -230,7 +230,7 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {/* Procedure Steps */}
           {Array.isArray(test.procedure) && test.procedure.length > 0 && (
             <div>
-              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+              <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
                 <span className="text-elec-yellow">Test Procedure</span>
               </h4>
               <ProcedureStepper steps={test.procedure} />
@@ -240,12 +240,12 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {/* Site Reality Factors */}
           {Array.isArray(test.siteRealityFactors) && test.siteRealityFactors.length > 0 && (
             <div>
-              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+              <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
                 <span className="text-amber-400">⚠️ Site Reality Factors</span>
               </h4>
               <div className="space-y-2">
                 {test.siteRealityFactors.map((factor, idx) => (
-                  <div key={idx} className="text-sm text-white/80 bg-amber-500/5 border-l-4 border-amber-500/50 p-3 rounded-lg">
+                  <div key={idx} className="text-sm text-foreground/80 bg-amber-500/5 border-l-4 border-amber-500/50 p-3 rounded-lg">
                     {factor}
                   </div>
                 ))}
@@ -256,12 +256,12 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {/* Efficiency Tips */}
           {Array.isArray(test.efficiencyTips) && test.efficiencyTips.length > 0 && (
             <div>
-              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+              <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
                 <span className="text-green-400">⚡ Efficiency Tips</span>
               </h4>
               <div className="space-y-2">
                 {test.efficiencyTips.map((tip, idx) => (
-                  <div key={idx} className="text-sm text-white/80 bg-green-500/5 border-l-4 border-green-500/50 p-3 rounded-lg">
+                  <div key={idx} className="text-sm text-foreground/80 bg-green-500/5 border-l-4 border-green-500/50 p-3 rounded-lg">
                     {tip}
                   </div>
                 ))}
@@ -272,10 +272,10 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {/* Temperature Notes */}
           {test.temperatureNotes && (
             <div>
-              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+              <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
                 <span className="text-blue-400">🌡️ Temperature Considerations</span>
               </h4>
-              <p className="text-sm text-white/80 bg-blue-500/5 border-l-4 border-blue-500/50 p-3 rounded-lg">
+              <p className="text-sm text-foreground/80 bg-blue-500/5 border-l-4 border-blue-500/50 p-3 rounded-lg">
                 {test.temperatureNotes}
               </p>
             </div>
@@ -284,10 +284,10 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {/* Client Explanation */}
           {test.clientExplanation && (
             <div>
-              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+              <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
                 <span className="text-purple-400">💬 Client Explanation</span>
               </h4>
-              <p className="text-sm text-white/80 bg-purple-500/5 border-l-4 border-purple-500/50 p-3 rounded-lg italic">
+              <p className="text-sm text-foreground/80 bg-purple-500/5 border-l-4 border-purple-500/50 p-3 rounded-lg italic">
                 "{test.clientExplanation}"
               </p>
             </div>
@@ -296,10 +296,10 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {/* Real Incident Example */}
           {test.realIncidentExample && (
             <div>
-              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+              <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
                 <span className="text-red-400">📋 Case Study</span>
               </h4>
-              <p className="text-sm text-white/80 bg-red-500/5 border-l-4 border-red-500/50 p-3 rounded-lg">
+              <p className="text-sm text-foreground/80 bg-red-500/5 border-l-4 border-red-500/50 p-3 rounded-lg">
                 {test.realIncidentExample}
               </p>
             </div>
@@ -321,7 +321,7 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           {/* Result Entry Section */}
           <div className="space-y-3 bg-background/40 border border-elec-yellow/30 rounded-lg p-4">
             <div className="flex items-center justify-between">
-              <h4 className="text-base font-semibold text-white flex items-center gap-2">
+              <h4 className="text-base font-semibold text-foreground flex items-center gap-2">
                 <FileText className="h-5 w-5 text-elec-yellow" />
                 Record Test Result
               </h4>
@@ -339,18 +339,18 @@ ${test.acceptanceCriteria || 'Not specified'}`;
 
             <div className="space-y-3">
               <div>
-                <Label className="text-white text-sm">Measured Value</Label>
+                <Label className="text-foreground text-sm">Measured Value</Label>
                 <Input
                   type="text"
                   value={measuredValue}
                   onChange={(e) => setMeasuredValue(e.target.value)}
                   placeholder={`e.g., 0.35${extractUnit(test.acceptanceCriteria)}`}
-                  className="bg-background/60 border-elec-yellow/30 text-white"
+                  className="bg-background/60 border-elec-yellow/30 text-foreground"
                 />
               </div>
 
               <div>
-                <Label className="text-white text-sm">Pass/Fail</Label>
+                <Label className="text-foreground text-sm">Pass/Fail</Label>
                 <div className="flex gap-2 mt-2">
                   <Button
                     onClick={() => setIsPassed(true)}
@@ -359,7 +359,7 @@ ${test.acceptanceCriteria || 'Not specified'}`;
                       "flex-1",
                       isPassed === true
                         ? "bg-green-500/20 border-green-500/50 text-green-400"
-                        : "border-elec-yellow/30 text-white"
+                        : "border-elec-yellow/30 text-foreground"
                     )}
                   >
                     <CheckCircle2 className="h-4 w-4 mr-2" />
@@ -372,7 +372,7 @@ ${test.acceptanceCriteria || 'Not specified'}`;
                       "flex-1",
                       isPassed === false
                         ? "bg-red-500/20 border-red-500/50 text-red-400"
-                        : "border-elec-yellow/30 text-white"
+                        : "border-elec-yellow/30 text-foreground"
                     )}
                   >
                     Fail
@@ -381,12 +381,12 @@ ${test.acceptanceCriteria || 'Not specified'}`;
               </div>
 
               <div>
-                <Label className="text-white text-sm">Notes (Optional)</Label>
+                <Label className="text-foreground text-sm">Notes (Optional)</Label>
                 <Textarea
                   value={resultNotes}
                   onChange={(e) => setResultNotes(e.target.value)}
                   placeholder="Add any observations or issues..."
-                  className="bg-background/60 border-elec-yellow/30 text-white min-h-[60px]"
+                  className="bg-background/60 border-elec-yellow/30 text-foreground min-h-[60px]"
                 />
               </div>
 

@@ -161,7 +161,7 @@ const OperationsTab = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <MapPin className="h-5 w-5 text-elec-yellow" />
               Operational Areas
             </CardTitle>
@@ -170,7 +170,7 @@ const OperationsTab = () => {
             {operationalAreas.map((area, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-semibold text-white">{area.title}</h4>
+                  <h4 className="font-semibold text-foreground">{area.title}</h4>
                   <Badge className={getPriorityColor(area.priority)}>
                     {area.priority}
                   </Badge>
@@ -190,7 +190,7 @@ const OperationsTab = () => {
 
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <Phone className="h-5 w-5 text-elec-yellow" />
               Business Systems
             </CardTitle>
@@ -203,7 +203,7 @@ const OperationsTab = () => {
                   {system.tools.map((tool, toolIndex) => (
                     <div key={toolIndex} className="border border-elec-yellow/10 rounded p-3">
                       <div className="flex justify-between items-start mb-2">
-                        <span className="font-medium text-white">{tool.name}</span>
+                        <span className="font-medium text-foreground">{tool.name}</span>
                         <span className="text-green-400 text-sm">{tool.cost}</span>
                       </div>
                       <div className="flex flex-wrap gap-1">
@@ -224,7 +224,7 @@ const OperationsTab = () => {
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <CheckCircle className="h-5 w-5 text-elec-yellow" />
             Quality Control Standards
           </CardTitle>
@@ -253,7 +253,7 @@ const OperationsTab = () => {
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <Star className="h-5 w-5 text-elec-yellow" />
             Customer Service Excellence
           </CardTitle>

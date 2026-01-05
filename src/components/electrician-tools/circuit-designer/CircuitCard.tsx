@@ -58,7 +58,7 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
               </p>
             )}
             <p className="text-base sm:text-lg font-semibold text-elec-light/90">{circuit.name}</p>
-            <p className="text-sm text-white/90 mt-1 capitalize">
+            <p className="text-sm text-foreground/90 mt-1 capitalize">
               {circuit.loadType.replace('-', ' ')}
             </p>
           </div>
@@ -129,15 +129,15 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
             )}
           </>
         ) : circuit.structuredOutput ? (
-          <div className="text-center py-12 text-white/60">
+          <div className="text-center py-12 text-foreground/60">
             <AlertTriangle className="h-8 w-8 text-amber-400 mx-auto mb-3" />
-            <p className="text-sm mb-2 text-white">Design data incomplete</p>
-            <p className="text-xs text-white/60">Some circuit details may be missing - try regenerating</p>
+            <p className="text-sm mb-2 text-foreground">Design data incomplete</p>
+            <p className="text-xs text-foreground/60">Some circuit details may be missing - try regenerating</p>
           </div>
         ) : (
-          <div className="text-center py-12 text-white/60">
+          <div className="text-center py-12 text-foreground/60">
             <p className="text-sm mb-2">Legacy design format detected</p>
-            <p className="text-xs text-white/40">Regenerate this circuit to see the new structured output format</p>
+            <p className="text-xs text-foreground/40">Regenerate this circuit to see the new structured output format</p>
           </div>
         )}
       </div>

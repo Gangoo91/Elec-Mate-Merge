@@ -142,42 +142,42 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       {results.originalInput && (
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardHeader className="pb-3">
-            <CardTitle className="text-white text-lg flex items-center gap-2">
+            <CardTitle className="text-foreground text-lg flex items-center gap-2">
               <FileText className="h-5 w-5" />
               What You Asked
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-left">
             <div>
-              <p className="text-sm text-white font-medium">Equipment</p>
-              <p className="text-base text-white">{results.originalInput.equipmentType.replace('-', ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</p>
+              <p className="text-sm text-foreground font-medium">Equipment</p>
+              <p className="text-base text-foreground">{results.originalInput.equipmentType.replace('-', ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</p>
             </div>
             <div>
-              <p className="text-sm text-white font-medium">Description</p>
-              <p className="text-base text-white">{results.originalInput.equipmentDescription}</p>
+              <p className="text-sm text-foreground font-medium">Description</p>
+              <p className="text-base text-foreground">{results.originalInput.equipmentDescription}</p>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <p className="text-sm text-white font-medium">Location</p>
-                <p className="text-base text-white">{results.originalInput.location}</p>
+                <p className="text-sm text-foreground font-medium">Location</p>
+                <p className="text-base text-foreground">{results.originalInput.location}</p>
               </div>
               <div>
-                <p className="text-sm text-white font-medium">Age</p>
-                <p className="text-base text-white">{results.originalInput.ageYears} years</p>
+                <p className="text-sm text-foreground font-medium">Age</p>
+                <p className="text-base text-foreground">{results.originalInput.ageYears} years</p>
               </div>
             </div>
             {(results.originalInput.buildingType || results.originalInput.environment) && (
               <div className="flex gap-4 text-sm">
                 {results.originalInput.buildingType && (
                   <div>
-                    <span className="text-white font-medium">Building: </span>
-                    <span className="text-white capitalize">{results.originalInput.buildingType}</span>
+                    <span className="text-foreground font-medium">Building: </span>
+                    <span className="text-foreground capitalize">{results.originalInput.buildingType}</span>
                   </div>
                 )}
                 {results.originalInput.environment && (
                   <div>
-                    <span className="text-white font-medium">Environment: </span>
-                    <span className="text-white capitalize">{results.originalInput.environment}</span>
+                    <span className="text-foreground font-medium">Environment: </span>
+                    <span className="text-foreground capitalize">{results.originalInput.environment}</span>
                   </div>
                 )}
               </div>
@@ -194,7 +194,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
               <AlertCircle className="h-5 w-5 text-yellow-400 shrink-0 mt-0.5" />
               <div className="text-left">
                 <p className="text-sm font-medium text-yellow-400">Partial Plan Generated</p>
-                <p className="text-sm text-white mt-1">
+                <p className="text-sm text-foreground mt-1">
                   Some sections may be incomplete: {results.missingSections?.join(', ') || 'Check details'}
                 </p>
               </div>
@@ -206,8 +206,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       {/* Header Actions */}
       <div className="flex flex-col gap-4">
         <div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">Maintenance Plan</h2>
-          <p className="text-base text-white mt-2">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground">Maintenance Plan</h2>
+          <p className="text-base text-foreground mt-2">
             {results.schedule?.length || 0} tasks • Generated {new Date().toLocaleDateString('en-GB')}
           </p>
         </div>
@@ -215,7 +215,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <Button
             onClick={handleCopy}
             variant="outline"
-            className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-12 touch-manipulation flex-1 sm:flex-none"
+            className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10 h-12 touch-manipulation flex-1 sm:flex-none"
           >
             <Copy className="mr-2 h-4 w-4" />
             Copy
@@ -231,7 +231,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <Button
             onClick={onReset}
             variant="outline"
-            className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-12 touch-manipulation sm:w-12 sm:p-0"
+            className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10 h-12 touch-manipulation sm:w-12 sm:p-0"
           >
             <RefreshCw className="h-5 w-5" />
           </Button>
@@ -245,7 +245,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm sm:text-base text-white mb-2">Risk Level</p>
+                <p className="text-sm sm:text-base text-foreground mb-2">Risk Level</p>
                 <p className={`text-2xl sm:text-3xl font-bold ${getRiskColor(results.riskLevel).split(' ')[0]}`}>
                   {results.riskScore || 0}
                 </p>
@@ -265,12 +265,12 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm sm:text-base text-white mb-2">Compliance</p>
+                <p className="text-sm sm:text-base text-foreground mb-2">Compliance</p>
                 <Badge className={`mt-2 ${getComplianceColor(results.complianceStatus)} transition-colors`}>
                   {results.complianceStatus?.replace('-', ' ') || 'unknown'}
                 </Badge>
                 {results.nextEICRDue && (
-                  <p className="text-xs text-white mt-2">EICR: {results.nextEICRDue}</p>
+                  <p className="text-xs text-foreground mt-2">EICR: {results.nextEICRDue}</p>
                 )}
               </div>
               <div className="bg-elec-yellow/10 p-2 rounded-lg group-hover:bg-elec-yellow/20 transition-colors">
@@ -285,18 +285,18 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm sm:text-base text-white mb-2">Annual Cost</p>
+                <p className="text-sm sm:text-base text-foreground mb-2">Annual Cost</p>
                 {results.annualCostEstimate ? (
                   <>
-                    <p className="text-xl sm:text-2xl font-bold text-white">
+                    <p className="text-xl sm:text-2xl font-bold text-foreground">
                       £{results.annualCostEstimate.min}
                     </p>
-                    <p className="text-xs text-white mt-1">
+                    <p className="text-xs text-foreground mt-1">
                       to £{results.annualCostEstimate.max}
                     </p>
                   </>
                 ) : (
-                  <p className="text-lg text-white">N/A</p>
+                  <p className="text-lg text-foreground">N/A</p>
                 )}
               </div>
               <div className="bg-elec-yellow/10 p-2 rounded-lg group-hover:bg-elec-yellow/20 transition-colors">
@@ -311,11 +311,11 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm sm:text-base text-white mb-2">Annual Hours</p>
-                <p className="text-xl sm:text-2xl font-bold text-white">
+                <p className="text-sm sm:text-base text-foreground mb-2">Annual Hours</p>
+                <p className="text-xl sm:text-2xl font-bold text-foreground">
                   {results.totalEstimatedHours || 0}h
                 </p>
-                <p className="text-xs text-white mt-1">per year</p>
+                <p className="text-xs text-foreground mt-1">per year</p>
               </div>
               <div className="bg-elec-yellow/10 p-2 rounded-lg group-hover:bg-elec-yellow/20 transition-colors">
                 <Clock className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
@@ -333,7 +333,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
               <AlertCircle className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
               <div className="text-left">
                 <p className="text-sm font-medium text-orange-400">Installation Age Warning</p>
-                <p className="text-sm text-white mt-1">
+                <p className="text-sm text-foreground mt-1">
                   Installation is {results.ageYears} years old. EICR recommended within 6 months (BS 7671 Section 631.1)
                 </p>
               </div>
@@ -347,11 +347,11 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
         <CardHeader className="pb-4 sm:pb-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <CardTitle className="text-white flex items-center gap-3 text-2xl sm:text-3xl">
+              <CardTitle className="text-foreground flex items-center gap-3 text-2xl sm:text-3xl">
                 <Calendar className="h-6 w-6 sm:h-7 sm:w-7" />
                 Scheduled Tasks
               </CardTitle>
-              <CardDescription className="text-white text-base sm:text-lg mt-2">
+              <CardDescription className="text-foreground text-base sm:text-lg mt-2">
                 {results.schedule?.length || 0} maintenance tasks identified
               </CardDescription>
             </div>
@@ -372,8 +372,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           {!results.schedule || results.schedule.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-left">
               <AlertCircle className="h-12 w-12 text-elec-yellow/50 mb-4" />
-              <h3 className="text-lg font-semibold text-white mb-2">No Maintenance Tasks Identified</h3>
-              <p className="text-sm text-white max-w-md">
+              <h3 className="text-lg font-semibold text-foreground mb-2">No Maintenance Tasks Identified</h3>
+              <p className="text-sm text-foreground max-w-md">
                 The system could not generate specific maintenance tasks for this equipment. 
                 Please try again with more detailed equipment information or contact support.
               </p>
@@ -392,8 +392,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       {task.priority}
                     </Badge>
                     <div className="flex-1 min-w-0 overflow-hidden">
-                      <p className="font-semibold text-white text-base sm:text-lg leading-tight sm:leading-normal break-words overflow-wrap-anywhere">{task.task}</p>
-                      <p className="text-sm text-white mt-2 leading-tight break-words">
+                      <p className="font-semibold text-foreground text-base sm:text-lg leading-tight sm:leading-normal break-words overflow-wrap-anywhere">{task.task}</p>
+                      <p className="text-sm text-foreground mt-2 leading-tight break-words">
                         {task.interval} • {task.regulation || 'Industry standard'}
                       </p>
                     </div>
@@ -404,7 +404,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                     {task.estimatedDurationMinutes && (
                       <div className="flex items-start gap-3 text-base">
                         <Clock className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                        <span className="text-white">
+                        <span className="text-foreground">
                           Duration: {task.estimatedDurationMinutes} minutes
                         </span>
                       </div>
@@ -412,7 +412,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                     {task.estimatedCost && (
                       <div className="flex items-start gap-3 text-base">
                         <PoundSterling className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                        <span className="text-white">
+                        <span className="text-foreground">
                           Cost: £{task.estimatedCost.min} - £{task.estimatedCost.max}
                         </span>
                       </div>
@@ -421,8 +421,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       <div className="flex items-start gap-3 text-base">
                         <FileText className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
                         <div className="flex-1 text-left">
-                          <p className="text-white font-semibold">Required Qualifications:</p>
-                          <p className="text-white text-sm mt-1">
+                          <p className="text-foreground font-semibold">Required Qualifications:</p>
+                          <p className="text-foreground text-sm mt-1">
                             {task.requiredQualifications.join(', ')}
                           </p>
                         </div>
@@ -432,8 +432,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       <div className="flex items-start gap-2 text-sm">
                         <Wrench className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                         <div className="flex-1 text-left">
-                          <p className="text-white font-medium">Tools Required:</p>
-                          <p className="text-white text-xs mt-1">
+                          <p className="text-foreground font-medium">Tools Required:</p>
+                          <p className="text-foreground text-xs mt-1">
                             {task.toolsRequired.join(', ')}
                           </p>
                         </div>
@@ -443,8 +443,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       <div className="flex items-start gap-2 text-sm">
                         <FileText className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                         <div className="flex-1 text-left">
-                          <p className="text-white font-medium">Procedure:</p>
-                          <ol className="text-white text-xs mt-1 space-y-1 list-decimal list-inside">
+                          <p className="text-foreground font-medium">Procedure:</p>
+                          <ol className="text-foreground text-xs mt-1 space-y-1 list-decimal list-inside">
                             {task.procedure
                               .filter(step => step && step.trim().length > 0)
                               .map((step, i) => (
@@ -459,8 +459,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       <div className="flex items-start gap-2 text-sm p-3 bg-orange-400/5 border border-orange-400/20 rounded-lg">
                         <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />
                         <div className="flex-1 text-left">
-                          <p className="text-white font-medium">Safety Precautions:</p>
-                          <ul className="text-white text-xs mt-1 space-y-1 list-disc list-inside">
+                          <p className="text-foreground font-medium">Safety Precautions:</p>
+                          <ul className="text-foreground text-xs mt-1 space-y-1 list-disc list-inside">
                             {task.safetyPrecautions
                               .filter(precaution => precaution && precaution.trim().length > 0)
                               .map((precaution, i) => (
@@ -484,11 +484,11 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       {results.commonFailureModes && results.commonFailureModes.length > 0 && (
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <TrendingUp className="h-5 w-5" />
               Predictive Maintenance Intelligence
             </CardTitle>
-            <CardDescription className="text-white">
+            <CardDescription className="text-foreground">
               Common failure modes and proactive measures
             </CardDescription>
           </CardHeader>
@@ -496,15 +496,15 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
             {results.commonFailureModes.map((failure, idx) => (
               <div key={idx} className="p-4 bg-elec-dark/30 border border-elec-gray/20 rounded-lg text-left">
                 <div className="flex items-start justify-between mb-2">
-                  <p className="font-medium text-white">{failure.failure}</p>
+                  <p className="font-medium text-foreground">{failure.failure}</p>
                   <Badge variant="outline" className="border-yellow-400/30 text-yellow-400">
                     {Math.round(failure.probability * 100)}% risk
                   </Badge>
                 </div>
                 {failure.earlyWarnings && failure.earlyWarnings.length > 0 && (
                   <div className="mt-2 text-left">
-                    <p className="text-xs font-medium text-white mb-1">Early Warning Signs:</p>
-                    <ul className="text-xs text-white space-y-0.5">
+                    <p className="text-xs font-medium text-foreground mb-1">Early Warning Signs:</p>
+                    <ul className="text-xs text-foreground space-y-0.5">
                       {failure.earlyWarnings.map((warning, i) => (
                         <li key={i}>• {warning}</li>
                       ))}
@@ -521,11 +521,11 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       {results.recommendedParts && results.recommendedParts.length > 0 && (
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <Package className="h-5 w-5" />
               Recommended Parts & Materials
             </CardTitle>
-            <CardDescription className="text-white">
+            <CardDescription className="text-foreground">
               Spare parts to keep on hand
             </CardDescription>
           </CardHeader>
@@ -534,13 +534,13 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
               {results.recommendedParts.map((part, idx) => (
                 <div key={idx} className="flex items-center justify-between p-3 bg-elec-dark/30 border border-elec-gray/20 rounded-lg text-left">
                   <div>
-                    <p className="font-medium text-white">{part.part}</p>
-                    <p className="text-xs text-white mt-0.5">{part.purpose}</p>
+                    <p className="font-medium text-foreground">{part.part}</p>
+                    <p className="text-xs text-foreground mt-0.5">{part.purpose}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-white">Qty: {part.quantity}</p>
+                    <p className="text-sm font-medium text-foreground">Qty: {part.quantity}</p>
                     {part.estimatedCost && (
-                      <p className="text-xs text-white">£{part.estimatedCost}</p>
+                      <p className="text-xs text-foreground">£{part.estimatedCost}</p>
                     )}
                   </div>
                 </div>
@@ -554,11 +554,11 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       {results.regulations && results.regulations.length > 0 && (
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <BookOpen className="h-5 w-5" />
               Regulation References
             </CardTitle>
-            <CardDescription className="text-white">
+            <CardDescription className="text-foreground">
               {results.regulations.length} regulations referenced
             </CardDescription>
           </CardHeader>
@@ -568,14 +568,14 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                 <div className="flex items-start justify-between mb-2">
                   <p className="font-medium text-elec-yellow">{reg.regulationNumber}</p>
                   {reg.confidence && (
-                    <Badge variant="outline" className="border-elec-gray/30 text-white">
+                    <Badge variant="outline" className="border-elec-gray/30 text-foreground">
                       {Math.round(reg.confidence * 100)}% match
                     </Badge>
                   )}
                 </div>
-                <p className="text-sm text-white mb-2">{reg.excerpt}</p>
+                <p className="text-sm text-foreground mb-2">{reg.excerpt}</p>
                 {reg.whyApplies && (
-                  <p className="text-xs text-white italic">
+                  <p className="text-xs text-foreground italic">
                     Why this applies: {reg.whyApplies}
                   </p>
                 )}
@@ -589,7 +589,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       {results.recommendations && results.recommendations.length > 0 && (
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <Zap className="h-5 w-5" />
               Additional Recommendations
             </CardTitle>
@@ -597,7 +597,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <CardContent>
             <ul className="space-y-2 text-left">
               {results.recommendations.map((rec, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-sm text-white">
+                <li key={idx} className="flex items-start gap-2 text-sm text-foreground">
                   <span className="text-elec-yellow mt-0.5">•</span>
                   <span>{rec}</span>
                 </li>

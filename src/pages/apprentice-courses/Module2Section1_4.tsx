@@ -1,0 +1,534 @@
+import { ArrowLeft, Repeat, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import UnitPrefixConverter from "@/components/apprentice-courses/UnitPrefixConverter";
+import useSEO from "@/hooks/useSEO";
+
+const TITLE = "SI Prefixes and Conversions – milli-, kilo-, mega- (Level 2 Module 2 Section 1.4)";
+const DESCRIPTION = "Master SI prefixes (milli, kilo, mega) and unit conversions for electrical quantities. Essential skills for BS 7671 testing and equipment selection.";
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What does the prefix 'kilo' mean?",
+    options: [
+      "× 100",
+      "× 1,000",
+      "× 10,000",
+      "÷ 1,000"
+    ],
+    correctAnswer: 1,
+    explanation: "The prefix 'kilo' means × 1,000 (multiply by one thousand). For example, 1 kV = 1,000 V."
+  },
+  {
+    id: 2,
+    question: "How many milliamps equal 1 amp?",
+    options: [
+      "10 mA",
+      "100 mA",
+      "1,000 mA",
+      "10,000 mA"
+    ],
+    correctAnswer: 2,
+    explanation: "1,000 mA = 1 A. The prefix 'milli' means ÷ 1,000, so 1 mA = 0.001 A."
+  },
+  {
+    id: 3,
+    question: "Convert 2.5 kW to watts:",
+    options: [
+      "25 W",
+      "250 W",
+      "2,500 W",
+      "25,000 W"
+    ],
+    correctAnswer: 2,
+    explanation: "2.5 kW = 2.5 × 1,000 = 2,500 W. To convert from kilo to base units, multiply by 1,000."
+  },
+  {
+    id: 4,
+    question: "What is 500 µA in amperes?",
+    options: [
+      "0.0005 A",
+      "0.05 A",
+      "5 A",
+      "500,000 A"
+    ],
+    correctAnswer: 0,
+    explanation: "500 µA = 500 ÷ 1,000,000 = 0.0005 A. The prefix 'micro' means ÷ 1,000,000."
+  },
+  {
+    id: 5,
+    question: "True or False: 1 MΩ is equal to 1,000 kΩ.",
+    options: [
+      "True",
+      "False"
+    ],
+    correctAnswer: 0,
+    explanation: "True. 1 MΩ = 1,000,000 Ω, and 1,000 kΩ = 1,000 × 1,000 = 1,000,000 Ω. They are exactly equal."
+  },
+  {
+    id: 6,
+    question: "Convert 0.025 A to milliamps:",
+    options: [
+      "2.5 mA",
+      "25 mA",
+      "250 mA",
+      "0.25 mA"
+    ],
+    correctAnswer: 1,
+    explanation: "0.025 A = 0.025 × 1,000 = 25 mA. To convert from base units to milli, multiply by 1,000."
+  },
+  {
+    id: 7,
+    question: "What is 3.3 kV in volts?",
+    options: [
+      "33 V",
+      "330 V",
+      "3,300 V",
+      "33,000 V"
+    ],
+    correctAnswer: 2,
+    explanation: "3.3 kV = 3.3 × 1,000 = 3,300 V. Kilo means multiply by 1,000."
+  },
+  {
+    id: 8,
+    question: "An RCD has a 30mA rating. What is this in amperes?",
+    options: [
+      "0.003 A",
+      "0.03 A",
+      "0.3 A",
+      "3 A"
+    ],
+    correctAnswer: 1,
+    explanation: "30 mA = 30 ÷ 1,000 = 0.03 A. This is a common RCD rating for domestic installations."
+  },
+  {
+    id: 9,
+    question: "Which is larger: 2,200 µF or 2.2 mF?",
+    options: [
+      "2,200 µF",
+      "2.2 mF",
+      "They are equal",
+      "Cannot determine"
+    ],
+    correctAnswer: 1,
+    explanation: "2.2 mF = 2.2 × 1,000 µF = 2,200 µF, but mF means milli (÷1,000), so 2.2 mF = 0.0022 F, whilst 2,200 µF = 0.0022 F. They are equal!"
+  },
+  {
+    id: 10,
+    question: "A cable has a resistance of 0.5 Ω per 100m. What is this in milliohms per metre?",
+    options: [
+      "5 mΩ/m",
+      "50 mΩ/m",
+      "0.5 mΩ/m",
+      "500 mΩ/m"
+    ],
+    correctAnswer: 0,
+    explanation: "0.5 Ω per 100m = 0.5 ÷ 100 = 0.005 Ω/m. Converting to mΩ: 0.005 × 1,000 = 5 mΩ/m."
+  }
+];
+
+const quickCheckQuestions = [
+  {
+    id: "prefix-conversion",
+    question: "How many milliamps equal 1 amp?",
+    options: [
+      "10 mA",
+      "100 mA", 
+      "1,000 mA",
+      "10,000 mA"
+    ],
+    correctIndex: 2,
+    explanation: "1,000 mA = 1 A. The prefix 'milli' means ÷ 1,000, so 1 mA = 0.001 A."
+  }
+];
+
+const Module2Section1_4 = () => {
+  useSEO(TITLE, DESCRIPTION);
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 2.1
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="mb-12">
+          <div className="flex items-center gap-3 mb-4">
+            <Repeat className="h-8 w-8 text-emerald-400" />
+            <div>
+              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+                Module 2.1.4
+              </span>
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+                SI Prefixes and Conversions
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+                Master milli-, kilo-, mega- prefixes for accurate electrical measurements and calculations
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Introduction */}
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
+            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
+              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+              <ul className="list-disc pl-6 space-y-1">
+                <li><strong>SI Prefixes:</strong> Standard multipliers for large/small electrical values.</li>
+                <li><strong>kilo (k):</strong> × 1,000 - common for power (kW), voltage (kV).</li>
+                <li><strong>milli (m):</strong> ÷ 1,000 - used for current (mA), time (ms).</li>
+                <li><strong>mega (M):</strong> × 1,000,000 - typical for resistance (MΩ).</li>
+                <li><strong>Conversion:</strong> Move decimal point or multiply/divide by factors.</li>
+                <li><strong>Safety:</strong> Wrong units = wrong components = danger.</li>
+              </ul>
+            </div>
+            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
+              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+              <ul className="list-disc pl-6 space-y-1">
+                <li><strong>Spot:</strong> Equipment labels (2.5kW heater), test results (500mA RCD), specifications.</li>
+                <li><strong>Use:</strong> Reading drawings, interpreting test readings, component selection.</li>
+                <li><strong>Apply:</strong> Load calculations, cable sizing, protection device selection, fault diagnosis.</li>
+              </ul>
+            </div>
+          </div>
+        </Card>
+
+        {/* Learning Outcomes */}
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
+          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-foreground">
+            <li className="flex items-start gap-3">
+              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <span>Understand common SI prefixes (kilo, mega, milli, micro, nano) and their multipliers</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <span>Convert between different units using prefixes accurately and confidently</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <span>Recognise prefix symbols and abbreviations on equipment and test instruments</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <span>Apply conversions to real electrical scenarios including BS 7671 testing</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <span>Avoid dangerous mistakes caused by unit confusion in component selection</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <span>Read equipment labels and test results with complete understanding</span>
+            </li>
+          </ul>
+        </Card>
+
+        {/* Section 1: SI Prefix System */}
+        <div className="mb-8">
+          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+              SI Prefix System
+            </h2>
+            <div className="space-y-4 text-foreground">
+              <p>
+                The International System of Units (SI) uses prefixes to express very large or very small quantities. 
+                These prefixes are based on powers of 10, making conversions straightforward once you understand the pattern.
+              </p>
+              
+              <div className="bg-card border border-border/30 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2 text-emerald-400">Why SI Prefixes Matter in Electrical Work</h3>
+                <ul className="text-orange-200 space-y-1 text-sm">
+                  <li>• <strong>Safety:</strong> Wrong units can lead to equipment damage or personal injury</li>
+                  <li>• <strong>Precision:</strong> Electrical measurements often span many orders of magnitude</li>
+                  <li>• <strong>Standards:</strong> BS 7671 and IET regulations use consistent SI notation</li>
+                  <li>• <strong>Communication:</strong> Universal language for electrical professionals worldwide</li>
+                </ul>
+              </div>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse border border-border/20">
+                  <thead>
+                    <tr className="bg-background/20">
+                      <th className="border border-border/20 p-4 text-left text-foreground font-semibold">Prefix</th>
+                      <th className="border border-border/20 p-4 text-left text-foreground font-semibold">Symbol</th>
+                      <th className="border border-border/20 p-4 text-left text-foreground font-semibold">Multiplier</th>
+                      <th className="border border-border/20 p-4 text-left text-foreground font-semibold">Example</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border border-border/20 p-4 font-medium">Mega</td>
+                      <td className="border border-border/20 p-4 font-mono text-emerald-400">M</td>
+                      <td className="border border-border/20 p-4">× 1,000,000</td>
+                      <td className="border border-border/20 p-4">1 MΩ = 1,000,000 Ω</td>
+                    </tr>
+                    <tr className="bg-muted/20">
+                      <td className="border border-border/20 p-4 font-medium">Kilo</td>
+                      <td className="border border-border/20 p-4 font-mono text-emerald-400">k</td>
+                      <td className="border border-border/20 p-4">× 1,000</td>
+                      <td className="border border-border/20 p-4">1 kW = 1,000 W</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-border/20 p-4 font-medium">Base unit</td>
+                      <td className="border border-border/20 p-4 font-mono text-emerald-400">-</td>
+                      <td className="border border-border/20 p-4">× 1</td>
+                      <td className="border border-border/20 p-4">1 V = 1 V</td>
+                    </tr>
+                    <tr className="bg-muted/20">
+                      <td className="border border-border/20 p-4 font-medium">Milli</td>
+                      <td className="border border-border/20 p-4 font-mono text-emerald-400">m</td>
+                      <td className="border border-border/20 p-4">÷ 1,000</td>
+                      <td className="border border-border/20 p-4">1 mA = 0.001 A</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-border/20 p-4 font-medium">Micro</td>
+                      <td className="border border-border/20 p-4 font-mono text-emerald-400">µ</td>
+                      <td className="border border-border/20 p-4">÷ 1,000,000</td>
+                      <td className="border border-border/20 p-4">1 µF = 0.000001 F</td>
+                    </tr>
+                    <tr className="bg-muted/20">
+                      <td className="border border-border/20 p-4 font-medium">Nano</td>
+                      <td className="border border-border/20 p-4 font-mono text-emerald-400">n</td>
+                      <td className="border border-border/20 p-4">÷ 1,000,000,000</td>
+                      <td className="border border-border/20 p-4">1 nF = 0.000000001 F</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="rounded-md border border-border/30 bg-card p-3">
+                <p className="text-sm">
+                  <strong>Professional tip:</strong> These prefixes appear constantly on equipment labels, drawings, and test results.
+                  Master them early to work more safely and efficiently.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2: Conversion Rules */}
+        <div className="mb-8">
+          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+              Conversion Rules
+            </h2>
+            <div className="space-y-4 text-foreground">
+              <p>
+                Converting between units with prefixes follows simple rules. Understanding these patterns 
+                helps you work quickly and accurately with electrical calculations.
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Converting to Larger Units</h3>
+                  <div className="bg-card border border-border/30 p-4 rounded-lg">
+                    <p className="text-emerald-400 font-medium mb-2">Rule: Divide by the multiplier</p>
+                    <div className="space-y-2 text-blue-200">
+                      <p>• 5,000 W → 5 kW (÷ 1,000)</p>
+                      <p>• 2,000,000 Ω → 2 MΩ (÷ 1,000,000)</p>
+                      <p>• 500 mA → 0.5 A (÷ 1,000)</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Converting to Smaller Units</h3>
+                  <div className="bg-card border border-green-400/30 p-4 rounded-lg">
+                    <p className="text-green-300 font-medium mb-2">Rule: Multiply by the multiplier</p>
+                    <div className="space-y-2 text-green-200">
+                      <p>• 3 kV → 3,000 V (× 1,000)</p>
+                      <p>• 1.5 MΩ → 1,500,000 Ω (× 1,000,000)</p>
+                      <p>• 0.25 A → 250 mA (× 1,000)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <p className="text-emerald-400 font-medium">
+                  <strong>Memory Aid:</strong> When moving the decimal point, remember:
+                  <br />• Moving up the table (to larger prefixes) = Move decimal left
+                  <br />• Moving down the table (to smaller prefixes) = Move decimal right
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 3: Step-by-Step Examples */}
+        <div className="mb-8">
+          <div className="border-l-4 border-purple-500 bg-card dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+              <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
+              Step-by-Step Conversion Examples
+            </h2>
+            <div className="space-y-6 text-foreground">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Example 1: 2.5 kW to W</h3>
+                  <div className="bg-background/20 p-4 rounded-lg space-y-2">
+                    <p><strong>Step 1:</strong> Identify the conversion (kilo to base)</p>
+                    <p><strong>Step 2:</strong> Kilo = × 1,000</p>
+                    <p><strong>Step 3:</strong> 2.5 × 1,000 = 2,500</p>
+                    <p className="text-emerald-400 font-medium"><strong>Answer:</strong> 2,500 W</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Example 2: 750 mA to A</h3>
+                  <div className="bg-background/20 p-4 rounded-lg space-y-2">
+                    <p><strong>Step 1:</strong> Identify the conversion (milli to base)</p>
+                    <p><strong>Step 2:</strong> Milli = ÷ 1,000</p>
+                    <p><strong>Step 3:</strong> 750 ÷ 1,000 = 0.75</p>
+                    <p className="text-emerald-400 font-medium"><strong>Answer:</strong> 0.75 A</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Example 3: 0.002 A to mA</h3>
+                  <div className="bg-background/20 p-4 rounded-lg space-y-2">
+                    <p><strong>Step 1:</strong> Identify the conversion (base to milli)</p>
+                    <p><strong>Step 2:</strong> To get milli, multiply by 1,000</p>
+                    <p><strong>Step 3:</strong> 0.002 × 1,000 = 2</p>
+                    <p className="text-emerald-400 font-medium"><strong>Answer:</strong> 2 mA</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Example 4: 4.7 MΩ to kΩ</h3>
+                  <div className="bg-background/20 p-4 rounded-lg space-y-2">
+                    <p><strong>Step 1:</strong> Identify the conversion (mega to kilo)</p>
+                    <p><strong>Step 2:</strong> 1 MΩ = 1,000 kΩ</p>
+                    <p><strong>Step 3:</strong> 4.7 × 1,000 = 4,700</p>
+                    <p className="text-emerald-400 font-medium"><strong>Answer:</strong> 4,700 kΩ</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-card border border-border/30 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2 text-emerald-400">Common Conversion Mistakes to Avoid</h3>
+                <div className="grid md:grid-cols-2 gap-4 text-red-200 text-sm">
+                  <div>
+                    <p className="font-medium mb-1">Wrong Direction:</p>
+                    <p>• 5 kW ≠ 5,000 mW (should be 5,000,000 mW)</p>
+                    <p>• 100 mA ≠ 100,000 A (should be 0.1 A)</p>
+                  </div>
+                  <div>
+                    <p className="font-medium mb-1">Symbol Confusion:</p>
+                    <p>• m ≠ M (milli vs mega = factor of 1 billion!)</p>
+                    <p>• µ ≠ m (micro vs milli = factor of 1,000)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 4: Hands-on Unit Converter */}
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
+            Hands-on: Unit Prefix Converter
+          </h2>
+          <p className="text-muted-foreground mb-4">
+            Practice converting between different electrical units and prefixes using this interactive tool:
+          </p>
+          <UnitPrefixConverter />
+          <p className="text-sm text-muted-foreground mt-4">
+            <strong>Try:</strong> Convert common values like 500mA to A, or 2.5kW to W to build confidence.
+          </p>
+        </Card>
+
+        {/* Section 5: Common Applications & Practical Tips */}
+        <div className="mb-8">
+          <div className="border-l-4 border-red-500 bg-card dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+              <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">5</span>
+              Common Applications & Practical Tips
+            </h2>
+            <div className="space-y-6 text-foreground">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Equipment Labels</h3>
+                  <div className="bg-background/20 p-4 rounded-lg space-y-2">
+                    <p>• <strong>2.5kW Heater:</strong> 2,500 watts</p>
+                    <p>• <strong>32A MCB:</strong> 32 amperes</p>
+                    <p>• <strong>500mA RCD:</strong> 0.5 amperes</p>
+                    <p>• <strong>13A Fuse:</strong> 13 amperes</p>
+                    <p>• <strong>1000V Insulation:</strong> 1 kilovolt</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Test Results</h3>
+                  <div className="bg-background/20 p-4 rounded-lg space-y-2">
+                    <p>• <strong>Insulation test:</strong> &gt;2MΩ = good</p>
+                    <p>• <strong>Continuity test:</strong> &lt;0.05Ω = good</p>
+                    <p>• <strong>RCD test:</strong> 28mA = 0.028A</p>
+                    <p>• <strong>Loop impedance:</strong> 1.2Ω = acceptable</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-card border border-border/30 p-4 rounded-lg">
+                <p className="text-emerald-400">
+                  <strong>Safety Reminder:</strong> Always double-check units when selecting components. 
+                  Confusing mA with A, or kV with V, can be dangerous and damage equipment.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <div className="mt-12">
+          <Quiz 
+            title="SI Prefixes and Conversions Quiz"
+            questions={quizQuestions}
+          />
+        </div>
+
+        {/* Navigation */}
+        <div className="flex justify-between mt-8">
+          <Button variant="outline" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous: Units of Measurement
+            </Link>
+          </Button>
+          <Button asChild>
+            <Link to="..">
+              Next: Mathematical Skills
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Module2Section1_4;

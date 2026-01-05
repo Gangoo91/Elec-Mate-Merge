@@ -65,7 +65,7 @@ export const SmartPricingWidget = ({
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <CardTitle className="text-lg text-white flex items-center gap-2">
+              <CardTitle className="text-lg text-foreground flex items-center gap-2">
                 {material.name}
                 {material.isFavourite && <Star className="h-4 w-4 text-yellow-400 fill-current" />}
               </CardTitle>
@@ -97,7 +97,7 @@ export const SmartPricingWidget = ({
             
             <div>
               <Label className="text-xs text-elec-light/80">Total Cost</Label>
-              <div className="text-xl font-bold text-white">
+              <div className="text-xl font-bold text-foreground">
                 £{pricing.total.toFixed(2)}
               </div>
               <div className="text-xs text-elec-light/60">

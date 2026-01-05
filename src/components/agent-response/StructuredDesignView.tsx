@@ -31,20 +31,20 @@ export const StructuredDesignView = ({ design }: StructuredDesignViewProps) => {
           {design.cable && (
             <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
               <div className="text-sm text-gray-400 mb-1">Cable</div>
-              <div className="text-lg font-semibold text-white">{design.cable}</div>
+              <div className="text-lg font-semibold text-foreground">{design.cable}</div>
             </div>
           )}
           {design.mcb && (
             <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
               <div className="text-sm text-gray-400 mb-1">MCB Rating</div>
-              <div className="text-lg font-semibold text-white">{design.mcb}</div>
+              <div className="text-lg font-semibold text-foreground">{design.mcb}</div>
             </div>
           )}
           {design.voltageDrop && (
             <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
               <div className="text-sm text-gray-400 mb-1">Voltage Drop</div>
               <div className="flex items-center gap-2">
-                <span className="text-lg font-semibold text-white">{design.voltageDrop}</span>
+                <span className="text-lg font-semibold text-foreground">{design.voltageDrop}</span>
                 {getPassFailIcon(design.voltageDrop)}
               </div>
             </div>
@@ -53,7 +53,7 @@ export const StructuredDesignView = ({ design }: StructuredDesignViewProps) => {
             <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
               <div className="text-sm text-gray-400 mb-1">Earth Fault Loop (Zs)</div>
               <div className="flex items-center gap-2">
-                <span className="text-lg font-semibold text-white">{design.earthFault}</span>
+                <span className="text-lg font-semibold text-foreground">{design.earthFault}</span>
                 {getPassFailIcon(design.earthFault)}
               </div>
             </div>

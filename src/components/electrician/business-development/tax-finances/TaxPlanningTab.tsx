@@ -404,7 +404,7 @@ const TaxPlanningTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className="text-sm font-medium text-white">{metric.metric}</div>
+              <div className="text-sm font-medium text-foreground">{metric.metric}</div>
               <div className="text-sm text-muted-foreground">{metric.data}</div>
             </div>
           </Card>

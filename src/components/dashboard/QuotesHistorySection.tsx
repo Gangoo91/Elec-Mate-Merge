@@ -80,7 +80,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
     // 1. Invoice raised
     if (hasInvoice) {
       return (
-        <Badge className="bg-blue-500 text-white border-0 hover:bg-blue-600">
+        <Badge className="bg-blue-500 text-foreground border-0 hover:bg-blue-600">
           <Receipt className="h-3 w-3 mr-1" />
           Invoiced
         </Badge>
@@ -90,7 +90,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
     // 2. Work done + accepted = ready to invoice
     if (isWorkDone && acceptanceStatus === "accepted") {
       return (
-        <Badge className="bg-green-500 text-white border-0 hover:bg-green-600 animate-pulse">
+        <Badge className="bg-green-500 text-foreground border-0 hover:bg-green-600 animate-pulse">
           <CheckCheck className="h-3 w-3 mr-1" />
           Ready to Invoice
         </Badge>
@@ -100,7 +100,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
     // 3. Accepted but work pending
     if (acceptanceStatus === "accepted" && !isWorkDone) {
       return (
-        <Badge className="bg-emerald-500 text-white border-0 hover:bg-emerald-600">
+        <Badge className="bg-emerald-500 text-foreground border-0 hover:bg-emerald-600">
           <CheckCircle className="h-3 w-3 mr-1" />
           Approved - Work Pending
         </Badge>
@@ -110,7 +110,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
     // 4. Rejected
     if (acceptanceStatus === "rejected") {
       return (
-        <Badge className="bg-red-500 text-white border-0 hover:bg-red-600">
+        <Badge className="bg-red-500 text-foreground border-0 hover:bg-red-600">
           <XCircle className="h-3 w-3 mr-1" />
           Rejected
         </Badge>
@@ -120,7 +120,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
     // 5. Sent but not yet accepted/rejected
     if (quote.status === "sent") {
       return (
-        <Badge className="bg-blue-500 text-white border-0 hover:bg-blue-600">
+        <Badge className="bg-blue-500 text-foreground border-0 hover:bg-blue-600">
           <Send className="h-3 w-3 mr-1" />
           Sent - Awaiting Client
         </Badge>

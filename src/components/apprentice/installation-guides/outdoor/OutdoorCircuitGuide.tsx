@@ -182,7 +182,7 @@ const OutdoorCircuitGuide = () => {
             <MapPin className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Outdoor Circuit Design Guide</CardTitle>
           </div>
-          <p className="text-muted-foreground">Comprehensive specifications for outdoor electrical installations</p>
+          <p className="text-neutral-300">Comprehensive specifications for outdoor electrical installations</p>
         </CardHeader>
       </Card>
 
@@ -219,15 +219,15 @@ const OutdoorCircuitGuide = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
                     <div>
                       <span className="text-blue-300 font-medium">Protection: </span>
-                      <span className="text-muted-foreground">{circuit.protection}</span>
+                      <span className="text-neutral-300">{circuit.protection}</span>
                     </div>
                     <div>
                       <span className="text-blue-300 font-medium">Control: </span>
-                      <span className="text-muted-foreground">{circuit.control}</span>
+                      <span className="text-neutral-300">{circuit.control}</span>
                     </div>
                     <div>
                       <span className="text-blue-300 font-medium">Notes: </span>
-                      <span className="text-muted-foreground">{circuit.notes}</span>
+                      <span className="text-neutral-300">{circuit.notes}</span>
                     </div>
                   </div>
                 </div>
@@ -254,7 +254,7 @@ const OutdoorCircuitGuide = () => {
                         {app.requirements.map((req, reqIndex) => (
                           <div key={reqIndex} className="flex items-center gap-2 text-sm">
                             <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0" />
-                            <span className="text-muted-foreground">{req}</span>
+                            <span className="text-neutral-300">{req}</span>
                           </div>
                         ))}
                       </div>
@@ -262,11 +262,11 @@ const OutdoorCircuitGuide = () => {
                     <div className="space-y-2">
                       <div>
                         <span className="text-purple-300 font-medium text-sm">Cable Spec: </span>
-                        <span className="text-muted-foreground text-sm">{app.cableSpec}</span>
+                        <span className="text-neutral-300 text-sm">{app.cableSpec}</span>
                       </div>
                       <div>
                         <span className="text-purple-300 font-medium text-sm">Control: </span>
-                        <span className="text-muted-foreground text-sm">{app.control}</span>
+                        <span className="text-neutral-300 text-sm">{app.control}</span>
                       </div>
                     </div>
                   </div>
@@ -291,19 +291,19 @@ const OutdoorCircuitGuide = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
                     <div>
                       <span className="text-green-300 font-medium">Depth: </span>
-                      <span className="text-muted-foreground">{install.depth}</span>
+                      <span className="text-neutral-300">{install.depth}</span>
                     </div>
                     <div>
                       <span className="text-green-300 font-medium">Protection: </span>
-                      <span className="text-muted-foreground">{install.protection}</span>
+                      <span className="text-neutral-300">{install.protection}</span>
                     </div>
                     <div>
                       <span className="text-green-300 font-medium">Warning: </span>
-                      <span className="text-muted-foreground">{install.warning}</span>
+                      <span className="text-neutral-300">{install.warning}</span>
                     </div>
                     <div>
                       <span className="text-green-300 font-medium">Backfill: </span>
-                      <span className="text-muted-foreground">{install.backfill}</span>
+                      <span className="text-neutral-300">{install.backfill}</span>
                     </div>
                   </div>
                 </div>
@@ -321,11 +321,11 @@ const OutdoorCircuitGuide = () => {
             <CardContent className="space-y-3">
               <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                 <h4 className="font-medium text-orange-300 mb-2">Service Location</h4>
-                <p className="text-sm text-muted-foreground">Always use CAT scanning and hand digging to prove service locations. Contact utility companies for accurate service plans.</p>
+                <p className="text-sm text-neutral-300">Always use CAT scanning and hand digging to prove service locations. Contact utility companies for accurate service plans.</p>
               </div>
               <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                 <h4 className="font-medium text-orange-300 mb-2">Excavation Safety</h4>
-                <p className="text-sm text-muted-foreground">Follow safe digging practices. Shore excavations over 1.2m deep. Provide adequate lighting and barriers for public safety.</p>
+                <p className="text-sm text-neutral-300">Follow safe digging practices. Shore excavations over 1.2m deep. Provide adequate lighting and barriers for public safety.</p>
               </div>
             </CardContent>
           </Card>
@@ -351,15 +351,15 @@ const OutdoorCircuitGuide = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                     <div>
                       <span className="text-cyan-300 font-medium">Application: </span>
-                      <span className="text-muted-foreground">{power.application}</span>
+                      <span className="text-neutral-300">{power.application}</span>
                     </div>
                     <div>
                       <span className="text-cyan-300 font-medium">Max Length: </span>
-                      <span className="text-muted-foreground">{power.maxLength}</span>
+                      <span className="text-neutral-300">{power.maxLength}</span>
                     </div>
                     <div>
                       <span className="text-cyan-300 font-medium">Protection: </span>
-                      <span className="text-muted-foreground">{power.protection}</span>
+                      <span className="text-neutral-300">{power.protection}</span>
                     </div>
                   </div>
                 </div>
@@ -388,11 +388,11 @@ const OutdoorCircuitGuide = () => {
                   <div className="space-y-2 text-sm">
                     <div>
                       <span className="text-red-300 font-medium">Description: </span>
-                      <span className="text-muted-foreground">{protection.description}</span>
+                      <span className="text-neutral-300">{protection.description}</span>
                     </div>
                     <div>
                       <span className="text-red-300 font-medium">Typical Use: </span>
-                      <span className="text-muted-foreground">{protection.typical}</span>
+                      <span className="text-neutral-300">{protection.typical}</span>
                     </div>
                   </div>
                 </div>

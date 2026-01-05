@@ -83,7 +83,7 @@ const BreathingExercise = () => {
           </div>
           
           <div className="text-center space-y-2">
-            <h3 className="text-lg font-medium text-white">
+            <h3 className="text-lg font-medium text-foreground">
               {phases[phase].instruction}
             </h3>
             <p className="text-sm text-muted-foreground">
@@ -123,7 +123,7 @@ const BreathingExercise = () => {
         </div>
 
         <div className="text-center space-y-2 pt-4 border-t border-elec-yellow/20">
-          <h4 className="font-semibold text-white">How it works:</h4>
+          <h4 className="font-semibold text-foreground">How it works:</h4>
           <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
             <div>• Inhale for 4 seconds</div>
             <div>• Hold for 4 seconds</div>

@@ -161,10 +161,10 @@ const QuickMaterialFinder = () => {
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "Critical": return "bg-red-600/90 text-white border-red-400";
-      case "Essential": return "bg-orange-600/90 text-white border-orange-400";
-      case "Recommended": return "bg-green-600/90 text-white border-green-400";
-      default: return "bg-blue-600/90 text-white border-blue-400";
+      case "Critical": return "bg-red-600/90 text-foreground border-red-400";
+      case "Essential": return "bg-orange-600/90 text-foreground border-orange-400";
+      case "Recommended": return "bg-green-600/90 text-foreground border-green-400";
+      default: return "bg-blue-600/90 text-foreground border-blue-400";
     }
   };
 
@@ -179,14 +179,14 @@ const QuickMaterialFinder = () => {
                 <CheckCircle className="h-6 w-6" />
               </div>
               <div>
-                <CardTitle className="text-white">Your Material Recommendations</CardTitle>
-                <p className="text-white/80 text-sm">Based on your project requirements</p>
+                <CardTitle className="text-foreground">Your Material Recommendations</CardTitle>
+                <p className="text-foreground/80 text-sm">Based on your project requirements</p>
               </div>
             </div>
             <Button 
               variant="outline" 
               onClick={reset}
-              className="border-white/20 text-white hover:border-green-500/50"
+              className="border-white/20 text-foreground hover:border-green-500/50"
             >
               Start Over
             </Button>
@@ -197,12 +197,12 @@ const QuickMaterialFinder = () => {
             {recommendations.map((rec, index) => (
               <div key={index} className="p-4 rounded-lg bg-elec-card/30 border border-white/10">
                 <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-medium text-white">{rec.name}</h4>
+                  <h4 className="font-medium text-foreground">{rec.name}</h4>
                   <Badge className={getPriorityColor(rec.priority)}>
                     {rec.priority}
                   </Badge>
                 </div>
-                <p className="text-sm text-white/80 mb-2">{rec.reason}</p>
+                <p className="text-sm text-foreground/80 mb-2">{rec.reason}</p>
                 <p className="text-sm text-elec-yellow font-medium">{rec.price}</p>
               </div>
             ))}
@@ -212,7 +212,7 @@ const QuickMaterialFinder = () => {
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
               <div>
-                <h5 className="font-medium text-white mb-1">Your Project Requirements</h5>
+                <h5 className="font-medium text-foreground mb-1">Your Project Requirements</h5>
                 <div className="flex flex-wrap gap-2">
                   {Object.entries(selections).map(([key, value]) => {
                     const question = questions.find(q => q.id === key);
@@ -232,8 +232,8 @@ const QuickMaterialFinder = () => {
             <div className="flex items-start gap-3">
               <Shield className="h-5 w-5 text-green-400 mt-0.5" />
               <div>
-                <h5 className="font-medium text-white mb-1">BS 7671 Compliance Note</h5>
-                <p className="text-sm text-white/80">
+                <h5 className="font-medium text-foreground mb-1">BS 7671 Compliance Note</h5>
+                <p className="text-sm text-foreground/80">
                   All recommendations align with 18th Edition wiring regulations. 
                   Ensure proper installation and testing procedures for full compliance.
                 </p>
@@ -256,8 +256,8 @@ const QuickMaterialFinder = () => {
             <Search className="h-6 w-6" />
           </div>
           <div>
-            <CardTitle className="text-white">Quick Material Finder</CardTitle>
-            <p className="text-white/80 text-sm">
+            <CardTitle className="text-foreground">Quick Material Finder</CardTitle>
+            <p className="text-foreground/80 text-sm">
               Answer a few questions to get personalised material recommendations
             </p>
           </div>
@@ -266,7 +266,7 @@ const QuickMaterialFinder = () => {
       <CardContent className="space-y-6">
         {/* Progress */}
         <div className="space-y-2">
-          <div className="flex justify-between text-sm text-white/80">
+          <div className="flex justify-between text-sm text-foreground/80">
             <span>Question {currentStep + 1} of {questions.length}</span>
             <span>{Math.round(((currentStep + 1) / questions.length) * 100)}% Complete</span>
           </div>
@@ -282,7 +282,7 @@ const QuickMaterialFinder = () => {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <Icon className="h-6 w-6 text-green-400" />
-            <h3 className="text-xl font-semibold text-white">{currentQuestion.title}</h3>
+            <h3 className="text-xl font-semibold text-foreground">{currentQuestion.title}</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -295,10 +295,10 @@ const QuickMaterialFinder = () => {
               >
                 <div className="w-full">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-medium text-white">{option.label}</span>
+                    <span className="font-medium text-foreground">{option.label}</span>
                     <ArrowRight className="h-4 w-4 text-green-400" />
                   </div>
-                  <p className="text-sm text-white/80 break-words overflow-wrap-anywhere text-wrap">{option.description}</p>
+                  <p className="text-sm text-foreground/80 break-words overflow-wrap-anywhere text-wrap">{option.description}</p>
                 </div>
               </Button>
             ))}
@@ -311,7 +311,7 @@ const QuickMaterialFinder = () => {
             <Button 
               variant="outline" 
               onClick={() => setCurrentStep(currentStep - 1)}
-              className="border-white/20 text-white hover:border-green-500/50"
+              className="border-white/20 text-foreground hover:border-green-500/50"
             >
               Previous Question
             </Button>

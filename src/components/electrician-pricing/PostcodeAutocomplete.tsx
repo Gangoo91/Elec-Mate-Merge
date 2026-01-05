@@ -147,12 +147,12 @@ const PostcodeAutocomplete = ({
                   >
                     <div className="flex items-center gap-2 w-full">
                       <MapPin className="h-4 w-4 text-elec-yellow" />
-                      <span className="font-medium text-white">{district.district_code}</span>
-                      <span className="text-sm text-white/70">
+                      <span className="font-medium text-foreground">{district.district_code}</span>
+                      <span className="text-sm text-foreground/70">
                         {district.local_authority}, {district.county}
                       </span>
                     </div>
-                    <div className="flex gap-4 text-xs text-white/60 ml-6">
+                    <div className="flex gap-4 text-xs text-foreground/60 ml-6">
                       <span>{formatIncomeRange(district.avg_household_income)}</span>
                       <span>•</span>
                       <span>{getContractorDensityText(district.contractor_density)}</span>

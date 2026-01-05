@@ -86,7 +86,7 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
             <h1 className="text-sm sm:text-base font-bold text-elec-light truncate">
               {design.projectName}
             </h1>
-            <p className="text-xs text-white/80 truncate">{design.location}</p>
+            <p className="text-xs text-foreground/80 truncate">{design.location}</p>
           </div>
           <Badge 
             variant={overallStatus === 'pass' ? 'default' : overallStatus === 'warning' ? 'outline' : 'destructive'}

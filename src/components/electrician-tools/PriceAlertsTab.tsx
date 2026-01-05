@@ -81,7 +81,7 @@ const PriceAlertsTab = () => {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-semibold text-white flex items-center justify-center gap-2">
+        <h2 className="text-2xl font-semibold text-foreground flex items-center justify-center gap-2">
           <Bell className="h-6 w-6 text-elec-yellow" />
           Price Alerts & Monitoring
         </h2>
@@ -101,7 +101,7 @@ const PriceAlertsTab = () => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="md:col-span-2">
-              <label className="text-sm font-medium text-white mb-2 block">Tool Name</label>
+              <label className="text-sm font-medium text-foreground mb-2 block">Tool Name</label>
               <Input
                 placeholder="e.g. Fluke 1663 Multifunction Tester"
                 value={newAlert.toolName}
@@ -110,7 +110,7 @@ const PriceAlertsTab = () => {
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-white mb-2 block">Target Price (£)</label>
+              <label className="text-sm font-medium text-foreground mb-2 block">Target Price (£)</label>
               <Input
                 type="number"
                 placeholder="550.00"
@@ -120,11 +120,11 @@ const PriceAlertsTab = () => {
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-white mb-2 block">Supplier</label>
+              <label className="text-sm font-medium text-foreground mb-2 block">Supplier</label>
               <select 
                 value={newAlert.supplier}
                 onChange={(e) => setNewAlert({...newAlert, supplier: e.target.value})}
-                className="w-full p-2 bg-elec-dark border border-elec-yellow/30 rounded text-white"
+                className="w-full p-2 bg-elec-dark border border-elec-yellow/30 rounded text-foreground"
               >
                 <option>Any Supplier</option>
                 <option>Screwfix</option>
@@ -145,7 +145,7 @@ const PriceAlertsTab = () => {
       {/* Active Alerts */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white">Your Price Alerts ({alerts.length})</CardTitle>
+          <CardTitle className="text-foreground">Your Price Alerts ({alerts.length})</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -154,7 +154,7 @@ const PriceAlertsTab = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <h3 className="font-medium text-white">{alert.toolName}</h3>
+                      <h3 className="font-medium text-foreground">{alert.toolName}</h3>
                       <Badge className={`${
                         alert.status === 'triggered' ? 'bg-green-500/20 text-green-400' : 'bg-blue-500/20 text-blue-400'
                       }`}>
@@ -180,16 +180,16 @@ const PriceAlertsTab = () => {
                       {alert.currentPrice > 0 && (
                         <div>
                           <span className="text-muted-foreground">Current Price:</span>
-                          <div className="text-white font-medium">£{alert.currentPrice.toFixed(2)}</div>
+                          <div className="text-foreground font-medium">£{alert.currentPrice.toFixed(2)}</div>
                         </div>
                       )}
                       <div>
                         <span className="text-muted-foreground">Supplier:</span>
-                        <div className="text-white">{alert.supplier}</div>
+                        <div className="text-foreground">{alert.supplier}</div>
                       </div>
                       <div>
                         <span className="text-muted-foreground">Created:</span>
-                        <div className="text-white">{alert.created}</div>
+                        <div className="text-foreground">{alert.created}</div>
                       </div>
                     </div>
                   </div>
@@ -212,18 +212,18 @@ const PriceAlertsTab = () => {
       {/* Price History Trends */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white">Recent Price Movements</CardTitle>
+          <CardTitle className="text-foreground">Recent Price Movements</CardTitle>
         </CardHeader>
         <CardContent>
           {priceHistory.map((item, index) => (
             <div key={index} className="space-y-3">
-              <h3 className="font-medium text-white">{item.tool}</h3>
+              <h3 className="font-medium text-foreground">{item.tool}</h3>
               <div className="space-y-2">
                 {item.changes.map((change, changeIndex) => (
                   <div key={changeIndex} className="flex items-center justify-between p-2 bg-elec-dark/30 rounded">
                     <span className="text-sm text-muted-foreground">{change.date}</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-white font-medium">£{change.price.toFixed(2)}</span>
+                      <span className="text-foreground font-medium">£{change.price.toFixed(2)}</span>
                       {change.change !== 0 && (
                         <div className={`flex items-center gap-1 text-xs ${
                           change.change < 0 ? 'text-green-400' : 'text-red-400'

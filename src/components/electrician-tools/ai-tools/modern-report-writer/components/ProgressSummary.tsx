@@ -42,7 +42,7 @@ const ProgressSummary: React.FC<ProgressSummaryProps> = ({
               <FileText className="h-5 w-5 text-elec-yellow" />
             </div>
             <div>
-              <h3 className="text-lg font-medium text-white">{templateName}</h3>
+              <h3 className="text-lg font-medium text-foreground">{templateName}</h3>
               <p className="text-sm text-muted-foreground">Progress Summary</p>
             </div>
           </div>
@@ -57,7 +57,7 @@ const ProgressSummary: React.FC<ProgressSummaryProps> = ({
         {/* Overall Progress */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-white font-medium">Overall Progress</span>
+            <span className="text-foreground font-medium">Overall Progress</span>
             <span className="text-elec-yellow">{Math.round(overallProgress)}%</span>
           </div>
           <Progress value={overallProgress} className="h-2" />
@@ -67,7 +67,7 @@ const ProgressSummary: React.FC<ProgressSummaryProps> = ({
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Current Step</span>
-            <span className="text-white">{Math.round(currentStepProgress)}%</span>
+            <span className="text-foreground">{Math.round(currentStepProgress)}%</span>
           </div>
           <Progress value={currentStepProgress} className="h-1.5" />
         </div>

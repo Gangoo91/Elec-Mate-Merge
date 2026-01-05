@@ -82,7 +82,7 @@ const LaTeXStylePDFGenerator = () => {
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-3">
             <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-3 rounded-xl">
-              <FileText className="h-8 w-8 text-white" />
+              <FileText className="h-8 w-8 text-foreground" />
             </div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               LaTeX-Style PDF Generator
@@ -97,7 +97,7 @@ const LaTeXStylePDFGenerator = () => {
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Content Input */}
           <Card className="shadow-xl border-0 bg-white/70 backdrop-blur-sm">
-            <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+            <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-500 text-foreground">
               <CardTitle className="flex items-center gap-2">
                 <BookOpen className="h-5 w-5" />
                 Markdown Content
@@ -134,7 +134,7 @@ Write your content in Markdown format...
 
           {/* Settings Panel */}
           <Card className="shadow-xl border-0 bg-white/70 backdrop-blur-sm">
-            <CardHeader className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+            <CardHeader className="bg-gradient-to-r from-purple-500 to-pink-500 text-foreground">
               <CardTitle className="flex items-center gap-2">
                 <Settings2 className="h-5 w-5" />
                 Document Settings
@@ -267,7 +267,7 @@ Write your content in Markdown format...
               <Button
                 onClick={handleGeneratePDF}
                 disabled={isGenerating || !markdownContent.trim()}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-foreground font-semibold py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
                 size="lg"
               >
                 {isGenerating ? (

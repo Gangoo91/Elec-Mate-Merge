@@ -62,7 +62,7 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
           <div className="flex items-center gap-3">
             <FileText className="h-5 w-5 text-elec-yellow" />
             <div>
-              <div className="text-sm font-medium text-white">
+              <div className="text-sm font-medium text-foreground">
                 {template?.name}
               </div>
               <div className="text-xs text-muted-foreground">
@@ -103,7 +103,7 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
               <FileText className="h-6 w-6 text-elec-yellow" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">Report Preview</h3>
+              <h3 className="text-xl font-bold text-foreground">Report Preview</h3>
               <p className="text-sm text-muted-foreground">
                 {template?.name}
               </p>
@@ -127,7 +127,7 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
           {/* Document Header */}
           <div className="space-y-4 pb-6 border-b border-elec-yellow/20">
             <div className="flex items-center justify-between">
-              <h4 className="text-lg font-semibold text-white">
+              <h4 className="text-lg font-semibold text-foreground">
                 {template?.name}
               </h4>
               <Badge variant="outline" className="text-xs border-blue-500/30 text-blue-400">
@@ -140,12 +140,12 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4 text-muted-foreground" />
                   <span className="text-muted-foreground">Client:</span>
-                  <span className="text-white">{clientDetails?.clientName || 'Not specified'}</span>
+                  <span className="text-foreground">{clientDetails?.clientName || 'Not specified'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
                   <span className="text-muted-foreground">Property:</span>
-                  <span className="text-white truncate">{clientDetails?.installationAddress || 'Not specified'}</span>
+                  <span className="text-foreground truncate">{clientDetails?.installationAddress || 'Not specified'}</span>
                 </div>
               </div>
               
@@ -153,12 +153,12 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-muted-foreground" />
                   <span className="text-muted-foreground">Date:</span>
-                  <span className="text-white">{new Date().toLocaleDateString()}</span>
+                  <span className="text-foreground">{new Date().toLocaleDateString()}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <FileText className="h-4 w-4 text-muted-foreground" />
                   <span className="text-muted-foreground">Pages:</span>
-                  <span className="text-white">{estimatedPages} (estimated)</span>
+                  <span className="text-foreground">{estimatedPages} (estimated)</span>
                 </div>
               </div>
             </div>
@@ -167,7 +167,7 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
           {/* Assessment Summary */}
           {inspectionDetails?.overallAssessment && (
             <div className="py-4 border-b border-elec-yellow/20">
-              <h5 className="text-sm font-medium text-white mb-2">Assessment Summary</h5>
+              <h5 className="text-sm font-medium text-foreground mb-2">Assessment Summary</h5>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Overall Assessment:</span>
                 <Badge 
@@ -191,18 +191,18 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
           {/* Technical Details */}
           {(clientDetails?.earthingArrangements || clientDetails?.supplyCharacteristics) && (
             <div className="py-4">
-              <h5 className="text-sm font-medium text-white mb-2">Technical Specifications</h5>
+              <h5 className="text-sm font-medium text-foreground mb-2">Technical Specifications</h5>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                 {clientDetails.earthingArrangements && (
                   <div>
                     <span className="text-muted-foreground">Earthing: </span>
-                    <span className="text-white">{clientDetails.earthingArrangements}</span>
+                    <span className="text-foreground">{clientDetails.earthingArrangements}</span>
                   </div>
                 )}
                 {clientDetails.supplyCharacteristics && (
                   <div>
                     <span className="text-muted-foreground">Supply: </span>
-                    <span className="text-white">{clientDetails.supplyCharacteristics}</span>
+                    <span className="text-foreground">{clientDetails.supplyCharacteristics}</span>
                   </div>
                 )}
               </div>

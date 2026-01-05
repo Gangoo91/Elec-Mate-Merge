@@ -433,7 +433,7 @@ export const InstallationResults = ({
           <div className="relative z-10">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-3">
               <div className="p-3 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg">
-                <Wrench className="h-8 w-8 text-white" />
+                <Wrench className="h-8 w-8 text-foreground" />
               </div>
               <div className="flex-1 w-full text-center sm:text-left">
                 <h2 className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 mb-2 leading-tight">

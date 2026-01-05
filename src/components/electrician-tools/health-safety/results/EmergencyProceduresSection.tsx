@@ -57,7 +57,7 @@ export const EmergencyProceduresSection = ({
               key={idx}
               className="flex flex-col items-center gap-3 p-4 bg-white/50 dark:bg-elec-card/50 rounded-lg border border-red-500/20 hover:border-red-500/40 transition-all relative sm:flex-row sm:items-start"
             >
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-orange-500 text-white flex items-center justify-center font-bold text-sm shadow-lg">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-orange-500 text-foreground flex items-center justify-center font-bold text-sm shadow-lg">
                 {idx + 1}
               </div>
               

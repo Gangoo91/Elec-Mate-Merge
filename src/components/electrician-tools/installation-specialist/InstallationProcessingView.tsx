@@ -142,7 +142,7 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
           <div className="flex items-start mb-4">
             <div className="flex items-center gap-3">
               <div className={`p-3 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 ${progressValue < 100 ? 'animate-pulse' : ''}`}>
-                <Wrench className="h-6 w-6 text-white" />
+                <Wrench className="h-6 w-6 text-foreground" />
               </div>
               <div>
                 <h3 className="font-semibold text-lg">Installation Specialist</h3>

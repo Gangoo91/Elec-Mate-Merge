@@ -50,7 +50,7 @@ const FeaturedDealsCarousel = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold text-white">Featured Deals</h2>
+        <h2 className="text-2xl font-semibold text-foreground">Featured Deals</h2>
         <Button variant="outline" size="sm" className="border-elec-yellow/30">
           View All Deals
         </Button>
@@ -73,7 +73,7 @@ const FeaturedDealsCarousel = () => {
                   {deal.timeLeft}
                 </div>
               </div>
-              <CardTitle className="text-lg text-white leading-tight">
+              <CardTitle className="text-lg text-foreground leading-tight">
                 {deal.title}
               </CardTitle>
               <p className="text-sm text-elec-yellow">{deal.supplier}</p>

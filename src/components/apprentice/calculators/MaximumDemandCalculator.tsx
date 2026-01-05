@@ -363,10 +363,33 @@ const MaximumDemandCalculator = () => {
                     </p>
                   </div>
 
-                  <div className="text-xs text-muted-foreground bg-info/5 p-3 rounded">
-                    <div className="font-medium text-info mb-1">Calculation Method:</div>
-                    <div>Maximum Demand = Σ(Load × Diversity Factor)</div>
-                    <div>Diversity accounts for non-simultaneous operation</div>
+                  {/* How It Worked Out */}
+                  <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 space-y-3">
+                    <div className="flex items-center gap-2 text-purple-200 font-semibold">
+                      <Calculator className="h-4 w-4 text-purple-400" />
+                      How It Worked Out
+                    </div>
+                    <div className="text-sm font-mono text-purple-300 space-y-2">
+                      <div className="text-xs text-purple-400">Step 1: Calculate each load contribution</div>
+                      {loads.filter(l => l.power > 0).map((load, idx) => (
+                        <div key={load.id} className="pl-2 border-l-2 border-purple-500/30">
+                          {load.name}: {load.power}kW × {load.diversityFactor} = <span className="text-purple-200 font-bold">{(load.power * load.diversityFactor).toFixed(2)}kW</span>
+                        </div>
+                      ))}
+
+                      <div className="pt-2 border-t border-purple-500/20">
+                        <div className="text-xs text-purple-400">Step 2: Sum all contributions</div>
+                        <div>MD = {loads.filter(l => l.power > 0).map(l => `${(l.power * l.diversityFactor).toFixed(2)}`).join(' + ')}</div>
+                        <div>MD = <span className="text-purple-200 font-bold">{result.maximumDemand}kW</span></div>
+                      </div>
+
+                      <div className="pt-2 border-t border-purple-500/20">
+                        <div className="text-xs text-purple-400">Step 3: Calculate current (230V single phase)</div>
+                        <div>I = (P × 1000) ÷ V</div>
+                        <div>I = ({result.maximumDemand} × 1000) ÷ 230</div>
+                        <div>I = <span className="text-purple-200 font-bold">{((result.maximumDemand * 1000) / 230).toFixed(1)}A</span></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ) : (

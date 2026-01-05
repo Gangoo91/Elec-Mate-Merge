@@ -501,10 +501,10 @@ ${analysisResult.recommendations.map(rec =>
 
   const getEicrCodeColor = (code: string) => {
     switch (code) {
-      case 'C1': return 'bg-red-500 text-white border border-red-500';
-      case 'C2': return 'bg-amber-500 text-white border border-amber-500';
-      case 'C3': return 'bg-blue-500 text-white border border-blue-500';
-      case 'FI': return 'bg-slate-500 text-white border border-slate-500';
+      case 'C1': return 'bg-red-500 text-foreground border border-red-500';
+      case 'C2': return 'bg-amber-500 text-foreground border border-amber-500';
+      case 'C3': return 'bg-blue-500 text-foreground border border-blue-500';
+      case 'FI': return 'bg-slate-500 text-foreground border border-slate-500';
       default: return 'bg-muted text-muted-foreground';
     }
   };
@@ -565,7 +565,7 @@ ${analysisResult.recommendations.map(rec =>
           <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500/30 to-blue-600/30 rounded-2xl border border-blue-400/30">
             <Eye className="h-6 w-6 sm:h-8 sm:w-8 text-blue-400" />
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-white">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-foreground">
             Visual Fault Analyser
           </h1>
           <p className="text-gray-300 text-sm sm:text-base lg:text-lg max-w-4xl mx-auto">
@@ -575,11 +575,11 @@ ${analysisResult.recommendations.map(rec =>
         </div>
 
         {/* Analysis Presets */}
-        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 max-w-5xl mx-auto">
+        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-border max-w-5xl mx-auto">
           <CardHeader className="p-4 sm:p-6">
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
               <Settings className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
-              <CardTitle className="text-lg sm:text-xl text-white">Analysis Presets</CardTitle>
+              <CardTitle className="text-lg sm:text-xl text-foreground">Analysis Presets</CardTitle>
             </div>
             <CardDescription className="text-gray-300 text-sm sm:text-base">
               Choose a preset optimised for your specific inspection type:
@@ -597,8 +597,8 @@ ${analysisResult.recommendations.map(rec =>
                         variant={selectedPreset.name === preset.name ? "default" : "outline"}
                         className={`h-auto p-4 flex flex-col items-start gap-2 ${
                           selectedPreset.name === preset.name 
-                            ? 'bg-blue-600 text-white border-blue-500' 
-                            : 'border-neutral-600 text-gray-300 hover:bg-neutral-700/50'
+                            ? 'bg-blue-600 text-foreground border-blue-500' 
+                            : 'border-border text-gray-300 hover:bg-muted/50'
                         }`}
                         onClick={() => {
                           setSelectedPreset(preset);
@@ -624,11 +624,11 @@ ${analysisResult.recommendations.map(rec =>
         </Card>
 
         {/* Main Analysis Interface */}
-        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 max-w-5xl mx-auto">
+        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-border max-w-5xl mx-auto">
           <CardHeader className="p-4 sm:p-6">
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
               <Eye className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
-              <CardTitle className="text-lg sm:text-xl text-white">Visual Analysis</CardTitle>
+              <CardTitle className="text-lg sm:text-xl text-foreground">Visual Analysis</CardTitle>
             </div>
             <CardDescription className="text-gray-300 text-sm sm:text-base">
               Upload images or capture live photos for intelligent fault detection and safety analysis:
@@ -638,7 +638,7 @@ ${analysisResult.recommendations.map(rec =>
           <CardContent className="p-4 sm:p-6 pt-0 space-y-4 sm:space-y-6">
             {/* Image Upload Area */}
             <div 
-              className="border-2 border-dashed border-neutral-600 rounded-lg p-6 sm:p-8 text-center space-y-4 hover:border-blue-400 transition-colors"
+              className="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center space-y-4 hover:border-blue-400 transition-colors"
               onDrop={handleDrop}
               onDragOver={(e) => e.preventDefault()}
             >
@@ -652,7 +652,7 @@ ${analysisResult.recommendations.map(rec =>
                     <TooltipTrigger asChild>
                       <Button
                         variant="outline"
-                        className="border-neutral-600 text-gray-300 hover:bg-neutral-700/50"
+                        className="border-border text-gray-300 hover:bg-muted/50"
                         onClick={() => fileInputRef.current?.click()}
                       >
                         <Upload className="h-4 w-4 mr-2" />
@@ -665,7 +665,7 @@ ${analysisResult.recommendations.map(rec =>
                   </Tooltip>
                   <Button
                     variant="outline"
-                    className="border-neutral-600 text-gray-300 hover:bg-neutral-700/50"
+                    className="border-border text-gray-300 hover:bg-muted/50"
                     onClick={isCameraActive ? stopCamera : startCamera}
                   >
                     <Camera className="h-4 w-4 mr-2" />
@@ -747,12 +747,12 @@ ${analysisResult.recommendations.map(rec =>
             )}
 
             {/* Analysis Settings */}
-            <div className="space-y-4 border border-neutral-600 rounded-lg p-4 bg-neutral-800/30">
-              <h3 className="text-lg font-semibold text-white">Analysis Settings</h3>
+            <div className="space-y-4 border border-border rounded-lg p-4 bg-card/30">
+              <h3 className="text-lg font-semibold text-foreground">Analysis Settings</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-white">
+                  <label className="text-sm font-medium text-foreground">
                     Confidence Threshold: {Math.round(confidenceThreshold[0] * 100)}%
                   </label>
                   <Slider
@@ -769,8 +769,8 @@ ${analysisResult.recommendations.map(rec =>
                 </div>
                 
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-neutral-700/30 border border-neutral-600">
-                    <label className="text-sm font-medium text-white">Background Removal</label>
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border">
+                    <label className="text-sm font-medium text-foreground">Background Removal</label>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Switch
@@ -785,8 +785,8 @@ ${analysisResult.recommendations.map(rec =>
                     </Tooltip>
                   </div>
                   
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-neutral-700/30 border border-neutral-600">
-                    <label className="text-sm font-medium text-white">Bounding Boxes</label>
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border">
+                    <label className="text-sm font-medium text-foreground">Bounding Boxes</label>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Switch
@@ -1044,11 +1044,11 @@ ${analysisResult.recommendations.map(rec =>
 
         {/* Example Queries for New Users */}
         {analysisResult === null && images.length === 0 && (
-          <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 max-w-5xl mx-auto">
+          <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-border max-w-5xl mx-auto">
             <CardHeader className="p-4 sm:p-6">
               <div className="flex items-center gap-2 sm:gap-3">
                 <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400" />
-                <CardTitle className="text-lg sm:text-xl text-white">Common Analysis Types</CardTitle>
+                <CardTitle className="text-lg sm:text-xl text-foreground">Common Analysis Types</CardTitle>
               </div>
               <CardDescription className="text-gray-300">
                 Upload images of these common electrical scenarios for analysis:
@@ -1058,7 +1058,7 @@ ${analysisResult.recommendations.map(rec =>
             <CardContent className="p-4 sm:p-6 pt-0">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 {exampleQueries.map((query, index) => (
-                  <div key={index} className="p-3 border border-neutral-600 rounded-lg text-sm text-white hover:bg-neutral-700/50 transition-colors">
+                  <div key={index} className="p-3 border border-border rounded-lg text-sm text-foreground hover:bg-muted/50 transition-colors">
                     {query}
                   </div>
                 ))}

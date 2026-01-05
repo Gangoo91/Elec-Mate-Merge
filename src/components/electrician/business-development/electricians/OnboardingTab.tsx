@@ -212,7 +212,7 @@ const OnboardingTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -230,7 +230,7 @@ const OnboardingTab = () => {
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{framework.area}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{framework.area}</h4>
                       <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {framework.timeline}
                       </Badge>
@@ -280,7 +280,7 @@ const OnboardingTab = () => {
               {onboardingTimeline.map((phase, index) => (
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex items-center justify-between">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{phase.title}</h4>
+                    <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{phase.title}</h4>
                     <Badge variant="outline" className={`text-purple-300 border-purple-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                       {phase.phase}
                     </Badge>
@@ -307,7 +307,7 @@ const OnboardingTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="border border-green-500/20 rounded-lg p-3 space-y-3">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Required Documents</h4>
+                  <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>Required Documents</h4>
                   <ul className="space-y-1">
                     {essentialDocuments.map((doc, index) => (
                       <li key={index} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-1`}>
@@ -319,7 +319,7 @@ const OnboardingTab = () => {
                 </div>
 
                 <div className="border border-orange-500/20 rounded-lg p-3 space-y-3">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Training Areas</h4>
+                  <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>Training Areas</h4>
                   <div className="space-y-2">
                     {trainingAreas.map((area, index) => (
                       <div key={index} className="space-y-1">
@@ -377,7 +377,7 @@ const OnboardingTab = () => {
                   onClick={() => window.open('https://www.gov.uk/employment-contracts-and-conditions', '_blank')}
                 >
                   <FileText className="h-4 w-4 mr-3 text-green-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>Employment Contract Templates</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>Employment Contract Templates</div>
                 </Button>
 
                 <Button 
@@ -386,7 +386,7 @@ const OnboardingTab = () => {
                   onClick={() => window.open('https://www.hse.gov.uk/construction/safetytopics/electrical.htm', '_blank')}
                 >
                   <Shield className="h-4 w-4 mr-3 text-blue-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>HSE Electrical Safety</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>HSE Electrical Safety</div>
                 </Button>
 
                 <Button 
@@ -395,7 +395,7 @@ const OnboardingTab = () => {
                   onClick={() => window.open('https://www.cipd.co.uk/knowledge/fundamentals/people/induction', '_blank')}
                 >
                   <UserPlus className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>CIPD Induction Guide</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>CIPD Induction Guide</div>
                 </Button>
               </div>
 

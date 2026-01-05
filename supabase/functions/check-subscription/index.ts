@@ -105,27 +105,55 @@ serve(async (req) => {
     if (hasActiveSub) {
       const subscription = subscriptions.data[0];
       logger.info("Active subscription found", { subscriptionId: subscription.id });
-      
-      // Determine subscription tier from price
+
+      // Determine subscription tier from price ID
       const priceId = subscription.items.data[0].price.id;
-      const price = await withRetry(
-        () => withTimeout(
-          stripe.prices.retrieve(priceId),
-          Timeouts.STANDARD,
-          'Stripe price retrieval'
-        ),
-        RetryPresets.STANDARD
-      );
-      const amount = price.unit_amount || 0;
-      
-      if (amount <= 399) {
-        subscriptionTier = "Apprentice";
-      } else if (amount <= 599) {
-        subscriptionTier = "Electrician";
-      } else {
+
+      // Map Stripe price IDs to subscription tiers
+      // Desktop Price: £6.99/month or £69.99/year
+      // Employer: £29.99/month or £299.99/year
+      const desktopPriceIds = [
+        "price_1RhtdT2RKw5t5RAmv6b2xE6p", // Desktop Monthly £6.99
+        "price_1Rhtgl2RKw5t5RAmkQVKVnKn", // Desktop Yearly £69.99
+      ];
+      const employerPriceIds = [
+        "price_1SlyAT2RKw5t5RAmUmTRGimH", // Employer Monthly £29.99
+        "price_1SlyB82RKw5t5RAmN447YJUW", // Employer Yearly £299.99
+      ];
+
+      if (desktopPriceIds.includes(priceId)) {
+        subscriptionTier = "Desktop Price";
+      } else if (employerPriceIds.includes(priceId)) {
         subscriptionTier = "Employer";
+      } else {
+        // Fallback: check price amount for unknown price IDs
+        const price = await withRetry(
+          () => withTimeout(
+            stripe.prices.retrieve(priceId),
+            Timeouts.STANDARD,
+            'Stripe price retrieval'
+          ),
+          RetryPresets.STANDARD
+        );
+        const amount = price.unit_amount || 0;
+
+        // £6.99 = 699, £29.99 = 2999, £69.99 = 6999, £299.99 = 29999
+        if (amount <= 1000) {
+          subscriptionTier = "Desktop Price"; // Up to ~£10/month
+        } else if (amount <= 10000) {
+          // Could be yearly desktop (6999) or monthly employer (2999)
+          // Check if it's a yearly plan by looking at the interval
+          const interval = price.recurring?.interval;
+          if (interval === 'year' && amount <= 8000) {
+            subscriptionTier = "Desktop Price"; // Yearly desktop
+          } else {
+            subscriptionTier = "Employer";
+          }
+        } else {
+          subscriptionTier = "Employer"; // Yearly employer or higher
+        }
       }
-      logger.info("Determined subscription tier", { priceId, amount, subscriptionTier });
+      logger.info("Determined subscription tier", { priceId, subscriptionTier });
       
       // Update profile in database
       try {

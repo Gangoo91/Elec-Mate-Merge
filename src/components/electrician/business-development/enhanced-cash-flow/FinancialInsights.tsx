@@ -204,7 +204,7 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
       {/* Business Insights & Alerts */}
       <Card className="border-elec-yellow/20 bg-elec-card">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-elec-yellow" />
             Business Insights & Recommendations
           </CardTitle>
@@ -241,7 +241,7 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
       {/* Growth Opportunities */}
       <Card className="border-elec-yellow/20 bg-elec-card">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
             Growth Opportunities
           </CardTitle>

@@ -209,7 +209,7 @@ const AssessmentProgressTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className="text-xs font-medium text-white">{metric.metric}</div>
+              <div className="text-xs font-medium text-foreground">{metric.metric}</div>
               <div className="text-xs text-muted-foreground">{metric.data}</div>
             </div>
           </Card>
@@ -227,7 +227,7 @@ const AssessmentProgressTab = () => {
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-white text-sm">{phase.phase}</h4>
+                      <h4 className="font-medium text-foreground text-sm">{phase.phase}</h4>
                       <Badge variant="outline" className="text-blue-300 border-blue-400/30 text-xs">
                         {phase.timing}
                       </Badge>
@@ -282,7 +282,7 @@ const AssessmentProgressTab = () => {
                   {category.tools.map((tool, toolIndex) => (
                     <div key={toolIndex} className="border border-purple-500/20 rounded-lg p-3 space-y-2">
                       <div className="flex items-center justify-between">
-                        <h5 className="font-medium text-white text-sm">{tool.name}</h5>
+                        <h5 className="font-medium text-foreground text-sm">{tool.name}</h5>
                         <Badge variant="outline" className="text-purple-300 border-purple-400/30 text-xs">
                           {tool.cost}
                         </Badge>
@@ -319,7 +319,7 @@ const AssessmentProgressTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {collegePerformance.map((indicator, index) => (
                 <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
-                  <h4 className="font-medium text-white text-sm">{indicator.indicator}</h4>
+                  <h4 className="font-medium text-foreground text-sm">{indicator.indicator}</h4>
                   
                   <div>
                     <h5 className="font-medium text-green-300 mb-2 text-xs">Key Metrics to Monitor</h5>
@@ -371,7 +371,7 @@ const AssessmentProgressTab = () => {
                 <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex items-center gap-2">
                     <AlertTriangle className="h-4 w-4 text-orange-400" />
-                    <h4 className="font-medium text-white text-sm">{strategy.trigger}</h4>
+                    <h4 className="font-medium text-foreground text-sm">{strategy.trigger}</h4>
                   </div>
                   
                   <div>
@@ -420,7 +420,7 @@ const AssessmentProgressTab = () => {
                 >
                   <FileText className="h-4 w-4 mr-3 text-blue-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
-                    <div className="text-sm text-white truncate">Institute for Apprenticeships</div>
+                    <div className="text-sm text-foreground truncate">Institute for Apprenticeships</div>
                     <div className="text-xs text-muted-foreground break-words">Official standards and EPA guidance</div>
                   </div>
                 </Button>
@@ -432,7 +432,7 @@ const AssessmentProgressTab = () => {
                 >
                   <Shield className="h-4 w-4 mr-3 text-green-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
-                    <div className="text-sm text-white truncate">CITB Apprenticeship Hub</div>
+                    <div className="text-sm text-foreground truncate">CITB Apprenticeship Hub</div>
                     <div className="text-xs text-muted-foreground break-words">Industry-specific guidance and support</div>
                   </div>
                 </Button>
@@ -444,7 +444,7 @@ const AssessmentProgressTab = () => {
                 >
                   <Brain className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
-                    <div className="text-sm text-white truncate">Apprenticeships.gov.uk</div>
+                    <div className="text-sm text-foreground truncate">Apprenticeships.gov.uk</div>
                     <div className="text-xs text-muted-foreground break-words">Government support and funding information</div>
                   </div>
                 </Button>

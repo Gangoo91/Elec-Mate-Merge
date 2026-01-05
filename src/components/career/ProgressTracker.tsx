@@ -97,7 +97,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
 
         {/* Milestones */}
         <div className="space-y-3">
-          <h4 className="font-medium text-white">Milestones</h4>
+          <h4 className="font-medium text-foreground">Milestones</h4>
           <div className="space-y-2">
             {milestones.map((milestone, index) => {
               const isCompleted = progressData?.milestones_completed?.includes(milestone) || false;
@@ -112,7 +112,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
                   ) : (
                     <Circle className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                   )}
-                  <span className={`text-sm ${isCompleted ? 'text-green-300 line-through' : 'text-white'}`}>
+                  <span className={`text-sm ${isCompleted ? 'text-green-300 line-through' : 'text-foreground'}`}>
                     {milestone}
                   </span>
                 </div>

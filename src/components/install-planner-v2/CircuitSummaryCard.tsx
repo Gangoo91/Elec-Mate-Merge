@@ -39,7 +39,7 @@ export const CircuitSummaryCard = ({
         <div className="flex items-center justify-between">
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-foreground truncate">{circuit.name}</h3>
-            <p className="text-sm text-white/70 mt-1">
+            <p className="text-sm text-foreground/70 mt-1">
               {circuit.totalLoad ? `${circuit.totalLoad}W` : 'Power TBC'} • 
               {circuit.cableSize ? ` ${circuit.cableSize}mm²` : ' Cable TBC'} • 
               {circuit.cableLength ? ` ${circuit.cableLength}m` : ' Length TBC'}
@@ -54,11 +54,11 @@ export const CircuitSummaryCard = ({
         
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div className="p-2 rounded bg-elec-dark/50 border border-elec-yellow/10">
-            <div className="text-white/60">Voltage</div>
+            <div className="text-foreground/60">Voltage</div>
             <div className="font-semibold text-foreground">{circuit.voltage || 230}V {circuit.phases === 'three' ? '3φ' : '1φ'}</div>
           </div>
           <div className="p-2 rounded bg-elec-dark/50 border border-elec-yellow/10">
-            <div className="text-white/60">Type</div>
+            <div className="text-foreground/60">Type</div>
             <div className="font-semibold text-foreground capitalize">{circuit.loadType || 'General'}</div>
           </div>
         </div>

@@ -151,7 +151,7 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
         <div className="flex items-center gap-2">
           {config.icon}
           <div>
-            <CardTitle className="text-sm text-white">{config.title}</CardTitle>
+            <CardTitle className="text-sm text-foreground">{config.title}</CardTitle>
             <p className="text-xs text-gray-400">{config.description}</p>
           </div>
         </div>
@@ -164,7 +164,7 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               placeholder={config.placeholder}
-              className="bg-elec-dark border-elec-yellow/20 text-white text-sm min-h-20"
+              className="bg-elec-dark border-elec-yellow/20 text-foreground text-sm min-h-20"
             />
             
             <Button
@@ -208,7 +208,7 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
                   <Copy className="h-3 w-3" />
                 </Button>
               </div>
-              <p className="text-white text-sm whitespace-pre-wrap">
+              <p className="text-foreground text-sm whitespace-pre-wrap">
                 {generatedContent}
               </p>
             </div>
@@ -217,7 +217,7 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
               <Button
                 onClick={handleAccept}
                 size="sm"
-                className="bg-green-600 hover:bg-green-700 text-white flex-1"
+                className="bg-green-600 hover:bg-green-700 text-foreground flex-1"
               >
                 <CheckCircle className="h-3 w-3 mr-2" />
                 Apply

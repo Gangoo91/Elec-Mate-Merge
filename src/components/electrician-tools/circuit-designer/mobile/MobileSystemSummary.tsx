@@ -66,10 +66,10 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
           >
             <div className="flex items-center gap-1 mb-1">
               <Zap className="h-3 w-3 text-elec-yellow" />
-              <p className="text-[10px] text-white/60 font-medium uppercase tracking-wide">Connected</p>
+              <p className="text-[10px] text-foreground/60 font-medium uppercase tracking-wide">Connected</p>
             </div>
             <p className="text-xl sm:text-2xl font-bold text-elec-yellow">{connectedLoadKw}</p>
-            <p className="text-[10px] text-white/40">kW Total</p>
+            <p className="text-[10px] text-foreground/40">kW Total</p>
           </motion.div>
           
           {/* Diversified Load */}
@@ -79,7 +79,7 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
           >
             <div className="flex items-center gap-1 mb-1">
               <TrendingDown className="h-3 w-3 text-green-400" />
-              <p className="text-[10px] text-white/60 font-medium uppercase tracking-wide">After Diversity</p>
+              <p className="text-[10px] text-foreground/60 font-medium uppercase tracking-wide">After Diversity</p>
             </div>
             <p className="text-xl sm:text-2xl font-bold text-green-400">{diversifiedLoadKw}</p>
             <p className="text-[10px] text-green-400/60">{diversityPercent}% reduction</p>
@@ -144,11 +144,11 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
             <button 
               className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-elec-dark/30 hover:bg-elec-dark/50 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all touch-manipulation min-h-[44px]"
             >
-              <span className="text-xs text-white font-medium">
+              <span className="text-xs text-foreground font-medium">
                 {isExpanded ? 'Hide' : 'Show'} Details
               </span>
               <ChevronDown 
-                className={`h-4 w-4 text-white/60 transition-transform duration-300 ${
+                className={`h-4 w-4 text-foreground/60 transition-transform duration-300 ${
                   isExpanded ? 'rotate-180' : ''
                 }`}
               />
@@ -201,13 +201,13 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
 
                     {/* Diversity Factor Detail */}
                     <div className="bg-elec-dark/40 rounded-lg p-3 border border-elec-yellow/10">
-                      <p className="text-[10px] text-white/60 uppercase tracking-wide mb-1">
+                      <p className="text-[10px] text-foreground/60 uppercase tracking-wide mb-1">
                         Diversity Factor Applied
                       </p>
                       <p className="text-lg font-bold text-elec-yellow">
                         {diversityFactor.toFixed(2)}
                       </p>
-                      <p className="text-[10px] text-white/40 mt-1">
+                      <p className="text-[10px] text-foreground/40 mt-1">
                         Reduces design current by {diversityPercent}%
                       </p>
                     </div>
@@ -231,7 +231,7 @@ interface StatPillProps {
 
 const StatPill = ({ label, value, className = '' }: StatPillProps) => (
   <div className={`rounded-lg p-2 border ${className}`}>
-    <p className="text-[9px] text-white/60 uppercase tracking-wide truncate">{label}</p>
-    <p className="text-sm font-bold text-white truncate mt-0.5">{value}</p>
+    <p className="text-[9px] text-foreground/60 uppercase tracking-wide truncate">{label}</p>
+    <p className="text-sm font-bold text-foreground truncate mt-0.5">{value}</p>
   </div>
 );

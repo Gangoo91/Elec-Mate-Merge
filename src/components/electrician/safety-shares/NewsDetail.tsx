@@ -103,17 +103,17 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
               <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
                 {article.regulatory_body}
               </Badge>
-              <div className="flex items-center gap-1 text-sm text-white/90">
+              <div className="flex items-center gap-1 text-sm text-foreground/90">
                 <Clock className="h-4 w-4" />
                 <span>{getReadTime(article.content)}</span>
               </div>
             </div>
             
-            <DialogTitle className="text-2xl lg:text-3xl font-bold text-white leading-tight">
+            <DialogTitle className="text-2xl lg:text-3xl font-bold text-foreground leading-tight">
               {article.title}
             </DialogTitle>
             
-            <div className="flex items-center gap-6 text-sm text-white/80">
+            <div className="flex items-center gap-6 text-sm text-foreground/80">
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 <span>{format(new Date(article.date_published), 'dd MMMM yyyy')}</span>
@@ -138,7 +138,7 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
         
         <div className="py-6">
           <div className="prose prose-invert max-w-none">
-            <div className="text-white leading-relaxed whitespace-pre-wrap">
+            <div className="text-foreground leading-relaxed whitespace-pre-wrap">
               {article.content}
             </div>
           </div>
@@ -162,14 +162,14 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
                 variant="ghost"
                 size="sm"
                 onClick={handleShare}
-                className="text-gray-400 hover:text-white"
+                className="text-gray-400 hover:text-foreground"
               >
                 <Share2 className="h-4 w-4 mr-2" />
                 Share
               </Button>
               
               <div className="flex items-center gap-1">
-                <span className="text-sm text-white/90 mr-2">Rate:</span>
+                <span className="text-sm text-foreground/90 mr-2">Rate:</span>
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star
                     key={star}
@@ -184,7 +184,7 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
               </div>
             </div>
             
-            <div className="text-sm text-white/80">
+            <div className="text-sm text-foreground/80">
               Published by {article.source_name}
             </div>
           </div>

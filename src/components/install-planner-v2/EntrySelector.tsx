@@ -64,7 +64,7 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
               <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
                 AI Guided Installation Designer
               </h3>
-              <p className="text-base md:text-lg text-white/70">
+              <p className="text-base md:text-lg text-foreground/70">
                 Chat with our AI to design your installation - just describe what you need and we'll guide you through the process
               </p>
             </div>
@@ -88,7 +88,7 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
                   <type.icon className="h-6 w-6 md:h-8 md:w-8 text-primary" />
                 </div>
                 <h3 className="text-lg md:text-xl font-bold text-foreground mb-1 md:mb-2">{type.title}</h3>
-                <p className="text-sm md:text-base text-white/70">{type.description}</p>
+                <p className="text-sm md:text-base text-foreground/70">{type.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -113,7 +113,7 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
                 </div>
                 <div className="min-w-0">
                   <h4 className="text-sm md:text-base font-semibold text-foreground mb-0.5 md:mb-1">{quick.title}</h4>
-                  <p className="text-xs md:text-sm text-white/70">{quick.description}</p>
+                  <p className="text-xs md:text-sm text-foreground/70">{quick.description}</p>
                 </div>
               </CardContent>
             </Card>

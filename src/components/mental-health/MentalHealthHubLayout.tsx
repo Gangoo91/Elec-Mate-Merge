@@ -101,7 +101,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
                     <CardTitle className="text-sm">{card.title}</CardTitle>
                   </div>
                   {card.urgent && (
-                    <Badge className="bg-red-500 text-white text-xs">Urgent</Badge>
+                    <Badge className="bg-red-500 text-foreground text-xs">Urgent</Badge>
                   )}
                 </div>
               </CardHeader>

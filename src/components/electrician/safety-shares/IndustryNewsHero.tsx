@@ -51,7 +51,7 @@ const IndustryNewsHero = () => {
           <h1 className="text-xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white via-elec-yellow to-white bg-clip-text text-transparent leading-tight">
             Industry News & Updates
           </h1>
-          <p className="text-white/80 max-w-3xl mx-auto text-xs sm:text-lg leading-relaxed px-4">
+          <p className="text-foreground/80 max-w-3xl mx-auto text-xs sm:text-lg leading-relaxed px-4">
             Stay current with the latest regulatory updates, compliance information, and industry developments 
             from leading electrical bodies and professional sources.
           </p>
@@ -59,15 +59,15 @@ const IndustryNewsHero = () => {
 
         {/* Feature highlights */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 max-w-4xl mx-auto">
-          <div className="flex flex-col sm:flex-row items-center gap-2 text-sm text-white/90 bg-white/5 rounded-lg p-3 border border-white/10">
+          <div className="flex flex-col sm:flex-row items-center gap-2 text-sm text-foreground/90 bg-white/5 rounded-lg p-3 border border-white/10">
             <Clock className="h-5 w-5 text-elec-yellow flex-shrink-0" />
             <span className="text-center sm:text-left">Real-time Updates</span>
           </div>
-          <div className="flex flex-col sm:flex-row items-center gap-2 text-sm text-white/90 bg-white/5 rounded-lg p-3 border border-white/10">
+          <div className="flex flex-col sm:flex-row items-center gap-2 text-sm text-foreground/90 bg-white/5 rounded-lg p-3 border border-white/10">
             <Shield className="h-5 w-5 text-green-400 flex-shrink-0" />
             <span className="text-center sm:text-left">BS 7671 Compliant</span>
           </div>
-          <div className="flex flex-col sm:flex-row items-center gap-2 text-sm text-white/90 bg-white/5 rounded-lg p-3 border border-white/10">
+          <div className="flex flex-col sm:flex-row items-center gap-2 text-sm text-foreground/90 bg-white/5 rounded-lg p-3 border border-white/10">
             <Globe className="h-5 w-5 text-blue-400 flex-shrink-0" />
             <span className="text-center sm:text-left">Industry Sources</span>
           </div>

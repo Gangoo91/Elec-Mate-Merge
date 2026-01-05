@@ -57,7 +57,7 @@ const OnJobSafetyCases = () => {
         </TabsContent>
       </Tabs>
 
-      <Card className="border-red-500/50 bg-red-500/10">
+      <Card className="border-red-500/50 bg-card">
         <CardHeader>
           <CardTitle className="text-red-300 flex items-center gap-2">
             <AlertTriangle className="h-5 w-5" />

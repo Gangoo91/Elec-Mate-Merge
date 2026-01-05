@@ -98,7 +98,7 @@ const MaterialsAdminPanel = () => {
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-white">Cache Management</h3>
+            <h3 className="text-sm font-medium text-foreground">Cache Management</h3>
             <div className="flex gap-2">
               <Button
                 onClick={checkCacheStatus}
@@ -132,12 +132,12 @@ const MaterialsAdminPanel = () => {
           </div>
 
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-white">Schedule Info</h3>
+            <h3 className="text-sm font-medium text-foreground">Schedule Info</h3>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="h-4 w-4" />
               <span>Auto-refresh: Every Sunday 2 AM UTC</span>
             </div>
-            <Badge variant="outline" className="text-xs border-elec-yellow/30 text-white">
+            <Badge variant="outline" className="text-xs border-elec-yellow/30 text-foreground">
               Firecrawl 2.0 Enabled
             </Badge>
           </div>

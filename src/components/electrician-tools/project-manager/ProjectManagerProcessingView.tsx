@@ -108,7 +108,7 @@ const ProjectManagerProcessingView = ({ progress, startTime }: ProjectManagerPro
             <div className="flex-shrink-0 mt-0.5">
               {(progress?.stage === 'parsing' || progress?.stage === 'rag' || progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete') ? (
                 <div className="h-5 w-5 rounded-full bg-green-500 flex items-center justify-center animate-scale-in">
-                  <Check className="h-3 w-3 text-white" />
+                  <Check className="h-3 w-3 text-foreground" />
                 </div>
               ) : (
                 <div className="h-5 w-5 rounded-full border-2 border-muted-foreground/40" />
@@ -133,7 +133,7 @@ const ProjectManagerProcessingView = ({ progress, startTime }: ProjectManagerPro
             <div className="flex-shrink-0 mt-0.5">
               {(progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete') ? (
                 <div className="h-5 w-5 rounded-full bg-green-500 flex items-center justify-center animate-scale-in">
-                  <Check className="h-3 w-3 text-white" />
+                  <Check className="h-3 w-3 text-foreground" />
                 </div>
               ) : progress?.stage === 'rag' ? (
                 <div className="h-5 w-5 rounded-full bg-pink-500 flex items-center justify-center animate-pulse">
@@ -162,7 +162,7 @@ const ProjectManagerProcessingView = ({ progress, startTime }: ProjectManagerPro
             <div className="flex-shrink-0 mt-0.5">
               {(progress?.stage === 'validation' || progress?.stage === 'complete') ? (
                 <div className="h-5 w-5 rounded-full bg-green-500 flex items-center justify-center animate-scale-in">
-                  <Check className="h-3 w-3 text-white" />
+                  <Check className="h-3 w-3 text-foreground" />
                 </div>
               ) : progress?.stage === 'ai' ? (
                 <div className="h-5 w-5 rounded-full bg-pink-500 flex items-center justify-center animate-pulse">
@@ -191,7 +191,7 @@ const ProjectManagerProcessingView = ({ progress, startTime }: ProjectManagerPro
             <div className="flex-shrink-0 mt-0.5">
               {progress?.stage === 'complete' ? (
                 <div className="h-5 w-5 rounded-full bg-green-500 flex items-center justify-center animate-scale-in">
-                  <Check className="h-3 w-3 text-white" />
+                  <Check className="h-3 w-3 text-foreground" />
                 </div>
               ) : progress?.stage === 'validation' ? (
                 <div className="h-5 w-5 rounded-full bg-pink-500 flex items-center justify-center animate-pulse">

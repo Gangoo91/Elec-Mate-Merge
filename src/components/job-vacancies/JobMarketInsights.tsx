@@ -93,7 +93,7 @@ const JobMarketInsights: React.FC<JobMarketInsightsProps> = ({ jobCount = 0 }) =
       {/* Market Statistics */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center gap-2 text-white">
+          <CardTitle className="text-lg flex items-center gap-2 text-foreground">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
             Market Overview
           </CardTitle>
@@ -102,15 +102,15 @@ const JobMarketInsights: React.FC<JobMarketInsightsProps> = ({ jobCount = 0 }) =
           <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-3'}`}>
             <div className="text-center p-3 bg-elec-yellow/10 rounded-lg">
               <div className="text-2xl font-bold text-elec-yellow">{jobCount}</div>
-              <div className="text-sm text-white">Available Jobs</div>
+              <div className="text-sm text-foreground">Available Jobs</div>
             </div>
             <div className="text-center p-3 bg-elec-yellow/10 rounded-lg">
               <div className="text-2xl font-bold text-green-400">94%</div>
-              <div className="text-sm text-white">Employment Rate</div>
+              <div className="text-sm text-foreground">Employment Rate</div>
             </div>
             <div className="text-center p-3 bg-elec-yellow/10 rounded-lg">
               <div className="text-2xl font-bold text-blue-400">£32k</div>
-              <div className="text-sm text-white">Average Salary</div>
+              <div className="text-sm text-foreground">Average Salary</div>
             </div>
           </div>
         </CardContent>
@@ -121,7 +121,7 @@ const JobMarketInsights: React.FC<JobMarketInsightsProps> = ({ jobCount = 0 }) =
         {/* Quick Tips */}
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2 text-white">
+            <CardTitle className="text-lg flex items-center gap-2 text-foreground">
               <Lightbulb className="h-5 w-5 text-elec-yellow" />
               Quick Tips
             </CardTitle>
@@ -131,8 +131,8 @@ const JobMarketInsights: React.FC<JobMarketInsightsProps> = ({ jobCount = 0 }) =
               <div key={index} className="flex items-start gap-3 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/10">
                 <tip.icon className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
-                  <div className="font-medium text-white text-sm">{tip.title}</div>
-                  <div className="text-xs text-white/80 mt-1">{tip.description}</div>
+                  <div className="font-medium text-foreground text-sm">{tip.title}</div>
+                  <div className="text-xs text-foreground/80 mt-1">{tip.description}</div>
                 </div>
               </div>
             ))}
@@ -142,7 +142,7 @@ const JobMarketInsights: React.FC<JobMarketInsightsProps> = ({ jobCount = 0 }) =
         {/* Career Development */}
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2 text-white">
+            <CardTitle className="text-lg flex items-center gap-2 text-foreground">
               <BookOpen className="h-5 w-5 text-elec-yellow" />
               Career Development
             </CardTitle>
@@ -152,8 +152,8 @@ const JobMarketInsights: React.FC<JobMarketInsightsProps> = ({ jobCount = 0 }) =
               <div key={index} className="flex items-start gap-3 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/10">
                 <item.icon className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
-                  <div className="font-medium text-white text-sm">{item.title}</div>
-                  <div className="text-xs text-white/80 mt-1">{item.description}</div>
+                  <div className="font-medium text-foreground text-sm">{item.title}</div>
+                  <div className="text-xs text-foreground/80 mt-1">{item.description}</div>
                 </div>
               </div>
             ))}
@@ -164,7 +164,7 @@ const JobMarketInsights: React.FC<JobMarketInsightsProps> = ({ jobCount = 0 }) =
       {/* High Demand Skills */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center gap-2 text-white">
+          <CardTitle className="text-lg flex items-center gap-2 text-foreground">
             <Award className="h-5 w-5 text-elec-yellow" />
             High Demand Skills
           </CardTitle>

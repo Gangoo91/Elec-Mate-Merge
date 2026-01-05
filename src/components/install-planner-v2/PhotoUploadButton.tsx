@@ -122,7 +122,7 @@ export const PhotoUploadButton = ({
           <Upload className="h-4 w-4" />
         </Button>
         {maxPhotos > 1 && (
-          <span className="text-xs text-white/70 flex items-center">
+          <span className="text-xs text-foreground/70 flex items-center">
             {photos.length}/{maxPhotos} photos
           </span>
         )}
@@ -140,11 +140,11 @@ export const PhotoUploadButton = ({
                 className="absolute top-1 right-1 p-1 bg-red-500/90 hover:bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                 aria-label="Remove photo"
               >
-                <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-3 w-3 text-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-              <div className="absolute bottom-1 left-1 bg-black/60 px-2 py-0.5 rounded text-xs text-white">
+              <div className="absolute bottom-1 left-1 bg-black/60 px-2 py-0.5 rounded text-xs text-foreground">
                 #{index + 1}
               </div>
             </div>

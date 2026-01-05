@@ -474,7 +474,7 @@ export const MaintenanceStepCard = ({
                 <Button
                   onClick={handleSave}
                   className={cn(
-                    "bg-green-600 hover:bg-green-700 text-white",
+                    "bg-green-600 hover:bg-green-700 text-foreground",
                     isMobile && "w-full"
                   )}
                 >

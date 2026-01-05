@@ -26,7 +26,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
       "Safety & Health Bodies": "bg-red-500/20 border-red-500/30 text-red-300",
       "Project & Construction Management": "bg-amber-500/20 border-amber-500/30 text-amber-300",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getPopularityColor = (popularity: number) => {
@@ -64,14 +64,14 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
                   target.style.display = 'none';
                   const parent = target.parentElement;
                   if (parent) {
-                    parent.innerHTML = `<span class="text-xs sm:text-sm font-bold text-white">${getInitials(accreditation.accreditationBody)}</span>`;
+                    parent.innerHTML = `<span class="text-xs sm:text-sm font-bold text-foreground">${getInitials(accreditation.accreditationBody)}</span>`;
                     parent.style.backgroundColor = brandInfo.brandColor + '20';
                   }
                 }}
               />
             ) : (
               <span 
-                className="text-sm sm:text-base font-bold text-white"
+                className="text-sm sm:text-base font-bold text-foreground"
                 style={{ backgroundColor: brandInfo.brandColor + '20' }}
               >
                 {getInitials(accreditation.accreditationBody)}
@@ -89,7 +89,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
         {/* Popularity indicator */}
         <div className="absolute bottom-3 right-3 flex items-center gap-1 text-xs">
           <TrendingUp className={`h-3 w-3 ${getPopularityColor(accreditation.popularity)}`} />
-          <span className="text-white/90">{accreditation.popularity}%</span>
+          <span className="text-foreground/90">{accreditation.popularity}%</span>
         </div>
       </div>
 
@@ -97,7 +97,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
       <div className="p-4 space-y-3 flex flex-col h-[calc(100%-8rem)] sm:h-[calc(100%-9rem)]">
         {/* Title and Provider */}
         <div className="space-y-2">
-          <h3 className="font-semibold text-white line-clamp-2 leading-tight text-sm sm:text-base">
+          <h3 className="font-semibold text-foreground line-clamp-2 leading-tight text-sm sm:text-base">
             {accreditation.title}
           </h3>
           <div className="flex items-center gap-2 text-xs text-amber-400">
@@ -107,13 +107,13 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
         </div>
 
         {/* Description */}
-        <p className="text-white/80 line-clamp-2 leading-relaxed text-xs sm:text-sm flex-grow">
+        <p className="text-foreground/80 line-clamp-2 leading-relaxed text-xs sm:text-sm flex-grow">
           {accreditation.description}
         </p>
 
         {/* Meta information grid */}
         <div className="grid grid-cols-2 gap-2 text-xs">
-          <div className="flex items-center gap-1 text-white/70">
+          <div className="flex items-center gap-1 text-foreground/70">
             <Clock className="h-3 w-3" />
             <span className="truncate">{accreditation.duration}</span>
           </div>
@@ -122,7 +122,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
             <span className="truncate">{accreditation.cost}</span>
           </div>
           {accreditation.locations.length > 0 && (
-            <div className="flex items-center gap-1 text-white/70 col-span-2">
+            <div className="flex items-center gap-1 text-foreground/70 col-span-2">
               <MapPin className="h-3 w-3" />
               <span className="truncate">
                 {accreditation.locations.slice(0, 2).join(', ')}
@@ -137,13 +137,13 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
           <div className="space-y-2">
             <div className="flex flex-wrap gap-1">
               {accreditation.benefits.slice(0, 2).map((benefit, idx) => (
-                <div key={idx} className="flex items-center gap-1 text-xs text-white/80">
+                <div key={idx} className="flex items-center gap-1 text-xs text-foreground/80">
                   <Check className="h-3 w-3 text-green-400 flex-shrink-0" />
                   <span className="truncate">{benefit}</span>
                 </div>
               ))}
               {accreditation.benefits.length > 2 && (
-                <span className="text-xs text-white/60">
+                <span className="text-xs text-foreground/60">
                   +{accreditation.benefits.length - 2} more benefits
                 </span>
               )}
@@ -153,7 +153,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
 
         {/* Footer */}
         <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-          <div className="flex items-center gap-2 text-xs text-white/70">
+          <div className="flex items-center gap-2 text-xs text-foreground/70">
             <Calendar className="h-3 w-3" />
             <span className="truncate">{accreditation.renewalPeriod || 'No renewal'}</span>
           </div>

@@ -106,7 +106,7 @@ const PhotoUploadButton = ({
       {/* Photo Gallery */}
       {photos.length > 0 && (
         <div className="mb-4 space-y-2">
-          <div className="text-xs text-white/70 font-medium">
+          <div className="text-xs text-foreground/70 font-medium">
             Uploaded Photos ({photos.length}/{maxPhotos})
           </div>
           <div className="grid grid-cols-3 gap-2">
@@ -119,9 +119,9 @@ const PhotoUploadButton = ({
                   className="absolute top-1 right-1 p-1 bg-red-500/90 hover:bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                   aria-label="Remove photo"
                 >
-                  <X className="h-3 w-3 text-white" />
+                  <X className="h-3 w-3 text-foreground" />
                 </button>
-                <div className="absolute bottom-1 left-1 bg-black/60 px-2 py-0.5 rounded text-xs text-white">
+                <div className="absolute bottom-1 left-1 bg-black/60 px-2 py-0.5 rounded text-xs text-foreground">
                   #{index + 1}
                 </div>
               </div>

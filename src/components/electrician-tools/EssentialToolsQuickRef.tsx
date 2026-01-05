@@ -57,8 +57,8 @@ const EssentialToolsQuickRef = () => {
 
   const getPriorityColor = (priority: string) => {
     return priority === "Critical" 
-      ? "bg-red-600/90 text-white border-red-400" 
-      : "bg-orange-600/90 text-white border-orange-400";
+      ? "bg-red-600/90 text-foreground border-red-400" 
+      : "bg-orange-600/90 text-foreground border-orange-400";
   };
 
   return (
@@ -70,8 +70,8 @@ const EssentialToolsQuickRef = () => {
               <Wrench className="h-6 w-6 text-elec-yellow" />
             </div>
             <div>
-              <CardTitle className="text-white">Must-Have Hand Tools</CardTitle>
-              <p className="text-white/80 text-sm">Essential tools every electrician needs</p>
+              <CardTitle className="text-foreground">Must-Have Hand Tools</CardTitle>
+              <p className="text-foreground/80 text-sm">Essential tools every electrician needs</p>
             </div>
           </div>
           <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
@@ -86,15 +86,15 @@ const EssentialToolsQuickRef = () => {
               <CardContent className="p-4">
                 <div className="space-y-2">
                   <div className="flex items-start justify-between gap-2">
-                    <h4 className="font-semibold text-white leading-tight">{tool.name}</h4>
+                    <h4 className="font-semibold text-foreground leading-tight">{tool.name}</h4>
                     <Badge className={getPriorityColor(tool.priority)}>
                       {tool.priority}
                     </Badge>
                   </div>
                   
-                  <p className="text-sm text-white/80">{tool.purpose}</p>
+                  <p className="text-sm text-foreground/80">{tool.purpose}</p>
                   
-                  <div className="flex items-center gap-2 text-xs text-white/60">
+                  <div className="flex items-center gap-2 text-xs text-foreground/60">
                     <ShieldCheck className="h-3 w-3 text-green-400" />
                     {tool.safety}
                   </div>
@@ -102,12 +102,12 @@ const EssentialToolsQuickRef = () => {
                   <div className="flex items-center justify-between pt-2 border-t border-white/10">
                     <div>
                       <div className="text-elec-yellow font-semibold">{tool.priceRange}</div>
-                      <div className="text-xs text-white/60">{tool.supplier}</div>
+                      <div className="text-xs text-foreground/60">{tool.supplier}</div>
                     </div>
                     <Button 
                       size="sm" 
                       variant="outline"
-                      className="h-8 border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+                      className="h-8 border-elec-yellow/30 hover:bg-elec-yellow/10 text-foreground"
                     >
                       <ExternalLink className="h-3 w-3 mr-1" />
                       View
@@ -123,8 +123,8 @@ const EssentialToolsQuickRef = () => {
           <div className="flex items-start gap-3">
             <ShieldCheck className="h-5 w-5 text-elec-yellow mt-0.5" />
             <div>
-              <h5 className="font-medium text-white mb-1">Safety First</h5>
-              <p className="text-sm text-white/80">
+              <h5 className="font-medium text-foreground mb-1">Safety First</h5>
+              <p className="text-sm text-foreground/80">
                 All tools must be VDE tested and BS7671 compliant for electrical work. 
                 Always use insulated tools when working on live circuits.
               </p>

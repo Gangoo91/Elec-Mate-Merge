@@ -29,6 +29,8 @@ import ElectricalInstallationGuides from "@/pages/apprentice/toolbox/ElectricalI
 import CommercialInstallations from "@/pages/apprentice/toolbox/CommercialInstallations";
 import IndustrialInstallations from "@/pages/apprentice/toolbox/IndustrialInstallations";
 import OutdoorInstallations from "@/pages/apprentice/toolbox/OutdoorInstallations";
+import DomesticInstallations from "@/pages/apprentice/DomesticInstallations";
+import SpecialistInstallations from "@/pages/apprentice/SpecialistInstallations";
 import CommunicationSkills from "@/pages/apprentice/toolbox/CommunicationSkills";
 import StudyTips from "@/pages/apprentice/toolbox/StudyTips";
 import LearningFromMistakes from "@/pages/apprentice/toolbox/LearningFromMistakes";
@@ -36,6 +38,8 @@ import TimeManagement from "@/pages/apprentice/toolbox/TimeManagement";
 import ApprenticeshipExpectations from "@/pages/apprentice/toolbox/ApprenticeshipExpectations";
 import OffJobTrainingGuide from "@/pages/apprentice/toolbox/OffJobTrainingGuide";
 import SiteJargon from "@/pages/apprentice/toolbox/SiteJargon";
+import ApprenticeshipFunding from "@/pages/apprentice/toolbox/ApprenticeshipFunding";
+import EndPointAssessment from "@/pages/apprentice/toolbox/EndPointAssessment";
 import Year1 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year1";
 import Year2 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year2";
 import Year3 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year3";
@@ -69,6 +73,8 @@ const ApprenticeRoutes = () => (
     <Route path="toolbox/study-tips" element={<StudyTips />} />
     <Route path="toolbox/learning-from-mistakes" element={<LearningFromMistakes />} />
     <Route path="toolbox/time-management" element={<TimeManagement />} />
+    <Route path="toolbox/apprenticeship-funding" element={<ApprenticeshipFunding />} />
+    <Route path="toolbox/end-point-assessment" element={<EndPointAssessment />} />
     <Route path="professional-development" element={<ProfessionalDevelopment />} />
     <Route path="toolbox/professional-tool-guide" element={<ProfessionalToolGuide />} />
     <Route path="on-job-tools" element={<OnJobTools />} />
@@ -77,6 +83,8 @@ const ApprenticeRoutes = () => (
     <Route path="on-job-tools/electrical-installation-guides/commercial" element={<CommercialInstallations />} />
     <Route path="on-job-tools/electrical-installation-guides/industrial" element={<IndustrialInstallations />} />
     <Route path="on-job-tools/electrical-installation-guides/outdoor" element={<OutdoorInstallations />} />
+    <Route path="on-job-tools/electrical-installation-guides/domestic" element={<DomesticInstallations />} />
+    <Route path="on-job-tools/electrical-installation-guides/specialist" element={<SpecialistInstallations />} />
     <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
     <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
     <Route path="on-job-tools/safety-cases" element={<OnJobSafetyCases />} />

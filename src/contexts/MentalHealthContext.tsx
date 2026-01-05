@@ -1,10 +1,12 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useMoodData } from '@/hooks/useMentalHealthSync';
 
 interface MoodEntry {
   date: string;
   mood: number;
   notes?: string;
+  factors?: string[];
 }
 
 interface SelfCareReminder {
@@ -19,6 +21,7 @@ interface SelfCareReminder {
 interface MentalHealthContextType {
   moodHistory: MoodEntry[];
   addMoodEntry: (entry: MoodEntry) => void;
+  isLoading: boolean;
   reminders: SelfCareReminder[];
   setReminders: React.Dispatch<React.SetStateAction<SelfCareReminder[]>>;
   dailyCheckIn: boolean;
@@ -44,19 +47,16 @@ interface MentalHealthProviderProps {
 }
 
 export const MentalHealthProvider: React.FC<MentalHealthProviderProps> = ({ children }) => {
-  const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
+  // Use cloud-synced mood data hook
+  const { moodHistory, addMoodEntry, isLoading } = useMoodData();
+
   const [reminders, setReminders] = useState<SelfCareReminder[]>([]);
   const [dailyCheckIn, setDailyCheckIn] = useState(false);
   const [weeklyReflection, setWeeklyReflection] = useState('');
   const [favoriteResources, setFavoriteResources] = useState<string[]>([]);
 
-  // Load data from localStorage on mount
+  // Load other data from localStorage on mount
   useEffect(() => {
-    const storedMoodHistory = localStorage.getItem('elec-mate-mood-history');
-    if (storedMoodHistory) {
-      setMoodHistory(JSON.parse(storedMoodHistory));
-    }
-
     const storedReminders = localStorage.getItem('elec-mate-selfcare-reminders');
     if (storedReminders) {
       setReminders(JSON.parse(storedReminders));
@@ -82,13 +82,7 @@ export const MentalHealthProvider: React.FC<MentalHealthProviderProps> = ({ chil
     }
   }, []);
 
-  // Save data to localStorage when state changes
-  useEffect(() => {
-    if (moodHistory.length > 0) {
-      localStorage.setItem('elec-mate-mood-history', JSON.stringify(moodHistory));
-    }
-  }, [moodHistory]);
-
+  // Save reminders to localStorage
   useEffect(() => {
     if (reminders.length > 0) {
       localStorage.setItem('elec-mate-selfcare-reminders', JSON.stringify(reminders));
@@ -108,17 +102,8 @@ export const MentalHealthProvider: React.FC<MentalHealthProviderProps> = ({ chil
     localStorage.setItem('elec-mate-favorite-resources', JSON.stringify(favoriteResources));
   }, [favoriteResources]);
 
-  const addMoodEntry = (entry: MoodEntry) => {
-    setMoodHistory(prev => {
-      const updated = [...prev.filter(h => h.date !== entry.date), entry]
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-        .slice(0, 30); // Keep last 30 days
-      return updated;
-    });
-  };
-
   const toggleFavoriteResource = (resourceId: string) => {
-    setFavoriteResources(prev => 
+    setFavoriteResources(prev =>
       prev.includes(resourceId)
         ? prev.filter(id => id !== resourceId)
         : [...prev, resourceId]
@@ -128,6 +113,7 @@ export const MentalHealthProvider: React.FC<MentalHealthProviderProps> = ({ chil
   const value: MentalHealthContextType = {
     moodHistory,
     addMoodEntry,
+    isLoading,
     reminders,
     setReminders,
     dailyCheckIn,

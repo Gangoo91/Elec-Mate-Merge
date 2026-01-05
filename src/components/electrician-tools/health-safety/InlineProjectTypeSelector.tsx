@@ -28,7 +28,7 @@ export const InlineProjectTypeSelector = ({
             className={cn(
               "flex flex-col items-center justify-center gap-2 p-3 rounded-lg border-2 transition-all touch-manipulation h-20 sm:h-24",
               selectedType === value
-                ? "bg-gradient-to-br from-orange-400 to-orange-600 border-orange-400 text-white"
+                ? "bg-gradient-to-br from-orange-400 to-orange-600 border-orange-400 text-foreground"
                 : "border-orange-400/30 hover:border-orange-400/50 hover:bg-orange-400/5"
             )}
             aria-label={label}

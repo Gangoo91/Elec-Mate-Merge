@@ -88,14 +88,14 @@ const MethodStatementSuccess = ({
         <DialogHeader className="text-center pb-4">
           <div className="flex justify-center mb-4">
             <div className="bg-gradient-to-br from-emerald-400 to-emerald-600 p-8 sm:p-6 rounded-full shadow-xl shadow-emerald-500/50 animate-bounce-subtle">
-              <CheckCircle2 className="h-16 w-16 sm:h-12 sm:w-12 text-white" />
+              <CheckCircle2 className="h-16 w-16 sm:h-12 sm:w-12 text-foreground" />
             </div>
           </div>
           
           <DialogTitle className="text-3xl sm:text-3xl lg:text-4xl font-bold text-foreground">
             Method Statement Complete!
           </DialogTitle>
-          <DialogDescription className="text-base sm:text-sm text-white/80 mt-2">
+          <DialogDescription className="text-base sm:text-sm text-foreground/80 mt-2">
             Your comprehensive method statement for <span className="font-semibold text-emerald-400">{projectName}</span> has been generated
           </DialogDescription>
         </DialogHeader>
@@ -104,7 +104,7 @@ const MethodStatementSuccess = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-6">
           <div className="bg-elec-dark/80 backdrop-blur-sm rounded-lg p-5 sm:p-4 text-center border border-emerald-500/30 hover:border-emerald-500/50 transition-all">
             <div className="text-4xl sm:text-3xl font-bold text-emerald-400 mb-1">{stepsCount}</div>
-            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+            <div className="text-base sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
               <Layers className="h-4 w-4" />
               <span>Steps</span>
             </div>
@@ -114,7 +114,7 @@ const MethodStatementSuccess = ({
             <div className="text-4xl sm:text-3xl font-bold text-emerald-400 mb-1 truncate">
               {totalDuration}
             </div>
-            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+            <div className="text-base sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
               <Clock className="h-4 w-4" />
               <span>Duration</span>
             </div>
@@ -122,7 +122,7 @@ const MethodStatementSuccess = ({
 
           <div className="bg-elec-dark/80 backdrop-blur-sm rounded-lg p-5 sm:p-4 text-center border border-orange-500/30 hover:border-orange-500/50 transition-all">
             <div className="text-4xl sm:text-3xl font-bold text-orange-400 mb-1">{hazardsCount}</div>
-            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+            <div className="text-base sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
               <AlertTriangle className="h-4 w-4" />
               <span>Hazards</span>
             </div>
@@ -132,7 +132,7 @@ const MethodStatementSuccess = ({
             <div className={`text-4xl sm:text-3xl font-bold mb-1 ${getRiskColor(riskLevel)} uppercase`}>
               {riskLevel}
             </div>
-            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+            <div className="text-base sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
               <AlertTriangle className="h-4 w-4" />
               <span>Risk</span>
             </div>
@@ -145,7 +145,7 @@ const MethodStatementSuccess = ({
             <Clock className="h-5 w-5" />
             <span className="text-base sm:text-sm font-semibold">Time Saved: ~{timeSaved} minutes</span>
           </div>
-          <p className="text-sm sm:text-xs text-white/80 mt-1 text-center">
+          <p className="text-sm sm:text-xs text-foreground/80 mt-1 text-center">
             Compared to manual method statement creation
           </p>
         </div>
@@ -156,14 +156,14 @@ const MethodStatementSuccess = ({
               onViewResults();
               onOpenChange(false);
             }}
-            className="w-full bg-gradient-to-r from-emerald-400 to-emerald-600 hover:from-emerald-500 hover:to-emerald-700 text-white h-12 touch-manipulation text-base shadow-lg shadow-emerald-500/20"
+            className="w-full bg-gradient-to-r from-emerald-400 to-emerald-600 hover:from-emerald-500 hover:to-emerald-700 text-foreground h-12 touch-manipulation text-base shadow-lg shadow-emerald-500/20"
           >
             <FileText className="mr-2 h-4 w-4" />
             View Method Statement
           </Button>
         </DialogFooter>
 
-        <p className="text-sm sm:text-xs text-white/70 text-center mt-2">
+        <p className="text-sm sm:text-xs text-foreground/70 text-center mt-2">
           Generated in {generationTime}s • BS 7671:2018+A3:2024 Compliant
         </p>
       </DialogContent>

@@ -169,30 +169,30 @@ const DetailedBreakdown = ({
       <CardContent className="space-y-6">
         {/* Calculation Formula */}
         <div className="p-4 bg-indigo-500/10 rounded-lg border border-indigo-500/20">
-          <h4 className="font-medium text-white mb-2 flex items-center gap-2">
+          <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
             <PoundSterling className="h-4 w-4" />
             Calculation Method
           </h4>
           <div className="text-sm text-muted-foreground space-y-1">
-            <p><strong className="text-white">Base Salary</strong> (experience-based)</p>
-            <p><strong className="text-white">×</strong> Location multiplier</p>
-            <p><strong className="text-white">×</strong> Qualification bonus</p>
-            <p><strong className="text-white">×</strong> Company size factor</p>
-            <p><strong className="text-white">×</strong> Contract type adjustment</p>
-            <p><strong className="text-white">+</strong> Specialist skill premiums</p>
+            <p><strong className="text-foreground">Base Salary</strong> (experience-based)</p>
+            <p><strong className="text-foreground">×</strong> Location multiplier</p>
+            <p><strong className="text-foreground">×</strong> Qualification bonus</p>
+            <p><strong className="text-foreground">×</strong> Company size factor</p>
+            <p><strong className="text-foreground">×</strong> Contract type adjustment</p>
+            <p><strong className="text-foreground">+</strong> Specialist skill premiums</p>
           </div>
         </div>
 
         {/* Breakdown Components */}
         <div className="space-y-4">
-          <h4 className="font-medium text-white">Calculation Factors</h4>
+          <h4 className="font-medium text-foreground">Calculation Factors</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {breakdownComponents.map((component, index) => (
               <div key={index} className="p-3 bg-white/5 rounded-lg border border-white/10">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     {component.icon}
-                    <span className="text-sm font-medium text-white">{component.factor}</span>
+                    <span className="text-sm font-medium text-foreground">{component.factor}</span>
                   </div>
                   <Badge className={`text-xs ${
                     component.multiplier > 1.0 || component.value > 0
@@ -218,7 +218,7 @@ const DetailedBreakdown = ({
         {/* Final Calculation */}
         <div className="p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg border border-green-500/20">
           <div className="flex items-center justify-between mb-3">
-            <h4 className="font-medium text-white flex items-center gap-2">
+            <h4 className="font-medium text-foreground flex items-center gap-2">
               <TrendingUp className="h-4 w-4" />
               Final Calculation Result
             </h4>
@@ -243,13 +243,13 @@ const DetailedBreakdown = ({
           </div>
 
           <div className="text-xs text-muted-foreground">
-            <p><strong className="text-white">Market Position:</strong> {
+            <p><strong className="text-foreground">Market Position:</strong> {
               salaryCalculation.min > 50000 ? "Senior/Specialist level" :
               salaryCalculation.min > 35000 ? "Experienced professional" :
               salaryCalculation.min > 25000 ? "Qualified electrician" :
               "Entry/apprentice level"
             }</p>
-            <p><strong className="text-white">Recommendation:</strong> {
+            <p><strong className="text-foreground">Recommendation:</strong> {
               salaryCalculation.confidence > 80 ? "High confidence - use for negotiations" :
               salaryCalculation.confidence > 60 ? "Good estimate - add more details for accuracy" :
               "Rough estimate - provide more information for better accuracy"

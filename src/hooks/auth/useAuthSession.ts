@@ -18,35 +18,26 @@ export function useAuthSession() {
         .select('*')
         .eq('id', userId)
         .single();
-        
+
       if (error) {
-        console.error('Error fetching profile:', error);
-        // For testing/demo purposes only - create a mock profile with admin role
-        // In production, this would come from your database
-        const mockProfile: ProfileType = {
-          id: userId,
-          username: 'admin_user',
-          full_name: 'Admin User',
-          avatar_url: '',
-          role: 'admin', // Set role to admin for testing
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          bio: '',
-          location: '',
-          website: '',
-          subscribed: true
-        };
-        
-        setProfile(mockProfile);
-        return mockProfile;
-      } else if (data) {
+        // Profile not found or database error - set to null
+        // User will need to complete profile setup or contact support
+        console.error('Error fetching profile:', error.message);
+        setProfile(null);
+        return null;
+      }
+
+      if (data) {
         setProfile(data);
         return data;
       }
+
+      return null;
     } catch (error) {
       console.error('Error in fetchProfile:', error);
+      setProfile(null);
+      return null;
     }
-    return null;
   };
 
   // Initial session check and listener setup
@@ -55,8 +46,7 @@ export function useAuthSession() {
     
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, currentSession) => {
-        console.log('Auth state changed:', event, currentSession?.user?.email);
+      async (_event, currentSession) => {
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
@@ -73,7 +63,6 @@ export function useAuthSession() {
     
     // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
-      console.log('Initial session check:', currentSession?.user?.email);
       setSession(currentSession);
       setUser(currentSession?.user ?? null);
       

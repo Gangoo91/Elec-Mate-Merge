@@ -196,7 +196,7 @@ const ComplianceChecker = () => {
         {complianceCategories.map((category, categoryIndex) => (
           <div key={categoryIndex}>
             <div className="flex items-center justify-between mb-3 p-3 bg-elec-dark/30 rounded-lg">
-              <h4 className="font-semibold text-white">{category.category}</h4>
+              <h4 className="font-semibold text-foreground">{category.category}</h4>
               <Badge 
                 variant="outline" 
                 className={`${
@@ -223,7 +223,7 @@ const ComplianceChecker = () => {
                   </div>
                   
                   {/* Main text centered */}
-                  <label htmlFor={item.id} className="block text-white font-medium cursor-pointer mb-4">
+                  <label htmlFor={item.id} className="block text-foreground font-medium cursor-pointer mb-4">
                     {item.text}
                   </label>
                   

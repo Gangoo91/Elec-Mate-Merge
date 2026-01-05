@@ -106,7 +106,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
             <div className="relative">
               <div className="absolute inset-0 bg-green-500/20 rounded-full blur-xl animate-pulse" />
               <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center animate-bounce-in shadow-lg">
-                <CheckCircle2 className="h-10 w-10 sm:h-12 sm:w-12 text-white" />
+                <CheckCircle2 className="h-10 w-10 sm:h-12 sm:w-12 text-foreground" />
               </div>
             </div>
           </div>

@@ -60,7 +60,7 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
       "Electrical Components": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
       "Tools": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getStockStatusColor = (status: string) => {
@@ -72,7 +72,7 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
       case 'out of stock':
         return 'text-red-300';
       default:
-        return 'text-white/80';
+        return 'text-foreground/80';
     }
   };
 
@@ -103,10 +103,10 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
     <div className={cn("space-y-4", className)}>
       {/* Section Header */}
       <div className="space-y-1">
-        <h2 className="text-xl sm:text-2xl font-bold text-white">
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground">
           Deal of the Day - Top Picks
         </h2>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-foreground/80">
           Featured tool deals and professional recommendations
         </p>
       </div>
@@ -163,7 +163,7 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
                   {/* Content */}
                   <div className="p-4 sm:p-5 space-y-3 flex flex-col h-[calc(100%-10rem)] sm:h-[calc(100%-12rem)]">
                     {/* Meta Info */}
-                    <div className="flex items-center justify-between text-xs text-white/80">
+                    <div className="flex items-center justify-between text-xs text-foreground/80">
                       <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1">
                           <DollarSign className="h-3 w-3" />
@@ -182,7 +182,7 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-semibold text-white line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
+                    <h3 className="font-semibold text-foreground line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
                       {tool.name}
                     </h3>
 
@@ -190,14 +190,14 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
                     <div className="space-y-1 flex-grow">
                       <div className="flex items-center gap-2">
                         {tool.salePrice && (
-                          <span className="text-white/60 line-through text-xs">{tool.price}</span>
+                          <span className="text-foreground/60 line-through text-xs">{tool.price}</span>
                         )}
                         <span className="text-elec-yellow font-medium text-sm">
                           {tool.salePrice || tool.price}
                         </span>
                       </div>
                       {tool.highlights && tool.highlights.length > 0 && (
-                        <p className="text-white/90 text-xs sm:text-sm line-clamp-2 leading-relaxed">
+                        <p className="text-foreground/90 text-xs sm:text-sm line-clamp-2 leading-relaxed">
                           {tool.highlights[0]}
                         </p>
                       )}
@@ -205,7 +205,7 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
 
                     {/* Footer */}
                     <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                      <div className="flex items-center gap-2 text-xs text-white/80">
+                      <div className="flex items-center gap-2 text-xs text-foreground/80">
                         <ShoppingCart className="h-3 w-3" />
                         <span>Order today</span>
                       </div>
@@ -236,7 +236,7 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
       </Carousel>
 
       {/* Mobile scroll hint */}
-      <div className="md:hidden flex items-center justify-center gap-2 text-xs text-white/60">
+      <div className="md:hidden flex items-center justify-center gap-2 text-xs text-foreground/60">
         <ChevronLeft className="h-3 w-3" />
         <span>Swipe to browse more tools</span>
         <ChevronRight className="h-3 w-3" />

@@ -223,7 +223,7 @@ const ReportWizard = () => {
                 <FileText className="h-6 w-6 text-elec-yellow" />
               </div>
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-white">Report Writer</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Report Writer</h1>
               </div>
             </div>
             <p className="text-muted-foreground max-w-2xl mx-auto">

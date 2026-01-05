@@ -50,7 +50,7 @@ const ToolBuyingGuides = () => {
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Guides
           </Button>
-          <h2 className="text-2xl font-semibold text-white">Tool Budget Calculator</h2>
+          <h2 className="text-2xl font-semibold text-foreground">Tool Budget Calculator</h2>
         </div>
         <BudgetCalculator 
           toolCategories={toolCategories}
@@ -64,7 +64,7 @@ const ToolBuyingGuides = () => {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-semibold text-white">Professional Buying Guides</h2>
+        <h2 className="text-2xl font-semibold text-foreground">Professional Buying Guides</h2>
         <p className="text-muted-foreground">
           Expert guidance to help you make informed tool purchasing decisions
         </p>
@@ -84,28 +84,28 @@ const ToolBuyingGuides = () => {
       {/* Additional Resources */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-xl text-white">Why Use Our Buying Guides?</CardTitle>
+          <CardTitle className="text-xl text-foreground">Why Use Our Buying Guides?</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex items-center gap-3">
               <Star className="h-5 w-5 text-amber-400" />
               <div>
-                <p className="font-medium text-white">Expert Reviews</p>
+                <p className="font-medium text-foreground">Expert Reviews</p>
                 <p className="text-sm text-muted-foreground">Tested by professionals</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <Users className="h-5 w-5 text-blue-400" />
               <div>
-                <p className="font-medium text-white">Community Insights</p>
+                <p className="font-medium text-foreground">Community Insights</p>
                 <p className="text-sm text-muted-foreground">Real user experiences</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <Clock className="h-5 w-5 text-green-400" />
               <div>
-                <p className="font-medium text-white">Regular Updates</p>
+                <p className="font-medium text-foreground">Regular Updates</p>
                 <p className="text-sm text-muted-foreground">Latest market trends</p>
               </div>
             </div>

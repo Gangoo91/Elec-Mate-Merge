@@ -22,11 +22,11 @@ export const InputHeroBar = () => {
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
-                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
                     Commissioning Specialist
                   </h1>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80 mt-0.5 hidden sm:block">
+                <p className="text-xs sm:text-sm text-foreground/80 mt-0.5 hidden sm:block">
                   Expert testing procedures for safe, compliant installations
                 </p>
               </div>

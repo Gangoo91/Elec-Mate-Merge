@@ -50,7 +50,7 @@ export const UnifiedResultsCard: React.FC<UnifiedResultsCardProps> = ({
         {circuitName && (
           <div className="flex items-center justify-between border-b border-elec-yellow/20 pb-3">
             <div>
-              <h3 className="font-semibold text-lg text-white">{circuitName}</h3>
+              <h3 className="font-semibold text-lg text-foreground">{circuitName}</h3>
               {circuitIndex !== undefined && (
                 <p className="text-sm text-muted-foreground">Circuit {circuitIndex + 1}</p>
               )}
@@ -69,21 +69,21 @@ export const UnifiedResultsCard: React.FC<UnifiedResultsCardProps> = ({
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-2">
             <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
-              <span className="text-sm text-white/70">Load</span>
+              <span className="text-sm text-foreground/70">Load</span>
               <span className="font-bold text-elec-yellow tabular-nums">{planData.totalLoad}W</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
-              <span className="text-sm text-white/70">Voltage</span>
+              <span className="text-sm text-foreground/70">Voltage</span>
               <span className="font-bold text-elec-yellow tabular-nums">{planData.voltage}V</span>
             </div>
           </div>
           <div className="space-y-2">
             <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
-              <span className="text-sm text-white/70">Length</span>
+              <span className="text-sm text-foreground/70">Length</span>
               <span className="font-bold text-elec-yellow tabular-nums">{planData.cableLength}m</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
-              <span className="text-sm text-white/70">Current</span>
+              <span className="text-sm text-foreground/70">Current</span>
               <span className="font-bold text-elec-yellow tabular-nums">{designCurrent.toFixed(1)}A</span>
             </div>
           </div>
@@ -110,7 +110,7 @@ export const UnifiedResultsCard: React.FC<UnifiedResultsCardProps> = ({
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <Cable className="h-4 w-4 text-elec-yellow" />
-              <h4 className="font-medium text-white">
+              <h4 className="font-medium text-foreground">
                 {isCompliant ? "Recommended Cable" : "Closest Available Option"}
               </h4>
             </div>
@@ -118,21 +118,21 @@ export const UnifiedResultsCard: React.FC<UnifiedResultsCardProps> = ({
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
                 <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
-                  <span className="text-sm text-white/70">Size</span>
-                  <span className="font-bold text-white tabular-nums">{finalRecommendation.size}</span>
+                  <span className="text-sm text-foreground/70">Size</span>
+                  <span className="font-bold text-foreground tabular-nums">{finalRecommendation.size}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
-                  <span className="text-sm text-white/70">Type</span>
-                  <span className="font-bold text-white">{finalRecommendation.type.toUpperCase()}</span>
+                  <span className="text-sm text-foreground/70">Type</span>
+                  <span className="font-bold text-foreground">{finalRecommendation.type.toUpperCase()}</span>
                 </div>
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
-                  <span className="text-sm text-white/70">Capacity</span>
-                  <span className="font-bold text-white tabular-nums">{finalRecommendation.currentCarryingCapacity}A</span>
+                  <span className="text-sm text-foreground/70">Capacity</span>
+                  <span className="font-bold text-foreground tabular-nums">{finalRecommendation.currentCarryingCapacity}A</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
-                  <span className="text-sm text-white/70">V.Drop</span>
+                  <span className="text-sm text-foreground/70">V.Drop</span>
                   <span className={`font-bold tabular-nums ${voltageDropCompliance ? 'text-green-400' : 'text-red-400'}`}>
                     {finalRecommendation.voltageDropPercentage.toFixed(2)}%
                   </span>
@@ -146,13 +146,13 @@ export const UnifiedResultsCard: React.FC<UnifiedResultsCardProps> = ({
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <Shield className="h-4 w-4 text-elec-yellow" />
-            <h4 className="font-medium text-white">BS 7671 Compliance</h4>
+            <h4 className="font-medium text-foreground">BS 7671 Compliance</h4>
           </div>
 
           <div className="space-y-2">
             {/* Current Capacity Check */}
             <div className="flex items-center justify-between py-2 px-3 bg-muted/10 rounded">
-              <span className="text-sm text-white/80">Current Capacity</span>
+              <span className="text-sm text-foreground/80">Current Capacity</span>
               <div className="flex items-center gap-2">
                 {finalRecommendation && finalRecommendation.currentCarryingCapacity >= designCurrent ? 
                   <CheckCircle className="h-4 w-4 text-green-400" /> : 
@@ -166,7 +166,7 @@ export const UnifiedResultsCard: React.FC<UnifiedResultsCardProps> = ({
 
             {/* Voltage Drop Check */}
             <div className="flex items-center justify-between py-2 px-3 bg-muted/10 rounded">
-              <span className="text-sm text-white/80">Voltage Drop ≤ {maxVdPercent}%</span>
+              <span className="text-sm text-foreground/80">Voltage Drop ≤ {maxVdPercent}%</span>
               <div className="flex items-center gap-2">
                 {voltageDropCompliance ? 
                   <CheckCircle className="h-4 w-4 text-green-400" /> : 
@@ -180,7 +180,7 @@ export const UnifiedResultsCard: React.FC<UnifiedResultsCardProps> = ({
 
             {/* Zs Check */}
             <div className="flex items-center justify-between py-2 px-3 bg-muted/10 rounded">
-              <span className="text-sm text-white/80">Earth Loop (Zs)</span>
+              <span className="text-sm text-foreground/80">Earth Loop (Zs)</span>
               <div className="flex items-center gap-2">
                 {zsCompliance ? 
                   <CheckCircle className="h-4 w-4 text-green-400" /> : 

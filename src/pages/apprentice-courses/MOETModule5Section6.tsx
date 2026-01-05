@@ -1,0 +1,87 @@
+import { ArrowLeft, Cable, Globe, Wifi, Shield } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
+import useSEO from "@/hooks/useSEO";
+
+const MOETModule5Section6 = () => {
+  useSEO(
+    "Section 5.6: Networking and Industrial Communication - MOET Module 5",
+    "Fieldbus, industrial Ethernet, wireless IoT and cybersecurity in industrial networks"
+  );
+
+  const subsections = [
+    {
+      number: "5.6.1",
+      title: "Fieldbus and Profibus Systems",
+      description: "Fieldbus protocols, Profibus networks and device integration",
+      icon: Cable,
+      href: "../m-o-e-t-module5-section6-1"
+    },
+    {
+      number: "5.6.2",
+      title: "Industrial Ethernet",
+      description: "Ethernet protocols, network topology and industrial applications",
+      icon: Globe,
+      href: "../m-o-e-t-module5-section6-2"
+    },
+    {
+      number: "5.6.3",
+      title: "Wireless and IoT in Industry",
+      description: "Wireless technologies, IoT devices and Industry 4.0 concepts",
+      icon: Wifi,
+      href: "../m-o-e-t-module5-section6-3"
+    },
+    {
+      number: "5.6.4",
+      title: "Cybersecurity in Industrial Networks",
+      description: "Network security, firewalls and protection strategies",
+      icon: Shield,
+      href: "../m-o-e-t-module5-section6-4"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="border-b border-border/20 bg-card/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+            <Link to="../m-o-e-t-module5">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 5
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="mb-12">
+          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
+            Section 5.6: Networking and Industrial Communication
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl">
+            Fieldbus, industrial Ethernet, wireless IoT and cybersecurity in industrial networks.
+          </p>
+        </div>
+
+        {/* Subsections Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {subsections.map((subsection, index) => (
+            <ModuleCard
+              key={index}
+              number={subsection.number}
+              title={subsection.title}
+              description={subsection.description}
+              icon={subsection.icon}
+              href={subsection.href}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MOETModule5Section6;

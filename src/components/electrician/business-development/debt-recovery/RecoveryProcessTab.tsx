@@ -213,7 +213,7 @@ const RecoveryProcessTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -235,7 +235,7 @@ const RecoveryProcessTab = () => {
                         <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 text-sm font-semibold">
                           {step.step}
                         </div>
-                        <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{step.title}</h4>
+                        <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{step.title}</h4>
                       </div>
                       <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {step.timeframe}
@@ -277,7 +277,7 @@ const RecoveryProcessTab = () => {
               {communicationTemplates.map((template, index) => (
                 <div key={index} className="space-y-3">
                   <div className="flex flex-col gap-2">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{template.stage}</h4>
+                    <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{template.stage}</h4>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>Subject: {template.subject}</p>
                   </div>
 
@@ -303,7 +303,7 @@ const RecoveryProcessTab = () => {
                 <div key={index} className="space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.strategy}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.strategy}</h4>
                       <Badge variant="outline" className={`text-purple-300 border-purple-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {strategy.suitableFor}
                       </Badge>
@@ -343,7 +343,7 @@ const RecoveryProcessTab = () => {
               {negotiationTips.map((tip, index) => (
                 <div key={index} className="space-y-3">
                   <div className="flex flex-col gap-2">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{tip.tip}</h4>
+                    <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{tip.tip}</h4>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{tip.description}</p>
                   </div>
 
@@ -367,7 +367,7 @@ const RecoveryProcessTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {documentationRequirements.map((category, index) => (
                 <div key={index} className="space-y-3">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-amber-500/20 pb-1`}>
+                  <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'} border-b border-amber-500/20 pb-1`}>
                     {category.category}
                   </h4>
                   

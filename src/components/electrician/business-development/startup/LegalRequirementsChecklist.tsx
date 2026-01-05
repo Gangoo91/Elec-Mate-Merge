@@ -197,7 +197,7 @@ const LegalRequirementsChecklist = () => {
         {requirements.map((category, categoryIndex) => (
           <div key={categoryIndex} className="border border-elec-yellow/20 rounded-lg p-4">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="font-semibold text-white">{category.category}</h4>
+              <h4 className="font-semibold text-foreground">{category.category}</h4>
               <Badge className={getPriorityColor(category.priority)}>
                 {category.priority}
               </Badge>
@@ -215,7 +215,7 @@ const LegalRequirementsChecklist = () => {
                     />
                     <div className="flex-1 space-y-2">
                       <div className="flex items-start justify-between">
-                        <label htmlFor={item.id} className="font-medium text-white cursor-pointer">
+                        <label htmlFor={item.id} className="font-medium text-foreground cursor-pointer">
                           {item.task}
                         </label>
                         <div className="flex items-center gap-2 text-xs">
@@ -244,7 +244,7 @@ const LegalRequirementsChecklist = () => {
           </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
-              <h5 className="font-medium text-white mb-2">Critical Deadlines:</h5>
+              <h5 className="font-medium text-foreground mb-2">Critical Deadlines:</h5>
               <ul className="space-y-1 text-blue-200">
                 <li>• Public Liability Insurance: Before any work</li>
                 <li>• HMRC Registration: Within 3 months of starting</li>
@@ -253,7 +253,7 @@ const LegalRequirementsChecklist = () => {
               </ul>
             </div>
             <div>
-              <h5 className="font-medium text-white mb-2">Getting Help:</h5>
+              <h5 className="font-medium text-foreground mb-2">Getting Help:</h5>
               <ul className="space-y-1 text-blue-200">
                 <li>• Business Link: Free government advice</li>
                 <li>• Local Enterprise Partnership</li>

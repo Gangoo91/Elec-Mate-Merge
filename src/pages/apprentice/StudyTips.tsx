@@ -86,9 +86,9 @@ const StudyTips = () => {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Study Tips for Electrical Apprentices</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+      <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4 text-center">Study Tips for Electrical Apprentices</h1>
+        <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
           Proven revision strategies for 18th Edition and Level 3 exams, plus free resources to help you succeed
         </p>
         <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
@@ -202,7 +202,7 @@ const StudyTips = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-green-500/50 bg-green-500/10">
+      <Card className="border-green-500/50 bg-card">
         <CardHeader>
           <CardTitle className="text-green-300">Success Mindset</CardTitle>
         </CardHeader>

@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Button } from "@/components/ui/button";
 import { HardHat, CheckSquare, MapPin, Thermometer, Wind, Sun, Droplets } from "lucide-react";
 import { useState } from "react";
@@ -187,11 +187,14 @@ const SiteConditionTab = () => {
           <CardTitle className="text-white">Environmental Assessment Notes</CardTitle>
         </CardHeader>
         <CardContent>
-          <Textarea
+          <MobileInput
+            label="Environmental Notes"
             value={environmentalNotes}
             onChange={(e) => setEnvironmentalNotes(e.target.value)}
             placeholder="Record specific environmental conditions, weather factors, seasonal considerations, or site-specific environmental challenges..."
-            className="min-h-24 mb-4"
+            multiline
+            rows={4}
+            className="mb-4"
           />
           <Button className="w-full">
             Complete Site Condition Assessment

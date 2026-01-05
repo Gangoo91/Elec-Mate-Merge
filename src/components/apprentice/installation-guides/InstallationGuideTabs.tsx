@@ -74,30 +74,30 @@ const InstallationGuideTabs = ({
       case "overview":
         return enhancedOverviewComponent || (
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
               <CardHeader>
-                <CardTitle className="text-elec-yellow">Common Installation Types</CardTitle>
-                <CardDescription>Typical projects you'll encounter in domestic electrical work</CardDescription>
+                <CardTitle className="text-elec-yellow text-xl">Common Installation Types</CardTitle>
+                <CardDescription className="text-neutral-300">Typical projects you'll encounter in domestic electrical work</CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2">
+                <ul className="space-y-3">
                   {commonTypes.map((type, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="text-elec-yellow">•</span>
-                      <span className="text-sm">{type}</span>
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-elec-yellow text-lg">•</span>
+                      <span className="text-sm text-white">{type}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
             </Card>
 
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
               <CardHeader>
-                <CardTitle className="text-elec-yellow">Safety & Compliance</CardTitle>
-                <CardDescription>Essential safety practices for domestic installations</CardDescription>
+                <CardTitle className="text-elec-yellow text-xl">Safety & Compliance</CardTitle>
+                <CardDescription className="text-neutral-300">Essential safety practices for domestic installations</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-neutral-200 leading-relaxed">
                   {safetyContent}
                 </p>
               </CardContent>
@@ -106,13 +106,13 @@ const InstallationGuideTabs = ({
         );
       case "planning":
         return enhancedPlanningComponent || (
-          <Card className="border-elec-yellow/20 bg-elec-gray">
+          <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
             <CardHeader>
-              <CardTitle className="text-elec-yellow">Installation Planning</CardTitle>
-              <CardDescription>Comprehensive planning approach for domestic installations</CardDescription>
+              <CardTitle className="text-elec-yellow text-xl">Installation Planning</CardTitle>
+              <CardDescription className="text-neutral-300">Comprehensive planning approach for domestic installations</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-neutral-200 leading-relaxed">
                 {planningContent}
               </p>
             </CardContent>
@@ -120,29 +120,29 @@ const InstallationGuideTabs = ({
         );
       case "circuits":
         return enhancedCircuitComponent || (
-          <Card className="border-elec-yellow/20 bg-elec-gray">
+          <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
             <CardHeader>
-              <CardTitle className="text-elec-yellow">Circuit Design & Cable Selection</CardTitle>
-              <CardDescription>Standard circuits and cable specifications for domestic installations</CardDescription>
+              <CardTitle className="text-elec-yellow text-xl">Circuit Design & Cable Selection</CardTitle>
+              <CardDescription className="text-neutral-300">Standard circuits and cable specifications for domestic installations</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
                   <thead>
-                    <tr className="border-b border-elec-yellow/20">
-                      <th className="text-left p-2 text-elec-yellow">Application</th>
-                      <th className="text-left p-2 text-elec-yellow">Cable</th>
-                      <th className="text-left p-2 text-elec-yellow">Protection</th>
-                      <th className="text-left p-2 text-elec-yellow">Notes</th>
+                    <tr className="border-b-2 border-elec-yellow/30 bg-elec-yellow/10">
+                      <th className="text-left p-3 text-elec-yellow font-semibold">Application</th>
+                      <th className="text-left p-3 text-elec-yellow font-semibold">Cable</th>
+                      <th className="text-left p-3 text-elec-yellow font-semibold">Protection</th>
+                      <th className="text-left p-3 text-elec-yellow font-semibold">Notes</th>
                     </tr>
                   </thead>
                   <tbody>
                     {cableTypes.map((cable, index) => (
-                      <tr key={index} className="border-b border-elec-yellow/10">
-                        <td className="p-2 text-sm">{cable.application}</td>
-                        <td className="p-2 text-sm font-mono">{cable.cable}</td>
-                        <td className="p-2 text-sm">{cable.protection}</td>
-                        <td className="p-2 text-xs text-muted-foreground">{cable.notes}</td>
+                      <tr key={index} className={`border-b border-elec-yellow/10 hover:bg-elec-yellow/5 transition-colors ${index % 2 === 0 ? 'bg-black/10' : 'bg-transparent'}`}>
+                        <td className="p-3 text-sm text-white">{cable.application}</td>
+                        <td className="p-3 text-sm font-mono text-elec-yellow/90">{cable.cable}</td>
+                        <td className="p-3 text-sm text-white">{cable.protection}</td>
+                        <td className="p-3 text-xs text-neutral-300">{cable.notes}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -153,21 +153,21 @@ const InstallationGuideTabs = ({
         );
       case "testing":
         return enhancedTestingComponent || (
-          <Card className="border-elec-yellow/20 bg-elec-gray">
+          <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
             <CardHeader>
-              <CardTitle className="text-elec-yellow">Testing & Verification</CardTitle>
-              <CardDescription>Essential testing procedures for domestic installations</CardDescription>
+              <CardTitle className="text-elec-yellow text-xl">Testing & Verification</CardTitle>
+              <CardDescription className="text-neutral-300">Essential testing procedures for domestic installations</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
+              <p className="text-sm text-neutral-200 mb-4 leading-relaxed">
                 All domestic electrical installations must undergo comprehensive testing and verification in accordance with BS 7671 requirements.
               </p>
-              <div className="space-y-2">
-                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">Continuity Testing</Badge>
-                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">Insulation Resistance</Badge>
-                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">Polarity Testing</Badge>
-                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">Earth Fault Loop Impedance</Badge>
-                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">RCD Testing</Badge>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30 bg-elec-yellow/10 hover:bg-elec-yellow/20 transition-colors">Continuity Testing</Badge>
+                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30 bg-elec-yellow/10 hover:bg-elec-yellow/20 transition-colors">Insulation Resistance</Badge>
+                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30 bg-elec-yellow/10 hover:bg-elec-yellow/20 transition-colors">Polarity Testing</Badge>
+                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30 bg-elec-yellow/10 hover:bg-elec-yellow/20 transition-colors">Earth Fault Loop Impedance</Badge>
+                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30 bg-elec-yellow/10 hover:bg-elec-yellow/20 transition-colors">RCD Testing</Badge>
               </div>
             </CardContent>
           </Card>
@@ -175,13 +175,13 @@ const InstallationGuideTabs = ({
       case "compliance":
         return enhancedReferenceComponent ? (
           <div className="space-y-6">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
               <CardHeader>
-                <CardTitle className="text-elec-yellow">Regulatory Compliance</CardTitle>
-                <CardDescription>Legal and regulatory requirements for domestic electrical work</CardDescription>
+                <CardTitle className="text-elec-yellow text-xl">Regulatory Compliance</CardTitle>
+                <CardDescription className="text-neutral-300">Legal and regulatory requirements for domestic electrical work</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">
+                <p className="text-sm text-neutral-200 mb-4 leading-relaxed">
                   {complianceContent}
                 </p>
               </CardContent>
@@ -189,13 +189,13 @@ const InstallationGuideTabs = ({
             {enhancedReferenceComponent}
           </div>
         ) : (
-          <Card className="border-elec-yellow/20 bg-elec-gray">
+          <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
             <CardHeader>
-              <CardTitle className="text-elec-yellow">Regulatory Compliance</CardTitle>
-              <CardDescription>Legal and regulatory requirements for domestic electrical work</CardDescription>
+              <CardTitle className="text-elec-yellow text-xl">Regulatory Compliance</CardTitle>
+              <CardDescription className="text-neutral-300">Legal and regulatory requirements for domestic electrical work</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
+              <p className="text-sm text-neutral-200 mb-4 leading-relaxed">
                 {complianceContent}
               </p>
             </CardContent>
@@ -203,17 +203,17 @@ const InstallationGuideTabs = ({
         );
       case "reference":
         return (
-          <Card className="border-elec-yellow/20 bg-elec-gray">
+          <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
             <CardHeader>
-              <CardTitle className="text-elec-yellow">Key Standards & Regulations</CardTitle>
-              <CardDescription>Essential standards and regulations for domestic electrical installations</CardDescription>
+              <CardTitle className="text-elec-yellow text-xl">Key Standards & Regulations</CardTitle>
+              <CardDescription className="text-neutral-300">Essential standards and regulations for domestic electrical installations</CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3">
                 {keyStandards.map((standard, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <span className="text-elec-yellow mt-1">•</span>
-                    <span className="text-sm">{standard}</span>
+                  <li key={index} className="flex items-start gap-3">
+                    <span className="text-elec-yellow mt-1 text-lg">•</span>
+                    <span className="text-sm text-white">{standard}</span>
                   </li>
                 ))}
               </ul>
@@ -228,11 +228,16 @@ const InstallationGuideTabs = ({
   return (
     <div className="space-y-6">
       <div className="text-center space-y-4">
-        <div className="flex items-center justify-center gap-3">
-          <Icon className="h-8 w-8 text-elec-yellow" />
-          <h1 className="text-3xl font-bold text-white">{title}</h1>
+        <div className="flex items-center justify-center gap-4">
+          <div className="relative">
+            <div className="absolute inset-0 bg-elec-yellow/20 blur-xl rounded-full" />
+            <div className="relative bg-elec-gray/80 p-3 rounded-xl border border-elec-yellow/30">
+              <Icon className="h-10 w-10 text-elec-yellow" />
+            </div>
+          </div>
+          <h1 className="text-4xl font-extrabold text-white tracking-tight">{title}</h1>
         </div>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+        <p className="text-lg text-neutral-200 max-w-3xl mx-auto leading-relaxed">
           {description}
         </p>
       </div>
@@ -240,30 +245,34 @@ const InstallationGuideTabs = ({
       <div className="w-full space-y-6">
         <div className="flex justify-center">
           <Select value={activeTab} onValueChange={setActiveTab}>
-            <SelectTrigger className="w-[280px] md:w-[320px]">
+            <SelectTrigger className="w-[320px] md:w-[400px] bg-elec-gray border-elec-yellow/30 hover:border-elec-yellow/50 transition-colors text-white h-12 text-base font-medium shadow-lg shadow-black/20">
               <SelectValue placeholder="Select section">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   {(() => {
                     const currentTab = tabOptions.find(tab => tab.value === activeTab);
                     const IconComponent = currentTab?.icon;
                     return (
                       <>
-                        {IconComponent && <IconComponent className="h-4 w-4" />}
-                        {currentTab?.label}
+                        {IconComponent && <IconComponent className="h-5 w-5 text-elec-yellow" />}
+                        <span>{currentTab?.label}</span>
                       </>
                     );
                   })()}
                 </div>
               </SelectValue>
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-elec-gray border-elec-yellow/30 shadow-xl shadow-black/30">
               {tabOptions.map((tab) => {
                 const IconComponent = tab.icon;
                 return (
-                  <SelectItem key={tab.value} value={tab.value}>
-                    <div className="flex items-center gap-2">
-                      <IconComponent className="h-4 w-4" />
-                      {tab.label}
+                  <SelectItem
+                    key={tab.value}
+                    value={tab.value}
+                    className="text-white hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 focus:text-white cursor-pointer transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <IconComponent className="h-5 w-5 text-elec-yellow" />
+                      <span>{tab.label}</span>
                     </div>
                   </SelectItem>
                 );
@@ -278,18 +287,18 @@ const InstallationGuideTabs = ({
       </div>
 
       {bottomSafetyNotice && (
-        <Alert className="border-red-500/50 bg-red-500/10 mt-8">
-          <AlertTriangle className="h-4 w-4 text-red-500" />
+        <Alert className="border-red-500/60 bg-red-500/15 mt-8 shadow-lg shadow-red-500/10 backdrop-blur-sm">
+          <AlertTriangle className="h-5 w-5 text-red-400" />
           <AlertDescription>
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-red-400 mb-3">
+              <h3 className="text-xl font-bold text-red-300 mb-3">
                 {bottomSafetyNotice.title}
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {bottomSafetyNotice.points.map((point, index) => (
-                  <div key={index} className="space-y-1">
-                    <h4 className="font-medium text-red-300">{point.title}</h4>
-                    <p className="text-sm text-red-200">{point.content}</p>
+                  <div key={index} className="space-y-1 pl-2 border-l-2 border-red-500/40">
+                    <h4 className="font-semibold text-red-200">{point.title}</h4>
+                    <p className="text-sm text-red-100">{point.content}</p>
                   </div>
                 ))}
               </div>

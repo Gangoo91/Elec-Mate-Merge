@@ -515,7 +515,7 @@ const CashFlowTab = () => {
       {/* Alert Section */}
       <Alert className="border-elec-yellow/20 bg-elec-yellow/10">
         <AlertTriangle className="h-4 w-4 text-elec-yellow" />
-        <AlertDescription className="text-white">
+        <AlertDescription className="text-foreground">
           Effective cash flow management is critical for electrical business success. Monitor your cash position daily and plan for seasonal variations.
         </AlertDescription>
       </Alert>
@@ -526,7 +526,7 @@ const CashFlowTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -542,21 +542,21 @@ const CashFlowTab = () => {
                 icon={section.icon}
                 className="text-left hover:bg-elec-gray/50 p-4 rounded-lg border border-elec-yellow/20"
               >
-                <span className="text-white font-semibold">{section.title}</span>
+                <span className="text-foreground font-semibold">{section.title}</span>
               </MobileAccordionTrigger>
               <MobileAccordionContent className="space-y-3 pt-4">
                 <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                   {section.cards.map((card, cardIndex) => (
                     <Card key={cardIndex} className={getColorClasses(card.color)}>
                       <CardHeader className="pb-3">
-                        <CardTitle className="text-sm font-semibold text-white">
+                        <CardTitle className="text-sm font-semibold text-foreground">
                           {card.title}
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-2">
                         {card.content.map((item, itemIndex) => (
                           <div key={itemIndex} className="flex items-start gap-2">
-                            <ArrowRight className="h-3 w-3 text-white/60 mt-0.5 flex-shrink-0" />
+                            <ArrowRight className="h-3 w-3 text-foreground/60 mt-0.5 flex-shrink-0" />
                             <span className="text-xs text-muted-foreground leading-relaxed">
                               {item}
                             </span>

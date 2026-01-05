@@ -301,7 +301,7 @@ export const SVGDiagramRenderer = ({
         {/* Tooltip overlay */}
         {tooltip && (
           <foreignObject x={tooltip.x} y={tooltip.y} width="250" height="80">
-            <div className="bg-gray-900 text-white p-2 rounded shadow-lg text-xs border border-gray-700">
+            <div className="bg-gray-900 text-foreground p-2 rounded shadow-lg text-xs border border-gray-700">
               {tooltip.content}
             </div>
           </foreignObject>

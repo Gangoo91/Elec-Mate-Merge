@@ -87,18 +87,18 @@ const EnhancedCourseSearch = ({
         <div className="max-w-4xl mx-auto space-y-4">
           {/* Header */}
           <div className="text-center space-y-2">
-            <h2 className="text-2xl font-bold text-white">Find Your Perfect Course</h2>
-            <p className="text-white/80">Search through {totalResults} professional courses and training programmes</p>
+            <h2 className="text-2xl font-bold text-foreground">Find Your Perfect Course</h2>
+            <p className="text-foreground/80">Search through {totalResults} professional courses and training programmes</p>
           </div>
           
           {/* Main Search Bar */}
           <div className="relative">
-            <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 ${isSearching ? 'animate-pulse text-elec-yellow' : 'text-white/60'}`} />
+            <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 ${isSearching ? 'animate-pulse text-elec-yellow' : 'text-foreground/60'}`} />
             <Input
               placeholder="Search courses, providers, locations, topics..."
               value={filters.searchQuery}
               onChange={(e) => handleFilterChange("searchQuery", e.target.value)}
-              className={`pl-12 pr-12 h-12 text-lg bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:border-elec-yellow/50 focus:bg-white/15 ${isSearching ? 'border-elec-yellow/50' : ''}`}
+              className={`pl-12 pr-12 h-12 text-lg bg-white/10 border-white/20 text-foreground placeholder:text-foreground/60 focus:border-elec-yellow/50 focus:bg-white/15 ${isSearching ? 'border-elec-yellow/50' : ''}`}
               disabled={isSearching}
             />
             {isSearching && (
@@ -113,7 +113,7 @@ const EnhancedCourseSearch = ({
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-white/20"
                 onClick={() => clearFilter("searchQuery")}
               >
-                <X className="h-4 w-4 text-white" />
+                <X className="h-4 w-4 text-foreground" />
               </Button>
             )}
           </div>
@@ -128,7 +128,7 @@ const EnhancedCourseSearch = ({
                 onClick={() => handleFilterChange("category", filters.category === category ? "All Categories" : category)}
                 className={filters.category === category ? 
                   "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" : 
-                  "border-white/30 text-white hover:bg-white/10 hover:border-elec-yellow/50"
+                  "border-white/30 text-foreground hover:bg-white/10 hover:border-elec-yellow/50"
                 }
               >
                 {category}
@@ -220,7 +220,7 @@ const EnhancedCourseSearch = ({
       {showAdvancedFilters && (
         <Card className="border-elec-yellow/20 bg-elec-gray/30 animate-fade-in">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base text-white flex items-center gap-2">
+            <CardTitle className="text-base text-foreground flex items-center gap-2">
               <SlidersHorizontal className="h-4 w-4 text-elec-yellow" />
               Advanced Filters
             </CardTitle>
@@ -229,7 +229,7 @@ const EnhancedCourseSearch = ({
             {/* Price Range */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium flex items-center gap-2 text-white">
+                <label className="text-sm font-medium flex items-center gap-2 text-foreground">
                   <PoundSterling className="h-4 w-4 text-elec-yellow" />
                   Price Range
                 </label>
@@ -294,7 +294,7 @@ const EnhancedCourseSearch = ({
 
             {/* Rating Filter */}
             <div className="space-y-3">
-              <label className="text-sm font-medium flex items-center gap-2 text-white">
+              <label className="text-sm font-medium flex items-center gap-2 text-foreground">
                 <Star className="h-4 w-4 text-elec-yellow" />
                 Minimum Rating
               </label>

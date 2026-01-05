@@ -528,7 +528,7 @@ const UnifiedJobSearch = () => {
                           variant="secondary" 
                           className={`backdrop-blur-sm ${
                             job.is_fresh 
-                              ? 'bg-green-500/90 text-white' 
+                              ? 'bg-green-500/90 text-foreground' 
                               : 'bg-white/90 text-black'
                           }`}
                         >
@@ -540,7 +540,7 @@ const UnifiedJobSearch = () => {
 
                     {/* Company name overlay */}
                     <div className="absolute bottom-4 left-4">
-                      <div className="flex items-center gap-2 text-white">
+                      <div className="flex items-center gap-2 text-foreground">
                         <Building2 className="h-4 w-4" />
                         <span className="text-sm font-medium">{job.company}</span>
                       </div>
@@ -551,7 +551,7 @@ const UnifiedJobSearch = () => {
                     <div className="space-y-4">
                       {/* Title and location */}
                       <div>
-                        <h3 className="text-lg font-semibold text-white group-hover:text-elec-yellow transition-colors line-clamp-2 mb-2">
+                        <h3 className="text-lg font-semibold text-foreground group-hover:text-elec-yellow transition-colors line-clamp-2 mb-2">
                           {job.title}
                         </h3>
                         <div className="flex items-center gap-2 text-muted-foreground text-sm">
@@ -564,7 +564,7 @@ const UnifiedJobSearch = () => {
                       <div className="flex flex-wrap items-center gap-3 text-sm">
                         <div className="flex items-center gap-1">
                           <Briefcase className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-white">{job.type}</span>
+                          <span className="text-foreground">{job.type}</span>
                         </div>
                         
                         {formatSalary(job.salary) && (
@@ -578,7 +578,7 @@ const UnifiedJobSearch = () => {
                         
                         <div className="flex items-center gap-1">
                           <Calendar className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-white">{formatDate(job.posted_date)}</span>
+                          <span className="text-foreground">{formatDate(job.posted_date)}</span>
                         </div>
                       </div>
 

@@ -964,7 +964,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
               <CardTitle className="text-base sm:text-lg text-foreground leading-tight mb-0.5">
                 {getModeTitle()}
               </CardTitle>
-              <p className="text-xs sm:text-sm text-white/80">
+              <p className="text-xs sm:text-sm text-foreground/80">
                 {getModeDescription()}
               </p>
             </div>
@@ -981,8 +981,8 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                   <div className="flex items-center gap-3">
                     <Loader className="h-5 w-5 animate-spin text-elec-yellow" />
                     <div>
-                      <h3 className="font-semibold text-sm sm:text-base text-white">Analysing Installation</h3>
-                      <p className="text-xs text-white/70">Verifying against BS 7671...</p>
+                      <h3 className="font-semibold text-sm sm:text-base text-foreground">Analysing Installation</h3>
+                      <p className="text-xs text-foreground/70">Verifying against BS 7671...</p>
                     </div>
                   </div>
                 <Button
@@ -1001,7 +1001,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                     style={{ width: `${analysisProgress}%` }}
                   />
                 </div>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-foreground/70 text-center">
                   {analysisProgress < 30 && "Uploading images..."}
                   {analysisProgress >= 30 && analysisProgress < 70 && "Scanning components..."}
                   {analysisProgress >= 70 && "Generating report..."}
@@ -1048,7 +1048,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 </div>
                 <Button 
                   onClick={captureImage}
-                  className="w-full h-11 bg-green-600 text-white hover:bg-green-700 font-semibold"
+                  className="w-full h-11 bg-green-600 text-foreground hover:bg-green-700 font-semibold"
                 >
                   📸 Capture Photo
                 </Button>
@@ -1070,11 +1070,11 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 onChange={(e) => handleFileSelect(e.target.files)}
                 className="hidden"
               />
-              <Upload className="h-8 w-8 mx-auto mb-2 text-white/60 group-hover:text-elec-yellow transition-colors" />
+              <Upload className="h-8 w-8 mx-auto mb-2 text-foreground/60 group-hover:text-elec-yellow transition-colors" />
               <p className="text-sm font-medium text-foreground mb-1">
                 {getUploadPlaceholder()}
               </p>
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-foreground/60">
                 Tap to browse or drag files here
               </p>
             </div>
@@ -1082,7 +1082,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
             {/* Quick Context - ALWAYS VISIBLE */}
             <div className="space-y-3 pt-1">
               <div className="flex items-center justify-between">
-                <p className="text-xs font-medium text-white">Quick Context:</p>
+                <p className="text-xs font-medium text-foreground">Quick Context:</p>
                 {selectedTags.length > 0 && (
                   <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
                     {selectedTags.length} selected
@@ -1114,7 +1114,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                   placeholder="Additional notes (optional)..."
                   value={additionalNotes}
                   onChange={(e) => setAdditionalNotes(e.target.value)}
-                  className="flex h-11 w-full rounded-lg border border-border bg-background/50 px-3 py-2 text-sm placeholder:text-white/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 transition-all"
+                  className="flex h-11 w-full rounded-lg border border-border bg-background/50 px-3 py-2 text-sm placeholder:text-foreground/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 transition-all"
                 />
               </div>
             </div>
@@ -1123,14 +1123,14 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
             {images.length > 0 && (
               <div className="space-y-2 animate-fade-in pt-2">
                 <div className="flex items-center justify-between">
-                  <p className="text-xs sm:text-sm font-medium text-white">
+                  <p className="text-xs sm:text-sm font-medium text-foreground">
                     {images.length} image{images.length > 1 ? 's' : ''}
                   </p>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => fileInputRef.current?.click()}
-                    className="h-7 text-xs text-white/80 hover:text-white"
+                    className="h-7 text-xs text-foreground/80 hover:text-foreground"
                   >
                     <Plus className="h-3 w-3 mr-1" />
                     Add
@@ -1395,7 +1395,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                       </div>
 
                       {/* Description - LEFT ALIGNED */}
-                      <p className="text-base text-white leading-relaxed mb-4 text-left">
+                      <p className="text-base text-foreground leading-relaxed mb-4 text-left">
                         {finding.description}
                       </p>
 

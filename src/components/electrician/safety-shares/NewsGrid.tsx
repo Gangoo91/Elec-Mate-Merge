@@ -28,7 +28,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
       "News": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
       "Training": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
   };
 
   const getCategoryImage = (category: string) => {
@@ -63,8 +63,8 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
         <div className="w-16 h-16 rounded-full bg-elec-yellow/10 flex items-center justify-center mx-auto mb-4">
           <ExternalLink className="h-8 w-8 text-elec-yellow" />
         </div>
-        <h3 className="text-lg font-semibold text-white mb-2">No Articles Found</h3>
-        <p className="text-white/90">Try adjusting your search or filter criteria.</p>
+        <h3 className="text-lg font-semibold text-foreground mb-2">No Articles Found</h3>
+        <p className="text-foreground/90">Try adjusting your search or filter criteria.</p>
       </div>
     );
   }
@@ -117,7 +117,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
               {/* Content */}
               <div className="p-4 sm:p-5 space-y-3 flex flex-col h-[calc(100%-10rem)] sm:h-[calc(100%-12rem)]">
                 {/* Meta Info */}
-                <div className="flex items-center justify-between text-xs text-white/80">
+                <div className="flex items-center justify-between text-xs text-foreground/80">
                   <div className="flex items-center gap-3">
                     <div className="flex items-center gap-1">
                       <Eye className="h-3 w-3" />
@@ -137,18 +137,18 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
                 </div>
 
                 {/* Title */}
-                <h3 className="font-semibold text-white line-clamp-2 leading-tight flex-grow text-sm sm:text-base" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                <h3 className="font-semibold text-foreground line-clamp-2 leading-tight flex-grow text-sm sm:text-base" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                   {article.title}
                 </h3>
 
                 {/* Summary */}
-                <p className="text-white/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
+                <p className="text-foreground/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
                   {article.summary}
                 </p>
 
                 {/* Footer */}
                 <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                  <div className="flex items-center gap-2 text-xs text-white/80">
+                  <div className="flex items-center gap-2 text-xs text-foreground/80">
                     <Calendar className="h-3 w-3" />
                     <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
                   </div>

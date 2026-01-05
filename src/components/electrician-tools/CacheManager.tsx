@@ -121,7 +121,7 @@ const CacheManager = () => {
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray/50">
       <CardHeader>
-        <CardTitle className="text-white flex items-center gap-2">
+        <CardTitle className="text-foreground flex items-center gap-2">
           <Database className="h-5 w-5 text-elec-yellow" />
           Tool Guide Cache Manager
         </CardTitle>
@@ -149,14 +149,14 @@ const CacheManager = () => {
 
         {cacheEntries.length > 0 ? (
           <div className="space-y-3">
-            <h4 className="text-white font-medium">Cache Status</h4>
+            <h4 className="text-foreground font-medium">Cache Status</h4>
             {cacheEntries.map((entry) => (
               <div
                 key={entry.guide_type}
                 className="p-3 bg-elec-gray border border-elec-yellow/20 rounded-lg"
               >
                 <div className="flex items-center justify-between mb-2">
-                  <h5 className="text-white font-medium capitalize">
+                  <h5 className="text-foreground font-medium capitalize">
                     {entry.guide_type.replace('-', ' ')}
                   </h5>
                   <div className="flex items-center gap-2">
@@ -176,25 +176,25 @@ const CacheManager = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-muted-foreground">
                   <div>
                     <span className="block">Last Updated:</span>
-                    <span className="text-white">
+                    <span className="text-foreground">
                       {entry.last_refreshed ? formatDate(entry.last_refreshed) : 'Never'}
                     </span>
                   </div>
                   <div>
                     <span className="block">Expires:</span>
-                    <span className={isExpired(entry.expires_at) ? 'text-red-400' : 'text-white'}>
+                    <span className={isExpired(entry.expires_at) ? 'text-red-400' : 'text-foreground'}>
                       {formatDate(entry.expires_at)}
                     </span>
                   </div>
                   <div>
                     <span className="block">Next Refresh:</span>
-                    <span className="text-white">
+                    <span className="text-foreground">
                       {entry.refresh_scheduled_for ? formatDate(entry.refresh_scheduled_for) : 'Not scheduled'}
                     </span>
                   </div>
                   <div>
                     <span className="block">Version:</span>
-                    <span className="text-white">v{entry.cache_version || 1}</span>
+                    <span className="text-foreground">v{entry.cache_version || 1}</span>
                   </div>
                 </div>
               </div>
@@ -203,7 +203,7 @@ const CacheManager = () => {
         ) : (
           <div className="text-center py-8">
             <Database className="h-12 w-12 text-elec-yellow mx-auto mb-4" />
-            <h3 className="text-white text-lg mb-2">No Cache Data</h3>
+            <h3 className="text-foreground text-lg mb-2">No Cache Data</h3>
             <p className="text-muted-foreground mb-4">
               Click "Refresh Status" to load current cache information.
             </p>

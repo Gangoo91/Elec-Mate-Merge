@@ -145,7 +145,7 @@ const IndustrialReferenceGuide = () => {
             <Book className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Industrial Installation Reference</CardTitle>
           </div>
-          <p className="text-muted-foreground">Comprehensive standards, testing procedures, and technical specifications</p>
+          <p className="text-neutral-300">Comprehensive standards, testing procedures, and technical specifications</p>
         </CardHeader>
       </Card>
 
@@ -175,7 +175,7 @@ const IndustrialReferenceGuide = () => {
                         {standard.scope}
                       </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground">{standard.title}</p>
+                    <p className="text-sm text-neutral-300">{standard.title}</p>
                   </div>
                 ))}
               </CardContent>
@@ -203,15 +203,15 @@ const IndustrialReferenceGuide = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
                     <div>
                       <span className="text-red-300 font-medium">Requirement: </span>
-                      <span className="text-muted-foreground">{system.requirement}</span>
+                      <span className="text-neutral-300">{system.requirement}</span>
                     </div>
                     <div>
                       <span className="text-red-300 font-medium">Installation: </span>
-                      <span className="text-muted-foreground">{system.installation}</span>
+                      <span className="text-neutral-300">{system.installation}</span>
                     </div>
                     <div>
                       <span className="text-red-300 font-medium">Testing: </span>
-                      <span className="text-muted-foreground">{system.testing}</span>
+                      <span className="text-neutral-300">{system.testing}</span>
                     </div>
                   </div>
                 </div>
@@ -235,19 +235,19 @@ const IndustrialReferenceGuide = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
                     <div>
                       <span className="text-green-300 font-medium">Method: </span>
-                      <span className="text-muted-foreground">{test.voltage || test.method || test.testCurrent}</span>
+                      <span className="text-neutral-300">{test.voltage || test.method || test.testCurrent}</span>
                     </div>
                     <div>
                       <span className="text-green-300 font-medium">Criteria: </span>
-                      <span className="text-muted-foreground">{test.minimumValue || test.maximumValue || test.tripTime}</span>
+                      <span className="text-neutral-300">{test.minimumValue || test.maximumValue || test.tripTime}</span>
                     </div>
                     <div>
                       <span className="text-green-300 font-medium">Procedure: </span>
-                      <span className="text-muted-foreground">{test.procedure}</span>
+                      <span className="text-neutral-300">{test.procedure}</span>
                     </div>
                     <div>
                       <span className="text-green-300 font-medium">Frequency: </span>
-                      <span className="text-muted-foreground">{test.frequency}</span>
+                      <span className="text-neutral-300">{test.frequency}</span>
                     </div>
                   </div>
                 </div>
@@ -276,15 +276,15 @@ const IndustrialReferenceGuide = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                     <div>
                       <span className="text-purple-300 font-medium">Rating: </span>
-                      <span className="text-muted-foreground">{device.rating}</span>
+                      <span className="text-neutral-300">{device.rating}</span>
                     </div>
                     <div>
                       <span className="text-purple-300 font-medium">Application: </span>
-                      <span className="text-muted-foreground">{device.application}</span>
+                      <span className="text-neutral-300">{device.application}</span>
                     </div>
                     <div>
                       <span className="text-purple-300 font-medium">Features: </span>
-                      <span className="text-muted-foreground">{device.features}</span>
+                      <span className="text-neutral-300">{device.features}</span>
                     </div>
                   </div>
                 </div>

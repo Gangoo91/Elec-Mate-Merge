@@ -56,7 +56,7 @@ const PriceTrendChart = ({
       const dataPoint = payload[0].payload;
       return (
         <div className="bg-elec-dark border border-elec-yellow/30 rounded-lg p-3 shadow-lg">
-          <p className="text-sm font-medium text-white">{`Date: ${new Date(label).toLocaleDateString('en-GB')}`}</p>
+          <p className="text-sm font-medium text-foreground">{`Date: ${new Date(label).toLocaleDateString('en-GB')}`}</p>
           <p className="text-sm text-elec-yellow">{`Price: £${payload[0].value.toFixed(2)}`}</p>
           <p className="text-xs text-muted-foreground">{`Confidence: ${dataPoint.confidence}%`}</p>
           <div className="flex items-center gap-1 mt-1">
@@ -87,7 +87,7 @@ const PriceTrendChart = ({
         
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-2xl font-bold text-white">£{currentPrice.toFixed(2)}</span>
+            <span className="text-2xl font-bold text-foreground">£{currentPrice.toFixed(2)}</span>
             <span className={`ml-2 text-sm ${isPositiveTrend ? 'text-red-400' : 'text-green-400'}`}>
               ({isPositiveTrend ? '+' : ''}£{Math.abs(priceChange).toFixed(2)})
             </span>
@@ -101,7 +101,7 @@ const PriceTrendChart = ({
                 className={`px-2 py-1 rounded text-xs transition-colors ${
                   timeframe === period 
                     ? 'bg-elec-yellow text-elec-dark font-medium' 
-                    : 'text-muted-foreground hover:text-white hover:bg-elec-yellow/10'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-elec-yellow/10'
                 }`}
               >
                 {timeframeLabels[period]}
@@ -196,7 +196,7 @@ const PriceTrendChart = ({
             <div className="flex items-start gap-2">
               <Info className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <h5 className="text-sm font-medium text-white mb-1">Price Trend Analysis</h5>
+                <h5 className="text-sm font-medium text-foreground mb-1">Price Trend Analysis</h5>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-muted-foreground">
                   <div>
                     <span className="font-medium">Data Points:</span> {data.length}

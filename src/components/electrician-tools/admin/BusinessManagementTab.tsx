@@ -77,7 +77,7 @@ const BusinessManagementTab = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {tool.icon}
-                      <h4 className="font-semibold text-white text-sm">{tool.title}</h4>
+                      <h4 className="font-semibold text-foreground text-sm">{tool.title}</h4>
                     </div>
                     <Badge variant="outline" className="border-green-500/40 text-green-400 text-xs">
                       {tool.status}
@@ -122,15 +122,15 @@ const BusinessManagementTab = () => {
           <CardContent>
             <div className="space-y-3">
               <div className="text-sm">
-                <h4 className="font-medium text-white mb-1">Electrical Specific Features</h4>
+                <h4 className="font-medium text-foreground mb-1">Electrical Specific Features</h4>
                 <p className="text-muted-foreground text-xs">Tools designed with electrical industry regulations and best practices in mind</p>
               </div>
               <div className="text-sm">
-                <h4 className="font-medium text-white mb-1">Compliance Ready</h4>
+                <h4 className="font-medium text-foreground mb-1">Compliance Ready</h4>
                 <p className="text-muted-foreground text-xs">Built-in templates for BS 7671, Part P notifications, and certification requirements</p>
               </div>
               <div className="text-sm">
-                <h4 className="font-medium text-white mb-1">Time Saving</h4>
+                <h4 className="font-medium text-foreground mb-1">Time Saving</h4>
                 <p className="text-muted-foreground text-xs">Reduce paperwork and administrative overhead with automated workflows</p>
               </div>
             </div>

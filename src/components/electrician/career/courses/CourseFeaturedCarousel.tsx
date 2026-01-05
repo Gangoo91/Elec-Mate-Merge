@@ -29,10 +29,10 @@ const CourseFeaturedCarousel = ({ courses, className, onCourseClick }: CourseFea
     <div className={cn("space-y-4", className)}>
       {/* Section Header */}
       <div className="space-y-1">
-        <h2 className="text-xl sm:text-2xl font-bold text-white">
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground">
           Featured Courses
         </h2>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-foreground/80">
           Top-rated electrical courses from leading training providers
         </p>
       </div>
@@ -64,7 +64,7 @@ const CourseFeaturedCarousel = ({ courses, className, onCourseClick }: CourseFea
       </Carousel>
 
       {/* Mobile scroll hint */}
-      <div className="md:hidden flex items-center justify-center gap-2 text-xs text-white/60">
+      <div className="md:hidden flex items-center justify-center gap-2 text-xs text-foreground/60">
         <ChevronLeft className="h-3 w-3" />
         <span>Swipe to browse more courses</span>
         <ChevronRight className="h-3 w-3" />

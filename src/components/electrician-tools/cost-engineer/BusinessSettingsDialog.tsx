@@ -140,15 +140,15 @@ export function BusinessSettingsDialog({ onSettingsChange, currentSettings }: Bu
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-white">Total Overheads:</span>
+                <span className="text-sm text-foreground">Total Overheads:</span>
                 <span className="text-base font-semibold">£{totalMonthlyOverheads.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/month</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-white">Per Working Day (22 days):</span>
+                <span className="text-sm text-foreground">Per Working Day (22 days):</span>
                 <span className="text-base font-semibold">£{(totalMonthlyOverheads / 22).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/day</span>
               </div>
               <div className="flex justify-between items-center border-t border-elec-yellow/20 pt-3 mt-1">
-                <span className="text-sm font-medium text-white">Monthly Break-even Target:</span>
+                <span className="text-sm font-medium text-foreground">Monthly Break-even Target:</span>
                 <span className="text-lg font-bold text-elec-yellow">£{monthlyBreakeven.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
             </CardContent>
@@ -371,7 +371,7 @@ export function BusinessSettingsDialog({ onSettingsChange, currentSettings }: Bu
                 <AlertCircle className="h-5 w-5 text-orange-500 flex-shrink-0 mt-0.5" />
                 <div className="space-y-1 text-sm">
                   <p className="font-semibold text-orange-500">Important: Review These Settings Regularly</p>
-                  <p className="text-white">
+                  <p className="text-foreground">
                     Your business costs change over time. Update these settings every few months to ensure accurate profitability calculations.
                   </p>
                 </div>

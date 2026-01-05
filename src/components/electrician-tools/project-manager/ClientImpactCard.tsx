@@ -18,7 +18,7 @@ const ClientImpactCard = ({ clientImpact }: ClientImpactCardProps) => {
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-lg">
           <div className="bg-orange-500 p-2 rounded-lg">
-            <AlertTriangle className="h-5 w-5 text-white" />
+            <AlertTriangle className="h-5 w-5 text-foreground" />
           </div>
           Client Impact Warnings
         </CardTitle>
@@ -37,10 +37,10 @@ const ClientImpactCard = ({ clientImpact }: ClientImpactCardProps) => {
                 <div className="font-semibold text-sm text-orange-600 dark:text-orange-400">
                   {impact.what}
                 </div>
-                <div className="text-xs text-white/70 mt-1">
+                <div className="text-xs text-foreground/70 mt-1">
                   <span className="font-semibold">When:</span> {impact.when}
                 </div>
-                <div className="text-xs text-white/70">
+                <div className="text-xs text-foreground/70">
                   <span className="font-semibold">Duration:</span> {impact.duration}
                 </div>
               </div>
@@ -50,7 +50,7 @@ const ClientImpactCard = ({ clientImpact }: ClientImpactCardProps) => {
               <div className="pt-2 border-t border-orange-500/20">
                 <div className="flex items-start gap-2 text-sm">
                   <Lightbulb className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <div className="text-white/90">
+                  <div className="text-foreground/90">
                     <span className="font-semibold">Pro Tip:</span> {impact.tip}
                   </div>
                 </div>
@@ -59,7 +59,7 @@ const ClientImpactCard = ({ clientImpact }: ClientImpactCardProps) => {
           </div>
         ))}
         
-        <div className="text-xs text-white/80 bg-muted/30 p-3 rounded-lg">
+        <div className="text-xs text-foreground/80 bg-muted/30 p-3 rounded-lg">
           💡 <strong>Communication Tip:</strong> Send this list to the client 2-3 days before work starts so they can prepare properly.
         </div>
       </CardContent>

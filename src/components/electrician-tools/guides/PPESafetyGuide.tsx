@@ -169,7 +169,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
         <TabsContent value="recommendations" className="space-y-6">
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-white">Select Your Work Environment</CardTitle>
+              <CardTitle className="text-foreground">Select Your Work Environment</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -198,7 +198,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
               {workTypeRecommendations.map((category, index) => (
                 <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
                   <CardHeader>
-                    <CardTitle className="text-white flex items-center gap-2">
+                    <CardTitle className="text-foreground flex items-center gap-2">
                       <Shield className="h-5 w-5 text-elec-yellow" />
                       {category.category}
                       {category.mandatory && (
@@ -215,7 +215,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                             <div className="text-2xl">{item.image}</div>
                             <div className="flex-1">
                               <div className="flex items-start justify-between mb-2">
-                                <h4 className="font-medium text-white">{item.name}</h4>
+                                <h4 className="font-medium text-foreground">{item.name}</h4>
                                 <span className="text-elec-yellow font-bold">{item.price}</span>
                               </div>
                               
@@ -254,7 +254,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
             <div className="space-y-4">
               <Card className="border-elec-yellow/20 bg-elec-gray">
                 <CardHeader>
-                  <CardTitle className="text-white text-lg">PPE Cost Calculator</CardTitle>
+                  <CardTitle className="text-foreground text-lg">PPE Cost Calculator</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -267,7 +267,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                     </div>
                     
                     <div className="space-y-2">
-                      <h4 className="text-sm font-medium text-white">Investment Breakdown:</h4>
+                      <h4 className="text-sm font-medium text-foreground">Investment Breakdown:</h4>
                       {workTypeRecommendations.map((category, index) => {
                         const cheapest = category.recommendedItems.reduce((min, item) => {
                           const price = parseInt(item.price.split('-')[0].replace('£', ''));
@@ -279,7 +279,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                         return (
                           <div key={index} className="flex justify-between text-xs">
                             <span className="text-muted-foreground">{category.category}:</span>
-                            <span className="text-white">£{cost}+</span>
+                            <span className="text-foreground">£{cost}+</span>
                           </div>
                         );
                       })}
@@ -290,7 +290,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
 
               <Card className="border-elec-yellow/20 bg-elec-gray">
                 <CardHeader>
-                  <CardTitle className="text-white text-lg">Safety Reminders</CardTitle>
+                  <CardTitle className="text-foreground text-lg">Safety Reminders</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -334,7 +334,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
-                <CardTitle className="text-white">UK Legal Requirements</CardTitle>
+                <CardTitle className="text-foreground">UK Legal Requirements</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
@@ -373,18 +373,18 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
 
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
-                <CardTitle className="text-white">PPE Standards & Markings</CardTitle>
+                <CardTitle className="text-foreground">PPE Standards & Markings</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h4 className="text-white font-medium text-sm mb-2">CE Marking</h4>
+                  <h4 className="text-foreground font-medium text-sm mb-2">CE Marking</h4>
                   <p className="text-xs text-muted-foreground mb-2">
                     All PPE sold in the UK must carry CE marking and meet European standards.
                   </p>
                 </div>
                 
                 <div>
-                  <h4 className="text-white font-medium text-sm mb-2">Key Standards:</h4>
+                  <h4 className="text-foreground font-medium text-sm mb-2">Key Standards:</h4>
                   <div className="space-y-2">
                     {[
                       { standard: "BS EN 397", description: "Hard hats and industrial safety helmets" },
@@ -414,7 +414,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
             {Object.entries(workTypes).map(([key, type]) => (
               <Card key={key} className="border-elec-yellow/20 bg-elec-gray">
                 <CardHeader>
-                  <CardTitle className="text-white">{type.label}</CardTitle>
+                  <CardTitle className="text-foreground">{type.label}</CardTitle>
                   <Badge className={
                     type.riskLevel === "Standard" ? "bg-green-500/20 text-green-400" :
                     type.riskLevel === "Medium" ? "bg-amber-500/20 text-amber-400" :
@@ -425,7 +425,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <h4 className="text-sm font-medium text-white">Required PPE:</h4>
+                    <h4 className="text-sm font-medium text-foreground">Required PPE:</h4>
                     <div className="space-y-2">
                       {getWorkTypeRecommendations(key).map((category, index) => (
                         <div key={index} className="flex items-center gap-2">
@@ -439,7 +439,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                     </div>
                     
                     <div className="pt-2 border-t border-elec-yellow/10">
-                      <h4 className="text-sm font-medium text-white mb-2">Additional Considerations:</h4>
+                      <h4 className="text-sm font-medium text-foreground mb-2">Additional Considerations:</h4>
                       {key === "domestic" && (
                         <ul className="space-y-1 text-xs text-muted-foreground">
                           <li>• Customer premises - professional appearance</li>
@@ -473,7 +473,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
-                <CardTitle className="text-white">PPE Maintenance Schedule</CardTitle>
+                <CardTitle className="text-foreground">PPE Maintenance Schedule</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -504,15 +504,15 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                     }
                   ].map((schedule, index) => (
                     <div key={index} className="p-3 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
-                      <h4 className="text-white font-medium text-sm mb-2">{schedule.item}</h4>
+                      <h4 className="text-foreground font-medium text-sm mb-2">{schedule.item}</h4>
                       <div className="space-y-1 text-xs">
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Daily:</span>
-                          <span className="text-white text-right flex-1 ml-2">{schedule.daily}</span>
+                          <span className="text-foreground text-right flex-1 ml-2">{schedule.daily}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Weekly:</span>
-                          <span className="text-white text-right flex-1 ml-2">{schedule.weekly}</span>
+                          <span className="text-foreground text-right flex-1 ml-2">{schedule.weekly}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Replace:</span>
@@ -527,7 +527,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
 
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
-                <CardTitle className="text-white">Storage & Care Tips</CardTitle>
+                <CardTitle className="text-foreground">Storage & Care Tips</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">

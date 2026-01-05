@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, AlertTriangle, Camera, FileText, Award } from "lucide-react";
 
@@ -240,10 +239,8 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
           {responses[currentItem.id] && (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
-                  Additional Details (Optional)
-                </label>
-                <Input
+                <MobileInput
+                  label="Additional Details (Optional)"
                   placeholder="Enter specific observations, measurements, or notes..."
                   value={responses[currentItem.id]?.details || ""}
                   onChange={(e) => handleResponse({
@@ -298,10 +295,12 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
           <CardTitle className="text-lg">Assessment Notes</CardTitle>
         </CardHeader>
         <CardContent>
-          <Textarea
+          <MobileInput
+            label="Assessment Notes"
             placeholder="Add general notes about the site conditions, any concerns, or recommendations..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
+            multiline
             rows={4}
           />
         </CardContent>

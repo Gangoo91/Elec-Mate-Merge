@@ -216,25 +216,25 @@ export const AIGuidedPlanner = ({ planData, updatePlanData, onReset }: AIGuidedP
             <div className="grid grid-cols-2 gap-3 text-sm">
               {planData.loadType && (
                 <div>
-                  <span className="text-white/70">Load Type:</span>
+                  <span className="text-foreground/70">Load Type:</span>
                   <p className="font-medium">{planData.loadType}</p>
                 </div>
               )}
               {planData.totalLoad > 0 && (
                 <div>
-                  <span className="text-white/70">Load:</span>
+                  <span className="text-foreground/70">Load:</span>
                   <p className="font-medium">{planData.totalLoad}W</p>
                 </div>
               )}
               {planData.cableLength > 0 && (
                 <div>
-                  <span className="text-white/70">Cable Length:</span>
+                  <span className="text-foreground/70">Cable Length:</span>
                   <p className="font-medium">{planData.cableLength}m</p>
                 </div>
               )}
               {planData.installationMethod && (
                 <div>
-                  <span className="text-white/70">Installation Method:</span>
+                  <span className="text-foreground/70">Installation Method:</span>
                   <p className="font-medium">{planData.installationMethod}</p>
                 </div>
               )}

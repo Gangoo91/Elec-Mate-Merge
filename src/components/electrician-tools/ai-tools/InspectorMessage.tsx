@@ -30,28 +30,28 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
       <div className={`max-w-[95%] sm:max-w-[85%] rounded-2xl px-4 sm:px-5 py-3 sm:py-4 shadow-sm ${
         isUser
           ? 'bg-primary text-primary-foreground'
-          : 'bg-muted text-white'
+          : 'bg-muted text-foreground'
       }`}>
         {message.agentName && (
           <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/10">
             <span className="text-lg">{message.agentName === 'inspector' ? '🔍' : message.agentName === 'designer' ? '📐' : '🔧'}</span>
-            <span className="text-xs font-semibold text-white/90">
+            <span className="text-xs font-semibold text-foreground/90">
               {message.agentName === 'inspector' ? 'Inspector' : message.agentName === 'designer' ? 'Designer' : 'Installer'}
             </span>
           </div>
         )}
         
-        <div className="inspector-message prose prose-sm sm:prose-base max-w-none text-white">
+        <div className="inspector-message prose prose-sm sm:prose-base max-w-none text-foreground">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
               h1: ({ children }) => (
-                <h1 className="text-base sm:text-lg font-bold mt-4 mb-2 first:mt-0 text-white text-left">
+                <h1 className="text-base sm:text-lg font-bold mt-4 mb-2 first:mt-0 text-foreground text-left">
                   {children}
                 </h1>
               ),
               h2: ({ children }) => (
-                <h2 className="text-base sm:text-lg font-bold mt-6 mb-3 first:mt-0 text-white text-left pb-2 border-b-2 border-elec-yellow/30">
+                <h2 className="text-base sm:text-lg font-bold mt-6 mb-3 first:mt-0 text-foreground text-left pb-2 border-b-2 border-elec-yellow/30">
                   {children}
                 </h2>
               ),
@@ -61,7 +61,7 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
                 </h3>
               ),
               p: ({ children }) => (
-                <p className="text-sm sm:text-base leading-relaxed my-3 text-white text-left">
+                <p className="text-sm sm:text-base leading-relaxed my-3 text-foreground text-left">
                   {children}
                 </p>
               ),
@@ -76,12 +76,12 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
                 </ol>
               ),
               li: ({ children }) => (
-                <li className="text-sm sm:text-base leading-relaxed list-disc marker:text-white/60 text-white text-left">
+                <li className="text-sm sm:text-base leading-relaxed list-disc marker:text-foreground/60 text-foreground text-left">
                   {children}
                 </li>
               ),
               strong: ({ children }) => (
-                <strong className="font-semibold text-white">
+                <strong className="font-semibold text-foreground">
                   {children}
                 </strong>
               ),
@@ -91,7 +91,7 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
                 </code>
               ),
               blockquote: ({ children }) => (
-                <blockquote className="border-l-2 border-elec-yellow/50 pl-3 my-2 italic text-white/90">
+                <blockquote className="border-l-2 border-elec-yellow/50 pl-3 my-2 italic text-foreground/90">
                   {children}
                 </blockquote>
               ),
@@ -120,7 +120,7 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
               variant="ghost"
               size="sm"
               onClick={handleCopy}
-              className="h-8 px-3 text-xs text-white/80 hover:text-white hover:bg-white/10"
+              className="h-8 px-3 text-xs text-foreground/80 hover:text-foreground hover:bg-white/10"
             >
               <Copy className="h-3.5 w-3.5 mr-1.5" />
               Copy

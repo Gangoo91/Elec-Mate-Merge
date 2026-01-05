@@ -111,7 +111,7 @@ export const ProductCard = ({ product, isCheapest, cheapestPrice, savings, onAdd
             </div>
             
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-white text-sm leading-tight line-clamp-2 mb-1">
+              <h3 className="font-semibold text-foreground text-sm leading-tight line-clamp-2 mb-1">
                 {product.name}
               </h3>
               
@@ -205,7 +205,7 @@ export const ProductCard = ({ product, isCheapest, cheapestPrice, savings, onAdd
             
             {/* Product Details */}
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-white text-base leading-tight line-clamp-2 mb-2">
+              <h3 className="font-semibold text-foreground text-base leading-tight line-clamp-2 mb-2">
                 {product.name}
               </h3>
               

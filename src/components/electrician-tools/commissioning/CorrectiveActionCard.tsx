@@ -47,10 +47,10 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
                 </Badge>
               )}
             </div>
-            <h4 className="text-base font-bold text-white mb-1.5">
+            <h4 className="text-base font-bold text-foreground mb-1.5">
               For: {action.forSymptom}
             </h4>
-            <p className="text-sm text-white/80 leading-relaxed">
+            <p className="text-sm text-foreground/80 leading-relaxed">
               {action.action}
             </p>
           </div>
@@ -61,13 +61,13 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
           {action.estimatedTime && (
             <div className="flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/30 rounded-lg px-3 py-1.5">
               <Clock className="h-3.5 w-3.5 text-blue-400" />
-              <span className="text-xs text-white/80 font-medium">{action.estimatedTime}</span>
+              <span className="text-xs text-foreground/80 font-medium">{action.estimatedTime}</span>
             </div>
           )}
           {action.materialsCost && (
             <div className="flex items-center gap-1.5 bg-green-500/10 border border-green-500/30 rounded-lg px-3 py-1.5">
               <PoundSterling className="h-3.5 w-3.5 text-green-400" />
-              <span className="text-xs text-white/80 font-medium">{action.materialsCost}</span>
+              <span className="text-xs text-foreground/80 font-medium">{action.materialsCost}</span>
             </div>
           )}
         </div>
@@ -79,14 +79,14 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
               <AccordionTrigger className="py-3 hover:no-underline">
                 <div className="flex items-center gap-2">
                   <BookOpen className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm font-semibold text-white">Detailed Procedure</span>
+                  <span className="text-sm font-semibold text-foreground">Detailed Procedure</span>
                 </div>
               </AccordionTrigger>
               <AccordionContent>
                 <div className="space-y-3 pt-2">
                   {action.detailedProcedure.map((paragraph, idx) => (
                     <div key={idx} className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-4">
-                      <p className="text-sm text-white/90 leading-relaxed">{paragraph}</p>
+                      <p className="text-sm text-foreground/90 leading-relaxed">{paragraph}</p>
                     </div>
                   ))}
                 </div>
@@ -100,7 +100,7 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
           <div className="space-y-3 mt-4">
             <div className="flex items-center gap-2 mb-3">
               <Settings className="h-4 w-4 text-blue-400" />
-              <h5 className="text-sm font-semibold text-white">Step-by-Step Fix</h5>
+              <h5 className="text-sm font-semibold text-foreground">Step-by-Step Fix</h5>
             </div>
             <div className="space-y-2">
               {action.stepByStepFix.map((step, idx) => (
@@ -108,7 +108,7 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
                   <div className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-500/20 border-2 border-blue-500/50 flex items-center justify-center">
                     <span className="text-sm font-bold text-blue-300">{idx + 1}</span>
                   </div>
-                  <p className="flex-1 text-sm text-white/90 leading-relaxed pt-0.5">{step}</p>
+                  <p className="flex-1 text-sm text-foreground/90 leading-relaxed pt-0.5">{step}</p>
                 </div>
               ))}
             </div>
@@ -122,7 +122,7 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
               <Lightbulb className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
               <h5 className="text-sm font-semibold text-purple-300">Why This Works</h5>
             </div>
-            <p className="text-sm text-white/80 leading-relaxed">{action.whyThisWorks}</p>
+            <p className="text-sm text-foreground/80 leading-relaxed">{action.whyThisWorks}</p>
           </div>
         )}
 
@@ -139,7 +139,7 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
               <AccordionContent className="pt-3">
                 <ul className="space-y-2">
                   {action.alternativeMethods.map((method, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-white/80 leading-relaxed">
+                    <li key={idx} className="flex items-start gap-2 text-sm text-foreground/80 leading-relaxed">
                       <span className="text-amber-400 font-bold">{idx + 1}.</span>
                       <span>{method}</span>
                     </li>
@@ -160,7 +160,7 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
             
             {action.tools && action.tools.length > 0 && (
               <div className="space-y-1.5">
-                <p className="text-xs text-white/60 font-medium">Tools Required:</p>
+                <p className="text-xs text-foreground/60 font-medium">Tools Required:</p>
                 <div className="flex flex-wrap gap-1.5">
                   {action.tools.map((tool, idx) => (
                     <Badge key={idx} variant="secondary" className="text-xs">
@@ -173,7 +173,7 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
             
             {action.partNumbers && action.partNumbers.length > 0 && (
               <div className="space-y-1.5">
-                <p className="text-xs text-white/60 font-medium">Part Numbers:</p>
+                <p className="text-xs text-foreground/60 font-medium">Part Numbers:</p>
                 <div className="flex flex-wrap gap-1.5">
                   {action.partNumbers.map((part, idx) => (
                     <Badge key={idx} variant="secondary" className="text-xs font-mono">
@@ -186,7 +186,7 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
             
             {action.commonBrands && action.commonBrands.length > 0 && (
               <div className="space-y-1.5">
-                <p className="text-xs text-white/60 font-medium">Common Brands:</p>
+                <p className="text-xs text-foreground/60 font-medium">Common Brands:</p>
                 <div className="flex flex-wrap gap-1.5">
                   {action.commonBrands.map((brand, idx) => (
                     <Badge key={idx} variant="outline" className="text-xs text-blue-300 border-blue-500/50">
@@ -224,7 +224,7 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
               <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
               <div className="flex-1">
                 <h5 className="text-sm font-semibold text-green-300 mb-1">Verification Test</h5>
-                <p className="text-sm text-white/80 leading-relaxed">{action.verificationTest}</p>
+                <p className="text-sm text-foreground/80 leading-relaxed">{action.verificationTest}</p>
               </div>
             </div>
           </div>

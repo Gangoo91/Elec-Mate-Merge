@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Shield, Plus, Lightbulb } from "lucide-react";
 
 interface ControlMeasuresGeneratorProps {
@@ -151,14 +151,16 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
             <Plus className="h-4 w-4" />
             Custom Control Measure
           </h4>
-          <div className="flex gap-2">
-            <Input
+          <div className="flex gap-2 items-end">
+            <MobileInput
+              label="Add Custom Measure"
               placeholder="Add a specific control measure..."
               value={customMeasure}
               onChange={(e) => setCustomMeasure(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addCustomMeasure()}
+              className="flex-1"
             />
-            <Button onClick={addCustomMeasure} disabled={!customMeasure.trim()}>
+            <Button onClick={addCustomMeasure} disabled={!customMeasure.trim()} className="min-h-[48px]">
               Add
             </Button>
           </div>

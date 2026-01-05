@@ -548,7 +548,7 @@ const ExpenseManagementTab = () => {
               <div className="flex justify-center">
                 {metric.icon}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -562,13 +562,13 @@ const ExpenseManagementTab = () => {
               icon={section.icon}
               className="text-left hover:bg-elec-gray/50 p-4 rounded-lg border border-elec-yellow/20"
             >
-              <span className="text-white font-semibold">{section.title}</span>
+              <span className="text-foreground font-semibold">{section.title}</span>
             </MobileAccordionTrigger>
             <MobileAccordionContent className="space-y-3 pt-4">
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {section.cards.map((card, cardIndex) => (
                   <Card key={cardIndex} className={`${getCardColorClasses(card.color)} p-4`}>
-                    <h4 className="font-semibold text-white mb-3 text-sm">{card.title}</h4>
+                    <h4 className="font-semibold text-foreground mb-3 text-sm">{card.title}</h4>
                     <ul className="space-y-1.5">
                       {card.items.map((item, itemIndex) => (
                         <li key={itemIndex} className="flex items-start gap-2 text-xs text-muted-foreground leading-relaxed">

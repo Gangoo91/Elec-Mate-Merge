@@ -99,7 +99,7 @@ const ReviewsRatingsTab = () => {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-semibold text-white flex items-center justify-center gap-2">
+        <h2 className="text-2xl font-semibold text-foreground flex items-center justify-center gap-2">
           <Star className="h-6 w-6 text-amber-400 fill-current" />
           Tool Reviews & Ratings
         </h2>
@@ -122,7 +122,7 @@ const ReviewsRatingsTab = () => {
               <div key={index} className="p-4 bg-elec-dark/30 rounded-lg border border-amber-500/20">
                 <div className="space-y-3">
                   <div className="flex items-start justify-between">
-                    <h3 className="font-medium text-white text-sm leading-tight">{tool.name}</h3>
+                    <h3 className="font-medium text-foreground text-sm leading-tight">{tool.name}</h3>
                     <Badge className="bg-amber-500/20 text-amber-400 text-xs">#{index + 1}</Badge>
                   </div>
                   
@@ -167,7 +167,7 @@ const ReviewsRatingsTab = () => {
       {/* Filters */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <Filter className="h-5 w-5" />
             Filter Reviews
           </CardTitle>
@@ -175,11 +175,11 @@ const ReviewsRatingsTab = () => {
         <CardContent>
           <div className="flex flex-wrap gap-4">
             <div>
-              <label className="text-sm font-medium text-white mb-2 block">Category</label>
+              <label className="text-sm font-medium text-foreground mb-2 block">Category</label>
               <select 
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="p-2 bg-elec-dark border border-elec-yellow/30 rounded text-white"
+                className="p-2 bg-elec-dark border border-elec-yellow/30 rounded text-foreground"
               >
                 {categories.map(cat => (
                   <option key={cat} value={cat}>
@@ -190,11 +190,11 @@ const ReviewsRatingsTab = () => {
             </div>
             
             <div>
-              <label className="text-sm font-medium text-white mb-2 block">Minimum Rating</label>
+              <label className="text-sm font-medium text-foreground mb-2 block">Minimum Rating</label>
               <select 
                 value={selectedRating}
                 onChange={(e) => setSelectedRating(e.target.value)}
-                className="p-2 bg-elec-dark border border-elec-yellow/30 rounded text-white"
+                className="p-2 bg-elec-dark border border-elec-yellow/30 rounded text-foreground"
               >
                 {ratings.map(rating => (
                   <option key={rating} value={rating}>
@@ -210,7 +210,7 @@ const ReviewsRatingsTab = () => {
       {/* Recent Reviews */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white">
+          <CardTitle className="text-foreground">
             Recent Reviews ({filteredReviews.length})
           </CardTitle>
         </CardHeader>
@@ -222,7 +222,7 @@ const ReviewsRatingsTab = () => {
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-medium text-white">{review.toolName}</h3>
+                        <h3 className="font-medium text-foreground">{review.toolName}</h3>
                         <Badge variant="outline" className="text-xs border-elec-yellow/30">
                           {review.category}
                         </Badge>
@@ -263,7 +263,7 @@ const ReviewsRatingsTab = () => {
                   </div>
                   
                   <div>
-                    <h4 className="font-medium text-white mb-2">{review.title}</h4>
+                    <h4 className="font-medium text-foreground mb-2">{review.title}</h4>
                     <p className="text-muted-foreground text-sm leading-relaxed">
                       {review.content}
                     </p>

@@ -457,9 +457,9 @@ const BasicToolsMaterialsGuide = () => {
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold tracking-tight mb-4 text-elec-yellow">Basic Tools & Materials Guide</h1>
-        <p className="text-muted-foreground text-lg max-w-3xl mx-auto mb-6">
+      <div className="text-center mb-6 sm:mb-8 px-2">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4 text-elec-yellow">Basic Tools & Materials Guide</h1>
+        <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto mb-4 sm:mb-6">
           Complete guide to electrical tools, materials, and equipment for UK apprentices. 
           Learn what you need, when you need it, and where to get the best deals.
         </p>
@@ -507,7 +507,7 @@ const BasicToolsMaterialsGuide = () => {
                   {expandedCableQuiz[currentQuiz].question}
                 </h3>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {expandedCableQuiz[currentQuiz].options.map((option, index) => (
                     <Button
                       key={index}
@@ -607,9 +607,9 @@ const BasicToolsMaterialsGuide = () => {
         <CardContent>
           <div className="space-y-8">
             {essentialToolsData.map((category, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-semibold text-white">{category.category}</h3>
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
+                  <h3 className="text-lg sm:text-xl font-semibold text-white">{category.category}</h3>
                   <Badge variant="outline" className={`
                     ${category.priority === 'Critical' ? 'border-red-500 text-red-400' : 
                       category.priority === 'Essential' ? 'border-elec-yellow text-elec-yellow' : 
@@ -619,9 +619,9 @@ const BasicToolsMaterialsGuide = () => {
                   </Badge>
                 </div>
                 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {category.tools.map((tool, toolIndex) => (
-                    <div key={toolIndex} className="bg-elec-dark/30 p-4 rounded-lg">
+                    <div key={toolIndex} className="bg-elec-dark/30 p-3 sm:p-4 rounded-lg">
                       <div className="flex items-start justify-between mb-2">
                         <h4 className="font-medium text-white">{tool.name}</h4>
                         <span className="text-sm text-green-300 flex items-center gap-1">
@@ -676,13 +676,13 @@ const BasicToolsMaterialsGuide = () => {
         <CardContent>
           <div className="space-y-8">
             {ukMaterialGuide.map((material, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
-                <h4 className="font-semibold text-white mb-4 flex items-center gap-2 text-xl">
-                  <span className="text-2xl">⚡</span>
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 sm:p-6">
+                <h4 className="font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2 text-lg sm:text-xl">
+                  <span className="text-xl sm:text-2xl">⚡</span>
                   {material.type}
                 </h4>
-                
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div className="space-y-4">
                     <div>
                       <h5 className="text-sm font-medium text-elec-yellow mb-2">Available Sizes</h5>
@@ -710,7 +710,7 @@ const BasicToolsMaterialsGuide = () => {
                   
                   <div>
                     <h5 className="text-sm font-medium text-elec-yellow mb-2">Applications by Size</h5>
-                    <ul className="text-xs text-muted-foreground space-y-1 max-h-32 overflow-y-auto">
+                    <ul className="text-xs text-muted-foreground space-y-1 max-h-40 sm:max-h-32 overflow-y-auto">
                       {material.applications.map((app, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <span className="text-green-400 mt-0.5">•</span>
@@ -738,14 +738,14 @@ const BasicToolsMaterialsGuide = () => {
         <CardContent>
           <div className="space-y-8">
             {cableFittingsGuide.map((category, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-white mb-2">{category.category}</h3>
-                <p className="text-sm text-muted-foreground mb-6">{category.description}</p>
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">{category.category}</h3>
+                <p className="text-sm text-muted-foreground mb-4 sm:mb-6">{category.description}</p>
                 
                 <div className="space-y-6">
                   {category.fittings.map((fitting, fittingIndex) => (
-                    <div key={fittingIndex} className="bg-elec-dark/30 p-5 rounded-lg">
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+                    <div key={fittingIndex} className="bg-elec-dark/30 p-3 sm:p-5 rounded-lg">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-4">
                         <div>
                           <h4 className="font-medium text-white mb-2">{fitting.name}</h4>
                           <p className="text-sm text-muted-foreground mb-1">
@@ -759,9 +759,9 @@ const BasicToolsMaterialsGuide = () => {
                           </p>
                         </div>
                         
-                        <div className="lg:col-span-2">
-                          <h5 className="font-medium text-elec-yellow mb-3">Installation Steps</h5>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div className="md:col-span-2">
+                          <h5 className="font-medium text-elec-yellow mb-2 sm:mb-3">Installation Steps</h5>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             {fitting.termination_steps.map((step, stepIndex) => (
                               <div key={stepIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
                                 <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
@@ -792,9 +792,9 @@ const BasicToolsMaterialsGuide = () => {
           <p className="text-muted-foreground">Essential tools and safety considerations for different cable work</p>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {toolSelection.map((task, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-5">
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 sm:p-5">
                 <h4 className="font-semibold text-white mb-4">{task.task}</h4>
                 
                 <div className="space-y-4">
@@ -840,23 +840,23 @@ const BasicToolsMaterialsGuide = () => {
         <CardContent>
           <div className="space-y-6">
             {apprenticeProgression.map((year, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
-                <div className="flex items-center justify-between mb-4">
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
                   <div className="flex items-center gap-3">
-                    <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold">
+                    <div className="bg-elec-yellow text-black rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center font-bold text-sm sm:text-base">
                       {index + 1}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white">{year.year}</h3>
-                      <p className="text-sm text-elec-yellow">{year.focus}</p>
+                      <h3 className="font-semibold text-white text-sm sm:text-base">{year.year}</h3>
+                      <p className="text-xs sm:text-sm text-elec-yellow">{year.focus}</p>
                     </div>
                   </div>
-                  <Badge variant="outline" className="border-green-500 text-green-400">
+                  <Badge variant="outline" className="border-green-500 text-green-400 text-xs">
                     {year.budget}
                   </Badge>
                 </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <h4 className="font-medium text-white mb-2">Essential Purchases</h4>
                     <ul className="text-sm text-muted-foreground space-y-1">
@@ -892,13 +892,13 @@ const BasicToolsMaterialsGuide = () => {
         <CardContent>
           <div className="space-y-6">
             {ukSuppliersGuide.map((category, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-5">
-                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <Star className="h-5 w-5 text-elec-yellow" />
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 sm:p-5">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2 text-sm sm:text-base">
+                  <Star className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
                   {category.name}
                 </h3>
-                
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                   <div>
                     <h4 className="text-sm font-medium text-elec-yellow mb-2">Suppliers</h4>
                     <ul className="text-sm text-muted-foreground space-y-1">
@@ -933,9 +933,9 @@ const BasicToolsMaterialsGuide = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <h4 className="font-semibold text-white mb-3">Quality Investment Strategy</h4>
+              <h4 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">Quality Investment Strategy</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />

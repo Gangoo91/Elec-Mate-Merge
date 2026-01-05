@@ -32,7 +32,7 @@ export const HealthSafetySuccess = ({
       <Card className="max-w-lg w-full border-orange-500/20 bg-gradient-to-br from-orange-500/10 via-background to-background">
         <CardContent className="p-8 text-center space-y-6">
           <div className="inline-flex p-4 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 animate-bounce-in">
-            <CheckCircle2 className="h-16 w-16 text-white" />
+            <CheckCircle2 className="h-16 w-16 text-foreground" />
           </div>
 
           <div>
@@ -76,7 +76,7 @@ export const HealthSafetySuccess = ({
 
           <Button
             onClick={onClose}
-            className="w-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white h-12 touch-manipulation"
+            className="w-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-foreground h-12 touch-manipulation"
           >
             View Results
           </Button>

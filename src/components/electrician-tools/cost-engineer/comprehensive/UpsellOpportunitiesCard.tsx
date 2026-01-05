@@ -14,7 +14,7 @@ const UpsellOpportunitiesCard = ({ upsells }: UpsellOpportunitiesCardProps) => {
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+          <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
             Upsell Opportunities
           </CardTitle>
@@ -31,7 +31,7 @@ const UpsellOpportunitiesCard = ({ upsells }: UpsellOpportunitiesCardProps) => {
                 <div className="flex flex-col gap-3 flex-1 text-left w-full pr-8">
                   <div className="flex items-start gap-2 w-full">
                     {upsell.isHot && <Flame className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />}
-                    <span className="font-medium text-white text-base leading-snug flex-1">
+                    <span className="font-medium text-foreground text-base leading-snug flex-1">
                       {upsell.opportunity}
                     </span>
                   </div>
@@ -47,15 +47,15 @@ const UpsellOpportunitiesCard = ({ upsells }: UpsellOpportunitiesCardProps) => {
               </AccordionTrigger>
               <AccordionContent>
                 <div className="space-y-3 pt-2 text-left">
-                  <div className="text-base text-white">
+                  <div className="text-base text-foreground">
                     <span className="font-medium text-amber-400">Timing:</span> {upsell.timing}
                   </div>
                   <div className="p-4 rounded-lg bg-accent/30 border border-border/30">
-                    <div className="text-base font-medium text-white mb-2 flex items-center gap-2">
+                    <div className="text-base font-medium text-foreground mb-2 flex items-center gap-2">
                       <span>💬</span>
                       <span>Conversation Script:</span>
                     </div>
-                    <p className="text-base text-white leading-relaxed">{upsell.script}</p>
+                    <p className="text-base text-foreground leading-relaxed">{upsell.script}</p>
                   </div>
                 </div>
               </AccordionContent>

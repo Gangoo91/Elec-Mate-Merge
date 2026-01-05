@@ -121,7 +121,7 @@ const InvoiceCardList = ({
       return {
         text: "Send Reminder",
         icon: <Bell className="h-4 w-4" />,
-        className: "bg-red-600 hover:bg-red-700 text-white border-red-600 font-medium",
+        className: "bg-red-600 hover:bg-red-700 text-foreground border-red-600 font-medium",
         ariaLabel: `Send payment reminder for invoice ${invoice.invoice_number}`,
       };
     }
@@ -130,7 +130,7 @@ const InvoiceCardList = ({
       return {
         text: "View Invoice",
         icon: <Eye className="h-4 w-4" />,
-        className: "bg-blue-600 hover:bg-blue-700 text-white border-blue-600 font-medium",
+        className: "bg-blue-600 hover:bg-blue-700 text-foreground border-blue-600 font-medium",
         ariaLabel: `View invoice ${invoice.invoice_number}`,
       };
     }

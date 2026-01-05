@@ -108,7 +108,7 @@ const PhasesSection = ({
                             <CheckCircle2 className="h-4 w-4 text-success" />
                           )}
                         </div>
-                        <div className="flex items-center gap-3 mt-1 text-sm text-white/70">
+                        <div className="flex items-center gap-3 mt-1 text-sm text-foreground/70">
                           <span>{phase.duration} {phase.durationUnit || 'days'}</span>
                           {calculatedDate && (
                             <>
@@ -122,7 +122,7 @@ const PhasesSection = ({
 
                     {/* Description */}
                     {phase.description && (
-                      <p className="text-base leading-relaxed text-white">
+                      <p className="text-base leading-relaxed text-foreground">
                         {phase.description}
                       </p>
                     )}
@@ -131,7 +131,7 @@ const PhasesSection = ({
                     {phase.practicalNotes && (
                       <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4 sm:p-5 flex gap-3">
                         <Lightbulb className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                        <p className="text-sm sm:text-base text-white leading-relaxed">
+                        <p className="text-sm sm:text-base text-foreground leading-relaxed">
                           {phase.practicalNotes.replace(/^WHY THIS ORDER[:\s]*/i, '')}
                         </p>
                       </div>
@@ -140,7 +140,7 @@ const PhasesSection = ({
                     {/* Key Actions - ENHANCED WITH MORE INFO */}
                     {phase.tasks && phase.tasks.length > 0 && (
                       <div className="bg-card/50 rounded-lg p-4 sm:p-5 border border-border/40">
-                        <h5 className="text-sm sm:text-base font-semibold text-white mb-4 flex items-center gap-2">
+                        <h5 className="text-sm sm:text-base font-semibold text-foreground mb-4 flex items-center gap-2">
                           <CheckCircle2 className="h-5 w-5 text-pink-400" />
                           Key Actions
                         </h5>
@@ -157,7 +157,7 @@ const PhasesSection = ({
                             const hasWarning = /asap|urgent|critical|before|must/i.test(taskText);
 
                             return (
-                              <li key={idx} className="flex gap-3 text-sm sm:text-base text-white leading-relaxed items-start border-l-2 border-pink-400/30 pl-4">
+                              <li key={idx} className="flex gap-3 text-sm sm:text-base text-foreground leading-relaxed items-start border-l-2 border-pink-400/30 pl-4">
                                 <span className="flex-shrink-0 mt-1">
                                   {hasOrder && '📦'}
                                   {hasInstall && '🔧'}
@@ -203,7 +203,7 @@ const PhasesSection = ({
 
                     {/* Dependencies & Milestones */}
                     {(phase.dependencies && phase.dependencies.length > 0) || (phase.milestones && phase.milestones.length > 0) ? (
-                      <div className="flex items-center gap-3 flex-wrap text-sm text-white/70">
+                      <div className="flex items-center gap-3 flex-wrap text-sm text-foreground/70">
                         {phase.dependencies && phase.dependencies.length > 0 && (
                           <div>
                             <span className="font-medium">Dependencies: </span>
@@ -234,7 +234,7 @@ const PhasesSection = ({
                         const hasWarning = /asap|urgent|critical|before|must/i.test(taskText);
 
                         return (
-                          <li key={idx} className="flex gap-3 text-sm sm:text-base text-white leading-relaxed items-start">
+                          <li key={idx} className="flex gap-3 text-sm sm:text-base text-foreground leading-relaxed items-start">
                             <span className="text-pink-400 mt-1 flex-shrink-0">•</span>
                             <div className="flex-1">
                               <span className={hasWarning ? 'font-medium text-elec-yellow' : ''}>

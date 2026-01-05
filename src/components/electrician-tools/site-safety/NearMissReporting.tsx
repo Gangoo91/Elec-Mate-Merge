@@ -380,7 +380,7 @@ export const NearMissReporting: React.FC = () => {
       </div>
       
       <div className="space-y-2">
-        <Label className="text-sm text-white">Quick templates</Label>
+        <Label className="text-sm text-foreground">Quick templates</Label>
         <div className="grid grid-cols-2 gap-2">
           {QUICK_TEMPLATES.map(t => (
             <button 
@@ -403,7 +403,7 @@ export const NearMissReporting: React.FC = () => {
         <CardContent className="p-4 space-y-6">
           {/* When & Where Section */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
               <Clock className="h-4 w-4" />When & Where
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -427,7 +427,7 @@ export const NearMissReporting: React.FC = () => {
 
           {/* What Happened Section */}
           <div className="space-y-4 pt-4 border-t border-border">
-            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
               <AlertTriangle className="h-4 w-4" />What Happened
             </h3>
             <div id="field-category" className="space-y-2">
@@ -466,7 +466,7 @@ export const NearMissReporting: React.FC = () => {
 
           {/* Actions (Optional) Section */}
           <div className="space-y-4 pt-4 border-t border-border">
-            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
               <Shield className="h-4 w-4" />Actions (Optional)
             </h3>
             <div className="space-y-2">
@@ -486,10 +486,10 @@ export const NearMissReporting: React.FC = () => {
           {/* People Involved (Optional) - Collapsible */}
           <Collapsible open={peopleOpen} onOpenChange={setPeopleOpen} className="pt-4 border-t border-border">
             <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation">
-              <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+              <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
                 <Users className="h-4 w-4" />People Involved (Optional)
               </h3>
-              {peopleOpen ? <ChevronUp className="h-5 w-5 text-white" /> : <ChevronDown className="h-5 w-5 text-white" />}
+              {peopleOpen ? <ChevronUp className="h-5 w-5 text-foreground" /> : <ChevronDown className="h-5 w-5 text-foreground" />}
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4 pt-4">
               {/* Witnesses */}
@@ -527,10 +527,10 @@ export const NearMissReporting: React.FC = () => {
           {/* Environment & Equipment (Optional) - Collapsible */}
           <Collapsible open={environmentOpen} onOpenChange={setEnvironmentOpen} className="pt-4 border-t border-border">
             <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation">
-              <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+              <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
                 <CloudSun className="h-4 w-4" />Environment & Equipment (Optional)
               </h3>
-              {environmentOpen ? <ChevronUp className="h-5 w-5 text-white" /> : <ChevronDown className="h-5 w-5 text-white" />}
+              {environmentOpen ? <ChevronUp className="h-5 w-5 text-foreground" /> : <ChevronDown className="h-5 w-5 text-foreground" />}
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4 pt-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -574,10 +574,10 @@ export const NearMissReporting: React.FC = () => {
           {/* Investigation (Optional) - Collapsible */}
           <Collapsible open={investigationOpen} onOpenChange={setInvestigationOpen} className="pt-4 border-t border-border">
             <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation">
-              <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+              <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
                 <UserCheck className="h-4 w-4" />Investigation (Optional)
               </h3>
-              {investigationOpen ? <ChevronUp className="h-5 w-5 text-white" /> : <ChevronDown className="h-5 w-5 text-white" />}
+              {investigationOpen ? <ChevronUp className="h-5 w-5 text-foreground" /> : <ChevronDown className="h-5 w-5 text-foreground" />}
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4 pt-4">
               <div className="space-y-3">
@@ -606,7 +606,7 @@ export const NearMissReporting: React.FC = () => {
 
           {/* Photos Section */}
           <div className="space-y-4 pt-4 border-t border-border">
-            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
               <Camera className="h-4 w-4" />Photos (Optional)
             </h3>
             <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhotoSelect} className="hidden" />

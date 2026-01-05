@@ -30,7 +30,14 @@ import AutoProcessOnsite from "@/pages/AutoProcessOnsite";
 import KnowledgeUploader from "@/pages/Admin/KnowledgeUploader";
 import LearningReview from "@/pages/admin/LearningReview";
 import CircuitDesigner from "@/pages/electrician-tools/CircuitDesigner";
+import InspectionRoutes from "@/routes/InspectionRoutes";
+import StudyCentreRoutes from "@/routes/StudyCentreRoutes";
+import UpskillingRoutes from "@/routes/UpskillingRoutes";
 import EnrichmentMonitor from "@/pages/Admin/EnrichmentMonitor";
+import EmployerDashboard from "@/pages/employer/EmployerDashboard";
+import CollegeDashboard from "@/pages/college/CollegeDashboard";
+import PrivacyPolicy from "@/pages/legal/PrivacyPolicy";
+import TermsOfService from "@/pages/legal/TermsOfService";
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();
@@ -48,6 +55,8 @@ const AppRouter = () => {
       <Route path="/index" element={<Index />} />
       <Route path="/auth/signin" element={<SignIn />} />
       <Route path="/auth/signup" element={<SignUp />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+      <Route path="/terms" element={<TermsOfService />} />
       <Route path="/quote/:token" element={<PublicQuote />} />
       <Route path="/public-quote/:token" element={<PublicQuote />} />
       <Route path="/pdf-generator" element={<LaTeXPDFGeneratorPage />} />
@@ -95,6 +104,21 @@ const AppRouter = () => {
         <Route path="electrician/quotes/view/:id" element={<QuoteViewPage />} />
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         
+        {/* Employer Hub Routes */}
+        
+        {/* Inspection & Testing Routes */}
+        <Route path="electrician/inspection-testing/*" element={<InspectionRoutes />} />
+        
+        {/* Study Centre Routes */}
+        <Route path="study-centre/*" element={<StudyCentreRoutes />} />
+        
+        {/* Professional Upskilling Routes */}
+        <Route path="electrician/upskilling/*" element={<UpskillingRoutes />} />
+        <Route path="employer" element={<EmployerDashboard />} />
+
+        {/* College Hub Routes */}
+        <Route path="college" element={<CollegeDashboard />} />
+
         {/* Apprentice Routes */}
         <Route path="apprentice/*" element={<ApprenticeRoutes />} />
         

@@ -291,9 +291,9 @@ const WiringSchematicDisplay = ({
                 >
                   <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-sm sm:text-base transition-all ${
                     step.safety_critical 
-                      ? 'bg-red-500 text-white' 
+                      ? 'bg-red-500 text-foreground' 
                       : completedSteps[step.step]
-                      ? 'bg-green-500 text-white'
+                      ? 'bg-green-500 text-foreground'
                       : 'bg-muted text-foreground'
                   }`}>
                     {completedSteps[step.step] ? '✓' : step.step}

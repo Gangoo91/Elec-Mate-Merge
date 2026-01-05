@@ -63,7 +63,7 @@ const KeyActionItems = ({ structuredData }: KeyActionItemsProps) => {
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
           <CheckSquare className="h-5 w-5 text-elec-yellow" />
           Key Action Items
         </CardTitle>
@@ -81,7 +81,7 @@ const KeyActionItems = ({ structuredData }: KeyActionItemsProps) => {
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1">
-                  <span className="text-base sm:text-sm font-medium text-white leading-relaxed">{action.text}</span>
+                  <span className="text-base sm:text-sm font-medium text-foreground leading-relaxed">{action.text}</span>
                 </div>
               </div>
             </div>

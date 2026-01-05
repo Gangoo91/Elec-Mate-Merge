@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle } from "lucide-react";
 import { hazardCategories, type HazardCategory } from "@/data/hazards";
@@ -50,14 +50,12 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div>
-              <Input
-                placeholder="Search hazards..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="mb-4"
-              />
-            </div>
+            <MobileInput
+              label="Search Hazards"
+              placeholder="Search hazards..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredHazards.map((category) => (
@@ -92,14 +90,16 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
                 <CardTitle className="text-blue-300 text-sm">Custom Hazard</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex gap-2">
-                  <Input
+                <div className="flex gap-2 items-end">
+                  <MobileInput
+                    label="Custom Hazard"
                     placeholder="Describe a specific hazard not listed above..."
                     value={customHazard}
                     onChange={(e) => setCustomHazard(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleCustomHazardSubmit()}
+                    className="flex-1"
                   />
-                  <Button onClick={handleCustomHazardSubmit} disabled={!customHazard.trim()}>
+                  <Button onClick={handleCustomHazardSubmit} disabled={!customHazard.trim()} className="min-h-[48px]">
                     Add
                   </Button>
                 </div>

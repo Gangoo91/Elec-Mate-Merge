@@ -59,7 +59,7 @@ export const InChatAgentSelector = ({
               <div key={agentId} className="flex items-center flex-shrink-0">
                 <div className={cn(
                   "flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] transition-all",
-                  isComplete ? "bg-green-500/10 text-green-400" : "bg-white/5 text-white/30"
+                  isComplete ? "bg-green-500/10 text-green-400" : "bg-white/5 text-foreground/30"
                 )}>
                   <Icon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                   <span className="hidden sm:inline">{agent.name}</span>
@@ -67,7 +67,7 @@ export const InChatAgentSelector = ({
                 {idx < agentOrder.length - 1 && (
                   <ArrowRight className={cn(
                     "h-2.5 w-2.5 mx-0.5 flex-shrink-0",
-                    isComplete ? "text-green-400/40" : "text-white/20"
+                    isComplete ? "text-green-400/40" : "text-foreground/20"
                   )} />
                 )}
               </div>

@@ -38,7 +38,7 @@ export const ProgressHeroBar = ({
           <div className="flex items-center gap-3">
             <Zap className="h-10 w-10 text-elec-yellow" />
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
                 Commissioning Specialist
               </h1>
               <Badge variant="outline" className="mt-2 border-elec-yellow/30 text-elec-yellow">
@@ -52,8 +52,8 @@ export const ProgressHeroBar = ({
         <div className="space-y-3 mb-6">
           <Progress value={completionPercentage} className="h-2" />
           <div className="text-right">
-            <span className="text-2xl font-bold text-white">{completionPercentage}%</span>
-            <span className="text-sm text-white/70 ml-2">Complete</span>
+            <span className="text-2xl font-bold text-foreground">{completionPercentage}%</span>
+            <span className="text-sm text-foreground/70 ml-2">Complete</span>
           </div>
         </div>
 
@@ -62,30 +62,30 @@ export const ProgressHeroBar = ({
           <div className="bg-elec-dark/40 border border-elec-yellow/20 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-2">
               <Eye className="h-4 w-4 text-elec-yellow" />
-              <div className="text-xs text-white/70">Visual</div>
+              <div className="text-xs text-foreground/70">Visual</div>
             </div>
-            <div className="text-2xl font-bold text-white">{visualCount}</div>
+            <div className="text-2xl font-bold text-foreground">{visualCount}</div>
           </div>
           <div className="bg-elec-dark/40 border border-elec-yellow/20 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-2">
               <AlertTriangle className="h-4 w-4 text-elec-yellow" />
-              <div className="text-xs text-white/70">Dead Tests</div>
+              <div className="text-xs text-foreground/70">Dead Tests</div>
             </div>
-            <div className="text-2xl font-bold text-white">{deadCount}</div>
+            <div className="text-2xl font-bold text-foreground">{deadCount}</div>
           </div>
           <div className="bg-elec-dark/40 border border-elec-yellow/20 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-2">
               <Zap className="h-4 w-4 text-elec-yellow" />
-              <div className="text-xs text-white/70">Live Tests</div>
+              <div className="text-xs text-foreground/70">Live Tests</div>
             </div>
-            <div className="text-2xl font-bold text-white">{liveCount}</div>
+            <div className="text-2xl font-bold text-foreground">{liveCount}</div>
           </div>
           <div className="bg-elec-dark/40 border border-elec-yellow/20 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-2">
               <Clock className="h-4 w-4 text-elec-yellow" />
-              <div className="text-xs text-white/70">Est. Time</div>
+              <div className="text-xs text-foreground/70">Est. Time</div>
             </div>
-            <div className="text-2xl font-bold text-white">{estimatedHours}h</div>
+            <div className="text-2xl font-bold text-foreground">{estimatedHours}h</div>
           </div>
         </div>
 

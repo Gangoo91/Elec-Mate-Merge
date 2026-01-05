@@ -273,7 +273,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
               </Button>
               <Button
                 onClick={() => onUseTemplate(template)}
-                className="bg-green-600 hover:bg-green-700 text-white"
+                className="bg-green-600 hover:bg-green-700 text-foreground"
               >
                 Use This Template
               </Button>

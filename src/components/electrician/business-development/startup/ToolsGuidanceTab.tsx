@@ -107,7 +107,7 @@ const ToolsGuidanceTab = () => {
               <div className="flex flex-col gap-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
-                    <h4 className="font-medium text-white">{template.name}</h4>
+                    <h4 className="font-medium text-foreground">{template.name}</h4>
                     <p className="text-sm text-muted-foreground mt-1">{template.description}</p>
                   </div>
                   <Button size="sm" className="flex-shrink-0">
@@ -140,7 +140,7 @@ const ToolsGuidanceTab = () => {
               <div className="flex flex-col gap-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
-                    <h4 className="font-medium text-white">{tool.name}</h4>
+                    <h4 className="font-medium text-foreground">{tool.name}</h4>
                     <p className="text-sm text-muted-foreground mt-1">{tool.description}</p>
                   </div>
                   <div className="flex flex-col items-end gap-2">
@@ -175,7 +175,7 @@ const ToolsGuidanceTab = () => {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <div className="flex items-start justify-between gap-3">
-                    <h4 className="font-medium text-white">{software.name}</h4>
+                    <h4 className="font-medium text-foreground">{software.name}</h4>
                     {software.ukSpecific && (
                       <Badge variant="outline" className="text-xs text-purple-300 border-purple-400/30 bg-purple-500/10 flex-shrink-0">
                         UK Specific

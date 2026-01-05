@@ -103,7 +103,7 @@ const ApprenticeScenarios = () => {
               >
                 <div className="flex items-center justify-between">
                   <div className="space-y-2">
-                    <h3 className="font-semibold text-white">{scenario.title}</h3>
+                    <h3 className="font-semibold text-foreground">{scenario.title}</h3>
                     <div className="flex flex-wrap gap-1">
                       {scenario.tags.map((tag) => (
                         <Badge key={tag} variant="outline" className="text-xs border-elec-yellow/30">
@@ -125,7 +125,7 @@ const ApprenticeScenarios = () => {
                 <>
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold text-white">{scenario.title}</h3>
+                      <h3 className="text-lg font-semibold text-foreground">{scenario.title}</h3>
                       <Button
                         variant="outline"
                         size="sm"
@@ -147,12 +147,12 @@ const ApprenticeScenarios = () => {
 
                   <div className="space-y-4">
                     <div className="border border-elec-yellow/20 rounded-lg p-4">
-                      <h4 className="font-semibold text-white mb-2">The Situation</h4>
+                      <h4 className="font-semibold text-foreground mb-2">The Situation</h4>
                       <p className="text-sm text-muted-foreground">{scenario.situation}</p>
                     </div>
 
                     <div className="border border-red-500/20 rounded-lg p-4 bg-red-500/5">
-                      <h4 className="font-semibold text-white mb-2">Stress Factors</h4>
+                      <h4 className="font-semibold text-foreground mb-2">Stress Factors</h4>
                       <ul className="space-y-1">
                         {scenario.stressors.map((stressor, index) => (
                           <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -164,7 +164,7 @@ const ApprenticeScenarios = () => {
                     </div>
 
                     <div className="border border-green-500/20 rounded-lg p-4 bg-green-500/5">
-                      <h4 className="font-semibold text-white mb-2">Effective Strategies</h4>
+                      <h4 className="font-semibold text-foreground mb-2">Effective Strategies</h4>
                       <ul className="space-y-2">
                         {scenario.strategies.map((strategy, index) => (
                           <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -176,7 +176,7 @@ const ApprenticeScenarios = () => {
                     </div>
 
                     <div className="border border-elec-yellow/20 rounded-lg p-4">
-                      <h4 className="font-semibold text-white mb-2">Positive Outcome</h4>
+                      <h4 className="font-semibold text-foreground mb-2">Positive Outcome</h4>
                       <p className="text-sm text-muted-foreground">{scenario.outcome}</p>
                     </div>
                   </div>

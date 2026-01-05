@@ -213,7 +213,7 @@ const OperationalSetupTab = () => {
             <h4 className="font-semibold text-blue-400 mb-2">Setup Phase Timeline</h4>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <h5 className="font-medium text-white mb-2">Week 1-2</h5>
+                <h5 className="font-medium text-foreground mb-2">Week 1-2</h5>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>• Purchase essential tools</li>
                   <li>• Set up insurance</li>
@@ -221,7 +221,7 @@ const OperationalSetupTab = () => {
                 </ul>
               </div>
               <div>
-                <h5 className="font-medium text-white mb-2">Week 3-4</h5>
+                <h5 className="font-medium text-foreground mb-2">Week 3-4</h5>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>• Vehicle acquisition</li>
                   <li>• Software setup</li>
@@ -229,7 +229,7 @@ const OperationalSetupTab = () => {
                 </ul>
               </div>
               <div>
-                <h5 className="font-medium text-white mb-2">Week 5-6</h5>
+                <h5 className="font-medium text-foreground mb-2">Week 5-6</h5>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>• Office organisation</li>
                   <li>• Process documentation</li>
@@ -237,7 +237,7 @@ const OperationalSetupTab = () => {
                 </ul>
               </div>
               <div>
-                <h5 className="font-medium text-white mb-2">Week 7-8</h5>
+                <h5 className="font-medium text-foreground mb-2">Week 7-8</h5>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>• Final testing</li>
                   <li>• First customer jobs</li>
@@ -250,13 +250,13 @@ const OperationalSetupTab = () => {
       </Card>
 
       <div className="space-y-6">
-        <h3 className="text-xl font-semibold text-white">Essential Setup Areas</h3>
+        <h3 className="text-xl font-semibold text-foreground">Essential Setup Areas</h3>
         {operationalAreas.map((area, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div>
-                  <CardTitle className="text-white text-lg">{area.title}</CardTitle>
+                  <CardTitle className="text-foreground text-lg">{area.title}</CardTitle>
                   <p className="text-sm text-muted-foreground">{area.timeframe}</p>
                 </div>
                 <Badge className={getPriorityColor(area.priority)}>
@@ -272,7 +272,7 @@ const OperationalSetupTab = () => {
                 </div>
 
                 <div>
-                  <h5 className="font-medium text-white mb-2">Key Items Required:</h5>
+                  <h5 className="font-medium text-foreground mb-2">Key Items Required:</h5>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {area.items.map((item, itemIndex) => (
                       <div key={itemIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -289,7 +289,7 @@ const OperationalSetupTab = () => {
       </div>
 
       <div className="space-y-6">
-        <h3 className="text-xl font-semibold text-white">Business Software Solutions</h3>
+        <h3 className="text-xl font-semibold text-foreground">Business Software Solutions</h3>
         {softwareTools.map((category, index) => (
           <Card key={index} className="border-blue-500/20 bg-blue-500/10">
             <CardHeader>
@@ -303,7 +303,7 @@ const OperationalSetupTab = () => {
                 {category.tools.map((tool, toolIndex) => (
                   <div key={toolIndex} className="border border-blue-500/20 rounded-lg p-3">
                     <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-semibold text-white">{tool.name}</h4>
+                      <h4 className="font-semibold text-foreground">{tool.name}</h4>
                       <span className="text-sm text-blue-400">{tool.cost}</span>
                     </div>
                     <div className="space-y-1">
@@ -335,7 +335,7 @@ const OperationalSetupTab = () => {
               {dailyOperations.map((operation, index) => (
                 <div key={index} className="border border-green-500/20 rounded-lg p-3">
                   <div className="flex justify-between items-start mb-1">
-                    <h4 className="font-semibold text-white">{operation.task}</h4>
+                    <h4 className="font-semibold text-foreground">{operation.task}</h4>
                     <div className="text-right">
                       <div className="text-sm text-green-400">{operation.time}</div>
                       <div className="text-xs text-muted-foreground">{operation.duration}</div>
@@ -359,7 +359,7 @@ const OperationalSetupTab = () => {
             <div className="space-y-4">
               {qualityStandards.map((standard, index) => (
                 <div key={index} className="border border-amber-500/20 rounded-lg p-3">
-                  <h4 className="font-semibold text-white mb-2">{standard.area}</h4>
+                  <h4 className="font-semibold text-foreground mb-2">{standard.area}</h4>
                   <div className="space-y-1">
                     {standard.standards.map((item, itemIndex) => (
                       <div key={itemIndex} className="flex items-start gap-2 text-xs text-muted-foreground">
@@ -402,7 +402,7 @@ const OperationalSetupTab = () => {
             <h4 className="font-semibold text-purple-300 mb-3">Operational Excellence Checklist</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
-                <h5 className="font-medium text-white mb-2">Systems Setup</h5>
+                <h5 className="font-medium text-foreground mb-2">Systems Setup</h5>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>□ Accounting software configured</li>
                   <li>□ Customer database created</li>
@@ -411,7 +411,7 @@ const OperationalSetupTab = () => {
                 </ul>
               </div>
               <div>
-                <h5 className="font-medium text-white mb-2">Process Documentation</h5>
+                <h5 className="font-medium text-foreground mb-2">Process Documentation</h5>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>□ Standard operating procedures</li>
                   <li>□ Safety protocols documented</li>

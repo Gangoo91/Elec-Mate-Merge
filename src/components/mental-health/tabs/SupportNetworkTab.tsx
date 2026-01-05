@@ -174,7 +174,7 @@ const SupportNetworkTab = () => {
               <div key={index} className="p-4 bg-red-500/10 rounded-lg border border-red-500/20">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div className="flex-1">
-                    <h4 className="font-semibold text-white text-sm">{service.name}</h4>
+                    <h4 className="font-semibold text-foreground text-sm">{service.name}</h4>
                     <p className="text-xs text-muted-foreground mb-2">{service.description}</p>
                     <div className="flex flex-wrap gap-4 text-xs">
                       <span className="flex items-center gap-1">
@@ -210,7 +210,7 @@ const SupportNetworkTab = () => {
               <div key={index} className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div className="flex-1">
-                    <h4 className="font-semibold text-white text-sm">{service.name}</h4>
+                    <h4 className="font-semibold text-foreground text-sm">{service.name}</h4>
                     <p className="text-xs text-muted-foreground mb-2">{service.description}</p>
                     <div className="flex items-center gap-1 text-xs">
                       <Phone className="h-3 w-3" />
@@ -240,7 +240,7 @@ const SupportNetworkTab = () => {
               <div key={index} className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                   <div className="flex-1">
-                    <h4 className="font-semibold text-white text-sm">{service.name}</h4>
+                    <h4 className="font-semibold text-foreground text-sm">{service.name}</h4>
                     <p className="text-xs text-muted-foreground mb-2">{service.description}</p>
                     <div className="space-y-1 text-xs">
                       <div className="flex items-center gap-1">
@@ -275,7 +275,7 @@ const SupportNetworkTab = () => {
               <div key={index} className="p-4 bg-teal-500/10 rounded-lg border border-teal-500/20">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                   <div className="flex-1">
-                    <h4 className="font-semibold text-white text-sm">{service.name}</h4>
+                    <h4 className="font-semibold text-foreground text-sm">{service.name}</h4>
                     <p className="text-xs text-muted-foreground mb-2">{service.description}</p>
                     <div className="space-y-1 text-xs">
                       <div className="flex items-center gap-1">
@@ -316,7 +316,7 @@ const SupportNetworkTab = () => {
               <div key={index} className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                   <div className="flex-1">
-                    <h4 className="font-semibold text-white text-sm">{service.name}</h4>
+                    <h4 className="font-semibold text-foreground text-sm">{service.name}</h4>
                     <p className="text-xs text-muted-foreground mb-2">{service.description}</p>
                     <div className="space-y-1 text-xs">
                       {service.contact && (
@@ -372,17 +372,17 @@ const SupportNetworkTab = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
               <Phone className="h-6 w-6 text-blue-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">NHS 111 Option 2</div>
+              <div className="text-sm font-medium text-foreground mb-1">NHS 111 Option 2</div>
               <div className="text-xs text-muted-foreground">24/7 mental health helpline</div>
             </div>
             <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
               <MapPin className="h-6 w-6 text-blue-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Hub of Hope</div>
+              <div className="text-sm font-medium text-foreground mb-1">Hub of Hope</div>
               <div className="text-xs text-muted-foreground">Find local mental health services</div>
             </div>
             <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
               <Users className="h-6 w-6 text-blue-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Andy's Man Club</div>
+              <div className="text-sm font-medium text-foreground mb-1">Andy's Man Club</div>
               <div className="text-xs text-muted-foreground">120+ local support groups</div>
             </div>
           </div>

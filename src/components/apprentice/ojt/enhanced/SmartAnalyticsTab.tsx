@@ -3,64 +3,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Brain, TrendingUp, Target, Clock, AlertTriangle, CheckCircle, BarChart3, Zap } from "lucide-react";
+import { Brain, TrendingUp, Target, Clock, AlertTriangle, CheckCircle, BarChart3, Zap, Loader2, RefreshCw } from "lucide-react";
+import { useOJTAnalytics } from "@/hooks/useOJTAnalytics";
 
 const SmartAnalyticsTab = () => {
-  const learningMetrics = [
-    {
-      category: "Electrical Theory",
-      progress: 85,
-      trend: "up",
-      aiInsight: "Strong progress - focus on advanced circuits",
-      timeSpent: "24h",
-      performance: "excellent"
-    },
-    {
-      category: "Practical Skills",
-      progress: 72,
-      trend: "up",
-      aiInsight: "Good hands-on development - more cable management practice needed",
-      timeSpent: "18h",
-      performance: "good"
-    },
-    {
-      category: "Health & Safety",
-      progress: 92,
-      trend: "stable",
-      aiInsight: "Exemplary safety awareness - maintain current standards",
-      timeSpent: "12h",
-      performance: "excellent"
-    },
-    {
-      category: "Regulations",
-      progress: 68,
-      trend: "slow",
-      aiInsight: "Needs attention - recommend focused BS 7671 study sessions",
-      timeSpent: "8h",
-      performance: "needs-improvement"
-    }
-  ];
-
-  const aiRecommendations = [
-    {
-      type: "urgent",
-      title: "Regulations Gap Identified",
-      description: "BS 7671 knowledge below target. Recommend 3 focused sessions this week.",
-      action: "Start Study Plan"
-    },
-    {
-      type: "opportunity",
-      title: "Advanced Circuit Analysis",
-      description: "Ready for complex circuit calculations based on theory progress.",
-      action: "Unlock Module"
-    },
-    {
-      type: "strength",
-      title: "Safety Leadership Potential",
-      description: "Exceptional safety scores suggest potential for safety officer role.",
-      action: "Explore Path"
-    }
-  ];
+  const {
+    totalHours,
+    totalEntries,
+    thisWeekHours,
+    lastWeekHours,
+    weeklyTarget,
+    completionPercentage,
+    learningMetrics,
+    isLoading,
+    error,
+    refresh
+  } = useOJTAnalytics();
 
   const getPerformanceBadge = (performance: string) => {
     switch (performance) {
@@ -71,7 +29,7 @@ const SmartAnalyticsTab = () => {
       case "needs-improvement":
         return <Badge className="bg-orange-600 text-white">Needs Focus</Badge>;
       default:
-        return <Badge>Average</Badge>;
+        return <Badge className="bg-gray-600 text-white">Average</Badge>;
     }
   };
 
@@ -86,118 +44,229 @@ const SmartAnalyticsTab = () => {
     }
   };
 
+  // Calculate derived metrics
+  const weeklyProgress = Math.min(Math.round((thisWeekHours / weeklyTarget) * 100), 100);
+  const velocityChange = lastWeekHours > 0
+    ? Math.round(((thisWeekHours - lastWeekHours) / lastWeekHours) * 100)
+    : thisWeekHours > 0 ? 100 : 0;
+
+  // Estimate completion time (assuming 7.5h/week target)
+  const remainingHours = 1000 - totalHours;
+  const weeksToCompletion = remainingHours / weeklyTarget;
+  const monthsToCompletion = (weeksToCompletion / 4.33).toFixed(1);
+
+  // Generate recommendations based on real data
+  const generateRecommendations = () => {
+    const recommendations = [];
+
+    // Check for low-progress categories
+    const needsAttention = learningMetrics.filter(m => m.progress < 50);
+    if (needsAttention.length > 0) {
+      recommendations.push({
+        type: "urgent",
+        title: `${needsAttention[0].category} Gap Identified`,
+        description: `Progress below target. Recommend focused sessions this week.`,
+        action: "View Study Plan"
+      });
+    }
+
+    // Check for excellent performance
+    const excellent = learningMetrics.filter(m => m.performance === 'excellent');
+    if (excellent.length > 0) {
+      recommendations.push({
+        type: "strength",
+        title: `Strong ${excellent[0].category}`,
+        description: `Exceptional progress suggests readiness for advanced topics.`,
+        action: "Explore Advanced"
+      });
+    }
+
+    // Check weekly target
+    if (thisWeekHours < weeklyTarget * 0.5) {
+      recommendations.push({
+        type: "urgent",
+        title: "Weekly Hours Behind",
+        description: `Only ${thisWeekHours.toFixed(1)}h logged this week. Target: ${weeklyTarget}h.`,
+        action: "Log Hours"
+      });
+    } else if (thisWeekHours >= weeklyTarget) {
+      recommendations.push({
+        type: "opportunity",
+        title: "Weekly Target Met!",
+        description: `Great work! You've logged ${thisWeekHours.toFixed(1)}h this week.`,
+        action: "View Progress"
+      });
+    }
+
+    // Default recommendations if none generated
+    if (recommendations.length === 0) {
+      recommendations.push({
+        type: "opportunity",
+        title: "Continue Your Progress",
+        description: "Keep logging your OJT hours regularly to track your development.",
+        action: "Log Hours"
+      });
+    }
+
+    return recommendations.slice(0, 3);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-12">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow mx-auto mb-4" />
+          <p className="text-muted-foreground">Loading analytics...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center p-12">
+        <AlertTriangle className="h-8 w-8 text-orange-500 mb-4" />
+        <p className="text-muted-foreground mb-4">{error}</p>
+        <Button onClick={refresh} variant="outline" size="sm">
+          <RefreshCw className="h-4 w-4 mr-2" />
+          Retry
+        </Button>
+      </div>
+    );
+  }
+
+  const recommendations = generateRecommendations();
+
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">AI Learning Score</CardTitle>
-            <Brain className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-500">87%</div>
-            <p className="text-xs text-muted-foreground">
-              +12% this month
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Progress Velocity</CardTitle>
-            <Zap className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-blue-500">+23%</div>
-            <p className="text-xs text-muted-foreground">
-              Above target pace
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Efficiency Rating</CardTitle>
-            <BarChart3 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-purple-500">94%</div>
-            <p className="text-xs text-muted-foreground">
-              Time optimisation
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Predicted Completion</CardTitle>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <Card className="bg-elec-gray border-elec-yellow/20">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
+            <CardTitle className="text-xs sm:text-sm font-medium">Total Hours</CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-elec-yellow">2.3 months</div>
+          <CardContent className="px-3 sm:px-6">
+            <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{totalHours.toFixed(1)}h</div>
             <p className="text-xs text-muted-foreground">
-              Ahead of schedule
+              {totalEntries} entries logged
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-elec-gray border-elec-yellow/20">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
+            <CardTitle className="text-xs sm:text-sm font-medium">This Week</CardTitle>
+            <Zap className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent className="px-3 sm:px-6">
+            <div className={`text-xl sm:text-2xl font-bold ${thisWeekHours >= weeklyTarget ? 'text-green-500' : 'text-blue-500'}`}>
+              {thisWeekHours.toFixed(1)}h
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Target: {weeklyTarget}h
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-elec-gray border-elec-yellow/20">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
+            <CardTitle className="text-xs sm:text-sm font-medium">Progress</CardTitle>
+            <BarChart3 className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent className="px-3 sm:px-6">
+            <div className="text-xl sm:text-2xl font-bold text-purple-500">{completionPercentage}%</div>
+            <p className="text-xs text-muted-foreground">
+              Of OJT complete
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-elec-gray border-elec-yellow/20">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
+            <CardTitle className="text-xs sm:text-sm font-medium">Est. Completion</CardTitle>
+            <Target className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent className="px-3 sm:px-6">
+            <div className="text-xl sm:text-2xl font-bold text-amber-500">
+              {remainingHours > 0 ? `${monthsToCompletion}mo` : 'Done!'}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {remainingHours > 0 ? `${Math.round(remainingHours)}h remaining` : 'Congratulations!'}
             </p>
           </CardContent>
         </Card>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+        {/* Learning Analytics */}
+        <Card className="bg-elec-gray border-elec-yellow/20">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Brain className="h-5 w-5" />
+            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <Brain className="h-5 w-5 text-elec-yellow" />
               Learning Analytics
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-6">
-              {learningMetrics.map((metric, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">{metric.category}</span>
-                      {getTrendIcon(metric.trend)}
+            {learningMetrics.length > 0 ? (
+              <div className="space-y-5">
+                {learningMetrics.map((metric, index) => (
+                  <div key={index} className="space-y-2">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-sm sm:text-base">{metric.category}</span>
+                        {getTrendIcon(metric.trend)}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {getPerformanceBadge(metric.performance)}
+                        <span className="text-xs sm:text-sm text-muted-foreground">{metric.timeSpent}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      {getPerformanceBadge(metric.performance)}
-                      <span className="text-sm text-muted-foreground">{metric.timeSpent}</span>
-                    </div>
+                    <Progress value={metric.progress} className="h-2" />
+                    <p className="text-xs sm:text-sm text-muted-foreground italic">
+                      {metric.aiInsight}
+                    </p>
                   </div>
-                  <Progress value={metric.progress} className="h-2" />
-                  <p className="text-sm text-muted-foreground italic">
-                    AI Insight: {metric.aiInsight}
-                  </p>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-muted-foreground">
+                <Clock className="h-8 w-8 mx-auto mb-3 opacity-50" />
+                <p>No activity logged yet</p>
+                <p className="text-sm mt-1">Start logging your OJT hours to see analytics</p>
+              </div>
+            )}
           </CardContent>
         </Card>
 
-        <Card>
+        {/* Recommendations */}
+        <Card className="bg-elec-gray border-elec-yellow/20">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5" />
-              AI Recommendations
+            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <Target className="h-5 w-5 text-elec-yellow" />
+              Recommendations
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {aiRecommendations.map((rec, index) => (
-                <div key={index} className="border rounded-lg p-4">
-                  <div className="flex items-start justify-between mb-2">
+              {recommendations.map((rec, index) => (
+                <div key={index} className="border border-elec-yellow/20 rounded-lg p-3 sm:p-4 bg-elec-dark/50">
+                  <div className="flex items-start justify-between mb-2 gap-2">
                     <div className="flex items-center gap-2">
-                      {rec.type === "urgent" && <AlertTriangle className="h-4 w-4 text-red-500" />}
-                      {rec.type === "opportunity" && <TrendingUp className="h-4 w-4 text-blue-500" />}
-                      {rec.type === "strength" && <CheckCircle className="h-4 w-4 text-green-500" />}
-                      <h4 className="font-medium">{rec.title}</h4>
+                      {rec.type === "urgent" && <AlertTriangle className="h-4 w-4 text-red-500 shrink-0" />}
+                      {rec.type === "opportunity" && <TrendingUp className="h-4 w-4 text-blue-500 shrink-0" />}
+                      {rec.type === "strength" && <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />}
+                      <h4 className="font-medium text-sm sm:text-base">{rec.title}</h4>
                     </div>
-                    <Badge variant={rec.type === "urgent" ? "destructive" : "default"}>
+                    <Badge
+                      variant={rec.type === "urgent" ? "destructive" : "default"}
+                      className="shrink-0 text-xs"
+                    >
                       {rec.type}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{rec.description}</p>
-                  <Button size="sm" variant="outline" className="w-full">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-3">{rec.description}</p>
+                  <Button size="sm" variant="outline" className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10">
                     {rec.action}
                   </Button>
                 </div>
@@ -205,6 +274,14 @@ const SmartAnalyticsTab = () => {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Refresh Button */}
+      <div className="flex justify-center">
+        <Button onClick={refresh} variant="ghost" size="sm" className="text-muted-foreground">
+          <RefreshCw className="h-4 w-4 mr-2" />
+          Refresh Analytics
+        </Button>
       </div>
     </div>
   );

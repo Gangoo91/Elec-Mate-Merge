@@ -35,7 +35,7 @@ export const PhaseCard = ({ phase, phaseNumber, startDate, onViewDetails, isActi
             {/* Phase Number Badge */}
             <div className={`flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full text-base sm:text-sm font-bold shadow-lg ${
               isCritical 
-                ? 'bg-gradient-to-br from-pink-500 to-pink-600 text-white' 
+                ? 'bg-gradient-to-br from-pink-500 to-pink-600 text-foreground' 
                 : 'bg-gradient-to-br from-elec-yellow to-yellow-400 text-gray-900'
             }`}>
               {phaseNumber}

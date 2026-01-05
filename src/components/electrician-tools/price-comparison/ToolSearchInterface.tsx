@@ -153,7 +153,7 @@ export const ToolSearchInterface = ({
                     className="w-full text-left px-4 py-2 hover:bg-elec-yellow/10 transition-colors first:rounded-t-lg last:rounded-b-lg"
                     onClick={() => selectSuggestion(suggestion)}
                   >
-                    <span className="text-sm text-white">{suggestion}</span>
+                    <span className="text-sm text-foreground">{suggestion}</span>
                   </button>
                 ))}
               </div>

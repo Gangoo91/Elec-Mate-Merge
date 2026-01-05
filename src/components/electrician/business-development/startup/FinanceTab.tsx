@@ -105,7 +105,7 @@ const FinanceTab = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <Calculator className="h-5 w-5 text-elec-yellow" />
               Startup Cost Breakdown
             </CardTitle>
@@ -134,7 +134,7 @@ const FinanceTab = () => {
 
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-foreground flex items-center gap-2">
               <CreditCard className="h-5 w-5 text-elec-yellow" />
               Funding Options
             </CardTitle>
@@ -143,7 +143,7 @@ const FinanceTab = () => {
             {fundingOptions.map((option, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-semibold text-white">{option.type}</h4>
+                  <h4 className="font-semibold text-foreground">{option.type}</h4>
                   <Badge className="bg-blue-500/20 text-blue-400">{option.rate}</Badge>
                 </div>
                 <p className="text-sm text-muted-foreground mb-3">{option.description}</p>
@@ -181,7 +181,7 @@ const FinanceTab = () => {
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
             Cash Flow Projection
           </CardTitle>

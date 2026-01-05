@@ -105,7 +105,7 @@ const ToolsTemplatesTab = () => {
           {businessTemplates.map((template, index) => (
             <div key={index} className="flex items-center justify-between p-4 bg-elec-dark/30 rounded-lg">
               <div className="flex-1">
-                <h4 className="font-medium text-white">{template.name}</h4>
+                <h4 className="font-medium text-foreground">{template.name}</h4>
                 <p className="text-sm text-muted-foreground">{template.description}</p>
                 <div className="flex items-center gap-2 mt-2">
                   <Badge variant="outline" className="text-xs">{template.type}</Badge>
@@ -135,7 +135,7 @@ const ToolsTemplatesTab = () => {
             <div key={index} className="p-4 bg-blue-500/5 rounded-lg border border-blue-500/20">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h4 className="font-medium text-white">{tool.name}</h4>
+                  <h4 className="font-medium text-foreground">{tool.name}</h4>
                   <p className="text-sm text-muted-foreground mb-3">{tool.description}</p>
                   <div className="grid grid-cols-2 gap-2">
                     {tool.features.map((feature, featureIndex) => (
@@ -169,7 +169,7 @@ const ToolsTemplatesTab = () => {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <h4 className="font-medium text-white">{software.name}</h4>
+                    <h4 className="font-medium text-foreground">{software.name}</h4>
                     {software.ukSpecific && (
                       <Badge variant="outline" className="text-xs text-purple-300 border-purple-400/30">
                         UK Specific

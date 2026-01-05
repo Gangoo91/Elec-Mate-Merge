@@ -23,7 +23,7 @@ export const FaultDiagnosisSection = ({
             <div className="text-red-400 shrink-0">
               {icon}
             </div>
-            <h2 className="text-lg sm:text-xl font-bold text-white">{title}</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-foreground">{title}</h2>
           </div>
         </div>
       </Card>

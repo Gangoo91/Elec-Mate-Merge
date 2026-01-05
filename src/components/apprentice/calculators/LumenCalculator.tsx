@@ -1,11 +1,9 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Variable, Lightbulb, Copy, Calculator, ChevronDown, ChevronRight, Info, CheckCircle, AlertTriangle } from "lucide-react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Variable, Lightbulb, Copy, Calculator, ChevronDown, ChevronRight, Info, CheckCircle, AlertTriangle, RotateCcw } from "lucide-react";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -280,42 +278,38 @@ const LumenCalculator = () => {
       <CardContent>
         <div className="space-y-6">
           {/* Calculation Type Selection */}
-          <div className="space-y-2">
-            <Label htmlFor="calculation-type">Calculation Type</Label>
-            <Select
-              value={calculationType}
-              onValueChange={(value) => setCalculationType(value as typeof calculationType)}
-            >
-              <SelectTrigger id="calculation-type" className="bg-elec-dark border-elec-yellow/20">
-                <SelectValue placeholder="Select calculation type" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                <SelectItem value="lux-to-lumens">Lux to Lumens</SelectItem>
-                <SelectItem value="lumens-to-lux">Lumens to Lux</SelectItem>
-                <SelectItem value="fixtures-needed">Fixtures Required</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <MobileSelect
+            value={calculationType}
+            onValueChange={(value) => setCalculationType(value as typeof calculationType)}
+          >
+            <MobileSelectTrigger label="Calculation Type">
+              <MobileSelectValue placeholder="Select calculation type" />
+            </MobileSelectTrigger>
+            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+              <MobileSelectItem value="lux-to-lumens">Lux to Lumens</MobileSelectItem>
+              <MobileSelectItem value="lumens-to-lux">Lumens to Lux</MobileSelectItem>
+              <MobileSelectItem value="fixtures-needed">Fixtures Required</MobileSelectItem>
+            </MobileSelectContent>
+          </MobileSelect>
 
           {/* Room Presets */}
           {(calculationType === "lux-to-lumens" || calculationType === "fixtures-needed") && (
             <div className="space-y-2">
-              <Label htmlFor="room-preset">Room Type (Optional Preset)</Label>
-              <Select
+              <MobileSelect
                 value={selectedRoom}
                 onValueChange={handleRoomPreset}
               >
-                <SelectTrigger id="room-preset" className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select room type for recommended lux" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                <MobileSelectTrigger label="Room Type (Optional Preset)">
+                  <MobileSelectValue placeholder="Select room type for recommended lux" />
+                </MobileSelectTrigger>
+                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
                   {Object.entries(ROOM_PRESETS).map(([key, preset]) => (
-                    <SelectItem key={key} value={key}>
+                    <MobileSelectItem key={key} value={key}>
                       {preset.name} ({preset.lux} lx)
-                    </SelectItem>
+                    </MobileSelectItem>
                   ))}
-                </SelectContent>
-              </Select>
+                </MobileSelectContent>
+              </MobileSelect>
               {selectedRoom && (
                 <div className="text-xs text-elec-light/70">
                   {ROOM_PRESETS[selectedRoom as keyof typeof ROOM_PRESETS].description}
@@ -329,24 +323,24 @@ const LumenCalculator = () => {
             <div className="space-y-4">
               {/* Area Input Mode Toggle */}
               <div className="space-y-2">
-                <Label>Area Input</Label>
+                <label className="text-sm font-medium text-elec-light">Area Input</label>
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Button
+                  <MobileButton
                     type="button"
-                    variant={inputMode === "area" ? "default" : "outline"}
+                    variant={inputMode === "area" ? "elec" : "elec-outline"}
                     onClick={() => setInputMode("area")}
                     className="flex-1 text-xs min-h-[48px]"
                   >
                     Direct Area
-                  </Button>
-                  <Button
+                  </MobileButton>
+                  <MobileButton
                     type="button"
-                    variant={inputMode === "dimensions" ? "default" : "outline"}
+                    variant={inputMode === "dimensions" ? "elec" : "elec-outline"}
                     onClick={() => setInputMode("dimensions")}
                     className="flex-1 text-xs min-h-[48px]"
                   >
                     Length × Width
-                  </Button>
+                  </MobileButton>
                 </div>
               </div>
 
@@ -482,9 +476,9 @@ const LumenCalculator = () => {
               {/* Advanced Options */}
               <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
                 <CollapsibleTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    className="w-full justify-between p-2 h-auto border border-elec-yellow/20 hover:bg-elec-yellow/10"
+                  <MobileButton
+                    variant="elec-outline"
+                    className="w-full justify-between p-2 h-auto min-h-[48px]"
                   >
                     <span className="text-sm font-medium">Advanced Options</span>
                     {showAdvanced ? (
@@ -492,104 +486,67 @@ const LumenCalculator = () => {
                     ) : (
                       <ChevronRight className="h-4 w-4" />
                     )}
-                  </Button>
+                  </MobileButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="space-y-4 mt-4">
                   <div className="p-4 border border-elec-yellow/10 rounded-md bg-elec-dark/30">
                     <div className="grid grid-cols-1 gap-4">
                       {/* Utilization Factor */}
-                      <div className="space-y-2">
-                        <Label htmlFor="utilization-factor" className="text-xs">
-                          Utilization Factor (UF)
-                          <span className="text-elec-light/50 ml-1">0.2-1.0</span>
-                        </Label>
-                        <Input
-                          id="utilization-factor"
-                          type="number"
-                          step="0.1"
-                          min="0.2"
-                          max="1.0"
-                          placeholder="0.6"
-                          value={utilizationFactor}
-                          onChange={(e) => {
-                            setUtilizationFactor(e.target.value);
-                            clearError('utilizationFactor');
-                          }}
-                          className={`bg-elec-dark border-elec-yellow/20 text-xs ${errors.utilizationFactor ? "border-destructive" : ""}`}
-                        />
-                        {errors.utilizationFactor && <p className="text-xs text-destructive">{errors.utilizationFactor}</p>}
-                        <p className="text-xs text-elec-light/60">Light reaching work plane (room geometry & reflectances)</p>
-                      </div>
+                      <MobileInput
+                        label="Utilization Factor (UF) 0.2-1.0"
+                        type="number"
+                        placeholder="0.6"
+                        value={utilizationFactor}
+                        onChange={(e) => {
+                          setUtilizationFactor(e.target.value);
+                          clearError('utilizationFactor');
+                        }}
+                        error={errors.utilizationFactor}
+                        hint="Light reaching work plane (room geometry & reflectances)"
+                      />
 
                       {/* Maintenance Factor */}
-                      <div className="space-y-2">
-                        <Label htmlFor="maintenance-factor" className="text-xs">
-                          Maintenance Factor (MF)
-                          <span className="text-elec-light/50 ml-1">0.5-1.0</span>
-                        </Label>
-                        <Input
-                          id="maintenance-factor"
-                          type="number"
-                          step="0.1"
-                          min="0.5"
-                          max="1.0"
-                          placeholder="0.8"
-                          value={maintenanceFactor}
-                          onChange={(e) => {
-                            setMaintenanceFactor(e.target.value);
-                            clearError('maintenanceFactor');
-                          }}
-                          className={`bg-elec-dark border-elec-yellow/20 text-xs ${errors.maintenanceFactor ? "border-destructive" : ""}`}
-                        />
-                        {errors.maintenanceFactor && <p className="text-xs text-destructive">{errors.maintenanceFactor}</p>}
-                        <p className="text-xs text-elec-light/60">Light depreciation over time (dirt, age)</p>
-                      </div>
+                      <MobileInput
+                        label="Maintenance Factor (MF) 0.5-1.0"
+                        type="number"
+                        placeholder="0.8"
+                        value={maintenanceFactor}
+                        onChange={(e) => {
+                          setMaintenanceFactor(e.target.value);
+                          clearError('maintenanceFactor');
+                        }}
+                        error={errors.maintenanceFactor}
+                        hint="Light depreciation over time (dirt, age)"
+                      />
 
                       {/* Fixture Efficacy */}
-                      <div className="space-y-2">
-                        <Label htmlFor="fixture-efficacy" className="text-xs">
-                          Fixture Efficacy (lm/W)
-                          <span className="text-elec-light/50 ml-1">20-200</span>
-                        </Label>
-                        <Input
-                          id="fixture-efficacy"
-                          type="number"
-                          min="20"
-                          max="200"
-                          placeholder="100"
-                          value={fixtureEfficacy}
-                          onChange={(e) => {
-                            setFixtureEfficacy(e.target.value);
-                            clearError('fixtureEfficacy');
-                          }}
-                          className={`bg-elec-dark border-elec-yellow/20 text-xs ${errors.fixtureEfficacy ? "border-destructive" : ""}`}
-                        />
-                        {errors.fixtureEfficacy && <p className="text-xs text-destructive">{errors.fixtureEfficacy}</p>}
-                        <p className="text-xs text-elec-light/60">LED: 80-150, Fluorescent: 60-100, Halogen: 15-25</p>
-                      </div>
+                      <MobileInput
+                        label="Fixture Efficacy (lm/W) 20-200"
+                        type="number"
+                        placeholder="100"
+                        value={fixtureEfficacy}
+                        onChange={(e) => {
+                          setFixtureEfficacy(e.target.value);
+                          clearError('fixtureEfficacy');
+                        }}
+                        error={errors.fixtureEfficacy}
+                        hint="LED: 80-150, Fluorescent: 60-100, Halogen: 15-25"
+                      />
 
                       {/* Daylight Contribution */}
-                      <div className="space-y-2">
-                        <Label htmlFor="daylight-contribution" className="text-xs">
-                          Daylight Contribution (%)
-                          <span className="text-elec-light/50 ml-1">0-80%</span>
-                        </Label>
-                        <Input
-                          id="daylight-contribution"
-                          type="number"
-                          min="0"
-                          max="80"
-                          placeholder="0"
-                          value={daylightContribution}
-                          onChange={(e) => {
-                            setDaylightContribution(e.target.value);
-                            clearError('daylightContribution');
-                          }}
-                          className={`bg-elec-dark border-elec-yellow/20 text-xs ${errors.daylightContribution ? "border-destructive" : ""}`}
-                        />
-                        {errors.daylightContribution && <p className="text-xs text-destructive">{errors.daylightContribution}</p>}
-                        <p className="text-xs text-elec-light/60">Natural light reduction in artificial lighting needs</p>
-                      </div>
+                      <MobileInput
+                        label="Daylight Contribution (%) 0-80%"
+                        type="number"
+                        placeholder="0"
+                        value={daylightContribution}
+                        onChange={(e) => {
+                          setDaylightContribution(e.target.value);
+                          clearError('daylightContribution');
+                        }}
+                        error={errors.daylightContribution}
+                        hint="Natural light reduction in artificial lighting needs"
+                        unit="%"
+                      />
                     </div>
                     
                     <Alert className="mt-4 bg-elec-yellow/5 border-elec-yellow/20">
@@ -603,21 +560,22 @@ const LumenCalculator = () => {
               </Collapsible>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button 
-                  onClick={calculate} 
-                  className="flex-1 min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              <div className="flex gap-2 mt-6">
+                <MobileButton
+                  onClick={calculate}
+                  variant="elec"
+                  className="flex-1 min-h-[48px]"
                 >
                   <Calculator className="h-4 w-4 mr-2" />
                   Calculate
-                </Button>
-                <Button 
-                  variant="outline" 
-                  onClick={resetCalculator} 
-                  className="flex-1 min-h-[48px] border-elec-yellow/20 hover:bg-elec-yellow/10"
+                </MobileButton>
+                <MobileButton
+                  variant="elec-outline"
+                  onClick={resetCalculator}
+                  className="min-h-[48px]"
                 >
-                  Reset
-                </Button>
+                  <RotateCcw className="h-4 w-4" />
+                </MobileButton>
               </div>
             </div>
 
@@ -657,15 +615,14 @@ const LumenCalculator = () => {
                     </div>
                   )}
                   
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <MobileButton
+                    variant="elec-outline"
                     onClick={copyResult}
-                    className="w-full border-elec-yellow/20 hover:bg-elec-yellow/10"
+                    className="w-full min-h-[44px]"
                   >
                     <Copy className="h-3 w-3 mr-1" />
                     Copy Result
-                  </Button>
+                  </MobileButton>
                 </CardContent>
               </Card>
             )}

@@ -226,7 +226,7 @@ const PowerFactorCalculator = () => {
               )}
             </div>
 
-            {capacitorKVAr && currentAfterCorrection && (
+            {capacitorKVAr && currentAfterCorrection && parseFloat(current) > 0 && (
               <Alert className="border-green-500/30 bg-green-500/10">
                 <TrendingDown className="h-4 w-4 text-green-500" />
                 <AlertDescription className="text-green-200">

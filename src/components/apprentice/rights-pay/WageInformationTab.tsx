@@ -6,17 +6,16 @@ import { PoundSterling, TrendingUp, Calculator, Info, AlertTriangle } from "luci
 
 const WageInformationTab = () => {
   const currentRates = {
-    apprenticeMinimum: 7.55,
-    nationalMinimumWage: 10.00,
-    nationalLivingWage: 12.21,
-    lastUpdated: "April 2025"
+    apprenticeMinimum: 8.00,
+    nationalMinimumWage: 10.85,
+    nationalLivingWage: 12.71,
+    lastUpdated: "April 2026"
   };
 
   const ageBasedRates = [
-    { age: "Under 18", rate: 7.55, description: "Same as apprentice minimum wage" },
-    { age: "18-20", rate: 10.00, description: "Development rate for young workers" },
-    { age: "21-22", rate: 12.21, description: "National Living Wage rate" },
-    { age: "23+", rate: 12.21, description: "Full National Living Wage" }
+    { age: "Under 18", rate: 8.00, description: "Same as apprentice minimum wage" },
+    { age: "18-20", rate: 10.85, description: "Development rate for young workers (+8.5% from 2025)" },
+    { age: "21+", rate: 12.71, description: "National Living Wage (+4.1% from 2025)" }
   ];
 
   const regionalVariations = [
@@ -29,11 +28,11 @@ const WageInformationTab = () => {
   ];
 
   const progressionPath = [
-    { stage: "Year 1 Apprentice", wage: "£7.55/hour minimum", annual: "~£15,100", description: "Learning fundamentals" },
-    { stage: "Year 2-4 Apprentice", wage: "£12.21/hour minimum", annual: "~£24,400", description: "Developing skills" },
-    { stage: "Newly Qualified", wage: "£14-17/hour", annual: "£28,000-34,000", description: "Basic competency achieved" },
-    { stage: "Experienced (2-5 years)", wage: "£17-23/hour", annual: "£34,000-46,000", description: "Proven track record" },
-    { stage: "Senior/Specialist", wage: "£23-35/hour", annual: "£46,000-70,000+", description: "Leadership or specialisation" }
+    { stage: "Year 1 Apprentice", wage: "£8.00/hour minimum", annual: "~£16,000", description: "Learning fundamentals" },
+    { stage: "Year 2-4 Apprentice (19+)", wage: "£12.71/hour minimum", annual: "~£25,400", description: "NLW applies after year 1 if 19+" },
+    { stage: "Newly Qualified", wage: "£15-18/hour", annual: "£30,000-36,000", description: "Basic competency achieved" },
+    { stage: "Experienced (2-5 years)", wage: "£18-25/hour", annual: "£36,000-50,000", description: "Proven track record" },
+    { stage: "Senior/Specialist", wage: "£25-40/hour", annual: "£50,000-80,000+", description: "Leadership or specialisation" }
   ];
 
   const payFactors = [

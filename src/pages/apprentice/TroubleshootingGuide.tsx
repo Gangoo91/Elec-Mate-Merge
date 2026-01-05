@@ -87,9 +87,9 @@ const TroubleshootingGuide = () => {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case "critical": return "border-red-500 bg-red-500/10";
+      case "critical": return "border-red-500 bg-card";
       case "high": return "border-orange-500 bg-orange-500/10";
-      case "medium": return "border-yellow-500 bg-yellow-500/10";
+      case "medium": return "border-yellow-500 bg-card";
       default: return "border-elec-yellow/20 bg-elec-gray";
     }
   };
@@ -113,7 +113,7 @@ const TroubleshootingGuide = () => {
         <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
       </div>
 
-      <Card className="border-red-500/50 bg-red-500/10">
+      <Card className="border-red-500/50 bg-card">
         <CardHeader>
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-6 w-6 text-red-500" />

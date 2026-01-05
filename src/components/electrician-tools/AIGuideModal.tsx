@@ -116,7 +116,7 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
         onOpenAutoFocus={() => {}}
       >
         <DialogHeader className="border-b border-elec-yellow/20 pb-4">
-          <DialogTitle className="text-2xl text-white flex items-center gap-3">
+          <DialogTitle className="text-2xl text-foreground flex items-center gap-3">
             <Zap className="h-6 w-6 text-elec-yellow" />
             {guideTitle}
           </DialogTitle>
@@ -158,25 +158,25 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
                       <div>
                         <span className="text-muted-foreground">Last Updated:</span>
-                        <p className="text-white font-medium">
+                        <p className="text-foreground font-medium">
                           {new Date(cacheInfo.lastRefreshed).toLocaleDateString()}
                         </p>
                       </div>
                       <div>
                         <span className="text-muted-foreground">Expires:</span>
-                        <p className="text-white font-medium">
+                        <p className="text-foreground font-medium">
                           {new Date(cacheInfo.expiresAt).toLocaleDateString()}
                         </p>
                       </div>
                       <div>
                         <span className="text-muted-foreground">Next Refresh:</span>
-                        <p className="text-white font-medium">
+                        <p className="text-foreground font-medium">
                           {cacheInfo.nextRefresh ? new Date(cacheInfo.nextRefresh).toLocaleDateString() : 'N/A'}
                         </p>
                       </div>
                       <div>
                         <span className="text-muted-foreground">Version:</span>
-                        <p className="text-white font-medium">v{cacheInfo.cacheVersion}</p>
+                        <p className="text-foreground font-medium">v{cacheInfo.cacheVersion}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -186,14 +186,14 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
               {/* Guide Summary */}
               <Card className="border-elec-yellow/30 bg-elec-yellow/10">
                 <CardContent className="pt-4">
-                  <p className="text-white leading-relaxed">{guideData.summary}</p>
+                  <p className="text-foreground leading-relaxed">{guideData.summary}</p>
                 </CardContent>
               </Card>
 
               {/* Budget Overview */}
               <Card className="border-elec-yellow/20 bg-elec-gray/50">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
+                  <CardTitle className="text-foreground flex items-center gap-2">
                     <PoundSterling className="h-5 w-5 text-elec-yellow" />
                     Budget Breakdown
                   </CardTitle>
@@ -202,15 +202,15 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="text-center p-3 bg-elec-gray rounded-lg border border-elec-yellow/20">
                       <div className="text-elec-yellow font-semibold">Starter</div>
-                      <div className="text-white text-lg">{guideData.budgetBreakdown.starter}</div>
+                      <div className="text-foreground text-lg">{guideData.budgetBreakdown.starter}</div>
                     </div>
                     <div className="text-center p-3 bg-elec-gray rounded-lg border border-elec-yellow/20">
                       <div className="text-elec-yellow font-semibold">Professional</div>
-                      <div className="text-white text-lg">{guideData.budgetBreakdown.professional}</div>
+                      <div className="text-foreground text-lg">{guideData.budgetBreakdown.professional}</div>
                     </div>
                     <div className="text-center p-3 bg-elec-gray rounded-lg border border-elec-yellow/20">
                       <div className="text-elec-yellow font-semibold">Premium</div>
-                      <div className="text-white text-lg">{guideData.budgetBreakdown.premium}</div>
+                      <div className="text-foreground text-lg">{guideData.budgetBreakdown.premium}</div>
                     </div>
                   </div>
                 </CardContent>
@@ -220,21 +220,21 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
               {guideData.sections.map((section, index) => (
                 <Card key={index} className="border-elec-yellow/20 bg-elec-gray/50">
                   <CardHeader>
-                    <CardTitle className="text-white">{section.title}</CardTitle>
+                    <CardTitle className="text-foreground">{section.title}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <p className="text-muted-foreground leading-relaxed">{section.content}</p>
                     
                     {section.recommendations.length > 0 && (
                       <div className="space-y-3">
-                        <h4 className="text-white font-semibold flex items-center gap-2">
+                        <h4 className="text-foreground font-semibold flex items-center gap-2">
                           <ShoppingCart className="h-4 w-4 text-elec-yellow" />
                           Recommendations
                         </h4>
                         {section.recommendations.map((rec, idx) => (
                           <div key={idx} className="p-3 bg-elec-gray border border-elec-yellow/20 rounded-lg">
                             <div className="flex justify-between items-start mb-2">
-                              <h5 className="text-white font-medium">{rec.tool}</h5>
+                              <h5 className="text-foreground font-medium">{rec.tool}</h5>
                               <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
                                 {rec.price}
                               </Badge>
@@ -261,7 +261,7 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
               {guideData.quickTips.length > 0 && (
                 <Card className="border-green-500/20 bg-green-500/10">
                   <CardHeader>
-                    <CardTitle className="text-white flex items-center gap-2">
+                    <CardTitle className="text-foreground flex items-center gap-2">
                       <TrendingUp className="h-5 w-5 text-green-400" />
                       Professional Tips
                     </CardTitle>
@@ -304,7 +304,7 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
               <CardContent className="text-center py-8">
                 <AlertCircle className="h-12 w-12 text-elec-yellow mx-auto mb-4" />
-                <h3 className="text-white text-lg mb-2">Guide Not Available</h3>
+                <h3 className="text-foreground text-lg mb-2">Guide Not Available</h3>
                 <p className="text-muted-foreground mb-4">
                   Unable to load the guide at this moment.
                 </p>

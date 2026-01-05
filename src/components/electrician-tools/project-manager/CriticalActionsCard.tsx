@@ -77,9 +77,9 @@ const CriticalActionsCard = ({
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1">
-                      <div className="font-medium text-sm text-white">{item.item}</div>
+                      <div className="font-medium text-sm text-foreground">{item.item}</div>
                       {item.supplier && (
-                        <div className="text-xs text-white/60">Supplier: {item.supplier}</div>
+                        <div className="text-xs text-foreground/60">Supplier: {item.supplier}</div>
                       )}
                     </div>
                     {item.cost && (
@@ -118,8 +118,8 @@ const CriticalActionsCard = ({
                   key={idx}
                   className="p-3 rounded-lg bg-warning/10 border border-warning/30 space-y-1"
                 >
-                  <div className="font-medium text-sm text-white">{item.what}</div>
-                  <div className="text-xs text-white/60">{item.when}</div>
+                  <div className="font-medium text-sm text-foreground">{item.what}</div>
+                  <div className="text-xs text-foreground/60">{item.when}</div>
                   {item.consequence && (
                     <div className="text-xs text-destructive flex items-start gap-1 mt-1">
                       <AlertTriangle className="h-3 w-3 mt-0.5 flex-shrink-0" />
@@ -149,10 +149,10 @@ const CriticalActionsCard = ({
                   className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/30 space-y-1"
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <div className="font-medium text-sm text-white">{item.what}</div>
-                    <div className="text-xs text-white/60 whitespace-nowrap">{item.when}</div>
+                    <div className="font-medium text-sm text-foreground">{item.what}</div>
+                    <div className="text-xs text-foreground/60 whitespace-nowrap">{item.when}</div>
                   </div>
-                  <div className="text-xs text-white/60">Duration: {item.duration}</div>
+                  <div className="text-xs text-foreground/60">Duration: {item.duration}</div>
                 </div>
               ))}
             </div>

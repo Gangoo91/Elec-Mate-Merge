@@ -101,13 +101,13 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
       <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-xs text-white/60 mb-0.5">Total Connected Load</p>
-            <p className="text-lg font-bold text-white">
+            <p className="text-xs text-foreground/60 mb-0.5">Total Connected Load</p>
+            <p className="text-lg font-bold text-foreground">
               {circuit.loadPower ? `${circuit.loadPower.toLocaleString()}W` : '—'}
             </p>
           </div>
           <div>
-            <p className="text-xs text-white/60 mb-0.5">After Diversity</p>
+            <p className="text-xs text-foreground/60 mb-0.5">After Diversity</p>
             <p className="text-lg font-bold text-elec-yellow">
               {circuit.calculations?.diversifiedLoad 
                 ? `${Math.round(circuit.calculations.diversifiedLoad).toLocaleString()}W` 
@@ -119,7 +119,7 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
         </div>
         {circuit.calculations?.diversityFactor && circuit.calculations.diversityFactor < 1 && (
           <div className="mt-2 pt-2 border-t border-elec-yellow/20">
-            <p className="text-xs text-white/70">
+            <p className="text-xs text-foreground/70">
               Diversity factor: {(circuit.calculations.diversityFactor * 100).toFixed(0)}% applied per BS 7671 Appendix A
             </p>
           </div>
@@ -157,15 +157,15 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
             <MobileAccordionContent>
               <div className="p-4 bg-elec-dark/60 border-t border-elec-yellow/10 space-y-3">
                 <div>
-                  <p className="text-xs text-white/60 mb-1">Expected Value</p>
+                  <p className="text-xs text-foreground/60 mb-1">Expected Value</p>
                   <p className="text-sm font-semibold text-elec-light">{result.expectedValue}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-white/60 mb-1">Pass Criteria</p>
-                  <p className="text-sm text-white/90">{result.passCriteria}</p>
+                  <p className="text-xs text-foreground/60 mb-1">Pass Criteria</p>
+                  <p className="text-sm text-foreground/90">{result.passCriteria}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-white/60 mb-1">Regulation</p>
+                  <p className="text-xs text-foreground/60 mb-1">Regulation</p>
                   <Badge variant="outline" className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
                     {result.regulation}
                   </Badge>
@@ -177,7 +177,7 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
       </MobileAccordion>
 
       <div className="mt-3 p-3 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
-        <p className="text-xs text-white/80">
+        <p className="text-xs text-foreground/80">
           <strong>Note:</strong> All test results must be recorded on the Electrical Installation Certificate (EIC) as per BS 7671 Part 6.
         </p>
       </div>

@@ -34,9 +34,9 @@ const VisualFaultRAGDisplay = ({
   const getCodeColor = (code: string) => {
     switch (code) {
       case 'C1': return 'bg-destructive text-destructive-foreground';
-      case 'C2': return 'bg-orange-500 text-white';
+      case 'C2': return 'bg-orange-500 text-foreground';
       case 'C3': return 'bg-yellow-500 text-black';
-      case 'FI': return 'bg-blue-500 text-white';
+      case 'FI': return 'bg-blue-500 text-foreground';
       default: return 'bg-muted text-muted-foreground';
     }
   };

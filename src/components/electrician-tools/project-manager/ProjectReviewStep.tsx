@@ -239,7 +239,7 @@ export const ProjectReviewStep = ({
         </Button>
         <Button
           onClick={onGenerate}
-          className="flex-1 bg-gradient-to-r from-pink-400 to-pink-600 hover:from-pink-500 hover:to-pink-700 text-white"
+          className="flex-1 bg-gradient-to-r from-pink-400 to-pink-600 hover:from-pink-500 hover:to-pink-700 text-foreground"
           size="lg"
         >
           <Zap className="h-4 w-4 mr-2" />

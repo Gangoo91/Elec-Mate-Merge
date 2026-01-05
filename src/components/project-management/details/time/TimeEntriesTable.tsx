@@ -68,12 +68,12 @@ export const TimeEntriesTable = ({
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel className="bg-elec-gray text-white hover:bg-elec-gray/80">
+                <AlertDialogCancel className="bg-elec-gray text-foreground hover:bg-elec-gray/80">
                   Cancel
                 </AlertDialogCancel>
                 <AlertDialogAction 
                   onClick={handleDeleteAll} 
-                  className="bg-red-600 text-white hover:bg-red-700"
+                  className="bg-red-600 text-foreground hover:bg-red-700"
                 >
                   Delete All
                 </AlertDialogAction>

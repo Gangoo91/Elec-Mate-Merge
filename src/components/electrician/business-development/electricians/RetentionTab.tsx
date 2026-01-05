@@ -215,7 +215,7 @@ const RetentionTab = () => {
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
@@ -233,7 +233,7 @@ const RetentionTab = () => {
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{framework.strategy}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{framework.strategy}</h4>
                       <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {framework.timeline}
                       </Badge>
@@ -285,7 +285,7 @@ const RetentionTab = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {category.icon}
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
+                      <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
                     </div>
                     <Badge variant="outline" className={`${
                       category.impact === 'High' ? 'text-green-300 border-green-400/30' :
@@ -384,7 +384,7 @@ const RetentionTab = () => {
                   onClick={() => window.open('https://www.cipd.co.uk/knowledge/fundamentals/people/employee-retention', '_blank')}
                 >
                   <Heart className="h-4 w-4 mr-3 text-green-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>CIPD Retention Guide</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>CIPD Retention Guide</div>
                 </Button>
 
                 <Button 
@@ -393,7 +393,7 @@ const RetentionTab = () => {
                   onClick={() => window.open('https://www.gov.uk/browse/employing-people', '_blank')}
                 >
                   <Users className="h-4 w-4 mr-3 text-blue-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>Employment Law Guidance</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>Employment Law Guidance</div>
                 </Button>
 
                 <Button 
@@ -402,7 +402,7 @@ const RetentionTab = () => {
                   onClick={() => window.open('https://www.glassdoor.co.uk/employers/', '_blank')}
                 >
                   <Trophy className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>Employer Brand Building</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>Employer Brand Building</div>
                 </Button>
               </div>
 

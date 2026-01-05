@@ -285,7 +285,7 @@ const ProjectManagerResults = ({
           {/* Header Actions */}
           <Card className="p-4">
             <div className="flex items-center justify-between mb-3">
-              <h4 className="font-semibold text-lg text-white">Project Plan Results</h4>
+              <h4 className="font-semibold text-lg text-foreground">Project Plan Results</h4>
               <Button
                 variant={editMode ? "default" : "outline"}
                 size="sm"
@@ -309,7 +309,7 @@ const ProjectManagerResults = ({
             {/* Progress Bar */}
             <div className="mb-4 pb-4 border-b border-border/30">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-white/80">
+                <span className="text-sm font-medium text-foreground/80">
                   Overall Progress
                 </span>
                 <span className="text-base font-bold text-pink-400">
@@ -353,7 +353,7 @@ const ProjectManagerResults = ({
                   size="sm" 
                   variant="ghost"
                   onClick={handleCopy}
-                  className="text-xs text-white/70"
+                  className="text-xs text-foreground/70"
                 >
                   <Copy className="h-3.5 w-3.5 mr-1.5" />
                   Copy Data

@@ -60,7 +60,7 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-lg">{getTypeIcon(contact.type)}</span>
-                    <h4 className="font-semibold text-white">{contact.name}</h4>
+                    <h4 className="font-semibold text-foreground">{contact.name}</h4>
                   </div>
                   <p className="text-sm text-muted-foreground mb-2">{contact.description}</p>
                   

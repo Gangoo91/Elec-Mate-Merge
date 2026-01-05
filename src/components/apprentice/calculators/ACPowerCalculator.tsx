@@ -410,6 +410,85 @@ const ACPowerCalculator = () => {
               </CardContent>
             </Card>
             
+            {/* How It Worked Out - Step-by-step calculation breakdown */}
+            <Card className="border-purple-500/30 bg-purple-500/5">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-purple-300 text-base flex items-center gap-2">
+                  <Calculator className="h-4 w-4" />
+                  How It Worked Out
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 text-sm">
+                {/* Step 1: Input values */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step 1: Your Input Values</p>
+                  <div className="bg-purple-500/10 rounded p-3 space-y-1 text-purple-100 font-mono text-xs">
+                    <p>System: {phaseSystem === "single" ? "Single Phase" : "Three Phase"}</p>
+                    <p>Voltage (V): {voltage}V ({voltageType})</p>
+                    <p>Current (I): {current}A</p>
+                    <p>Power Factor (cos φ): {powerFactor || "1.00"} {pfType}</p>
+                  </div>
+                </div>
+
+                {/* Step 2: Formula used */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step 2: Formula Applied</p>
+                  <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs">
+                    {phaseSystem === "single" ? (
+                      <>
+                        <p className="text-purple-300 mb-1">Single Phase Power:</p>
+                        <p>S = V × I = {voltage} × {current} = {results.apparentPower?.toFixed(2)} VA</p>
+                        <p>P = S × cos(φ) = {results.apparentPower?.toFixed(2)} × {powerFactor || "1"} = {results.activePower?.toFixed(2)} W</p>
+                        <p>Q = S × sin(φ) = {results.apparentPower?.toFixed(2)} × sin({results.phaseAngle?.toFixed(1)}°) = {results.reactivePower?.toFixed(2)} VAr</p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-purple-300 mb-1">Three Phase Power:</p>
+                        <p>S = √3 × V × I = 1.732 × {voltageType === "L-N" ? (parseFloat(voltage) * Math.sqrt(3)).toFixed(0) : voltage} × {current} = {results.apparentPower?.toFixed(2)} VA</p>
+                        <p>P = S × cos(φ) = {results.apparentPower?.toFixed(2)} × {powerFactor || "1"} = {results.activePower?.toFixed(2)} W</p>
+                        <p>Q = S × sin(φ) = {results.apparentPower?.toFixed(2)} × sin({results.phaseAngle?.toFixed(1)}°) = {results.reactivePower?.toFixed(2)} VAr</p>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                {/* Step 3: Phase angle */}
+                <div className="space-y-2">
+                  <p className="text-purple-200 font-medium">Step 3: Phase Angle</p>
+                  <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs">
+                    <p>φ = cos⁻¹(PF) = cos⁻¹({powerFactor || "1"}) = {results.phaseAngle?.toFixed(1)}°</p>
+                    <p className="text-purple-400 mt-1">({pfType === "lagging" ? "Current lags voltage (inductive load)" : "Current leads voltage (capacitive load)"})</p>
+                  </div>
+                </div>
+
+                {/* Step 4: Unity PF comparison */}
+                {results.currentAtUnity && (
+                  <div className="space-y-2">
+                    <p className="text-purple-200 font-medium">Step 4: Current at Unity Power Factor</p>
+                    <div className="bg-purple-500/10 rounded p-3 text-purple-100 font-mono text-xs">
+                      {phaseSystem === "single" ? (
+                        <p>I@unity = P / V = {results.activePower?.toFixed(2)} / {voltage} = {results.currentAtUnity?.toFixed(2)} A</p>
+                      ) : (
+                        <p>I@unity = P / (√3 × V) = {results.activePower?.toFixed(2)} / (1.732 × {voltageType === "L-N" ? (parseFloat(voltage) * Math.sqrt(3)).toFixed(0) : voltage}) = {results.currentAtUnity?.toFixed(2)} A</p>
+                      )}
+                      <p className="text-green-400 mt-1">✓ Improving PF to 1.0 would reduce current by {((results.current! - results.currentAtUnity) / results.current! * 100).toFixed(1)}%</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Power Triangle Visual */}
+                <div className="bg-purple-500/10 rounded p-3 border border-purple-500/30">
+                  <p className="text-purple-200 font-medium mb-2">Power Triangle Verification:</p>
+                  <p className="text-purple-100 font-mono text-xs">
+                    S² = P² + Q² → {results.apparentPower?.toFixed(0)}² = {results.activePower?.toFixed(0)}² + {results.reactivePower?.toFixed(0)}²
+                  </p>
+                  <p className="text-purple-100 font-mono text-xs">
+                    {(results.apparentPower! * results.apparentPower!).toFixed(0)} ≈ {(results.activePower! * results.activePower! + results.reactivePower! * results.reactivePower!).toFixed(0)} ✓
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* What this means panel */}
             <Card className="border-blue-500/30 bg-blue-500/5">
               <CardHeader>

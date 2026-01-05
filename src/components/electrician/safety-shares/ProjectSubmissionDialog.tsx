@@ -224,7 +224,7 @@ export const ProjectSubmissionDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-white">Submit New Project</DialogTitle>
+          <DialogTitle className="text-xl font-bold text-foreground">Submit New Project</DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">

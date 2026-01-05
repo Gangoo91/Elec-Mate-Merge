@@ -161,7 +161,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                       variant="elec"
                       onClick={() => handleActionClick(quote, "accept")}
                       icon={<CheckCircle className="h-4 w-4" />}
-                      className="w-full touch-target bg-green-600 hover:bg-green-700 text-white border-green-600 font-medium min-w-0"
+                      className="w-full touch-target bg-green-600 hover:bg-green-700 text-foreground border-green-600 font-medium min-w-0"
                       aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
                     >
                       <span className="truncate">Accept Quote</span>
@@ -171,7 +171,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                       variant="elec-outline"
                       onClick={() => handleActionClick(quote, "reject")}
                       icon={<XCircle className="h-4 w-4" />}
-                      className="w-full touch-target border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-medium min-w-0"
+                      className="w-full touch-target border-red-500 text-red-600 hover:bg-red-500 hover:text-foreground font-medium min-w-0"
                       aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
                     >
                       <span className="truncate">Reject Quote</span>
@@ -185,7 +185,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                       variant="elec"
                       onClick={() => handleActionClick(quote, "accept")}
                       icon={<CheckCircle className="h-4 w-4" />}
-                      className="bg-green-600 hover:bg-green-700 text-white border-green-600 font-medium px-3 py-2 flex-shrink-0"
+                      className="bg-green-600 hover:bg-green-700 text-foreground border-green-600 font-medium px-3 py-2 flex-shrink-0"
                       aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
                     >
                       Accept
@@ -195,7 +195,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                       variant="elec-outline"
                       onClick={() => handleActionClick(quote, "reject")}
                       icon={<XCircle className="h-4 w-4" />}
-                      className="border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-medium px-3 py-2 flex-shrink-0"
+                      className="border-red-500 text-red-600 hover:bg-red-500 hover:text-foreground font-medium px-3 py-2 flex-shrink-0"
                       aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
                     >
                       Reject

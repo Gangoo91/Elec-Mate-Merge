@@ -109,7 +109,7 @@ const RemindersPanel = () => {
           {highPriorityReminders.map((reminder) => (
             <Alert key={reminder.id} className="border-red-500/30 bg-red-500/5">
               <AlertTriangle className="h-4 w-4" />
-              <AlertDescription className="text-white">
+              <AlertDescription className="text-foreground">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <p className="font-medium">{reminder.title}</p>

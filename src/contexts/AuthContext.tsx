@@ -24,16 +24,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { isDevelopmentMode, toggleDevelopmentMode } = useDevelopmentMode();
   const { signIn, signUp, signOut } = useAuthentication();
 
-  // Log auth state for debugging
-  useEffect(() => {
-    console.log('AuthContext state updated:', {
-      isAuthenticated: !!user,
-      userEmail: user?.email,
-      isLoading,
-      isSubscribed,
-      subscriptionTier,
-    });
-  }, [user, isLoading, isSubscribed, subscriptionTier]);
 
   const value: AuthContextType = {
     session,

@@ -83,7 +83,7 @@ const OffJobTrainingGuide = () => {
           <div className="space-y-3">
             {whatCounts.map((item, index) => (
               <div key={index} className={`flex items-center justify-between p-3 rounded-lg border ${
-                item.valid ? 'border-green-500/30 bg-green-500/10' : 'border-red-500/30 bg-red-500/10'
+                item.valid ? 'border-green-500/30 bg-card' : 'border-red-500/30 bg-card'
               }`}>
                 <div className="flex items-center gap-3">
                   <CheckCircle className={`h-5 w-5 ${item.valid ? 'text-green-400' : 'text-red-400'}`} />

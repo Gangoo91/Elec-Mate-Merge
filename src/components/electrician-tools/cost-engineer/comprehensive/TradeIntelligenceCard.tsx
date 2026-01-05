@@ -92,11 +92,11 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
   return (
     <Card className="border-0 sm:border-2 border-elec-yellow/20 rounded-none sm:rounded-xl bg-gradient-to-br from-elec-card to-elec-dark/30 shadow-none sm:shadow-xl">
       <CardHeader className="px-4 py-5 sm:px-6 sm:py-6 bg-gradient-to-r from-blue-500/10 to-transparent border-b border-blue-500/20">
-        <CardTitle className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-xl sm:text-2xl font-bold text-foreground flex items-center gap-2">
           <Target className="h-6 w-6 text-elec-yellow" />
           Trade Intelligence - AI Self-Validation
         </CardTitle>
-        <CardDescription className="text-base sm:text-sm text-white mt-2">
+        <CardDescription className="text-base sm:text-sm text-foreground mt-2">
           AI-powered quality check of materials, labour estimates, and value-add suggestions to ensure compliance with BS7671:2018+A3:2024
         </CardDescription>
       </CardHeader>
@@ -107,8 +107,8 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
           <div className="flex items-start gap-3 mb-3">
             <CheckCircle className="h-6 w-6 text-green-400 flex-shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-base font-bold text-white mb-2">Overall Assessment</h4>
-              <p className="text-base text-white leading-relaxed">
+              <h4 className="text-base font-bold text-foreground mb-2">Overall Assessment</h4>
+              <p className="text-base text-foreground leading-relaxed">
                 {tradeIntelligence.overallAssessment.summary}
               </p>
             </div>
@@ -123,7 +123,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
               </div>
               <ul className="space-y-2">
                 {tradeIntelligence.overallAssessment.criticalIssues.map((issue, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-white">
+                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-foreground">
                     <span className="text-red-400 text-xl">•</span>
                     <span>{issue}</span>
                   </li>
@@ -138,7 +138,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-2">
               {getStatusIcon(tradeIntelligence.materialsCompleteness.status)}
-              <h4 className="text-lg sm:text-base font-bold text-white">
+              <h4 className="text-lg sm:text-base font-bold text-foreground">
                 📦 Materials Completeness
               </h4>
             </div>
@@ -148,7 +148,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
             )}
           </div>
           
-          <p className="text-base sm:text-sm text-white leading-relaxed">
+          <p className="text-base sm:text-sm text-foreground leading-relaxed">
             {tradeIntelligence.materialsCompleteness.commentary}
           </p>
 
@@ -161,7 +161,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
               </div>
               <ul className="space-y-2">
                 {tradeIntelligence.materialsCompleteness.missingItems.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-white">
+                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-foreground">
                     <span className="text-red-400 text-xl">•</span>
                     <span>{item}</span>
                   </li>
@@ -179,7 +179,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
               </div>
               <ul className="space-y-2">
                 {tradeIntelligence.materialsCompleteness.excessItems.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-white">
+                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-foreground">
                     <span className="text-yellow-400 text-xl">•</span>
                     <span>{item}</span>
                   </li>
@@ -197,7 +197,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
               </div>
               <ul className="space-y-2">
                 {tradeIntelligence.materialsCompleteness.recommendations.map((rec, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-white">
+                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-foreground">
                     <Wrench className="h-4 w-4 mt-1 flex-shrink-0 text-blue-400" />
                     <span>{rec}</span>
                   </li>
@@ -212,7 +212,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-2">
               {getStatusIcon(tradeIntelligence.labourRealism.status)}
-              <h4 className="text-lg sm:text-base font-bold text-white">
+              <h4 className="text-lg sm:text-base font-bold text-foreground">
                 ⏱️ Labour Realism
               </h4>
             </div>
@@ -222,13 +222,13 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
             )}
           </div>
           
-          <p className="text-base sm:text-sm text-white leading-relaxed">
+          <p className="text-base sm:text-sm text-foreground leading-relaxed">
             {tradeIntelligence.labourRealism.commentary}
           </p>
 
           {tradeIntelligence.labourRealism.benchmarkComparison && (
             <div className="rounded-xl border-2 border-blue-500/30 bg-blue-500/10 p-4">
-              <p className="text-base sm:text-sm text-white">
+              <p className="text-base sm:text-sm text-foreground">
                 <span className="font-bold text-blue-300">Benchmark: </span>
                 {tradeIntelligence.labourRealism.benchmarkComparison}
               </p>
@@ -244,7 +244,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
               </div>
               <ul className="space-y-2">
                 {tradeIntelligence.labourRealism.concerns.map((concern, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-white">
+                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-foreground">
                     <span className="text-yellow-400 text-xl">•</span>
                     <span>{concern}</span>
                   </li>
@@ -262,7 +262,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
               </div>
               <ul className="space-y-2">
                 {tradeIntelligence.labourRealism.recommendations.map((rec, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-white">
+                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-foreground">
                     <Wrench className="h-4 w-4 mt-1 flex-shrink-0 text-blue-400" />
                     <span>{rec}</span>
                   </li>
@@ -277,7 +277,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-2">
               {getStatusIcon(tradeIntelligence.futureWorkLogic.status)}
-              <h4 className="text-lg sm:text-base font-bold text-white">
+              <h4 className="text-lg sm:text-base font-bold text-foreground">
                 🎯 Future Work Logic
               </h4>
             </div>
@@ -287,13 +287,13 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
             )}
           </div>
           
-          <p className="text-base sm:text-sm text-white leading-relaxed">
+          <p className="text-base sm:text-sm text-foreground leading-relaxed">
             {tradeIntelligence.futureWorkLogic.commentary}
           </p>
 
           {tradeIntelligence.futureWorkLogic.relevanceCheck && (
             <div className="rounded-xl border-2 border-blue-500/30 bg-blue-500/10 p-4">
-              <p className="text-base sm:text-sm text-white">
+              <p className="text-base sm:text-sm text-foreground">
                 {tradeIntelligence.futureWorkLogic.relevanceCheck}
               </p>
             </div>
@@ -308,7 +308,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
               </div>
               <ul className="space-y-2">
                 {tradeIntelligence.futureWorkLogic.concerns.map((concern, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-white">
+                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-foreground">
                     <span className="text-yellow-400 text-xl">•</span>
                     <span>{concern}</span>
                   </li>
@@ -326,7 +326,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
               </div>
               <ul className="space-y-2">
                 {tradeIntelligence.futureWorkLogic.recommendations.map((rec, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-white">
+                  <li key={idx} className="flex items-start gap-3 text-base sm:text-sm text-foreground">
                     <TrendingUp className="h-4 w-4 mt-1 flex-shrink-0 text-blue-400" />
                     <span>{rec}</span>
                   </li>

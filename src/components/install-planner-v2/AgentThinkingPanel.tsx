@@ -52,7 +52,7 @@ export const AgentThinkingPanel = ({
   return (
     <Card className="bg-elec-card/50 border-elec-yellow/20">
       <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-semibold text-white flex items-center gap-2">
+        <CardTitle className="text-sm font-semibold text-foreground flex items-center gap-2">
           <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
           Agent Thinking
         </CardTitle>
@@ -64,7 +64,7 @@ export const AgentThinkingPanel = ({
           <div className="p-3 rounded-lg bg-elec-dark/50 border border-elec-yellow/30">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-base">{AGENT_EMOJI[activeStep.agent]}</span>
-              <span className="text-sm font-medium text-white">
+              <span className="text-sm font-medium text-foreground">
                 {AGENT_NAMES[activeStep.agent]}
               </span>
             </div>

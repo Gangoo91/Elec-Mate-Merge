@@ -185,13 +185,13 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
       {/* Executive Summary - Always visible */}
       <Card className="border-l-4 border-elec-yellow">
         <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-lg text-white">
+          <CardTitle className="flex items-center gap-2 text-lg text-foreground">
             <Target className="h-5 w-5 text-elec-yellow" />
             Executive Summary
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-base leading-relaxed text-white text-left">{businessCase}</p>
+          <p className="text-base leading-relaxed text-foreground text-left">{businessCase}</p>
         </CardContent>
       </Card>
 
@@ -210,12 +210,12 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
             <Card className={`${colors.border} ${colors.bg}`}>
               <CollapsibleTrigger className="w-full text-left">
                 <CardHeader className="pb-3 cursor-pointer hover:bg-white/5 transition-colors rounded-t-lg">
-                  <CardTitle className="flex items-center gap-2 text-base text-white justify-between">
+                  <CardTitle className="flex items-center gap-2 text-base text-foreground justify-between">
                     <div className="flex items-center gap-2">
                       <Icon className={`h-5 w-5 ${colors.icon}`} />
                       {section.title}
                     </div>
-                    <ChevronDown className={`h-4 w-4 text-white transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`h-4 w-4 text-foreground transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                   </CardTitle>
                 </CardHeader>
               </CollapsibleTrigger>
@@ -229,7 +229,7 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
                         if (block.type === 'phase-header') {
                           return (
                             <div key={i} className="bg-red-500/10 rounded-md p-3 border border-red-500/20">
-                              <h4 className="font-semibold text-sm text-white leading-relaxed">
+                              <h4 className="font-semibold text-sm text-foreground leading-relaxed">
                                 {block.content}
                               </h4>
                             </div>
@@ -240,7 +240,7 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
                           return (
                             <ul key={i} className="space-y-2">
                               {block.items.map((item, itemIdx) => (
-                                <li key={itemIdx} className="text-sm text-white leading-relaxed flex items-start gap-2">
+                                <li key={itemIdx} className="text-sm text-foreground leading-relaxed flex items-start gap-2">
                                   <span className="text-red-400 text-lg leading-none mt-0.5">•</span>
                                   <span className="flex-1">{item}</span>
                                 </li>
@@ -250,7 +250,7 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
                         }
                         
                         return (
-                          <p key={i} className="text-sm text-white leading-relaxed">
+                          <p key={i} className="text-sm text-foreground leading-relaxed">
                             {block.content}
                           </p>
                         );
@@ -261,7 +261,7 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
                       {(section.content as string[]).map((item, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm leading-relaxed">
                           <span className={`${colors.icon} text-lg leading-none mt-0.5`}>•</span>
-                          <span className="flex-1 text-white">{item}</span>
+                          <span className="flex-1 text-foreground">{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -270,12 +270,12 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
                       {(section.content as string[]).map((item, i) => (
                         <div key={i} className="flex items-start gap-2">
                           <CheckSquare className={`h-4 w-4 ${colors.icon} mt-0.5 flex-shrink-0`} />
-                          <span className="text-sm leading-relaxed flex-1 text-white">{item}</span>
+                          <span className="text-sm leading-relaxed flex-1 text-foreground">{item}</span>
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <p className="text-sm leading-relaxed text-white text-left">{section.content as string}</p>
+                    <p className="text-sm leading-relaxed text-foreground text-left">{section.content as string}</p>
                   )}
                 </CardContent>
               </CollapsibleContent>

@@ -397,30 +397,30 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
           <div className="space-y-4">
             {/* Primary Cable */}
             <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
-              <h4 className="font-semibold flex items-center gap-2 mb-4 text-white">
+              <h4 className="font-semibold flex items-center gap-2 mb-4 text-foreground">
                 <Zap className="h-5 w-5 text-elec-yellow" />
                 Primary Cable
               </h4>
               <div className="space-y-4">
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Specification:</span>
-                  <span className="font-medium text-white">{procurement.primaryCable.specification}</span>
+                  <span className="text-foreground/80 text-sm">Specification:</span>
+                  <span className="font-medium text-foreground">{procurement.primaryCable.specification}</span>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Length Required:</span>
-                  <span className="font-medium text-white">{procurement.primaryCable.length}</span>
+                  <span className="text-foreground/80 text-sm">Length Required:</span>
+                  <span className="font-medium text-foreground">{procurement.primaryCable.length}</span>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Installation:</span>
-                  <span className="font-medium text-white capitalize">{procurement.primaryCable.installationMethod?.replace('-', ' ')}</span>
+                  <span className="text-foreground/80 text-sm">Installation:</span>
+                  <span className="font-medium text-foreground capitalize">{procurement.primaryCable.installationMethod?.replace('-', ' ')}</span>
                 </div>
                 <Separator className="my-3 bg-elec-yellow/20" />
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Rate:</span>
+                  <span className="text-foreground/80 text-sm">Rate:</span>
                   <span className="font-medium text-elec-green">{procurement.primaryCable.estimate}</span>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Total Cable:</span>
+                  <span className="text-foreground/80 text-sm">Total Cable:</span>
                   <span className="font-bold text-elec-green text-lg">{procurement.primaryCable.totalEstimate}</span>
                 </div>
               </div>
@@ -428,26 +428,26 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
             
             {/* Protective Device */}
             <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-blue/20">
-              <h4 className="font-semibold flex items-center gap-2 mb-4 text-white">
+              <h4 className="font-semibold flex items-center gap-2 mb-4 text-foreground">
                 <Shield className="h-5 w-5 text-elec-blue" />
                 Protective Device
               </h4>
               <div className="space-y-4">
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Type:</span>
-                  <span className="font-medium text-white">{procurement.protectiveDevice.type}</span>
+                  <span className="text-foreground/80 text-sm">Type:</span>
+                  <span className="font-medium text-foreground">{procurement.protectiveDevice.type}</span>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Features:</span>
-                  <span className="font-medium text-white text-sm leading-relaxed">{procurement.protectiveDevice.characteristics}</span>
+                  <span className="text-foreground/80 text-sm">Features:</span>
+                  <span className="font-medium text-foreground text-sm leading-relaxed">{procurement.protectiveDevice.characteristics}</span>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Quantity:</span>
-                  <span className="font-medium text-white">{procurement.protectiveDevice.quantity}</span>
+                  <span className="text-foreground/80 text-sm">Quantity:</span>
+                  <span className="font-medium text-foreground">{procurement.protectiveDevice.quantity}</span>
                 </div>
                 <Separator className="my-3 bg-elec-blue/20" />
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Unit Cost:</span>
+                  <span className="text-foreground/80 text-sm">Unit Cost:</span>
                   <span className="font-bold text-elec-blue text-lg">{procurement.protectiveDevice.estimate}</span>
                 </div>
               </div>
@@ -458,7 +458,7 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
           <div className="grid grid-cols-1 gap-4">
             {/* Installation Accessories */}
             <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
-              <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
+              <h4 className="font-semibold mb-4 text-foreground flex items-center gap-2">
                 <Wrench className="h-5 w-5 text-elec-yellow" />
                 Installation Accessories
               </h4>
@@ -468,16 +468,16 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-elec-green mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <h5 className="font-medium text-white text-sm leading-tight">{item.name}</h5>
-                        <p className="text-white/70 text-xs mt-1 leading-relaxed">{item.description}</p>
+                        <h5 className="font-medium text-foreground text-sm leading-tight">{item.name}</h5>
+                        <p className="text-foreground/70 text-xs mt-1 leading-relaxed">{item.description}</p>
                       </div>
                     </div>
                     <div className="flex flex-col gap-1 sm:items-center">
-                      <span className="text-white/60 text-xs uppercase tracking-wide">Quantity</span>
-                      <span className="text-white text-sm font-medium">{item.quantity}</span>
+                      <span className="text-foreground/60 text-xs uppercase tracking-wide">Quantity</span>
+                      <span className="text-foreground text-sm font-medium">{item.quantity}</span>
                     </div>
                     <div className="flex flex-col gap-1 sm:items-center">
-                      <span className="text-white/60 text-xs uppercase tracking-wide">Priority</span>
+                      <span className="text-foreground/60 text-xs uppercase tracking-wide">Priority</span>
                       <Badge 
                         className={`text-xs px-2 py-0.5 ${
                           item.importance === 'Mandatory' ? 'bg-red-500/20 text-red-300 border-red-500/30' :
@@ -498,20 +498,20 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
               <h4 className="font-semibold text-elec-yellow mb-4">Estimated Project Cost</h4>
               <div className="space-y-4">
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Materials:</span>
-                  <span className="font-medium text-white">{procurement.totalProjectEstimate.materials}</span>
+                  <span className="text-foreground/80 text-sm">Materials:</span>
+                  <span className="font-medium text-foreground">{procurement.totalProjectEstimate.materials}</span>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Labour:</span>
-                  <span className="font-medium text-white">{procurement.totalProjectEstimate.labour}</span>
+                  <span className="text-foreground/80 text-sm">Labour:</span>
+                  <span className="font-medium text-foreground">{procurement.totalProjectEstimate.labour}</span>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-white/80 text-sm">Testing/Cert:</span>
-                  <span className="font-medium text-white">{procurement.totalProjectEstimate.testing}</span>
+                  <span className="text-foreground/80 text-sm">Testing/Cert:</span>
+                  <span className="font-medium text-foreground">{procurement.totalProjectEstimate.testing}</span>
                 </div>
                 <Separator className="my-3 bg-elec-yellow/30" />
                 <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
-                  <span className="font-semibold text-white">Total Range:</span>
+                  <span className="font-semibold text-foreground">Total Range:</span>
                   <span className="font-bold text-elec-yellow text-right text-lg">
                     £{(
                       parseInt(procurement.totalProjectEstimate.materials.split('-')[0].replace('£', '')) + 
@@ -621,11 +621,11 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
       {/* Regulatory References */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
+          <CardTitle className="flex items-center gap-2 text-foreground">
             <BookOpen className="h-5 w-5 text-elec-primary" />
             Regulatory Framework
           </CardTitle>
-          <CardDescription className="text-white">
+          <CardDescription className="text-foreground">
             Essential regulations and standards governing this installation
           </CardDescription>
         </CardHeader>
@@ -649,7 +649,7 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
                       {reg.compliance}
                     </Badge>
                   </div>
-                  <p className="text-sm text-white/80">{reg.description}</p>
+                  <p className="text-sm text-foreground/80">{reg.description}</p>
                 </div>
               </div>
               
@@ -660,7 +660,7 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
                   <h5 className="font-medium text-sm mb-2 text-elec-yellow">Key Requirements</h5>
                    <ul className="space-y-1">
                       {reg.keyClauses.map((clause, idx) => (
-                        <li key={idx} className="text-xs text-white flex items-start gap-2">
+                        <li key={idx} className="text-xs text-foreground flex items-start gap-2">
                           <span className="text-elec-primary mt-1 flex-shrink-0">•</span>
                           <span className="leading-tight">{clause}</span>
                         </li>
