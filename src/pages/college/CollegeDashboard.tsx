@@ -68,6 +68,36 @@ export type CollegeSection =
   // Employer Portal
   | "employerportal";
 
+// Section titles for the header
+const sectionTitles: Record<CollegeSection, string> = {
+  overview: "College Dashboard",
+  peoplehub: "People Hub",
+  curriculumhub: "Curriculum Hub",
+  assessmenthub: "Assessment Hub",
+  resourceshub: "Resources Hub",
+  tutors: "Tutors",
+  students: "Students",
+  cohorts: "Cohorts",
+  supportstaff: "Support Staff",
+  courses: "Courses",
+  lessonplans: "Lesson Plans",
+  teachingresources: "Teaching Resources",
+  schemesofwork: "Schemes of Work",
+  tutornotebook: "Tutor Notebook",
+  grading: "Grading",
+  attendance: "Attendance",
+  ilpmanagement: "ILP Management",
+  epatracking: "EPA Tracking",
+  progresstracking: "Progress Tracking",
+  portfolio: "Portfolio",
+  workqueue: "Work Queue",
+  documentlibrary: "Document Library",
+  compliancedocs: "Compliance Docs",
+  ltisettings: "LTI Settings",
+  collegesettings: "College Settings",
+  employerportal: "Employer Portal",
+};
+
 const CollegeDashboard = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<CollegeSection>("overview");
@@ -304,59 +334,64 @@ const CollegeDashboard = () => {
 
   return (
     <CollegeProvider>
-      <div className="animate-fade-in">
-        {/* Top bar with search and notifications */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2">
-            {/* Back navigation for sub-sections */}
-            {activeSection !== "overview" && (
-              <button
-                onClick={handleBack}
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-elec-yellow transition-colors mr-2"
-              >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                Back
-              </button>
-            )}
-          </div>
+      <div className="min-h-screen bg-background">
+        {/* Sticky Header - Native App Style */}
+        <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex h-14 sm:h-16 items-center justify-between">
+              {/* Left side - Back button */}
+              <div className="flex items-center gap-2 sm:gap-4">
+                {activeSection === "overview" ? (
+                  <Button variant="ghost" size="sm" onClick={handleGoHome} className="gap-1 text-muted-foreground hover:text-foreground">
+                    <ArrowLeft className="h-4 w-4" />
+                    <span className="hidden sm:inline">Home</span>
+                  </Button>
+                ) : (
+                  <Button variant="ghost" size="sm" onClick={handleBack} className="gap-1 text-muted-foreground hover:text-foreground">
+                    <ArrowLeft className="h-4 w-4" />
+                    <span className="hidden sm:inline">Back</span>
+                  </Button>
+                )}
+                <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
+                  <span>/</span>
+                  <span className="text-foreground font-medium">{sectionTitles[activeSection]}</span>
+                </div>
+              </div>
 
-          <div className="flex items-center gap-2">
-            {/* Search trigger */}
-            <Button
-              variant="outline"
-              className="gap-2 text-muted-foreground hidden sm:flex"
-              onClick={() => setCommandPaletteOpen(true)}
-            >
-              <Search className="h-4 w-4" />
-              <span className="text-sm">Search...</span>
-              <kbd className="pointer-events-none hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-                <span className="text-xs">⌘</span>K
-              </kbd>
-            </Button>
+              {/* Center - Title (mobile only) */}
+              <div className="sm:hidden flex items-center gap-2">
+                <School className="h-5 w-5 text-elec-yellow" />
+                <span className="font-semibold text-sm truncate max-w-[120px]">{sectionTitles[activeSection]}</span>
+              </div>
 
-            {/* Mobile search button */}
-            <Button
-              variant="outline"
-              size="icon"
-              className="sm:hidden"
-              onClick={() => setCommandPaletteOpen(true)}
-            >
-              <Search className="h-4 w-4" />
-            </Button>
-
+              {/* Right side - Actions */}
+              <div className="flex items-center gap-2">
+                <Button variant="outline" className="gap-2 text-muted-foreground hidden sm:flex" onClick={() => setCommandPaletteOpen(true)}>
+                  <Search className="h-4 w-4" />
+                  <span className="text-sm">Search...</span>
+                  <kbd className="pointer-events-none hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+                    <span className="text-xs">Ctrl</span>K
+                  </kbd>
+                </Button>
+                <Button variant="ghost" size="icon" className="sm:hidden h-9 w-9" onClick={() => setCommandPaletteOpen(true)}>
+                  <Search className="h-5 w-5" />
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => handleNavigate("collegesettings")} className="gap-2 text-muted-foreground hover:text-foreground">
+                  <Settings className="h-4 w-4" />
+                  <span className="hidden sm:inline">Settings</span>
+                </Button>
+              </div>
             </div>
-        </div>
+          </div>
+        </header>
 
-        {renderSection()}
+        {/* Main Content */}
+        <main className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto pb-24 sm:pb-8">
+          <div className="animate-fade-in">{renderSection()}</div>
+        </main>
 
         {/* Command Palette */}
-        <CommandPalette
-          open={commandPaletteOpen}
-          onOpenChange={setCommandPaletteOpen}
-          onNavigate={handleNavigate}
-        />
+        <CommandPalette open={commandPaletteOpen} onOpenChange={setCommandPaletteOpen} onNavigate={handleNavigate} />
 
         {/* Quick Actions FAB */}
         <QuickActions onNavigate={handleNavigate} />

@@ -94,7 +94,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
             </p>
           </div>
         </div>
-        <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto">
+        <p className="text-sm sm:text-base text-white max-w-2xl mx-auto">
           Comprehensive learning modules covering testing procedures, fault finding, regulations and assessments
         </p>
       </div>
@@ -138,7 +138,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
                 </h3>
 
                 {/* Description */}
-                <p className="text-sm text-gray-400 leading-relaxed mb-4">
+                <p className="text-sm text-white leading-relaxed mb-4">
                   {module.description}
                 </p>
 
@@ -147,7 +147,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
                   {module.features.map((feature, idx) => (
                     <span
                       key={idx}
-                      className="text-xs px-2 py-1 rounded-full bg-white/5 text-gray-300 border border-white/10"
+                      className="text-xs px-2 py-1 rounded-full bg-white/5 text-white border border-white/10"
                     >
                       {feature}
                     </span>

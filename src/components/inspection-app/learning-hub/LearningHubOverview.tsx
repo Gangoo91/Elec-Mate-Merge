@@ -3,15 +3,19 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { 
-  BookOpen, 
-  GraduationCap, 
-  Zap, 
-  Shield, 
+import {
+  BookOpen,
+  GraduationCap,
+  Zap,
+  Shield,
   ArrowRight,
   Star,
   Clock,
-  Users
+  Users,
+  Search,
+  Wrench,
+  FileText,
+  Brain
 } from 'lucide-react';
 import { LearningSection } from '../LearningHub';
 
@@ -21,69 +25,82 @@ interface LearningHubOverviewProps {
 
 const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) => {
   const navigate = useNavigate();
-  
+
   const learningModules = [
     {
       id: 'testing' as LearningSection,
       title: 'Testing Procedures',
-      description: 'Step-by-step electrical testing methods and best practices',
+      description: 'Step-by-step electrical testing methods including continuity, insulation resistance, RCD and loop impedance testing',
       icon: Zap,
-      color: 'bg-orange-500/10 border-orange-500/20',
+      gradient: 'from-orange-500/20 via-orange-500/10 to-transparent',
+      borderColor: 'border-orange-500/30 hover:border-orange-500/50',
+      iconBg: 'bg-orange-500/20',
       iconColor: 'text-orange-400',
       stats: { items: 18, duration: '35 min' },
-      features: ['Video tutorials', 'Interactive simulations', 'Test equipment guides']
+      features: ['Continuity Testing', 'Insulation Resistance', 'RCD Testing', 'Loop Impedance']
     },
     {
       id: 'fault-finding' as LearningSection,
       title: 'Fault Finding',
-      description: 'Systematic approach to identifying and resolving electrical faults',
-      icon: Zap,
-      color: 'bg-red-500/10 border-red-500/20',
+      description: 'Systematic diagnostic techniques for identifying and resolving common electrical faults safely',
+      icon: Wrench,
+      gradient: 'from-red-500/20 via-red-500/10 to-transparent',
+      borderColor: 'border-red-500/30 hover:border-red-500/50',
+      iconBg: 'bg-red-500/20',
       iconColor: 'text-red-400',
       stats: { items: 20, duration: '40 min' },
-      features: ['Diagnostic techniques', 'Test equipment usage', 'Troubleshooting guides']
+      features: ['Earth Faults', 'Short Circuits', 'Open Circuits', 'High Resistance']
     },
     {
       id: 'regulations' as LearningSection,
-      title: 'BS7671 Regulation Reference',
-      description: 'Comprehensive guide to electrical installation standards and regulations',
+      title: 'BS 7671 Reference',
+      description: 'Quick access to essential BS 7671 regulations, tables and requirements for inspection work',
       icon: BookOpen,
-      color: 'bg-blue-500/10 border-blue-500/20',
+      gradient: 'from-blue-500/20 via-blue-500/10 to-transparent',
+      borderColor: 'border-blue-500/30 hover:border-blue-500/50',
+      iconBg: 'bg-blue-500/20',
       iconColor: 'text-blue-400',
       stats: { items: 24, duration: '45 min' },
-      features: ['Quick search', 'Interactive guides', 'Regulation updates']
+      features: ['Part 6 Inspection', 'Cable Tables', 'Test Values', 'Documentation']
     },
     {
       id: 'quiz' as LearningSection,
-      title: 'Knowledge Assessment',
-      description: 'Test your understanding with interactive quizzes and assessments',
-      icon: GraduationCap,
-      color: 'bg-yellow-500/10 border-yellow-500/20',
-      iconColor: 'text-yellow-400',
+      title: 'Knowledge Quiz',
+      description: 'Test and reinforce your understanding with interactive quizzes covering all inspection topics',
+      icon: Brain,
+      gradient: 'from-elec-yellow/20 via-elec-yellow/10 to-transparent',
+      borderColor: 'border-elec-yellow/30 hover:border-elec-yellow/50',
+      iconBg: 'bg-elec-yellow/20',
+      iconColor: 'text-elec-yellow',
       stats: { items: 12, duration: '60 min' },
-      features: ['Progress tracking', 'Certificates', 'Difficulty levels']
+      features: ['Multiple Choice', 'Progress Tracking', 'Instant Feedback', 'Score History']
     }
   ];
 
   return (
-    <div className="space-y-6 sm:space-y-8 md:space-y-12">
+    <div className="space-y-6 sm:space-y-8 md:space-y-10">
       {/* Header Section */}
-      <div className="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 md:space-y-6 px-3 sm:px-4">
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4 md:mb-6">
-          <div className="p-2 sm:p-2.5 md:p-3 bg-elec-yellow/10 rounded-full">
-            <BookOpen className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-elec-yellow" />
+      <div className="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 px-3 sm:px-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4">
+          <div className="p-3 sm:p-4 bg-elec-yellow/10 rounded-2xl border border-elec-yellow/20">
+            <Zap className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground text-center">
-            Inspection & Testing Hub
-          </h1>
+          <div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
+              Inspection & Testing Hub
+            </h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
+              BS 7671 Compliant Training Resources
+            </p>
+          </div>
         </div>
-        <p className="text-sm sm:text-base md:text-base text-gray-300 max-w-3xl mx-auto px-2 sm:px-4">
-          BS7671 guidance, testing procedures and comprehensive safety resources for electrical professionals
+        <p className="text-sm sm:text-base text-white max-w-2xl mx-auto">
+          Comprehensive learning modules covering testing procedures, fault finding, regulations and assessments
         </p>
       </div>
 
       {/* Learning Modules Grid */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:gap-8 px-3 sm:px-0">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6 px-3 sm:px-4">
         {learningModules.map((module) => {
           const IconComponent = module.icon;
           const handleClick = () => {
@@ -93,36 +110,81 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
               onNavigateToSection(module.id);
             }
           };
-          
+
           return (
-            <Card 
+            <Card
               key={module.id}
-              className="bg-elec-gray border border-elec-yellow/30 rounded-lg sm:rounded-xl md:rounded-2xl hover:scale-[1.02] sm:hover:scale-105 hover:border-elec-yellow/50 transition-all duration-300 group cursor-pointer touch-manipulation min-h-[44px]"
+              className={`relative overflow-hidden bg-elec-gray ${module.borderColor} rounded-xl sm:rounded-2xl hover:scale-[1.02] transition-all duration-300 group cursor-pointer touch-manipulation`}
               onClick={handleClick}
             >
-              <div className="text-center space-y-3 sm:space-y-4 p-4 sm:p-5 md:p-6">
-                {/* Icon */}
-                <div className="flex justify-center">
-                  <div className="p-2 sm:p-2.5 md:p-3 bg-elec-yellow/10 rounded-xl md:rounded-2xl">
-                    <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-elec-yellow" />
+              {/* Background Gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${module.gradient} opacity-50 group-hover:opacity-70 transition-opacity duration-300`} />
+
+              <div className="relative p-5 sm:p-6">
+                {/* Top Row: Icon and Stats */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className={`p-3 sm:p-4 ${module.iconBg} rounded-xl sm:rounded-2xl group-hover:scale-110 transition-transform duration-300`}>
+                    <IconComponent className={`h-7 w-7 sm:h-8 sm:w-8 ${module.iconColor}`} />
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Clock className="h-3.5 w-3.5" />
+                    <span>{module.stats.duration}</span>
                   </div>
                 </div>
-                
+
                 {/* Title */}
-                <CardTitle className="text-foreground text-base sm:text-lg md:text-xl font-bold group-hover:text-elec-yellow transition-colors">
+                <h3 className={`text-lg sm:text-xl font-bold text-foreground mb-2 group-hover:${module.iconColor} transition-colors`}>
                   {module.title}
-                </CardTitle>
-                
+                </h3>
+
                 {/* Description */}
-                <CardDescription className="text-gray-300 text-sm sm:text-base leading-relaxed px-1 sm:px-2">
+                <p className="text-sm text-white leading-relaxed mb-4">
                   {module.description}
-                </CardDescription>
+                </p>
+
+                {/* Feature Tags */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {module.features.map((feature, idx) => (
+                    <span
+                      key={idx}
+                      className="text-xs px-2 py-1 rounded-full bg-white/5 text-white border border-white/10"
+                    >
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Action Button */}
+                <div className={`flex items-center gap-2 ${module.iconColor} font-medium text-sm group-hover:gap-3 transition-all duration-300`}>
+                  <span>Start Learning</span>
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
               </div>
             </Card>
           );
         })}
       </div>
 
+      {/* Quick Tips Section */}
+      <div className="max-w-6xl mx-auto px-3 sm:px-4">
+        <Card className="bg-elec-gray/50 border-elec-yellow/20 rounded-xl">
+          <div className="p-4 sm:p-5">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-elec-yellow/10 flex-shrink-0">
+                <Shield className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-foreground mb-1">Safety First</h4>
+                <p className="text-sm text-muted-foreground">
+                  Always follow safe isolation procedures before conducting any electrical tests.
+                  These learning materials supplement your practical training but do not replace
+                  hands-on supervision from a qualified electrician.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };
