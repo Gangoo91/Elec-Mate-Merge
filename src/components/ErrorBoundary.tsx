@@ -102,7 +102,7 @@ class ErrorBoundary extends Component<Props, State> {
                 </Button>
               </div>
 
-              {process.env.NODE_ENV === 'development' && this.state.errorInfo && (
+              {import.meta.env.DEV && this.state.errorInfo && (
                 <details className="text-xs text-muted-foreground">
                   <summary className="cursor-pointer font-medium mb-2">Stack Trace</summary>
                   <pre className="bg-muted p-3 rounded overflow-auto max-h-48">
