@@ -17,18 +17,19 @@ function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
       className="
         group relative overflow-hidden cursor-pointer
         bg-elec-gray/50 border border-elec-yellow/10
-        hover:border-elec-yellow/30 hover:bg-elec-gray/80
+        hover:border-elec-yellow/30 hover:bg-elec-gray/70
         active:scale-[0.97]
-        transition-all duration-200
+        transition-colors duration-150
+        touch-manipulation shadow-none
       "
       onClick={() => navigate(path)}
     >
-      <div className="p-3 sm:p-4 flex items-center gap-2 sm:gap-3">
+      <div className="p-2.5 sm:p-3 flex items-center gap-2 sm:gap-3">
         <div className="
           p-1.5 sm:p-2 rounded-lg
           bg-elec-yellow/10 text-elec-yellow/80
-          group-hover:bg-elec-yellow/20 group-hover:text-elec-yellow
-          transition-all duration-200
+          group-hover:bg-elec-yellow/15 group-hover:text-elec-yellow
+          transition-colors duration-150
           flex-shrink-0
         ">
           {icon}
@@ -37,14 +38,11 @@ function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
           {title}
         </span>
         {badge && (
-          <span className="ml-auto px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-medium bg-elec-yellow/20 text-elec-yellow rounded-full flex-shrink-0">
+          <span className="ml-auto px-1.5 py-0.5 text-[10px] font-medium bg-elec-yellow/20 text-elec-yellow rounded-full flex-shrink-0">
             {badge}
           </span>
         )}
       </div>
-
-      {/* Hover glow */}
-      <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/5 to-elec-yellow/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" />
     </Card>
   );
 }
@@ -89,7 +87,7 @@ export function SecondaryQuickAccess() {
       <h3 className="text-xs sm:text-sm font-medium text-gray-400 uppercase tracking-wider mb-2 sm:mb-3">
         Quick Access
       </h3>
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
         {items.map((item) => (
           <QuickAccessItem key={item.path + item.title} {...item} />
         ))}

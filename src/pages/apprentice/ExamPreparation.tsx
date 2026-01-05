@@ -90,35 +90,40 @@ const ExamPreparation = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">Examination Preparation</h1>
-        <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
-          Comprehensive preparation resources for electrical qualifications and assessments
-        </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
-      </div>
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 space-y-4 sm:space-y-6 animate-fade-in">
+        <div className="flex flex-col items-center justify-center mb-2 sm:mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4">Examination Preparation</h1>
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
+            Comprehensive preparation resources for electrical qualifications and assessments
+          </p>
+          <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {studyResources.map((resource, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors">
-            <CardHeader className="pb-2">
-              <div className="flex items-center gap-2">
-                {resource.icon}
-                <CardTitle className="text-sm">{resource.title}</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-xs text-muted-foreground mb-2">{resource.description}</p>
-              <Badge variant="outline" className="text-xs">
-                {resource.count}
-              </Badge>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+          {studyResources.map((resource, index) => (
+            <Card key={index} className="bg-card border-border/30 hover:border-primary/40 transition-colors">
+              <CardHeader className="pb-2 p-3 sm:p-4">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
+                    {React.cloneElement(resource.icon as React.ReactElement, {
+                      className: "h-4 w-4 sm:h-5 sm:w-5 text-primary"
+                    })}
+                  </div>
+                  <CardTitle className="text-xs sm:text-sm">{resource.title}</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="p-3 sm:p-4 pt-0">
+                <p className="text-[10px] sm:text-xs text-muted-foreground mb-2">{resource.description}</p>
+                <Badge variant="outline" className="text-[10px] sm:text-xs border-primary/30 text-primary">
+                  {resource.count}
+                </Badge>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
         {examTypes.map((exam, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>

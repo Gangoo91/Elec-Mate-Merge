@@ -21,9 +21,9 @@ function HubCard({ title, subtitle, description, icon, path, accentColor, bgImag
         group relative overflow-hidden cursor-pointer
         bg-elec-gray/80 border border-elec-yellow/10
         hover:border-elec-yellow/40
-        active:scale-[0.98]
-        transition-all duration-300 ease-out
-        hover:shadow-xl hover:shadow-elec-yellow/10
+        active:scale-[0.97]
+        transition-all duration-200 ease-out
+        touch-manipulation
       `}
       onClick={() => navigate(path)}
     >
@@ -67,10 +67,10 @@ function HubCard({ title, subtitle, description, icon, path, accentColor, bgImag
 
         {/* Text */}
         <div className="flex-grow">
-          <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground mb-1 sm:mb-2 group-hover:text-elec-yellow transition-colors drop-shadow-sm">
+          <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground mb-1 sm:mb-2 group-hover:text-elec-yellow transition-colors">
             {title}
           </h3>
-          <p className="text-xs sm:text-sm text-gray-300 leading-relaxed line-clamp-2 drop-shadow-sm">
+          <p className="text-xs sm:text-sm text-gray-300 leading-relaxed line-clamp-2">
             {description}
           </p>
         </div>

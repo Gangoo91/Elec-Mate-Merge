@@ -80,16 +80,13 @@ export function HeroWelcome() {
   };
 
   return (
-    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-elec-gray via-elec-gray to-elec-dark">
-      {/* Animated background glow */}
-      <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/5 via-transparent to-elec-yellow/5 animate-pulse" />
+    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-elec-gray via-elec-gray to-elec-dark shadow-none">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/3 via-transparent to-elec-yellow/3" />
 
-      {/* Glassmorphism overlay */}
-      <div className="absolute inset-0 backdrop-blur-[2px]" />
-
-      {/* Decorative elements - smaller on mobile */}
-      <div className="absolute top-0 right-0 w-32 sm:w-64 h-32 sm:h-64 bg-elec-yellow/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-24 sm:w-48 h-24 sm:h-48 bg-elec-yellow/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
+      {/* Decorative elements - smaller on mobile, optimized for performance */}
+      <div className="absolute top-0 right-0 w-24 sm:w-48 h-24 sm:h-48 bg-elec-yellow/8 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-20 sm:w-36 h-20 sm:h-36 bg-elec-yellow/5 rounded-full blur-xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 p-4 sm:p-6 md:p-8">
@@ -109,11 +106,11 @@ export function HeroWelcome() {
               className="group relative"
             >
               <div className={`
-                w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden
+                w-14 h-14 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl sm:rounded-2xl overflow-hidden
                 bg-elec-yellow/10 border-2 border-elec-yellow/30
                 flex items-center justify-center
-                transition-all duration-300
-                group-hover:border-elec-yellow group-hover:shadow-lg group-hover:shadow-elec-yellow/20
+                transition-colors duration-200
+                group-hover:border-elec-yellow/60
                 ${uploading ? "animate-pulse" : ""}
               `}>
                 {avatarUrl ? (

@@ -62,15 +62,15 @@ function StatItem({ icon, value, label, color = "text-elec-yellow", path }: Stat
   };
 
   return (
-    <div className="flex-shrink-0 min-w-[120px] sm:min-w-0 group">
+    <div className="flex-shrink-0 min-w-[110px] sm:min-w-0 group">
       <Card
         className={`
           relative overflow-hidden h-full
-          bg-elec-gray/50 border-elec-yellow/10
-          hover:border-elec-yellow/30
-          transition-all duration-300
-          hover:shadow-lg hover:shadow-elec-yellow/5
-          active:scale-[0.98]
+          bg-elec-gray/60 border-elec-yellow/10
+          hover:border-elec-yellow/30 hover:bg-elec-gray/80
+          transition-colors duration-200
+          active:scale-[0.97]
+          shadow-none
           ${path ? "cursor-pointer" : ""}
         `}
         onClick={handleClick}
@@ -92,11 +92,8 @@ function StatItem({ icon, value, label, color = "text-elec-yellow", path }: Stat
           </span>
 
           {/* Label */}
-          <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5">{label}</p>
+          <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5 whitespace-nowrap">{label}</p>
         </div>
-
-        {/* Hover glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-t from-elec-yellow/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       </Card>
     </div>
   );
@@ -164,22 +161,19 @@ export function SmartStatsBar() {
 
   return (
     <div className="relative">
-      {/* Fade edges for scroll indication on mobile */}
-      <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none sm:hidden" />
-      <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none sm:hidden" />
-
       {/* Stats container - horizontal scroll on mobile, grid on desktop */}
       <div className="
-        flex gap-2 sm:gap-3
-        overflow-x-auto
-        pb-2 -mx-4 px-4
+        flex gap-2.5 sm:gap-3
+        overflow-x-auto overscroll-x-contain
+        pb-1 -mx-4 px-4
         sm:mx-0 sm:px-0
         scrollbar-hide
         sm:grid sm:grid-cols-5
         snap-x snap-mandatory sm:snap-none
+        scroll-smooth
       ">
         {stats.map((stat, index) => (
-          <div key={index} className="snap-start">
+          <div key={index} className="snap-center first:snap-start last:snap-end">
             <StatItem {...stat} />
           </div>
         ))}

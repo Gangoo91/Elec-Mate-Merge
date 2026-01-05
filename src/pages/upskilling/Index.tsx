@@ -137,30 +137,30 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <div className="px-4 sm:px-6 md:px-8 pt-4 sm:pt-6 md:pt-8 pb-6">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-6">
         <Link to="/electrician/study-centre">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="text-muted-foreground hover:text-foreground hover:bg-card transition-all duration-200 mb-4 sm:mb-6 p-0 h-auto"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Study Centre
           </Button>
         </Link>
 
-        <div className="space-y-2">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
+        <div className="space-y-2 sm:space-y-3">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight">
             Electrical Upskilling
           </h1>
-          <p className="text-base md:text-lg text-muted-foreground">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl">
             Advanced electrical courses and professional development for qualified electricians
           </p>
         </div>
       </div>
 
       {/* Course Grid */}
-      <div className="px-4 sm:px-6 md:px-8 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
           {courses.map((course) => {
             const IconComponent = course.icon;
             return (

@@ -2,7 +2,8 @@ import { useState, useCallback, useEffect } from "react";
 import { OverviewSection } from "@/components/employer/sections/OverviewSection";
 import { EmployeesSection } from "@/components/employer/sections/EmployeesSection";
 import { JobsSection } from "@/components/employer/sections/JobsSection";
-import VoiceAssistantV2 from "@/components/VoiceAssistantV2";
+import DraggableVoiceAssistant from "@/components/DraggableVoiceAssistant";
+import { MobileBottomNav } from "@/components/employer/MobileBottomNav";
 
 import { SafetyHRSection } from "@/components/employer/sections/SafetyHRSection";
 import { RAMSSection } from "@/components/employer/sections/RAMSSection";
@@ -497,13 +498,13 @@ const EmployerDashboard = () => {
 
   return (
     <EmployerProvider>
-      <div className="animate-fade-in">
+      <div className="animate-fade-in pb-20 md:pb-0">
         {/* Back navigation for sub-sections */}
         {activeSection !== "overview" && (
           <div className="mb-4">
             <button
               onClick={handleBack}
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-elec-yellow transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-elec-yellow transition-colors touch-target"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -526,6 +527,12 @@ const EmployerDashboard = () => {
         <CreateOrderDialog open={orderDialogOpen} onOpenChange={setOrderDialogOpen} />
         <CreateSupplierDialog open={supplierDialogOpen} onOpenChange={setSupplierDialogOpen} />
         <PostVacancyDialog open={vacancyDialogOpen} onOpenChange={setVacancyDialogOpen} trigger={null} />
+
+        {/* Mobile Bottom Navigation */}
+        <MobileBottomNav currentSection={activeSection} onNavigate={handleNavigate} />
+
+        {/* Draggable Voice Assistant */}
+        <DraggableVoiceAssistant onNavigate={handleNavigate} currentSection={activeSection} />
       </div>
     </EmployerProvider>
   );

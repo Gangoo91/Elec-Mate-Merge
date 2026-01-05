@@ -14,70 +14,72 @@ const CityGuildsCourses = () => {
   const cityGuildsCourses = awardingBodies?.['City & Guilds'] || [];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight mb-2">
-            <span className="gradient-text">City & Guilds Courses</span>
-          </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
-            Industry-standard vocational qualifications for electrical professionals
-          </p>
-        </div>
-        <Link to="/apprentice/study" className="w-full sm:w-auto">
-          <Button 
-            variant="outline" 
-            className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-full sm:w-auto"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Study Centre
-          </Button>
-        </Link>
-      </div>
-
-      {loading ? (
-        <div className="flex justify-center items-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-          <span className="ml-2 text-muted-foreground">Loading City & Guilds courses...</span>
-        </div>
-      ) : error ? (
-        <div className="text-center py-12">
-          <p className="text-destructive mb-4">Error loading courses: {error}</p>
-          <Button variant="outline" onClick={() => window.location.reload()}>
-            Try Again
-          </Button>
-        </div>
-      ) : cityGuildsCourses.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">No City & Guilds courses available at the moment.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {cityGuildsCourses.map((course) => (
-            <Link 
-              key={course.id}
-              to={`/apprentice/study/cityGuilds/${course.id}`}
-              className="block h-full transition-transform hover:scale-102 duration-200"
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 space-y-4 sm:space-y-6 animate-fade-in">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 mb-2 sm:mb-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-2">
+              <span className="gradient-text">City & Guilds Courses</span>
+            </h1>
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg">
+              Industry-standard vocational qualifications for electrical professionals
+            </p>
+          </div>
+          <Link to="/apprentice/study" className="w-full sm:w-auto">
+            <Button
+              variant="ghost"
+              className="text-muted-foreground hover:text-foreground hover:bg-card transition-all duration-200 w-full sm:w-auto"
             >
-              <Card 
-                className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Study Centre
+            </Button>
+          </Link>
+        </div>
+
+        {loading ? (
+          <div className="flex justify-center items-center py-8 sm:py-12">
+            <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-primary" />
+            <span className="ml-2 text-muted-foreground text-sm sm:text-base">Loading City & Guilds courses...</span>
+          </div>
+        ) : error ? (
+          <div className="text-center py-8 sm:py-12">
+            <p className="text-destructive mb-4 text-sm sm:text-base">Error loading courses: {error}</p>
+            <Button variant="outline" onClick={() => window.location.reload()}>
+              Try Again
+            </Button>
+          </div>
+        ) : cityGuildsCourses.length === 0 ? (
+          <div className="text-center py-8 sm:py-12">
+            <p className="text-muted-foreground text-sm sm:text-base">No City & Guilds courses available at the moment.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 auto-rows-fr">
+            {cityGuildsCourses.map((course) => (
+              <Link
+                key={course.id}
+                to={`/apprentice/study/cityGuilds/${course.id}`}
+                className="block h-full"
               >
-                <CardContent className="flex flex-col h-full p-6">
-                  <div className="flex flex-col items-center justify-center flex-grow">
-                    <BookOpen className="h-10 w-10 text-elec-yellow mb-4 opacity-80" />
-                    <h3 className="text-xl font-medium text-center mb-2">
+                <Card className="bg-card border-border/30 hover:border-primary/40 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col active:scale-[0.98]">
+                  <CardContent className="text-center space-y-2 sm:space-y-3 p-3 sm:p-4 flex-grow flex flex-col justify-center">
+                    <div className="flex justify-center">
+                      <div className="p-2 sm:p-2.5 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                        <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-primary" strokeWidth={1.5} />
+                      </div>
+                    </div>
+                    <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
                       {course.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground text-center">
+                    <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
                       {course.description || 'Professional electrical qualification'}
                     </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      )}
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

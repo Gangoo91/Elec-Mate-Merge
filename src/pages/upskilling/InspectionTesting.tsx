@@ -68,81 +68,79 @@ const InspectionTesting = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
+      <header className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-4 sm:pb-6">
         <Link to="/electrician/upskilling">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="text-muted-foreground hover:text-foreground hover:bg-card transition-all duration-200 mb-4 sm:mb-6 p-0 h-auto"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Study Centre
           </Button>
         </Link>
-        
-        <div className="space-y-3">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+
+        <div className="space-y-2 sm:space-y-3">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight">
             Inspection & Testing
           </h1>
-          <p className="text-lg sm:text-xl text-white max-w-3xl">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl">
             Electrical inspection, testing and certification procedures
           </p>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-6xl mx-auto">
-          {/* Grid Container with equal height cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-fr">
-            {modules.map((module) => {
-              const IconComponent = module.icon;
-              
-              const cardContent = (
-                <Card 
-                  className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col"
-                >
-                  <CardHeader className="text-center space-y-3 pb-2 p-4 flex-shrink-0">
-                    {/* Icon */}
-                    <div className="flex justify-center">
-                      <IconComponent className="h-8 w-8 text-yellow-400" strokeWidth={1.5} />
-                    </div>
-                    
-                    {/* Module Badge */}
-                    <div className="flex justify-center">
-                      <Badge 
-                        variant="secondary" 
-                        className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-bold text-xs px-3 py-1 border-0"
-                      >
-                        Module {module.id}
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent className="text-center space-y-2 pt-0 p-4 flex-grow flex flex-col justify-center">
-                    {/* Title */}
-                    <h3 className="text-lg font-bold text-white leading-tight group-hover:text-yellow-400 transition-colors duration-300">
-                      {module.title}
-                    </h3>
-                    
-                    {/* Description */}
-                    <p className="text-white text-xs leading-relaxed">
-                      {module.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              );
+      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12">
+        {/* Grid Container with equal height cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 auto-rows-fr">
+          {modules.map((module) => {
+            const IconComponent = module.icon;
 
-              return module.link ? (
-                <Link key={module.id} to={module.link} className="h-full">
-                  {cardContent}
-                </Link>
-              ) : (
-                <div key={module.id} className="h-full">
-                  {cardContent}
-                </div>
-              );
-            })}
-          </div>
+            const cardContent = (
+              <Card className="bg-card border-border/30 hover:border-primary/40 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col active:scale-[0.98]">
+                <CardHeader className="text-center space-y-2 sm:space-y-3 pb-2 p-3 sm:p-4 flex-shrink-0">
+                  {/* Icon */}
+                  <div className="flex justify-center">
+                    <div className="p-2 sm:p-2.5 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                      <IconComponent className="h-6 w-6 sm:h-8 sm:w-8 text-primary" strokeWidth={1.5} />
+                    </div>
+                  </div>
+
+                  {/* Module Badge */}
+                  <div className="flex justify-center">
+                    <Badge
+                      variant="secondary"
+                      className="bg-primary/10 text-primary hover:bg-primary/20 font-semibold text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 border-0"
+                    >
+                      Module {module.id}
+                    </Badge>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="text-center space-y-1 sm:space-y-2 pt-0 p-3 sm:p-4 flex-grow flex flex-col justify-center">
+                  {/* Title */}
+                  <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
+                    {module.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed line-clamp-2">
+                    {module.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+
+            return module.link ? (
+              <Link key={module.id} to={module.link} className="block h-full">
+                {cardContent}
+              </Link>
+            ) : (
+              <div key={module.id} className="h-full">
+                {cardContent}
+              </div>
+            );
+          })}
         </div>
       </main>
     </div>

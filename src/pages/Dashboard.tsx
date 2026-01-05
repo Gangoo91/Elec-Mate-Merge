@@ -8,43 +8,43 @@ import TrialBanner from "@/components/dashboard/TrialBanner";
 const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-elec-dark via-background to-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-5 sm:space-y-6 lg:space-y-8">
         {/* Hero Welcome Section */}
-        <div className="animate-fade-in">
+        <section className="animate-fade-in">
           <HeroWelcome />
-        </div>
+        </section>
 
-        {/* Smart Stats Bar */}
-        <div className="animate-fade-in" style={{ animationDelay: "100ms" }}>
+        {/* Smart Stats Bar - Swipeable on mobile */}
+        <section className="animate-fade-in" style={{ animationDelay: "50ms" }}>
           <SmartStatsBar />
-        </div>
+        </section>
 
         {/* Trial Banner (if applicable) */}
-        <div className="animate-fade-in" style={{ animationDelay: "150ms" }}>
+        <section className="animate-fade-in" style={{ animationDelay: "100ms" }}>
           <TrialBanner />
-        </div>
+        </section>
 
         {/* Main Hub Cards - Equal Prominence */}
-        <div className="animate-fade-in" style={{ animationDelay: "200ms" }}>
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <span className="w-1 h-6 bg-elec-yellow rounded-full"></span>
+        <section className="animate-fade-in" style={{ animationDelay: "150ms" }}>
+          <h2 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2">
+            <span className="w-1 h-5 sm:h-6 bg-elec-yellow rounded-full"></span>
             Your Hubs
           </h2>
           <HubGrid />
-        </div>
+        </section>
 
         {/* Action Required Panel */}
-        <div className="animate-fade-in" style={{ animationDelay: "300ms" }}>
+        <section className="animate-fade-in" style={{ animationDelay: "200ms" }}>
           <ActionRequired />
-        </div>
+        </section>
 
         {/* Secondary Quick Access */}
-        <div className="animate-fade-in" style={{ animationDelay: "400ms" }}>
+        <section className="animate-fade-in" style={{ animationDelay: "250ms" }}>
           <SecondaryQuickAccess />
-        </div>
+        </section>
 
-        {/* Footer spacing */}
-        <div className="h-8" />
+        {/* Footer spacing for mobile nav */}
+        <div className="h-4 sm:h-8" />
       </div>
     </div>
   );

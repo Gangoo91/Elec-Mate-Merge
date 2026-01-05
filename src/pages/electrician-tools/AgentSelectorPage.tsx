@@ -1,39 +1,27 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, ArrowRight, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, ArrowRight, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap, Sparkles, ChevronRight } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface Agent {
   id: string;
   name: string;
   icon: React.ComponentType<{ className?: string }>;
-  color: string;
+  gradient: string;
+  bgGradient: string;
   description: string;
   expertise: string[];
   comingSoon?: boolean;
 }
-
-const getGradientForColor = (color: string): string => {
-  const gradients: Record<string, string> = {
-    'text-elec-yellow': 'from-yellow-500 to-yellow-600',
-    'text-green-400': 'from-green-500 to-emerald-600',
-    'text-blue-400': 'from-blue-500 to-blue-600',
-    'text-orange-400': 'from-orange-500 to-red-500',
-    'text-purple-400': 'from-purple-500 to-purple-600',
-    'text-pink-400': 'from-pink-500 to-rose-500',
-    'text-cyan-400': 'from-cyan-500 to-teal-500',
-    'text-indigo-400': 'from-indigo-500 to-indigo-600',
-  };
-  return gradients[color] || 'from-gray-500 to-gray-600';
-};
 
 const AGENTS: Agent[] = [
   {
     id: 'designer',
     name: 'Circuit Designer',
     icon: Zap,
-    color: 'text-elec-yellow',
+    gradient: 'from-amber-400 to-yellow-500',
+    bgGradient: 'from-amber-500/20 to-yellow-500/10',
     description: 'BS 7671 compliant circuit design and cable sizing',
     expertise: ['Circuit calculations', 'Cable sizing', 'Consumer unit layouts', 'Voltage drop analysis']
   },
@@ -41,7 +29,8 @@ const AGENTS: Agent[] = [
     id: 'cost-engineer',
     name: 'Cost Engineer',
     icon: Calculator,
-    color: 'text-green-400',
+    gradient: 'from-emerald-400 to-green-500',
+    bgGradient: 'from-emerald-500/20 to-green-500/10',
     description: 'Full project quotes with materials, labour and timescales',
     expertise: ['Material pricing', 'Labour estimates', 'Project timescales', 'Quote generation']
   },
@@ -49,7 +38,8 @@ const AGENTS: Agent[] = [
     id: 'installer',
     name: 'Installation Specialist',
     icon: Wrench,
-    color: 'text-blue-400',
+    gradient: 'from-blue-400 to-blue-500',
+    bgGradient: 'from-blue-500/20 to-blue-500/10',
     description: 'Step-by-step installation methods and practical guidance',
     expertise: ['Installation methods', 'Practical tips', 'Tool selection', 'Best practices']
   },
@@ -57,7 +47,8 @@ const AGENTS: Agent[] = [
     id: 'maintenance',
     name: 'Maintenance Specialist',
     icon: Settings,
-    color: 'text-cyan-400',
+    gradient: 'from-cyan-400 to-teal-500',
+    bgGradient: 'from-cyan-500/20 to-teal-500/10',
     description: 'Periodic inspections, preventive maintenance & fault diagnosis',
     expertise: ['Periodic inspections', 'Preventive maintenance', 'Fault diagnosis', 'Equipment servicing']
   },
@@ -65,7 +56,8 @@ const AGENTS: Agent[] = [
     id: 'health-safety',
     name: 'Health & Safety',
     icon: Shield,
-    color: 'text-orange-400',
+    gradient: 'from-orange-400 to-red-500',
+    bgGradient: 'from-orange-500/20 to-red-500/10',
     description: 'Risk assessments, PPE requirements and safety procedures',
     expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Emergency procedures']
   },
@@ -73,7 +65,8 @@ const AGENTS: Agent[] = [
     id: 'commissioning',
     name: 'Testing & Commissioning',
     icon: CheckCircle2,
-    color: 'text-purple-400',
+    gradient: 'from-purple-400 to-purple-500',
+    bgGradient: 'from-purple-500/20 to-purple-500/10',
     description: 'Test procedures, EICR defect coding and fault diagnosis',
     expertise: ['Testing procedures', 'EICR photo analysis', 'Defect coding (C1-C3)', 'Fault diagnosis'],
     comingSoon: true
@@ -82,7 +75,8 @@ const AGENTS: Agent[] = [
     id: 'project-manager',
     name: 'Project Manager',
     icon: Clipboard,
-    color: 'text-pink-400',
+    gradient: 'from-pink-400 to-rose-500',
+    bgGradient: 'from-pink-500/20 to-rose-500/10',
     description: 'Scheduling, coordination, handover documentation',
     expertise: ['Project planning', 'Coordination', 'Documentation', 'Client communication'],
     comingSoon: true
@@ -91,7 +85,8 @@ const AGENTS: Agent[] = [
     id: 'tutor',
     name: 'Training Tutor',
     icon: GraduationCap,
-    color: 'text-indigo-400',
+    gradient: 'from-indigo-400 to-indigo-500',
+    bgGradient: 'from-indigo-500/20 to-indigo-500/10',
     description: 'Educational guidance, exam prep & concept explanations',
     expertise: ['Level 3 guidance', 'Concept explanations', 'Exam preparation', 'Practice questions'],
     comingSoon: true
@@ -103,7 +98,7 @@ const AgentSelectorPage = () => {
 
   const handleAgentSelect = (agentId: string, comingSoon?: boolean) => {
     if (comingSoon) return;
-    
+
     const routes: Record<string, string> = {
       'designer': '/electrician/circuit-designer',
       'cost-engineer': '/electrician/cost-engineer',
@@ -119,114 +114,179 @@ const AgentSelectorPage = () => {
     if (route) {
       navigate(route, { state: { fromAgentSelector: true } });
     } else {
-      // Fallback to AI chat
       navigate('/electrician/install-planner?mode=ai', {
         state: { preSelectedAgent: agentId }
       });
     }
   };
 
-  return (
-    <div className="min-h-screen bg-elec-dark">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-4 sm:py-6">
-        <div className="space-y-6 animate-fade-in">
-          {/* Back Button */}
-          <Link to="/electrician">
-            <Button variant="outline" size="sm" className="gap-2 touch-manipulation h-10">
-              <ArrowLeft className="h-4 w-4" /> Back to Electrical Hub
-            </Button>
-          </Link>
+  // Separate available and coming soon agents
+  const availableAgents = AGENTS.filter(a => !a.comingSoon);
+  const comingSoonAgents = AGENTS.filter(a => a.comingSoon);
 
-          {/* Header */}
-          <div className="text-center sm:text-left">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
-              AI Design Consultation
-            </h1>
-            <p className="text-muted-foreground text-sm sm:text-base mt-2">
-              Choose your specialist agent to begin
-            </p>
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
+      {/* Sticky Header */}
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-elec-dark/80 border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+              </div>
+              <div>
+                <h1 className="text-lg sm:text-xl font-bold tracking-tight text-white">
+                  AI Consultation
+                </h1>
+                <p className="text-xs text-white/50 hidden sm:block">Choose your specialist agent</p>
+              </div>
+            </div>
+            <Link to="/electrician">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-10 px-3 sm:px-4 text-white/70 hover:text-white hover:bg-white/10 gap-1.5 touch-manipulation"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                <span className="hidden sm:inline">Electrical Hub</span>
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-10 pb-safe">
+        {/* Available Agents Section */}
+        <section className="space-y-4 sm:space-y-5">
+          <div className="flex items-center gap-2.5 px-1">
+            <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <h2 className="text-lg sm:text-xl font-bold text-white">Available Agents</h2>
+            <Badge variant="secondary" className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">
+              {availableAgents.length} Active
+            </Badge>
           </div>
 
-          {/* Agent Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
-            {AGENTS.map((agent) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            {availableAgents.map((agent) => {
               const IconComponent = agent.icon;
               return (
-                <Card 
+                <button
                   key={agent.id}
-                  className={`
-                    group relative overflow-hidden
-                    border-2 border-elec-yellow/10 
-                    hover:border-elec-yellow/40 
-                    hover:shadow-2xl hover:scale-[1.02]
-                    transition-all duration-300 
-                    ${agent.comingSoon ? 'opacity-75 cursor-not-allowed' : 'cursor-pointer'}
-                  `}
                   onClick={() => handleAgentSelect(agent.id, agent.comingSoon)}
+                  className="text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation w-full"
+                >
+                  <Card className={`relative overflow-hidden border-white/10 bg-gradient-to-br ${agent.bgGradient} backdrop-blur-sm hover:border-white/20 active:scale-[0.98] transition-all duration-200 h-full group`}>
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                    <CardHeader className="relative p-4 sm:p-5 space-y-3">
+                      {/* Icon with gradient background */}
+                      <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} shadow-lg group-active:scale-95 transition-transform`}>
+                        <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
+                      </div>
+
+                      {/* Agent Name */}
+                      <CardTitle className="text-base sm:text-lg font-bold text-white">
+                        {agent.name}
+                      </CardTitle>
+
+                      {/* Description */}
+                      <p className="text-sm text-white/70 leading-relaxed">
+                        {agent.description}
+                      </p>
+                    </CardHeader>
+
+                    <CardContent className="relative pt-0 px-4 sm:px-5 pb-4 sm:pb-5">
+                      {/* Expertise Tags - Horizontal scroll on mobile */}
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
+                        {agent.expertise.slice(0, 3).map((item, idx) => (
+                          <span
+                            key={idx}
+                            className="px-2 py-1 text-[10px] sm:text-xs bg-white/10 text-white/80 rounded-md border border-white/10"
+                          >
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* CTA - Always visible */}
+                      <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                        <span className="text-sm font-medium text-elec-yellow">
+                          Start Consultation
+                        </span>
+                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/30 transition-colors">
+                          <ArrowRight className="h-4 w-4 text-elec-yellow group-hover:translate-x-0.5 transition-transform" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Coming Soon Agents Section */}
+        <section className="space-y-4 sm:space-y-5">
+          <div className="flex items-center gap-2.5 px-1">
+            <div className="h-1.5 w-1.5 rounded-full bg-white/40" />
+            <h2 className="text-lg sm:text-xl font-bold text-white/60">Coming Soon</h2>
+            <Badge variant="secondary" className="bg-white/10 text-white/50 border-white/20 text-xs">
+              {comingSoonAgents.length} Planned
+            </Badge>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            {comingSoonAgents.map((agent) => {
+              const IconComponent = agent.icon;
+              return (
+                <Card
+                  key={agent.id}
+                  className="relative overflow-hidden border-white/5 bg-white/5 backdrop-blur-sm opacity-60 h-full"
                 >
                   {/* Coming Soon Badge */}
-                  {agent.comingSoon && (
-                    <div className="absolute top-3 right-3 z-10">
-                      <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs font-semibold">
-                        Coming Soon
-                      </Badge>
-                    </div>
-                  )}
+                  <div className="absolute top-3 right-3 z-10">
+                    <Badge variant="secondary" className="bg-white/10 text-white/60 border-white/20 text-xs font-medium">
+                      Coming Soon
+                    </Badge>
+                  </div>
 
-                  <CardHeader className="pb-3 space-y-2 sm:space-y-4 p-4 sm:p-6 lg:p-8 text-left">
-                    {/* Large Gradient Icon Circle */}
-                    <div className={`
-                      w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full 
-                      flex items-center justify-center
-                      bg-gradient-to-br ${getGradientForColor(agent.color)}
-                      group-hover:scale-110 transition-transform duration-300
-                    `}>
-                      <IconComponent className="h-6 w-6 sm:h-8 sm:w-8 lg:h-10 lg:w-10 text-white" />
+                  <CardHeader className="p-4 sm:p-5 space-y-3">
+                    {/* Icon with muted gradient */}
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} opacity-50`}>
+                      <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
                     </div>
 
                     {/* Agent Name */}
-                    <CardTitle className="text-lg sm:text-xl font-bold text-left">
+                    <CardTitle className="text-base sm:text-lg font-bold text-white/60">
                       {agent.name}
                     </CardTitle>
 
                     {/* Description */}
-                    <CardDescription className="text-sm leading-relaxed text-left text-white/90">
+                    <p className="text-sm text-white/40 leading-relaxed">
                       {agent.description}
-                    </CardDescription>
+                    </p>
                   </CardHeader>
 
-                  <CardContent className="pt-0 px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8">
-                    {/* Expertise List */}
-                    <div className="space-y-2 text-left">
-                      <p className="text-xs font-semibold text-white/70 uppercase tracking-wider">
-                        Expertise
-                      </p>
-                      <ul className="space-y-1">
-                        {agent.expertise.slice(0, 3).map((item, idx) => (
-                          <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
-                            <span className="text-elec-yellow mt-0.5 font-bold">→</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  <CardContent className="pt-0 px-4 sm:px-5 pb-4 sm:pb-5">
+                    {/* Expertise Tags - Muted */}
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                      {agent.expertise.slice(0, 3).map((item, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2 py-1 text-[10px] sm:text-xs bg-white/5 text-white/40 rounded-md border border-white/5"
+                        >
+                          {item}
+                        </span>
+                      ))}
                     </div>
-
-                    {/* Hover CTA Indicator */}
-                    {!agent.comingSoon && (
-                      <div className="hidden sm:block mt-6 pt-4 border-t border-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <p className="text-sm text-elec-yellow font-medium flex items-center gap-2">
-                          Click to consult
-                          <ArrowRight className="h-4 w-4" />
-                        </p>
-                      </div>
-                    )}
                   </CardContent>
                 </Card>
               );
             })}
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 };
