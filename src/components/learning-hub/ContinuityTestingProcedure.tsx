@@ -37,7 +37,7 @@ const ContinuityTestingProcedure = ({ onBack }: ContinuityTestingProcedureProps)
           <Zap className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
           <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">Continuity of Protective Conductors Testing</h1>
         </div>
-        <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-3xl mx-auto">
+        <p className="text-sm sm:text-base lg:text-lg text-white max-w-3xl mx-auto">
           Comprehensive BS 7671 compliant testing procedure for protective conductor continuity with practical guidance, real-world scenarios, and professional development focus.
         </p>
       </div>
@@ -93,7 +93,7 @@ const ContinuityTestingProcedure = ({ onBack }: ContinuityTestingProcedureProps)
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2 text-gray-300">
+          <div className="space-y-2 text-white">
             <p>• Always ensure complete isolation before commencing any continuity testing</p>
             <p>• Use appropriate test equipment compliant with current safety standards</p>
             <p>• Never assume previous test results are still valid - always retest</p>

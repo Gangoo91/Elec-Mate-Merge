@@ -58,7 +58,7 @@ const ContinuityCPCTestCard = () => {
             <CheckCircle2 className="h-6 w-6" />
             Circuit Protective Conductor (CPC) Continuity Test
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             R1+R2 method testing for protective conductor continuity - BS 7671 Regulation 612.2.1
           </CardDescription>
         </CardHeader>
@@ -69,7 +69,7 @@ const ContinuityCPCTestCard = () => {
               <BookOpen className="h-4 w-4 text-blue-400" />
               <h4 className="font-medium text-blue-400">Test Procedure</h4>
             </div>
-            <div className="space-y-2 text-sm text-gray-300">
+            <div className="space-y-2 text-sm text-white">
               <p><strong>1.</strong> Ensure circuit is safely isolated and secured</p>
               <p><strong>2.</strong> At distribution board, temporarily connect line and CPC together</p>
               <p><strong>3.</strong> Test between line and CPC at furthest point of circuit</p>
@@ -145,10 +145,10 @@ const ContinuityCPCTestCard = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                           <div className="font-medium text-foreground">{test.circuitRef}</div>
-                          <div className="text-sm text-gray-300">
+                          <div className="text-sm text-white">
                             R1+R2: {test.r1r2Reading}Ω
                           </div>
-                          <div className="text-sm text-gray-300">
+                          <div className="text-sm text-white">
                             Max: {test.maxPermissible}Ω
                           </div>
                           <Badge 
@@ -168,7 +168,7 @@ const ContinuityCPCTestCard = () => {
                         </Button>
                       </div>
                       {test.notes && (
-                        <div className="mt-2 text-sm text-gray-400">
+                        <div className="mt-2 text-sm text-white/80">
                           Notes: {test.notes}
                         </div>
                       )}
@@ -185,7 +185,7 @@ const ContinuityCPCTestCard = () => {
               <AlertTriangle className="h-4 w-4 text-yellow-400" />
               <h4 className="font-medium text-yellow-400">Acceptance Criteria</h4>
             </div>
-            <div className="space-y-1 text-sm text-gray-300">
+            <div className="space-y-1 text-sm text-white">
               <p>• Ring final circuits: R1+R2 ≤ 1.67Ω (BS 7671 Table 41.4)</p>
               <p>• Radial circuits: R1+R2 must not exceed values in BS 7671 Table 41.4</p>
               <p>• Test current: Minimum 200mA DC for protective conductors</p>

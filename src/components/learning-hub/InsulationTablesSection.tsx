@@ -9,7 +9,7 @@ const InsulationTablesSection = () => (
         <Calculator className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">BS 7671 Minimum Insulation Resistance Values</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-purple-400 mb-2">Circuit Nominal Voltage vs Test Voltage:</p>
@@ -58,7 +58,7 @@ const InsulationTablesSection = () => (
         <TrendingUp className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">Temperature Correction Factors</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-green-400 mb-2">Temperature vs Correction Factor:</p>
@@ -107,7 +107,7 @@ const InsulationTablesSection = () => (
         <CheckCircle2 className="h-4 w-4 text-blue-400" />
         <h4 className="font-medium text-blue-400">Professional Assessment Guidelines</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-blue-400 mb-2">New Installations:</p>
@@ -168,7 +168,7 @@ const InsulationTablesSection = () => (
         <AlertTriangle className="h-4 w-4 text-amber-400" />
         <h4 className="font-medium text-amber-400">SELV Circuit Special Considerations</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-3">
           <p className="font-medium text-amber-400 mb-2">SELV (≤50V) Circuits Only:</p>
           <div className="space-y-2 text-xs">
@@ -190,7 +190,7 @@ const InsulationTablesSection = () => (
         <AlertTriangle className="h-4 w-4 text-orange-400" />
         <h4 className="font-medium text-orange-400">Environmental Factors Affecting Results</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-orange-400 mb-2">Temperature Effects:</p>
@@ -244,7 +244,7 @@ const InsulationTablesSection = () => (
         <Thermometer className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">Insulation Material Properties</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-cyan-400 mb-2">Common Insulation Materials:</p>
@@ -281,7 +281,7 @@ const InsulationTablesSection = () => (
         <Zap className="h-4 w-4 text-indigo-400" />
         <h4 className="font-medium text-indigo-400">Test Equipment Specifications</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-indigo-400 mb-2">Accuracy Requirements:</p>
@@ -319,7 +319,7 @@ const InsulationTablesSection = () => (
         <AlertTriangle className="h-4 w-4 text-violet-400" />
         <h4 className="font-medium text-violet-400">Professional Decision Framework</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-violet-400 mb-2">Reading Assessment Process:</p>

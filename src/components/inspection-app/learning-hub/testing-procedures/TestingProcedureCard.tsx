@@ -18,7 +18,7 @@ const TestingProcedureCard = ({ procedure, onStart, onPreview }: TestingProcedur
       case 'Critical': return 'bg-red-500/10 text-red-400 border-red-400/20';
       case 'Essential': return 'bg-orange-500/10 text-orange-400 border-orange-400/20';
       case 'Required': return 'bg-blue-500/10 text-blue-400 border-blue-400/20';
-      default: return 'bg-muted/50 text-neutral-400 border-border';
+      default: return 'bg-muted/50 text-white/80 border-border';
     }
   };
 
@@ -59,7 +59,7 @@ const TestingProcedureCard = ({ procedure, onStart, onPreview }: TestingProcedur
         <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
           {procedure.regulation}
         </Badge>
-        <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+        <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
           {procedure.description}
         </CardDescription>
       </CardHeader>
@@ -67,7 +67,7 @@ const TestingProcedureCard = ({ procedure, onStart, onPreview }: TestingProcedur
       <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-5 md:p-6 pt-0">
         {/* Key Equipment */}
         <div>
-          <p className="text-xs text-neutral-400 mb-2 font-medium">Key Equipment:</p>
+          <p className="text-xs text-white/80 mb-2 font-medium">Key Equipment:</p>
           <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {procedure.equipment.slice(0, 3).map((item, index) => (
               <Badge key={index} variant="outline" className="text-xs bg-muted/50 border-border">
@@ -85,7 +85,7 @@ const TestingProcedureCard = ({ procedure, onStart, onPreview }: TestingProcedur
         {/* Real World Examples Preview */}
         {procedure.realWorldExamples.length > 0 && (
           <div className="p-3 bg-muted/50 rounded-lg text-xs sm:text-sm">
-            <p className="text-neutral-400 mb-1.5 font-medium">Example scenario:</p>
+            <p className="text-white/80 mb-1.5 font-medium">Example scenario:</p>
             <p className="text-foreground leading-relaxed line-clamp-2">{procedure.realWorldExamples[0].scenario}</p>
           </div>
         )}

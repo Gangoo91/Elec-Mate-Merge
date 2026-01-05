@@ -9,7 +9,7 @@ const WhyTestSection = () => (
         <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
         <h4 className="font-medium text-sm sm:text-base text-red-400">Critical Life-Saving Protection</h4>
       </div>
-      <div className="space-y-3 text-xs sm:text-sm text-gray-300">
+      <div className="space-y-3 text-xs sm:text-sm text-white">
         <div className="flex items-start gap-2">
           <Heart className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
           <div>
@@ -46,7 +46,7 @@ const WhyTestSection = () => (
         <Activity className="h-4 w-4 text-blue-400" />
         <h4 className="font-medium text-blue-400">The Science Behind RCD Operation</h4>
       </div>
-      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
+      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-white leading-relaxed">
         <div>
           <p className="font-medium text-foreground">Residual Current Detection Principle:</p>
           <p className="ml-4">• <strong>Balanced currents:</strong> In normal operation, current flowing out through the phase conductor returns through the neutral</p>
@@ -83,7 +83,7 @@ const WhyTestSection = () => (
         <Clock className="h-4 w-4 text-orange-400" />
         <h4 className="font-medium text-orange-400">RCD Types and Applications</h4>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-300">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-white">
         <div className="bg-card rounded p-3">
           <div className="text-orange-400 font-medium mb-2">Type AC RCDs</div>
           <ul className="space-y-1">
@@ -118,7 +118,7 @@ const WhyTestSection = () => (
       <div className="mt-4 space-y-3">
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
           <p className="font-medium text-yellow-400 mb-2">Sensitivity Ratings:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
             <div>
               <p className="font-medium text-foreground">High Sensitivity (≤30mA):</p>
               <p>• Personal protection against electric shock</p>
@@ -137,7 +137,7 @@ const WhyTestSection = () => (
         </div>
         <div className="bg-purple-500/10 border border-purple-500/20 rounded p-3">
           <p className="font-medium text-purple-400 mb-2">Time Delay Characteristics:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
             <div>
               <p className="font-medium text-foreground">Instantaneous (General Type):</p>
               <p>• No intentional time delay</p>
@@ -162,7 +162,7 @@ const WhyTestSection = () => (
         <TrendingUp className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Real-World Failure Scenarios</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Scenario 1: Faulty Appliance with Damaged Cable</p>
           <p className="mb-2">A lawn mower cable is damaged, causing the metal casing to become live:</p>
@@ -195,7 +195,7 @@ const WhyTestSection = () => (
         <BookOpen className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">Legal and Regulatory Requirements</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">BS 7671 Requirements for RCD Protection:</p>
           <p className="ml-4">• <strong>Regulation 411.3.3:</strong> Additional protection by RCD for socket outlets ≤20A</p>
@@ -232,7 +232,7 @@ const WhyTestSection = () => (
         <Shield className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">RCD Limitations and Considerations</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">What RCDs cannot protect against:</p>
           <p className="ml-4">• <strong>Phase to neutral shock:</strong> No earth leakage current flows</p>
@@ -251,7 +251,7 @@ const WhyTestSection = () => (
         </div>
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
           <p className="font-medium text-yellow-400 mb-2">Why Regular Testing is Essential:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             RCDs are mechanical devices with moving parts that can fail without warning. Unlike fuses or MCBs that clearly show when they've operated, 
             a failed RCD may appear normal but provide no protection. Regular testing is the only way to ensure continued protection.
           </p>

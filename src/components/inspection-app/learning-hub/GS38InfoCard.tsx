@@ -51,7 +51,7 @@ const GS38InfoCard = () => {
             <Shield className="h-5 w-5" />
             GS38 Safety Standard Compliance
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Essential requirements for electrical test equipment and safe testing practices
           </CardDescription>
         </CardHeader>
@@ -64,7 +64,7 @@ const GS38InfoCard = () => {
               </h4>
               <ul className="space-y-2 ml-6">
                 {section.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="text-gray-300 text-sm flex items-start gap-2">
+                  <li key={itemIndex} className="text-white text-sm flex items-start gap-2">
                     <span className="text-blue-400 mt-1">•</span>
                     <span>{item}</span>
                   </li>
@@ -80,7 +80,7 @@ const GS38InfoCard = () => {
             </div>
             <ul className="space-y-1">
               {safetyChecks.map((check, index) => (
-                <li key={index} className="text-gray-300 text-sm flex items-start gap-2">
+                <li key={index} className="text-white text-sm flex items-start gap-2">
                   <span className="text-orange-400 mt-1">•</span>
                   <span>{check}</span>
                 </li>

@@ -9,7 +9,7 @@ const HowToTestSection = () => (
         <TestTube2 className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-green-400">RCD Test Equipment and Setup</h4>
       </div>
-      <div className="space-y-3 text-xs sm:text-sm text-gray-300">
+      <div className="space-y-3 text-xs sm:text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Essential test equipment:</p>
           <p className="ml-4">• <strong>RCD tester:</strong> Calibrated instrument capable of injecting precise test currents</p>
@@ -47,7 +47,7 @@ const HowToTestSection = () => (
         <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-blue-400">Standard RCD Testing Procedure</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Step 1: Test Button Verification</p>
           <p className="ml-4">• Press the mechanical test button on the RCD</p>
@@ -96,7 +96,7 @@ const HowToTestSection = () => (
         <Settings className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-orange-400">Testing Different RCD Types</h4>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-white">
         <div className="bg-card rounded p-3">
           <div className="text-orange-400 font-medium mb-2">Type AC RCDs</div>
           <ul className="space-y-1">
@@ -135,7 +135,7 @@ const HowToTestSection = () => (
         <Clock className="h-4 w-4 text-yellow-400" />
         <h4 className="font-medium text-yellow-400">RCD Test Results and Acceptance Criteria</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Pass/Fail Criteria Summary:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -181,7 +181,7 @@ const HowToTestSection = () => (
         <Zap className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Advanced Testing Techniques</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Phase angle testing for Type AC RCDs:</p>
           <p className="ml-4">• Test at 0° phase angle (current peak aligns with voltage peak)</p>
@@ -207,7 +207,7 @@ const HowToTestSection = () => (
         </div>
         <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
           <p className="font-medium text-blue-400 mb-2">Testing RCDs in Series (Discrimination):</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             When RCDs are installed in series (e.g., main RCD + RCBO), test the downstream device first. 
             If both trip during testing, check for correct discrimination. Time-delayed (S-type) RCDs upstream 
             should allow downstream RCDs to operate first.
@@ -221,7 +221,7 @@ const HowToTestSection = () => (
         <AlertTriangle className="h-4 w-4 text-red-400" />
         <h4 className="font-medium text-red-400">Safety Considerations During Testing</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Personal safety precautions:</p>
           <p className="ml-4">• Use appropriate PPE including insulated gloves</p>
@@ -240,7 +240,7 @@ const HowToTestSection = () => (
         </div>
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
           <p className="font-medium text-yellow-400 mb-2">Testing in Special Locations:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Extra care required when testing RCDs protecting special locations (bathrooms, swimming pools, medical areas). 
             Ensure alternative safety measures are in place during testing, and restore protection immediately after testing. 
             Consider increased testing frequency in harsh environments.
@@ -254,7 +254,7 @@ const HowToTestSection = () => (
         <CheckCircle2 className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">Documentation and Record Keeping</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Essential information to record:</p>
           <p className="ml-4">• <strong>RCD details:</strong> Rating, type, manufacturer, and location</p>
@@ -274,7 +274,7 @@ const HowToTestSection = () => (
         </div>
         <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
           <p className="font-medium text-green-400 mb-2">Quality Assurance:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Cross-reference RCD test results with circuit details and previous test records. 
             Look for trends in trip times that might indicate deteriorating performance. 
             Fast trip times (&lt;10ms) may indicate an oversensitive RCD, while slower times ({'>'}100ms) suggest deterioration.

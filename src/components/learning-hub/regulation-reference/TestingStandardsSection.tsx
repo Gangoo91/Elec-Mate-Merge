@@ -141,7 +141,7 @@ const TestingStandardsSection = () => {
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-2xl font-bold text-foreground mb-2">Testing Standards & Procedures</h2>
-        <p className="text-gray-300">Complete guide to electrical testing per BS 7671 Part 6</p>
+        <p className="text-white">Complete guide to electrical testing per BS 7671 Part 6</p>
       </div>
 
       {/* Test Type Selection */}
@@ -165,7 +165,7 @@ const TestingStandardsSection = () => {
                           {testStandards.continuity.regulation}
                         </Badge>
                       </div>
-                      <p className="text-gray-300">{testStandards.continuity.description}</p>
+                      <p className="text-white">{testStandards.continuity.description}</p>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div>
@@ -173,7 +173,7 @@ const TestingStandardsSection = () => {
                         <div className="space-y-2">
                           {testStandards.continuity.requirements.map((req, index) => (
                             <div key={index} className="flex justify-between items-center p-2 bg-muted rounded">
-                              <span className="text-sm text-gray-300">{req.item}</span>
+                              <span className="text-sm text-white">{req.item}</span>
                               <div className="flex items-center gap-2">
                                 <span className="text-sm font-medium text-foreground">{req.value}</span>
                                 {req.critical && (
@@ -202,7 +202,7 @@ const TestingStandardsSection = () => {
                             <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold mt-0.5">
                               {index + 1}
                             </div>
-                            <p className="text-sm text-gray-300 flex-1">{step}</p>
+                            <p className="text-sm text-white flex-1">{step}</p>
                           </div>
                         ))}
                       </div>
@@ -214,7 +214,7 @@ const TestingStandardsSection = () => {
                         </h4>
                         <div className="space-y-2">
                           {testStandards.continuity.commonIssues.map((issue, index) => (
-                            <div key={index} className="text-sm text-gray-400 flex items-center gap-2">
+                            <div key={index} className="text-sm text-white/80 flex items-center gap-2">
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
                             </div>
@@ -245,7 +245,7 @@ const TestingStandardsSection = () => {
                           {testStandards.insulation.regulation}
                         </Badge>
                       </div>
-                      <p className="text-gray-300">{testStandards.insulation.description}</p>
+                      <p className="text-white">{testStandards.insulation.description}</p>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div>
@@ -253,7 +253,7 @@ const TestingStandardsSection = () => {
                         <div className="space-y-2">
                           {testStandards.insulation.requirements.map((req, index) => (
                             <div key={index} className="flex justify-between items-center p-2 bg-muted rounded">
-                              <span className="text-sm text-gray-300">{req.item}</span>
+                              <span className="text-sm text-white">{req.item}</span>
                               <div className="flex items-center gap-2">
                                 <span className="text-sm font-medium text-foreground">{req.value}</span>
                                 {req.critical && (
@@ -282,7 +282,7 @@ const TestingStandardsSection = () => {
                             <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold mt-0.5">
                               {index + 1}
                             </div>
-                            <p className="text-sm text-gray-300 flex-1">{step}</p>
+                            <p className="text-sm text-white flex-1">{step}</p>
                           </div>
                         ))}
                       </div>
@@ -294,7 +294,7 @@ const TestingStandardsSection = () => {
                         </h4>
                         <div className="space-y-2">
                           {testStandards.insulation.commonIssues.map((issue, index) => (
-                            <div key={index} className="text-sm text-gray-400 flex items-center gap-2">
+                            <div key={index} className="text-sm text-white/80 flex items-center gap-2">
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
                             </div>
@@ -325,7 +325,7 @@ const TestingStandardsSection = () => {
                           {testStandards.zs.regulation}
                         </Badge>
                       </div>
-                      <p className="text-gray-300">{testStandards.zs.description}</p>
+                      <p className="text-white">{testStandards.zs.description}</p>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div>
@@ -333,7 +333,7 @@ const TestingStandardsSection = () => {
                         <div className="space-y-2">
                           {testStandards.zs.requirements.map((req, index) => (
                             <div key={index} className="flex justify-between items-center p-2 bg-muted rounded">
-                              <span className="text-sm text-gray-300">{req.item}</span>
+                              <span className="text-sm text-white">{req.item}</span>
                               <div className="flex items-center gap-2">
                                 <span className="text-sm font-medium text-foreground">{req.value}</span>
                                 {req.critical && (
@@ -362,7 +362,7 @@ const TestingStandardsSection = () => {
                             <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold mt-0.5">
                               {index + 1}
                             </div>
-                            <p className="text-sm text-gray-300 flex-1">{step}</p>
+                            <p className="text-sm text-white flex-1">{step}</p>
                           </div>
                         ))}
                       </div>
@@ -374,7 +374,7 @@ const TestingStandardsSection = () => {
                         </h4>
                         <div className="space-y-2">
                           {testStandards.zs.commonIssues.map((issue, index) => (
-                            <div key={index} className="text-sm text-gray-400 flex items-center gap-2">
+                            <div key={index} className="text-sm text-white/80 flex items-center gap-2">
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
                             </div>
@@ -405,7 +405,7 @@ const TestingStandardsSection = () => {
                           {testStandards.rcd.regulation}
                         </Badge>
                       </div>
-                      <p className="text-gray-300">{testStandards.rcd.description}</p>
+                      <p className="text-white">{testStandards.rcd.description}</p>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div>
@@ -413,7 +413,7 @@ const TestingStandardsSection = () => {
                         <div className="space-y-2">
                           {testStandards.rcd.requirements.map((req, index) => (
                             <div key={index} className="flex justify-between items-center p-2 bg-muted rounded">
-                              <span className="text-sm text-gray-300">{req.item}</span>
+                              <span className="text-sm text-white">{req.item}</span>
                               <div className="flex items-center gap-2">
                                 <span className="text-sm font-medium text-foreground">{req.value}</span>
                                 {req.critical && (
@@ -442,7 +442,7 @@ const TestingStandardsSection = () => {
                             <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold mt-0.5">
                               {index + 1}
                             </div>
-                            <p className="text-sm text-gray-300 flex-1">{step}</p>
+                            <p className="text-sm text-white flex-1">{step}</p>
                           </div>
                         ))}
                       </div>
@@ -454,7 +454,7 @@ const TestingStandardsSection = () => {
                         </h4>
                         <div className="space-y-2">
                           {testStandards.rcd.commonIssues.map((issue, index) => (
-                            <div key={index} className="text-sm text-gray-400 flex items-center gap-2">
+                            <div key={index} className="text-sm text-white/80 flex items-center gap-2">
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
                             </div>
@@ -489,7 +489,7 @@ const TestingStandardsSection = () => {
                 <h4 className="font-medium text-foreground mb-2">{equipment.name}</h4>
                 <div className="space-y-2">
                   <div>
-                    <p className="text-xs text-gray-400 mb-1">Used for:</p>
+                    <p className="text-xs text-white/80 mb-1">Used for:</p>
                     <div className="flex flex-wrap gap-1">
                       {equipment.uses.map((use, idx) => (
                         <Badge key={idx} variant="secondary" className="text-xs">
@@ -498,11 +498,11 @@ const TestingStandardsSection = () => {
                       ))}
                     </div>
                   </div>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-white/80">
                     <Clock className="inline h-3 w-3 mr-1" />
                     {equipment.calibration}
                   </p>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-white/80">
                     <CheckCircle className="inline h-3 w-3 mr-1" />
                     {equipment.standards}
                   </p>

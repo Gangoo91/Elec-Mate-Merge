@@ -9,7 +9,7 @@ const ContinuityWhyTestSection = () => (
         <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-red-400">Critical Safety Protection</h4>
       </div>
-      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
+      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-white leading-relaxed">
         <div className="flex items-start gap-2">
           <Heart className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
           <div>
@@ -46,7 +46,7 @@ const ContinuityWhyTestSection = () => (
         <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-blue-400">Understanding Fault Current Paths</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">How protective conductors work in fault conditions:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -99,7 +99,7 @@ const ContinuityWhyTestSection = () => (
         <Brain className="h-4 w-4 text-orange-400" />
         <h4 className="font-medium text-orange-400">Common Failure Modes</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Real-world protective conductor failures:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -144,7 +144,7 @@ const ContinuityWhyTestSection = () => (
         <TrendingUp className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Case Studies: When Testing Saves Lives</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Case 1: Commercial Kitchen Equipment Fault</p>
           <p className="mb-2">A commercial kitchen's stainless steel worktop became live due to a faulty appliance connection:</p>
@@ -183,7 +183,7 @@ const ContinuityWhyTestSection = () => (
         <BookOpen className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">Regulatory and Professional Requirements</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">UK Legal and Standards Framework:</p>
           <div className="ml-4 space-y-1">

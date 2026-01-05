@@ -13,30 +13,34 @@ const SidebarNavLink = ({ item, onItemClick }: SidebarNavLinkProps) => {
   try {
     const location = useLocation();
     const isActive = location.pathname === item.path || location.pathname.startsWith(`${item.path}/`);
-    
+
     const handleClick = () => {
-      console.log('Sidebar navigation clicked:', { 
-        from: location.pathname, 
-        to: item.path, 
-        itemName: item.name 
-      });
       // Call the onItemClick prop if provided (for closing mobile sidebar)
       onItemClick?.();
     };
-    
+
     return (
       <SafeLink
         to={item.path}
         onClick={handleClick}
         className={cn(
-          "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+          "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium",
+          "transition-all duration-200 ease-out",
+          "hover:translate-x-1",
           isActive
-            ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-            : "text-elec-light hover:bg-elec-gray-light hover:text-elec-yellow"
+            ? "bg-gradient-to-r from-elec-yellow/20 to-transparent border-l-2 border-elec-yellow text-white"
+            : "text-white/70 hover:bg-white/5 hover:text-white"
         )}
       >
-        {item.icon}
-        {item.name}
+        <div
+          className={cn(
+            "p-2 rounded-lg transition-colors duration-200",
+            isActive ? "bg-elec-yellow/20" : "bg-white/5"
+          )}
+        >
+          {item.icon}
+        </div>
+        <span className={isActive ? "font-semibold" : ""}>{item.name}</span>
       </SafeLink>
     );
   } catch (error) {
@@ -45,12 +49,14 @@ const SidebarNavLink = ({ item, onItemClick }: SidebarNavLinkProps) => {
     return (
       <div
         className={cn(
-          "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-          "text-elec-light hover:bg-elec-gray-light hover:text-elec-yellow"
+          "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium",
+          "text-white/70 hover:bg-white/5 hover:text-white"
         )}
       >
-        {item.icon}
-        {item.name}
+        <div className="p-2 rounded-lg bg-white/5">
+          {item.icon}
+        </div>
+        <span>{item.name}</span>
       </div>
     );
   }

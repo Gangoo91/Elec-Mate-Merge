@@ -27,7 +27,7 @@ const QuizPerformanceAnalytics = ({ onViewReport }: QuizPerformanceAnalyticsProp
           <BarChart3 className="h-4 w-4 sm:h-5 sm:w-5" />
           Performance Analytics
         </CardTitle>
-        <CardDescription className="text-gray-300 text-sm">
+        <CardDescription className="text-white text-sm">
           Track your learning progress and identify strengths
         </CardDescription>
       </CardHeader>
@@ -37,7 +37,7 @@ const QuizPerformanceAnalytics = ({ onViewReport }: QuizPerformanceAnalyticsProp
             <div key={index} className="space-y-2">
               <div className="flex justify-between text-xs sm:text-sm">
                 <span className="text-foreground">{subject.subject}</span>
-                <span className="text-gray-400">
+                <span className="text-white/80">
                   {subject.score > 0 ? `${subject.score}%` : 'Not attempted'}
                 </span>
               </div>

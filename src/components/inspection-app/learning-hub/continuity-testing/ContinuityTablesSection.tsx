@@ -16,21 +16,21 @@ const ContinuityTablesSection = () => (
           <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
             <h5 className="font-medium text-green-400 mb-2">Good Reading</h5>
             <p className="text-2xl font-bold text-foreground mb-1">&lt;0.5Ω</p>
-            <p className="text-sm text-gray-300">Most domestic final circuits with reasonable cable lengths</p>
+            <p className="text-sm text-white">Most domestic final circuits with reasonable cable lengths</p>
           </div>
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
             <h5 className="font-medium text-yellow-400 mb-2">Acceptable</h5>
             <p className="text-2xl font-bold text-foreground mb-1">0.5-1.0Ω</p>
-            <p className="text-sm text-gray-300">Longer cable runs - verify against maximum values for protective device</p>
+            <p className="text-sm text-white">Longer cable runs - verify against maximum values for protective device</p>
           </div>
           <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
             <h5 className="font-medium text-red-400 mb-2">Investigate</h5>
             <p className="text-2xl font-bold text-foreground mb-1">&gt;1.0Ω</p>
-            <p className="text-sm text-gray-300">Check connections, cable size, and length. Compare against maximum permitted value</p>
+            <p className="text-sm text-white">Check connections, cable size, and length. Compare against maximum permitted value</p>
           </div>
         </div>
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             <strong className="text-blue-400">Note:</strong> These are typical guidance values. Always compare measured R1+R2 against the maximum value permitted for your specific protective device using the tables below.
           </p>
         </div>

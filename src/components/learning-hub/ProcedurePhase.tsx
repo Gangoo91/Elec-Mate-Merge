@@ -38,7 +38,7 @@ const ProcedurePhase = ({ isolationSteps, onStepToggle, onProceed }: ProcedurePh
             <Shield className="h-5 w-5" />
             Safe Isolation Procedure
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Follow the 10-step safe isolation procedure in accordance with BS 7671
           </CardDescription>
         </CardHeader>
@@ -66,7 +66,7 @@ const ProcedurePhase = ({ isolationSteps, onStepToggle, onProceed }: ProcedurePh
               <AlertTriangle className="h-5 w-5 text-orange-400" />
               <span className="font-medium text-orange-400">Critical Steps Status</span>
             </div>
-            <p className="text-gray-300 text-sm">
+            <p className="text-white text-sm">
               {criticalStepsCompleted}/{totalCriticalSteps} critical steps completed. 
               All critical steps must be completed before proceeding to testing phase.
             </p>

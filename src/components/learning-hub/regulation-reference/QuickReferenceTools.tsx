@@ -86,7 +86,7 @@ const QuickReferenceTools = () => {
           <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
           <h2 className="text-xl sm:text-2xl font-bold text-foreground">Quick Reference Tools</h2>
         </div>
-        <p className="text-sm sm:text-base text-gray-300 max-w-2xl mx-auto">
+        <p className="text-sm sm:text-base text-white max-w-2xl mx-auto">
           Access instant regulation information and practical tools for your daily electrical work
         </p>
       </div>
@@ -94,7 +94,7 @@ const QuickReferenceTools = () => {
       {/* Search */}
       <div className="max-w-md mx-auto">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/80" />
           <Input
             type="text"
             placeholder="Search tools..."
@@ -127,13 +127,13 @@ const QuickReferenceTools = () => {
                 <CardTitle className="text-foreground group-hover:text-elec-yellow transition-colors text-lg">
                   {tool.title}
                 </CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardDescription className="text-white/80">
                   {tool.description}
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="flex items-center justify-between">
-                  <Badge variant="outline" className="text-xs text-gray-400 border-gray-600">
+                  <Badge variant="outline" className="text-xs text-white/80 border-gray-600">
                     {tool.category}
                   </Badge>
                   <Button 
@@ -158,22 +158,22 @@ const QuickReferenceTools = () => {
         <div className="bg-card rounded-lg p-4 text-center border border-border">
           <TrendingUp className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
           <div className="text-lg font-bold text-foreground">6</div>
-          <div className="text-xs text-gray-400">Quick Tools</div>
+          <div className="text-xs text-white/80">Quick Tools</div>
         </div>
         <div className="bg-card rounded-lg p-4 text-center border border-border">
           <Calculator className="h-5 w-5 text-blue-400 mx-auto mb-2" />
           <div className="text-lg font-bold text-foreground">12</div>
-          <div className="text-xs text-gray-400">Calculators</div>
+          <div className="text-xs text-white/80">Calculators</div>
         </div>
         <div className="bg-card rounded-lg p-4 text-center border border-border">
           <BookOpen className="h-5 w-5 text-green-400 mx-auto mb-2" />
           <div className="text-lg font-bold text-foreground">200+</div>
-          <div className="text-xs text-gray-400">References</div>
+          <div className="text-xs text-white/80">References</div>
         </div>
         <div className="bg-card rounded-lg p-4 text-center border border-border">
           <Shield className="h-5 w-5 text-red-400 mx-auto mb-2" />
           <div className="text-lg font-bold text-foreground">50+</div>
-          <div className="text-xs text-gray-400">Safety Rules</div>
+          <div className="text-xs text-white/80">Safety Rules</div>
         </div>
       </div>
     </div>

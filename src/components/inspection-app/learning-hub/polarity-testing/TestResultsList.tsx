@@ -28,7 +28,7 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-4">
                   <div className="font-medium text-foreground">{test.circuitRef}</div>
-                  <div className="text-sm text-gray-400">
+                  <div className="text-sm text-white/80">
                     ({test.testMethod === 'dead' ? 'Dead Test' : 'Live Test'})
                   </div>
                   <Badge 
@@ -51,10 +51,10 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                 {test.socketOutlets !== 'pending' && (
                   <div>
-                    <span className="text-gray-400">Sockets:</span>
+                    <span className="text-white/80">Sockets:</span>
                     <span className={`ml-1 ${
                       test.socketOutlets === 'pass' ? 'text-green-400' : 
-                      test.socketOutlets === 'fail' ? 'text-red-400' : 'text-gray-400'
+                      test.socketOutlets === 'fail' ? 'text-red-400' : 'text-white/80'
                     }`}>
                       {test.socketOutlets === 'pass' ? 'Pass' : 
                        test.socketOutlets === 'fail' ? 'Fail' : 'N/A'}
@@ -64,10 +64,10 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
                 
                 {test.lightingPoints !== 'pending' && (
                   <div>
-                    <span className="text-gray-400">Lighting:</span>
+                    <span className="text-white/80">Lighting:</span>
                     <span className={`ml-1 ${
                       test.lightingPoints === 'pass' ? 'text-green-400' : 
-                      test.lightingPoints === 'fail' ? 'text-red-400' : 'text-gray-400'
+                      test.lightingPoints === 'fail' ? 'text-red-400' : 'text-white/80'
                     }`}>
                       {test.lightingPoints === 'pass' ? 'Pass' : 
                        test.lightingPoints === 'fail' ? 'Fail' : 'N/A'}
@@ -77,10 +77,10 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
                 
                 {test.isolatorSwitches !== 'pending' && (
                   <div>
-                    <span className="text-gray-400">Isolators:</span>
+                    <span className="text-white/80">Isolators:</span>
                     <span className={`ml-1 ${
                       test.isolatorSwitches === 'pass' ? 'text-green-400' : 
-                      test.isolatorSwitches === 'fail' ? 'text-red-400' : 'text-gray-400'
+                      test.isolatorSwitches === 'fail' ? 'text-red-400' : 'text-white/80'
                     }`}>
                       {test.isolatorSwitches === 'pass' ? 'Pass' : 
                        test.isolatorSwitches === 'fail' ? 'Fail' : 'N/A'}
@@ -90,7 +90,7 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
               </div>
               
               {test.notes && (
-                <div className="mt-2 text-sm text-gray-400">
+                <div className="mt-2 text-sm text-white/80">
                   Notes: {test.notes}
                 </div>
               )}

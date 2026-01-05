@@ -82,7 +82,7 @@ const EnhancedContinuityRingTestCard = () => {
         Ring Final Circuit Configuration
       </h4>
       <div className="bg-card p-6 rounded border text-sm">
-        <div className="text-center text-gray-300 mb-4">Distribution Board</div>
+        <div className="text-center text-white mb-4">Distribution Board</div>
         <div className="flex justify-center mb-4">
           <div className="border-2 border-purple-400 p-2 rounded">
             <div className="flex gap-4">
@@ -122,7 +122,7 @@ const EnhancedContinuityRingTestCard = () => {
           </div>
         </div>
         
-        <div className="mt-4 text-xs text-gray-400 text-center">
+        <div className="mt-4 text-xs text-white/80 text-center">
           Two cables form a ring - both legs must be tested separately
         </div>
       </div>
@@ -141,7 +141,7 @@ const EnhancedContinuityRingTestCard = () => {
           <div className="border-2 border-blue-400 p-3 rounded text-center">
             <div className="text-foreground mb-2">At DB: Link L1↔E1</div>
             <div className="text-yellow-400 mb-2">Test at Socket: L↔E</div>
-            <div className="text-xs text-gray-400">
+            <div className="text-xs text-white/80">
               This tests one leg of the ring
             </div>
           </div>
@@ -151,7 +151,7 @@ const EnhancedContinuityRingTestCard = () => {
           <div className="border-2 border-purple-400 p-3 rounded text-center">
             <div className="text-foreground mb-2">At DB: Link L2↔E2</div>
             <div className="text-yellow-400 mb-2">Test at Socket: L↔E</div>
-            <div className="text-xs text-gray-400">
+            <div className="text-xs text-white/80">
               This tests the other leg
             </div>
           </div>
@@ -161,7 +161,7 @@ const EnhancedContinuityRingTestCard = () => {
           <div className="border-2 border-green-400 p-3 rounded text-center">
             <div className="text-foreground mb-2">At DB: Link L1↔E2</div>
             <div className="text-yellow-400 mb-2">Test at Socket: L↔E</div>
-            <div className="text-xs text-gray-400">
+            <div className="text-xs text-white/80">
               Verifies ring integrity
             </div>
           </div>
@@ -183,7 +183,7 @@ const EnhancedContinuityRingTestCard = () => {
                 <Lightbulb className="h-4 w-4 text-purple-400" />
                 <h4 className="font-medium text-purple-400">Why Ring Circuit Testing is Essential</h4>
               </div>
-              <div className="space-y-3 text-sm text-gray-300">
+              <div className="space-y-3 text-sm text-white">
                 <div className="flex items-start gap-2">
                   <RotateCcw className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
@@ -213,7 +213,7 @@ const EnhancedContinuityRingTestCard = () => {
                 <Users className="h-4 w-4 text-red-400" />
                 <h4 className="font-medium text-red-400">Real-World Consequences</h4>
               </div>
-              <div className="space-y-2 text-sm text-gray-300">
+              <div className="space-y-2 text-sm text-white">
                 <p><strong>Broken Ring (Undetected):</strong> Kitchen ring with one leg disconnected - all load through single 2.5mm² cable, causing overheating and potential fire</p>
                 <p><strong>Cross-Connected Ring:</strong> Legs wrongly connected - creates figure-of-eight circuit with unequal load sharing and overloading</p>
                 <p><strong>Multiple Breaks:</strong> Ring circuit with several poor connections - creates multiple radial spurs exceeding safe loading limits</p>
@@ -225,7 +225,7 @@ const EnhancedContinuityRingTestCard = () => {
                 <BookOpen className="h-4 w-4 text-yellow-400" />
                 <h4 className="font-medium text-yellow-400">Professional Implications</h4>
               </div>
-              <div className="space-y-2 text-sm text-gray-300">
+              <div className="space-y-2 text-sm text-white">
                 <p>• <strong>Legal Responsibility:</strong> Failure to properly test ring circuits is professional negligence</p>
                 <p>• <strong>Insurance Claims:</strong> Improper testing can void insurance cover for fire damage</p>
                 <p>• <strong>Building Regulations:</strong> Part P compliance requires proper testing of all ring circuits</p>
@@ -249,7 +249,7 @@ const EnhancedContinuityRingTestCard = () => {
               <Target className="h-4 w-4 text-green-400" />
               <h4 className="font-medium text-green-400">Detailed Testing Procedure</h4>
             </div>
-            <div className="space-y-4 text-sm text-gray-300">
+            <div className="space-y-4 text-sm text-white">
               <div className="border-l-4 border-blue-400 pl-4">
                 <h5 className="font-medium text-foreground mb-2">Phase 1: Prepare for Testing</h5>
                 <div className="space-y-1">
@@ -311,7 +311,7 @@ const EnhancedContinuityRingTestCard = () => {
                   <h5 className="text-foreground font-medium">Healthy Ring Circuit</h5>
                   <div className="bg-green-500/10 p-3 rounded border border-green-500/20">
                     <p className="text-green-400 font-medium mb-1">Example: 30m 2.5mm² Ring</p>
-                    <div className="space-y-1 text-gray-300">
+                    <div className="space-y-1 text-white">
                       <p>• Leg 1: 1.20Ω</p>
                       <p>• Leg 2: 1.25Ω</p>
                       <p>• Cross-connect: 2.45Ω</p>
@@ -323,7 +323,7 @@ const EnhancedContinuityRingTestCard = () => {
                   <h5 className="text-foreground font-medium">Problem Indicators</h5>
                   <div className="bg-red-500/10 p-3 rounded border border-red-500/20">
                     <p className="text-red-400 font-medium mb-1">Warning Signs</p>
-                    <div className="space-y-1 text-gray-300">
+                    <div className="space-y-1 text-white">
                       <p>• Leg difference {'>'}20%</p>
                       <p>• Infinite reading on one leg</p>
                       <p>• Cross-connect ≠ sum of legs</p>
@@ -339,7 +339,7 @@ const EnhancedContinuityRingTestCard = () => {
                 <AlertTriangle className="h-4 w-4 text-orange-400" />
                 <h4 className="font-medium text-orange-400">Common Ring Circuit Problems</h4>
               </div>
-              <div className="space-y-3 text-sm text-gray-300">
+              <div className="space-y-3 text-sm text-white">
                 <div className="flex gap-3">
                   <div className="bg-red-500 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">!</div>
                   <div>
@@ -381,7 +381,7 @@ const EnhancedContinuityRingTestCard = () => {
               <Target className="h-4 w-4 text-blue-400" />
               <h4 className="font-medium text-blue-400">Practice Ring Circuit Testing</h4>
             </div>
-            <p className="text-sm text-gray-300 mb-4">
+            <p className="text-sm text-white mb-4">
               Enter your test readings below. The system will automatically calculate the final R1+R2 value and determine the pass/fail status.
             </p>
             
@@ -488,14 +488,14 @@ const EnhancedContinuityRingTestCard = () => {
                         Remove
                       </Button>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-gray-300">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-white">
                       <div>Leg 1: {result.leg1Reading}Ω</div>
                       <div>Leg 2: {result.leg2Reading}Ω</div>
                       <div>Cross: {result.crossConnectReading}Ω</div>
                       <div>Final R1+R2: {result.finalR1R2}Ω</div>
                     </div>
                     {result.notes && (
-                      <div className="mt-2 text-sm text-gray-400">
+                      <div className="mt-2 text-sm text-white/80">
                         Notes: {result.notes}
                       </div>
                     )}
@@ -510,7 +510,7 @@ const EnhancedContinuityRingTestCard = () => {
               <BookOpen className="h-4 w-4 text-yellow-400" />
               <h4 className="font-medium text-yellow-400">BS 7671 Ring Circuit Requirements</h4>
             </div>
-            <div className="space-y-1 text-sm text-gray-300">
+            <div className="space-y-1 text-sm text-white">
               <p>• Final R1+R2 must not exceed 1.67Ω for 32A ring final circuits</p>
               <p>• Both legs should be within 20% of each other to ensure proper load distribution</p>
               <p>• Cross-connection test verifies ring integrity and proper connections</p>
@@ -530,7 +530,7 @@ const EnhancedContinuityRingTestCard = () => {
             <RotateCcw className="h-6 w-6" />
             Enhanced Ring Circuit Continuity Testing Module
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Comprehensive learning module for ring final circuit continuity testing - BS 7671 Regulation 612.2.2
           </CardDescription>
         </CardHeader>

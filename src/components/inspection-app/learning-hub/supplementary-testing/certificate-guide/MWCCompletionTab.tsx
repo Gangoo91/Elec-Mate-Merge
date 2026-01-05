@@ -2,7 +2,7 @@ import React from 'react';
 
 const MWCCompletionTab = () => {
   return (
-    <div className="space-y-4 text-gray-300">
+    <div className="space-y-4 text-white">
       <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
         <h4 className="font-semibold text-purple-400 mb-3">Minor Works Certificate Usage and Application</h4>
         <div className="text-sm space-y-3">

@@ -46,7 +46,7 @@ const EnhancedInsulationResistanceTestCard = () => {
             <Zap className="h-6 w-6" />
             Enhanced Insulation Resistance Testing Module
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Comprehensive learning module for insulation resistance testing with temperature correction - BS 7671 Regulation 612.3
           </CardDescription>
         </CardHeader>

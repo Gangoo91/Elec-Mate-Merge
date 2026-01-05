@@ -9,7 +9,7 @@ const PracticalGuidanceSection = () => (
         <Target className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-green-400">Testing Strategy and Planning</h4>
       </div>
-      <div className="space-y-3 text-xs sm:text-sm text-gray-300">
+      <div className="space-y-3 text-xs sm:text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Pre-testing assessment:</p>
           <p className="ml-4">• <strong>Circuit mapping:</strong> Identify all circuits protected by each RCD</p>
@@ -47,7 +47,7 @@ const PracticalGuidanceSection = () => (
         <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-blue-400">Common Testing Challenges and Solutions</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Challenge 1: RCD won't reset after testing</p>
           <div className="ml-4 space-y-1">
@@ -97,7 +97,7 @@ const PracticalGuidanceSection = () => (
         <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-orange-400">Troubleshooting RCD Problems</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Diagnostic flowchart approach:</p>
           <div className="space-y-2">
@@ -136,7 +136,7 @@ const PracticalGuidanceSection = () => (
         <Settings className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Specialised Applications and Considerations</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <div className="text-purple-400 font-medium mb-2">TT System Installations</div>
@@ -189,7 +189,7 @@ const PracticalGuidanceSection = () => (
         <AlertTriangle className="h-4 w-4 text-yellow-400" />
         <h4 className="font-medium text-yellow-400">Maintenance and Replacement Guidelines</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Recommended maintenance intervals:</p>
           <p className="ml-4">• <strong>Monthly:</strong> Test button operation by user (recommended)</p>
@@ -224,7 +224,7 @@ const PracticalGuidanceSection = () => (
         <BookOpen className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">Documentation and Compliance</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Essential record keeping:</p>
           <p className="ml-4">• <strong>Test schedules:</strong> Maintain regular testing calendar</p>
@@ -243,7 +243,7 @@ const PracticalGuidanceSection = () => (
         </div>
         <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
           <p className="font-medium text-green-400 mb-2">Best Practice Recommendations:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Maintain a comprehensive RCD register including location, type, rating, installation date, 
             and test history. Use this to plan preventive maintenance and budget for future replacements. 
             Consider upgrading to higher specification RCD types during routine replacements.
@@ -257,7 +257,7 @@ const PracticalGuidanceSection = () => (
         <TrendingUp className="h-4 w-4 text-indigo-400" />
         <h4 className="font-medium text-indigo-400">Emerging Technologies and Future Considerations</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Smart RCDs and monitoring systems:</p>
           <p className="ml-4">• <strong>Remote monitoring:</strong> Real-time RCD status and performance data</p>
@@ -276,7 +276,7 @@ const PracticalGuidanceSection = () => (
         </div>
         <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
           <p className="font-medium text-blue-400 mb-2">Planning for the Future:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Consider upgrading to Type A or Type B RCDs during planned maintenance to future-proof installations. 
             Evaluate smart RCD options for critical applications where downtime must be minimised. 
             Plan for increased testing frequency as installations become more complex.

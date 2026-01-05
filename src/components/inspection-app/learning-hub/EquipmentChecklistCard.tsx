@@ -95,7 +95,7 @@ const EquipmentChecklistCard = () => {
       case 'testing': return <Wrench className="h-4 w-4 text-blue-400" />;
       case 'safety': return <Shield className="h-4 w-4 text-green-400" />;
       case 'isolation': return <CheckCircle2 className="h-4 w-4 text-orange-400" />;
-      default: return <Wrench className="h-4 w-4 text-gray-400" />;
+      default: return <Wrench className="h-4 w-4 text-white/80" />;
     }
   };
 
@@ -119,7 +119,7 @@ const EquipmentChecklistCard = () => {
           <Wrench className="h-5 w-5" />
           Equipment Checklist
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Verify all required equipment is available and in good condition
         </CardDescription>
         <div className="mt-2 text-sm">
@@ -151,7 +151,7 @@ const EquipmentChecklistCard = () => {
                       )}
                     </h4>
                   </div>
-                  <p className="text-gray-300 text-sm mb-2">{item.description}</p>
+                  <p className="text-white text-sm mb-2">{item.description}</p>
                   {item.calibrationRequired && (
                     <div className="flex items-center gap-1 text-xs text-yellow-400">
                       <Calendar className="h-3 w-3" />

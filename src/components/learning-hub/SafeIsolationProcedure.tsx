@@ -281,7 +281,7 @@ const SafeIsolationProcedure = ({ onBack }: SafeIsolationProcedureProps) => {
           <Shield className="h-8 w-8 text-elec-yellow" />
           <h1 className="text-3xl font-bold text-foreground">Enhanced Safe Isolation Procedure</h1>
         </div>
-        <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+        <p className="text-lg text-white max-w-3xl mx-auto">
           Comprehensive BS 7671 compliant safe isolation with GS38 equipment guidance and enhanced 3-phase testing capabilities.
         </p>
       </div>
@@ -305,7 +305,7 @@ const SafeIsolationProcedure = ({ onBack }: SafeIsolationProcedureProps) => {
                 <Shield className="h-5 w-5" />
                 Enhanced Safe Isolation Steps
               </CardTitle>
-              <CardDescription className="text-gray-300">
+              <CardDescription className="text-white">
                 Follow each step with comprehensive practical guidance and safety information
               </CardDescription>
             </CardHeader>
@@ -343,7 +343,7 @@ const SafeIsolationProcedure = ({ onBack }: SafeIsolationProcedureProps) => {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <span className="font-medium text-orange-400">Procedure Status</span>
                 </div>
-                <p className="text-gray-300 text-sm">
+                <p className="text-white text-sm">
                   Critical steps: {criticalStepsCompleted}/{totalCriticalSteps} completed
                   {showTesting && ` • Testing: ${allTestsValid ? 'Valid' : 'Incomplete'}`}
                 </p>

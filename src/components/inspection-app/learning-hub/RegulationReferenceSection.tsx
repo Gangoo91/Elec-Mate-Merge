@@ -56,7 +56,7 @@ const RegulationReferenceSection = ({ onBack }: RegulationReferenceSectionProps)
       {/* Simple Header */}
       <div className="text-center space-y-3 sm:space-y-4 mb-6 sm:mb-8 md:mb-12 px-2 sm:px-4">
         <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">BS7671 Practical Reference</h1>
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white max-w-4xl mx-auto leading-relaxed">
           The regulations that matter most to your daily work as an electrician. 
           Quick access to testing standards, safety requirements, and compliance guidance.
         </p>

@@ -40,7 +40,7 @@ const EmergencyContacts = () => {
       case 'critical': return 'text-red-400 bg-red-400/10';
       case 'high': return 'text-orange-400 bg-orange-400/10';
       case 'medium': return 'text-blue-400 bg-blue-400/10';
-      default: return 'text-gray-400 bg-gray-400/10';
+      default: return 'text-white/80 bg-gray-400/10';
     }
   };
 
@@ -51,7 +51,7 @@ const EmergencyContacts = () => {
           <Phone className="h-5 w-5" />
           Emergency Contacts
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Critical contact numbers for electrical emergencies
         </CardDescription>
       </CardHeader>
@@ -74,8 +74,8 @@ const EmergencyContacts = () => {
                       {contact.number}
                     </Button>
                   </div>
-                  <p className="text-sm text-gray-300 mb-2">{contact.description}</p>
-                  <div className="flex items-center gap-2 text-xs text-gray-400">
+                  <p className="text-sm text-white mb-2">{contact.description}</p>
+                  <div className="flex items-center gap-2 text-xs text-white/80">
                     <Clock className="h-3 w-3" />
                     <span>{contact.availability}</span>
                   </div>
@@ -90,7 +90,7 @@ const EmergencyContacts = () => {
             <AlertTriangle className="h-4 w-4 text-red-400" />
             <h4 className="font-medium text-red-400">Emergency Protocol</h4>
           </div>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             In case of electrical incident: 1) Ensure personal safety, 2) Isolate power if safe to do so, 
             3) Call emergency services, 4) Provide first aid if qualified, 5) Report incident to HSE.
           </p>

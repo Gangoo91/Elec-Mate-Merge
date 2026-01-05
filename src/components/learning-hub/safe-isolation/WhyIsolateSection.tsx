@@ -9,7 +9,7 @@ const WhyIsolateSection = () => (
         <AlertTriangle className="h-4 w-4 text-red-400" />
         <h4 className="font-medium text-red-400">Critical Life-Saving Protection</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="flex items-start gap-2">
           <Heart className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
           <div>
@@ -46,7 +46,7 @@ const WhyIsolateSection = () => (
         <Activity className="h-4 w-4 text-blue-400" />
         <h4 className="font-medium text-blue-400">The Science Behind Electrical Hazards</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Physiological Effects of Electric Current:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -102,7 +102,7 @@ const WhyIsolateSection = () => (
         <Brain className="h-4 w-4 text-orange-400" />
         <h4 className="font-medium text-orange-400">Human Factors in Electrical Accidents</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Common cognitive biases leading to accidents:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -122,7 +122,7 @@ const WhyIsolateSection = () => (
         </div>
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
           <p className="font-medium text-yellow-400 mb-2">The Swiss Cheese Model in Electrical Safety:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Accidents occur when multiple safety barriers fail simultaneously. Safe isolation is your final barrier - when all else fails,
             proper isolation prevents accidents. Each step in the procedure represents a layer of protection that must remain intact.
           </p>
@@ -135,7 +135,7 @@ const WhyIsolateSection = () => (
         <TrendingUp className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Real-World Accident Case Studies</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Case 1: Failure to Test Dead (Manufacturing Plant)</p>
           <p className="mb-2">An experienced electrician assumed a circuit was dead after switching off the main isolator:</p>
@@ -174,7 +174,7 @@ const WhyIsolateSection = () => (
         <BookOpen className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">Legal and Professional Obligations</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">UK Legal Framework:</p>
           <div className="ml-4 space-y-1">
@@ -222,7 +222,7 @@ const WhyIsolateSection = () => (
         <Shield className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">Economic Impact of Electrical Accidents</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Direct costs of electrical accidents:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -250,7 +250,7 @@ const WhyIsolateSection = () => (
         </div>
         <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
           <p className="font-medium text-green-400 mb-2">Return on Investment in Safety:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Proper isolation procedures cost minutes of time but prevent accidents costing hundreds of thousands of pounds. 
             The HSE estimates that every £1 spent on health and safety returns £4-£7 in avoided costs and increased productivity.
           </p>

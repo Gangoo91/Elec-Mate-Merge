@@ -75,7 +75,7 @@ const EnvironmentalSafetyCard = () => {
           <Cloud className="h-6 w-6" />
           Environmental Safety Considerations - BS 7671 Compliance
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Safety protocols for working in challenging environmental conditions
         </CardDescription>
       </CardHeader>
@@ -98,7 +98,7 @@ const EnvironmentalSafetyCard = () => {
                       <p className="text-sm font-medium text-red-400 mb-2">Key Risks:</p>
                       <div className="space-y-1">
                         {hazard.risks.map((risk, riskIndex) => (
-                          <div key={riskIndex} className="flex items-center gap-2 text-xs text-gray-300">
+                          <div key={riskIndex} className="flex items-center gap-2 text-xs text-white">
                             <AlertTriangle className="h-3 w-3 text-red-400" />
                             {risk}
                           </div>
@@ -110,7 +110,7 @@ const EnvironmentalSafetyCard = () => {
                       <p className="text-sm font-medium text-green-400 mb-2">Control Measures:</p>
                       <div className="space-y-1">
                         {hazard.controls.map((control, controlIndex) => (
-                          <div key={controlIndex} className="flex items-center gap-2 text-xs text-gray-300">
+                          <div key={controlIndex} className="flex items-center gap-2 text-xs text-white">
                             <div className="w-1 h-1 bg-green-400 rounded-full"></div>
                             {control}
                           </div>
@@ -141,7 +141,7 @@ const EnvironmentalSafetyCard = () => {
                     <p className="font-medium text-red-400 mb-2">High Temperature ({weather.high.temp})</p>
                     <div className="space-y-1">
                       {weather.high.risks.map((risk, riskIndex) => (
-                        <p key={riskIndex} className="text-xs text-gray-300">• {risk}</p>
+                        <p key={riskIndex} className="text-xs text-white">• {risk}</p>
                       ))}
                     </div>
                   </div>
@@ -150,7 +150,7 @@ const EnvironmentalSafetyCard = () => {
                     <p className="font-medium text-blue-400 mb-2">Low Temperature ({weather.low.temp})</p>
                     <div className="space-y-1">
                       {weather.low.risks.map((risk, riskIndex) => (
-                        <p key={riskIndex} className="text-xs text-gray-300">• {risk}</p>
+                        <p key={riskIndex} className="text-xs text-white">• {risk}</p>
                       ))}
                     </div>
                   </div>
@@ -160,7 +160,7 @@ const EnvironmentalSafetyCard = () => {
                   <p className="font-medium text-green-400 mb-2">General Controls:</p>
                   <div className="flex flex-wrap gap-2">
                     {weather.controls.map((control, controlIndex) => (
-                      <span key={controlIndex} className="text-xs bg-muted text-gray-300 px-2 py-1 rounded">
+                      <span key={controlIndex} className="text-xs bg-muted text-white px-2 py-1 rounded">
                         {control}
                       </span>
                     ))}
@@ -177,7 +177,7 @@ const EnvironmentalSafetyCard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
               <p className="font-medium text-foreground mb-2">Indoor Special Locations:</p>
-              <ul className="space-y-1 text-xs text-gray-300">
+              <ul className="space-y-1 text-xs text-white">
                 <li>• Section 701 - Locations containing a bath or shower</li>
                 <li>• Section 702 - Swimming pools and fountains</li>
                 <li>• Section 703 - Rooms and cabins containing sauna heaters</li>
@@ -187,7 +187,7 @@ const EnvironmentalSafetyCard = () => {
             </div>
             <div>
               <p className="font-medium text-foreground mb-2">Outdoor Special Locations:</p>
-              <ul className="space-y-1 text-xs text-gray-300">
+              <ul className="space-y-1 text-xs text-white">
                 <li>• Section 706 - Conducting locations with restricted movement</li>
                 <li>• Section 708 - Electrical installations in caravan parks</li>
                 <li>• Section 709 - Marinas and similar locations</li>
@@ -207,21 +207,21 @@ const EnvironmentalSafetyCard = () => {
                 <Droplets className="h-6 w-6 text-foreground" />
               </div>
               <p className="font-medium text-foreground mb-1">Humidity</p>
-              <p className="text-xs text-gray-300">Monitor for condensation risk</p>
+              <p className="text-xs text-white">Monitor for condensation risk</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-2">
                 <Thermometer className="h-6 w-6 text-foreground" />
               </div>
               <p className="font-medium text-foreground mb-1">Temperature</p>
-              <p className="text-xs text-gray-300">Equipment derating required</p>
+              <p className="text-xs text-white">Equipment derating required</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-2">
                 <Wind className="h-6 w-6 text-foreground" />
               </div>
               <p className="font-medium text-foreground mb-1">Air Quality</p>
-              <p className="text-xs text-gray-300">Toxic/explosive gases</p>
+              <p className="text-xs text-white">Toxic/explosive gases</p>
             </div>
           </div>
         </div>

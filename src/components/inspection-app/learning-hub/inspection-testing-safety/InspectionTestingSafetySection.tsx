@@ -116,7 +116,7 @@ const InspectionTestingSafetySection = ({ onBack }: InspectionTestingSafetySecti
           <Shield className="h-8 w-8 text-elec-yellow" />
           <h1 className="text-3xl font-bold text-foreground">Inspection & Testing Safety</h1>
         </div>
-        <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+        <p className="text-lg text-white max-w-3xl mx-auto">
           Learn essential safety principles and procedures specifically for electrical inspection and testing work. 
           Master safe isolation, equipment safety, and environmental considerations for BS 7671 compliance.
         </p>
@@ -139,7 +139,7 @@ const InspectionTestingSafetySection = ({ onBack }: InspectionTestingSafetySecti
           <Shield className="h-5 w-5 text-red-400" />
           Critical Safety Reminders for Testing
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-white">
           <div className="space-y-2">
             <p className="font-medium text-red-400">Before Testing:</p>
             <ul className="space-y-1 text-sm">

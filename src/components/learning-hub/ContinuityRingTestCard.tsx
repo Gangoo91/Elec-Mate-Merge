@@ -99,7 +99,7 @@ const ContinuityRingTestCard = () => {
             <Calculator className="h-6 w-6" />
             Ring Final Circuit Continuity Test
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Comprehensive ring circuit testing - BS 7671 Appendix 15
           </CardDescription>
         </CardHeader>
@@ -110,7 +110,7 @@ const ContinuityRingTestCard = () => {
               <BookOpen className="h-4 w-4 text-green-400" />
               <h4 className="font-medium text-green-400">Ring Circuit Test Procedure</h4>
             </div>
-            <div className="space-y-2 text-sm text-gray-300">
+            <div className="space-y-2 text-sm text-white">
               <p><strong>Step 1:</strong> Identify both ends of ring at distribution board</p>
               <p><strong>Step 2:</strong> Test end-to-end resistance of each conductor (R1, Rn, R2)</p>
               <p><strong>Step 3:</strong> Cross-connect conductors and test at each socket</p>
@@ -255,28 +255,28 @@ const ContinuityRingTestCard = () => {
                       </div>
                       <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-sm">
                         <div>
-                          <span className="text-gray-400">R1:</span>
+                          <span className="text-white/80">R1:</span>
                           <span className="text-foreground ml-1">{test.r1}Ω</span>
                         </div>
                         <div>
-                          <span className="text-gray-400">Rn:</span>
+                          <span className="text-white/80">Rn:</span>
                           <span className="text-foreground ml-1">{test.rn}Ω</span>
                         </div>
                         <div>
-                          <span className="text-gray-400">R2:</span>
+                          <span className="text-white/80">R2:</span>
                           <span className="text-foreground ml-1">{test.r2}Ω</span>
                         </div>
                         <div>
-                          <span className="text-gray-400">R1+Rn:</span>
+                          <span className="text-white/80">R1+Rn:</span>
                           <span className="text-foreground ml-1">{test.crossTestResults.r1rn}Ω</span>
                         </div>
                         <div>
-                          <span className="text-gray-400">R1+R2:</span>
+                          <span className="text-white/80">R1+R2:</span>
                           <span className="text-foreground ml-1">{test.crossTestResults.r1r2}Ω</span>
                         </div>
                       </div>
                       {test.notes && (
-                        <div className="mt-2 text-sm text-gray-400">
+                        <div className="mt-2 text-sm text-white/80">
                           Notes: {test.notes}
                         </div>
                       )}
@@ -293,7 +293,7 @@ const ContinuityRingTestCard = () => {
               <AlertTriangle className="h-4 w-4 text-yellow-400" />
               <h4 className="font-medium text-yellow-400">Ring Circuit Test Criteria</h4>
             </div>
-            <div className="space-y-1 text-sm text-gray-300">
+            <div className="space-y-1 text-sm text-white">
               <p>• End-to-end readings for R1 and Rn should be similar (within 0.05Ω)</p>
               <p>• R1+R2 reading should not exceed 1.67Ω at any socket</p>
               <p>• Cross-connection readings confirm ring integrity</p>

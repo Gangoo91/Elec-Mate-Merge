@@ -10,7 +10,7 @@ const ScienceSection = () => (
         <Activity className="h-4 w-4 text-blue-400" />
         <h4 className="font-medium text-blue-400">Physics of Insulation Testing</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="border-l-4 border-blue-400 pl-4">
           <p className="font-medium text-foreground mb-1">Ohm's Law Application</p>
           <p className="text-xs sm:text-sm">R = V / I → Higher voltage reveals insulation weaknesses through increased stress</p>
@@ -35,7 +35,7 @@ const ScienceSection = () => (
         <Thermometer className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">Why Temperature Correction Matters</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="flex items-start gap-2">
           <span className="text-green-400 font-bold">•</span>
           <div><strong>Consistent Standards:</strong> BS 7671 specifies minimum values at 20°C reference temperature</div>

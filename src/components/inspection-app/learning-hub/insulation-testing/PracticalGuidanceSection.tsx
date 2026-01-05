@@ -12,7 +12,7 @@ const PracticalGuidanceSection = () => (
         <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-green-400">Practical Testing Techniques</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="font-medium text-foreground mb-2">Equipment Setup:</p>
@@ -43,7 +43,7 @@ const PracticalGuidanceSection = () => (
         <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-blue-400">Common Testing Scenarios</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-blue-400 mb-2">New Installation</p>
@@ -81,7 +81,7 @@ const PracticalGuidanceSection = () => (
         <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-yellow-400">Troubleshooting Guide</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 gap-4">
           <div className="bg-card rounded p-4">
             <p className="font-medium text-yellow-400 mb-3">Common Problems and Solutions:</p>
@@ -127,7 +127,7 @@ const PracticalGuidanceSection = () => (
         <AlertTriangle className="h-4 w-4 text-red-400" />
         <h4 className="font-medium text-red-400">Safety Considerations</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="font-medium text-foreground mb-2">Before Testing:</p>

@@ -42,7 +42,7 @@ const SafetyResources = () => {
           <BookOpen className="h-5 w-5" />
           Safety Resources
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Essential safety documentation and reference materials
         </CardDescription>
       </CardHeader>
@@ -63,7 +63,7 @@ const SafetyResources = () => {
                         <ExternalLink className="h-3 w-3" />
                       </Button>
                     </div>
-                    <p className="text-sm text-gray-300 mb-1">{resource.description}</p>
+                    <p className="text-sm text-white mb-1">{resource.description}</p>
                     <span className={`text-xs ${resource.color} bg-neutral-600 px-2 py-0.5 rounded`}>
                       {resource.type}
                     </span>

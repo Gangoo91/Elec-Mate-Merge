@@ -42,7 +42,7 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
       case 'Critical': return 'text-red-400 bg-red-400/10';
       case 'Essential': return 'text-orange-400 bg-orange-400/10';
       case 'Required': return 'text-blue-400 bg-blue-400/10';
-      default: return 'text-gray-400 bg-gray-400/10';
+      default: return 'text-white/80 bg-gray-400/10';
     }
   };
 
@@ -62,7 +62,7 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
               <CheckCircle className="h-6 w-6" />
               Procedure Completed!
             </CardTitle>
-            <p className="text-gray-300">
+            <p className="text-white">
               You have successfully completed all steps for {procedure.title}
             </p>
           </CardHeader>
@@ -74,7 +74,7 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
                   {procedure.acceptanceCriteria.map((criteria, index) => (
                     <div key={index} className="p-3 bg-muted rounded-lg">
                       <p className="font-medium text-foreground">{criteria.parameter}</p>
-                      <p className="text-sm text-gray-300">{criteria.requirement}</p>
+                      <p className="text-sm text-white">{criteria.requirement}</p>
                       <Badge className="mt-1 bg-blue-500/20 text-blue-400 text-xs">
                         {criteria.regulation}
                       </Badge>
@@ -89,7 +89,7 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
                   {procedure.tips.map((tip, index) => (
                     <div key={index} className="flex items-start gap-2 p-2 bg-green-500/5 rounded">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                      <p className="text-sm text-gray-300">{tip}</p>
+                      <p className="text-sm text-white">{tip}</p>
                     </div>
                   ))}
                 </div>
@@ -133,7 +133,7 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
           <div className="flex items-start justify-between">
             <div>
               <CardTitle className="text-2xl text-foreground">{procedure.title}</CardTitle>
-              <p className="text-gray-300 mt-2">{procedure.description}</p>
+              <p className="text-white mt-2">{procedure.description}</p>
             </div>
             <div className="flex flex-col items-end gap-2">
               <Badge className={getDifficultyColor(procedure.difficulty)}>
@@ -147,11 +147,11 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
         </CardHeader>
         <CardContent>
           <div className="flex items-center gap-6 mb-4">
-            <div className="flex items-center gap-2 text-gray-300">
+            <div className="flex items-center gap-2 text-white">
               <Clock className="h-4 w-4" />
               <span>{procedure.duration}</span>
             </div>
-            <div className="flex items-center gap-2 text-gray-300">
+            <div className="flex items-center gap-2 text-white">
               <FileText className="h-4 w-4" />
               <span>{procedure.steps.length} steps</span>
             </div>
@@ -159,7 +159,7 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
 
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-gray-300">Progress</span>
+              <span className="text-white">Progress</span>
               <span className="text-elec-yellow">{completedSteps.length}/{procedure.steps.length} steps</span>
             </div>
             <Progress value={progress} className="h-2" />
@@ -180,7 +180,7 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
             {procedure.safetyRequirements.map((requirement, index) => (
               <div key={index} className="flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0" />
-                <span className="text-sm text-gray-300">{requirement}</span>
+                <span className="text-sm text-white">{requirement}</span>
               </div>
             ))}
           </div>

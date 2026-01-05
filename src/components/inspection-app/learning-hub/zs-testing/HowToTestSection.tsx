@@ -10,7 +10,7 @@ const HowToTestSection = () => (
         <Plug className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-green-400">Socket Outlet Testing (Most Common Method)</h4>
       </div>
-      <div className="space-y-3 text-xs sm:text-sm text-gray-300">
+      <div className="space-y-3 text-xs sm:text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Standard socket testing procedure:</p>
           <p className="ml-4">• Simply plug the Zs tester directly into the socket outlet</p>
@@ -43,7 +43,7 @@ const HowToTestSection = () => (
         <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-red-400">Live Testing Method (BS 7671 Standard Approach)</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Step 1: Safety preparations</p>
           <p className="ml-4">• Use GS38 compliant test leads and voltage indicator</p>
@@ -84,7 +84,7 @@ const HowToTestSection = () => (
         <Shield className="h-4 w-4 text-blue-400" />
         <h4 className="font-medium text-blue-400">Different Circuit Types - Testing Approaches</h4>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
         <div className="bg-card rounded p-3">
           <div className="text-blue-400 font-medium mb-2">Socket Outlet Circuits</div>
           <ul className="space-y-1">
@@ -106,7 +106,7 @@ const HowToTestSection = () => (
           </ul>
         </div>
       </div>
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
         <div className="bg-card rounded p-3">
           <div className="text-blue-400 font-medium mb-2">Fixed Appliance Circuits</div>
           <ul className="space-y-1">
@@ -135,7 +135,7 @@ const HowToTestSection = () => (
         <TestTube2 className="h-4 w-4 text-yellow-400" />
         <h4 className="font-medium text-yellow-400">Dead Testing Method (Alternative When Required)</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">When to use dead testing:</p>
           <p className="ml-4">• When live testing may cause nuisance tripping of RCDs</p>
@@ -155,7 +155,7 @@ const HowToTestSection = () => (
         </div>
         <div className="bg-orange-500/10 border border-orange-500/20 rounded p-3">
           <p className="font-medium text-orange-400 mb-2">Dead Testing Accuracy Considerations:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Dead testing doesn't account for parallel earth paths or the load impedance that exists during actual fault conditions. 
             Results are therefore conservative but may not reflect true fault loop impedance under operating conditions.
           </p>
@@ -168,7 +168,7 @@ const HowToTestSection = () => (
         <ThermometerSun className="h-4 w-4 text-orange-400" />
         <h4 className="font-medium text-orange-400">Temperature Correction Requirements</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Temperature Correction Formula:</p>
           <p className="text-center text-lg font-mono text-orange-400">
@@ -216,7 +216,7 @@ const HowToTestSection = () => (
         <AlertTriangle className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">RCD Interaction and Testing Considerations</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">RCD behaviour during Zs testing:</p>
           <p className="ml-4">• Zs testers typically produce 15-25A test current</p>
@@ -235,7 +235,7 @@ const HowToTestSection = () => (
         </div>
         <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
           <p className="font-medium text-red-400 mb-2">Important Safety Note:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Never disable RCD protection unless you are competent and have implemented appropriate alternative safety measures. 
             Always restore RCD protection immediately after testing and verify correct operation.
           </p>
@@ -248,7 +248,7 @@ const HowToTestSection = () => (
         <Shield className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">Test Equipment Specifications and Selection</h4>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
         <div>
           <p className="font-medium text-foreground mb-2">Essential tester features:</p>
           <ul className="space-y-1">
@@ -276,7 +276,7 @@ const HowToTestSection = () => (
       </div>
       <div className="mt-4 bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
         <p className="font-medium text-yellow-400 mb-2">Popular Zs Tester Models:</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-white">
           <div>
             <p className="font-medium text-foreground">Dedicated Zs Testers:</p>
             <p>• Megger LTW325</p>

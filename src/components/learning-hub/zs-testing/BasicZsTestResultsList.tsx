@@ -47,24 +47,24 @@ const BasicZsTestResultsList = ({ testResults, onRemoveTest }: BasicZsTestResult
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
                 <div>
-                  <span className="text-gray-400">Measured:</span>
+                  <span className="text-white/80">Measured:</span>
                   <span className="text-foreground ml-1">{test.zsReading}Ω</span>
                 </div>
                 <div>
-                  <span className="text-gray-400">Corrected:</span>
+                  <span className="text-white/80">Corrected:</span>
                   <span className="text-foreground ml-1">{test.correctedZs}Ω</span>
                 </div>
                 <div>
-                  <span className="text-gray-400">Max:</span>
+                  <span className="text-white/80">Max:</span>
                   <span className="text-foreground ml-1">{test.zsMaxPermitted}Ω</span>
                 </div>
                 <div>
-                  <span className="text-gray-400">Temp:</span>
+                  <span className="text-white/80">Temp:</span>
                   <span className="text-foreground ml-1">{test.temperature}°C</span>
                 </div>
               </div>
               {test.notes && (
-                <div className="mt-2 text-sm text-gray-400">
+                <div className="mt-2 text-sm text-white/80">
                   Notes: {test.notes}
                 </div>
               )}

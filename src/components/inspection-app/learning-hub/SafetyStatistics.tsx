@@ -58,7 +58,7 @@ const SafetyStatistics = () => {
               <CardTitle className="text-foreground text-sm font-medium mb-1">
                 {stat.title}
               </CardTitle>
-              <CardDescription className="text-gray-400 text-xs">
+              <CardDescription className="text-white/80 text-xs">
                 {stat.description}
               </CardDescription>
             </CardContent>

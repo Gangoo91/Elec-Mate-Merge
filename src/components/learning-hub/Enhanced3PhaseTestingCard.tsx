@@ -84,7 +84,7 @@ const Enhanced3PhaseTestingCard = ({
           <Zap className="h-5 w-5" />
           Enhanced 3-Phase Dead Testing
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Comprehensive voltage testing for 3-phase installations with detailed guidance
         </CardDescription>
         <div className="flex items-center gap-4 mt-4">
@@ -128,8 +128,8 @@ const Enhanced3PhaseTestingCard = ({
                   {index + 1}
                 </span>
                 <span className={step.color}>{step.phase}</span>
-                <ArrowRight className="h-3 w-3 text-gray-500" />
-                <span className="text-gray-300">{step.description}</span>
+                <ArrowRight className="h-3 w-3 text-white/60" />
+                <span className="text-white">{step.description}</span>
               </div>
             ))}
           </div>
@@ -240,7 +240,7 @@ const Enhanced3PhaseTestingCard = ({
             <AlertTriangle className="h-4 w-4 text-orange-400" />
             <span className="font-medium text-orange-400">Safety Reminders</span>
           </div>
-          <ul className="space-y-1 text-sm text-gray-300">
+          <ul className="space-y-1 text-sm text-white">
             <li>• Test at the point of work, not just at the isolation point</li>
             <li>• Use GS38 compliant test equipment throughout</li>
             <li>• Prove your tester before and after dead testing</li>

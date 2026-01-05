@@ -9,7 +9,7 @@ const WhyTestSection = () => (
         <Lightbulb className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Why Insulation Resistance Testing is Critical</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="flex items-start gap-2">
           <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
           <div>
@@ -46,7 +46,7 @@ const WhyTestSection = () => (
         <Users className="h-4 w-4 text-yellow-400" />
         <h4 className="font-medium text-yellow-400">Real-World Failure Scenarios</h4>
       </div>
-      <div className="space-y-2 text-sm text-gray-300">
+      <div className="space-y-2 text-sm text-white">
         <p><strong>Domestic Installation:</strong> Cable damaged by drilling - insulation breakdown leads to RCD tripping and potential electrocution</p>
         <p><strong>Industrial Environment:</strong> Chemical contamination of cables - gradual insulation deterioration causing equipment failure</p>
         <p><strong>Damp Conditions:</strong> Moisture ingress in junction boxes - low insulation resistance causing nuisance tripping</p>
@@ -59,7 +59,7 @@ const WhyTestSection = () => (
         <AlertTriangle className="h-4 w-4 text-red-400" />
         <h4 className="font-medium text-red-400">Cost of Poor Insulation</h4>
       </div>
-      <div className="grid grid-cols-2 gap-4 text-sm text-gray-300">
+      <div className="grid grid-cols-2 gap-4 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Financial Impact</p>
           <ul className="list-disc list-inside space-y-1 mt-1">

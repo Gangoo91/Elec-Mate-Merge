@@ -170,7 +170,7 @@ const SafetyComplianceSection = () => {
     <div className="space-y-6">
       <div className="text-center px-2 sm:px-4">
         <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">Safety & Compliance</h2>
-        <p className="text-sm sm:text-base text-gray-300">Essential safety requirements and compliance checks</p>
+        <p className="text-sm sm:text-base text-white">Essential safety requirements and compliance checks</p>
       </div>
 
       {/* Location Selection */}
@@ -219,7 +219,7 @@ const SafetyComplianceSection = () => {
                   </Badge>
                 </div>
                 <p className="text-sm text-elec-yellow font-medium mb-2">{req.requirement}</p>
-                <p className="text-xs text-gray-400 mb-2">{req.details}</p>
+                <p className="text-xs text-white/80 mb-2">{req.details}</p>
                 <Badge variant="secondary" className="text-xs">
                   {req.regulation}
                 </Badge>

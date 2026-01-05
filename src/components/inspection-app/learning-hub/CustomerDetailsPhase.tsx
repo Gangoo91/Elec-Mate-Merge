@@ -33,7 +33,7 @@ const CustomerDetailsPhase = ({ customerDetails, onCustomerDetailsChange, onProc
             <User className="h-5 w-5" />
             Customer Communication
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Record customer details and work description before beginning isolation procedure
           </CardDescription>
         </CardHeader>

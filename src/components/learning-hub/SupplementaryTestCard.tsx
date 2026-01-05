@@ -20,7 +20,7 @@ const SupplementaryTestCard = () => {
               Earth Electrode Continuity Testing
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 text-gray-300">
+          <CardContent className="space-y-6 text-white">
             {/* Why Test Section */}
             <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
               <h4 className="font-semibold text-green-400 mb-3 flex items-center gap-2">
@@ -180,7 +180,7 @@ const SupplementaryTestCard = () => {
               Voltage Drop Testing
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 text-gray-300">
+          <CardContent className="space-y-6 text-white">
             <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
               <h4 className="font-semibold text-orange-400 mb-3">BS 7671 Voltage Drop Limits</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -220,7 +220,7 @@ const SupplementaryTestCard = () => {
               Phase Sequence Testing
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 text-gray-300">
+          <CardContent className="space-y-6 text-white">
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
               <h4 className="font-semibold text-blue-400 mb-3">Phase Sequence Verification</h4>
               <p className="text-sm">Ensures correct phase rotation for three-phase equipment operation.</p>
@@ -241,7 +241,7 @@ const SupplementaryTestCard = () => {
               Touch Voltage Testing
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 text-gray-300">
+          <CardContent className="space-y-6 text-white">
             <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
               <h4 className="font-semibold text-red-400 mb-3">Safety Assessment</h4>
               <p className="text-sm">Measures potential voltage differences accessible to persons.</p>
@@ -262,7 +262,7 @@ const SupplementaryTestCard = () => {
               Temperature Monitoring
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 text-gray-300">
+          <CardContent className="space-y-6 text-white">
             <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
               <h4 className="font-semibold text-purple-400 mb-3">Thermal Assessment</h4>
               <p className="text-sm">Verification of thermal effects in electrical installations.</p>
@@ -283,7 +283,7 @@ const SupplementaryTestCard = () => {
               Neutral Integrity Testing
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 text-gray-300">
+          <CardContent className="space-y-6 text-white">
             <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4">
               <h4 className="font-semibold text-cyan-400 mb-3">Neutral Conductor Verification</h4>
               <p className="text-sm">Testing of neutral conductor continuity and integrity.</p>
@@ -314,7 +314,7 @@ const SupplementaryTestCard = () => {
         </div>
         <div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Supplementary Testing</h1>
-          <p className="text-sm sm:text-base text-gray-300">Additional tests required or recommended by BS 7671</p>
+          <p className="text-sm sm:text-base text-white">Additional tests required or recommended by BS 7671</p>
         </div>
       </div>
 
@@ -326,7 +326,7 @@ const SupplementaryTestCard = () => {
             </div>
             <div>
               <CardTitle className="text-purple-400 text-xl">Supplementary Testing Overview</CardTitle>
-              <CardDescription className="text-gray-300">
+              <CardDescription className="text-white">
                 Additional electrical tests beyond core verification procedures
               </CardDescription>
             </div>
@@ -336,7 +336,7 @@ const SupplementaryTestCard = () => {
             <Badge variant="secondary" className="bg-purple-500/20 text-purple-400 border-purple-500/30">
               Additional Tests
             </Badge>
-            <Badge variant="outline" className="text-gray-300 border-gray-500">
+            <Badge variant="outline" className="text-white border-gray-500">
               Varies by installation
             </Badge>
           </div>
@@ -348,7 +348,7 @@ const SupplementaryTestCard = () => {
               <Target className="h-4 w-4" />
               Purpose of Supplementary Testing
             </h4>
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-white">
               Supplementary tests are performed in addition to the standard verification tests 
               to confirm specific aspects of electrical installations. These tests may be 
               required based on the type of installation, environmental conditions, or 

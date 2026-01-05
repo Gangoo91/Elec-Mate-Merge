@@ -50,7 +50,7 @@ const PracticalIsolationStepCard = ({ step, onToggle }: PracticalIsolationStepCa
                 </span>
               )}
             </div>
-            <p className="text-gray-300 text-sm mb-2">{step.description}</p>
+            <p className="text-white text-sm mb-2">{step.description}</p>
             <p className="text-xs text-elec-yellow mb-3">{step.regulation}</p>
             
             <Button
@@ -81,7 +81,7 @@ const PracticalIsolationStepCard = ({ step, onToggle }: PracticalIsolationStepCa
                   </div>
                   <ul className="space-y-1">
                     {step.practicalGuidance.map((guidance, index) => (
-                      <li key={index} className="text-gray-300 text-sm flex items-start gap-2">
+                      <li key={index} className="text-white text-sm flex items-start gap-2">
                         <span className="text-blue-400 mt-1">•</span>
                         <span>{guidance}</span>
                       </li>
@@ -96,7 +96,7 @@ const PracticalIsolationStepCard = ({ step, onToggle }: PracticalIsolationStepCa
                   </div>
                   <ul className="space-y-1">
                     {step.safetyNotes.map((note, index) => (
-                      <li key={index} className="text-gray-300 text-sm flex items-start gap-2">
+                      <li key={index} className="text-white text-sm flex items-start gap-2">
                         <span className="text-orange-400 mt-1">•</span>
                         <span>{note}</span>
                       </li>
@@ -110,7 +110,7 @@ const PracticalIsolationStepCard = ({ step, onToggle }: PracticalIsolationStepCa
                       <TestTube className="h-4 w-4 text-purple-400" />
                       <span className="font-medium text-purple-400">Testing Instructions</span>
                     </div>
-                    <p className="text-gray-300 text-sm">{step.testingInstructions}</p>
+                    <p className="text-white text-sm">{step.testingInstructions}</p>
                   </div>
                 )}
               </div>

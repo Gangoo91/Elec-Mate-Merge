@@ -12,7 +12,7 @@ const PracticalGuidanceSection = () => {
           <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
           <h4 className="text-base sm:text-lg font-semibold text-green-400">Practical Guidance & Best Practices</h4>
         </div>
-        <div className="space-y-4 sm:space-y-6 text-xs sm:text-sm text-gray-300 leading-relaxed">
+        <div className="space-y-4 sm:space-y-6 text-xs sm:text-sm text-white leading-relaxed">
           
           {/* Best Practices Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -144,7 +144,7 @@ const PracticalGuidanceSection = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-3">
-                <h6 className="font-medium text-gray-200">Optimal Testing Times</h6>
+                <h6 className="font-medium text-white">Optimal Testing Times</h6>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-between p-2 bg-muted/50 rounded">
                     <span>RCD Monthly Tests</span>
@@ -166,28 +166,28 @@ const PracticalGuidanceSection = () => {
               </div>
 
               <div className="space-y-3">
-                <h6 className="font-medium text-gray-200">Frequency Guidelines</h6>
+                <h6 className="font-medium text-white">Frequency Guidelines</h6>
                 <div className="space-y-2 text-sm">
                   <div className="p-2 bg-green-500/10 border border-green-500/20 rounded">
                     <div className="flex justify-between items-center mb-1">
                       <span className="font-medium">RCD Test Buttons</span>
                       <span className="text-green-400 text-xs">Monthly</span>
                     </div>
-                    <p className="text-xs text-gray-400">Quick test during routine maintenance</p>
+                    <p className="text-xs text-white/80">Quick test during routine maintenance</p>
                   </div>
                   <div className="p-2 bg-blue-500/10 border border-blue-500/20 rounded">
                     <div className="flex justify-between items-center mb-1">
                       <span className="font-medium">Emergency Stops</span>
                       <span className="text-blue-400 text-xs">Quarterly</span>
                     </div>
-                    <p className="text-xs text-gray-400">During planned maintenance windows</p>
+                    <p className="text-xs text-white/80">During planned maintenance windows</p>
                   </div>
                   <div className="p-2 bg-purple-500/10 border border-purple-500/20 rounded">
                     <div className="flex justify-between items-center mb-1">
                       <span className="font-medium">Control Systems</span>
                       <span className="text-purple-400 text-xs">Annually</span>
                     </div>
-                    <p className="text-xs text-gray-400">Part of annual inspection</p>
+                    <p className="text-xs text-white/80">Part of annual inspection</p>
                   </div>
                 </div>
               </div>

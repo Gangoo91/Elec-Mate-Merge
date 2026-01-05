@@ -47,7 +47,7 @@ const SafetyRemindersCard = () => {
           <AlertTriangle className="h-5 w-5" />
           Critical Safety Reminders
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Essential safety points for all testing procedures
         </CardDescription>
       </CardHeader>

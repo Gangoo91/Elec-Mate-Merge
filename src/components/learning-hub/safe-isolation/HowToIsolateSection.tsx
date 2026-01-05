@@ -9,7 +9,7 @@ const HowToIsolateSection = () => (
         <Shield className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">The Six-Step Safe Isolation Procedure</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="bg-card rounded p-4">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">1</div>
@@ -197,7 +197,7 @@ const HowToIsolateSection = () => (
         <Activity className="h-4 w-4 text-blue-400" />
         <h4 className="font-medium text-blue-400">Advanced Isolation Techniques</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Complex Supply Systems:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -244,7 +244,7 @@ const HowToIsolateSection = () => (
         <Eye className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Visual Verification Techniques</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">What to look for during isolation:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -272,7 +272,7 @@ const HowToIsolateSection = () => (
         </div>
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
           <p className="font-medium text-yellow-400 mb-2">Don't Trust Your Eyes Alone:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Visual indication is useful but never sufficient on its own. Always use proper test equipment to verify isolation. 
             Some equipment may continue running on alternative supplies, and voltage can be present even when equipment appears off.
           </p>
@@ -285,7 +285,7 @@ const HowToIsolateSection = () => (
         <Lock className="h-4 w-4 text-orange-400" />
         <h4 className="font-medium text-orange-400">Lockout/Tagout (LOTO) Systems</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Professional LOTO Implementation:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -333,7 +333,7 @@ const HowToIsolateSection = () => (
         <AlertTriangle className="h-4 w-4 text-red-400" />
         <h4 className="font-medium text-red-400">Common Isolation Failures</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-red-400 mb-2">Procedural Failures:</p>

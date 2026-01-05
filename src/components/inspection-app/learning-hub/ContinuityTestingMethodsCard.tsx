@@ -146,7 +146,7 @@ const ContinuityTestingMethodsCard = () => {
           <BookOpen className="h-5 w-5" />
           Continuity Testing Methods
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Detailed procedures for different types of continuity measurements
         </CardDescription>
       </CardHeader>
@@ -163,7 +163,7 @@ const ContinuityTestingMethodsCard = () => {
                     <Zap className="h-6 w-6 text-blue-400 mt-1" />
                     <div>
                       <h3 className="text-xl font-semibold text-foreground mb-2">{method.name}</h3>
-                      <p className="text-gray-300 mb-3">{method.description}</p>
+                      <p className="text-white mb-3">{method.description}</p>
                       <Badge variant="secondary" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
                         {method.regulation}
                       </Badge>
@@ -172,7 +172,7 @@ const ContinuityTestingMethodsCard = () => {
 
                   <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                     <h4 className="font-medium text-blue-400 mb-2">When to Use</h4>
-                    <p className="text-gray-300 text-sm">{method.when}</p>
+                    <p className="text-white text-sm">{method.when}</p>
                   </div>
                 </div>
 
@@ -188,7 +188,7 @@ const ContinuityTestingMethodsCard = () => {
                         <span className="bg-elec-yellow text-black text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center mt-1">
                           {index + 1}
                         </span>
-                        <span className="text-gray-300 text-sm">{step}</span>
+                        <span className="text-white text-sm">{step}</span>
                       </div>
                     ))}
                   </div>
@@ -200,7 +200,7 @@ const ContinuityTestingMethodsCard = () => {
                     <Calculator className="h-4 w-4 text-green-400" />
                     <h4 className="font-medium text-green-400">Acceptable Limits</h4>
                   </div>
-                  <p className="text-gray-300 text-sm">{method.acceptableLimits}</p>
+                  <p className="text-white text-sm">{method.acceptableLimits}</p>
                 </div>
 
                 {/* Practical Tips */}
@@ -213,7 +213,7 @@ const ContinuityTestingMethodsCard = () => {
                     {method.practicalTips.map((tip, index) => (
                       <div key={index} className="flex items-start gap-2">
                         <span className="text-yellow-400 mt-1 text-sm">💡</span>
-                        <span className="text-gray-300 text-sm">{tip}</span>
+                        <span className="text-white text-sm">{tip}</span>
                       </div>
                     ))}
                   </div>
@@ -229,7 +229,7 @@ const ContinuityTestingMethodsCard = () => {
                     {method.commonIssues.map((issue, index) => (
                       <div key={index} className="flex items-start gap-2">
                         <span className="text-red-400 mt-1 text-sm">⚠</span>
-                        <span className="text-gray-300 text-sm">{issue}</span>
+                        <span className="text-white text-sm">{issue}</span>
                       </div>
                     ))}
                   </div>

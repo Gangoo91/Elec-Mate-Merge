@@ -60,7 +60,7 @@ const PfcTablesSection = () => (
         <Shield className="h-4 w-4 text-blue-400" />
         <h4 className="font-medium text-blue-400">Fuse Minimum PFC Requirements</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-4">
             <p className="font-medium text-blue-400 mb-3">BS 88 Fuses - 0.4 Second Disconnection:</p>
@@ -138,12 +138,12 @@ const PfcTablesSection = () => (
         <Target className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">RCBO and Combined Protection Requirements</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-4">
             <p className="font-medium text-green-400 mb-3">RCBO Minimum PFC Requirements:</p>
             <div className="space-y-2">
-              <p className="text-xs text-gray-400 mb-2">RCBOs combine MCB and RCD functions - must meet both requirements:</p>
+              <p className="text-xs text-white/80 mb-2">RCBOs combine MCB and RCD functions - must meet both requirements:</p>
               <div className="grid grid-cols-4 gap-2 font-mono text-xs">
                 <div className="font-medium text-foreground border-b border-gray-600 pb-1">Rating</div>
                 <div className="font-medium text-foreground border-b border-gray-600 pb-1">Type B</div>
@@ -195,7 +195,7 @@ const PfcTablesSection = () => (
         <Clock className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Time/Current Characteristics and PFC Relationships</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="bg-card rounded p-4">
           <p className="font-medium text-purple-400 mb-3">MCB Operating Regions:</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
@@ -265,7 +265,7 @@ const PfcTablesSection = () => (
         <TrendingUp className="h-4 w-4 text-yellow-400" />
         <h4 className="font-medium text-yellow-400">PFC Assessment Guidelines</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-card rounded p-4">
             <div className="flex items-center gap-2 mb-2">
@@ -335,7 +335,7 @@ const PfcTablesSection = () => (
         <Thermometer className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">Temperature Correction Factors</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="bg-card rounded p-4">
           <p className="font-medium text-cyan-400 mb-3">Cable Resistance Temperature Correction:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
@@ -375,7 +375,7 @@ const PfcTablesSection = () => (
         <Calculator className="h-4 w-4 text-indigo-400" />
         <h4 className="font-medium text-indigo-400">Worked PFC Calculation Examples</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="bg-card rounded p-4">
           <p className="font-medium text-indigo-400 mb-3">Example 1: Domestic Ring Final Circuit</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">

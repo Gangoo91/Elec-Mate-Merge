@@ -76,7 +76,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
       case 'Beginner': return 'bg-green-500/20 text-green-400 border-green-500/50';
       case 'Intermediate': return 'bg-amber-500/20 text-amber-400 border-amber-500/50';
       case 'Advanced': return 'bg-red-500/20 text-red-400 border-red-500/50';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/50';
+      default: return 'bg-gray-500/20 text-white/80 border-gray-500/50';
     }
   };
 
@@ -159,7 +159,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
                 {questions.map((_, index) => {
                   const status = getQuestionStatus(index);
                   let bgColor = 'bg-gray-700';
-                  let textColor = 'text-gray-300';
+                  let textColor = 'text-white';
                   
                   if (status === 'correct') {
                     bgColor = 'bg-green-600';

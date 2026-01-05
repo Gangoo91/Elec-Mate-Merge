@@ -11,7 +11,7 @@ const HowToTestSection = () => {
           <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
           <h4 className="text-base sm:text-lg font-semibold text-green-400">Comprehensive Functional Testing Procedure</h4>
         </div>
-        <div className="space-y-4 sm:space-y-6 text-xs sm:text-sm text-gray-300 leading-relaxed">
+        <div className="space-y-4 sm:space-y-6 text-xs sm:text-sm text-white leading-relaxed">
           
           {/* Pre-Test Preparation */}
           <div className="space-y-4">
@@ -63,7 +63,7 @@ const HowToTestSection = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
-                      <h6 className="font-medium text-gray-200 mb-2">Check Points:</h6>
+                      <h6 className="font-medium text-white mb-2">Check Points:</h6>
                       <ul className="text-xs space-y-1">
                         <li>• Switch operation - smooth without binding</li>
                         <li>• Contact condition - clean and secure</li>
@@ -73,7 +73,7 @@ const HowToTestSection = () => {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-gray-200 mb-2">Common Issues:</h6>
+                      <h6 className="font-medium text-white mb-2">Common Issues:</h6>
                       <ul className="text-xs space-y-1">
                         <li>• Stiff or damaged switch mechanisms</li>
                         <li>• Loose or corroded connections</li>
@@ -104,7 +104,7 @@ const HowToTestSection = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
-                      <h6 className="font-medium text-gray-200 mb-2">Test Procedure:</h6>
+                      <h6 className="font-medium text-white mb-2">Test Procedure:</h6>
                       <ol className="text-xs space-y-1">
                         <li>1. Energise the RCD normally</li>
                         <li>2. Press the test button firmly</li>
@@ -114,7 +114,7 @@ const HowToTestSection = () => {
                       </ol>
                     </div>
                     <div>
-                      <h6 className="font-medium text-gray-200 mb-2">Expected Results:</h6>
+                      <h6 className="font-medium text-white mb-2">Expected Results:</h6>
                       <ul className="text-xs space-y-1">
                         <li>• RCD trips within 40ms</li>
                         <li>• Consistent operation on each test</li>
@@ -145,7 +145,7 @@ const HowToTestSection = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
-                      <h6 className="font-medium text-gray-200 mb-2">Test Sequence:</h6>
+                      <h6 className="font-medium text-white mb-2">Test Sequence:</h6>
                       <ol className="text-xs space-y-1">
                         <li>1. Coordinate with operations team</li>
                         <li>2. Activate emergency stop button</li>
@@ -156,7 +156,7 @@ const HowToTestSection = () => {
                       </ol>
                     </div>
                     <div>
-                      <h6 className="font-medium text-gray-200 mb-2">Verification Points:</h6>
+                      <h6 className="font-medium text-white mb-2">Verification Points:</h6>
                       <ul className="text-xs space-y-1">
                         <li>• Immediate power disconnection</li>
                         <li>• All related equipment stops</li>
@@ -187,7 +187,7 @@ const HowToTestSection = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
-                      <h6 className="font-medium text-gray-200 mb-2">Control Tests:</h6>
+                      <h6 className="font-medium text-white mb-2">Control Tests:</h6>
                       <ul className="text-xs space-y-1">
                         <li>• Automatic transfer switches</li>
                         <li>• Motor control centres</li>
@@ -197,7 +197,7 @@ const HowToTestSection = () => {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-gray-200 mb-2">Safety Systems:</h6>
+                      <h6 className="font-medium text-white mb-2">Safety Systems:</h6>
                       <ul className="text-xs space-y-1">
                         <li>• Fire alarm interface</li>
                         <li>• Gas detection systems</li>
@@ -214,7 +214,7 @@ const HowToTestSection = () => {
 
           {/* Test Documentation */}
           <div className="bg-gray-500/10 border border-gray-500/20 rounded-lg p-4">
-            <h4 className="font-semibold text-gray-200 mb-3 flex items-center gap-2">
+            <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
               <Clock className="h-4 w-4" />
               Documentation Requirements
             </h4>

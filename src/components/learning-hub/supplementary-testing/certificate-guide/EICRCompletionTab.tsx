@@ -2,7 +2,7 @@ import React from 'react';
 
 const EICRCompletionTab = () => {
   return (
-    <div className="space-y-4 text-gray-300">
+    <div className="space-y-4 text-white">
       <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
         <h4 className="font-semibold text-orange-400 mb-3">EICR Assessment Process</h4>
         <div className="text-sm space-y-3">

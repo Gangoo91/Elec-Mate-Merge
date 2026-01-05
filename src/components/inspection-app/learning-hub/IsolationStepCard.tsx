@@ -37,7 +37,7 @@ const IsolationStepCard = ({ step, onToggle }: IsolationStepCardProps) => {
                 </span>
               )}
             </div>
-            <p className="text-gray-300 text-sm mb-2">{step.description}</p>
+            <p className="text-white text-sm mb-2">{step.description}</p>
             <p className="text-xs text-elec-yellow">{step.regulation}</p>
           </div>
           {step.completed && (

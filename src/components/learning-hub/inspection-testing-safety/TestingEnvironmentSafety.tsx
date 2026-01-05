@@ -107,7 +107,7 @@ const TestingEnvironmentSafety = ({ onBack }: TestingEnvironmentSafetyProps) => 
 
       <div className="text-center space-y-3 sm:space-y-4 mb-6 sm:mb-8">
         <h1 className={responsiveHeading.h1 + " text-foreground"}>Testing Environment Safety</h1>
-        <p className={responsiveBody.large + " text-gray-300 max-w-3xl mx-auto px-4"}>
+        <p className={responsiveBody.large + " text-white max-w-3xl mx-auto px-4"}>
           Learn to assess and manage environmental conditions that affect safety during electrical testing work.
         </p>
       </div>
@@ -133,13 +133,13 @@ const TestingEnvironmentSafety = ({ onBack }: TestingEnvironmentSafetyProps) => 
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <p className="text-gray-300 text-sm">{condition.description}</p>
+                    <p className="text-white text-sm">{condition.description}</p>
                     
                     <div>
                       <h4 className="font-semibold text-red-300 mb-2">Key Hazards:</h4>
                       <ul className="space-y-1">
                         {condition.hazards.map((hazard, index) => (
-                          <li key={index} className="text-gray-300 text-sm flex items-start gap-2">
+                          <li key={index} className="text-white text-sm flex items-start gap-2">
                             <span className="text-red-400">•</span>
                             {hazard}
                           </li>
@@ -151,7 +151,7 @@ const TestingEnvironmentSafety = ({ onBack }: TestingEnvironmentSafetyProps) => 
                       <h4 className="font-semibold text-green-300 mb-2">Safety Precautions:</h4>
                       <ul className="space-y-1">
                         {condition.precautions.map((precaution, index) => (
-                          <li key={index} className="text-gray-300 text-sm flex items-start gap-2">
+                          <li key={index} className="text-white text-sm flex items-start gap-2">
                             <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                             {precaution}
                           </li>
@@ -201,7 +201,7 @@ const TestingEnvironmentSafety = ({ onBack }: TestingEnvironmentSafetyProps) => 
                               className={`p-2 h-auto ${
                                 completedChecks.includes(item.id)
                                   ? 'text-green-400 hover:text-green-300'
-                                  : 'text-gray-400 hover:text-gray-300'
+                                  : 'text-white/80 hover:text-white'
                               }`}
                             >
                               <CheckCircle
@@ -213,7 +213,7 @@ const TestingEnvironmentSafety = ({ onBack }: TestingEnvironmentSafetyProps) => 
                             <span className={`text-sm ${
                               completedChecks.includes(item.id) 
                                 ? 'text-green-300 line-through' 
-                                : 'text-gray-300'
+                                : 'text-white'
                             }`}>
                               {item.task}
                             </span>
@@ -257,21 +257,21 @@ const TestingEnvironmentSafety = ({ onBack }: TestingEnvironmentSafetyProps) => 
                 <CardTitle className="text-orange-300">Case Study 1: Basement Testing in Winter</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 mb-4">
+                <p className="text-white mb-4">
                   Electrical testing required in an unheated basement during winter months. High humidity and condensation present.
                 </p>
                 <div className="space-y-3">
                   <div>
                     <span className="font-medium text-orange-400">Challenge:</span>
-                    <span className="text-gray-300"> Condensation on test equipment and electrical components</span>
+                    <span className="text-white"> Condensation on test equipment and electrical components</span>
                   </div>
                   <div>
                     <span className="font-medium text-green-400">Solution:</span>
-                    <span className="text-gray-300"> Equipment acclimatisation, dehumidification, and extended test intervals</span>
+                    <span className="text-white"> Equipment acclimatisation, dehumidification, and extended test intervals</span>
                   </div>
                   <div>
                     <span className="font-medium text-blue-400">Outcome:</span>
-                    <span className="text-gray-300"> Safe completion with accurate results and no equipment damage</span>
+                    <span className="text-white"> Safe completion with accurate results and no equipment damage</span>
                   </div>
                 </div>
               </CardContent>
@@ -282,21 +282,21 @@ const TestingEnvironmentSafety = ({ onBack }: TestingEnvironmentSafetyProps) => 
                 <CardTitle className="text-purple-300">Case Study 2: Industrial Kitchen Testing</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 mb-4">
+                <p className="text-white mb-4">
                   Testing electrical installation in commercial kitchen with high temperature and steam conditions.
                 </p>
                 <div className="space-y-3">
                   <div>
                     <span className="font-medium text-orange-400">Challenge:</span>
-                    <span className="text-gray-300"> High temperature, steam, and grease affecting safety and equipment</span>
+                    <span className="text-white"> High temperature, steam, and grease affecting safety and equipment</span>
                   </div>
                   <div>
                     <span className="font-medium text-green-400">Solution:</span>
-                    <span className="text-gray-300"> Testing during off-hours, increased PPE, equipment protection</span>
+                    <span className="text-white"> Testing during off-hours, increased PPE, equipment protection</span>
                   </div>
                   <div>
                     <span className="font-medium text-blue-400">Outcome:</span>
-                    <span className="text-gray-300"> Comprehensive testing completed safely with schedule coordination</span>
+                    <span className="text-white"> Comprehensive testing completed safely with schedule coordination</span>
                   </div>
                 </div>
               </CardContent>
@@ -307,21 +307,21 @@ const TestingEnvironmentSafety = ({ onBack }: TestingEnvironmentSafetyProps) => 
                 <CardTitle className="text-red-300">Case Study 3: Outdoor Substation in Storm</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 mb-4">
+                <p className="text-white mb-4">
                   Emergency testing required at outdoor substation during severe weather conditions.
                 </p>
                 <div className="space-y-3">
                   <div>
                     <span className="font-medium text-orange-400">Challenge:</span>
-                    <span className="text-gray-300"> High winds, rain, and urgent timeframe</span>
+                    <span className="text-white"> High winds, rain, and urgent timeframe</span>
                   </div>
                   <div>
                     <span className="font-medium text-green-400">Solution:</span>
-                    <span className="text-gray-300"> Risk assessment led to postponement until conditions improved</span>
+                    <span className="text-white"> Risk assessment led to postponement until conditions improved</span>
                   </div>
                   <div>
                     <span className="font-medium text-blue-400">Outcome:</span>
-                    <span className="text-gray-300"> Safety prioritised over urgency, successful testing when safe</span>
+                    <span className="text-white"> Safety prioritised over urgency, successful testing when safe</span>
                   </div>
                 </div>
               </CardContent>

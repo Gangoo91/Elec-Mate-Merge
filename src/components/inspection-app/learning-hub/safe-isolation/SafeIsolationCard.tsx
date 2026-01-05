@@ -54,7 +54,7 @@ const SafeIsolationCard = ({ onBack }: SafeIsolationCardProps) => {
             <Shield className="h-5 w-5 sm:h-6 sm:w-6" />
             Enhanced Safe Isolation Procedure
           </CardTitle>
-          <CardDescription className="text-gray-300 text-sm sm:text-base">
+          <CardDescription className="text-white text-sm sm:text-base">
             Comprehensive guide to BS 7671 compliant safe isolation with practical implementation strategies
           </CardDescription>
         </CardHeader>

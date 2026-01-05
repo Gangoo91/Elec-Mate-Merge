@@ -10,7 +10,7 @@ const ContinuityRegulationRequirementsCard = () => (
         <BookOpen className="h-5 w-5 sm:h-6 sm:w-6" />
         BS 7671 Regulation Requirements
       </CardTitle>
-      <CardDescription className="text-gray-300 text-sm sm:text-base">
+      <CardDescription className="text-white text-sm sm:text-base">
         Detailed regulatory requirements for continuity of protective conductors testing
       </CardDescription>
     </CardHeader>
@@ -21,7 +21,7 @@ const ContinuityRegulationRequirementsCard = () => (
             <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
             <h4 className="font-medium text-blue-400 text-sm sm:text-base">Regulation 612.2 - Continuity of Protective Conductors</h4>
           </div>
-          <div className="space-y-3 text-sm text-gray-300">
+          <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium text-foreground mb-2">612.2.1 - Test Requirements:</p>
@@ -52,7 +52,7 @@ const ContinuityRegulationRequirementsCard = () => (
             <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
             <h4 className="font-medium text-green-400 text-sm sm:text-base">Regulation 543.1 - Protective Conductor Cross-sectional Areas</h4>
           </div>
-          <div className="space-y-3 text-sm text-gray-300">
+          <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium text-foreground mb-2">543.1.3 - Minimum Cross-sectional Areas:</p>
@@ -83,7 +83,7 @@ const ContinuityRegulationRequirementsCard = () => (
             <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400" />
             <h4 className="font-medium text-orange-400 text-sm sm:text-base">Regulation 411.3.2 - Automatic Disconnection Requirements</h4>
           </div>
-          <div className="space-y-3 text-sm text-gray-300">
+          <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium text-foreground mb-2">411.3.2.2 - Maximum Disconnection Times:</p>
@@ -114,7 +114,7 @@ const ContinuityRegulationRequirementsCard = () => (
             <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
             <h4 className="font-medium text-red-400 text-sm sm:text-base">Critical Compliance Points</h4>
           </div>
-          <div className="space-y-3 text-sm text-gray-300">
+          <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <p className="font-medium text-foreground mb-2">Testing Requirements:</p>

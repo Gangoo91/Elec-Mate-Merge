@@ -33,7 +33,7 @@ const ContinuityTestingStepsCard = ({ step, onToggle }: ContinuityTestingStepsCa
       case 'R1+R2': return <Zap className="h-4 w-4 text-blue-400" />;
       case 'main-bonding': return <CheckCircle2 className="h-4 w-4 text-green-400" />;
       case 'supplementary-bonding': return <CheckCircle2 className="h-4 w-4 text-yellow-400" />;
-      default: return <BookOpen className="h-4 w-4 text-gray-400" />;
+      default: return <BookOpen className="h-4 w-4 text-white/80" />;
     }
   };
 
@@ -72,7 +72,7 @@ const ContinuityTestingStepsCard = ({ step, onToggle }: ContinuityTestingStepsCa
               )}
               {step.completed && <CheckCircle2 className="h-5 w-5 text-green-400" />}
             </div>
-            <CardDescription className="text-gray-300 mb-2">
+            <CardDescription className="text-white mb-2">
               {step.description}
             </CardDescription>
             <div className="text-xs text-blue-400 bg-blue-500/10 px-2 py-1 rounded inline-block">
@@ -82,7 +82,7 @@ const ContinuityTestingStepsCard = ({ step, onToggle }: ContinuityTestingStepsCa
           <Button
             variant="ghost"
             size="sm"
-            className="text-gray-400 hover:text-foreground"
+            className="text-white/80 hover:text-foreground"
           >
             {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </Button>
@@ -102,7 +102,7 @@ const ContinuityTestingStepsCard = ({ step, onToggle }: ContinuityTestingStepsCa
                 {step.practicalGuidance.map((guidance, index) => (
                   <div key={index} className="flex items-start gap-2">
                     <span className="text-yellow-400 mt-1 text-sm">•</span>
-                    <span className="text-gray-300 text-sm">{guidance}</span>
+                    <span className="text-white text-sm">{guidance}</span>
                   </div>
                 ))}
               </div>
@@ -118,7 +118,7 @@ const ContinuityTestingStepsCard = ({ step, onToggle }: ContinuityTestingStepsCa
                 {step.safetyNotes.map((note, index) => (
                   <div key={index} className="flex items-start gap-2">
                     <span className="text-red-400 mt-1 text-sm">⚠</span>
-                    <span className="text-gray-300 text-sm">{note}</span>
+                    <span className="text-white text-sm">{note}</span>
                   </div>
                 ))}
               </div>
@@ -134,7 +134,7 @@ const ContinuityTestingStepsCard = ({ step, onToggle }: ContinuityTestingStepsCa
                 {step.commonMistakes.map((mistake, index) => (
                   <div key={index} className="flex items-start gap-2">
                     <span className="text-orange-400 mt-1 text-sm">×</span>
-                    <span className="text-gray-300 text-sm">{mistake}</span>
+                    <span className="text-white text-sm">{mistake}</span>
                   </div>
                 ))}
               </div>

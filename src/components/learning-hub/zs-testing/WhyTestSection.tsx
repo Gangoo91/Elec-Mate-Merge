@@ -9,7 +9,7 @@ const WhyTestSection = () => (
         <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-red-400">Critical Life Safety Requirement</h4>
       </div>
-      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
+      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-white leading-relaxed">
         <div className="flex items-start gap-2">
           <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
           <div>
@@ -46,7 +46,7 @@ const WhyTestSection = () => (
         <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-blue-400">The Physics of Earth Fault Loop Impedance</h4>
       </div>
-      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
+      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-white leading-relaxed">
         <div>
           <p className="font-medium text-foreground">Understanding the complete fault path:</p>
           <p className="ml-4">• <strong>Source impedance (Ze):</strong> External supply network resistance</p>
@@ -78,7 +78,7 @@ const WhyTestSection = () => (
         <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-orange-400">Disconnection Time Requirements Explained</h4>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
         <div className="bg-card rounded p-3">
           <div className="text-orange-400 font-medium mb-2">Socket Outlet Circuits (0.4s max)</div>
           <ul className="space-y-1">
@@ -105,14 +105,14 @@ const WhyTestSection = () => (
       <div className="mt-4 space-y-3">
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
           <p className="font-medium text-yellow-400 mb-2">Special Location Requirements:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Bathrooms (Section 701), swimming pools (Section 702), construction sites (Section 704), and other special locations 
             typically require 0.4s disconnection for all circuits due to increased shock risk from reduced body resistance in wet conditions or harsh environments.
           </p>
         </div>
         <div className="bg-purple-500/10 border border-purple-500/20 rounded p-3">
           <p className="font-medium text-purple-400 mb-2">Medical Locations (Section 710):</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Medical locations may require even shorter disconnection times or additional protective measures such as medical IT systems, 
             due to the critical nature of patient safety and the presence of life-supporting equipment.
           </p>
@@ -125,7 +125,7 @@ const WhyTestSection = () => (
         <TrendingUp className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Real-World Failure Scenarios and Consequences</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Scenario 1: High Zs = Inadequate Fault Current</p>
           <p className="mb-2">A 32A Type B MCB protecting a ring final circuit requires 160A fault current for 0.4s disconnection.</p>
@@ -169,7 +169,7 @@ const WhyTestSection = () => (
         <BookOpen className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">Legal and Regulatory Framework</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Primary legislation and standards:</p>
           <p className="ml-4">• <strong>BS 7671 Regulation 612.9:</strong> Mandatory test for verification of ADS</p>
@@ -205,7 +205,7 @@ const WhyTestSection = () => (
         <Shield className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">Additional Protection Methods</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">When Zs limits cannot be met:</p>
           <p className="ml-4">• <strong>RCD protection:</strong> 30mA RCDs provide additional shock protection</p>
@@ -216,7 +216,7 @@ const WhyTestSection = () => (
         </div>
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
           <p className="font-medium text-yellow-400 mb-2">RCD Limitation:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             RCDs provide additional protection but cannot replace the requirement for ADS compliance. 
             They protect against earth leakage currents but may not operate for phase-to-phase or phase-to-neutral faults.
           </p>

@@ -11,7 +11,7 @@ const WhyTestSection = () => {
           <Target className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
           <h4 className="text-base sm:text-lg font-semibold text-green-400">Why Functional Testing is Essential</h4>
         </div>
-        <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
+        <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-white leading-relaxed">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <h4 className="font-semibold text-foreground flex items-center gap-2">
@@ -75,7 +75,7 @@ const WhyTestSection = () => {
               <Target className="h-4 w-4" />
               Real-World Impact
             </h4>
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-white">
               Functional testing has prevented countless accidents by identifying faulty emergency stops, 
               malfunctioning RCDs, and defective control systems. A properly functioning emergency stop 
               can be the difference between a minor incident and a serious injury. Regular functional 
@@ -88,7 +88,7 @@ const WhyTestSection = () => {
               <AlertTriangle className="h-4 w-4" />
               Consequences of Not Testing
             </h4>
-            <ul className="space-y-1 text-sm text-gray-300">
+            <ul className="space-y-1 text-sm text-white">
               <li>• Emergency systems may fail when needed most</li>
               <li>• RCD protection may not operate correctly</li>
               <li>• Legal liability for accidents and injuries</li>

@@ -63,7 +63,7 @@ const IsolationStepsWithTesting = ({
             <Shield className="h-5 w-5" />
             Safe Isolation Procedure with Integrated Testing
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Follow the step-by-step procedure with practical guidance and complete testing when required
           </CardDescription>
         </CardHeader>
@@ -94,7 +94,7 @@ const IsolationStepsWithTesting = ({
                     <TestTube className="h-5 w-5" />
                     Three-Phase Testing (Step 5 Validation)
                   </CardTitle>
-                  <CardDescription className="text-gray-300">
+                  <CardDescription className="text-white">
                     Record test readings to validate the installation is dead
                   </CardDescription>
                 </CardHeader>
@@ -114,7 +114,7 @@ const IsolationStepsWithTesting = ({
               <AlertTriangle className="h-5 w-5 text-orange-400" />
               <span className="font-medium text-orange-400">Procedure Status</span>
             </div>
-            <p className="text-gray-300 text-sm">
+            <p className="text-white text-sm">
               Critical steps: {criticalStepsCompleted}/{totalCriticalSteps} completed
               {showTesting && ` • Testing: ${allTestsValid ? 'Valid' : 'Incomplete'}`}
             </p>

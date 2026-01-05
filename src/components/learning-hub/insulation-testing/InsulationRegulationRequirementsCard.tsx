@@ -10,7 +10,7 @@ const InsulationRegulationRequirementsCard = () => (
         <BookOpen className="h-5 w-5 sm:h-6 sm:w-6" />
         BS 7671 Regulation Requirements
       </CardTitle>
-      <CardDescription className="text-gray-300 text-sm sm:text-base">
+      <CardDescription className="text-white text-sm sm:text-base">
         Detailed regulatory requirements for insulation resistance testing
       </CardDescription>
     </CardHeader>
@@ -21,7 +21,7 @@ const InsulationRegulationRequirementsCard = () => (
             <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
             <h4 className="font-medium text-purple-400 text-sm sm:text-base">Regulation 612.3 - Insulation Resistance</h4>
           </div>
-          <div className="space-y-3 text-sm text-gray-300">
+          <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium text-foreground mb-2">612.3.1 - Test Requirements:</p>
@@ -54,7 +54,7 @@ const InsulationRegulationRequirementsCard = () => (
             <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
             <h4 className="font-medium text-blue-400 text-sm sm:text-base">Regulation 134.1.1 - Protection Against Electric Shock</h4>
           </div>
-          <div className="space-y-3 text-sm text-gray-300">
+          <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium text-foreground mb-2">Basic Protection Requirements:</p>
@@ -85,7 +85,7 @@ const InsulationRegulationRequirementsCard = () => (
             <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
             <h4 className="font-medium text-green-400 text-sm sm:text-base">Regulation 651.4 - Periodic Inspection and Testing</h4>
           </div>
-          <div className="space-y-3 text-sm text-gray-300">
+          <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium text-foreground mb-2">Periodic Testing Requirements:</p>
@@ -118,7 +118,7 @@ const InsulationRegulationRequirementsCard = () => (
             <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400" />
             <h4 className="font-medium text-orange-400 text-sm sm:text-base">Regulation 421.1.201 - RCD Protection</h4>
           </div>
-          <div className="space-y-3 text-sm text-gray-300">
+          <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium text-foreground mb-2">Insulation and RCD Relationship:</p>
@@ -149,7 +149,7 @@ const InsulationRegulationRequirementsCard = () => (
             <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
             <h4 className="font-medium text-red-400 text-sm sm:text-base">Critical Compliance Points</h4>
           </div>
-          <div className="space-y-3 text-sm text-gray-300">
+          <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <p className="font-medium text-foreground mb-2">Testing Compliance:</p>

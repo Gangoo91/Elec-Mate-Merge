@@ -9,7 +9,7 @@ const WhyTestSection = () => (
         <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-blue-400">Fundamental Safety Purpose</h4>
       </div>
-      <div className="space-y-3 text-xs sm:text-sm text-gray-300">
+      <div className="space-y-3 text-xs sm:text-sm text-white">
         <p>PFC testing is a critical safety verification that ensures protective devices can operate effectively during fault conditions. Without adequate fault current, protective devices may fail to disconnect dangerous circuits, leading to serious safety hazards.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
@@ -39,7 +39,7 @@ const WhyTestSection = () => (
         <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-red-400">Consequences of Inadequate PFC</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-card rounded p-3">
             <div className="flex items-center gap-2 mb-2">
@@ -89,7 +89,7 @@ const WhyTestSection = () => (
         <Target className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">How PFC Testing Ensures Safety</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-green-400 mb-2">Automatic Disconnection Verification:</p>
@@ -118,7 +118,7 @@ const WhyTestSection = () => (
         <Clock className="h-4 w-4 text-yellow-400" />
         <h4 className="font-medium text-yellow-400">BS 7671 Disconnection Time Requirements</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-4">
           <p className="font-medium text-yellow-400 mb-3">Maximum Disconnection Times - Table 41.1:</p>
           <div className="space-y-3">
@@ -149,7 +149,7 @@ const WhyTestSection = () => (
         <Zap className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">PFC and Protective Device Operation</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-purple-400 mb-2">MCB Operation Zones:</p>
@@ -197,7 +197,7 @@ const WhyTestSection = () => (
         <TrendingUp className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">Professional and Legal Importance</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-cyan-400 mb-2">Regulatory Compliance:</p>
@@ -228,7 +228,7 @@ const WhyTestSection = () => (
         <CheckCircle2 className="h-4 w-4 text-emerald-400" />
         <h4 className="font-medium text-emerald-400">Real-World Safety Benefits</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-4">
           <p className="font-medium text-emerald-400 mb-3">Case Study: Domestic Installation</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">

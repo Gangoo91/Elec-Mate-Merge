@@ -65,12 +65,12 @@ const TestingProceduresGrid = ({
             <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
               BS 7671 Regulation 612.1
             </Badge>
-            <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+            <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
               Essential safety procedure for isolating electrical installations before any work
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3 p-4 sm:p-5 md:p-6 pt-0">
-            <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-neutral-300">
+            <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-white">
               <div className="flex items-center gap-1.5">
                 <Clock className="h-4 w-4" />
                 <span>15-20 minutes</span>
@@ -113,12 +113,12 @@ const TestingProceduresGrid = ({
               <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
                 BS 7671 Section 612.2
               </Badge>
-              <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+              <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
                 Test continuity of protective conductors and ring final circuits
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 p-4 sm:p-5 md:p-6 pt-0">
-              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-neutral-300">
+              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-white">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-4 w-4" />
                   <span>20-30 minutes</span>
@@ -152,12 +152,12 @@ const TestingProceduresGrid = ({
               <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
                 BS 7671 Section 612.3
               </Badge>
-              <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+              <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
                 Test insulation resistance between conductors and earth
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 p-4 sm:p-5 md:p-6 pt-0">
-              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-neutral-300">
+              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-white">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-4 w-4" />
                   <span>15-25 minutes</span>
@@ -191,12 +191,12 @@ const TestingProceduresGrid = ({
               <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
                 BS 7671 Section 612.6
               </Badge>
-              <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+              <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
                 Verify correct polarity of all electrical connections
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 p-4 sm:p-5 md:p-6 pt-0">
-              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-neutral-300">
+              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-white">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-4 w-4" />
                   <span>10-20 minutes</span>
@@ -230,12 +230,12 @@ const TestingProceduresGrid = ({
               <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
                 BS 7671 Sections 612.9 & 411.4.5
               </Badge>
-              <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+              <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
                 Measure earth fault loop impedance for safety verification
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 p-4 sm:p-5 md:p-6 pt-0">
-              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-neutral-300">
+              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-white">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-4 w-4" />
                   <span>15-25 minutes</span>
@@ -269,12 +269,12 @@ const TestingProceduresGrid = ({
               <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
                 BS 7671 Sections 612.10 & 612.13
               </Badge>
-              <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+              <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
                 Test RCD operation and trip times for protection verification
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 p-4 sm:p-5 md:p-6 pt-0">
-              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-neutral-300">
+              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-white">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-4 w-4" />
                   <span>10-15 minutes</span>
@@ -308,12 +308,12 @@ const TestingProceduresGrid = ({
               <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
                 BS 7671 Sections 612.11 & 434.5.2
               </Badge>
-              <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+              <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
                 Measure prospective fault current for protective device verification
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 p-4 sm:p-5 md:p-6 pt-0">
-              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-neutral-300">
+              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-white">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-4 w-4" />
                   <span>10-20 minutes</span>
@@ -347,12 +347,12 @@ const TestingProceduresGrid = ({
               <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
                 BS 7671 Section 612.13
               </Badge>
-              <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+              <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
                 Test operation and functionality of electrical installations and controls
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 p-4 sm:p-5 md:p-6 pt-0">
-              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-neutral-300">
+              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-white">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-4 w-4" />
                   <span>20-30 minutes</span>
@@ -386,12 +386,12 @@ const TestingProceduresGrid = ({
               <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
                 BS 7671 Various Sections
               </Badge>
-              <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+              <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
                 Additional tests required or recommended by BS 7671 for specific installations
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 p-4 sm:p-5 md:p-6 pt-0">
-              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-neutral-300">
+              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-white">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-4 w-4" />
                   <span>Varies by test</span>
@@ -425,12 +425,12 @@ const TestingProceduresGrid = ({
               <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
                 BS 7671 Compliance
               </Badge>
-              <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+              <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
                 Complete guide to electrical certificate completion and compliance
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 p-4 sm:p-5 md:p-6 pt-0">
-              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-neutral-300">
+              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-white">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-4 w-4" />
                   <span>Reference Guide</span>
@@ -464,12 +464,12 @@ const TestingProceduresGrid = ({
               <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
                 Testing Standards
               </Badge>
-              <CardDescription className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+              <CardDescription className="text-white text-xs sm:text-sm leading-relaxed">
                 Guide to completing test results schedules accurately
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 p-4 sm:p-5 md:p-6 pt-0">
-              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-neutral-300">
+              <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-white">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-4 w-4" />
                   <span>Reference Guide</span>

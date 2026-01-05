@@ -74,7 +74,7 @@ const WorkPermitSystemCard = () => {
           <FileText className="h-6 w-6" />
           Work Permit Systems - BS 7671 & HSE Compliance
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Formal authorization systems for high-risk electrical and associated work activities
         </CardDescription>
       </CardHeader>
@@ -89,10 +89,10 @@ const WorkPermitSystemCard = () => {
                   <FileText className={`h-5 w-5 ${permit.color} mt-0.5`} />
                   <div className="flex-grow">
                     <h5 className={`font-medium ${permit.color} mb-1`}>{permit.type}</h5>
-                    <p className="text-sm text-gray-300 mb-3">{permit.description}</p>
+                    <p className="text-sm text-white mb-3">{permit.description}</p>
                     
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                      <div className="flex items-center gap-2 text-xs text-white/80">
                         <Clock className="h-3 w-3" />
                         <span>Duration: {permit.duration}</span>
                       </div>
@@ -101,7 +101,7 @@ const WorkPermitSystemCard = () => {
                         <p className="text-xs font-medium text-foreground mb-1">Key Requirements:</p>
                         <div className="space-y-1">
                           {permit.requirements.map((req, reqIndex) => (
-                            <div key={reqIndex} className="flex items-center gap-2 text-xs text-gray-300">
+                            <div key={reqIndex} className="flex items-center gap-2 text-xs text-white">
                               <CheckCircle2 className="h-3 w-3 text-green-400" />
                               {req}
                             </div>
@@ -132,10 +132,10 @@ const WorkPermitSystemCard = () => {
                       {stage.responsible}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-300 mb-2">{stage.description}</p>
+                  <p className="text-sm text-white mb-2">{stage.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {stage.actions.map((action, actionIndex) => (
-                      <span key={actionIndex} className="text-xs bg-neutral-600 text-gray-300 px-2 py-1 rounded">
+                      <span key={actionIndex} className="text-xs bg-neutral-600 text-white px-2 py-1 rounded">
                         {action}
                       </span>
                     ))}
@@ -153,7 +153,7 @@ const WorkPermitSystemCard = () => {
               <CheckCircle2 className="h-5 w-5 text-green-400" />
               <h4 className="font-medium text-green-400">Success Factors</h4>
             </div>
-            <div className="space-y-2 text-sm text-gray-300">
+            <div className="space-y-2 text-sm text-white">
               <p>• Clear communication between all parties</p>
               <p>• Competent and authorized personnel</p>
               <p>• Regular monitoring and supervision</p>
@@ -167,7 +167,7 @@ const WorkPermitSystemCard = () => {
               <AlertTriangle className="h-5 w-5 text-red-400" />
               <h4 className="font-medium text-red-400">Common Failures</h4>
             </div>
-            <div className="space-y-2 text-sm text-gray-300">
+            <div className="space-y-2 text-sm text-white">
               <p>• Inadequate hazard identification</p>
               <p>• Poor communication and handovers</p>
               <p>• Insufficient monitoring and supervision</p>
@@ -183,7 +183,7 @@ const WorkPermitSystemCard = () => {
             <Users className="h-5 w-5 text-blue-400" />
             <h4 className="font-medium text-blue-400">Legal and Regulatory Framework</h4>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
             <div>
               <p className="font-medium text-foreground mb-2">Key Regulations:</p>
               <ul className="space-y-1 text-xs">

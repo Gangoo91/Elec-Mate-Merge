@@ -76,7 +76,7 @@ const PolarityTestCard = () => {
             <RotateCcw className="h-6 w-6" />
             Polarity Testing
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Verify correct polarity of all electrical connections - BS 7671 Regulation 612.6
           </CardDescription>
         </CardHeader>
@@ -87,7 +87,7 @@ const PolarityTestCard = () => {
               <BookOpen className="h-4 w-4 text-indigo-400" />
               <h4 className="font-medium text-indigo-400">Polarity Test Procedure</h4>
             </div>
-            <div className="space-y-2 text-sm text-gray-300">
+            <div className="space-y-2 text-sm text-white">
               <p><strong>Dead Testing (Preferred):</strong> Use continuity tester between phase at origin and switched contacts</p>
               <p><strong>Live Testing:</strong> Use approved voltage indicator to confirm phase at all outlets</p>
               <p><strong>Check:</strong> Socket outlets (correct phase/neutral), lighting switches, isolator switches</p>
@@ -186,7 +186,7 @@ const PolarityTestCard = () => {
                       <Zap className="h-4 w-4 text-blue-400" />
                       <h4 className="font-medium text-blue-400">Common Polarity Issues</h4>
                     </div>
-                    <div className="space-y-2 text-sm text-gray-300">
+                    <div className="space-y-2 text-sm text-white">
                       <p>• <strong>Reversed socket wiring:</strong> Phase and neutral swapped at socket outlet</p>
                       <p>• <strong>Switch line connections:</strong> Neutral switched instead of phase</p>
                       <p>• <strong>Lamp holder connections:</strong> Phase connected to outer contact instead of centre</p>
@@ -223,7 +223,7 @@ const PolarityTestCard = () => {
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-4">
                           <div className="font-medium text-foreground">{test.circuitRef}</div>
-                          <div className="text-sm text-gray-400">({test.testMethod === 'dead' ? 'Dead Test' : 'Live Test'})</div>
+                          <div className="text-sm text-white/80">({test.testMethod === 'dead' ? 'Dead Test' : 'Live Test'})</div>
                           <Badge 
                             variant={test.result === 'pass' ? 'default' : 'destructive'}
                             className={test.result === 'pass' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}
@@ -243,7 +243,7 @@ const PolarityTestCard = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                         {test.socketOutlets && (
                           <div>
-                            <span className="text-gray-400">Sockets:</span>
+                            <span className="text-white/80">Sockets:</span>
                             <span className={`ml-1 ${test.socketOutlets === 'correct' ? 'text-green-400' : 'text-red-400'}`}>
                               {test.socketOutlets === 'correct' ? 'Correct' : test.socketOutlets === 'incorrect' ? 'Incorrect' : 'N/T'}
                             </span>
@@ -251,7 +251,7 @@ const PolarityTestCard = () => {
                         )}
                         {test.lightingPoints && (
                           <div>
-                            <span className="text-gray-400">Lighting:</span>
+                            <span className="text-white/80">Lighting:</span>
                             <span className={`ml-1 ${test.lightingPoints === 'correct' ? 'text-green-400' : 'text-red-400'}`}>
                               {test.lightingPoints === 'correct' ? 'Correct' : test.lightingPoints === 'incorrect' ? 'Incorrect' : 'N/T'}
                             </span>
@@ -259,7 +259,7 @@ const PolarityTestCard = () => {
                         )}
                         {test.isolatorSwitches && (
                           <div>
-                            <span className="text-gray-400">Isolators:</span>
+                            <span className="text-white/80">Isolators:</span>
                             <span className={`ml-1 ${test.isolatorSwitches === 'correct' ? 'text-green-400' : 'text-red-400'}`}>
                               {test.isolatorSwitches === 'correct' ? 'Correct' : test.isolatorSwitches === 'incorrect' ? 'Incorrect' : 'N/T'}
                             </span>
@@ -267,7 +267,7 @@ const PolarityTestCard = () => {
                         )}
                       </div>
                       {test.notes && (
-                        <div className="mt-2 text-sm text-gray-400">
+                        <div className="mt-2 text-sm text-white/80">
                           Notes: {test.notes}
                         </div>
                       )}
@@ -284,7 +284,7 @@ const PolarityTestCard = () => {
               <AlertTriangle className="h-4 w-4 text-yellow-400" />
               <h4 className="font-medium text-yellow-400">BS 7671 Polarity Requirements</h4>
             </div>
-            <div className="space-y-1 text-sm text-gray-300">
+            <div className="space-y-1 text-sm text-white">
               <p>• All single-pole switches and protective devices must be in the phase conductor</p>
               <p>• Centre contact of Edison screw lampholders connected to phase conductor</p>
               <p>• Socket outlets: Phase (L) to right terminal when viewed from front</p>

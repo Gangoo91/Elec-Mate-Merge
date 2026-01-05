@@ -178,7 +178,7 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
       {currentTest.zsReading && currentTest.temperature && (
         <div className="bg-card rounded-lg p-4">
           <h4 className="font-medium text-foreground mb-2">Temperature Correction Calculation</h4>
-          <div className="text-sm text-gray-300 space-y-1">
+          <div className="text-sm text-white space-y-1">
             <p>Measured Zs: {currentTest.zsReading}Ω at {currentTest.temperature}°C</p>
             <p>Correction factor: (230 + 70) / (230 + {currentTest.temperature}) = {((300) / (230 + parseFloat(currentTest.temperature || '20'))).toFixed(3)}</p>
             <p>Corrected Zs: {currentTest.correctedZs}Ω (at 70°C conductor temperature)</p>

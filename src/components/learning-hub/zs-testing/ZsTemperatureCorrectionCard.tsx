@@ -13,7 +13,7 @@ const ZsTemperatureCorrectionCard = ({ currentTest }: ZsTemperatureCorrectionCar
       <Calculator className="h-4 w-4 text-orange-400" />
       <h4 className="font-medium text-orange-400">Temperature Correction Calculation</h4>
     </div>
-    <div className="space-y-2 text-sm text-gray-300">
+    <div className="space-y-2 text-sm text-white">
       <p>Zs values must be corrected to maximum conductor operating temperature (70°C)</p>
       <p><strong>Formula:</strong> Zs(corrected) = Zs(measured) × (230 + 70) / (230 + test temp)</p>
       {currentTest.zsReading && currentTest.temperature && (

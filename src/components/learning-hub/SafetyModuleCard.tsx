@@ -24,7 +24,7 @@ const SafetyModuleCard = ({ module, onModuleClick }: SafetyModuleCardProps) => {
       case 'Critical': return 'text-red-400 bg-red-400/10 border-red-400/20';
       case 'Essential': return 'text-orange-400 bg-orange-400/10 border-orange-400/20';
       case 'Required': return 'text-blue-400 bg-blue-400/10 border-blue-400/20';
-      default: return 'text-gray-400 bg-gray-400/10 border-gray-400/20';
+      default: return 'text-white/80 bg-gray-400/10 border-gray-400/20';
     }
   };
 
@@ -42,13 +42,13 @@ const SafetyModuleCard = ({ module, onModuleClick }: SafetyModuleCardProps) => {
             </div>
           )}
         </div>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           {module.description}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div className="flex items-center justify-between text-sm text-gray-400">
+          <div className="flex items-center justify-between text-sm text-white/80">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
                 <Clock className="h-3 w-3" />
@@ -64,7 +64,7 @@ const SafetyModuleCard = ({ module, onModuleClick }: SafetyModuleCardProps) => {
             <h4 className="text-sm font-medium text-foreground">Modules Covered:</h4>
             <div className="grid grid-cols-2 gap-1">
               {module.modules.map((mod, index) => (
-                <div key={index} className="text-xs text-gray-400 flex items-center gap-1">
+                <div key={index} className="text-xs text-white/80 flex items-center gap-1">
                   <Star className="h-2 w-2 text-elec-yellow" />
                   {mod}
                 </div>

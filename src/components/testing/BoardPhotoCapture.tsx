@@ -1,13 +1,26 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Camera, X, Check, Loader2, Upload, Info } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Camera, X, Check, Loader2, Upload, Info, Zap, Radio, Activity } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { AIResultsPreview } from './AIResultsPreview';
+import { enhanceImageForAI, assessImageQuality, detectThreePhaseBoard, getDataUrlSizeMB } from '@/utils/boardAnalysis/imagePreprocessor';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { useStreamingBoardAnalysis } from '@/hooks/useStreamingBoardAnalysis';
 
 interface BoardPhotoCaptureProps {
   onAnalysisComplete: (data: any) => void;
   onClose: () => void;
+}
+
+interface AnalysisOptions {
+  useEnhancedScanner: boolean;
+  useStreaming: boolean;
+  fastMode: boolean;
+  isThreePhase: boolean;
 }
 
 export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
@@ -20,6 +33,24 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [showCamera, setShowCamera] = useState(false);
+
+  // Enhanced scanner state
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewData, setPreviewData] = useState<{
+    circuits: any[];
+    board: any;
+    metadata?: any;
+  } | null>(null);
+  const [showOptions, setShowOptions] = useState(false);
+  const [options, setOptions] = useState<AnalysisOptions>({
+    useEnhancedScanner: true,
+    useStreaming: true,
+    fastMode: false,
+    isThreePhase: false
+  });
+
+  // Streaming analysis hook
+  const streaming = useStreamingBoardAnalysis();
 
   const TOTAL_CAP_MB = 8.0;
 
@@ -342,6 +373,30 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
     setCapturedImages(prev => prev.filter((_, i) => i !== index));
   };
 
+  // Handler for applying circuits from AI preview
+  const handleApplyFromPreview = (circuits: any[]) => {
+    if (!previewData) return;
+
+    const transformedData = {
+      circuits,
+      board: previewData.board,
+      metadata: previewData.metadata,
+      warnings: previewData.metadata?.warnings,
+      decisions: previewData.metadata?.decisions
+    };
+
+    onAnalysisComplete(transformedData);
+    setShowPreview(false);
+    setPreviewData(null);
+  };
+
+  // Handler for re-scan from preview
+  const handleRescan = () => {
+    setShowPreview(false);
+    setPreviewData(null);
+    // Images are still captured, user can adjust and re-analyze
+  };
+
   const analyzeImages = async () => {
     if (capturedImages.length === 0) return;
 
@@ -362,7 +417,102 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
     }
 
     setIsAnalyzing(true);
-    
+
+    // Check for three-phase indicators in first image
+    let detectedThreePhase = options.isThreePhase;
+    if (!options.fastMode && capturedImages.length > 0) {
+      try {
+        const threePhaseResult = await detectThreePhaseBoard(capturedImages[0].url);
+        if (threePhaseResult.isLikelyThreePhase && !detectedThreePhase) {
+          detectedThreePhase = true;
+          toast.info('Three-phase board detected', { duration: 3000 });
+        }
+      } catch (e) {
+        console.warn('Three-phase detection failed:', e);
+      }
+    }
+
+    const hints = {
+      main_switch_side: 'right' as const,
+      is_three_phase: detectedThreePhase,
+      board_type: 'domestic' as const
+    };
+
+    const analysisOptions = {
+      fast_mode: options.fastMode,
+      use_claude_ocr: !options.fastMode,
+      use_openai_components: !options.fastMode
+    };
+
+    // =========================================================================
+    // STREAMING MODE - Progressive results
+    // =========================================================================
+    if (options.useStreaming && options.useEnhancedScanner) {
+      try {
+        const result = await streaming.analyzeImages(
+          capturedImages.map(img => img.url),
+          hints,
+          analysisOptions
+        );
+
+        if (result.circuits.length > 0) {
+          const photoText = capturedImages.length > 1 ? `${capturedImages.length} photos` : 'image';
+          toast.success(`Found ${result.circuits.length} circuits from ${photoText}`);
+
+          // Transform streaming results to match expected format
+          const transformedCircuits = result.circuits.map((circuit, i) => ({
+            id: circuit.id || `${circuit.index}-${i}-${Date.now()}`,
+            position: circuit.index,
+            label: circuit.label_text || `Circuit ${circuit.index}`,
+            pictograms: circuit.pictograms || [],
+            device: circuit.device?.category || 'MCB',
+            curve: circuit.device?.curve || null,
+            rating: circuit.device?.rating_amps || null,
+            kaRating: circuit.device?.breaking_capacity_kA ? `${circuit.device.breaking_capacity_kA}kA` : null,
+            confidence: circuit.confidence || 'medium',
+            evidence: circuit.evidence,
+            phase: circuit.phase || '1P',
+            phases: circuit.phases || null
+          }));
+
+          const transformedBoard = {
+            make: result.board?.brand || 'Unknown',
+            model: result.board?.model || 'Unknown',
+            mainSwitch: result.board?.main_switch_rating ? `${result.board.main_switch_rating}A` : 'Unknown',
+            spd: result.board?.spd_status === 'green_ok' ? 'OK' :
+                 result.board?.spd_status === 'red_replace' ? 'Replace' :
+                 result.board?.spd_status === 'yellow_check' ? 'Check' : 'Unknown',
+            totalWays: result.board?.estimated_total_ways || result.circuits.length,
+            boardLayout: result.board?.board_layout || '1P'
+          };
+
+          // Show preview dialog
+          setPreviewData({
+            circuits: transformedCircuits,
+            board: transformedBoard,
+            metadata: {
+              analysisTime: result.metadata?.analysisTime,
+              modelsUsed: result.metadata?.modelsUsed || ['gemini'],
+              decisions: streaming.decisions || [],
+              warnings: streaming.warnings || []
+            }
+          });
+          setShowPreview(true);
+        } else {
+          toast.error('AI could not detect any circuits. Please try another angle or ensure the board is clearly visible.');
+        }
+      } catch (error) {
+        console.error('Streaming analysis error:', error);
+        toast.error(error instanceof Error ? error.message : 'Failed to analyze images');
+      } finally {
+        setIsAnalyzing(false);
+      }
+      return;
+    }
+
+    // =========================================================================
+    // STANDARD MODE - Wait for full results
+    // =========================================================================
     toast.loading('📤 Preparing images for AI analysis...', { id: 'analysis' });
 
     const stage2Timer = setTimeout(() => {
@@ -380,20 +530,23 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
     const stage5Timer = setTimeout(() => {
       toast.loading('✅ Verifying board configuration...', { id: 'analysis' });
     }, 9000);
-    
+
     const timeoutId = setTimeout(() => {
       toast.warning('This is taking longer than usual. Please ensure good lighting and try again if needed.', {
         id: 'timeout-warning'
       });
     }, 20000);
-    
-    try {
-      const hints = { 
-        main_switch_side: 'right'
-      };
 
-      const { data, error: invokeError } = await supabase.functions.invoke('board-read-simple', {
-        body: { images: capturedImages.map(img => img.url), hints }
+    try {
+      // Use enhanced scanner if enabled, otherwise fall back to simple
+      const functionName = options.useEnhancedScanner ? 'board-read-enhanced' : 'board-read-simple';
+
+      const { data, error: invokeError } = await supabase.functions.invoke(functionName, {
+        body: {
+          images: capturedImages.map(img => img.url),
+          hints,
+          options: analysisOptions
+        }
       });
 
       clearTimeout(stage2Timer);
@@ -510,7 +663,23 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
         };
         
         toast.success(`Found ${data.circuits.length} circuits from ${photoText}`);
-        onAnalysisComplete(transformedData);
+
+        // Show preview dialog for enhanced scanner, or apply directly for simple
+        if (options.useEnhancedScanner) {
+          setPreviewData({
+            circuits: transformedCircuits,
+            board: transformedBoard,
+            metadata: {
+              analysisTime: data?.metadata?.analysisTime,
+              modelsUsed: data?.metadata?.modelsUsed || ['gemini'],
+              decisions: data?.decisions || [],
+              warnings: data?.warnings || []
+            }
+          });
+          setShowPreview(true);
+        } else {
+          onAnalysisComplete(transformedData);
+        }
         
         const lowConfCircuits = transformedCircuits.filter(c => c.confidence === 'low');
         if (lowConfCircuits.length > 0) {
@@ -660,12 +829,126 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
                 </div>
               ))}
             </div>
+            {/* Enhanced Scanner Options */}
+            <div className="flex items-center justify-between py-2 border-t border-b border-border">
+              <div className="flex items-center gap-4 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <Switch
+                    id="enhanced-mode"
+                    checked={options.useEnhancedScanner}
+                    onCheckedChange={(checked) => setOptions(prev => ({ ...prev, useEnhancedScanner: checked }))}
+                  />
+                  <Label htmlFor="enhanced-mode" className="text-xs cursor-pointer flex items-center gap-1">
+                    <Zap className="h-3 w-3 text-primary" />
+                    Enhanced AI
+                  </Label>
+                </div>
+                {options.useEnhancedScanner && (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <Switch
+                        id="stream-mode"
+                        checked={options.useStreaming}
+                        onCheckedChange={(checked) => setOptions(prev => ({ ...prev, useStreaming: checked }))}
+                      />
+                      <Label htmlFor="stream-mode" className="text-xs cursor-pointer flex items-center gap-1">
+                        <Activity className="h-3 w-3 text-green-500" />
+                        Live
+                      </Label>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Switch
+                        id="fast-mode"
+                        checked={options.fastMode}
+                        onCheckedChange={(checked) => setOptions(prev => ({ ...prev, fastMode: checked }))}
+                      />
+                      <Label htmlFor="fast-mode" className="text-xs cursor-pointer">
+                        Fast
+                      </Label>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="three-phase"
+                  checked={options.isThreePhase}
+                  onCheckedChange={(checked) => setOptions(prev => ({ ...prev, isThreePhase: checked }))}
+                />
+                <Label htmlFor="three-phase" className="text-xs cursor-pointer">
+                  3-Phase
+                </Label>
+              </div>
+            </div>
+
+            {/* Live Streaming Progress */}
+            {streaming.isStreaming && (
+              <div className="space-y-3 p-3 bg-muted/50 rounded-lg border border-border animate-in fade-in duration-300">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Radio className="h-4 w-4 text-green-500 animate-pulse" />
+                    <span className="text-sm font-medium">Live Analysis</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">{streaming.progress}%</span>
+                </div>
+
+                <Progress value={streaming.progress} className="h-2" />
+
+                <p className="text-xs text-muted-foreground">{streaming.stageMessage}</p>
+
+                {/* Live board info */}
+                {streaming.board && (
+                  <div className="text-xs bg-background/50 p-2 rounded border">
+                    <span className="font-medium">{streaming.board.brand}</span>
+                    {streaming.board.main_switch_rating && (
+                      <span className="text-muted-foreground ml-2">{streaming.board.main_switch_rating}A Main</span>
+                    )}
+                    {streaming.board.estimated_total_ways && (
+                      <span className="text-muted-foreground ml-2">{streaming.board.estimated_total_ways} ways</span>
+                    )}
+                  </div>
+                )}
+
+                {/* Live circuits count */}
+                {streaming.circuits.length > 0 && (
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-green-600 dark:text-green-400">
+                      {streaming.circuits.length} circuits detected
+                    </span>
+                    <div className="flex gap-1">
+                      {streaming.circuits.slice(-5).map((c, i) => (
+                        <span
+                          key={i}
+                          className="px-1.5 py-0.5 bg-primary/10 rounded text-[10px] animate-in slide-in-from-right duration-200"
+                        >
+                          #{c.index}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Cancel button */}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    streaming.abort();
+                    setIsAnalyzing(false);
+                  }}
+                  className="w-full text-xs"
+                >
+                  Cancel Analysis
+                </Button>
+              </div>
+            )}
+
             <div className="flex flex-wrap gap-2">
               {!isAnalyzing ? (
                 <>
                   <Button onClick={analyzeImages} className="flex-1 min-w-full sm:min-w-0 h-10 md:h-12 text-sm md:text-base">
-                    <Check className="h-4 w-4 mr-2" />
-                    Analyse {capturedImages.length} Photo{capturedImages.length > 1 ? 's' : ''}
+                    {options.useEnhancedScanner ? <Zap className="h-4 w-4 mr-2" /> : <Check className="h-4 w-4 mr-2" />}
+                    {options.useEnhancedScanner ? 'Enhanced Analyse' : 'Analyse'} {capturedImages.length} Photo{capturedImages.length > 1 ? 's' : ''}
                   </Button>
                   <Button
                     variant="outline"
@@ -699,6 +982,20 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
           </div>
         )}
       </CardContent>
+
+      {/* AI Results Preview Dialog */}
+      {previewData && (
+        <AIResultsPreview
+          open={showPreview}
+          onOpenChange={setShowPreview}
+          circuits={previewData.circuits}
+          board={previewData.board}
+          imageUrl={capturedImages[0]?.url}
+          metadata={previewData.metadata}
+          onApply={handleApplyFromPreview}
+          onRescan={handleRescan}
+        />
+      )}
     </Card>
   );
 };

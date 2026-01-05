@@ -120,20 +120,20 @@ const KeyRegulationsGrid = () => {
                         PRIORITY
                       </Badge>
                     )}
-                    <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <div className="flex items-center gap-2 text-sm text-white/80">
                       <TrendingUp className="h-4 w-4" />
                       <span>{reg.usage} usage</span>
                     </div>
                   </div>
                 </div>
-                <CardDescription className="text-gray-300 text-base">
+                <CardDescription className="text-white text-base">
                   {reg.description}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3 mb-6">
                   {reg.sections.map((section, idx) => (
-                    <div key={idx} className="text-sm text-gray-400 flex items-center gap-3">
+                    <div key={idx} className="text-sm text-white/80 flex items-center gap-3">
                       <div className="w-2 h-2 bg-elec-yellow rounded-full flex-shrink-0" />
                       <span>{section}</span>
                     </div>

@@ -16,7 +16,7 @@ const RegulationReferenceHeader = () => {
         <BookOpen className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">BS7671 Practical Reference</h1>
       </div>
-      <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+      <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white max-w-4xl mx-auto leading-relaxed">
         The regulations that matter most to your daily work as an electrician. 
         Quick access to testing standards, safety requirements, and compliance guidance.
       </p>
@@ -29,7 +29,7 @@ const RegulationReferenceHeader = () => {
             <div key={index} className="bg-card rounded-lg p-3 sm:p-4 border border-border">
               <IconComponent className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.color} mx-auto mb-2`} />
               <div className="text-base sm:text-lg font-bold text-foreground">{stat.value}</div>
-              <div className="text-xs text-gray-400">{stat.label}</div>
+              <div className="text-xs text-white/80">{stat.label}</div>
             </div>
           );
         })}

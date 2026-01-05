@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Zap, AlertTriangle, CheckCircle, CheckCircle2, Search, Wrench, Target, Clock, User, Lightbulb, BookOpen, Shield, FileText, ChevronDown, ChevronUp, HardHat, Eye, Phone, Activity } from 'lucide-react';
+import { ArrowLeft, Zap, AlertTriangle, CheckCircle, CheckCircle2, Search, Wrench, Target, Clock, User, Lightbulb, BookOpen, Shield, FileText, ChevronDown, ChevronUp, HardHat, Eye, Phone, Activity, Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { SmartTabs } from '@/components/ui/smart-tabs';
@@ -45,7 +45,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
       case 'appliance_fault': return <Wrench className="h-4 w-4 text-orange-400" />;
       case 'complex': return <Target className="h-4 w-4 text-indigo-400" />;
       case 'heating': return <Activity className="h-4 w-4 text-cyan-400" />;
-      default: return <Target className="h-4 w-4 text-gray-400" />;
+      default: return <Target className="h-4 w-4 text-white/80" />;
     }
   };
 
@@ -393,7 +393,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                       <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400 shrink-0" />
                       <h5 className="font-semibold text-orange-400 text-sm sm:text-base">Safety Note</h5>
                     </div>
-                    <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{(step as any).safetyNote}</p>
+                    <p className="text-xs sm:text-sm text-white leading-relaxed">{(step as any).safetyNote}</p>
                   </div>
                 )}
 
@@ -404,7 +404,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                       <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400 shrink-0" />
                       <span className="text-blue-400 font-semibold text-sm sm:text-base">Testing Context</span>
                     </div>
-                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                    <p className="text-white text-xs sm:text-sm leading-relaxed">
                       {(step as any).testingContext}
                     </p>
                   </div>
@@ -433,7 +433,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                 <h4 className="font-semibold text-purple-400 mb-2 text-sm sm:text-base">Primary Uses:</h4>
                 <ul className="space-y-2">
                   {equipment.uses.map((use, useIndex) => (
-                    <li key={useIndex} className="text-gray-300 text-xs sm:text-sm flex items-start gap-2 leading-relaxed">
+                    <li key={useIndex} className="text-white text-xs sm:text-sm flex items-start gap-2 leading-relaxed">
                       <Target className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400 mt-0.5 shrink-0" />
                       <span className="flex-1">{use}</span>
                     </li>
@@ -445,7 +445,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                 <h4 className="font-semibold text-blue-400 mb-2 text-sm sm:text-base">Fault Types Detected:</h4>
                 <ul className="space-y-2">
                   {equipment.faultTypes.map((faultType, faultIndex) => (
-                    <li key={faultIndex} className="text-gray-300 text-xs sm:text-sm flex items-start gap-2 leading-relaxed">
+                    <li key={faultIndex} className="text-white text-xs sm:text-sm flex items-start gap-2 leading-relaxed">
                       <Search className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400 mt-0.5 shrink-0" />
                       <span className="flex-1">{faultType}</span>
                     </li>
@@ -465,7 +465,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
               </div>
               <div>
                 <h5 className="font-medium text-red-400 mb-1 text-xs sm:text-sm">Safety:</h5>
-                <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">{equipment.safety}</p>
+                <p className="text-white text-xs sm:text-sm leading-relaxed">{equipment.safety}</p>
               </div>
             </div>
           </CardContent>
@@ -2345,13 +2345,38 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
         </div>
 
         <div className="text-center space-y-3 sm:space-y-4 mb-4 sm:mb-6 md:mb-8 px-2 sm:px-4">
-          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 sm:mb-3 md:mb-4">
-            <Zap className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-elec-yellow" />
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Fault Finding</h1>
+          {/* Amendment Badges */}
+          <div className="flex justify-center gap-2 flex-wrap">
+            <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
+              <CheckCircle2 className="h-3 w-3 mr-1" />
+              BS 7671:2018+A3:2024
+            </Badge>
+            <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+              <Calendar className="h-3 w-3 mr-1" />
+              Updated January 2026
+            </Badge>
+            <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-xs">
+              <AlertTriangle className="h-3 w-3 mr-1" />
+              Diagnostic Techniques
+            </Badge>
           </div>
-          <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-3xl mx-auto">
-            Learn systematic approaches to electrical fault diagnosis and resolution. 
-            Master the methodical process from initial symptoms to successful repair.
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <div className="p-3 sm:p-4 bg-red-500/10 rounded-2xl border border-red-500/20">
+              <Wrench className="h-8 w-8 sm:h-10 sm:w-10 text-red-400" />
+            </div>
+            <div>
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+                Fault Finding
+              </h1>
+              <p className="text-sm sm:text-base text-white/80 mt-1">
+                Systematic Diagnostic Procedures
+              </p>
+            </div>
+          </div>
+          <p className="text-sm sm:text-base text-white max-w-3xl mx-auto">
+            Learn systematic approaches to electrical fault diagnosis and resolution aligned with
+            BS 7671:2018 Amendment 3:2024. Master the methodical process from initial symptoms to successful repair.
           </p>
         </div>
 
@@ -2374,17 +2399,17 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
               <div className="text-center p-4 sm:p-5 bg-black/20 rounded-lg border border-elec-yellow/20 touch-manipulation active:scale-[0.99] transition-transform">
                 <Search className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow mx-auto mb-3" />
                 <h4 className="font-bold text-elec-yellow mb-2 text-base sm:text-lg">Systematic Approach</h4>
-                <p className="text-gray-200 text-xs sm:text-sm leading-relaxed">Follow logical sequence from information gathering to final testing</p>
+                <p className="text-white text-xs sm:text-sm leading-relaxed">Follow logical sequence from information gathering to final testing</p>
               </div>
               <div className="text-center p-4 sm:p-5 bg-black/20 rounded-lg border border-red-500/20 touch-manipulation active:scale-[0.99] transition-transform">
                 <Target className="h-10 w-10 sm:h-12 sm:w-12 text-red-400 mx-auto mb-3" />
                 <h4 className="font-bold text-red-400 mb-2 text-base sm:text-lg">Safety First</h4>
-                <p className="text-gray-200 text-xs sm:text-sm leading-relaxed">Always ensure safe isolation before commencing fault location work</p>
+                <p className="text-white text-xs sm:text-sm leading-relaxed">Always ensure safe isolation before commencing fault location work</p>
               </div>
               <div className="text-center p-4 sm:p-5 bg-black/20 rounded-lg border border-green-500/20 touch-manipulation active:scale-[0.99] transition-transform">
                 <CheckCircle className="h-10 w-10 sm:h-12 sm:w-12 text-green-400 mx-auto mb-3" />
                 <h4 className="font-bold text-green-400 mb-2 text-base sm:text-lg">Verify Repair</h4>
-                <p className="text-gray-200 text-xs sm:text-sm leading-relaxed">Always test thoroughly after repair to confirm fault has been resolved</p>
+                <p className="text-white text-xs sm:text-sm leading-relaxed">Always test thoroughly after repair to confirm fault has been resolved</p>
               </div>
             </div>
           </CardContent>

@@ -35,7 +35,7 @@ const RcdTestCard = () => {
         <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
         <div>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">RCD Testing</h2>
-          <p className="text-sm sm:text-base text-gray-300">Residual Current Device testing procedures and guidance</p>
+          <p className="text-sm sm:text-base text-white">Residual Current Device testing procedures and guidance</p>
         </div>
       </div>
 

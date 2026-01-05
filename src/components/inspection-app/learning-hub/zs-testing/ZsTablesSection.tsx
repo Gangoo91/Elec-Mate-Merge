@@ -13,18 +13,18 @@ const ZsTablesSection = () => (
       <div className="grid md:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
         <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
           <p className="font-medium text-blue-400 mb-2">🔵 BS 7671 Maximum (100%)</p>
-          <p className="text-gray-300">These are the values from Appendix 3, Table 41.3. They represent the maximum Zs at <strong>fault temperature (~70°C for PVC cables)</strong> when conductors are carrying high fault current.</p>
+          <p className="text-white">These are the values from Appendix 3, Table 41.3. They represent the maximum Zs at <strong>fault temperature (~70°C for PVC cables)</strong> when conductors are carrying high fault current.</p>
         </div>
         <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
           <p className="font-medium text-green-400 mb-2">🎯 80% Rule (Testing Limit)</p>
-          <p className="text-gray-300">Your measured Zs must not exceed this value. Measured at <strong>ambient temperature (~20°C)</strong>. The 80% accounts for resistance increase when conductors heat up during a fault.</p>
+          <p className="text-white">Your measured Zs must not exceed this value. Measured at <strong>ambient temperature (~20°C)</strong>. The 80% accounts for resistance increase when conductors heat up during a fault.</p>
         </div>
       </div>
-      <div className="mt-3 bg-card rounded p-3 text-sm text-gray-300">
+      <div className="mt-3 bg-card rounded p-3 text-sm text-white">
         <p className="font-medium text-foreground mb-2">Why 80%?</p>
         <p>When a fault occurs, conductors heat up rapidly and their resistance increases. The 80% rule provides a safety margin so that even when resistance increases to the BS 7671 maximum at fault temperature, the protective device still trips within the required time. <strong className="text-elec-yellow">Testing Rule: Measured Zs ≤ 80% value = PASS ✓</strong></p>
       </div>
-      <div className="mt-3 flex items-start gap-2 text-xs text-gray-400 bg-card/50 rounded p-2">
+      <div className="mt-3 flex items-start gap-2 text-xs text-white/80 bg-card/50 rounded p-2">
         <span>💡</span>
         <p><strong>Colour Key:</strong> Blue columns = Reference values (BS 7671) | Green columns = Testing values (what you compare against)</p>
       </div>
@@ -35,21 +35,21 @@ const ZsTablesSection = () => (
         <Table className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
         <h4 className="font-medium text-sm sm:text-base text-blue-400">BS 7671 Appendix 3 - Maximum Zs Values (Type B MCBs)</h4>
       </div>
-      <div className="space-y-4 text-xs sm:text-sm text-gray-300">
+      <div className="space-y-4 text-xs sm:text-sm text-white">
         <div className="bg-card rounded p-3 sm:p-4">
           <p className="font-medium text-foreground mb-3 text-sm sm:text-base">Table 3A - Maximum Zs for Socket Outlets (0.4s disconnection)</p>
           <div className="overflow-x-auto touch-manipulation">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left p-2 text-neutral-300">MCB Type & Rating</th>
+                  <th className="text-left p-2 text-white">MCB Type & Rating</th>
                   <th className="text-left p-2 text-blue-400">BS 7671 Max (Ω)<br/><span className="text-xs font-normal">(at ~70°C)</span></th>
                   <th className="text-left p-2 text-green-400">🎯 80% Rule (Ω)<br/><span className="text-xs font-normal">(measured ~20°C)</span></th>
-                  <th className="text-left p-2 text-neutral-300">Min Fault (A)</th>
-                  <th className="text-left p-2 text-neutral-300">Typical Applications</th>
+                  <th className="text-left p-2 text-white">Min Fault (A)</th>
+                  <th className="text-left p-2 text-white">Typical Applications</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-300">
+              <tbody className="text-white">
                 <tr className="border-b border-border">
                   <td className="p-2 font-medium">Type B 6A</td>
                   <td className="p-2 text-blue-400 font-mono">9.58</td>
@@ -117,14 +117,14 @@ const ZsTablesSection = () => (
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left p-2 text-neutral-300">MCB Type & Rating</th>
+                  <th className="text-left p-2 text-white">MCB Type & Rating</th>
                   <th className="text-left p-2 text-blue-400">BS 7671 Max (Ω)<br/><span className="text-xs font-normal">(at ~70°C)</span></th>
                   <th className="text-left p-2 text-green-400">🎯 80% Rule (Ω)<br/><span className="text-xs font-normal">(measured ~20°C)</span></th>
-                  <th className="text-left p-2 text-neutral-300">Min Fault (A)</th>
-                  <th className="text-left p-2 text-neutral-300">Typical Applications</th>
+                  <th className="text-left p-2 text-white">Min Fault (A)</th>
+                  <th className="text-left p-2 text-white">Typical Applications</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-300">
+              <tbody className="text-white">
                 <tr className="border-b border-border">
                   <td className="p-2 font-medium">Type B 6A</td>
                   <td className="p-2 text-blue-400 font-mono">11.46</td>
@@ -172,17 +172,17 @@ const ZsTablesSection = () => (
         <Calculator className="h-4 w-4 text-orange-400" />
         <h4 className="font-medium text-orange-400">Type C MCB Maximum Zs Values</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="bg-card rounded p-4">
           <p className="font-medium text-foreground mb-3">Type C MCBs (Industrial/Commercial Applications)</p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left p-2 text-neutral-300" rowSpan={2}>MCB Rating</th>
+                  <th className="text-left p-2 text-white" rowSpan={2}>MCB Rating</th>
                   <th className="text-center p-2 text-blue-400 border-r border-border" colSpan={2}>0.4s Disconnection</th>
                   <th className="text-center p-2 text-blue-400" colSpan={2}>5s Disconnection</th>
-                  <th className="text-left p-2 text-neutral-300" rowSpan={2}>Min Fault (A)</th>
+                  <th className="text-left p-2 text-white" rowSpan={2}>Min Fault (A)</th>
                 </tr>
                 <tr className="border-b border-border">
                   <th className="text-left p-2 text-blue-400 text-xs">BS 7671</th>
@@ -191,7 +191,7 @@ const ZsTablesSection = () => (
                   <th className="text-left p-2 text-green-400 text-xs">🎯 80%</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-300">
+              <tbody className="text-white">
                 <tr className="border-b border-border">
                   <td className="p-2 font-medium">Type C 6A</td>
                   <td className="p-2 text-blue-400 font-mono">4.79</td>
@@ -238,7 +238,7 @@ const ZsTablesSection = () => (
         </div>
         <div className="bg-purple-500/10 border border-purple-500/20 rounded p-3">
           <p className="font-medium text-purple-400 mb-2">Type C MCB Applications:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Type C MCBs are used for circuits with inductive loads such as motors, transformers, and fluorescent lighting 
             where higher inrush currents are expected. They require higher fault currents for magnetic operation (10 × In).
           </p>
@@ -251,17 +251,17 @@ const ZsTablesSection = () => (
         <FileText className="h-4 w-4 text-red-400" />
         <h4 className="font-medium text-red-400">BS 88 Fuse Maximum Zs Values</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="bg-card rounded p-4">
           <p className="font-medium text-foreground mb-3">Common BS 88 Fuse Ratings</p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left p-2 text-neutral-300" rowSpan={2}>Fuse Rating</th>
+                  <th className="text-left p-2 text-white" rowSpan={2}>Fuse Rating</th>
                   <th className="text-center p-2 text-blue-400 border-r border-border" colSpan={2}>0.4s Disconnection</th>
                   <th className="text-center p-2 text-blue-400" colSpan={2}>5s Disconnection</th>
-                  <th className="text-left p-2 text-neutral-300" rowSpan={2}>Typical Use</th>
+                  <th className="text-left p-2 text-white" rowSpan={2}>Typical Use</th>
                 </tr>
                 <tr className="border-b border-border">
                   <th className="text-left p-2 text-blue-400 text-xs">BS 7671</th>
@@ -270,7 +270,7 @@ const ZsTablesSection = () => (
                   <th className="text-left p-2 text-green-400 text-xs">🎯 80%</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-300">
+              <tbody className="text-white">
                 <tr className="border-b border-border">
                   <td className="p-2 font-medium">20A</td>
                   <td className="p-2 text-blue-400 font-mono">1.44</td>
@@ -317,7 +317,7 @@ const ZsTablesSection = () => (
         </div>
         <div className="bg-orange-500/10 border border-orange-500/20 rounded p-3">
           <p className="font-medium text-orange-400 mb-2">BS 88 Fuse Characteristics:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             BS 88 fuses have different time/current characteristics compared to MCBs. 
             They provide excellent discrimination and fault current limitation but require lower Zs values for reliable operation.
           </p>
@@ -330,7 +330,7 @@ const ZsTablesSection = () => (
         <BookOpen className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">Using the Tables in Practice</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Step-by-step table usage:</p>
           <p className="ml-4">• <strong>Step 1:</strong> Identify the protective device type and rating</p>
@@ -348,7 +348,7 @@ const ZsTablesSection = () => (
           <p className="ml-4 text-green-400">• 80% Rule Limit: 1.44Ω (for testing at ~20°C)</p>
           <p className="mt-2"><strong>Comparison:</strong> 1.38Ω ≤ 1.44Ω ✅</p>
           <p className="text-green-400 font-medium mt-2">Result: PASS - Safety margin: 0.06Ω (4.2%)</p>
-          <p className="text-xs text-gray-400 mt-2">Under fault conditions: 1.38Ω × 1.25 = 1.73Ω, which is still below 1.80Ω</p>
+          <p className="text-xs text-white/80 mt-2">Under fault conditions: 1.38Ω × 1.25 = 1.73Ω, which is still below 1.80Ω</p>
         </div>
         <div>
           <p className="font-medium text-foreground">Important considerations:</p>
@@ -365,7 +365,7 @@ const ZsTablesSection = () => (
         <AlertTriangle className="h-4 w-4 text-yellow-400" />
         <h4 className="font-medium text-yellow-400">Common Mistakes and Misconceptions</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Frequent errors in table usage:</p>
           <p className="ml-4">• <strong>Wrong disconnection time:</strong> Using 5s limits for socket outlet circuits</p>
@@ -391,7 +391,7 @@ const ZsTablesSection = () => (
         <Shield className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Special Applications and Exceptions</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Reduced disconnection times:</p>
           <p className="ml-4">• <strong>Medical locations:</strong> Group 1 areas may require 0.1s disconnection</p>
@@ -408,7 +408,7 @@ const ZsTablesSection = () => (
         </div>
         <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
           <p className="font-medium text-red-400 mb-2">Always Remember:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             These tables represent maximum values under ideal conditions. 
             Real installations should aim for values well below these limits to ensure reliable operation under all conditions.
           </p>

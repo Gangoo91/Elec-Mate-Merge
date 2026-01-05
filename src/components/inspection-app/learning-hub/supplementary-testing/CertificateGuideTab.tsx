@@ -43,7 +43,7 @@ const CertificateGuideTab = () => {
           Certificate Completion Guide
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6 text-gray-300">
+      <CardContent className="space-y-6 text-white">
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
           <h4 className="font-semibold text-blue-400 mb-3">Certificate Overview</h4>
           <p className="text-sm mb-3">

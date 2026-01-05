@@ -62,32 +62,27 @@ const IndustrialElectricalCourse = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Header - full width */}
-      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 pt-3 sm:pt-4 md:pt-6 pb-4 sm:pb-6">
-        <Link to="/electrician/upskilling">
-          <Button
-            variant="ghost"
-            className="text-muted-foreground hover:text-foreground transition-colors mb-3 sm:mb-4 p-0 h-auto"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Courses
-          </Button>
-        </Link>
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+      {/* Back Button */}
+      <Link to="/electrician/upskilling">
+        <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Courses
+        </Button>
+      </Link>
 
-        <div className="space-y-1 sm:space-y-2">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-            Industrial Electrical Systems
-          </h1>
-          <p className="text-sm sm:text-base text-muted-foreground">
-            High voltage systems, motor control, and industrial automation
-          </p>
-        </div>
+      {/* Header */}
+      <div className="space-y-1">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+          Industrial Electrical Systems
+        </h1>
+        <p className="text-sm sm:text-base text-muted-foreground">
+          High voltage systems, motor control, and industrial automation
+        </p>
       </div>
 
-      {/* Module Grid - full width */}
-      <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 pb-6 sm:pb-8">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+      {/* Module Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
           {modules.map((module) => (
             <Link
               key={module.id}
@@ -121,7 +116,6 @@ const IndustrialElectricalCourse = () => {
               </div>
             </Link>
           ))}
-        </div>
       </div>
     </div>
   );

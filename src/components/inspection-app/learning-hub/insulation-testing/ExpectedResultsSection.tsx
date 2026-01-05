@@ -12,7 +12,7 @@ const ExpectedResultsSection = () => (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
         <div className="space-y-2">
           <h5 className="text-foreground font-medium">Excellent Results (PASS)</h5>
-          <div className="space-y-1 text-gray-300">
+          <div className="space-y-1 text-white">
             <p>• New installation: &gt;999MΩ</p>
             <p>• Good existing installation: 50-200MΩ</p>
             <p>• Acceptable older installation: 2-10MΩ</p>
@@ -21,7 +21,7 @@ const ExpectedResultsSection = () => (
         </div>
         <div className="space-y-2">
           <h5 className="text-foreground font-medium">Problem Indicators (INVESTIGATE)</h5>
-          <div className="space-y-1 text-gray-300">
+          <div className="space-y-1 text-white">
             <p>• Below 1MΩ (BS 7671 minimum)</p>
             <p>• Significant variation between phases</p>
             <p>• Readings that change during test</p>
@@ -36,7 +36,7 @@ const ExpectedResultsSection = () => (
         <AlertTriangle className="h-4 w-4 text-red-400" />
         <h4 className="font-medium text-red-400">Common Problems & Solutions</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Problem: Low Readings (&lt;1MΩ)</p>
           <p className="ml-4">→ Check for: Moisture ingress, damaged cables, connected equipment, parallel paths</p>
@@ -61,7 +61,7 @@ const ExpectedResultsSection = () => (
         <Eye className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">Professional Tips</h4>
       </div>
-      <div className="space-y-2 text-sm text-gray-300">
+      <div className="space-y-2 text-sm text-white">
         <p>• Always start with lowest test voltage and increase gradually</p>
         <p>• Apply test voltage for full 1 minute - readings may stabilise</p>
         <p>• Check test leads for contamination - clean with isopropyl alcohol</p>

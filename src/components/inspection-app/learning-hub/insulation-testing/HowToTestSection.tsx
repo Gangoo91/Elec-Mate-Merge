@@ -11,7 +11,7 @@ const HowToTestSection = () => (
         <Target className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-red-400">CRITICAL: Equipment Protection Warning</h4>
       </div>
-      <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-gray-300 leading-relaxed">
+      <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-white leading-relaxed">
         <p className="font-medium text-foreground">The following MUST be disconnected before insulation testing or they WILL be destroyed by the 500V DC test voltage:</p>
         <ul className="list-disc list-inside space-y-1 ml-2">
           <li><strong>Surge Protection Devices (SPDs)</strong> - disconnect or remove</li>
@@ -33,7 +33,7 @@ const HowToTestSection = () => (
         <Target className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-green-400">Complete Testing Procedure</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="flex gap-3">
           <div className="bg-purple-500 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
           <div>
@@ -87,7 +87,7 @@ const HowToTestSection = () => (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
         <div className="border border-blue-400 p-3 rounded">
           <div className="text-blue-400 font-medium mb-1">250V DC</div>
-          <div className="text-gray-300">
+          <div className="text-white">
             <p>SELV circuits</p>
             <p>Telecommunications</p>
             <p>Up to 50V nominal</p>
@@ -95,7 +95,7 @@ const HowToTestSection = () => (
         </div>
         <div className="border border-green-400 p-3 rounded">
           <div className="text-green-400 font-medium mb-1">500V DC</div>
-          <div className="text-gray-300">
+          <div className="text-white">
             <p>LV installations</p>
             <p>50V to 500V</p>
             <p>Most common choice</p>
@@ -103,7 +103,7 @@ const HowToTestSection = () => (
         </div>
         <div className="border border-orange-400 p-3 rounded">
           <div className="text-orange-400 font-medium mb-1">1000V DC</div>
-          <div className="text-gray-300">
+          <div className="text-white">
             <p>HV installations</p>
             <p>500V to 1000V</p>
             <p>Industrial systems</p>

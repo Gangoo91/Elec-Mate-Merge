@@ -2,7 +2,7 @@ import React from 'react';
 
 const PracticalTipsTab = () => {
   return (
-    <div className="space-y-4 text-gray-300">
+    <div className="space-y-4 text-white">
       <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
         <h4 className="font-semibold text-emerald-400 mb-3">Practical Completion Tips</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">

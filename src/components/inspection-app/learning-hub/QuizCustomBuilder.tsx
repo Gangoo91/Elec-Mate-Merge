@@ -15,7 +15,7 @@ const QuizCustomBuilder = () => {
     <Card className="bg-gradient-to-br from-neutral-800 to-neutral-700 border-2 border-elec-yellow/20">
       <CardHeader>
         <CardTitle className="text-elec-yellow">Create Custom Assessment</CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Build personalised quizzes focusing on specific topics or regulations
         </CardDescription>
       </CardHeader>
@@ -25,7 +25,7 @@ const QuizCustomBuilder = () => {
             <h4 className="font-medium text-foreground">Choose Your Focus Areas:</h4>
             <div className="space-y-2">
               {focusAreas.map((topic, index) => (
-                <label key={index} className="flex items-center gap-2 text-sm text-gray-300">
+                <label key={index} className="flex items-center gap-2 text-sm text-white">
                   <input type="checkbox" className="rounded" />
                   <span>{topic}</span>
                 </label>
@@ -36,7 +36,7 @@ const QuizCustomBuilder = () => {
             <h4 className="font-medium text-foreground">Quiz Settings:</h4>
             <div className="space-y-3">
               <div>
-                <label className="block text-sm text-gray-400 mb-1">Number of Questions</label>
+                <label className="block text-sm text-white/80 mb-1">Number of Questions</label>
                 <select className="w-full p-2 bg-muted border border-border rounded text-foreground">
                   <option>10</option>
                   <option>20</option>
@@ -44,7 +44,7 @@ const QuizCustomBuilder = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-1">Difficulty Level</label>
+                <label className="block text-sm text-white/80 mb-1">Difficulty Level</label>
                 <select className="w-full p-2 bg-muted border border-border rounded text-foreground">
                   <option>Mixed</option>
                   <option>Beginner</option>

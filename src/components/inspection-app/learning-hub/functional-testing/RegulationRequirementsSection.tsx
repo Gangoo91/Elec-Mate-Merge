@@ -14,7 +14,7 @@ const RegulationRequirementsSection = () => {
             BS 7671 Regulation Requirements
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-8 text-gray-300">
+        <CardContent className="space-y-8 text-white">
           
           {/* Main Regulation */}
           <div className="space-y-4">
@@ -28,7 +28,7 @@ const RegulationRequirementsSection = () => {
                 <FileCheck className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <h5 className="font-semibold text-blue-400 mb-2">Primary Requirement</h5>
-                  <p className="text-sm text-gray-300 mb-3">
+                  <p className="text-sm text-white mb-3">
                     "Assemblies, including switchgear and controlgear assemblies, and components 
                     of the electrical installation shall be subjected to a functional test to show 
                     that they are properly mounted, adjusted and installed in accordance with the 
@@ -58,7 +58,7 @@ const RegulationRequirementsSection = () => {
                   </Badge>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <p className="text-xs text-gray-300">
+                  <p className="text-xs text-white">
                     All switchgear and controlgear shall be operated to ensure correct functioning including:
                   </p>
                   <ul className="text-xs space-y-1 ml-3">
@@ -78,7 +78,7 @@ const RegulationRequirementsSection = () => {
                   </Badge>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <p className="text-xs text-gray-300">
+                  <p className="text-xs text-white">
                     RCDs shall be tested using the integral test facility to verify:
                   </p>
                   <ul className="text-xs space-y-1 ml-3">
@@ -98,7 +98,7 @@ const RegulationRequirementsSection = () => {
                   </Badge>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <p className="text-xs text-gray-300">
+                  <p className="text-xs text-white">
                     Emergency switching and stopping devices shall be tested to ensure:
                   </p>
                   <ul className="text-xs space-y-1 ml-3">
@@ -118,7 +118,7 @@ const RegulationRequirementsSection = () => {
                   </Badge>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <p className="text-xs text-gray-300">
+                  <p className="text-xs text-white">
                     Control and auxiliary circuits shall be functionally tested including:
                   </p>
                   <ul className="text-xs space-y-1 ml-3">
@@ -145,7 +145,7 @@ const RegulationRequirementsSection = () => {
                   <h6 className="font-medium text-foreground">Regulation 132.16 - Emergency Switching</h6>
                   <Badge variant="outline" className="text-orange-400 border-orange-400 text-xs">Design Requirement</Badge>
                 </div>
-                <p className="text-xs text-gray-300">
+                <p className="text-xs text-white">
                   Emergency switching devices must be clearly identified, readily accessible, 
                   and capable of cutting off electrical energy to parts of an installation.
                 </p>
@@ -156,7 +156,7 @@ const RegulationRequirementsSection = () => {
                   <h6 className="font-medium text-foreground">Regulation 411.3.3 - RCD Protection</h6>
                   <Badge variant="outline" className="text-teal-400 border-teal-400 text-xs">Protection Requirement</Badge>
                 </div>
-                <p className="text-xs text-gray-300">
+                <p className="text-xs text-white">
                   RCDs used for additional protection must have rated residual operating current 
                   not exceeding 30mA and operate within specified time limits.
                 </p>
@@ -167,7 +167,7 @@ const RegulationRequirementsSection = () => {
                   <h6 className="font-medium text-foreground">Regulation 514.12 - Identification</h6>
                   <Badge variant="outline" className="text-cyan-400 border-cyan-400 text-xs">Identification Requirement</Badge>
                 </div>
-                <p className="text-xs text-gray-300">
+                <p className="text-xs text-white">
                   Every device for isolation and switching must be clearly identified to indicate 
                   the circuit or equipment controlled.
                 </p>
@@ -184,7 +184,7 @@ const RegulationRequirementsSection = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-3">
-                <h6 className="font-medium text-gray-200">Required Records</h6>
+                <h6 className="font-medium text-white">Required Records</h6>
                 <div className="space-y-2">
                   <div className="p-2 bg-green-500/10 border border-green-500/20 rounded text-xs">
                     <strong className="text-green-400">Test Results:</strong><br />
@@ -202,7 +202,7 @@ const RegulationRequirementsSection = () => {
               </div>
 
               <div className="space-y-3">
-                <h6 className="font-medium text-gray-200">Certificate Requirements</h6>
+                <h6 className="font-medium text-white">Certificate Requirements</h6>
                 <div className="space-y-2">
                   <div className="p-2 bg-amber-500/10 border border-amber-500/20 rounded text-xs">
                     <strong className="text-amber-400">EIC Schedule:</strong><br />

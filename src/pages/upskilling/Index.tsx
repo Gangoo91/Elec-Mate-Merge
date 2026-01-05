@@ -134,77 +134,74 @@ const courses = [
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Header - full width */}
-      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 pt-3 sm:pt-4 md:pt-6 pb-4 sm:pb-6">
-        <Link to="/electrician/study-centre">
-          <Button
-            variant="ghost"
-            className="text-muted-foreground hover:text-foreground transition-colors mb-3 sm:mb-4 p-0 h-auto"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Study Centre
-          </Button>
-        </Link>
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+      {/* Back Button */}
+      <Link to="/electrician/study-centre">
+        <Button
+          variant="ghost"
+          className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Study Centre
+        </Button>
+      </Link>
 
-        <div className="space-y-1 sm:space-y-2">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-            Electrical Upskilling
-          </h1>
-          <p className="text-sm sm:text-base text-muted-foreground">
-            Advanced courses for qualified electricians
-          </p>
-        </div>
+      {/* Header */}
+      <div className="space-y-1">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+          Electrical Upskilling
+        </h1>
+        <p className="text-sm sm:text-base text-muted-foreground">
+          Advanced courses for qualified electricians
+        </p>
       </div>
 
-      {/* Course Grid - full width, edge to edge on mobile */}
-      <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 pb-6 sm:pb-8">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
-          {courses.map((course) => {
-            const IconComponent = course.icon;
-            return (
-              <Link key={course.id} to={course.link} aria-label={`View ${course.title} course`}>
-                <div
-                  className="
-                    group relative overflow-hidden cursor-pointer h-full
-                    bg-card/50 rounded-lg
-                    active:scale-[0.98] active:bg-card/70
-                    transition-all duration-200
-                  "
-                >
-                  {/* Content */}
-                  <div className="relative z-10 p-3 sm:p-4 flex flex-col h-full min-h-[140px] sm:min-h-[160px]">
-                    {/* Icon */}
-                    <div className="flex items-center justify-between mb-2 sm:mb-3">
-                      <div className="p-2 sm:p-2.5 rounded-lg bg-primary/10 text-primary">
-                        <IconComponent className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2} />
-                      </div>
-                      <span className="text-[9px] sm:text-[10px] font-medium text-primary/70 uppercase tracking-wide">
-                        {course.level}
-                      </span>
+      {/* Course Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+        {courses.map((course) => {
+          const IconComponent = course.icon;
+          return (
+            <Link key={course.id} to={course.link} aria-label={`View ${course.title} course`}>
+              <div
+                className="
+                  group relative overflow-hidden cursor-pointer h-full
+                  bg-card/50 rounded-lg
+                  active:scale-[0.98] active:bg-card/70
+                  transition-all duration-200
+                "
+              >
+                {/* Content */}
+                <div className="relative z-10 p-3 sm:p-4 flex flex-col h-full min-h-[140px] sm:min-h-[160px]">
+                  {/* Icon */}
+                  <div className="flex items-center justify-between mb-2 sm:mb-3">
+                    <div className="p-2 sm:p-2.5 rounded-lg bg-primary/10 text-primary">
+                      <IconComponent className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2} />
                     </div>
+                    <span className="text-[9px] sm:text-[10px] font-medium text-primary/70 uppercase tracking-wide">
+                      {course.level}
+                    </span>
+                  </div>
 
-                    {/* Title and description */}
-                    <div className="flex-grow">
-                      <h3 className="text-sm sm:text-base font-semibold text-foreground mb-1 leading-tight line-clamp-2">
-                        {course.title}
-                      </h3>
-                      <p className="text-[10px] sm:text-xs text-muted-foreground leading-relaxed line-clamp-2 hidden sm:block">
-                        {course.description}
-                      </p>
-                    </div>
+                  {/* Title and description */}
+                  <div className="flex-grow">
+                    <h3 className="text-sm sm:text-base font-semibold text-foreground mb-1 leading-tight line-clamp-2">
+                      {course.title}
+                    </h3>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground leading-relaxed line-clamp-2 hidden sm:block">
+                      {course.description}
+                    </p>
+                  </div>
 
-                    {/* Duration */}
-                    <div className="mt-2 flex items-center justify-between">
-                      <span className="text-[10px] sm:text-xs text-muted-foreground">{course.duration}</span>
-                      <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary/60" />
-                    </div>
+                  {/* Duration */}
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="text-[10px] sm:text-xs text-muted-foreground">{course.duration}</span>
+                    <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary/60" />
                   </div>
                 </div>
-              </Link>
-            );
-          })}
-        </div>
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

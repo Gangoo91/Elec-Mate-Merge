@@ -149,7 +149,7 @@ const ContinuityTestingEquipmentCard = () => {
       case 'accessories': return <Settings className="h-4 w-4 text-purple-400" />;
       case 'safety': return <Shield className="h-4 w-4 text-green-400" />;
       case 'documentation': return <CheckCircle2 className="h-4 w-4 text-orange-400" />;
-      default: return <Wrench className="h-4 w-4 text-gray-400" />;
+      default: return <Wrench className="h-4 w-4 text-white/80" />;
     }
   };
 
@@ -174,7 +174,7 @@ const ContinuityTestingEquipmentCard = () => {
           <Wrench className="h-5 w-5" />
           Continuity Testing Equipment
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Essential equipment for accurate and safe continuity measurements
         </CardDescription>
         <div className="mt-2 text-sm">
@@ -206,13 +206,13 @@ const ContinuityTestingEquipmentCard = () => {
                       )}
                     </h4>
                   </div>
-                  <p className="text-gray-300 text-sm mb-3">{item.description}</p>
+                  <p className="text-white text-sm mb-3">{item.description}</p>
                   
                   {/* Specifications */}
                   <div className="space-y-1 mb-3">
-                    <h5 className="text-xs font-medium text-gray-400 uppercase tracking-wide">Specifications</h5>
+                    <h5 className="text-xs font-medium text-white/80 uppercase tracking-wide">Specifications</h5>
                     {item.specifications.map((spec, index) => (
-                      <div key={index} className="text-xs text-gray-300 flex items-start gap-2">
+                      <div key={index} className="text-xs text-white flex items-start gap-2">
                         <span className="text-blue-400 mt-1">•</span>
                         <span>{spec}</span>
                       </div>
@@ -241,7 +241,7 @@ const ContinuityTestingEquipmentCard = () => {
         {/* Equipment Summary */}
         <div className="mt-6 p-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg">
           <h4 className="font-medium text-blue-400 mb-2">Key Equipment Requirements</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-white">
             <div>• Minimum 200mA DC test current for protective conductors</div>
             <div>• 0.01Ω resolution for accurate low resistance measurement</div>
             <div>• Current calibration certificates for all instruments</div>

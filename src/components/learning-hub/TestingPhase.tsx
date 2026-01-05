@@ -41,7 +41,7 @@ const TestingPhase = ({ testReadings, onTestReadingChange }: TestingPhaseProps) 
             Testing Validation Status
           </span>
         </div>
-        <p className="text-gray-300 text-sm">
+        <p className="text-white text-sm">
           {allTestsValid 
             ? 'All test readings are valid. Installation is confirmed dead and safe for work.'
             : 'Complete all test readings with valid values (0-1000V) to confirm safe isolation.'

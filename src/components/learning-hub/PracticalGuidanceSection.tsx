@@ -12,7 +12,7 @@ const PracticalGuidanceSection = () => (
         <Wrench className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">Practical Testing Techniques</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="font-medium text-foreground mb-2">Equipment Setup:</p>
@@ -43,7 +43,7 @@ const PracticalGuidanceSection = () => (
         <CheckCircle2 className="h-4 w-4 text-blue-400" />
         <h4 className="font-medium text-blue-400">Common Testing Scenarios</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-blue-400 mb-2">New Installation</p>
@@ -81,7 +81,7 @@ const PracticalGuidanceSection = () => (
         <Target className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Advanced Testing Strategies</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-purple-400 mb-2">Sequential Testing Method:</p>
@@ -112,7 +112,7 @@ const PracticalGuidanceSection = () => (
         <Clock className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">Time-Based Testing Considerations</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-cyan-400 mb-2">Absorption Effects:</p>
@@ -153,7 +153,7 @@ const PracticalGuidanceSection = () => (
         <Search className="h-4 w-4 text-yellow-400" />
         <h4 className="font-medium text-yellow-400">Enhanced Troubleshooting Guide</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="grid grid-cols-1 gap-4">
           <div className="bg-card rounded p-4">
             <p className="font-medium text-yellow-400 mb-3">Systematic Problem Diagnosis:</p>
@@ -281,7 +281,7 @@ const PracticalGuidanceSection = () => (
         <TrendingUp className="h-4 w-4 text-indigo-400" />
         <h4 className="font-medium text-indigo-400">Professional Best Practices</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-indigo-400 mb-2">Documentation Standards:</p>
@@ -314,7 +314,7 @@ const PracticalGuidanceSection = () => (
         <AlertTriangle className="h-4 w-4 text-red-400" />
         <h4 className="font-medium text-red-400">Safety Considerations</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="font-medium text-foreground mb-2">Before Testing:</p>
@@ -370,7 +370,7 @@ const PracticalGuidanceSection = () => (
         <Shield className="h-4 w-4 text-teal-400" />
         <h4 className="font-medium text-teal-400">Regulatory Compliance</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-teal-400 mb-2">BS 7671 Requirements:</p>
@@ -411,7 +411,7 @@ const PracticalGuidanceSection = () => (
         <FileText className="h-4 w-4 text-emerald-400" />
         <h4 className="font-medium text-emerald-400">Investigation Report Template</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-4">
           <p className="font-medium text-emerald-400 mb-2">When readings are 1.0-2.0MΩ, document:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">

@@ -94,7 +94,7 @@ const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCa
             <FileText className="h-5 w-5" />
             Test Results Recording
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Document and validate continuity test measurements
           </CardDescription>
         </CardHeader>
@@ -103,15 +103,15 @@ const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCa
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-lg p-4">
               <div className="text-xl sm:text-2xl font-bold text-blue-400">{completedSteps}/{totalSteps}</div>
-              <div className="text-sm text-gray-300">Total Steps</div>
+              <div className="text-sm text-white">Total Steps</div>
             </div>
             <div className="bg-gradient-to-br from-green-500/10 to-green-600/10 border border-green-500/20 rounded-lg p-4">
               <div className="text-xl sm:text-2xl font-bold text-green-400">{criticalStepsCompleted}/{totalCriticalSteps}</div>
-              <div className="text-sm text-gray-300">Critical Steps</div>
+              <div className="text-sm text-white">Critical Steps</div>
             </div>
             <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-lg p-4">
               <div className="text-xl sm:text-2xl font-bold text-purple-400">{testRecords.length}</div>
-              <div className="text-sm text-gray-300">Test Records</div>
+              <div className="text-sm text-white">Test Records</div>
             </div>
           </div>
 
@@ -139,7 +139,7 @@ const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCa
             <Calculator className="h-5 w-5" />
             Test Measurements
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Record and validate continuity test readings
           </CardDescription>
         </CardHeader>
@@ -238,7 +238,7 @@ const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCa
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
               <h4 className="font-medium text-foreground">Typical Acceptable Values</h4>
-              <div className="space-y-2 text-sm text-gray-300">
+              <div className="space-y-2 text-sm text-white">
                 <div>• R1+R2 for ring circuits: ≤ 1.67Ω</div>
                 <div>• Main protective bonding: ≤ 0.05Ω</div>
                 <div>• Supplementary bonding: ≤ 0.05Ω</div>
@@ -247,7 +247,7 @@ const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCa
             </div>
             <div className="space-y-3">
               <h4 className="font-medium text-foreground">Investigation Required If</h4>
-              <div className="space-y-2 text-sm text-gray-300">
+              <div className="space-y-2 text-sm text-white">
                 <div>• Readings significantly higher than expected</div>
                 <div>• Ring circuit legs show large differences</div>
                 <div>• Bonding conductors exceed maximum values</div>

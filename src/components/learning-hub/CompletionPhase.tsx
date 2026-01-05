@@ -44,7 +44,7 @@ const CompletionPhase = ({
             <FileText className="h-5 w-5" />
             Digital Signature & Certificate
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Sign and generate your safe isolation certificate
           </CardDescription>
         </CardHeader>
@@ -58,19 +58,19 @@ const CompletionPhase = ({
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-300">Steps Completed:</span>
+                  <span className="text-white">Steps Completed:</span>
                   <span className="text-elec-yellow">{completedSteps}/{totalSteps}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-300">Critical Steps:</span>
+                  <span className="text-white">Critical Steps:</span>
                   <span className="text-green-400">{criticalStepsCompleted}/{totalCriticalSteps}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-300">Test Results:</span>
+                  <span className="text-white">Test Results:</span>
                   <span className="text-green-400">{allTestsValid ? 'Valid' : 'Pending'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-300">Customer:</span>
+                  <span className="text-white">Customer:</span>
                   <span className="text-foreground">{customerDetails.name}</span>
                 </div>
               </CardContent>
@@ -82,19 +82,19 @@ const CompletionPhase = ({
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-300">Date:</span>
+                  <span className="text-white">Date:</span>
                   <span className="text-foreground">{new Date().toLocaleDateString('en-GB')}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-300">Time:</span>
+                  <span className="text-white">Time:</span>
                   <span className="text-foreground">{new Date().toLocaleTimeString('en-GB')}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-300">Standard:</span>
+                  <span className="text-white">Standard:</span>
                   <span className="text-elec-yellow">BS 7671</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-300">Status:</span>
+                  <span className="text-white">Status:</span>
                   <span className="text-green-400">
                     {canComplete ? 'Ready to Generate' : 'Incomplete'}
                   </span>
@@ -129,7 +129,7 @@ const CompletionPhase = ({
                 <CheckCircle2 className="h-5 w-5 text-green-400" />
                 <span className="font-medium text-green-400">Procedure Complete</span>
               </div>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Safe isolation procedure completed successfully. Certificate generated and ready for download.
               </p>
             </div>

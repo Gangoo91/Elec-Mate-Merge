@@ -305,16 +305,26 @@ const VoiceSettingsPanel: React.FC = () => {
     setSyncResult(null);
 
     try {
-      const { data, error } = await supabase.functions.invoke('sync-elevenlabs-tools', {
-        body: {
+      // Call the elec-mate-merge edge function directly
+      const response = await fetch('https://yulrjfdmkjcoeddorawg.supabase.co/functions/v1/sync-elevenlabs-tools', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           apiKey: apiKey.trim(),
           agentId: agentId.trim(),
           tools: voiceToolsRegistry,
           systemPrompt: syncIncludePrompt ? ELEC_MATE_SYSTEM_PROMPT : undefined,
-        },
+        }),
       });
 
-      if (error) throw error;
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText);
+      }
+
+      const data = await response.json();
 
       setSyncResult(data as SyncResult);
 

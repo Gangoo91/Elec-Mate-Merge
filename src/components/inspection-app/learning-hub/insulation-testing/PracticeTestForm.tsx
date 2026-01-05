@@ -87,7 +87,7 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
       {currentTest.temperature !== '20' && (
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-4">
           <div className="text-blue-400 font-medium mb-2">Temperature Corrected Values (20°C reference)</div>
-          <div className="text-sm text-gray-300 space-y-1">
+          <div className="text-sm text-white space-y-1">
             <p>Live-Neutral: {currentTest.correctedValues.liveNeutral || 'N/A'} MΩ</p>
             <p>Live-Earth: {currentTest.correctedValues.liveEarth || 'N/A'} MΩ</p>
             <p>Neutral-Earth: {currentTest.correctedValues.neutralEarth || 'N/A'} MΩ</p>
@@ -120,7 +120,7 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
         <BookOpen className="h-4 w-4 text-yellow-400" />
         <h4 className="font-medium text-yellow-400">BS 7671 Acceptance Criteria</h4>
       </div>
-      <div className="space-y-1 text-sm text-gray-300">
+      <div className="space-y-1 text-sm text-white">
         <p>• Minimum insulation resistance: 1.0 MΩ for circuits up to 500V (Table 61)</p>
         <p>• Test voltage: Minimum 250V DC, typically 500V DC for LV circuits</p>
         <p>• Temperature correction: Apply when test temperature differs significantly from 20°C</p>

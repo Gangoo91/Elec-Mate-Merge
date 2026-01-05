@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Shield, Wrench, CheckCircle, Clock, Zap, XCircle, FileText, ChevronDown } from 'lucide-react';
+import { Shield, Wrench, CheckCircle, Clock, Zap, XCircle, FileText, ChevronDown, Sparkles } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { TimelineExpectation } from './TimelineExpectation';
 import { Button } from '@/components/ui/button';
@@ -115,70 +115,108 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
   const currentAgentIndex = agentSteps.findIndex(a => a.status === 'processing');
 
   return (
-    <div className="space-y-6 pb-8 px-1">
-      {/* Overall Progress Card - NO STICKY */}
-      <Card className="border-elec-yellow/20 shadow-lg">
-        <CardContent className="pt-6 pb-5 space-y-4">
-          {/* Title */}
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-              <Zap className="w-6 h-6 text-elec-yellow" />
+    <div className="space-y-4 sm:space-y-6 pb-8 px-2 sm:px-0">
+      {/* Overall Progress Card */}
+      <Card className="overflow-hidden">
+        <CardContent className="p-4 sm:p-6 space-y-4">
+          {/* Header */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="relative">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-elec-yellow/10 flex items-center justify-center border border-elec-yellow/20">
+                <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-elec-yellow" />
+              </div>
+              {/* Animated ring */}
+              <div className="absolute inset-0 rounded-2xl border-2 border-elec-yellow/20 animate-ping opacity-20" style={{ animationDuration: '2s' }} />
             </div>
-            <div className="flex-1">
-              <h2 className="text-xl font-semibold text-foreground">Generating RAMS Document</h2>
-              <p className="text-sm text-gray-400 mt-0.5">{currentStep}</p>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg sm:text-xl font-bold text-white truncate">Generating RAMS</h2>
+              <p className="text-sm text-white/50 truncate mt-0.5">{currentStep}</p>
             </div>
           </div>
 
           {/* Progress Bar */}
-          <div className="space-y-2.5">
-            <div className="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden shadow-inner">
+          <div className="space-y-3">
+            <div className="relative w-full h-3 bg-[#1a1a1a] rounded-full overflow-hidden">
+              {/* Progress fill */}
               <div
-                className="h-full bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow transition-all duration-700 ease-out shadow-lg shadow-elec-yellow/30"
+                className="h-full bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow transition-all duration-700 ease-out relative overflow-hidden rounded-full"
                 style={{ width: `${displayProgress}%` }}
-              />
-            </div>
-            
-            {/* Stats Row */}
-            <div className="flex items-center justify-between text-sm">
-              <span className="font-semibold text-elec-yellow text-base">{Math.round(displayProgress)}%</span>
-              <div className="flex items-center gap-3 text-gray-400">
-                <span className="flex items-center gap-1.5">
-                  <Clock className="w-4 h-4" />
-                  {formatTime(elapsedTime)}
-                </span>
-                <span className="text-gray-600">•</span>
-                <span>~{formatTime(estimatedTimeRemaining)} remaining</span>
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
               </div>
             </div>
 
-            {/* Step Indicator */}
-            <div className="text-center text-sm text-gray-400 pt-1">
-              Step {currentAgentIndex >= 0 ? currentAgentIndex + 1 : agentSteps.length} of {agentSteps.length}
+            {/* Stats Row */}
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-2">
+                <span className="text-xl sm:text-2xl font-bold text-elec-yellow tabular-nums">
+                  {Math.round(displayProgress)}%
+                </span>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-4 text-white/40">
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-4 h-4" />
+                  <span className="tabular-nums">{formatTime(elapsedTime)}</span>
+                </span>
+                <span className="hidden sm:flex items-center gap-1.5">
+                  <span className="text-white/20">•</span>
+                  <span className="tabular-nums">~{formatTime(estimatedTimeRemaining)}</span>
+                  <span className="text-white/30">left</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Step Indicator Pills */}
+            <div className="flex items-center justify-center gap-2 pt-1">
+              {agentSteps.map((agent) => (
+                <div
+                  key={agent.name}
+                  className={`
+                    h-1.5 rounded-full transition-all duration-500
+                    ${agent.status === 'complete' ? 'w-8 bg-green-500' : ''}
+                    ${agent.status === 'processing' ? 'w-12 bg-elec-yellow' : ''}
+                    ${agent.status === 'pending' ? 'w-4 bg-white/10' : ''}
+                  `}
+                />
+              ))}
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Job Description Card */}
+      <style>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .animate-shimmer {
+          animation: shimmer 2s infinite;
+        }
+      `}</style>
+
+      {/* Job Description Card - Collapsible */}
       {jobDescription && (
-        <Card className="border-blue-500/20 bg-blue-950/20">
-          <CardContent className="pt-5 pb-5">
+        <Card>
+          <CardContent className="p-0">
             <Collapsible defaultOpen={false}>
               <CollapsibleTrigger asChild>
-                <button className="w-full flex items-center justify-between group touch-manipulation">
+                <button className="w-full flex items-center justify-between p-4 group touch-manipulation active:bg-white/5 transition-colors">
                   <div className="flex items-center gap-3">
-                    <FileText className="h-5 w-5 text-blue-400" />
-                    <span className="font-semibold text-foreground">Your Job Description</span>
+                    <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                      <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
+                    </div>
+                    <span className="font-semibold text-white text-sm sm:text-base">Your Job Description</span>
                   </div>
-                  <ChevronDown className="h-4 w-4 text-gray-400 transition-transform group-data-[state=open]:rotate-180" />
+                  <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <div className="mt-4 p-4 rounded-lg bg-elec-grey/40 border border-blue-500/20">
-                  <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap">
-                    {jobDescription}
-                  </p>
+                <div className="px-4 pb-4">
+                  <div className="p-3 sm:p-4 rounded-xl bg-[#1a1a1a] border border-white/5">
+                    <p className="text-sm text-white/60 leading-relaxed whitespace-pre-wrap">
+                      {jobDescription}
+                    </p>
+                  </div>
                 </div>
               </CollapsibleContent>
             </Collapsible>
@@ -186,112 +224,110 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
         </Card>
       )}
 
-      {/* Agent Cards - Mobile Optimized Vertical Layout */}
-      <div className="space-y-6">
+      {/* Agent Cards - Grid on larger screens */}
+      <div className="grid gap-4 sm:grid-cols-2">
         {agentSteps.map((agent) => {
           const Icon = getAgentIcon(agent.name);
           const isActive = agent.status === 'processing';
           const isComplete = agent.status === 'complete';
           const isPending = agent.status === 'pending';
-          
-          // PHASE 4 FIX: Use real agent progress
           const realProgress = agent.name === 'health-safety' ? hsAgentProgress : installerAgentProgress;
 
           return (
             <Card
               key={agent.name}
               className={`
-                transition-all duration-300 min-h-[300px]
-                ${isActive ? 'border-2 border-elec-yellow/40 shadow-xl shadow-elec-yellow/10 scale-[1.02]' : ''}
-                ${isComplete ? 'border-2 border-green-500/40 shadow-lg' : ''}
-                ${isPending ? 'border border-gray-700/50 opacity-70' : ''}
+                transition-all duration-300 overflow-hidden
+                ${isActive ? 'ring-2 ring-elec-yellow/40 shadow-lg shadow-elec-yellow/5' : ''}
+                ${isComplete ? 'ring-2 ring-green-500/30' : ''}
+                ${isPending ? 'opacity-50' : ''}
               `}
             >
-              <CardContent className="pt-8 pb-6 px-6">
-                <div className="flex flex-col items-center text-center space-y-4">
-                  {/* Icon - Centered at Top - LARGER */}
+              <CardContent className="p-4 sm:p-5">
+                <div className="flex flex-col items-center text-center space-y-3 sm:space-y-4">
+                  {/* Icon */}
                   <div className={`
-                    w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300
-                    ${isActive ? 'bg-elec-yellow/20 ring-4 ring-elec-yellow/30 shadow-xl shadow-elec-yellow/20' : ''}
-                    ${isComplete ? 'bg-green-500/20 ring-4 ring-green-500/30 shadow-lg' : ''}
-                    ${isPending ? 'bg-gray-800/50' : ''}
+                    relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center transition-all duration-300
+                    ${isActive ? 'bg-elec-yellow/10 border-2 border-elec-yellow/30' : ''}
+                    ${isComplete ? 'bg-green-500/10 border-2 border-green-500/30' : ''}
+                    ${isPending ? 'bg-white/5 border border-white/10' : ''}
                   `}>
                     {isComplete ? (
-                      <CheckCircle className="w-10 h-10 text-green-400" />
+                      <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8 text-green-400" />
                     ) : (
                       <Icon className={`
-                        w-10 h-10
-                        ${isActive ? 'text-elec-yellow' : ''}
-                        ${isPending ? 'text-gray-500' : ''}
+                        w-7 h-7 sm:w-8 sm:h-8
+                        ${isActive ? 'text-elec-yellow' : 'text-white/30'}
                       `} />
+                    )}
+                    {isActive && (
+                      <div className="absolute inset-0 rounded-2xl border-2 border-elec-yellow/30 animate-ping opacity-20" style={{ animationDuration: '2s' }} />
                     )}
                   </div>
 
-                  {/* Title - LARGER */}
+                  {/* Title & Status */}
                   <div className="space-y-2">
                     <h3 className={`
-                      text-xl font-semibold
+                      text-base sm:text-lg font-bold
                       ${isActive ? 'text-elec-yellow' : ''}
                       ${isComplete ? 'text-green-400' : ''}
-                      ${isPending ? 'text-gray-400' : ''}
+                      ${isPending ? 'text-white/40' : ''}
                     `}>
                       {getAgentTitle(agent.name)}
                     </h3>
 
-                    {/* Status Badge - LARGER */}
+                    {/* Status Badge */}
                     <div className={`
-                      inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium
-                      ${isActive ? 'bg-elec-yellow/20 text-elec-yellow' : ''}
-                      ${isComplete ? 'bg-green-500/20 text-green-400' : ''}
-                      ${isPending ? 'bg-gray-800/50 text-gray-500' : ''}
+                      inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium
+                      ${isActive ? 'bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20' : ''}
+                      ${isComplete ? 'bg-green-500/10 text-green-400 border border-green-500/20' : ''}
+                      ${isPending ? 'bg-white/5 text-white/40 border border-white/10' : ''}
                     `}>
                       {isActive && (
                         <>
-                          <span className="w-2 h-2 rounded-full bg-elec-yellow animate-pulse" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow animate-pulse" />
                           Processing
                         </>
                       )}
                       {isComplete && (
                         <>
-                          <CheckCircle className="w-4 h-4" />
+                          <CheckCircle className="w-3.5 h-3.5" />
                           Complete
                         </>
                       )}
                       {isPending && (
                         <>
-                          <Clock className="w-4 h-4" />
-                          Pending
+                          <Clock className="w-3.5 h-3.5" />
+                          Waiting
                         </>
                       )}
                     </div>
                   </div>
 
-                  {/* Progress Bar for Active Agent - PHASE 4 FIX: Use real progress */}
+                  {/* Progress Bar for Active Agent */}
                   {isActive && (
-                    <div className="w-full space-y-2 pt-2">
-                      <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+                    <div className="w-full space-y-1.5">
+                      <div className="w-full h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-elec-yellow to-amber-400 transition-all duration-500"
+                          className="h-full bg-gradient-to-r from-elec-yellow to-amber-400 transition-all duration-500 rounded-full"
                           style={{ width: `${realProgress}%` }}
                         />
                       </div>
-                      <div className="text-sm text-gray-400 font-medium">
-                        {realProgress}% complete
-                      </div>
+                      <p className="text-xs text-white/40 tabular-nums">{realProgress}%</p>
                     </div>
                   )}
 
-                  {/* Description - LARGER */}
-                  <p className="text-base text-gray-400 max-w-xs leading-relaxed">
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-white/40">
                     {getAgentDescription(agent.name)}
                   </p>
 
-                  {/* Reasoning Box - LARGER */}
+                  {/* Current Step / Reasoning */}
                   {(isActive || isComplete) && (agent.currentStep || agent.reasoning) && (
-                    <div className="w-full mt-4 p-4 bg-elec-grey/40 rounded-lg border border-elec-yellow/20">
-                      <div className="flex items-start gap-2.5">
-                        <Zap className="w-4 h-4 text-elec-yellow shrink-0 mt-1" />
-                        <p className="text-sm text-gray-300 leading-relaxed text-left">
+                    <div className="w-full p-3 bg-[#1a1a1a] rounded-xl border border-white/5">
+                      <div className="flex items-start gap-2">
+                        <Zap className="w-3.5 h-3.5 text-elec-yellow shrink-0 mt-0.5" />
+                        <p className="text-xs text-white/50 leading-relaxed text-left">
                           {agent.reasoning || agent.currentStep}
                         </p>
                       </div>

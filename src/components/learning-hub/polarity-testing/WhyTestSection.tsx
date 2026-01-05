@@ -9,7 +9,7 @@ const WhyTestSection = () => (
         <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-red-400">Why Polarity Testing is Critical</h4>
       </div>
-      <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-gray-300 leading-relaxed">
+      <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-white leading-relaxed">
         <p>• <strong>Safety:</strong> Incorrect polarity can make normally safe parts live and dangerous</p>
         <p>• <strong>Protection:</strong> Single-pole devices must interrupt the phase conductor, not neutral</p>
         <p>• <strong>Standards:</strong> BS 7671 requires correct polarity throughout the installation</p>
@@ -22,7 +22,7 @@ const WhyTestSection = () => (
         <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-blue-400">Common Polarity Hazards</h4>
       </div>
-      <div className="space-y-2 text-sm text-gray-300">
+      <div className="space-y-2 text-sm text-white">
         <p>• <strong>Socket outlets:</strong> Reversed connections can energise equipment cases</p>
         <p>• <strong>Light switches:</strong> Neutral switching leaves lamp holders permanently live</p>
         <p>• <strong>Edison screw fittings:</strong> Outer contact becomes live if phase/neutral reversed</p>

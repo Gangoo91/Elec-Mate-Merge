@@ -179,7 +179,7 @@ const PracticalGuidance = () => {
       case 'basic': return 'bg-green-500/20 text-green-400';
       case 'intermediate': return 'bg-yellow-500/20 text-yellow-400';
       case 'advanced': return 'bg-red-500/20 text-red-400';
-      default: return 'bg-gray-500/20 text-gray-400';
+      default: return 'bg-gray-500/20 text-white/80';
     }
   };
 
@@ -187,7 +187,7 @@ const PracticalGuidance = () => {
     <div className="space-y-6">
       <div className="text-center px-2 sm:px-4">
         <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">Practical Guidance</h2>
-        <p className="text-sm sm:text-base text-gray-300">Step-by-step guides for common electrical work scenarios</p>
+        <p className="text-sm sm:text-base text-white">Step-by-step guides for common electrical work scenarios</p>
       </div>
 
       {/* Scenario Selection */}
@@ -208,7 +208,7 @@ const PracticalGuidance = () => {
                 <Badge className={getComplexityColor(scenario.complexity)}>
                   {scenario.complexity.toUpperCase()}
                 </Badge>
-                <p className="text-xs text-gray-400">{scenario.duration}</p>
+                <p className="text-xs text-white/80">{scenario.duration}</p>
               </div>
             </CardContent>
           </Card>
@@ -221,13 +221,13 @@ const PracticalGuidance = () => {
           <div className="flex justify-between items-start">
             <div>
               <CardTitle className="text-elec-yellow text-xl mb-2">{currentScenario.title}</CardTitle>
-              <p className="text-gray-300">{currentScenario.overview}</p>
+              <p className="text-white">{currentScenario.overview}</p>
             </div>
             <div className="text-right">
               <Badge className={getComplexityColor(currentScenario.complexity)}>
                 {currentScenario.complexity.toUpperCase()}
               </Badge>
-              <p className="text-sm text-gray-400 mt-1">{currentScenario.duration}</p>
+              <p className="text-sm text-white/80 mt-1">{currentScenario.duration}</p>
             </div>
           </div>
           <div className="flex flex-wrap gap-2 mt-4">
@@ -259,7 +259,7 @@ const PracticalGuidance = () => {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-300 mb-4">{step.details}</p>
+                      <p className="text-white mb-4">{step.details}</p>
                       
                       <div className="space-y-3">
                         <div>
@@ -269,7 +269,7 @@ const PracticalGuidance = () => {
                           </h4>
                           <div className="space-y-1">
                             {step.regulations.map((reg, idx) => (
-                              <p key={idx} className="text-sm text-gray-400">{reg}</p>
+                              <p key={idx} className="text-sm text-white/80">{reg}</p>
                             ))}
                           </div>
                         </div>
@@ -283,7 +283,7 @@ const PracticalGuidance = () => {
                             {step.tips.map((tip, idx) => (
                               <div key={idx} className="flex items-start gap-2">
                                 <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0" />
-                                <p className="text-sm text-gray-400">{tip}</p>
+                                <p className="text-sm text-white/80">{tip}</p>
                               </div>
                             ))}
                           </div>
@@ -305,7 +305,7 @@ const PracticalGuidance = () => {
                   {currentScenario.commonIssues.map((issue, index) => (
                     <div key={index} className="flex items-start gap-3 p-4 bg-muted rounded-lg">
                       <AlertTriangle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-gray-300">{issue}</p>
+                      <p className="text-white">{issue}</p>
                     </div>
                   ))}
                 </div>

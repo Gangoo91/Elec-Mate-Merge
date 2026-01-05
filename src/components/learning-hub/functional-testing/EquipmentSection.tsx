@@ -14,7 +14,7 @@ const EquipmentSection = () => {
             Required Equipment & Tools
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6 text-gray-300">
+        <CardContent className="space-y-6 text-white">
           
           {/* Basic Equipment */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -27,7 +27,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Visual Inspection Checklist</h6>
-                    <p className="text-xs text-gray-400">Standardised inspection forms</p>
+                    <p className="text-xs text-white/80">Standardised inspection forms</p>
                   </div>
                   <Badge variant="outline" className="text-green-400 border-green-400">Essential</Badge>
                 </div>
@@ -35,7 +35,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Torch/Inspection Light</h6>
-                    <p className="text-xs text-gray-400">LED torch with focusing beam</p>
+                    <p className="text-xs text-white/80">LED torch with focusing beam</p>
                   </div>
                   <Badge variant="outline" className="text-green-400 border-green-400">Essential</Badge>
                 </div>
@@ -43,7 +43,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Communication Equipment</h6>
-                    <p className="text-xs text-gray-400">Two-way radios or mobile phones</p>
+                    <p className="text-xs text-white/80">Two-way radios or mobile phones</p>
                   </div>
                   <Badge variant="outline" className="text-blue-400 border-blue-400">Important</Badge>
                 </div>
@@ -51,9 +51,9 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Basic Hand Tools</h6>
-                    <p className="text-xs text-gray-400">Screwdrivers, spanners, pliers</p>
+                    <p className="text-xs text-white/80">Screwdrivers, spanners, pliers</p>
                   </div>
-                  <Badge variant="outline" className="text-gray-400 border-gray-400">Useful</Badge>
+                  <Badge variant="outline" className="text-white/80 border-gray-400">Useful</Badge>
                 </div>
               </div>
             </div>
@@ -67,7 +67,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Personal Protective Equipment</h6>
-                    <p className="text-xs text-gray-400">Hard hat, safety glasses, gloves</p>
+                    <p className="text-xs text-white/80">Hard hat, safety glasses, gloves</p>
                   </div>
                   <Badge variant="outline" className="text-red-400 border-red-400">Critical</Badge>
                 </div>
@@ -75,7 +75,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Warning Notices</h6>
-                    <p className="text-xs text-gray-400">Test in progress signs</p>
+                    <p className="text-xs text-white/80">Test in progress signs</p>
                   </div>
                   <Badge variant="outline" className="text-red-400 border-red-400">Critical</Badge>
                 </div>
@@ -83,7 +83,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Barriers/Tape</h6>
-                    <p className="text-xs text-gray-400">Area isolation if required</p>
+                    <p className="text-xs text-white/80">Area isolation if required</p>
                   </div>
                   <Badge variant="outline" className="text-orange-400 border-orange-400">Conditional</Badge>
                 </div>
@@ -91,7 +91,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Emergency Contact List</h6>
-                    <p className="text-xs text-gray-400">Key personnel contact details</p>
+                    <p className="text-xs text-white/80">Key personnel contact details</p>
                   </div>
                   <Badge variant="outline" className="text-blue-400 border-blue-400">Important</Badge>
                 </div>
@@ -112,7 +112,7 @@ const EquipmentSection = () => {
                   <CardTitle className="text-sm text-foreground">RCD Test Button Verification</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <p className="text-xs text-gray-300">
+                  <p className="text-xs text-white">
                     Built-in test mechanism - no external equipment required
                   </p>
                   <div className="flex flex-wrap gap-1">
@@ -127,12 +127,12 @@ const EquipmentSection = () => {
                   <CardTitle className="text-sm text-foreground">Stopwatch/Timer</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <p className="text-xs text-gray-300">
+                  <p className="text-xs text-white">
                     For measuring response times of safety systems
                   </p>
                   <div className="flex flex-wrap gap-1">
                     <Badge variant="outline" className="text-xs text-blue-400 border-blue-400">Optional</Badge>
-                    <Badge variant="outline" className="text-xs text-gray-400 border-gray-400">Digital Preferred</Badge>
+                    <Badge variant="outline" className="text-xs text-white/80 border-gray-400">Digital Preferred</Badge>
                   </div>
                 </CardContent>
               </Card>
@@ -142,7 +142,7 @@ const EquipmentSection = () => {
                   <CardTitle className="text-sm text-foreground">Digital Camera</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <p className="text-xs text-gray-300">
+                  <p className="text-xs text-white">
                     Document equipment condition and defects
                   </p>
                   <div className="flex flex-wrap gap-1">
@@ -157,7 +157,7 @@ const EquipmentSection = () => {
                   <CardTitle className="text-sm text-foreground">Test Certificates</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <p className="text-xs text-gray-300">
+                  <p className="text-xs text-white">
                     Blank forms for recording test results
                   </p>
                   <div className="flex flex-wrap gap-1">
@@ -205,7 +205,7 @@ const EquipmentSection = () => {
               <CheckCircle2 className="h-4 w-4" />
               Cost-Effective Testing
             </h4>
-            <div className="text-sm text-gray-300">
+            <div className="text-sm text-white">
               <p className="mb-2">
                 Functional testing is one of the most cost-effective electrical tests because:
               </p>

@@ -17,7 +17,7 @@ const SafetyGuidelines = () => {
       case 'Critical': return 'text-red-400 bg-red-400/10';
       case 'Essential': return 'text-orange-400 bg-orange-400/10';
       case 'Required': return 'text-blue-400 bg-blue-400/10';
-      default: return 'text-gray-400 bg-gray-400/10';
+      default: return 'text-white/80 bg-gray-400/10';
     }
   };
 
@@ -28,7 +28,7 @@ const SafetyGuidelines = () => {
           <Shield className="h-5 w-5" />
           Safety Guidelines
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Essential safety protocols and procedures
         </CardDescription>
       </CardHeader>

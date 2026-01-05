@@ -64,7 +64,7 @@ const EmergencyProceduresCard = () => {
           <AlertTriangle className="h-6 w-6" />
           Emergency Response Procedures - Electrical Incidents
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Critical response protocols for electrical emergencies and first aid procedures
         </CardDescription>
       </CardHeader>
@@ -89,7 +89,7 @@ const EmergencyProceduresCard = () => {
                       <span className={`w-5 h-5 rounded-full bg-muted flex items-center justify-center text-xs font-bold ${emergency.color} flex-shrink-0`}>
                         {stepIndex + 1}
                       </span>
-                      <span className="text-gray-300">{step}</span>
+                      <span className="text-white">{step}</span>
                     </div>
                   ))}
                 </div>
@@ -112,7 +112,7 @@ const EmergencyProceduresCard = () => {
                     {index + 1}
                   </div>
                   <h6 className="font-medium text-foreground text-sm mb-1">{aid.action}</h6>
-                  <p className="text-xs text-gray-300">{aid.instruction}</p>
+                  <p className="text-xs text-white">{aid.instruction}</p>
                 </div>
               </div>
             ))}
@@ -128,29 +128,29 @@ const EmergencyProceduresCard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-300">Emergency Services:</span>
+                <span className="text-white">Emergency Services:</span>
                 <span className="text-foreground font-bold">999</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-300">NHS Direct:</span>
+                <span className="text-white">NHS Direct:</span>
                 <span className="text-foreground font-bold">111</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-300">Electricity Emergency:</span>
+                <span className="text-white">Electricity Emergency:</span>
                 <span className="text-foreground font-bold">105</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-300">HSE Emergency:</span>
+                <span className="text-white">HSE Emergency:</span>
                 <span className="text-foreground font-bold">0151 951 4000</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-300">Electrical Safety First:</span>
+                <span className="text-white">Electrical Safety First:</span>
                 <span className="text-foreground font-bold">0207 582 7746</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-300">Gas Emergency:</span>
+                <span className="text-white">Gas Emergency:</span>
                 <span className="text-foreground font-bold">0800 111 999</span>
               </div>
             </div>
@@ -163,7 +163,7 @@ const EmergencyProceduresCard = () => {
             <Users className="h-5 w-5 text-purple-400" />
             <h4 className="font-medium text-purple-400">Post-Incident Requirements</h4>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-white">
             <div>
               <p className="font-medium text-foreground mb-2">Immediate Actions:</p>
               <ul className="space-y-1 text-xs">

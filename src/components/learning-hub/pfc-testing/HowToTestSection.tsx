@@ -8,7 +8,7 @@ const HowToTestSection = () => (
         <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-green-400">Essential Test Equipment</h4>
       </div>
-      <div className="space-y-4 text-xs sm:text-sm text-gray-300">
+      <div className="space-y-4 text-xs sm:text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-green-400 mb-2">Primary Test Equipment:</p>
@@ -57,7 +57,7 @@ const HowToTestSection = () => (
         <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-red-400">CRITICAL: PFC Testing Requires Live Circuits</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="bg-card rounded p-4">
           <p className="font-medium text-red-400 mb-3">Why PFC Testing Must Be Performed Live:</p>
           <div className="space-y-2 text-xs">
@@ -71,7 +71,7 @@ const HowToTestSection = () => (
         
         <div className="bg-red-500/20 border border-red-500/30 rounded p-3">
           <p className="font-medium text-red-400 mb-2">⚠️ Live Working Safety Notice:</p>
-          <p className="text-xs text-gray-300">
+          <p className="text-xs text-white">
             PFC testing involves working on or near live electrical circuits. This presents significant risks of electric shock, 
             burns, and arc flash. Only competent persons with appropriate training, equipment, and authorisation should perform PFC testing.
           </p>
@@ -84,7 +84,7 @@ const HowToTestSection = () => (
         <Play className="h-4 w-4 text-blue-400" />
         <h4 className="font-medium text-blue-400">Live Circuit PFC Testing Procedure</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="bg-card rounded p-4">
           <p className="font-medium text-blue-400 mb-3">Step-by-Step Live Testing Procedure:</p>
           <div className="space-y-4">
@@ -92,7 +92,7 @@ const HowToTestSection = () => (
               <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">1</div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Risk Assessment and Preparation</p>
-                <div className="text-xs text-gray-400 space-y-1">
+                <div className="text-xs text-white/80 space-y-1">
                   <p>• Complete live working risk assessment</p>
                   <p>• Ensure appropriate competency and training</p>
                   <p>• Obtain permission for live working if required</p>
@@ -106,7 +106,7 @@ const HowToTestSection = () => (
               <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">2</div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Live Working Safety Setup</p>
-                <div className="text-xs text-gray-400 space-y-1">
+                <div className="text-xs text-white/80 space-y-1">
                   <p>• Don appropriate PPE for live working</p>
                   <p>• Establish barriers and warning notices</p>
                   <p>• Ensure emergency procedures are understood</p>
@@ -120,7 +120,7 @@ const HowToTestSection = () => (
               <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">3</div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Circuit Load Disconnection</p>
-                <div className="text-xs text-gray-400 space-y-1">
+                <div className="text-xs text-white/80 space-y-1">
                   <p>• Disconnect all loads from the circuit whilst keeping it energised</p>
                   <p>• Remove lamps from lighting circuits</p>
                   <p>• Unplug all equipment from socket circuits</p>
@@ -134,7 +134,7 @@ const HowToTestSection = () => (
               <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">4</div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Live Circuit Test Connection</p>
-                <div className="text-xs text-gray-400 space-y-1">
+                <div className="text-xs text-white/80 space-y-1">
                   <p>• Use insulated tools and maintain safe working distances</p>
                   <p>• Connect test leads at circuit origin (live terminals)</p>
                   <p>• Phase conductor to earth terminal for L-E PFC</p>
@@ -148,7 +148,7 @@ const HowToTestSection = () => (
               <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">5</div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Live Measurement and Recording</p>
-                <div className="text-xs text-gray-400 space-y-1">
+                <div className="text-xs text-white/80 space-y-1">
                   <p>• Perform phase-earth PFC test on live circuit</p>
                   <p>• Record reading immediately and note any warnings</p>
                   <p>• Perform phase-neutral PFC test if required</p>
@@ -162,7 +162,7 @@ const HowToTestSection = () => (
               <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">6</div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Safe Disconnection and Restoration</p>
-                <div className="text-xs text-gray-400 space-y-1">
+                <div className="text-xs text-white/80 space-y-1">
                   <p>• Carefully disconnect test equipment using insulated tools</p>
                   <p>• Reconnect all loads and equipment</p>
                   <p>• Test circuit operation after restoration</p>
@@ -201,7 +201,7 @@ const HowToTestSection = () => (
         <Calculator className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Calculation Method (Design Stage Only)</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="bg-card rounded p-3">
           <p className="font-medium text-purple-400 mb-2">When to Use Calculated Method:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
@@ -291,7 +291,7 @@ const HowToTestSection = () => (
         <Zap className="h-4 w-4 text-orange-400" />
         <h4 className="font-medium text-orange-400">Advanced Live Testing Techniques</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-orange-400 mb-2">Three-Phase Live System Testing:</p>
@@ -354,7 +354,7 @@ const HowToTestSection = () => (
         <AlertTriangle className="h-4 w-4 text-red-400" />
         <h4 className="font-medium text-red-400">Critical Live Working Safety Precautions</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-red-400 mb-2">Pre-Live Working Safety Checks:</p>
@@ -414,7 +414,7 @@ const HowToTestSection = () => (
         <CheckCircle2 className="h-4 w-4 text-teal-400" />
         <h4 className="font-medium text-teal-400">Live Test Result Analysis and Validation</h4>
       </div>
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-teal-400 mb-2">Live Circuit Result Assessment:</p>

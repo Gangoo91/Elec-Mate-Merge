@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const EICCompletionTab = () => {
   return (
-    <div className="space-y-4 text-gray-300">
+    <div className="space-y-4 text-white">
       <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
         <h4 className="font-semibold text-green-400 mb-3">EIC Completion Requirements</h4>
         <p className="text-sm mb-3">

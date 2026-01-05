@@ -22,7 +22,7 @@ const RegulationReference = () => {
           <BookOpen className="h-5 w-5" />
           BS7671 Regulation Reference
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Quick access to key regulations and standards
         </CardDescription>
       </CardHeader>
@@ -31,7 +31,7 @@ const RegulationReference = () => {
           {regulationTopics.map((topic, index) => (
             <div key={index} className="p-3 bg-muted rounded-lg">
               <h4 className="font-medium text-foreground mb-1">{topic.title}</h4>
-              <p className="text-sm text-gray-400">{topic.description}</p>
+              <p className="text-sm text-white/80">{topic.description}</p>
             </div>
           ))}
         </div>

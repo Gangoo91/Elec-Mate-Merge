@@ -10,7 +10,7 @@ const HowToTestSection = () => (
         <TestTube2 className="h-5 w-5 sm:h-6 sm:w-6 text-purple-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-purple-400">Dead Testing Method (Preferred)</h4>
       </div>
-      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
+      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-white leading-relaxed">
         <div>
           <p className="font-medium text-foreground">Step 1: Isolate the circuit safely</p>
           <p className="ml-4">Turn off protective device and prove dead with voltage indicator</p>
@@ -35,7 +35,7 @@ const HowToTestSection = () => (
         <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-orange-400">Live Testing Method (When Required)</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Step 1: Use approved voltage indicator</p>
           <p className="ml-4">GS38 compliant tester with appropriate PPE</p>

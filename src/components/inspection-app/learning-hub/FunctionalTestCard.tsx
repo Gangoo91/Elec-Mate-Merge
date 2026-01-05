@@ -51,7 +51,7 @@ const FunctionalTestCard = () => {
                 Real-World Testing Examples
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6 text-gray-300">
+            <CardContent className="space-y-6 text-white">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 
                 {/* Domestic Example */}
@@ -172,7 +172,7 @@ const FunctionalTestCard = () => {
                   <AlertTriangle className="h-4 w-4" />
                   Key Learning Points
                 </h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Every site has unique functional testing requirements</li>
                   <li>• Coordination and communication are essential for safety</li>
                   <li>• Understanding system operation prevents costly mistakes</li>
@@ -194,7 +194,7 @@ const FunctionalTestCard = () => {
         </div>
         <div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Functional Testing</h1>
-          <p className="text-sm sm:text-base text-gray-300">BS 7671 Regulation 612.13 - Testing operation and functionality</p>
+          <p className="text-sm sm:text-base text-white">BS 7671 Regulation 612.13 - Testing operation and functionality</p>
         </div>
       </div>
 

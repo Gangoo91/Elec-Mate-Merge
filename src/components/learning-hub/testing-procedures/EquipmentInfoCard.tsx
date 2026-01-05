@@ -13,7 +13,7 @@ const EquipmentInfoCard = () => {
           <Calculator className="h-5 w-5" />
           Professional Test Equipment
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Essential instruments for electrical testing
         </CardDescription>
       </CardHeader>
@@ -22,11 +22,11 @@ const EquipmentInfoCard = () => {
           {testingEquipment.map((equipment, index) => (
             <div key={index} className="p-4 bg-muted rounded-lg">
               <h4 className="font-medium text-foreground mb-2">{equipment.name}</h4>
-              <p className="text-sm text-gray-300 mb-3">{equipment.description}</p>
+              <p className="text-sm text-white mb-3">{equipment.description}</p>
               
               <div className="space-y-2">
                 <div>
-                  <p className="text-xs text-gray-400 mb-1">Tests:</p>
+                  <p className="text-xs text-white/80 mb-1">Tests:</p>
                   <div className="flex flex-wrap gap-1">
                     {equipment.tests.map((test, idx) => (
                       <Badge key={idx} variant="secondary" className="text-xs">
@@ -36,7 +36,7 @@ const EquipmentInfoCard = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-2 text-xs text-gray-400">
+                <div className="flex items-center gap-2 text-xs text-white/80">
                   <Clock className="h-3 w-3" />
                   <span>{equipment.calibrationRequirement}</span>
                 </div>

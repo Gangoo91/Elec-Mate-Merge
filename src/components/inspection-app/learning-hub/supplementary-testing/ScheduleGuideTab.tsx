@@ -11,7 +11,7 @@ const ScheduleGuideTab = () => {
           Test Results Schedule Completion Guide
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6 text-gray-300">
+      <CardContent className="space-y-6 text-white">
         <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
           <h4 className="font-semibold text-emerald-400 mb-3">Schedule of Test Results Overview</h4>
           <p className="text-sm mb-3">

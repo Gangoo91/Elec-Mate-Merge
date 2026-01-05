@@ -64,7 +64,7 @@ const QuizAchievements = () => {
         default: return 'bg-elec-yellow/20 text-elec-yellow';
       }
     }
-    return 'bg-neutral-600 text-gray-400';
+    return 'bg-neutral-600 text-white/80';
   };
 
   const filteredAchievements = achievements.filter(achievement => {
@@ -97,10 +97,10 @@ const QuizAchievements = () => {
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <h4 className={`font-medium ${achievement.unlocked ? 'text-foreground' : 'text-gray-300'}`}>
+                <h4 className={`font-medium ${achievement.unlocked ? 'text-foreground' : 'text-white'}`}>
                   {achievement.title}
                 </h4>
-                <p className="text-sm text-gray-400 mt-1">
+                <p className="text-sm text-white/80 mt-1">
                   {achievement.description}
                 </p>
               </div>
@@ -117,7 +117,7 @@ const QuizAchievements = () => {
             
             {!achievement.unlocked && progress && (
               <div className="mt-3">
-                <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
+                <div className="flex items-center justify-between text-xs text-white/80 mb-1">
                   <span>Progress</span>
                   <span>{progress.currentValue}/{progress.targetValue}</span>
                 </div>
@@ -139,7 +139,7 @@ const QuizAchievements = () => {
               <Trophy className="h-4 w-4 sm:h-5 sm:w-5" />
               Achievements
             </CardTitle>
-            <CardDescription className="text-gray-300 mt-1 text-sm">
+            <CardDescription className="text-white mt-1 text-sm">
               {stats.unlockedCount}/{stats.totalAchievements} unlocked ({stats.progressPercentage.toFixed(0)}%)
             </CardDescription>
           </div>
@@ -198,7 +198,7 @@ const QuizAchievements = () => {
           {filteredAchievements.length > 0 ? (
             filteredAchievements.map(renderAchievement)
           ) : (
-            <div className="text-center py-6 sm:py-8 text-gray-400">
+            <div className="text-center py-6 sm:py-8 text-white/80">
               <Trophy className="h-6 w-6 sm:h-8 sm:w-8 mx-auto mb-2 opacity-50" />
               <p className="text-sm">No achievements match your current filters</p>
             </div>

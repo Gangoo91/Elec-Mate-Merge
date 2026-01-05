@@ -9,7 +9,7 @@ const ContinuityPracticalGuidanceSection = () => (
         <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-green-400">Best Practice Testing Procedures</h4>
       </div>
-      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
+      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-white leading-relaxed">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-green-400 mb-2">Pre-Test Preparation:</p>
@@ -42,7 +42,7 @@ const ContinuityPracticalGuidanceSection = () => (
         <Wrench className="h-4 w-4 text-blue-400" />
         <h4 className="font-medium text-blue-400">Practical Testing Techniques</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-blue-400 mb-2">Efficient Test Routing:</p>
@@ -105,7 +105,7 @@ const ContinuityPracticalGuidanceSection = () => (
         <AlertTriangle className="h-4 w-4 text-orange-400" />
         <h4 className="font-medium text-orange-400">Troubleshooting Common Problems</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-orange-400 mb-2">High Resistance Readings:</p>
@@ -167,7 +167,7 @@ const ContinuityPracticalGuidanceSection = () => (
         <CheckCircle2 className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Quality Assurance and Verification</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-purple-400 mb-2">Result Verification:</p>
@@ -200,7 +200,7 @@ const ContinuityPracticalGuidanceSection = () => (
         <Clock className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">Record Keeping and Documentation</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-cyan-400 mb-2">Essential Records:</p>

@@ -52,7 +52,7 @@ const RiskAssessmentCard = () => {
           <AlertTriangle className="h-6 w-6" />
           Risk Assessment Methodology - BS 7671 Compliance
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Systematic approach to electrical risk assessment and control measures
         </CardDescription>
       </CardHeader>
@@ -74,10 +74,10 @@ const RiskAssessmentCard = () => {
                         <IconComponent className={`h-4 w-4 ${step.color}`} />
                         <h5 className="font-medium text-foreground">{step.title}</h5>
                       </div>
-                      <p className="text-sm text-gray-300 mb-3">{step.description}</p>
+                      <p className="text-sm text-white mb-3">{step.description}</p>
                       <div className="space-y-1">
                         {step.examples.map((example, exampleIndex) => (
-                          <div key={exampleIndex} className="flex items-center gap-2 text-xs text-gray-400">
+                          <div key={exampleIndex} className="flex items-center gap-2 text-xs text-white/80">
                             <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
                             {example}
                           </div>
@@ -98,23 +98,23 @@ const RiskAssessmentCard = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left text-gray-400 p-2">Likelihood</th>
-                  <th className="text-left text-gray-400 p-2">Severity</th>
-                  <th className="text-left text-gray-400 p-2">Risk Level</th>
-                  <th className="text-left text-gray-400 p-2">Required Action</th>
+                  <th className="text-left text-white/80 p-2">Likelihood</th>
+                  <th className="text-left text-white/80 p-2">Severity</th>
+                  <th className="text-left text-white/80 p-2">Risk Level</th>
+                  <th className="text-left text-white/80 p-2">Required Action</th>
                 </tr>
               </thead>
               <tbody>
                 {riskMatrix.map((row, index) => (
                   <tr key={index} className="border-b border-border">
-                    <td className="p-2 text-gray-300">{row.likelihood}</td>
-                    <td className="p-2 text-gray-300">{row.severity}</td>
+                    <td className="p-2 text-white">{row.likelihood}</td>
+                    <td className="p-2 text-white">{row.severity}</td>
                     <td className="p-2">
                       <span className={`px-2 py-1 rounded text-xs font-medium text-foreground ${row.color}`}>
                         {row.risk}
                       </span>
                     </td>
-                    <td className="p-2 text-gray-300 text-xs">{row.action}</td>
+                    <td className="p-2 text-white text-xs">{row.action}</td>
                   </tr>
                 ))}
               </tbody>
@@ -130,35 +130,35 @@ const RiskAssessmentCard = () => {
               <span className="w-6 h-6 bg-red-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">1</span>
               <div>
                 <span className="text-foreground font-medium">Elimination:</span>
-                <span className="text-gray-300 ml-2">Remove the hazard completely</span>
+                <span className="text-white ml-2">Remove the hazard completely</span>
               </div>
             </div>
             <div className="flex items-center gap-3 p-2 bg-card rounded">
               <span className="w-6 h-6 bg-orange-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">2</span>
               <div>
                 <span className="text-foreground font-medium">Substitution:</span>
-                <span className="text-gray-300 ml-2">Replace with safer alternative</span>
+                <span className="text-white ml-2">Replace with safer alternative</span>
               </div>
             </div>
             <div className="flex items-center gap-3 p-2 bg-card rounded">
               <span className="w-6 h-6 bg-yellow-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">3</span>
               <div>
                 <span className="text-foreground font-medium">Engineering Controls:</span>
-                <span className="text-gray-300 ml-2">Physical safeguards and barriers</span>
+                <span className="text-white ml-2">Physical safeguards and barriers</span>
               </div>
             </div>
             <div className="flex items-center gap-3 p-2 bg-card rounded">
               <span className="w-6 h-6 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">4</span>
               <div>
                 <span className="text-foreground font-medium">Administrative:</span>
-                <span className="text-gray-300 ml-2">Procedures, training, signage</span>
+                <span className="text-white ml-2">Procedures, training, signage</span>
               </div>
             </div>
             <div className="flex items-center gap-3 p-2 bg-card rounded">
               <span className="w-6 h-6 bg-green-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">5</span>
               <div>
                 <span className="text-foreground font-medium">PPE:</span>
-                <span className="text-gray-300 ml-2">Personal protective equipment (last resort)</span>
+                <span className="text-white ml-2">Personal protective equipment (last resort)</span>
               </div>
             </div>
           </div>

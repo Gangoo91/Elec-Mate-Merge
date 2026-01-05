@@ -112,7 +112,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
           <Zap className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-elec-yellow" />
           <h1 className={responsiveHeading.h1 + " text-foreground"}>Safe Isolation for Testing</h1>
         </div>
-        <p className={responsiveBody.large + " text-gray-300 max-w-3xl mx-auto px-4"}>
+        <p className={responsiveBody.large + " text-white max-w-3xl mx-auto px-4"}>
           Learn the essential principles of safe isolation specifically for electrical inspection and testing work. 
           Understand BS 7671 requirements and practical application.
         </p>
@@ -138,7 +138,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-foreground mb-2">Legal Requirements</h4>
-                  <ul className="space-y-1 text-gray-300 text-sm">
+                  <ul className="space-y-1 text-white text-sm">
                     <li>• BS 7671: Wiring Regulations compliance</li>
                     <li>• Electricity at Work Regulations 1989</li>
                     <li>• Health and Safety at Work Act 1974</li>
@@ -147,7 +147,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground mb-2">Testing Specific Risks</h4>
-                  <ul className="space-y-1 text-gray-300 text-sm">
+                  <ul className="space-y-1 text-white text-sm">
                     <li>• High test voltages (insulation testing)</li>
                     <li>• Equipment damage from energised testing</li>
                     <li>• False readings on live circuits</li>
@@ -197,12 +197,12 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-300 mb-4">{step.description}</p>
+                  <p className="text-white mb-4">{step.description}</p>
                   <div className="space-y-2">
                     {step.details.map((detail, detailIndex) => (
                       <div key={detailIndex} className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-300 text-sm">{detail}</span>
+                        <span className="text-white text-sm">{detail}</span>
                       </div>
                     ))}
                   </div>
@@ -241,10 +241,10 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
                     <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                     <div className="space-y-2">
                       <h4 className="font-semibold text-red-300">{mistake.mistake}</h4>
-                      <p className="text-gray-300 text-sm">
+                      <p className="text-white text-sm">
                         <span className="font-medium text-red-400">Risk:</span> {mistake.consequence}
                       </p>
-                      <p className="text-gray-300 text-sm">
+                      <p className="text-white text-sm">
                         <span className="font-medium text-green-400">Prevention:</span> {mistake.prevention}
                       </p>
                     </div>
@@ -284,7 +284,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
               <div className="space-y-4">
                 <div className="p-4 bg-white/5 rounded-lg">
                   <h4 className="font-semibold text-purple-300 mb-2">Scenario 1: Consumer Unit Testing</h4>
-                  <p className="text-gray-300 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     You need to test circuits in a domestic consumer unit. Multiple circuits share the same neutral.
                   </p>
                   <p className="text-purple-400 text-sm font-medium">
@@ -294,7 +294,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
                 
                 <div className="p-4 bg-white/5 rounded-lg">
                   <h4 className="font-semibold text-purple-300 mb-2">Scenario 2: Industrial Installation</h4>
-                  <p className="text-gray-300 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Testing a motor circuit with multiple supply sources and emergency stop circuits.
                   </p>
                   <p className="text-purple-400 text-sm font-medium">
@@ -304,7 +304,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
 
                 <div className="p-4 bg-white/5 rounded-lg">
                   <h4 className="font-semibold text-purple-300 mb-2">Scenario 3: Solar PV System</h4>
-                  <p className="text-gray-300 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Testing a property with solar PV installation and battery storage system.
                   </p>
                   <p className="text-purple-400 text-sm font-medium">
@@ -341,7 +341,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-semibold text-foreground mb-2">Learning Progress</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Complete all sections to master safe isolation principles
               </p>
             </div>
@@ -349,7 +349,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
               <div className="text-2xl font-bold text-elec-yellow">
                 {completedSections.length}/4
               </div>
-              <p className="text-sm text-gray-400">Sections Complete</p>
+              <p className="text-sm text-white/80">Sections Complete</p>
             </div>
           </div>
           <div className="mt-4 flex gap-2">

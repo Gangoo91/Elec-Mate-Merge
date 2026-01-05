@@ -58,7 +58,7 @@ const EnhancedContinuityCPCTestCard = () => {
             <CheckCircle2 className="h-6 w-6" />
             Enhanced CPC Continuity Testing Module
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-white">
             Comprehensive learning module for Circuit Protective Conductor continuity testing - BS 7671 Regulation 612.2.1
           </CardDescription>
         </CardHeader>
@@ -76,7 +76,7 @@ const EnhancedContinuityCPCTestCard = () => {
                         <Lightbulb className="h-4 w-4 text-blue-400" />
                         <h4 className="font-medium text-blue-400">Why CPC Continuity Testing is Critical</h4>
                       </div>
-                      <div className="space-y-3 text-sm text-gray-300">
+                      <div className="space-y-3 text-sm text-white">
                         <div className="flex items-start gap-2">
                           <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                           <div>
@@ -200,22 +200,22 @@ const EnhancedContinuityCPCTestCard = () => {
                                 </div>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
                                   <div>
-                                    <span className="text-gray-400">Reading:</span>
+                                    <span className="text-white/80">Reading:</span>
                                     <span className="text-foreground ml-1">{test.r1r2Reading}Ω</span>
                                   </div>
                                   <div>
-                                    <span className="text-gray-400">Max:</span>
+                                    <span className="text-white/80">Max:</span>
                                     <span className="text-foreground ml-1">{test.maxPermissible}Ω</span>
                                   </div>
                                   <div>
-                                    <span className="text-gray-400">Status:</span>
+                                    <span className="text-white/80">Status:</span>
                                     <span className={`ml-1 ${test.result === 'pass' ? 'text-green-400' : 'text-red-400'}`}>
                                       {test.result === 'pass' ? 'PASS' : 'FAIL'}
                                     </span>
                                   </div>
                                 </div>
                                 {test.notes && (
-                                  <div className="mt-2 text-sm text-gray-400">
+                                  <div className="mt-2 text-sm text-white/80">
                                     Notes: {test.notes}
                                   </div>
                                 )}

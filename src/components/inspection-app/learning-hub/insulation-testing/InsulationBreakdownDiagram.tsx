@@ -17,11 +17,11 @@ const InsulationBreakdownDiagram = () => (
             <span className="text-green-400 text-xs sm:text-sm text-center">Good Insulation (&gt;1MΩ)</span>
             <span className="text-blue-400 text-sm font-medium">Neutral</span>
           </div>
-          <div className="text-center text-xs text-gray-400 mt-2">
+          <div className="text-center text-xs text-white/80 mt-2">
             Current flow: &lt;1μA (negligible)
           </div>
         </div>
-        <div className="text-xs text-gray-400 mt-2">
+        <div className="text-xs text-white/80 mt-2">
           High resistance prevents current flow
         </div>
       </div>
@@ -33,7 +33,7 @@ const InsulationBreakdownDiagram = () => (
             <span className="text-red-400 text-xs sm:text-sm text-center">Poor Insulation (&lt;1MΩ)</span>
             <span className="text-blue-400 text-sm font-medium">Neutral</span>
           </div>
-          <div className="text-center text-xs text-gray-400 mt-2">
+          <div className="text-center text-xs text-white/80 mt-2">
             Current flow: &gt;1mA (dangerous)
           </div>
         </div>

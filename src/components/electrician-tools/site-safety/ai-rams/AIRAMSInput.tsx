@@ -147,46 +147,43 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       {/* Enhanced Header */}
       <div className="space-y-4">
         <div className="flex items-center gap-4">
-          <div className="relative h-14 w-14 md:h-16 md:w-16 rounded-2xl bg-gradient-to-br from-elec-yellow via-yellow-400 to-elec-yellow/70 flex items-center justify-center shadow-lg shadow-elec-yellow/30 animate-pulse-glow">
-            <Sparkles className="h-7 w-7 md:h-8 md:w-8 text-elec-dark animate-float" />
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-transparent blur-xl" />
+          <div className="relative h-14 w-14 md:h-16 md:w-16 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
+            <Sparkles className="h-7 w-7 md:h-8 md:w-8 text-elec-yellow" />
           </div>
           <div className="flex-1">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight bg-gradient-to-r from-elec-light via-foreground to-elec-light bg-clip-text text-transparent">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Job Details
             </h2>
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed mt-1">
+            <p className="text-sm sm:text-base text-white/50 mt-1">
               Describe your electrical work in detail
             </p>
           </div>
         </div>
-        
+
         {/* Enhanced Progress indicator */}
         {completionPercentage > 0 && completionPercentage < 100 && (
-          <div className="space-y-2 p-4 rounded-xl bg-elec-card/50 border border-elec-yellow/20">
+          <div className="space-y-2 p-4 rounded-xl bg-[#1a1a1a] border border-white/10">
             <div className="flex justify-between items-center">
-              <span className="text-sm font-semibold text-muted-foreground">Form Completion</span>
+              <span className="text-sm text-white/40">Form Completion</span>
               <span className="text-lg font-bold text-elec-yellow tabular-nums">{completionPercentage}%</span>
             </div>
-            <div className="h-2.5 md:h-3 bg-elec-grey rounded-full overflow-hidden shadow-inner">
-              <div 
-                className="h-full bg-gradient-to-r from-elec-yellow via-yellow-400 to-elec-yellow transition-all duration-700 ease-out relative overflow-hidden"
+            <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-elec-yellow to-amber-500 transition-all duration-700 ease-out rounded-full"
                 style={{ width: `${completionPercentage}%` }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse" />
-              </div>
+              />
             </div>
           </div>
         )}
       </div>
 
       {/* Enhanced Job Description Card */}
-      <Card className="border-0 md:border md:border-elec-yellow/30 shadow-none md:shadow-xl bg-transparent md:bg-elec-card/80 md:backdrop-blur-sm hover:border-elec-yellow/50 transition-all duration-300 rounded-none md:rounded-2xl">
-        <CardContent className="p-4 md:p-6 lg:p-8 space-y-6">
-          <div className="space-y-4">
-            <label className="text-lg md:text-base font-bold text-foreground tracking-wide flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 flex items-center justify-center border border-elec-yellow/30">
-                <Zap className="h-5 w-5 text-elec-yellow" />
+      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl overflow-hidden">
+        <CardContent className="p-4 sm:p-6 space-y-5">
+          <div className="space-y-3">
+            <label className="text-base font-semibold text-white flex items-center gap-3">
+              <div className="h-9 w-9 rounded-xl bg-elec-yellow/10 flex items-center justify-center border border-elec-yellow/20">
+                <Zap className="h-4 w-4 text-elec-yellow" />
               </div>
               <span>Job Description</span>
             </label>
@@ -195,15 +192,15 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               onChange={(e) => setJobDescription(e.target.value)}
               placeholder="Describe the electrical work in detail... e.g., Install new consumer unit in 3-bed house with full rewire of kitchen and additional circuits"
               disabled={isProcessing}
-              className="resize-none min-h-[140px] md:min-h-[120px] text-base bg-elec-grey/80 border-elec-yellow/30 focus-visible:border-elec-yellow focus-visible:ring-elec-yellow/30 transition-all"
+              className="resize-none min-h-[140px] sm:min-h-[120px] text-base bg-[#1a1a1a] border-white/10 focus-visible:border-elec-yellow/50 focus-visible:ring-elec-yellow/20 transition-all placeholder:text-white/30"
               maxLength={1000}
             />
           </div>
 
           {/* Enhanced Job Scale Detection */}
           {scaleConfidence > 0 && (
-            <div className="space-y-4 p-4 rounded-xl bg-elec-grey/50 border border-elec-yellow/20">
-              <JobScaleBadge 
+            <div className="p-4 rounded-xl bg-[#1a1a1a] border border-white/5">
+              <JobScaleBadge
                 scale={manualScale || detectedScale}
                 confidence={scaleConfidence}
                 onManualChange={setManualScale}
@@ -212,24 +209,24 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
           )}
 
           {/* Enhanced Example Prompts */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <HardHat className="h-4 w-4 text-elec-yellow" />
-              <p className="text-sm font-bold text-foreground tracking-wide">
-                Quick Examples:
+              <HardHat className="h-4 w-4 text-white/40" />
+              <p className="text-sm font-medium text-white/40">
+                Quick Examples
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {examplePrompts[manualScale || detectedScale].map((prompt, idx) => (
                 <button
                   key={idx}
                   onClick={() => setJobDescription(prompt)}
                   disabled={isProcessing}
-                  className="group min-h-[56px] px-5 py-3 text-sm font-medium rounded-xl bg-gradient-to-br from-elec-grey to-elec-grey/80 border border-elec-yellow/30 hover:border-elec-yellow hover:shadow-lg hover:shadow-elec-yellow/20 text-foreground transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation text-left"
+                  className="group min-h-[52px] px-4 py-3 text-sm rounded-xl bg-[#1a1a1a] border border-white/10 hover:border-elec-yellow/30 hover:bg-elec-yellow/5 text-white/70 hover:text-white transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation text-left"
                 >
                   <div className="flex items-start gap-3">
-                    <Zap className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5 group-hover:animate-pulse" />
-                    <span className="line-clamp-2">{prompt}</span>
+                    <Zap className="h-3.5 w-3.5 text-elec-yellow/60 flex-shrink-0 mt-0.5 group-hover:text-elec-yellow" />
+                    <span className="line-clamp-2 text-xs sm:text-sm">{prompt}</span>
                   </div>
                 </button>
               ))}
@@ -239,59 +236,59 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       </Card>
 
       {/* Enhanced Project Info Card */}
-      <Card className="border-0 md:border md:border-elec-yellow/30 shadow-none md:shadow-xl bg-transparent md:bg-elec-card/80 md:backdrop-blur-sm hover:border-elec-yellow/50 transition-all duration-300 rounded-none md:rounded-2xl">
-        <CardContent className="p-4 md:p-6 lg:p-8 space-y-6">
-          <h3 className="text-xl md:text-lg font-bold tracking-tight leading-tight flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 flex items-center justify-center border border-elec-yellow/30">
-              <FileWarning className="h-5 w-5 text-elec-yellow" />
+      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl overflow-hidden">
+        <CardContent className="p-4 sm:p-6 space-y-5">
+          <h3 className="text-base font-semibold text-white flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl bg-elec-yellow/10 flex items-center justify-center border border-elec-yellow/20">
+              <FileWarning className="h-4 w-4 text-elec-yellow" />
             </div>
             <span>Project Information</span>
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <MobileInput
               label="Project Name"
               value={projectInfo.projectName}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, projectName: e.target.value }))}
               placeholder="e.g., Warehouse Lighting Upgrade"
               disabled={isProcessing}
-              className="bg-elec-grey/80 border-elec-yellow/30 h-14 text-base focus-visible:border-elec-yellow"
+              className="bg-[#1a1a1a] border-white/10 h-12 text-base focus-visible:border-elec-yellow/50"
             />
-            
+
             <MobileInput
               label="Location"
               value={projectInfo.location}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, location: e.target.value }))}
               placeholder="e.g., Unit 5, Industrial Estate"
               disabled={isProcessing}
-              className="bg-elec-grey/80 border-elec-yellow/30 h-14 text-base focus-visible:border-elec-yellow"
+              className="bg-[#1a1a1a] border-white/10 h-12 text-base focus-visible:border-elec-yellow/50"
             />
-            
+
             <MobileInput
               label="Assessor"
               value={projectInfo.assessor}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, assessor: e.target.value }))}
               placeholder="Your name"
               disabled={isProcessing}
-              className="bg-elec-grey/80 border-elec-yellow/30 h-14 text-base focus-visible:border-elec-yellow"
+              className="bg-[#1a1a1a] border-white/10 h-12 text-base focus-visible:border-elec-yellow/50"
             />
-            
+
             <MobileInput
               label="Contractor"
               value={projectInfo.contractor}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, contractor: e.target.value }))}
               placeholder="Company name"
               disabled={isProcessing}
-              className="bg-elec-grey/80 border-elec-yellow/30 h-14 text-base focus-visible:border-elec-yellow"
+              className="bg-[#1a1a1a] border-white/10 h-12 text-base focus-visible:border-elec-yellow/50"
             />
-            
+
             <MobileInput
               label="Supervisor (Optional)"
               value={projectInfo.supervisor}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, supervisor: e.target.value }))}
               placeholder="Site supervisor"
               disabled={isProcessing}
-              className="md:col-span-2 bg-elec-grey/80 border-elec-yellow/30 h-14 text-base focus-visible:border-elec-yellow"
+              className="sm:col-span-2 bg-[#1a1a1a] border-white/10 h-12 text-base focus-visible:border-elec-yellow/50"
             />
           </div>
 
@@ -300,27 +297,27 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
             <CollapsibleTrigger asChild>
               <button
                 type="button"
-                className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-xl bg-gradient-to-r from-elec-grey/80 to-elec-grey/60 hover:from-elec-yellow/10 hover:to-elec-yellow/5 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all min-h-[56px] touch-manipulation group gap-3"
+                className="w-full flex items-center justify-between p-4 rounded-xl bg-[#1a1a1a] border border-white/10 hover:border-elec-yellow/30 transition-all touch-manipulation group"
               >
-                <div className="flex items-center gap-3 flex-wrap">
-                  <Shield className="h-5 w-5 text-elec-yellow group-hover:animate-pulse flex-shrink-0" />
-                  <span className="text-base font-semibold text-foreground">Emergency Contacts & Site Personnel</span>
-                  <span className="text-xs px-2.5 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 font-medium whitespace-nowrap">
-                    Optional - Recommended
+                <div className="flex items-center gap-3">
+                  <Shield className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                  <span className="text-sm font-medium text-white">Emergency Contacts</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-white/40 font-medium">
+                    Optional
                   </span>
                 </div>
-                <ChevronDown className={`h-5 w-5 text-elec-yellow transition-transform duration-300 flex-shrink-0 self-end sm:self-center ${showEmergencyContacts ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-4 w-4 text-white/40 transition-transform duration-300 ${showEmergencyContacts ? 'rotate-180' : ''}`} />
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="pt-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+            <CollapsibleContent className="pt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <MobileInput
                   label="Site Manager Name"
                   value={projectInfo.siteManagerName}
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, siteManagerName: e.target.value }))}
                   placeholder="John Smith"
                   disabled={isProcessing}
-                  className="bg-elec-grey/80 border-elec-yellow/30 h-14 text-base"
+                  className="bg-[#1a1a1a] border-white/10 h-12 text-base"
                 />
                 <MobileInput
                   label="Site Manager Phone"
@@ -328,7 +325,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, siteManagerPhone: e.target.value }))}
                   placeholder="07XXX XXXXXX"
                   disabled={isProcessing}
-                  className="bg-elec-grey/80 border-elec-yellow/30 h-14 text-base"
+                  className="bg-[#1a1a1a] border-white/10 h-12 text-base"
                 />
                 <MobileInput
                   label="First Aider Name"
@@ -336,7 +333,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, firstAiderName: e.target.value }))}
                   placeholder="Jane Doe"
                   disabled={isProcessing}
-                  className="bg-elec-grey/80 border-elec-yellow/30 h-14 text-base"
+                  className="bg-[#1a1a1a] border-white/10 h-12 text-base"
                 />
                 <MobileInput
                   label="First Aider Phone"
@@ -344,7 +341,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, firstAiderPhone: e.target.value }))}
                   placeholder="07XXX XXXXXX"
                   disabled={isProcessing}
-                  className="bg-elec-grey/80 border-elec-yellow/30 h-14 text-base"
+                  className="bg-[#1a1a1a] border-white/10 h-12 text-base"
                 />
                 <MobileInput
                   label="H&S Officer Name"
@@ -352,7 +349,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, safetyOfficerName: e.target.value }))}
                   placeholder="Safety Officer"
                   disabled={isProcessing}
-                  className="bg-elec-grey/80 border-elec-yellow/30 h-14 text-base"
+                  className="bg-[#1a1a1a] border-white/10 h-12 text-base"
                 />
                 <MobileInput
                   label="H&S Officer Phone"
@@ -360,7 +357,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, safetyOfficerPhone: e.target.value }))}
                   placeholder="07XXX XXXXXX"
                   disabled={isProcessing}
-                  className="bg-elec-grey/80 border-elec-yellow/30 h-14 text-base"
+                  className="bg-[#1a1a1a] border-white/10 h-12 text-base"
                 />
                 <MobileInput
                   label="Emergency Assembly Point"
@@ -368,7 +365,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, assemblyPoint: e.target.value }))}
                   placeholder="e.g., Main car park, Site entrance"
                   disabled={isProcessing}
-                  className="md:col-span-2 bg-elec-grey/80 border-elec-yellow/30 h-14 text-base"
+                  className="sm:col-span-2 bg-[#1a1a1a] border-white/10 h-12 text-base"
                 />
               </div>
             </CollapsibleContent>
@@ -376,34 +373,33 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
         </CardContent>
       </Card>
 
-      {/* Enhanced Generate Button */}
-      <div className="mt-6 space-y-4">
-        <MobileButton
-          onClick={loadMockData}
-          disabled={isProcessing}
-          variant="outline"
-          className="w-full border-primary/40 hover:border-primary hover:bg-primary/10 text-primary"
-        >
-          <TestTube2 className="h-5 w-5 mr-2" />
-          Load Test Data
-        </MobileButton>
-        
+      {/* Generate Button */}
+      <div className="space-y-3 pt-2">
         <MobileButton
           onClick={handleSubmit}
           disabled={!isFormValid || isProcessing}
           loading={isProcessing}
           size="lg"
           variant="elec"
-          icon={<HardHat className="h-6 w-6" />}
-          className="w-full text-xl sm:text-lg font-bold tracking-wide shadow-2xl shadow-elec-yellow/30 hover:shadow-elec-yellow/50 hover:scale-[1.02] transition-all duration-200 h-16 sm:h-14 rounded-xl"
+          icon={<Sparkles className="h-5 w-5" />}
+          className="w-full text-base sm:text-lg font-bold shadow-lg shadow-elec-yellow/20 h-14 rounded-xl"
         >
           {isProcessing ? 'Generating RAMS...' : 'Generate RAMS'}
         </MobileButton>
+
+        <button
+          onClick={loadMockData}
+          disabled={isProcessing}
+          className="w-full flex items-center justify-center gap-2 py-3 text-sm text-white/40 hover:text-white/60 transition-colors disabled:opacity-50"
+        >
+          <TestTube2 className="h-4 w-4" />
+          <span>Load test data</span>
+        </button>
       </div>
 
       {!isFormValid && (
-        <div className="text-center p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30">
-          <p className="text-sm font-semibold text-elec-yellow leading-relaxed">
+        <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+          <p className="text-sm text-white/50">
             Please provide job description and project name to continue
           </p>
         </div>

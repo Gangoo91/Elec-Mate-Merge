@@ -34,7 +34,7 @@ const QuizAssessment = () => {
       case 'Beginner': return 'text-green-400 bg-green-400/10';
       case 'Intermediate': return 'text-yellow-400 bg-yellow-400/10';
       case 'Advanced': return 'text-red-400 bg-red-400/10';
-      default: return 'text-gray-400 bg-gray-400/10';
+      default: return 'text-white/80 bg-gray-400/10';
     }
   };
 
@@ -45,7 +45,7 @@ const QuizAssessment = () => {
           <GraduationCap className="h-5 w-5" />
           Quiz & Assessment
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Test your knowledge and track your progress
         </CardDescription>
       </CardHeader>
@@ -63,7 +63,7 @@ const QuizAssessment = () => {
                 )}
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm text-gray-400">
+                <div className="flex items-center gap-4 text-sm text-white/80">
                   <span>{assessment.questions} questions</span>
                   <div className="flex items-center gap-1">
                     <Clock className="h-3 w-3" />

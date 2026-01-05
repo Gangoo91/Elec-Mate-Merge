@@ -9,7 +9,7 @@ const PracticalGuidanceSection = () => (
         <Wrench className="h-4 w-4 text-green-400" />
         <h4 className="font-medium text-green-400">Practical Implementation Strategies</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Building Effective Isolation Habits:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -58,7 +58,7 @@ const PracticalGuidanceSection = () => (
         <Users className="h-4 w-4 text-blue-400" />
         <h4 className="font-medium text-blue-400">Team Communication and Coordination</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Effective Communication Protocols:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -105,7 +105,7 @@ const PracticalGuidanceSection = () => (
         <Brain className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Psychological Safety and Error Prevention</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Creating a Safety-First Mindset:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -153,7 +153,7 @@ const PracticalGuidanceSection = () => (
         <Target className="h-4 w-4 text-orange-400" />
         <h4 className="font-medium text-orange-400">Scenario-Based Learning</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Scenario 1: Emergency Call-Out</p>
           <div className="space-y-2">
@@ -207,7 +207,7 @@ const PracticalGuidanceSection = () => (
         <AlertCircle className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">Technology and Modern Challenges</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Modern Electrical Systems Challenges:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -255,7 +255,7 @@ const PracticalGuidanceSection = () => (
         <BookOpen className="h-4 w-4 text-yellow-400" />
         <h4 className="font-medium text-yellow-400">Continuous Professional Development</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Maintaining Competency:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -302,7 +302,7 @@ const PracticalGuidanceSection = () => (
         <TrendingUp className="h-4 w-4 text-red-400" />
         <h4 className="font-medium text-red-400">Quality Improvement and Learning</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Continuous Improvement Culture:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -330,7 +330,7 @@ const PracticalGuidanceSection = () => (
         </div>
         <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
           <p className="font-medium text-green-400 mb-2">Innovation in Safety:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Stay open to new technologies and methods that can improve safety. Whether it's new test equipment,
             improved lockout devices, or digital systems for managing isolation procedures, embrace innovations
             that enhance worker protection while maintaining the fundamental principles of safe isolation.
@@ -344,7 +344,7 @@ const PracticalGuidanceSection = () => (
         <Shield className="h-4 w-4 text-indigo-400" />
         <h4 className="font-medium text-indigo-400">Personal Safety Philosophy</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">The Professional Mindset:</p>
           <div className="space-y-2 text-sm">

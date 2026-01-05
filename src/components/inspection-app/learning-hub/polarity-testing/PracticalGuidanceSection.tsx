@@ -9,7 +9,7 @@ const PracticalGuidanceSection = () => (
         <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-green-400">What to Check - Socket Outlets</h4>
       </div>
-      <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-gray-300 leading-relaxed">
+      <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-white leading-relaxed">
         <p>• <strong>Phase terminal:</strong> Right-hand terminal when viewed from front</p>
         <p>• <strong>Neutral terminal:</strong> Left-hand terminal when viewed from front</p>
         <p>• <strong>Earth terminal:</strong> Top terminal (correct by design)</p>
@@ -22,7 +22,7 @@ const PracticalGuidanceSection = () => (
         <Target className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-blue-400">What to Check - Lighting</h4>
       </div>
-      <div className="space-y-2 text-sm text-gray-300">
+      <div className="space-y-2 text-sm text-white">
         <p>• <strong>Switch connections:</strong> Phase conductor switched, not neutral</p>
         <p>• <strong>Edison screw fittings:</strong> Phase to centre contact, neutral to thread</p>
         <p>• <strong>Bayonet fittings:</strong> Phase to centre contact</p>
@@ -35,7 +35,7 @@ const PracticalGuidanceSection = () => (
         <Target className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-yellow-400">What to Check - Isolators & Protection</h4>
       </div>
-      <div className="space-y-2 text-sm text-gray-300">
+      <div className="space-y-2 text-sm text-white">
         <p>• <strong>Single-pole MCBs:</strong> Connected in phase conductor only</p>
         <p>• <strong>Isolator switches:</strong> Break phase conductor, not neutral</p>
         <p>• <strong>Fused spurs:</strong> Fuse in phase conductor</p>

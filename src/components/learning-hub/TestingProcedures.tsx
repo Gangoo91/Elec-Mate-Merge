@@ -17,7 +17,7 @@ const TestingProcedures = () => {
       case 'Essential': return 'text-red-400';
       case 'Critical': return 'text-orange-400';
       case 'Required': return 'text-blue-400';
-      default: return 'text-gray-400';
+      default: return 'text-white/80';
     }
   };
 
@@ -28,7 +28,7 @@ const TestingProcedures = () => {
           <Zap className="h-5 w-5" />
           Testing Procedures
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Step-by-step testing guides and procedures
         </CardDescription>
       </CardHeader>
@@ -43,7 +43,7 @@ const TestingProcedures = () => {
                     {topic.status}
                   </span>
                 </div>
-                <p className="text-sm text-gray-400">{topic.description}</p>
+                <p className="text-sm text-white/80">{topic.description}</p>
               </div>
               <Button size="sm" variant="ghost" className="text-elec-yellow hover:bg-elec-yellow hover:text-black">
                 <Play className="h-4 w-4" />

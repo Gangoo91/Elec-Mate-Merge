@@ -9,7 +9,7 @@ const PracticalGuidanceSection = () => (
         <Target className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-green-400">Test Equipment Selection and Setup</h4>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
         <div>
           <p className="font-medium text-foreground mb-2">Dedicated loop impedance testers:</p>
           <ul className="space-y-1">
@@ -59,7 +59,7 @@ const PracticalGuidanceSection = () => (
         <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
         <h4 className="text-base sm:text-lg font-semibold text-blue-400">Testing Best Practices and Techniques</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Socket outlet testing methodology:</p>
           <p className="ml-4">• <strong>Plug insertion:</strong> Ensure tester plug makes full contact in socket</p>
@@ -91,7 +91,7 @@ const PracticalGuidanceSection = () => (
         <Wrench className="h-4 w-4 text-orange-400" />
         <h4 className="font-medium text-orange-400">Troubleshooting Common Issues</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">High Zs readings - systematic approach:</p>
           <div className="ml-4 space-y-2">
@@ -128,7 +128,7 @@ const PracticalGuidanceSection = () => (
         <Settings className="h-4 w-4 text-purple-400" />
         <h4 className="font-medium text-purple-400">Circuit-Specific Testing Strategies</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <div className="text-purple-400 font-medium mb-2">Ring Final Circuits</div>
@@ -185,7 +185,7 @@ const PracticalGuidanceSection = () => (
         <AlertTriangle className="h-4 w-4 text-yellow-400" />
         <h4 className="font-medium text-yellow-400">Remedial Actions for Non-Compliance</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Immediate actions for high Zs readings:</p>
           <p className="ml-4">• <strong>Safety assessment:</strong> Determine if installation can remain energised</p>
@@ -228,7 +228,7 @@ const PracticalGuidanceSection = () => (
         <BookOpen className="h-4 w-4 text-cyan-400" />
         <h4 className="font-medium text-cyan-400">Documentation and Record Keeping</h4>
       </div>
-      <div className="space-y-3 text-sm text-gray-300">
+      <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Essential information to record:</p>
           <p className="ml-4">• <strong>Circuit identification:</strong> Clear reference to tested circuit</p>
@@ -250,7 +250,7 @@ const PracticalGuidanceSection = () => (
         </div>
         <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
           <p className="font-medium text-green-400 mb-2">Quality Assurance Checks:</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-white">
             Cross-reference Zs results with R1+R2 continuity tests and Ze measurements. 
             The relationship Zs ≈ Ze + (R1+R2) should be approximately maintained, 
             allowing for measurement tolerances and circuit conditions.

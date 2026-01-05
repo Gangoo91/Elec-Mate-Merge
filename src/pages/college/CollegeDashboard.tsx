@@ -27,7 +27,6 @@ import { CurriculumHub } from "@/components/college/hubs/CurriculumHub";
 import { AssessmentHub } from "@/components/college/hubs/AssessmentHub";
 import { ResourcesHub } from "@/components/college/hubs/ResourcesHub";
 import { CollegeProvider } from "@/contexts/CollegeContext";
-import { NotificationCenter } from "@/components/college/NotificationCenter";
 import { CommandPalette } from "@/components/college/CommandPalette";
 import { QuickActions } from "@/components/college/QuickActions";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
@@ -259,6 +258,10 @@ const CollegeDashboard = () => {
     }
   }, [activeSection]);
 
+  const handleGoHome = useCallback(() => {
+    navigate("/");
+  }, [navigate]);
+
   const renderSection = () => {
     switch (activeSection) {
       // Overview
@@ -334,61 +337,70 @@ const CollegeDashboard = () => {
 
   return (
     <CollegeProvider>
-      <div className="min-h-screen bg-background">
-        {/* Sticky Header - Native App Style */}
-        <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex h-14 sm:h-16 items-center justify-between">
-              {/* Left side - Back button */}
-              <div className="flex items-center gap-2 sm:gap-4">
-                {activeSection === "overview" ? (
-                  <Button variant="ghost" size="sm" onClick={handleGoHome} className="gap-1 text-muted-foreground hover:text-foreground">
-                    <ArrowLeft className="h-4 w-4" />
-                    <span className="hidden sm:inline">Home</span>
-                  </Button>
-                ) : (
-                  <Button variant="ghost" size="sm" onClick={handleBack} className="gap-1 text-muted-foreground hover:text-foreground">
-                    <ArrowLeft className="h-4 w-4" />
-                    <span className="hidden sm:inline">Back</span>
-                  </Button>
-                )}
-                <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
-                  <span>/</span>
-                  <span className="text-foreground font-medium">{sectionTitles[activeSection]}</span>
+      <div className="min-h-screen bg-background text-foreground p-3 sm:p-6 md:p-8 space-y-4 sm:space-y-6 md:space-y-8 pb-20 sm:pb-6">
+        <div className="md:max-w-7xl mx-auto md:px-6 lg:px-10 xl:px-14">
+          {/* Header - Native App Style (non-sticky) */}
+          <div className="relative w-full">
+            {/* Back button - top left */}
+            <div className="absolute top-0 left-0">
+              {activeSection === "overview" ? (
+                <Button variant="ghost" size="sm" onClick={handleGoHome} className="hover:bg-accent/10">
+                  <ArrowLeft className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button variant="ghost" size="sm" onClick={handleBack} className="hover:bg-accent/10">
+                  <ArrowLeft className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+
+            {/* Search and Settings - top right */}
+            <div className="absolute top-0 right-0 flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setCommandPaletteOpen(true)}
+                aria-label="Search"
+                className="h-9 w-9 sm:h-10 sm:w-auto sm:px-3 rounded-full sm:rounded-md bg-gradient-to-br from-blue-500/20 to-cyan-500/10 border-blue-500/50 hover:from-blue-500/30 hover:to-cyan-500/20 hover:border-blue-400/70 transition-all duration-200 p-0 sm:p-2"
+              >
+                <Search className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
+                <span className="hidden sm:inline ml-2 text-sm">Search...</span>
+                <kbd className="pointer-events-none hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium ml-2">
+                  <span className="text-xs">Ctrl</span>K
+                </kbd>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleNavigate("collegesettings")}
+                className="flex items-center gap-2"
+              >
+                <Settings className="h-4 w-4" />
+                <span className="hidden sm:inline">Settings</span>
+              </Button>
+            </div>
+
+            {/* Main content - centered */}
+            <div className="flex flex-col items-center gap-4 w-full pt-8 sm:pt-0">
+              <div className="text-center w-full max-w-2xl mx-auto px-4">
+                <div className="flex justify-center mb-2">
+                  <School className="h-7 w-7 sm:h-9 sm:w-9 text-elec-yellow" />
                 </div>
-              </div>
-
-              {/* Center - Title (mobile only) */}
-              <div className="sm:hidden flex items-center gap-2">
-                <School className="h-5 w-5 text-elec-yellow" />
-                <span className="font-semibold text-sm truncate max-w-[120px]">{sectionTitles[activeSection]}</span>
-              </div>
-
-              {/* Right side - Actions */}
-              <div className="flex items-center gap-2">
-                <Button variant="outline" className="gap-2 text-muted-foreground hidden sm:flex" onClick={() => setCommandPaletteOpen(true)}>
-                  <Search className="h-4 w-4" />
-                  <span className="text-sm">Search...</span>
-                  <kbd className="pointer-events-none hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-                    <span className="text-xs">Ctrl</span>K
-                  </kbd>
-                </Button>
-                <Button variant="ghost" size="icon" className="sm:hidden h-9 w-9" onClick={() => setCommandPaletteOpen(true)}>
-                  <Search className="h-5 w-5" />
-                </Button>
-                <Button variant="ghost" size="sm" onClick={() => handleNavigate("collegesettings")} className="gap-2 text-muted-foreground hover:text-foreground">
-                  <Settings className="h-4 w-4" />
-                  <span className="hidden sm:inline">Settings</span>
-                </Button>
+                <h1 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-foreground mb-2">
+                  {sectionTitles[activeSection]}
+                </h1>
+                <p className="text-sm sm:text-base text-muted-foreground">
+                  {activeSection === "overview" ? "Manage your apprenticeship programme" : ""}
+                </p>
               </div>
             </div>
           </div>
-        </header>
+        </div>
 
         {/* Main Content */}
-        <main className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto pb-24 sm:pb-8">
+        <div className="md:px-6 lg:px-10 xl:px-14 space-y-4 md:space-y-6 lg:space-y-8">
           <div className="animate-fade-in">{renderSection()}</div>
-        </main>
+        </div>
 
         {/* Command Palette */}
         <CommandPalette open={commandPaletteOpen} onOpenChange={setCommandPaletteOpen} onNavigate={handleNavigate} />

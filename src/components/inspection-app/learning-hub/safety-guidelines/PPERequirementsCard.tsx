@@ -41,7 +41,7 @@ const PPERequirementsCard = () => {
           <Shield className="h-6 w-6" />
           Personal Protective Equipment (PPE) Requirements
         </CardTitle>
-        <CardDescription className="text-gray-300">
+        <CardDescription className="text-white">
           Essential protective equipment for electrical work compliance with BS 7671
         </CardDescription>
       </CardHeader>
@@ -58,14 +58,14 @@ const PPERequirementsCard = () => {
                 </div>
                 <div className="space-y-2">
                   {category.items.map((item, itemIndex) => (
-                    <div key={itemIndex} className="flex items-center gap-2 text-sm text-gray-300">
+                    <div key={itemIndex} className="flex items-center gap-2 text-sm text-white">
                       <CheckCircle2 className="h-3 w-3 text-green-400" />
                       {item}
                     </div>
                   ))}
                 </div>
                 <div className="mt-3 pt-2 border-t border-border">
-                  <span className="text-xs text-gray-400">Standard: {category.regulation}</span>
+                  <span className="text-xs text-white/80">Standard: {category.regulation}</span>
                 </div>
               </div>
             );
@@ -75,7 +75,7 @@ const PPERequirementsCard = () => {
         {/* Risk Assessment */}
         <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
           <h4 className="font-medium text-orange-400 mb-3">PPE Selection Risk Assessment</h4>
-          <div className="space-y-2 text-sm text-gray-300">
+          <div className="space-y-2 text-sm text-white">
             <p><strong>Voltage Level:</strong> Determine appropriate insulation rating</p>
             <p><strong>Arc Flash Risk:</strong> Calculate incident energy and select appropriate arc rating</p>
             <p><strong>Environmental Factors:</strong> Consider moisture, chemicals, and temperature</p>
@@ -86,7 +86,7 @@ const PPERequirementsCard = () => {
         {/* Inspection Requirements */}
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
           <h4 className="font-medium text-blue-400 mb-3">PPE Inspection & Maintenance</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-white">
             <div>
               <p><strong>Before Each Use:</strong></p>
               <ul className="mt-1 space-y-1 text-xs">

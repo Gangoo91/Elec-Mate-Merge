@@ -56,15 +56,15 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
             </div>
           </div>
           <h1 className="text-3xl font-bold text-elec-yellow mb-2">Quiz Complete!</h1>
-          <h2 className="text-xl text-gray-300">{assessment.title}</h2>
-          <p className="text-gray-400 mt-2">{getScoreMessage(result.percentage)}</p>
+          <h2 className="text-xl text-white">{assessment.title}</h2>
+          <p className="text-white/80 mt-2">{getScoreMessage(result.percentage)}</p>
         </div>
 
         {/* Score Overview */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card className="bg-card border-border text-center">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-gray-400">Final Score</CardTitle>
+              <CardTitle className="text-sm text-white/80">Final Score</CardTitle>
             </CardHeader>
             <CardContent>
               <div className={`text-3xl font-bold ${getScoreColor(result.percentage)}`}>
@@ -75,19 +75,19 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
 
           <Card className="bg-card border-border text-center">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-gray-400">Correct Answers</CardTitle>
+              <CardTitle className="text-sm text-white/80">Correct Answers</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-green-400">
                 {result.correctAnswers}
               </div>
-              <div className="text-sm text-gray-400">of {result.totalQuestions}</div>
+              <div className="text-sm text-white/80">of {result.totalQuestions}</div>
             </CardContent>
           </Card>
 
           <Card className="bg-card border-border text-center">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-gray-400">Time Taken</CardTitle>
+              <CardTitle className="text-sm text-white/80">Time Taken</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-blue-400">
@@ -98,7 +98,7 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
 
           <Card className="bg-card border-border text-center">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-gray-400">Average per Question</CardTitle>
+              <CardTitle className="text-sm text-white/80">Average per Question</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-purple-400">
@@ -156,7 +156,7 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
                       </div>
                     ))}
                   {Object.entries(result.categoryBreakdown).filter(([, data]) => (data.correct / data.total) >= 0.8).length === 0 && (
-                    <p className="text-gray-400 text-sm">Focus on improving across all areas</p>
+                    <p className="text-white/80 text-sm">Focus on improving across all areas</p>
                   )}
                 </div>
               </div>
@@ -173,7 +173,7 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
                       </div>
                     ))}
                   {Object.entries(result.categoryBreakdown).filter(([, data]) => (data.correct / data.total) < 0.7).length === 0 && (
-                    <p className="text-gray-400 text-sm">Good performance across all categories!</p>
+                    <p className="text-white/80 text-sm">Good performance across all categories!</p>
                   )}
                 </div>
               </div>
@@ -208,7 +208,7 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
               <CardTitle className="text-blue-400">Recommended Study Areas</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-2 text-sm text-gray-300">
+              <div className="space-y-2 text-sm text-white">
                 {result.percentage < 60 && (
                   <p>• Review fundamental BS 7671 principles and definitions</p>
                 )}

@@ -118,7 +118,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
           <Shield className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-elec-yellow" />
           <h1 className={responsiveHeading.h1 + " text-foreground"}>Testing Equipment Safety</h1>
         </div>
-        <p className={responsiveBody.large + " text-gray-300 max-w-3xl mx-auto px-4"}>
+        <p className={responsiveBody.large + " text-white max-w-3xl mx-auto px-4"}>
           Learn to select, inspect, and use electrical testing equipment safely in accordance with GS38 and BS 7671.
         </p>
       </div>
@@ -147,7 +147,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                           {section.requirements.map((requirement, reqIndex) => (
                             <li key={reqIndex} className="flex items-start gap-2">
                               <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                              <span className="text-gray-300 text-xs sm:text-sm">{requirement}</span>
+                              <span className="text-white text-xs sm:text-sm">{requirement}</span>
                             </li>
                           ))}
                         </ul>
@@ -178,7 +178,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                           className={`p-2 h-auto min-h-[44px] touch-manipulation ${
                             inspectionChecks.includes(item.id)
                               ? 'text-green-400 hover:text-green-300'
-                              : 'text-gray-400 hover:text-gray-300'
+                              : 'text-white/80 hover:text-white'
                           }`}
                         >
                           <CheckCircle
@@ -190,7 +190,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                         <span className={`text-xs sm:text-sm ${
                           inspectionChecks.includes(item.id) 
                             ? 'text-green-300 line-through' 
-                            : 'text-gray-300'
+                            : 'text-white'
                         }`}>
                           {item.item}
                         </span>
@@ -229,7 +229,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                           <h4 className="font-semibold text-red-300 mb-2">Common Issues:</h4>
                           <ul className="space-y-1">
                             {instrument.commonIssues.map((issue, issueIndex) => (
-                              <li key={issueIndex} className="text-gray-300 text-sm flex items-start gap-2">
+                              <li key={issueIndex} className="text-white text-sm flex items-start gap-2">
                                 <AlertTriangle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
                                 {issue}
                               </li>
@@ -241,7 +241,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                           <h4 className="font-semibold text-blue-300 mb-2">Best Practices:</h4>
                           <ul className="space-y-1">
                             {instrument.bestPractices.map((practice, practiceIndex) => (
-                              <li key={practiceIndex} className="text-gray-300 text-sm flex items-start gap-2">
+                              <li key={practiceIndex} className="text-white text-sm flex items-start gap-2">
                                 <CheckCircle className="h-3 w-3 text-blue-400 mt-0.5 flex-shrink-0" />
                                 {practice}
                               </li>
@@ -269,7 +269,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                     <CardContent className="space-y-3">
                       <div>
                         <h4 className="font-semibold text-orange-400 mb-2">Daily:</h4>
-                        <ul className="space-y-1 text-gray-300 text-sm">
+                        <ul className="space-y-1 text-white text-sm">
                           <li>• Visual inspection before use</li>
                           <li>• Functional checks</li>
                           <li>• Clean storage after use</li>
@@ -277,7 +277,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                       </div>
                       <div>
                         <h4 className="font-semibold text-orange-400 mb-2">Weekly:</h4>
-                        <ul className="space-y-1 text-gray-300 text-sm">
+                        <ul className="space-y-1 text-white text-sm">
                           <li>• Detailed inspection of leads</li>
                           <li>• Battery level monitoring</li>
                           <li>• Accessory inventory check</li>
@@ -285,7 +285,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                       </div>
                       <div>
                         <h4 className="font-semibold text-orange-400 mb-2">Monthly:</h4>
-                        <ul className="space-y-1 text-gray-300 text-sm">
+                        <ul className="space-y-1 text-white text-sm">
                           <li>• Calibration verification</li>
                           <li>• Storage condition review</li>
                           <li>• Documentation update</li>
@@ -301,7 +301,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                     <CardContent className="space-y-4">
                       <div className="p-3 bg-yellow-500/10 rounded">
                         <h4 className="font-semibold text-yellow-400 mb-2">Calibration Intervals:</h4>
-                        <ul className="space-y-1 text-gray-300 text-sm">
+                        <ul className="space-y-1 text-white text-sm">
                           <li>• Multifunction testers: 12 months</li>
                           <li>• Insulation testers: 12 months</li>
                           <li>• RCD testers: 12 months</li>
@@ -311,7 +311,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                       
                       <div>
                         <h4 className="font-semibold text-yellow-400 mb-2">Calibration Records:</h4>
-                        <ul className="space-y-1 text-gray-300 text-sm">
+                        <ul className="space-y-1 text-white text-sm">
                           <li>• Certificate must be valid</li>
                           <li>• Traceable to national standards</li>
                           <li>• Records kept for audit</li>
@@ -333,7 +333,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <h4 className="font-semibold text-red-400 mb-2">Immediate Removal:</h4>
-                        <ul className="space-y-1 text-gray-300 text-sm">
+                        <ul className="space-y-1 text-white text-sm">
                           <li>• Visible damage to insulation</li>
                           <li>• Cracked or broken case</li>
                           <li>• Exposed conductors</li>
@@ -343,7 +343,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                       </div>
                       <div>
                         <h4 className="font-semibold text-red-400 mb-2">Schedule Replacement:</h4>
-                        <ul className="space-y-1 text-gray-300 text-sm">
+                        <ul className="space-y-1 text-white text-sm">
                           <li>• Calibration overdue</li>
                           <li>• Battery life issues</li>
                           <li>• Wear on test leads</li>

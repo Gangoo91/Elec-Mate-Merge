@@ -22,7 +22,7 @@ const ZsReferenceValuesCard = () => (
         <div className="space-y-2">
           <div className="text-xs">
             <strong className="text-blue-400">Type B:</strong>
-            <div className="grid grid-cols-4 gap-1 mt-1 text-gray-300">
+            <div className="grid grid-cols-4 gap-1 mt-1 text-white">
               <span>6A: 7.28Ω</span>
               <span>10A: 4.37Ω</span>
               <span>16A: 2.73Ω</span>
@@ -36,7 +36,7 @@ const ZsReferenceValuesCard = () => (
           
           <div className="text-xs">
             <strong className="text-yellow-400">Type C:</strong>
-            <div className="grid grid-cols-4 gap-1 mt-1 text-gray-300">
+            <div className="grid grid-cols-4 gap-1 mt-1 text-white">
               <span>6A: 3.64Ω</span>
               <span>10A: 2.19Ω</span>
               <span>16A: 1.37Ω</span>
@@ -50,7 +50,7 @@ const ZsReferenceValuesCard = () => (
           
           <div className="text-xs">
             <strong className="text-red-400">Type D:</strong>
-            <div className="grid grid-cols-4 gap-1 mt-1 text-gray-300">
+            <div className="grid grid-cols-4 gap-1 mt-1 text-white">
               <span>6A: 1.82Ω</span>
               <span>10A: 1.09Ω</span>
               <span>16A: 0.68Ω</span>
@@ -70,7 +70,7 @@ const ZsReferenceValuesCard = () => (
         <div className="space-y-2">
           <div className="text-xs">
             <strong className="text-blue-400">BS 88-2 gG (HRC):</strong>
-            <div className="grid grid-cols-4 gap-1 mt-1 text-gray-300">
+            <div className="grid grid-cols-4 gap-1 mt-1 text-white">
               <span>6A: 7.80Ω</span>
               <span>10A: 4.65Ω</span>
               <span>16A: 2.43Ω</span>
@@ -84,7 +84,7 @@ const ZsReferenceValuesCard = () => (
           
           <div className="text-xs">
             <strong className="text-yellow-400">BS 3036 (Rewirable):</strong>
-            <div className="grid grid-cols-4 gap-1 mt-1 text-gray-300">
+            <div className="grid grid-cols-4 gap-1 mt-1 text-white">
               <span>5A: 9.10Ω</span>
               <span>15A: 2.43Ω</span>
               <span>20A: 1.68Ω</span>
@@ -96,7 +96,7 @@ const ZsReferenceValuesCard = () => (
           
           <div className="text-xs">
             <strong className="text-green-400">BS 1362 (Plug-Top):</strong>
-            <div className="grid grid-cols-4 gap-1 mt-1 text-gray-300">
+            <div className="grid grid-cols-4 gap-1 mt-1 text-white">
               <span>3A: 15.6Ω</span>
               <span>13A: 2.30Ω</span>
             </div>
@@ -110,7 +110,7 @@ const ZsReferenceValuesCard = () => (
         <div className="space-y-2">
           <div className="text-xs">
             <strong className="text-blue-400">BS 88-2 gG (HRC):</strong>
-            <div className="grid grid-cols-4 gap-1 mt-1 text-gray-300">
+            <div className="grid grid-cols-4 gap-1 mt-1 text-white">
               <span>16A: 4.0Ω</span>
               <span>20A: 2.8Ω</span>
               <span>25A: 2.2Ω</span>
@@ -124,7 +124,7 @@ const ZsReferenceValuesCard = () => (
           
           <div className="text-xs">
             <strong className="text-yellow-400">BS 3036 (Rewirable):</strong>
-            <div className="grid grid-cols-4 gap-1 mt-1 text-gray-300">
+            <div className="grid grid-cols-4 gap-1 mt-1 text-white">
               <span>5A: 16.8Ω</span>
               <span>15A: 5.08Ω</span>
               <span>20A: 3.64Ω</span>
@@ -136,7 +136,7 @@ const ZsReferenceValuesCard = () => (
           
           <div className="text-xs">
             <strong className="text-green-400">BS 1362 (Plug-Top):</strong>
-            <div className="grid grid-cols-4 gap-1 mt-1 text-gray-300">
+            <div className="grid grid-cols-4 gap-1 mt-1 text-white">
               <span>3A: 22.0Ω</span>
               <span>13A: 3.64Ω</span>
             </div>
