@@ -10,6 +10,7 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { NotificationProvider } from '@/components/notifications/NotificationProvider';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/lib/queryClient';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <TrainingActivityMonitor />
               <AppRouter />
               <Toaster />
+              <Analytics />
             </NotificationProvider>
           </ThemeProvider>
         </AuthProvider>
