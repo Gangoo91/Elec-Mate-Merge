@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Card } from "@/components/ui/card";
 import { GraduationCap, Zap, Briefcase, ChevronRight } from "lucide-react";
 
 interface HubCardProps {
@@ -15,19 +16,14 @@ function HubCard({ title, subtitle, description, icon, path, iconColor, iconBg }
   const navigate = useNavigate();
 
   return (
-    <button
+    <Card
       className="
-        w-full text-left
-        group relative overflow-hidden rounded-2xl
-        bg-[#1a1a1a] border border-white/[0.06]
-        hover:border-white/[0.12] hover:bg-[#1e1e1e]
+        group cursor-pointer
+        hover:border-elec-yellow/40 hover:bg-[#242424]
         active:scale-[0.98] active:opacity-90
-        transition-all duration-200
-        touch-manipulation
       "
       onClick={() => navigate(path)}
     >
-      {/* Content */}
       <div className="p-4 sm:p-5 flex flex-col h-full min-h-[140px] sm:min-h-[160px]">
         {/* Top row - Icon and badge */}
         <div className="flex items-start justify-between mb-3">
@@ -61,19 +57,16 @@ function HubCard({ title, subtitle, description, icon, path, iconColor, iconBg }
           </span>
           <div className="
             w-7 h-7 sm:w-8 sm:h-8 rounded-full
-            bg-white/[0.05]
+            bg-white/[0.05] border border-elec-yellow/20
             flex items-center justify-center
-            group-hover:bg-elec-yellow group-hover:text-black
+            group-hover:bg-elec-yellow group-hover:border-elec-yellow
             transition-all duration-200
           ">
             <ChevronRight className="w-4 h-4 text-white/60 group-hover:text-black group-hover:translate-x-0.5 transition-all" />
           </div>
         </div>
       </div>
-
-      {/* Subtle gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-t from-elec-yellow/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-    </button>
+    </Card>
   );
 }
 

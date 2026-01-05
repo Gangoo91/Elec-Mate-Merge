@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { Card } from "@/components/ui/card";
 import { Sparkles, Camera, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -74,12 +75,12 @@ export function HeroWelcome() {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-[#1a1a1a] border border-white/[0.06]">
+    <Card className="relative overflow-hidden">
       {/* Subtle accent glow */}
       <div className="absolute top-0 right-0 w-32 sm:w-48 h-32 sm:h-48 bg-elec-yellow/[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 p-4 sm:p-5 md:p-6">
+      <div className="relative z-10 p-4 sm:p-5">
         <div className="flex items-start gap-3 sm:gap-4">
           {/* Profile Photo */}
           <div className="relative flex-shrink-0">
@@ -97,10 +98,10 @@ export function HeroWelcome() {
             >
               <div className={`
                 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl overflow-hidden
-                bg-white/[0.05] border border-white/[0.08]
+                bg-white/[0.05] border border-elec-yellow/30
                 flex items-center justify-center
                 transition-all duration-200
-                group-hover:border-elec-yellow/40
+                group-hover:border-elec-yellow/50
                 ${uploading ? "animate-pulse" : ""}
               `}>
                 {avatarUrl ? (
@@ -144,12 +145,12 @@ export function HeroWelcome() {
           </div>
 
           {/* Status indicator - desktop only */}
-          <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] flex-shrink-0">
+          <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-elec-yellow/20 flex-shrink-0">
             <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
             <span className="text-[10px] text-white/50 font-medium">Online</span>
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }

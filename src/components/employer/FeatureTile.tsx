@@ -38,10 +38,9 @@ export function FeatureTile({
     return (
       <Card
         className={cn(
-          "border-elec-yellow/20 bg-elec-gray cursor-pointer group transition-all duration-200",
-          "hover:bg-elec-gray/80 hover:border-elec-yellow/40",
+          "cursor-pointer group",
+          "hover:bg-[#222222] hover:border-elec-yellow/40",
           "active:scale-[0.98] active:bg-elec-yellow/5",
-          "touch-manipulation select-none",
           className
         )}
         onClick={onClick}
@@ -76,10 +75,9 @@ export function FeatureTile({
   return (
     <Card
       className={cn(
-        "border-elec-yellow/20 bg-elec-gray cursor-pointer group transition-all duration-200",
-        "hover:bg-elec-gray/80 hover:border-elec-yellow/40 hover:shadow-lg hover:shadow-elec-yellow/5",
+        "cursor-pointer group",
+        "hover:bg-[#222222] hover:border-elec-yellow/40",
         "active:scale-[0.98] active:bg-elec-yellow/5",
-        "touch-manipulation select-none",
         className
       )}
       onClick={onClick}

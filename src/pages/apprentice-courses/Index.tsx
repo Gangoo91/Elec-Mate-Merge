@@ -49,31 +49,28 @@ const courses = [
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Link to="/study-centre">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              <span className="text-sm sm:text-base">Back to Study Centre</span>
-            </Button>
-          </Link>
+      {/* Header - full width */}
+      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 pt-3 sm:pt-4 md:pt-6 pb-4 sm:pb-6">
+        <Link to="/study-centre">
+          <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 mb-3 sm:mb-4">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            <span className="text-sm">Back to Study Centre</span>
+          </Button>
+        </Link>
+
+        <div className="space-y-1 sm:space-y-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+            Apprentice Courses
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
+            Electrical training for apprentices
+          </p>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
-        <div className="mb-6 sm:mb-12">
-          <h1 className="text-xl sm:text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4">
-            Apprentice courses
-          </h1>
-          <p className="text-sm sm:text-lg text-muted-foreground max-w-3xl">
-            Comprehensive electrical training and skills development for apprentice electricians
-          </p>
-        </div>
-
-        {/* Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
+      {/* Course Grid - full width, edge to edge on mobile */}
+      <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 pb-6 sm:pb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
           {courses.map((course, index) => (
             <CourseCard
               key={index}

@@ -171,7 +171,7 @@ const ElectricalHub = () => {
                 key={resource.id}
                 className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
               >
-                <Card className={`relative overflow-hidden border-white/10 bg-gradient-to-br ${resource.gradient} backdrop-blur-sm hover:border-elec-yellow/30 active:scale-[0.97] transition-all duration-200 h-full`}>
+                <Card className="relative overflow-hidden hover:bg-[#222222] hover:border-elec-yellow/40 active:scale-[0.97] h-full">
                   {/* Subtle hover glow */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity" />
 
@@ -208,7 +208,7 @@ const ElectricalHub = () => {
                 key={resource.id}
                 className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
               >
-                <Card className="relative overflow-hidden border-white/10 bg-elec-gray/50 backdrop-blur-sm hover:bg-elec-gray/70 hover:border-white/20 active:scale-[0.97] transition-all duration-200 h-full group">
+                <Card className="relative overflow-hidden hover:bg-[#222222] hover:border-elec-yellow/40 active:scale-[0.97] h-full group">
                   <CardHeader className="flex flex-col items-center justify-center text-center p-3 sm:p-4 space-y-2">
                     <div className="p-2 rounded-lg bg-white/5 border border-white/10 group-hover:bg-elec-yellow/10 group-hover:border-elec-yellow/20 transition-colors">
                       <resource.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white/70 group-hover:text-elec-yellow transition-colors" />

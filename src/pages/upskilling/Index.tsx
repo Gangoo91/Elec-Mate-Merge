@@ -136,98 +136,72 @@ const courses = [
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-6">
+      {/* Header - full width */}
+      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 pt-3 sm:pt-4 md:pt-6 pb-4 sm:pb-6">
         <Link to="/electrician/study-centre">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground hover:bg-card transition-all duration-200 mb-4 sm:mb-6 p-0 h-auto"
+            className="text-muted-foreground hover:text-foreground transition-colors mb-3 sm:mb-4 p-0 h-auto"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Study Centre
           </Button>
         </Link>
 
-        <div className="space-y-2 sm:space-y-3">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+        <div className="space-y-1 sm:space-y-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
             Electrical Upskilling
           </h1>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl">
-            Advanced electrical courses and professional development for qualified electricians
+          <p className="text-sm sm:text-base text-muted-foreground">
+            Advanced courses for qualified electricians
           </p>
         </div>
       </div>
 
-      {/* Course Grid */}
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+      {/* Course Grid - full width, edge to edge on mobile */}
+      <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 pb-6 sm:pb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
           {courses.map((course) => {
             const IconComponent = course.icon;
             return (
               <Link key={course.id} to={course.link} aria-label={`View ${course.title} course`}>
-                <Card
+                <div
                   className="
                     group relative overflow-hidden cursor-pointer h-full
-                    bg-card border border-yellow-400/20
-                    hover:border-yellow-400/50
-                    active:scale-[0.98]
-                    transition-all duration-300 ease-out
-                    hover:shadow-lg hover:shadow-yellow-400/10
+                    bg-card/50 rounded-lg
+                    active:scale-[0.98] active:bg-card/70
+                    transition-all duration-200
                   "
                 >
-                  {/* Background glow on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  {/* Decorative corner */}
-                  <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden pointer-events-none">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-yellow-400/5 rotate-45 translate-x-12 -translate-y-12 group-hover:bg-yellow-400/10 transition-colors" />
-                  </div>
-
                   {/* Content */}
-                  <div className="relative z-10 p-4 sm:p-5 flex flex-col h-full min-h-[180px]">
-                    {/* Icon and level */}
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="
-                        p-2.5 rounded-xl
-                        bg-yellow-400/10 text-yellow-400
-                        group-hover:bg-yellow-400 group-hover:text-black
-                        transition-all duration-300
-                      ">
-                        <IconComponent className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2.5} />
+                  <div className="relative z-10 p-3 sm:p-4 flex flex-col h-full min-h-[140px] sm:min-h-[160px]">
+                    {/* Icon */}
+                    <div className="flex items-center justify-between mb-2 sm:mb-3">
+                      <div className="p-2 sm:p-2.5 rounded-lg bg-primary/10 text-primary">
+                        <IconComponent className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2} />
                       </div>
-                      <span className="text-[10px] sm:text-xs font-medium text-yellow-400/70 uppercase tracking-wider px-2 py-0.5 rounded bg-yellow-400/5">
+                      <span className="text-[9px] sm:text-[10px] font-medium text-primary/70 uppercase tracking-wide">
                         {course.level}
                       </span>
                     </div>
 
                     {/* Title and description */}
                     <div className="flex-grow">
-                      <h3 className="text-base sm:text-lg font-bold text-white mb-1.5 group-hover:text-yellow-400 transition-colors leading-tight">
+                      <h3 className="text-sm sm:text-base font-semibold text-foreground mb-1 leading-tight line-clamp-2">
                         {course.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-gray-400 leading-relaxed line-clamp-2">
+                      <p className="text-[10px] sm:text-xs text-muted-foreground leading-relaxed line-clamp-2 hidden sm:block">
                         {course.description}
                       </p>
                     </div>
 
-                    {/* Duration and action */}
-                    <div className="mt-3 flex items-center justify-between">
-                      <span className="text-xs text-gray-500">{course.duration}</span>
-                      <div className="
-                        w-7 h-7 rounded-full
-                        bg-yellow-400/10
-                        flex items-center justify-center
-                        group-hover:bg-yellow-400 group-hover:text-black
-                        transition-all duration-300
-                      ">
-                        <ChevronRight className="w-4 h-4 text-yellow-400 group-hover:text-black group-hover:translate-x-0.5 transition-all" />
-                      </div>
+                    {/* Duration */}
+                    <div className="mt-2 flex items-center justify-between">
+                      <span className="text-[10px] sm:text-xs text-muted-foreground">{course.duration}</span>
+                      <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary/60" />
                     </div>
                   </div>
-
-                  {/* Bottom accent line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-yellow-400/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Card>
+                </div>
               </Link>
             );
           })}

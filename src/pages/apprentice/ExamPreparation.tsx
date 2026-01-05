@@ -1,7 +1,5 @@
 import React from 'react';
 import BackButton from "@/components/common/BackButton";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { BookOpen, Clock, Target, CheckCircle, AlertCircle, Trophy } from "lucide-react";
@@ -22,7 +20,7 @@ const ExamPreparation = () => {
       title: "18th Edition (BS 7671)",
       description: "Wiring Regulations examination",
       duration: "2 hours",
-      difficulty: "Intermediate", 
+      difficulty: "Intermediate",
       topics: ["Regulations knowledge", "Design principles", "Installation methods", "Special locations"],
       progress: 80,
       link: "/apprentice/18th-edition"
@@ -51,35 +49,35 @@ const ExamPreparation = () => {
     {
       title: "Practice Questions",
       description: "Topic-specific questions with detailed explanations",
-      icon: <Target className="h-5 w-5 text-elec-yellow" />,
+      icon: <Target className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />,
       count: "500+ questions"
     },
     {
       title: "Mock Examinations",
       description: "Full-length practice exams under timed conditions",
-      icon: <Clock className="h-5 w-5 text-elec-yellow" />,
+      icon: <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />,
       count: "12 mock exams"
     },
     {
       title: "Study Guides",
       description: "Comprehensive revision materials for each qualification",
-      icon: <BookOpen className="h-5 w-5 text-elec-yellow" />,
+      icon: <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />,
       count: "8 study guides"
     },
     {
       title: "Video Tutorials",
       description: "Step-by-step explanations of complex topics",
-      icon: <CheckCircle className="h-5 w-5 text-elec-yellow" />,
+      icon: <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />,
       count: "50+ videos"
     }
   ];
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Advanced": return "border-red-500/40 text-red-300";
-      case "Intermediate": return "border-yellow-500/40 text-yellow-300";
-      case "Beginner": return "border-green-500/40 text-green-300";
-      default: return "border-elec-yellow/40 text-elec-yellow";
+      case "Advanced": return "text-red-400";
+      case "Intermediate": return "text-yellow-400";
+      case "Beginner": return "text-green-400";
+      default: return "text-primary";
     }
   };
 
@@ -91,165 +89,163 @@ const ExamPreparation = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 space-y-4 sm:space-y-6 animate-fade-in">
-        <div className="flex flex-col items-center justify-center mb-2 sm:mb-4">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4">Examination Preparation</h1>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
+      {/* Header - full width */}
+      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 pt-3 sm:pt-4 md:pt-6 pb-4 sm:pb-6">
+        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+
+        <div className="space-y-1 sm:space-y-2 mt-3 sm:mt-4">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+            Examination Preparation
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
             Comprehensive preparation resources for electrical qualifications and assessments
           </p>
-          <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
         </div>
+      </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+      {/* Study Resources Grid - full width */}
+      <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 pb-4 sm:pb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
           {studyResources.map((resource, index) => (
-            <Card key={index} className="bg-card border-border/30 hover:border-primary/40 transition-colors">
-              <CardHeader className="pb-2 p-3 sm:p-4">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
-                    {React.cloneElement(resource.icon as React.ReactElement, {
-                      className: "h-4 w-4 sm:h-5 sm:w-5 text-primary"
-                    })}
-                  </div>
-                  <CardTitle className="text-xs sm:text-sm">{resource.title}</CardTitle>
+            <div key={index} className="bg-card/50 rounded-lg p-3 sm:p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
+                  {resource.icon}
                 </div>
-              </CardHeader>
-              <CardContent className="p-3 sm:p-4 pt-0">
-                <p className="text-[10px] sm:text-xs text-muted-foreground mb-2">{resource.description}</p>
-                <Badge variant="outline" className="text-[10px] sm:text-xs border-primary/30 text-primary">
-                  {resource.count}
-                </Badge>
-              </CardContent>
-            </Card>
+                <h3 className="text-xs sm:text-sm font-semibold text-foreground">{resource.title}</h3>
+              </div>
+              <p className="text-[10px] sm:text-xs text-muted-foreground mb-2 line-clamp-2">{resource.description}</p>
+              <span className="text-[10px] sm:text-xs text-primary font-medium">
+                {resource.count}
+              </span>
+            </div>
           ))}
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
+      {/* Exam Types Grid - full width */}
+      <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 pb-4 sm:pb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
           {examTypes.map((exam, index) => (
-            <Card key={index} className="bg-card border-border/30">
-              <CardHeader className="p-3 sm:p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <CardTitle className="text-base sm:text-lg md:text-xl text-primary">{exam.title}</CardTitle>
-                  <Badge variant="outline" className={`text-[10px] sm:text-xs ${getDifficultyColor(exam.difficulty)}`}>
-                    {exam.difficulty}
-                  </Badge>
-                </div>
-                <p className="text-muted-foreground text-xs sm:text-sm">{exam.description}</p>
-                <div className="flex items-center gap-3 sm:gap-4 mt-2">
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
-                    <span className="text-xs sm:text-sm text-muted-foreground">{exam.duration}</span>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-3 sm:space-y-4 p-3 sm:p-4 pt-0">
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2 text-xs sm:text-sm">Key Topics:</h4>
-                  <div className="flex flex-wrap gap-1">
-                    {exam.topics.map((topic, topicIndex) => (
-                      <Badge key={topicIndex} variant="outline" className="text-[10px] sm:text-xs">
-                        {topic}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
+            <div key={index} className="bg-card/50 rounded-lg p-3 sm:p-4">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-sm sm:text-base font-semibold text-foreground">{exam.title}</h3>
+                <span className={`text-[10px] sm:text-xs font-medium ${getDifficultyColor(exam.difficulty)}`}>
+                  {exam.difficulty}
+                </span>
+              </div>
+              <p className="text-muted-foreground text-[10px] sm:text-xs mb-2">{exam.description}</p>
+              <div className="flex items-center gap-1 mb-3">
+                <Clock className="h-3 w-3 text-muted-foreground" />
+                <span className="text-[10px] sm:text-xs text-muted-foreground">{exam.duration}</span>
+              </div>
 
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs sm:text-sm font-medium">Preparation Progress</span>
-                    <span className={`text-xs sm:text-sm font-medium ${getProgressColor(exam.progress)}`}>
-                      {exam.progress}%
+              <div className="mb-3">
+                <p className="font-medium text-foreground mb-1.5 text-[10px] sm:text-xs">Key Topics:</p>
+                <div className="flex flex-wrap gap-1">
+                  {exam.topics.map((topic, topicIndex) => (
+                    <span key={topicIndex} className="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded bg-primary/10 text-primary">
+                      {topic}
                     </span>
-                  </div>
-                  <Progress value={exam.progress} className="h-1.5 sm:h-2" />
+                  ))}
                 </div>
+              </div>
 
-                <Link to={exam.link}>
-                  <Button className="w-full text-xs sm:text-sm h-8 sm:h-10">
-                    Start Preparation
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
+              <div className="mb-3">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[10px] sm:text-xs font-medium text-foreground">Progress</span>
+                  <span className={`text-[10px] sm:text-xs font-medium ${getProgressColor(exam.progress)}`}>
+                    {exam.progress}%
+                  </span>
+                </div>
+                <Progress value={exam.progress} className="h-1.5" />
+              </div>
+
+              <Link to={exam.link}>
+                <Button className="w-full text-xs sm:text-sm h-8 sm:h-9">
+                  Start Preparation
+                </Button>
+              </Link>
+            </div>
           ))}
         </div>
+      </div>
 
-        <Card className="bg-card border-border/30">
-          <CardHeader className="p-3 sm:p-4">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
-                <Trophy className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-              </div>
-              <CardTitle className="text-primary text-base sm:text-lg">Exam Success Tips</CardTitle>
+      {/* Exam Tips Section - full width */}
+      <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 pb-6 sm:pb-8">
+        <div className="bg-card/50 rounded-lg p-3 sm:p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
+              <Trophy className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
             </div>
-          </CardHeader>
-          <CardContent className="p-3 sm:p-4 pt-0">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              <div>
-                <h4 className="font-semibold text-foreground mb-2 sm:mb-3 text-sm sm:text-base">Before the Exam</h4>
-                <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    Review regulations and standards thoroughly
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    Practice calculations and formulas
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    Take multiple mock exams under timed conditions
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    Get plenty of rest the night before
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-foreground mb-2 sm:mb-3 text-sm sm:text-base">During the Exam</h4>
-                <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
-                  <li className="flex items-start gap-2">
-                    <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    Read all questions carefully before answering
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    Manage your time effectively
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    Answer easier questions first
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    Double-check calculations and answers
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-foreground mb-2 sm:mb-3 text-sm sm:text-base">Practical Assessments</h4>
-                <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
-                  <li className="flex items-start gap-2">
-                    <Target className="h-3 w-3 sm:h-4 sm:w-4 text-primary mt-0.5 flex-shrink-0" />
-                    Follow safe isolation procedures
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Target className="h-3 w-3 sm:h-4 sm:w-4 text-primary mt-0.5 flex-shrink-0" />
-                    Use appropriate test equipment correctly
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Target className="h-3 w-3 sm:h-4 sm:w-4 text-primary mt-0.5 flex-shrink-0" />
-                    Document results clearly and accurately
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Target className="h-3 w-3 sm:h-4 sm:w-4 text-primary mt-0.5 flex-shrink-0" />
-                    Demonstrate professional working practices
-                  </li>
-                </ul>
-              </div>
+            <h3 className="text-sm sm:text-base font-semibold text-foreground">Exam Success Tips</h3>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div>
+              <h4 className="font-semibold text-foreground mb-2 text-xs sm:text-sm">Before the Exam</h4>
+              <ul className="space-y-1.5 text-[10px] sm:text-xs text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                  Review regulations and standards thoroughly
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                  Practice calculations and formulas
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                  Take multiple mock exams under timed conditions
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                  Get plenty of rest the night before
+                </li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
+            <div>
+              <h4 className="font-semibold text-foreground mb-2 text-xs sm:text-sm">During the Exam</h4>
+              <ul className="space-y-1.5 text-[10px] sm:text-xs text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <AlertCircle className="h-3 w-3 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  Read all questions carefully before answering
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertCircle className="h-3 w-3 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  Manage your time effectively
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertCircle className="h-3 w-3 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  Answer easier questions first
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertCircle className="h-3 w-3 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  Double-check calculations and answers
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-foreground mb-2 text-xs sm:text-sm">Practical Assessments</h4>
+              <ul className="space-y-1.5 text-[10px] sm:text-xs text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <Target className="h-3 w-3 text-primary mt-0.5 flex-shrink-0" />
+                  Follow safe isolation procedures
+                </li>
+                <li className="flex items-start gap-2">
+                  <Target className="h-3 w-3 text-primary mt-0.5 flex-shrink-0" />
+                  Use appropriate test equipment correctly
+                </li>
+                <li className="flex items-start gap-2">
+                  <Target className="h-3 w-3 text-primary mt-0.5 flex-shrink-0" />
+                  Document results clearly and accurately
+                </li>
+                <li className="flex items-start gap-2">
+                  <Target className="h-3 w-3 text-primary mt-0.5 flex-shrink-0" />
+                  Demonstrate professional working practices
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

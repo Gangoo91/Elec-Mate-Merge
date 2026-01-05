@@ -1,3 +1,4 @@
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AlertCircle, Clock, FileText, CheckCircle2, ChevronRight } from "lucide-react";
@@ -18,19 +19,19 @@ function ActionItem({ type, title, description, action, onAction }: ActionItemPr
   const colors = {
     urgent: {
       bg: "bg-red-500/10",
-      border: "border-red-500/20",
+      border: "border-red-500/30",
       icon: "text-red-400",
       iconBg: "bg-red-500/15"
     },
     warning: {
       bg: "bg-amber-500/10",
-      border: "border-amber-500/20",
+      border: "border-amber-500/30",
       icon: "text-amber-400",
       iconBg: "bg-amber-500/15"
     },
     info: {
       bg: "bg-blue-500/10",
-      border: "border-blue-500/20",
+      border: "border-blue-500/30",
       icon: "text-blue-400",
       iconBg: "bg-blue-500/15"
     }
@@ -49,20 +50,17 @@ function ActionItem({ type, title, description, action, onAction }: ActionItemPr
         touch-manipulation
       `}
     >
-      {/* Icon */}
       <div className={`p-2 rounded-lg ${style.iconBg} ${style.icon} flex-shrink-0`}>
         {type === "urgent" ? <AlertCircle className="h-4 w-4" /> :
          type === "warning" ? <Clock className="h-4 w-4" /> :
          <FileText className="h-4 w-4" />}
       </div>
 
-      {/* Content */}
       <div className="flex-grow min-w-0">
         <p className="text-sm font-medium text-white truncate">{title}</p>
         <p className="text-xs text-white/50 truncate">{description}</p>
       </div>
 
-      {/* Action arrow */}
       <div className="flex-shrink-0 flex items-center gap-1 text-elec-yellow">
         <span className="text-xs font-medium hidden sm:inline">{action}</span>
         <ChevronRight className="h-4 w-4" />
@@ -78,7 +76,6 @@ export function ActionRequired() {
 
   const actionItems: ActionItemProps[] = [];
 
-  // Check for overdue invoices
   const overdueInvoices = invoices?.filter(inv => {
     if (!inv.due_date || inv.invoice_status === "paid") return false;
     return isPast(new Date(inv.due_date));
@@ -95,7 +92,6 @@ export function ActionRequired() {
     });
   });
 
-  // Check for pending quotes needing response
   const pendingQuotes = savedQuotes?.filter(q =>
     q.status === "sent" && q.acceptance_status === "pending"
   ) || [];
@@ -110,12 +106,11 @@ export function ActionRequired() {
     });
   });
 
-  // If no action items, show all clear
   if (actionItems.length === 0) {
     return (
-      <div className="rounded-2xl bg-[#1a1a1a] border border-white/[0.06] p-4">
+      <Card className="p-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-green-500/10 flex-shrink-0">
+          <div className="p-2.5 rounded-xl bg-green-500/10 border border-green-500/20 flex-shrink-0">
             <CheckCircle2 className="h-5 w-5 text-green-400" />
           </div>
           <div className="min-w-0">
@@ -123,21 +118,21 @@ export function ActionRequired() {
             <p className="text-xs text-white/50">No urgent actions required</p>
           </div>
         </div>
-      </div>
+      </Card>
     );
   }
 
   return (
-    <div className="rounded-2xl bg-[#1a1a1a] border border-white/[0.06]">
+    <Card>
       <div className="p-4 pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-elec-yellow/10">
+            <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
               <AlertCircle className="h-4 w-4 text-elec-yellow" />
             </div>
             <span className="text-sm font-semibold text-white">Action Required</span>
           </div>
-          <Badge className="bg-red-500/15 text-red-400 border-0 text-[10px] font-semibold px-1.5 py-0.5">
+          <Badge className="bg-red-500/15 text-red-400 border border-red-500/30 text-[10px] font-semibold px-1.5 py-0.5">
             {actionItems.length}
           </Badge>
         </div>
@@ -156,6 +151,6 @@ export function ActionRequired() {
           </Button>
         )}
       </div>
-    </div>
+    </Card>
   );
 }

@@ -28,7 +28,6 @@ function StatItem({ icon, value, label, color = "text-elec-yellow", path }: Stat
   const [displayValue, setDisplayValue] = useState(0);
   const numericValue = typeof value === "number" ? value : parseInt(value.replace(/[^0-9]/g, "")) || 0;
 
-  // Animate counter
   useEffect(() => {
     if (typeof value !== "number") {
       return;
@@ -52,7 +51,6 @@ function StatItem({ icon, value, label, color = "text-elec-yellow", path }: Stat
     return () => clearInterval(timer);
   }, [numericValue, value]);
 
-  // Format display value
   const formattedValue = typeof value === "string"
     ? value
     : formatCompactNumber(displayValue);
@@ -63,19 +61,16 @@ function StatItem({ icon, value, label, color = "text-elec-yellow", path }: Stat
 
   return (
     <div className="flex-shrink-0 min-w-[100px] sm:min-w-0 group">
-      <div
+      <Card
         className={`
-          relative overflow-hidden h-full rounded-xl
-          bg-[#1a1a1a] border border-white/[0.06]
-          hover:border-white/[0.12] hover:bg-[#1e1e1e]
-          transition-all duration-200
+          h-full
+          hover:border-elec-yellow/40 hover:bg-[#242424]
           active:scale-[0.97] active:opacity-90
           ${path ? "cursor-pointer" : ""}
         `}
         onClick={handleClick}
       >
         <div className="p-2.5 sm:p-3.5 flex flex-col items-center text-center">
-          {/* Icon */}
           <div className={`
             p-1.5 sm:p-2 rounded-lg mb-1.5
             bg-white/[0.05] ${color}
@@ -85,15 +80,13 @@ function StatItem({ icon, value, label, color = "text-elec-yellow", path }: Stat
             {icon}
           </div>
 
-          {/* Value */}
           <span className="text-lg sm:text-xl md:text-2xl font-semibold text-white tracking-tight">
             {formattedValue}
           </span>
 
-          {/* Label */}
           <p className="text-[10px] sm:text-xs text-white/50 mt-0.5 whitespace-nowrap font-medium">{label}</p>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }
@@ -102,7 +95,6 @@ export function SmartStatsBar() {
   const { savedQuotes } = useQuoteStorage();
   const { invoices } = useInvoiceStorage();
 
-  // Calculate stats
   const pendingQuotes = savedQuotes?.filter(q =>
     q.status === "sent" || q.status === "pending"
   ) || [];
@@ -115,7 +107,6 @@ export function SmartStatsBar() {
     return new Date(i.due_date) < new Date();
   }).length;
 
-  // Format currency for display
   const formattedValue = totalQuoteValue >= 1000
     ? `£${(totalQuoteValue / 1000).toFixed(1)}k`
     : `£${totalQuoteValue}`;
@@ -160,11 +151,10 @@ export function SmartStatsBar() {
 
   return (
     <div className="relative">
-      {/* Stats container - horizontal scroll on mobile, grid on desktop */}
       <div className="
         flex gap-2.5 sm:gap-3
         overflow-x-auto overscroll-x-contain
-        pb-1 -mx-4 px-4
+        pb-1 -mx-3 px-3
         sm:mx-0 sm:px-0
         scrollbar-hide
         sm:grid sm:grid-cols-5

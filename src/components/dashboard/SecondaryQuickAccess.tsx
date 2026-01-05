@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Card } from "@/components/ui/card";
 import { BookOpen, ClipboardCheck, Calculator, Heart, Sparkles, FileText } from "lucide-react";
 
 interface QuickAccessItemProps {
@@ -12,22 +13,18 @@ function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
   const navigate = useNavigate();
 
   return (
-    <button
+    <Card
       className="
-        w-full text-left
-        group relative overflow-hidden rounded-xl
-        bg-[#1a1a1a] border border-white/[0.06]
-        hover:border-white/[0.12] hover:bg-[#1e1e1e]
+        group cursor-pointer
+        hover:border-elec-yellow/40 hover:bg-[#242424]
         active:scale-[0.97] active:opacity-90
-        transition-all duration-150
-        touch-manipulation
       "
       onClick={() => navigate(path)}
     >
       <div className="p-2.5 sm:p-3 flex items-center gap-2 sm:gap-2.5">
         <div className="
           p-1.5 sm:p-2 rounded-lg
-          bg-white/[0.05] text-elec-yellow/80
+          bg-elec-yellow/10 text-elec-yellow/80
           group-hover:text-elec-yellow
           transition-colors duration-150
           flex-shrink-0
@@ -43,7 +40,7 @@ function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
           </span>
         )}
       </div>
-    </button>
+    </Card>
   );
 }
 

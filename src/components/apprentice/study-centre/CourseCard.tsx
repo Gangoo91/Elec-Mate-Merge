@@ -41,7 +41,7 @@ export function CourseCard({ title, description, icon: Icon, href, number, comin
   if (href && !comingSoon) {
     return (
       <Link to={href} className="block h-full">
-        <Card className="group relative overflow-hidden bg-elec-card border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300 cursor-pointer h-[200px] flex flex-col">
+        <Card className="group relative overflow-hidden hover:bg-[#222222] hover:border-elec-yellow/40 cursor-pointer h-[200px] flex flex-col active:scale-[0.98]">
           {CardContent}
         </Card>
       </Link>
@@ -49,7 +49,7 @@ export function CourseCard({ title, description, icon: Icon, href, number, comin
   }
 
   return (
-    <Card className={`group relative overflow-hidden bg-elec-card border border-elec-yellow/20 transition-all duration-300 h-[200px] flex flex-col ${comingSoon ? 'cursor-not-allowed' : 'hover:border-elec-yellow/40 cursor-pointer'}`}>
+    <Card className={`group relative overflow-hidden h-[200px] flex flex-col ${comingSoon ? 'cursor-not-allowed opacity-80' : 'hover:bg-[#222222] hover:border-elec-yellow/40 cursor-pointer active:scale-[0.98]'}`}>
       {CardContent}
     </Card>
   );
