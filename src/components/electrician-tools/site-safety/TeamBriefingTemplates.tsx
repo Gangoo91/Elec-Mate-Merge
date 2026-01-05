@@ -193,10 +193,19 @@ const TeamBriefingTemplates = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-8">
-        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-        <span className="ml-2 text-muted-foreground">Loading briefings...</span>
-      </div>
+      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
+        <CardContent className="py-16">
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+            </div>
+            <div className="text-center">
+              <p className="text-white font-medium">Loading Briefings</p>
+              <p className="text-sm text-white/50 mt-1">Fetching your team briefings...</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -255,25 +264,29 @@ const TeamBriefingTemplates = () => {
         </div>
 
         {/* Scheduled Briefings - Collapsible at Bottom */}
-        <div className="border-t border-elec-yellow/20 pt-6">
+        <div className="border-t border-white/10 pt-6">
           <button
             onClick={() => setScheduledBriefingsExpanded(!scheduledBriefingsExpanded)}
-            className="w-full flex items-center justify-between mb-4 touch-manipulation min-h-[44px]"
+            className="w-full flex items-center justify-between mb-4 touch-manipulation min-h-[44px] active:scale-[0.98] transition-transform"
           >
-            <h2 className="text-lg font-semibold text-elec-light flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-elec-yellow" />
-              Your Scheduled Briefings
+            <h2 className="text-lg font-semibold text-white flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                <Calendar className="h-4 w-4 text-elec-yellow" />
+              </div>
+              Scheduled Briefings
               {upcomingBriefings > 0 && (
-                <span className="bg-elec-yellow text-elec-dark text-xs font-bold px-2 py-1 rounded-full">
+                <span className="bg-elec-yellow text-black text-xs font-bold px-2.5 py-1 rounded-full">
                   {upcomingBriefings}
                 </span>
               )}
             </h2>
-            {scheduledBriefingsExpanded ? (
-              <ChevronUp className="h-5 w-5 text-elec-yellow" />
-            ) : (
-              <ChevronDown className="h-5 w-5 text-elec-yellow" />
-            )}
+            <div className="p-2 rounded-xl bg-white/5">
+              {scheduledBriefingsExpanded ? (
+                <ChevronUp className="h-5 w-5 text-white/50" />
+              ) : (
+                <ChevronDown className="h-5 w-5 text-white/50" />
+              )}
+            </div>
           </button>
 
           {scheduledBriefingsExpanded && (
@@ -285,39 +298,39 @@ const TeamBriefingTemplates = () => {
                   .map((briefing) => {
                     const statusColors = {
                       'completed': 'border-green-500/30 bg-green-500/5',
-                      'in_progress': 'border-yellow-500/50 bg-yellow-500/5 shadow-yellow-500/20 shadow-sm',
-                      'scheduled': 'border-elec-yellow/10',
+                      'in_progress': 'border-yellow-500/30 bg-yellow-500/5',
+                      'scheduled': 'border-white/10',
                     };
-                    const statusColor = statusColors[briefing.status as keyof typeof statusColors] || 'border-elec-yellow/10';
-                    
+                    const statusColor = statusColors[briefing.status as keyof typeof statusColors] || 'border-white/10';
+
                     return (
                       <div
                         key={briefing.id}
-                        className={`bg-card ${statusColor} rounded-xl p-3 hover:border-elec-yellow/40 transition-all`}
+                        className={`bg-[#1e1e1e] border ${statusColor} rounded-2xl p-4 hover:border-elec-yellow/30 transition-all active:scale-[0.98]`}
                       >
-                        <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-start justify-between mb-3">
                           <div className="flex-1">
-                            <h3 className="font-semibold text-elec-light mb-1 text-sm">{briefing.briefing_name}</h3>
-                            <p className="text-xs text-elec-light/70">
+                            <h3 className="font-semibold text-white mb-1 text-sm">{briefing.briefing_name}</h3>
+                            <p className="text-xs text-white/50">
                               {briefing.location}
                             </p>
                           </div>
-                          <Badge className={`text-xs ${
-                            briefing.status === 'completed' ? 'bg-green-500/20 text-green-400 border-0' :
-                            briefing.status === 'in_progress' ? 'bg-yellow-500/20 text-yellow-400 border-0' :
-                            'bg-card border-elec-yellow/20 text-elec-light'
+                          <Badge className={`text-xs capitalize ${
+                            briefing.status === 'completed' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
+                            briefing.status === 'in_progress' ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20' :
+                            'bg-white/5 text-white/70 border border-white/10'
                           }`}>
                             {briefing.status === 'in_progress' ? 'In Progress' : briefing.status}
                           </Badge>
                         </div>
-                        <div className="flex items-center gap-4 text-xs text-elec-light/60">
-                          <div className="flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
+                        <div className="flex items-center gap-4 text-xs text-white/40">
+                          <div className="flex items-center gap-1.5">
+                            <Calendar className="h-3.5 w-3.5" />
                             <span>{new Date(briefing.briefing_date).toLocaleDateString('en-GB')}</span>
                           </div>
                           {briefing.attendees?.length > 0 && (
-                            <div className="flex items-center gap-1">
-                              <Users className="h-3 w-3" />
+                            <div className="flex items-center gap-1.5">
+                              <Users className="h-3.5 w-3.5" />
                               <span>{briefing.attendees.length}</span>
                             </div>
                           )}
@@ -326,9 +339,11 @@ const TeamBriefingTemplates = () => {
                     );
                   })
               ) : (
-                <div className="bg-card border border-elec-yellow/20 rounded-xl p-6 text-center">
-                  <Calendar className="h-12 w-12 text-elec-yellow/50 mx-auto mb-3" />
-                  <p className="text-elec-light/70">No scheduled briefings yet</p>
+                <div className="bg-[#1e1e1e] border border-white/10 border-dashed rounded-2xl p-6 text-center">
+                  <div className="p-3 rounded-xl bg-white/5 w-fit mx-auto mb-3">
+                    <Calendar className="h-10 w-10 text-white/30" />
+                  </div>
+                  <p className="text-white/50 text-sm">No scheduled briefings yet</p>
                 </div>
               )}
             </div>
@@ -339,40 +354,38 @@ const TeamBriefingTemplates = () => {
       {/* DESKTOP LAYOUT */}
       <div className="hidden md:block space-y-6">
         {/* Statistics Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <MobileGestureHandler onTap={() => {}}>
-            <Card className="border-primary/30">
-              <CardContent className="p-4 text-center">
-                <div className="text-3xl font-bold text-primary">{briefings.length}</div>
-                <div className="text-sm text-muted-foreground">Total Briefings</div>
-              </CardContent>
-            </Card>
-          </MobileGestureHandler>
-          
-          <Card className="border-primary/30">
-            <CardContent className="p-4 text-center">
-              <div className="text-3xl font-bold text-primary">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
+            <CardContent className="p-6 text-center">
+              <div className="text-3xl font-bold text-elec-yellow mb-1">{briefings.length}</div>
+              <div className="text-sm text-white/50">Total Briefings</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
+            <CardContent className="p-6 text-center">
+              <div className="text-3xl font-bold text-green-400 mb-1">
                 {briefings.filter(b => b.status === 'completed').length}
               </div>
-              <div className="text-sm text-muted-foreground">Completed</div>
+              <div className="text-sm text-white/50">Completed</div>
             </CardContent>
           </Card>
-          
-          <Card className="border-secondary/30">
-            <CardContent className="p-4 text-center">
-              <div className="text-3xl font-bold text-secondary-foreground">
+
+          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
+            <CardContent className="p-6 text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-1">
                 {briefings.reduce((total, b) => total + b.attendees.length, 0)}
               </div>
-              <div className="text-sm text-muted-foreground">Total Attendees</div>
+              <div className="text-sm text-white/50">Total Attendees</div>
             </CardContent>
           </Card>
-          
-          <Card className="border-accent/30">
-            <CardContent className="p-4 text-center">
-              <div className="text-3xl font-bold text-accent-foreground">
+
+          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
+            <CardContent className="p-6 text-center">
+              <div className="text-3xl font-bold text-orange-400 mb-1">
                 {upcomingBriefings}
               </div>
-              <div className="text-sm text-muted-foreground">Upcoming</div>
+              <div className="text-sm text-white/50">Upcoming</div>
             </CardContent>
           </Card>
         </div>
@@ -393,33 +406,36 @@ const TeamBriefingTemplates = () => {
 
         {/* Desktop Scheduled Briefings */}
         <div>
-          <h2 className="text-xl font-semibold text-elec-light mb-4 flex items-center gap-2">
-            <Calendar className="h-5 w-5 text-elec-yellow" />
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <Calendar className="h-5 w-5 text-elec-yellow" />
+            </div>
             Scheduled Briefings
           </h2>
           {briefings && briefings.length > 0 ? (
             <div className="grid md:grid-cols-2 gap-4">
               {briefings.map((briefing) => (
-                <Card key={briefing.id} className="border-elec-yellow/20">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-2">
+                <Card key={briefing.id} className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-all">
+                  <CardContent className="p-5">
+                    <div className="flex items-start justify-between mb-3">
                       <div>
-                        <h3 className="font-semibold text-elec-light">{briefing.briefing_name}</h3>
-                        <p className="text-sm text-elec-light/70">{briefing.location}</p>
+                        <h3 className="font-semibold text-white">{briefing.briefing_name}</h3>
+                        <p className="text-sm text-white/50">{briefing.location}</p>
                       </div>
-                      <Badge className={`${
-                        briefing.status === 'completed' ? 'bg-primary/10 text-primary' :
-                        'bg-card text-elec-light'
+                      <Badge className={`capitalize ${
+                        briefing.status === 'completed' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
+                        briefing.status === 'in_progress' ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20' :
+                        'bg-white/5 text-white/70 border border-white/10'
                       }`}>
-                        {briefing.status}
+                        {briefing.status.replace('_', ' ')}
                       </Badge>
                     </div>
-                    <div className="flex items-center gap-4 text-sm text-elec-light/60">
-                      <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-4 text-sm text-white/50">
+                      <div className="flex items-center gap-1.5">
                         <Calendar className="h-4 w-4" />
                         <span>{new Date(briefing.briefing_date).toLocaleDateString('en-GB')}</span>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1.5">
                         <Users className="h-4 w-4" />
                         <span>{briefing.attendees.length}</span>
                       </div>
@@ -429,10 +445,12 @@ const TeamBriefingTemplates = () => {
               ))}
             </div>
           ) : (
-            <Card className="border-elec-yellow/20">
-              <CardContent className="p-6 text-center">
-                <Calendar className="h-12 w-12 text-elec-yellow/50 mx-auto mb-3" />
-                <p className="text-elec-light/70">No scheduled briefings yet</p>
+            <Card className="bg-[#1e1e1e] border border-white/10 border-dashed rounded-2xl">
+              <CardContent className="p-8 text-center">
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 w-fit mx-auto mb-4">
+                  <Calendar className="h-12 w-12 text-white/40" />
+                </div>
+                <p className="text-white/50">No scheduled briefings yet</p>
               </CardContent>
             </Card>
           )}

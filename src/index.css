@@ -201,9 +201,78 @@
   .bg-section-item {
     @apply bg-[#1a1a1a];
   }
-  
+
   .bg-section-expanded {
     @apply bg-[#1a1a1a];
+  }
+
+  /* Properly styled bullet points - left aligned */
+  .prose-list ul,
+  .content-list {
+    @apply list-disc list-outside pl-5 space-y-1.5 text-left;
+  }
+
+  .prose-list ol,
+  .content-list-numbered {
+    @apply list-decimal list-outside pl-5 space-y-1.5 text-left;
+  }
+
+  .prose-list li,
+  .content-list li,
+  .content-list-numbered li {
+    @apply text-left pl-1;
+  }
+
+  /* Native list styling for content pages */
+  ul.native-list {
+    @apply list-disc list-inside space-y-2 text-muted-foreground;
+  }
+
+  ol.native-list {
+    @apply list-decimal list-inside space-y-2 text-muted-foreground;
+  }
+
+  ul.native-list li,
+  ol.native-list li {
+    @apply text-left text-sm leading-relaxed;
+  }
+
+  /* Global list styling fixes for content pages */
+  /* Override list-inside to ensure proper left alignment */
+  .space-y-4 ul.list-disc,
+  .space-y-6 ul.list-disc,
+  .bg-card ul.list-disc,
+  [class*="bg-card"] ul.list-disc,
+  .animate-fade-in ul.list-disc {
+    @apply list-outside pl-5 ml-0;
+  }
+
+  .space-y-4 ol.list-decimal,
+  .space-y-6 ol.list-decimal,
+  .bg-card ol.list-decimal,
+  [class*="bg-card"] ol.list-decimal,
+  .animate-fade-in ol.list-decimal {
+    @apply list-outside pl-5 ml-0;
+  }
+
+  /* Ensure list items are properly left-aligned */
+  .space-y-4 ul li,
+  .space-y-6 ul li,
+  .bg-card ul li,
+  [class*="bg-card"] ul li,
+  .animate-fade-in ul li {
+    @apply text-left;
+  }
+
+  /* Override inline list-inside styling */
+  ul.list-inside,
+  ol.list-inside {
+    @apply pl-5;
+  }
+
+  ul.list-inside li,
+  ol.list-inside li {
+    @apply text-left;
   }
   
   /* Safe area insets for mobile devices */
@@ -673,4 +742,7 @@
     @apply text-lg sm:text-xl font-bold text-white;
   }
 }
+
+/* Touch optimization styles */
+@import './styles/touch.css';
 

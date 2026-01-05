@@ -167,7 +167,7 @@ const AM2Module8 = () => {
   if (!examStarted) {
     return (
       <div className="min-h-screen bg-background p-2 sm:p-4">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <Card className="border-emerald-500/30 bg-card">
             <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
               <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-emerald-500/10">
@@ -227,7 +227,7 @@ const AM2Module8 = () => {
   if (showResults && !showReview) {
     return (
       <div className="min-h-screen bg-background p-2 sm:p-4">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <Card className="border-emerald-500/30 bg-card">
             <CardHeader className="text-center pb-4 px-4 sm:px-6">
               <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-lg font-semibold mb-4 ${

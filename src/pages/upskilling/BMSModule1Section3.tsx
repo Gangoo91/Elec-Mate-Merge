@@ -12,7 +12,7 @@ const BMSModule1Section3 = () => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className={`${isMobile ? 'px-4 pt-4 pb-8' : 'px-8 pt-8 pb-12'} max-w-6xl mx-auto module-content`}>
         <Link to="../bms-module-1">
           <Button

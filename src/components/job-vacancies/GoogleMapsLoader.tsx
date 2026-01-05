@@ -25,7 +25,7 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ children }) => {
     const loadGoogleMapsAPI = async () => {
       try {
         // Fetch the API key from our edge function
-        const response = await fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/get-google-maps-key');
+        const response = await fetch('https://yulrjfdmkjcoeddorawg.supabase.co/functions/v1/get-google-maps-key');
         const data = await response.json();
         
         if (!response.ok || !data.apiKey) {

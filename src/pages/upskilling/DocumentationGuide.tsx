@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const DocumentationGuide = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-8 pt-8 pb-12">
         <Link to="module-8/section-3">
           <Button
@@ -18,7 +18,7 @@ const DocumentationGuide = () => {
           </Button>
         </Link>
         
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           {/* Header */}
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold text-white">Documentation Guide</h1>

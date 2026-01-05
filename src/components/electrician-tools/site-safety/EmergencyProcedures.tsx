@@ -1,8 +1,6 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { AlertTriangle, Phone, MapPin, Clock, Users, FileText, Shield, Printer, Download } from "lucide-react";
+import { AlertTriangle, Phone, MapPin, FileText, Shield, Printer, Download } from "lucide-react";
 
 const EmergencyProcedures = () => {
   const [activeTab, setActiveTab] = useState("contacts");
@@ -33,98 +31,102 @@ const EmergencyProcedures = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-red-500/50 bg-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-red-300 flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
-            Emergency Procedures & Contacts
-          </CardTitle>
+      <Card className="bg-red-500/10 border border-red-500/30 rounded-2xl">
+        <CardHeader className="pb-2">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-red-500/20 border border-red-500/30">
+              <AlertTriangle className="h-5 w-5 text-red-400" />
+            </div>
+            <CardTitle className="text-red-300 text-lg">Emergency Procedures & Contacts</CardTitle>
+          </div>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground mb-4">
+          <p className="text-sm text-white/60">
             Critical emergency procedures and contact information for electrical work sites.
             Ensure all team members are familiar with these procedures before commencing work.
           </p>
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <Card 
-          className={`cursor-pointer transition-colors border-elec-yellow/20 ${
-            activeTab === "contacts" ? "bg-elec-yellow/20" : "bg-elec-gray/50 hover:bg-elec-gray/80"
-          }`}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        <button
           onClick={() => setActiveTab("contacts")}
-        >
-          <CardContent className="p-4 text-center">
-            <Phone className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
-            <h3 className="font-medium text-sm">Emergency Contacts</h3>
-          </CardContent>
-        </Card>
-        
-        <Card 
-          className={`cursor-pointer transition-colors border-elec-yellow/20 ${
-            activeTab === "evacuation" ? "bg-elec-yellow/20" : "bg-elec-gray/50 hover:bg-elec-gray/80"
+          className={`p-4 rounded-xl border text-center transition-all touch-manipulation active:scale-[0.98] ${
+            activeTab === "contacts"
+              ? "bg-elec-yellow/20 border-elec-yellow/40 ring-1 ring-elec-yellow/30"
+              : "bg-[#1e1e1e] border-white/10 hover:border-white/20"
           }`}
+        >
+          <Phone className={`h-6 w-6 mx-auto mb-2 ${activeTab === "contacts" ? "text-elec-yellow" : "text-white/70"}`} />
+          <h3 className={`font-medium text-sm ${activeTab === "contacts" ? "text-white" : "text-white/70"}`}>Emergency Contacts</h3>
+        </button>
+
+        <button
           onClick={() => setActiveTab("evacuation")}
-        >
-          <CardContent className="p-4 text-center">
-            <MapPin className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
-            <h3 className="font-medium text-sm">Evacuation</h3>
-          </CardContent>
-        </Card>
-        
-        <Card 
-          className={`cursor-pointer transition-colors border-elec-yellow/20 ${
-            activeTab === "first-aid" ? "bg-elec-yellow/20" : "bg-elec-gray/50 hover:bg-elec-gray/80"
+          className={`p-4 rounded-xl border text-center transition-all touch-manipulation active:scale-[0.98] ${
+            activeTab === "evacuation"
+              ? "bg-elec-yellow/20 border-elec-yellow/40 ring-1 ring-elec-yellow/30"
+              : "bg-[#1e1e1e] border-white/10 hover:border-white/20"
           }`}
+        >
+          <MapPin className={`h-6 w-6 mx-auto mb-2 ${activeTab === "evacuation" ? "text-elec-yellow" : "text-white/70"}`} />
+          <h3 className={`font-medium text-sm ${activeTab === "evacuation" ? "text-white" : "text-white/70"}`}>Evacuation</h3>
+        </button>
+
+        <button
           onClick={() => setActiveTab("first-aid")}
-        >
-          <CardContent className="p-4 text-center">
-            <Shield className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
-            <h3 className="font-medium text-sm">First Aid</h3>
-          </CardContent>
-        </Card>
-        
-        <Card 
-          className={`cursor-pointer transition-colors border-elec-yellow/20 ${
-            activeTab === "procedures" ? "bg-elec-yellow/20" : "bg-elec-gray/50 hover:bg-elec-gray/80"
+          className={`p-4 rounded-xl border text-center transition-all touch-manipulation active:scale-[0.98] ${
+            activeTab === "first-aid"
+              ? "bg-elec-yellow/20 border-elec-yellow/40 ring-1 ring-elec-yellow/30"
+              : "bg-[#1e1e1e] border-white/10 hover:border-white/20"
           }`}
-          onClick={() => setActiveTab("procedures")}
         >
-          <CardContent className="p-4 text-center">
-            <FileText className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
-            <h3 className="font-medium text-sm">Procedures</h3>
-          </CardContent>
-        </Card>
+          <Shield className={`h-6 w-6 mx-auto mb-2 ${activeTab === "first-aid" ? "text-elec-yellow" : "text-white/70"}`} />
+          <h3 className={`font-medium text-sm ${activeTab === "first-aid" ? "text-white" : "text-white/70"}`}>First Aid</h3>
+        </button>
+
+        <button
+          onClick={() => setActiveTab("procedures")}
+          className={`p-4 rounded-xl border text-center transition-all touch-manipulation active:scale-[0.98] ${
+            activeTab === "procedures"
+              ? "bg-elec-yellow/20 border-elec-yellow/40 ring-1 ring-elec-yellow/30"
+              : "bg-[#1e1e1e] border-white/10 hover:border-white/20"
+          }`}
+        >
+          <FileText className={`h-6 w-6 mx-auto mb-2 ${activeTab === "procedures" ? "text-elec-yellow" : "text-white/70"}`} />
+          <h3 className={`font-medium text-sm ${activeTab === "procedures" ? "text-white" : "text-white/70"}`}>Procedures</h3>
+        </button>
       </div>
 
       <div className="w-full">
 
         {activeTab === "contacts" && (
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                <Phone className="h-5 w-5" />
-                Emergency Contact Numbers
-              </CardTitle>
+          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                  <Phone className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <CardTitle className="text-white text-lg">Emergency Contact Numbers</CardTitle>
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {emergencyContacts.map((contact, index) => (
-                  <div key={index} className="bg-gradient-to-br from-elec-dark to-elec-card border border-elec-yellow/30 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-elec-yellow/50 group">
+                  <div key={index} className="bg-[#1a1a1a] border border-white/10 rounded-xl p-5 hover:border-white/20 transition-all group">
                     <div className="text-center">
-                      <div className="inline-flex items-center justify-center w-8 h-8 bg-elec-yellow/20 rounded-full mb-3">
+                      <div className="inline-flex items-center justify-center w-8 h-8 bg-elec-yellow/20 border border-elec-yellow/30 rounded-full mb-3">
                         <span className="text-sm font-bold text-elec-yellow">#{index + 1}</span>
                       </div>
-                      <h4 className="font-semibold text-foreground text-lg mb-4 group-hover:text-elec-yellow transition-colors">{contact.service}</h4>
-                      <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/40 rounded-xl p-4 mb-4 shadow-inner">
-                        <span className="text-3xl font-bold text-elec-yellow tracking-wider">{contact.number}</span>
+                      <h4 className="font-semibold text-white text-base mb-3 group-hover:text-elec-yellow transition-colors">{contact.service}</h4>
+                      <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4 mb-3">
+                        <span className="text-2xl font-bold text-elec-yellow tracking-wider">{contact.number}</span>
                       </div>
-                      <p className="text-sm text-elec-light/80 mb-5 leading-relaxed">{contact.description}</p>
-                      <Button variant="outline" size="sm" className="w-full bg-elec-yellow/5 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark transition-all duration-200 font-medium">
-                        <Phone className="h-4 w-4 mr-2" />
+                      <p className="text-sm text-white/50 mb-4">{contact.description}</p>
+                      <a href={`tel:${contact.number.replace(/\s/g, '')}`} className="flex items-center justify-center gap-2 w-full h-11 bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow hover:text-black rounded-xl transition-all duration-200 font-medium text-sm touch-manipulation active:scale-[0.98]">
+                        <Phone className="h-4 w-4" />
                         Call Now
-                      </Button>
+                      </a>
                     </div>
                   </div>
                 ))}
@@ -134,16 +136,18 @@ const EmergencyProcedures = () => {
         )}
 
         {activeTab === "evacuation" && (
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                <MapPin className="h-5 w-5" />
-                Evacuation Procedures
-              </CardTitle>
+          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                  <MapPin className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <CardTitle className="text-white text-lg">Evacuation Procedures</CardTitle>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+                <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
                   <h4 className="font-medium text-red-300 mb-3 flex items-center gap-2">
                     <AlertTriangle className="h-4 w-4" />
                     Emergency Evacuation Steps
@@ -151,17 +155,17 @@ const EmergencyProcedures = () => {
                   <ol className="space-y-2">
                     {evacuationProcedures.map((step, index) => (
                       <li key={index} className="flex items-start gap-3 text-left">
-                        <span className="bg-red-500 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">
                           {index + 1}
                         </span>
-                        <span className="text-sm">{step}</span>
+                        <span className="text-sm text-white/80">{step}</span>
                       </li>
                     ))}
                   </ol>
                 </div>
-                <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
                   <h4 className="font-medium text-elec-yellow mb-2">Important Reminders</h4>
-                  <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed text-left">
+                  <ul className="text-sm space-y-2 text-white/60 leading-relaxed text-left">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow mt-1">•</span>
                       <span>Never use lifts during evacuation</span>
@@ -186,32 +190,34 @@ const EmergencyProcedures = () => {
         )}
 
         {activeTab === "first-aid" && (
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                <Shield className="h-5 w-5" />
-                First Aid Procedures
-              </CardTitle>
+          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-green-500/10 border border-green-500/20">
+                  <Shield className="h-5 w-5 text-green-400" />
+                </div>
+                <CardTitle className="text-white text-lg">First Aid Procedures</CardTitle>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+                <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
                   <h4 className="font-medium text-green-300 mb-3">First Aid Response Steps</h4>
                   <ol className="space-y-3">
                     {firstAidProcedures.map((step, index) => (
                       <li key={index} className="flex items-start gap-3 text-left">
-                        <span className="bg-green-500 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
+                        <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                           {index + 1}
                         </span>
-                        <span className="text-sm leading-relaxed">{step}</span>
+                        <span className="text-sm text-white/80 leading-relaxed">{step}</span>
                       </li>
                     ))}
                   </ol>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
+                  <div className="bg-[#1a1a1a] border border-white/10 rounded-xl p-4">
                     <h4 className="font-medium text-elec-yellow mb-2">Electrical Shock Response</h4>
-                    <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed text-left">
+                    <ul className="text-sm space-y-2 text-white/60 leading-relaxed text-left">
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow mt-1">•</span>
                         <span>Switch off power source immediately</span>
@@ -234,9 +240,9 @@ const EmergencyProcedures = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
+                  <div className="bg-[#1a1a1a] border border-white/10 rounded-xl p-4">
                     <h4 className="font-medium text-elec-yellow mb-2">Burns Treatment</h4>
-                    <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed text-left">
+                    <ul className="text-sm space-y-2 text-white/60 leading-relaxed text-left">
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow mt-1">•</span>
                         <span>Cool with cold running water for 20 minutes</span>
@@ -266,18 +272,20 @@ const EmergencyProcedures = () => {
         )}
 
         {activeTab === "procedures" && (
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Site-Specific Emergency Procedures
-              </CardTitle>
+          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                  <FileText className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <CardTitle className="text-white text-lg">Site-Specific Emergency Procedures</CardTitle>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
-                  <h4 className="font-medium text-foreground mb-3">Before Starting Work</h4>
-                  <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed">
+                <div className="bg-[#1a1a1a] border border-white/10 rounded-xl p-4">
+                  <h4 className="font-medium text-white mb-3">Before Starting Work</h4>
+                  <ul className="text-sm space-y-2 text-white/60 leading-relaxed">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow mt-1">•</span>
                       <span>Identify location of nearest emergency exits</span>
@@ -300,9 +308,9 @@ const EmergencyProcedures = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
-                  <h4 className="font-medium text-foreground mb-3">During Emergencies</h4>
-                  <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed">
+                <div className="bg-[#1a1a1a] border border-white/10 rounded-xl p-4">
+                  <h4 className="font-medium text-white mb-3">During Emergencies</h4>
+                  <ul className="text-sm space-y-2 text-white/60 leading-relaxed">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow mt-1">•</span>
                       <span>Maintain calm and think clearly</span>
@@ -325,15 +333,15 @@ const EmergencyProcedures = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="flex flex-wrap gap-4">
-                  <Button className="flex-1">
-                    <Printer className="h-4 w-4 mr-2" />
+                <div className="flex flex-wrap gap-3">
+                  <button className="flex-1 h-12 flex items-center justify-center gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium rounded-xl touch-manipulation active:scale-[0.98] transition-all">
+                    <Printer className="h-4 w-4" />
                     Print Emergency Card
-                  </Button>
-                  <Button variant="outline" className="flex-1">
-                    <Download className="h-4 w-4 mr-2" />
+                  </button>
+                  <button className="flex-1 h-12 flex items-center justify-center gap-2 border border-white/10 bg-[#1a1a1a] text-white hover:bg-white/5 hover:border-white/20 font-medium rounded-xl touch-manipulation active:scale-[0.98] transition-all">
+                    <Download className="h-4 w-4" />
                     Download Procedures
-                  </Button>
+                  </button>
                 </div>
               </div>
             </CardContent>

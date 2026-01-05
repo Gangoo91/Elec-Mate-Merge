@@ -50,7 +50,7 @@ const BMSModule6Section3 = () => {
 
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           
           {/* Introduction */}
           <Card className="bg-card border-gray-700">
@@ -550,7 +550,7 @@ const BMSModule6Section3 = () => {
 
       {/* Navigation */}
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center">
             <Link to="../bms-module-6-section-2" className="w-full sm:w-auto">
               <Button 

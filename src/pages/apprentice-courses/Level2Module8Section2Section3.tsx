@@ -11,7 +11,7 @@ const Level2Module8Section2Section3 = () => {
 
   return (
     <div className="min-h-screen bg-background p-3 sm:p-4 lg:p-6">
-      <div className="max-w-4xl mx-auto">
+      <div>
         <div className="flex items-center gap-3 mb-4 sm:mb-6">
           <Link 
             to=".." 

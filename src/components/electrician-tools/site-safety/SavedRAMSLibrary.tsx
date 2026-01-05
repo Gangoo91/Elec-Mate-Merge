@@ -360,11 +360,16 @@ export const SavedRAMSLibrary = () => {
 
   if (loading) {
     return (
-      <Card className="border-border bg-card">
-        <CardContent className="py-12">
+      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
+        <CardContent className="py-16">
           <div className="flex flex-col items-center justify-center gap-4">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            <p className="text-sm text-muted-foreground">Loading your documents...</p>
+            <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+            </div>
+            <div className="text-center">
+              <p className="text-white font-medium">Loading Documents</p>
+              <p className="text-sm text-white/50 mt-1">Fetching your saved RAMS...</p>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -373,7 +378,7 @@ export const SavedRAMSLibrary = () => {
 
   if (documents.length === 0) {
     return (
-      <Card className="border-border bg-card">
+      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
         <CardContent className="py-12">
           <RAMSEmptyState type="no-documents" />
         </CardContent>
@@ -384,10 +389,10 @@ export const SavedRAMSLibrary = () => {
   return (
     <div className="space-y-4">
       {/* Search and Filter Section */}
-      <Card className="border-border bg-card">
+      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
         <CardContent className="pt-6">
           <div className="space-y-4">
-            <RAMSSearchBar 
+            <RAMSSearchBar
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
             />
@@ -416,8 +421,8 @@ export const SavedRAMSLibrary = () => {
 
       {/* Document count and View All toggle */}
       {filteredDocuments.length > 12 && (
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">
+        <div className="flex items-center justify-between px-1">
+          <p className="text-sm text-white/50">
             Showing {displayedDocuments.length} of {filteredDocuments.length} documents
             {hasActiveFilters && ` (filtered from ${documents.length} total)`}
           </p>
@@ -425,7 +430,7 @@ export const SavedRAMSLibrary = () => {
             variant="ghost"
             size="sm"
             onClick={() => setShowAll(!showAll)}
-            className="text-elec-yellow hover:text-elec-yellow/80"
+            className="text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/10"
           >
             {showAll ? (
               <>
@@ -444,9 +449,9 @@ export const SavedRAMSLibrary = () => {
 
       {/* Empty state for filtered results */}
       {filteredDocuments.length === 0 && (
-        <Card className="border-border bg-card">
+        <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
           <CardContent className="py-12">
-            <RAMSEmptyState 
+            <RAMSEmptyState
               type={hasActiveFilters ? 'no-filtered-results' : 'no-results'}
               searchTerm={searchTerm}
               onClearFilters={clearFilters}
@@ -459,45 +464,49 @@ export const SavedRAMSLibrary = () => {
       {filteredDocuments.length > 0 && (
         <div className="block md:hidden space-y-3">
           {displayedDocuments.map((doc) => (
-            <Card 
-              key={doc.id} 
-              className="border-border bg-card hover:border-primary/40 transition-colors"
+            <Card
+              key={doc.id}
+              className={`
+                bg-[#1e1e1e] border rounded-2xl transition-all duration-200
+                ${selectedDocIds.has(doc.id) ? 'border-elec-yellow/50 ring-1 ring-elec-yellow/20' : 'border-white/10 hover:border-white/20'}
+              `}
             >
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between gap-3">
+              <CardContent className="p-4 space-y-4">
+                {/* Header with checkbox and document info */}
+                <div className="flex items-start gap-3">
                   <Checkbox
                     checked={selectedDocIds.has(doc.id)}
                     onCheckedChange={() => toggleSelection(doc.id)}
-                    className="mt-1"
+                    className="mt-1 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                   />
                   <div className="flex items-start gap-3 flex-1 min-w-0">
-                    <div className="p-2 rounded-lg bg-primary/10 shrink-0">
-                      <FileText className="h-5 w-5 text-primary" />
+                    <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 shrink-0">
+                      <FileText className="h-5 w-5 text-elec-yellow" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-base mb-1">{doc.project_name}</h3>
-                      <p className="text-sm text-muted-foreground">{doc.location}</p>
+                      <h3 className="font-semibold text-white text-base truncate">{doc.project_name}</h3>
+                      <p className="text-sm text-white/50 truncate">{doc.location}</p>
                     </div>
                   </div>
                 </div>
-              </CardHeader>
-              
-              <CardContent className="pt-0 space-y-3">
-                <div className="flex items-center justify-between gap-2 text-xs">
-                  <Badge variant="outline" className={getStatusColor(doc.status)}>
+
+                {/* Status and date */}
+                <div className="flex items-center justify-between gap-2 px-1">
+                  <Badge variant="outline" className={`${getStatusColor(doc.status)} capitalize`}>
                     {doc.status}
                   </Badge>
-                  <div className="flex items-center gap-1 text-muted-foreground">
-                    <Calendar className="h-3 w-3" />
+                  <div className="flex items-center gap-1.5 text-white/40 text-xs">
+                    <Calendar className="h-3.5 w-3.5" />
                     <span>{format(new Date(doc.created_at), 'dd/MM/yy')}</span>
                   </div>
                 </div>
-                
+
+                {/* Action buttons */}
                 <div className="grid grid-cols-3 gap-2">
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-11"
+                    className="h-11 bg-[#1a1a1a] border-white/10 hover:border-elec-yellow/30 hover:bg-elec-yellow/10 text-white active:scale-[0.98]"
                     onClick={() => handleDownload(doc)}
                     disabled={!doc.pdf_url || downloadingId === doc.id}
                   >
@@ -510,7 +519,7 @@ export const SavedRAMSLibrary = () => {
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-11"
+                    className="h-11 bg-[#1a1a1a] border-white/10 hover:border-blue-500/30 hover:bg-blue-500/10 text-white active:scale-[0.98]"
                     onClick={() => {
                       setSelectedDocumentId(doc.id);
                       setAmendDialogOpen(true);
@@ -521,7 +530,7 @@ export const SavedRAMSLibrary = () => {
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-11 border-destructive/30 hover:bg-destructive/10 text-destructive"
+                    className="h-11 bg-[#1a1a1a] border-red-500/30 hover:bg-red-500/10 text-red-400 active:scale-[0.98]"
                     onClick={() => handleDelete(doc.id, doc.pdf_url)}
                     disabled={deletingId === doc.id}
                   >
@@ -542,20 +551,23 @@ export const SavedRAMSLibrary = () => {
       {/* Desktop: Table view */}
       {filteredDocuments.length > 0 && (
         <div className="hidden md:block">
-          <Card className="border-border bg-card overflow-hidden">
-            <CardHeader>
+          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl overflow-hidden">
+            <CardHeader className="border-b border-white/5">
               <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-3 text-white">
+                  <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                    <FileText className="h-5 w-5 text-elec-yellow" />
+                  </div>
                   Saved RAMS Documents
                 </CardTitle>
                 {displayedDocuments.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">Select All</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm text-white/50">Select All</span>
                     <Checkbox
                       checked={selectedDocIds.size === displayedDocuments.length && displayedDocuments.length > 0}
                       onCheckedChange={toggleSelectAll}
                       aria-label="Select all documents"
+                      className="border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                     />
                   </div>
                 )}
@@ -563,42 +575,49 @@ export const SavedRAMSLibrary = () => {
             </CardHeader>
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-accent/50 border-b border-border">
+                <thead className="bg-[#1a1a1a] border-b border-white/5">
                   <tr>
-                    <th className="px-4 py-3 text-center text-xs font-semibold w-12">
+                    <th className="px-4 py-3 text-center text-xs font-semibold text-white/40 w-12">
                       <span className="sr-only">Select</span>
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold">Document</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold">Location</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold">Status</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold">Created</th>
-                    <th className="px-4 py-3 text-right text-xs font-semibold">Actions</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/40 uppercase tracking-wider">Document</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/40 uppercase tracking-wider">Location</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/40 uppercase tracking-wider">Status</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/40 uppercase tracking-wider">Created</th>
+                    <th className="px-4 py-3 text-right text-xs font-semibold text-white/40 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border">
+                <tbody className="divide-y divide-white/5">
                   {displayedDocuments.map((doc) => (
-                    <tr key={doc.id} className="hover:bg-accent/30 transition-colors">
+                    <tr
+                      key={doc.id}
+                      className={`
+                        transition-colors
+                        ${selectedDocIds.has(doc.id) ? 'bg-elec-yellow/5' : 'hover:bg-white/[0.02]'}
+                      `}
+                    >
                       <td className="px-4 py-3 text-center">
                         <Checkbox
                           checked={selectedDocIds.has(doc.id)}
                           onCheckedChange={() => toggleSelection(doc.id)}
+                          className="border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                         />
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="p-2 rounded-lg bg-primary/10">
-                            <FileText className="h-4 w-4 text-primary" />
+                          <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                            <FileText className="h-4 w-4 text-elec-yellow" />
                           </div>
-                          <span className="font-medium text-sm">{doc.project_name}</span>
+                          <span className="font-medium text-sm text-white">{doc.project_name}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm text-muted-foreground">{doc.location}</td>
+                      <td className="px-4 py-3 text-sm text-white/50">{doc.location}</td>
                       <td className="px-4 py-3">
-                        <Badge variant="outline" className={getStatusColor(doc.status)}>
+                        <Badge variant="outline" className={`${getStatusColor(doc.status)} capitalize`}>
                           {doc.status}
                         </Badge>
                       </td>
-                      <td className="px-4 py-3 text-sm text-muted-foreground">
+                      <td className="px-4 py-3 text-sm text-white/50">
                         {format(new Date(doc.created_at), 'dd MMM yyyy')}
                       </td>
                       <td className="px-4 py-3">
@@ -606,6 +625,7 @@ export const SavedRAMSLibrary = () => {
                           <Button
                             size="sm"
                             variant="outline"
+                            className="bg-transparent border-white/10 hover:border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
                             onClick={() => handleDownload(doc)}
                             disabled={!doc.pdf_url || downloadingId === doc.id}
                           >
@@ -621,6 +641,7 @@ export const SavedRAMSLibrary = () => {
                           <Button
                             size="sm"
                             variant="outline"
+                            className="bg-transparent border-white/10 hover:border-blue-500/30 hover:bg-blue-500/10 text-white"
                             onClick={() => {
                               setSelectedDocumentId(doc.id);
                               setAmendDialogOpen(true);
@@ -632,7 +653,7 @@ export const SavedRAMSLibrary = () => {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="border-destructive/30 hover:bg-destructive/10 text-destructive"
+                            className="bg-transparent border-red-500/30 hover:bg-red-500/10 text-red-400"
                             onClick={() => handleDelete(doc.id, doc.pdf_url)}
                             disabled={deletingId === doc.id}
                           >

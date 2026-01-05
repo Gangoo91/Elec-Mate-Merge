@@ -47,7 +47,8 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   }
 
   return (
-    <div className="p-2 sm:p-4 space-y-3 sm:space-y-6 prevent-shortcuts">
+    <div className="min-h-screen mobile-safe-area">
+      <div className="space-y-6 md:space-y-8 animate-fade-in px-4 sm:px-6 md:px-8 pb-8 md:pb-12 max-w-7xl mx-auto pt-4 md:pt-6 prevent-shortcuts">
       <EICRFormHeader
         onBack={onBack}
         currentReportId={currentReportId}
@@ -76,6 +77,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         onConfirmStartNew={confirmStartNew}
         onConfirmDuplicate={confirmDuplicate}
       />
+      </div>
     </div>
   );
 };

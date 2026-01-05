@@ -132,7 +132,7 @@ const TestResultsPhotoCapture = ({ onAnalysisComplete, onClose }: TestResultsPho
 
     try {
       const response = await fetch(
-        'https://ywmwkjprxcgbcryckmkp.supabase.co/functions/v1/test-results-scan',
+        'https://yulrjfdmkjcoeddorawg.supabase.co/functions/v1/test-results-scan',
         {
           method: 'POST',
           headers: {

@@ -78,7 +78,7 @@ const DataCablingModule2Section5 = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+      <div>
         <Link to="../data-cabling-module-2">
           <Button
             variant="ghost"

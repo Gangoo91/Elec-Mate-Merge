@@ -13,8 +13,8 @@ import { BS7671Module7Section3Summary } from '@/components/upskilling/bs7671/BS7
 
 const BS7671Module7Section3 = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+      <div>
         <Link to="../bs7671-module-7">
           <Button
             variant="ghost"

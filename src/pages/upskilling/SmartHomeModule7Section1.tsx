@@ -41,7 +41,7 @@ const SmartHomeModule7Section1 = () => {
       </header>
       
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           <SmartHomeModule7Section1Intro />
           <SmartHomeModule7Section1LearningOutcomes />
           <WiringRequirementsSection />
@@ -57,7 +57,7 @@ const SmartHomeModule7Section1 = () => {
       </main>
       
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex justify-between items-center">
             <Link to="../smart-home-module-7">
               <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">

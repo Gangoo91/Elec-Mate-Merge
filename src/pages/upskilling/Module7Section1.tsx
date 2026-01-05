@@ -30,7 +30,7 @@ const Module7Section1 = () => {
         </div>
       </header>
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           <CertificationPurposeContent />
           <CertificationPurposePractical />
           <CertificationPurposeFAQ />
@@ -38,7 +38,7 @@ const Module7Section1 = () => {
         </div>
       </main>
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center">
             <div className="order-2 sm:order-1"></div>
             <Link to="module-7/section-2" className="order-1 sm:order-2 w-full sm:w-auto">

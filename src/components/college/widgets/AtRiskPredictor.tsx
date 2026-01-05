@@ -244,11 +244,11 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
 
   if (compact) {
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-warning/30 transition-all duration-300">
         <CardHeader className="pb-2">
           <CardTitle className="text-sm flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Brain className="h-4 w-4 text-elec-yellow" />
+              <div className="p-1.5 rounded-lg bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5"><Brain className="h-3.5 w-3.5 text-warning" /></div>
               <span>At-Risk Predictor</span>
               <Badge className="bg-elec-yellow/20 text-elec-yellow text-[10px]">
                 <Sparkles className="h-2.5 w-2.5 mr-0.5" />
@@ -270,7 +270,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           {filteredStudents.slice(0, 2).map(student => (
             <div
               key={student.id}
-              className="flex items-center justify-between p-2 rounded-lg hover:bg-elec-dark/50 transition-colors cursor-pointer"
+              className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
               onClick={() => onNavigate?.("progresstracking")}
             >
               <div className="min-w-0">
@@ -299,11 +299,11 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
   }
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-warning/30 transition-all duration-300">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Brain className="h-5 w-5 text-elec-yellow" />
+            <div className="p-1.5 rounded-xl bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5"><Brain className="h-4 w-4 text-warning" /></div>
             <span>At-Risk Predictor</span>
             <Badge className="bg-elec-yellow/20 text-elec-yellow">
               <Sparkles className="h-3 w-3 mr-1" />

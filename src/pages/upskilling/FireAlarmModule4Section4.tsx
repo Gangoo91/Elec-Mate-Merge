@@ -41,7 +41,7 @@ const FireAlarmModule4Section4 = () => {
   const sequentialQuestions = useMemo(() => questions.map(q => ({ id: q.id, question: q.question, options: q.options, correct: q.correctAnswer, explanation: q.explanation })), [questions]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-8 pt-8 pb-12">
         <Link to="../fire-alarm-module-4">
           <Button variant="ghost" className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md">

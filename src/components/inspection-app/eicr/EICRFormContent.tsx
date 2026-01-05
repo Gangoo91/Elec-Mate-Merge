@@ -49,7 +49,7 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
   };
 
   return (
-    <div className="px-2 md:px-4">
+    <div className="space-y-6">
 
       <DraftHeaderActions
         hasDraft={hasDraft}

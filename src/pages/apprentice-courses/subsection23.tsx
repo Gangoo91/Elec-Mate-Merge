@@ -136,7 +136,7 @@ const Section6_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">

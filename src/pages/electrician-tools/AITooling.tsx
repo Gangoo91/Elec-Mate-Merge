@@ -1,8 +1,6 @@
-
-import { Brain, ArrowLeft, ArrowRight, Cpu, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Brain, ArrowLeft, ArrowRight, Cpu } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Link, useNavigate } from "react-router-dom";
 import { toolOptions } from "@/components/electrician-tools/ai-tools/constants";
 
 // Color assignments for each tool to add visual variety
@@ -16,62 +14,60 @@ const toolColors: Record<string, { gradient: string; bgGradient: string }> = {
 };
 
 const AITooling = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-10 pb-safe">
-        {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20">
-              <Brain className="h-6 w-6 sm:h-7 sm:w-7 text-purple-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                AI Tooling Suite
-              </h1>
-              <p className="text-sm text-white/60">Smart analysis tools for UK electricians</p>
-            </div>
-          </div>
-          <Link to="/electrician">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Hub
-            </Button>
-          </Link>
-        </header>
-        {/* Hero Section - Compact for mobile */}
-        <section className="relative overflow-hidden rounded-2xl border border-purple-500/20 bg-gradient-to-br from-elec-gray via-elec-gray/90 to-elec-gray/70">
-          {/* Decorative gradient blobs */}
-          <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 bg-purple-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-32 sm:h-32 bg-blue-500/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
+    <div className="min-h-screen bg-[#121212] pb-24">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-[#121212]/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3">
+          <button
+            onClick={() => navigate('/electrician')}
+            className="flex items-center gap-2 text-white active:opacity-70 transition-opacity touch-manipulation"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span className="text-sm font-medium">Electrician Hub</span>
+          </button>
+        </div>
+      </div>
 
-          <div className="relative p-5 sm:p-8 flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/20">
-              <Cpu className="h-8 w-8 sm:h-10 sm:w-10 text-purple-400" />
-            </div>
-            <div className="text-center sm:text-left">
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-1.5">
-                AI Analysis Suite
-              </h2>
-              <p className="text-sm sm:text-base text-white/70 leading-relaxed max-w-xl">
-                Professional AI tools for UK electricians - component identification, wiring guidance, fault diagnosis & BS 7671 compliance verification
-              </p>
-            </div>
+      <main className="px-4 py-4 space-y-6">
+        {/* Hero Header */}
+        <div className="flex items-center gap-3">
+          <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+            <Brain className="h-6 w-6 text-purple-400" />
           </div>
-        </section>
+          <div>
+            <h1 className="text-xl font-bold text-white">AI Tooling Suite</h1>
+            <p className="text-sm text-white/50">Smart analysis tools for UK electricians</p>
+          </div>
+        </div>
 
-        {/* Tools Grid */}
-        <section className="space-y-4 sm:space-y-5">
-          <div className="flex items-center gap-2.5 px-1">
+        {/* Feature Banner */}
+        <Card className="relative overflow-hidden bg-[#1e1e1e] border border-purple-500/20 rounded-2xl">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-4">
+              <div className="flex-shrink-0 p-3 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/20">
+                <Cpu className="h-8 w-8 text-purple-400" />
+              </div>
+              <div>
+                <h2 className="text-base font-bold text-white mb-1">AI Analysis Suite</h2>
+                <p className="text-sm text-white/60 leading-relaxed">
+                  Component identification, wiring guidance, fault diagnosis & BS 7671 compliance
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Tools List */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-2.5">
             <div className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-            <h2 className="text-lg sm:text-xl font-bold text-white">Available Tools</h2>
+            <h2 className="text-base font-bold text-white">Available Tools</h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          <div className="space-y-3">
             {toolOptions.map((tool) => {
               const IconComponent = tool.icon;
               const colors = toolColors[tool.value] || { gradient: 'from-gray-400 to-gray-500', bgGradient: 'from-gray-500/20 to-gray-500/10' };
@@ -80,37 +76,31 @@ const AITooling = () => {
                 <Link
                   key={tool.value}
                   to={`/electrician-tools/ai-tooling/${tool.value}`}
-                  className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 rounded-2xl touch-manipulation"
+                  className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 rounded-2xl touch-manipulation active:scale-[0.98] transition-transform"
                 >
-                  <Card className={`relative overflow-hidden border-white/10 bg-gradient-to-br ${colors.bgGradient} backdrop-blur-sm hover:border-white/20 active:scale-[0.98] transition-all duration-200 h-full group`}>
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Card className="relative overflow-hidden bg-[#1e1e1e] border border-white/10 rounded-2xl group">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-4">
+                        {/* Icon with gradient background */}
+                        <div className={`flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center bg-gradient-to-br ${colors.gradient} shadow-lg`}>
+                          <IconComponent className="h-7 w-7 text-white" />
+                        </div>
 
-                    <CardHeader className="relative p-4 sm:p-5 space-y-3">
-                      {/* Icon with gradient background */}
-                      <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-gradient-to-br ${colors.gradient} shadow-lg group-active:scale-95 transition-transform`}>
-                        <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
-                      </div>
+                        <div className="flex-1 min-w-0">
+                          {/* Title */}
+                          <h3 className="text-base font-bold text-white mb-1">
+                            {tool.label}
+                          </h3>
 
-                      {/* Title */}
-                      <CardTitle className="text-base sm:text-lg font-bold text-white">
-                        {tool.label}
-                      </CardTitle>
+                          {/* Description */}
+                          <p className="text-sm text-white/60 leading-relaxed line-clamp-2">
+                            {tool.description}
+                          </p>
+                        </div>
 
-                      {/* Description */}
-                      <p className="text-sm text-white/70 leading-relaxed line-clamp-2">
-                        {tool.description}
-                      </p>
-                    </CardHeader>
-
-                    <CardContent className="relative pt-0 px-4 sm:px-5 pb-4 sm:pb-5">
-                      {/* CTA - Always visible */}
-                      <div className="flex items-center justify-between pt-3 border-t border-white/10">
-                        <span className="text-sm font-medium text-purple-400">
-                          Open Tool
-                        </span>
-                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-500/10 border border-purple-500/20 group-hover:bg-purple-500/20 group-active:bg-purple-500/30 transition-colors">
-                          <ArrowRight className="h-4 w-4 text-purple-400 group-hover:translate-x-0.5 transition-transform" />
+                        {/* Arrow indicator */}
+                        <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/20 group-active:bg-purple-500/20 transition-colors self-center">
+                          <ArrowRight className="h-5 w-5 text-purple-400" />
                         </div>
                       </div>
                     </CardContent>

@@ -111,7 +111,7 @@ const BMSModule2Section6 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-12">
         <Link to="../bms-module-2">
           <Button

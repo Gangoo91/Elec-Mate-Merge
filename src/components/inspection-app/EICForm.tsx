@@ -708,7 +708,8 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
 
   return (
     <>
-      <div className="p-2 sm:p-4 space-y-3 sm:space-y-6">
+      <div className="min-h-screen mobile-safe-area">
+        <div className="space-y-6 md:space-y-8 animate-fade-in px-4 sm:px-6 md:px-8 pb-8 md:pb-12 max-w-7xl mx-auto pt-4 md:pt-6">
         <EICFormHeader
           onBack={onBack}
           isSaving={isSaving}
@@ -721,19 +722,18 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
           isAuthenticated={isAuthenticated}
         />
         
-        <div className="px-2 md:px-4">
-          <EICFormTabs
-            currentTab={currentTab}
-            onTabChange={handleTabChange}
-            canAccessTab={canAccessTab}
-            formData={formData}
-            onUpdate={handleUpdate}
-            tabNavigationProps={tabNavigationProps}
-            observationsProps={observationsProps}
-            onGenerateCertificate={handleGenerateCertificate}
-            onSaveDraft={handleSaveDraft}
-            canGenerateCertificate={canGenerateCertificate()}
-          />
+        <EICFormTabs
+          currentTab={currentTab}
+          onTabChange={handleTabChange}
+          canAccessTab={canAccessTab}
+          formData={formData}
+          onUpdate={handleUpdate}
+          tabNavigationProps={tabNavigationProps}
+          observationsProps={observationsProps}
+          onGenerateCertificate={handleGenerateCertificate}
+          onSaveDraft={handleSaveDraft}
+          canGenerateCertificate={canGenerateCertificate()}
+        />
         </div>
       </div>
 

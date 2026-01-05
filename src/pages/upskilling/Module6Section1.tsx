@@ -45,7 +45,7 @@ const Module6Section1 = () => {
 
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           <RCDFundamentalsContent />
           <RCDFundamentalsPractical />
           <RCDFundamentalsFAQ />
@@ -55,7 +55,7 @@ const Module6Section1 = () => {
 
       {/* Navigation */}
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex justify-between items-center">
             <Link to="../module-6">
               <Button 

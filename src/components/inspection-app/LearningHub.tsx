@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, BookOpen } from 'lucide-react';
 import LearningHubOverview from './learning-hub/LearningHubOverview';
 import RegulationReferenceSection from './learning-hub/RegulationReferenceSection';
 import FaultFindingSection from './learning-hub/FaultFindingSection';
@@ -47,19 +47,27 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="md:max-w-7xl mx-auto p-3 sm:p-4 md:p-6">
+    <div className="min-h-screen mobile-safe-area">
+      <div className="space-y-6 md:space-y-8 animate-fade-in px-4 sm:px-6 md:px-8 pb-8 md:pb-12 max-w-7xl mx-auto pt-4 md:pt-6">
         {currentSection === 'overview' && (
-          <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-            <Button 
-              variant="outline" 
-              onClick={onBack}
-              className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200 text-sm sm:text-base min-h-[44px] touch-manipulation"
-            >
-              <ArrowLeft className="h-4 w-4 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-              <span className="hidden sm:inline">Back to Dashboard</span>
-              <span className="sm:hidden">Back</span>
-            </Button>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-elec-yellow/10">
+                  <BookOpen className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
+                </div>
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+                  Learning Hub
+                </h1>
+              </div>
+              <Button variant="outline" onClick={onBack} className="h-10 gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                <span className="hidden sm:inline">Back</span>
+              </Button>
+            </div>
+            <p className="text-base text-muted-foreground max-w-2xl">
+              BS7671 guidance, testing procedures and safety resources
+            </p>
           </div>
         )}
 

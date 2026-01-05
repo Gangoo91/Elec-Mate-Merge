@@ -26,7 +26,7 @@ const BS7671Module6Section5 = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+      <div>
         <Link to="../bs7671-module-6">
           <Button
             variant="ghost"
@@ -37,7 +37,7 @@ const BS7671Module6Section5 = () => {
           </Button>
         </Link>
         
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           {/* Header */}
           <div>
             <div className="flex items-center gap-4 mb-4">

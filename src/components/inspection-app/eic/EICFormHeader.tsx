@@ -2,7 +2,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, FileText, Save, Plus, WifiOff } from 'lucide-react';
-import SaveStatusIndicator from '@/components/SaveStatusIndicator';
 import { SyncStatusIndicator } from '@/components/ui/sync-status-indicator';
 import { SyncStatus } from '@/hooks/useCloudSync';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -32,125 +31,80 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
 }) => {
   const isMobile = useIsMobile();
 
-  if (isMobile) {
-    return (
-      <div className="flex items-center gap-3 mb-6">
-        <Button variant="ghost" onClick={onBack} className="p-2 flex-shrink-0 hover:bg-accent/10 transition-colors duration-200">
-          <ArrowLeft className="h-4 w-4" />
-        </Button>
-        <div className="flex-1 min-w-0">
-          <h1 className="text-base font-bold tracking-tight flex items-center gap-2 flex-wrap">
-            <div className="p-1.5 rounded-lg bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-sm">
-              <FileText className="h-4 w-4 text-black flex-shrink-0" />
-            </div>
-            <span className="bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">EIC</span>
-          </h1>
-        </div>
-        {onStartNew && (
-          <Button 
-            onClick={onStartNew} 
-            variant="outline" 
-            size="sm" 
-            className="h-11 w-11 p-2 flex-shrink-0 border-border hover:bg-accent/10 hover:border-border transition-all duration-200 touch-manipulation"
-            aria-label="Start New Report"
-            title="Start New"
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
-        )}
-        {onManualSave && (
-          <Button 
-            onClick={onManualSave} 
-            disabled={isSaving || syncState?.status === 'syncing'} 
-            variant="outline" 
-            size="sm" 
-            className="h-11 w-11 p-2 flex-shrink-0 border-border hover:bg-accent/10 hover:border-border transition-all duration-200 touch-manipulation"
-            aria-label="Save Now"
-            title="Save Now"
-          >
-            <Save className="h-4 w-4" />
-          </Button>
-        )}
-      </div>
-    );
-  }
-
   return (
-    <div className="mb-6 pb-4 border-b border-border/50">
-      <div className="flex items-center justify-between gap-4">
-        {/* Left: Back Button + Title */}
-        <div className="flex items-center gap-3 flex-1 min-w-0">
-          <Button 
-            variant="ghost" 
-            onClick={onBack}
-            size="icon"
-            className="flex-shrink-0"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="flex-shrink-0 w-12 h-12 rounded-lg elec-gradient-bg flex items-center justify-center">
-              <FileText className="h-6 w-6 text-black" />
-            </div>
-            
-            <div className="flex-1 min-w-0">
-          <span className="truncate bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent text-2xl font-bold">
-            EIC - Electrical Installation Certificate
-          </span>
-              <p className="text-sm text-muted-foreground">
-                BS7671:2018 New Installation Certificate
+    <div className="flex flex-col gap-4">
+      {/* Top row - Navigation and Actions */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-elec-yellow/10">
+            <FileText className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
+          </div>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+              EIC Certificate
+            </h1>
+            {formData?.certificateNumber && (
+              <p className="text-sm text-muted-foreground font-mono">
+                {formData.certificateNumber}
               </p>
-            </div>
+            )}
           </div>
         </div>
-        
-        {/* Right: Action Buttons */}
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          {/* Offline Badge */}
+          {!isOnline && (
+            <Badge variant="outline" className="text-orange-500 border-orange-500/30 bg-orange-500/10">
+              <WifiOff className="h-3 w-3 mr-1" />
+              Offline
+            </Badge>
+          )}
+          {/* Sync Status */}
+          {syncState && (
+            <SyncStatusIndicator
+              status={syncState.status}
+              lastSyncTime={syncState.lastSyncTime}
+              isOnline={isOnline}
+              isAuthenticated={isAuthenticated}
+              className="mr-1"
+            />
+          )}
+          {/* New Report Button */}
           {onStartNew && (
             <Button
               variant="outline"
+              size={isMobile ? "icon" : "sm"}
               onClick={onStartNew}
-              className="h-10"
+              className={isMobile ? "h-10 w-10" : "h-10 gap-2"}
             >
-              Start New
+              <Plus className="h-4 w-4" />
+              {!isMobile && <span>New</span>}
             </Button>
           )}
-          
+          {/* Save Button */}
           {onManualSave && (
             <Button
+              variant="outline"
+              size={isMobile ? "icon" : "sm"}
               onClick={onManualSave}
               disabled={isSaving || syncState?.status === 'syncing'}
-              className="elec-gradient-bg hover:opacity-90 text-black font-semibold h-10 px-6"
+              className={`${isMobile ? "h-10 w-10 bg-elec-yellow/20 border-elec-yellow/50 hover:bg-elec-yellow/30" : "h-10 gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90"}`}
             >
-              <Save className="h-4 w-4 mr-2" />
-              Save Now
+              <Save className="h-4 w-4" />
+              {!isMobile && <span>Save</span>}
             </Button>
           )}
+          {/* Back Button */}
+          <Button variant="outline" onClick={onBack} className="h-10 gap-2">
+            <ArrowLeft className="h-4 w-4" />
+            <span className="hidden sm:inline">Back</span>
+          </Button>
         </div>
       </div>
-      
-      {/* Save Status - Separate Row */}
-      <div className="flex justify-end mt-2 items-center gap-3">
-        {!isOnline && (
-          <Badge variant="outline" className="text-orange-600 border-orange-600/20 bg-orange-600/5">
-            <WifiOff className="h-3 w-3 mr-1" />
-            Offline Mode
-          </Badge>
-        )}
-        <SaveStatusIndicator
-          hasUnsavedChanges={hasUnsavedChanges}
-          isSaving={isSaving}
-        />
-        {syncState && (
-          <SyncStatusIndicator
-            status={syncState.status}
-            lastSyncTime={syncState.lastSyncTime}
-            isOnline={isOnline}
-            isAuthenticated={isAuthenticated}
-          />
-        )}
-      </div>
+
+      {/* Subtitle */}
+      <p className="text-base text-muted-foreground max-w-2xl">
+        BS7671 Electrical Installation Certificate for New Installations
+      </p>
     </div>
   );
 };

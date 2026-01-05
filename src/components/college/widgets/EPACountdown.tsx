@@ -281,11 +281,11 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
     const atRiskCount = epaStudents.filter(s => s.gatewayStatus === 'at_risk').length;
 
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-success/30 transition-all duration-300">
         <CardHeader className="pb-2">
           <CardTitle className="text-sm flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Award className="h-4 w-4 text-elec-yellow" />
+              <div className="p-1.5 rounded-lg bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5"><Award className="h-3.5 w-3.5 text-success" /></div>
               <span>EPA Gateway</span>
             </div>
             <span className="text-lg font-bold text-elec-yellow">{epaStudents.length}</span>
@@ -302,7 +302,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
           </div>
           {nearestEPA && (
             <div
-              className="flex items-center justify-between p-2 rounded-lg hover:bg-elec-dark/50 transition-colors cursor-pointer"
+              className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
               onClick={() => onNavigate?.("epatracking")}
             >
               <div className="min-w-0">
@@ -332,11 +332,11 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
   }
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-success/30 transition-all duration-300">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Award className="h-5 w-5 text-elec-yellow" />
+            <div className="p-1.5 rounded-xl bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5"><Award className="h-4 w-4 text-success" /></div>
             <span>EPA Gateway Countdown</span>
             <Badge className="bg-elec-yellow/20 text-elec-yellow">
               <Sparkles className="h-3 w-3 mr-1" />

@@ -54,40 +54,40 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
 
       {/* Quick Stats */}
       <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-warning/10 border-warning/20 shrink-0">
+        <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-warning/30 shrink-0 transition-all duration-300 cursor-pointer group">
           <CardContent className="p-3 flex items-center gap-2">
-            <CheckSquare className="h-4 w-4 text-warning" />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5 group-hover:scale-110 transition-transform duration-300"><CheckSquare className="h-4 w-4 text-warning" /></div>
             <div>
-              <p className="text-lg font-bold text-foreground">{pendingAssessments}</p>
-              <p className="text-xs text-muted-foreground">Pending</p>
+              <p className="text-lg font-bold text-white">{pendingAssessments}</p>
+              <p className="text-xs text-white/60">Pending</p>
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-success/10 border-success/20 shrink-0">
+        <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-success/30 shrink-0 transition-all duration-300 cursor-pointer group">
           <CardContent className="p-3 flex items-center gap-2">
-            <Clock className="h-4 w-4 text-success" />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5 group-hover:scale-110 transition-transform duration-300"><Clock className="h-4 w-4 text-success" /></div>
             <div>
-              <p className="text-lg font-bold text-foreground">{avgAttendance}%</p>
-              <p className="text-xs text-muted-foreground">Attendance</p>
+              <p className="text-lg font-bold text-white">{avgAttendance}%</p>
+              <p className="text-xs text-white/60">Attendance</p>
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
+        <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-elec-yellow/30 shrink-0 transition-all duration-300 cursor-pointer group">
           <CardContent className="p-3 flex items-center gap-2">
-            <Award className="h-4 w-4 text-elec-yellow" />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/20 shadow-lg shadow-elec-yellow/5 group-hover:scale-110 transition-transform duration-300"><Award className="h-4 w-4 text-elec-yellow" /></div>
             <div>
-              <p className="text-lg font-bold text-foreground">{studentsAtGateway}</p>
-              <p className="text-xs text-muted-foreground">Gateway</p>
+              <p className="text-lg font-bold text-white">{studentsAtGateway}</p>
+              <p className="text-xs text-white/60">Gateway</p>
             </div>
           </CardContent>
         </Card>
         {overdueILPReviews > 0 && (
-          <Card className="bg-warning/10 border-warning/20 shrink-0">
+          <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-warning/30 shrink-0 transition-all duration-300 cursor-pointer group">
             <CardContent className="p-3 flex items-center gap-2">
-              <Target className="h-4 w-4 text-warning" />
+              <div className="p-2 rounded-xl bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5 group-hover:scale-110 transition-transform duration-300"><Target className="h-4 w-4 text-warning" /></div>
               <div>
-                <p className="text-lg font-bold text-foreground">{overdueILPReviews}</p>
-                <p className="text-xs text-muted-foreground">Overdue ILPs</p>
+                <p className="text-lg font-bold text-white">{overdueILPReviews}</p>
+                <p className="text-xs text-white/60">Overdue ILPs</p>
               </div>
             </CardContent>
           </Card>
@@ -96,8 +96,8 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
 
       {/* Grading & Attendance */}
       <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
+        <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+          <span className="w-1 h-5 bg-gradient-to-b from-elec-yellow to-amber-500 rounded-full"></span>
           Grading & Attendance
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -122,8 +122,8 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
 
       {/* Progress & ILP */}
       <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-info rounded-full"></span>
+        <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+          <span className="w-1 h-5 bg-gradient-to-b from-info to-blue-500 rounded-full"></span>
           Progress & Learning Plans
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -155,8 +155,8 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
 
       {/* EPA Tracking */}
       <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-success rounded-full"></span>
+        <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+          <span className="w-1 h-5 bg-gradient-to-b from-success to-green-500 rounded-full"></span>
           End Point Assessment
         </h2>
         <CollegeFeatureTile
@@ -171,8 +171,8 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
 
       {/* Work Queue */}
       <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-warning rounded-full"></span>
+        <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+          <span className="w-1 h-5 bg-gradient-to-b from-warning to-orange-500 rounded-full"></span>
           Work Queue
         </h2>
         <CollegeFeatureTile
@@ -187,8 +187,8 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
 
       {/* AI Tools */}
       <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
+        <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+          <span className="w-1 h-5 bg-gradient-to-b from-elec-yellow to-amber-500 rounded-full"></span>
           AI-Powered Tools
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -200,8 +200,8 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
 
       {/* Quick Actions */}
       <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
+        <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+          <span className="w-1 h-5 bg-gradient-to-b from-elec-yellow to-amber-500 rounded-full"></span>
           Quick Actions
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">

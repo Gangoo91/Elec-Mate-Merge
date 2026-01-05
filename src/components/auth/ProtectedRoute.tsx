@@ -1,19 +1,17 @@
 
-import { ReactNode, useEffect } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { ReactNode } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import TrialExpiredPaywall from './TrialExpiredPaywall';
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { user, isLoading, isTrialActive, isSubscribed } = useAuth();
+  const { user, isLoading, isTrialActive, isSubscribed, isCheckingStatus } = useAuth();
   const location = useLocation();
-  const navigate = useNavigate();
-  const { toast } = useToast();
 
   // Development mode - full access during development only
   // This is automatically false in production builds
@@ -26,28 +24,14 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   // In development mode, always allow access for testing
   const canAccess = isDevelopment || isSubscribed || isTrialActive || isSubscriptionPage;
 
-  useEffect(() => {
-    // If authenticated but trial expired and not subscribed, show message
-    if (user && !isLoading && !canAccess) {
-      toast({
-        title: "Trial Expired",
-        description: "Your free trial has ended. Please subscribe to continue using Elec-Mate.",
-        variant: "destructive",
-      });
-
-      if (!isSubscriptionPage) {
-        navigate('/subscriptions');
-      }
-    }
-  }, [user, isLoading, isTrialActive, isSubscribed, isSubscriptionPage, navigate, toast, canAccess]);
-
   // Redirect to sign in if not logged in
   if (!isLoading && !user) {
     return <Navigate to="/auth/signin" state={{ from: location }} replace />;
   }
 
-  // Show loading indicator while checking authentication
-  if (isLoading) {
+  // Show loading indicator while checking authentication OR subscription status
+  // This prevents the redirect from happening before we know the subscription status
+  if (isLoading || isCheckingStatus) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black">
         <Loader2 className="h-12 w-12 text-yellow-400 animate-spin" />
@@ -57,8 +41,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   // Check if user can access based on trial/subscription status
+  // Show paywall instead of hard redirect for better UX
   if (user && !canAccess) {
-    return <Navigate to="/subscriptions" replace />;
+    return <TrialExpiredPaywall />;
   }
 
   // Render the protected content if authenticated and can access

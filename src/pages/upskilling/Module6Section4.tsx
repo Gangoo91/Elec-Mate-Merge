@@ -30,7 +30,7 @@ const Module6Section4 = () => {
         </div>
       </header>
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           <RCDInstallationContent />
           <RCDInstallationPractical />
           <RCDInstallationFAQ />
@@ -38,7 +38,7 @@ const Module6Section4 = () => {
         </div>
       </main>
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex flex-col sm:flex-row gap-4 sm:justify-between items-stretch sm:items-center">
             <Link to="module-6/section-3" className="flex-1 sm:flex-initial">
               <Button 

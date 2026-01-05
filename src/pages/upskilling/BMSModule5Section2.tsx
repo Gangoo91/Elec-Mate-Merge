@@ -56,7 +56,7 @@ const BMSModule5Section2 = () => {
 
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           <BMSModule5Section2Intro />
           <BMSModule5Section2LearningOutcomes />
           <BMSModule5Section2ContentPart1 />
@@ -76,7 +76,7 @@ const BMSModule5Section2 = () => {
 
       {/* Navigation */}
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
             <Link to="../bms-module-5-section-1" className="w-full sm:w-auto">
               <Button 

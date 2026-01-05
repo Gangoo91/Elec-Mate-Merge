@@ -113,7 +113,7 @@ const BS7671Module5Section6 = () => {
 
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           <BS7671Module5Section6Intro />
           <BS7671Module5Section6Environmental />
           <BS7671Module5Section6Practical />
@@ -135,7 +135,7 @@ const BS7671Module5Section6 = () => {
 
       {/* Navigation */}
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex justify-between items-center">
             <Link to="../bs7671-module-5-section-5">
               <Button 

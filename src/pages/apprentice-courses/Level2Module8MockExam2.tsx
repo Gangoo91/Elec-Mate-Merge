@@ -149,7 +149,7 @@ const Level2Module8MockExam2 = () => {
   if (!examStarted) {
     return (
       <div className="min-h-screen bg-background p-2 sm:p-4">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <Card className="border-emerald-500/30 bg-card">
             <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
               <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-emerald-500/10">
@@ -386,7 +386,7 @@ const Level2Module8MockExam2 = () => {
     
     return (
       <div className="min-h-screen bg-background p-2 sm:p-4">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <Card className="border-emerald-500/30 bg-card">
             <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
               <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-emerald-500/10">

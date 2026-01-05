@@ -211,7 +211,7 @@ const BS7671Module4Section7 = () => {
 
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">{/* Introduction */}
+        <div className="space-y-4 sm:space-y-6">{/* Introduction */}
           <Card className="bg-card border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
@@ -597,7 +597,7 @@ const BS7671Module4Section7 = () => {
 
       {/* Navigation */}
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex flex-col sm:flex-row justify-between gap-4">
             <Link to="../bs7671-module-4-section-6">
               <Button variant="outline" className="bg-transparent border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-all duration-200 w-full sm:w-auto">

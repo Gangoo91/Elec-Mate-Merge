@@ -56,7 +56,7 @@ const Module5Section7 = () => {
 
       {/* Navigation */}
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <Link to="module-5/section-6" className="w-full sm:w-auto">
               <Button 

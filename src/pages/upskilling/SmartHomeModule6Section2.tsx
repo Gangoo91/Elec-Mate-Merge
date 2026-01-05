@@ -52,7 +52,7 @@ const SmartHomeModule6Section2 = () => {
 
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           <SmartHomeModule6Section2Intro />
           <SmartHomeModule6Section2LearningOutcomes />
           <SmartHomeModule6Section2VoiceRole />
@@ -69,7 +69,7 @@ const SmartHomeModule6Section2 = () => {
 
       {/* Navigation */}
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex justify-between items-center">
             <Link to="../smart-home-module-6-section-1">
               <Button 

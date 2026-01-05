@@ -103,7 +103,7 @@ const SmartHomeMockExam = () => {
   // Start Screen
   if (examState === 'start') {
     return (
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="space-y-4 sm:space-y-6 animate-fade-in">
         <div className="px-4 sm:px-8 pt-8 pb-12">
           <Link to="../smart-home-course">
             <Button
@@ -115,7 +115,7 @@ const SmartHomeMockExam = () => {
             </Button>
           </Link>
           
-          <div className="max-w-4xl mx-auto space-y-8">
+          <div className="space-y-4 sm:space-y-6">
             <div className="text-center">
               <h1 className="text-4xl font-bold text-white mb-4">
                 Smart Home Mock Exam
@@ -213,7 +213,7 @@ const SmartHomeMockExam = () => {
     const timeTaken = formatTime(Math.min(timeElapsed, EXAM_DURATION));
 
     return (
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="space-y-4 sm:space-y-6 animate-fade-in">
         <div className="px-4 sm:px-8 pt-8 pb-12">
           <Link to="../smart-home-course">
             <Button
@@ -225,7 +225,7 @@ const SmartHomeMockExam = () => {
             </Button>
           </Link>
 
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div className="text-center">
               <h1 className="text-4xl font-bold text-white mb-4">Exam Results</h1>
               
@@ -328,7 +328,7 @@ const SmartHomeMockExam = () => {
   const question = questions[currentQuestion];
   
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-4 sm:px-8 pt-8 pb-12">
         {/* Header with timer */}
         <div className="flex flex-col gap-4 mb-6 sm:mb-8">
@@ -357,7 +357,7 @@ const SmartHomeMockExam = () => {
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           <QuizProgress 
             currentQuestion={currentQuestion}
             totalQuestions={questions.length}

@@ -88,8 +88,8 @@ const FireAlarmModule2Section1 = () => {
   const score = selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+      <div>
         <Link to="../fire-alarm-module-2">
           <Button
             variant="ghost"
@@ -100,7 +100,7 @@ const FireAlarmModule2Section1 = () => {
           </Button>
         </Link>
         
-          <div className="max-w-4xl mx-auto space-y-8">
+          <div className="space-y-4 sm:space-y-6">
           {/* Header */}
           <div>
             <div className="flex items-center gap-4 mb-4">

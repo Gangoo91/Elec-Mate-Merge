@@ -1,39 +1,40 @@
-import { Button } from "@/components/ui/button";
 import { ArrowLeft, Settings } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MaintenanceMethodInterface } from "@/components/electrician-tools/maintenance-method/MaintenanceMethodInterface";
 
 const MaintenancePage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const fromAgentSelector = location.state?.fromAgentSelector;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 pb-safe">
-        {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
-              <Settings className="h-6 w-6 sm:h-7 sm:w-7 text-cyan-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Maintenance Specialist
-              </h1>
-              <p className="text-sm text-white/60">Inspections & fault diagnosis</p>
-            </div>
+    <div className="min-h-screen bg-[#121212] pb-24">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-[#121212]/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3">
+          <button
+            onClick={() => navigate(fromAgentSelector ? "/electrician/agent-selector" : "/electrician")}
+            className="flex items-center gap-2 text-white active:opacity-70 transition-opacity touch-manipulation"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span className="text-sm font-medium">
+              {fromAgentSelector ? "Agent Selector" : "Electrician Hub"}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <main className="px-4 py-4 space-y-5">
+        {/* Hero Header */}
+        <div className="flex items-center gap-3">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500/20 to-teal-500/10 border border-cyan-500/20">
+            <Settings className="h-6 w-6 text-cyan-400" />
           </div>
-          <Link to={fromAgentSelector ? "/electrician/agent-selector" : "/electrician"}>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              {fromAgentSelector ? "Back to Agents" : "Back to Hub"}
-            </Button>
-          </Link>
-        </header>
+          <div>
+            <h1 className="text-xl font-bold text-white">Maintenance Specialist</h1>
+            <p className="text-sm text-white/50">Inspections & fault diagnosis</p>
+          </div>
+        </div>
 
         <MaintenanceMethodInterface />
       </main>

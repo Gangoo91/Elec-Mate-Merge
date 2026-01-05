@@ -751,65 +751,70 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
 
 
   return (
-    <div className="min-h-screen bg-background prevent-shortcuts">
-      <div className="p-2 sm:p-6 space-y-3 sm:space-y-6">
-        {/* Header */}
-        <div className="rounded-lg px-0 py-6 md:px-6 overflow-hidden">
-          <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-4">
-            <Button variant="ghost" onClick={onBack} size="sm" className="mt-1 min-h-[44px]">
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-            <div className="flex-1 min-w-0 space-y-2">
-              <div className="flex items-center gap-2">
-                {!isOnline && (
-                  <Badge variant="outline" className="text-orange-600 border-orange-600/20 bg-orange-600/5">
-                    <WifiOff className="h-3 w-3 mr-1" />
-                    Offline
-                  </Badge>
+    <div className="min-h-screen mobile-safe-area prevent-shortcuts">
+      <div className="space-y-6 md:space-y-8 animate-fade-in px-4 sm:px-6 md:px-8 pb-8 md:pb-12 max-w-7xl mx-auto pt-4 md:pt-6">
+        {/* Hub-Style Header */}
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-elec-yellow/10">
+                <FileCheck className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
+              </div>
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+                  Minor Works
+                </h1>
+                {formData.certificateNumber && (
+                  <p className="text-sm text-muted-foreground font-mono">
+                    {formData.certificateNumber}
+                  </p>
                 )}
               </div>
-              <h1 className="text-xl sm:text-2xl font-bold flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 leading-tight">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-yellow-500 flex items-center justify-center flex-shrink-0">
-                  <FileCheck className="h-5 w-5 sm:h-5 sm:w-5 text-black" />
-                </div>
-                <span className="truncate bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">Minor Electrical Installation Works Certificate</span>
-              </h1>
-              <p className="text-muted-foreground text-sm sm:text-sm mt-2">
-                BS 7671:2018+A3:2024 - Additions & Alterations
-              </p>
+            </div>
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              {!isOnline && (
+                <Badge variant="outline" className="text-orange-500 border-orange-500/30 bg-orange-500/10">
+                  <WifiOff className="h-3 w-3 mr-1" />
+                  Offline
+                </Badge>
+              )}
+              {hasUnsavedChanges && (
+                <Badge variant="outline" className="text-amber-500 border-amber-500/30">
+                  <Clock className="h-3 w-3 mr-1" />
+                  Unsaved
+                </Badge>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleSaveDraft}
+                className="h-10 gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              >
+                <Save className="h-4 w-4" />
+                <span className="hidden sm:inline">Save</span>
+              </Button>
+              <Button variant="outline" onClick={onBack} className="h-10 gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                <span className="hidden sm:inline">Back</span>
+              </Button>
             </div>
           </div>
-          
-          <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            {hasUnsavedChanges && (
-              <Badge variant="outline" className="flex items-center gap-2 text-xs">
-                <Clock className="h-3 w-3" />
-                Unsaved changes
-              </Badge>
-            )}
-            {lastSaveTime && (
-              <Badge variant="secondary" className="text-xs">
-                Saved {lastSaveTime.toLocaleTimeString()}
-              </Badge>
-            )}
-            <Button variant="outline" size="sm" onClick={handleSaveDraft} className="text-xs sm:text-sm h-11 min-h-[44px]">
-              <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-              Save Draft
-            </Button>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex justify-between text-xs sm:text-sm">
-              <span>Completion Progress</span>
-              <span>{getCompletionPercentage()}%</span>
+          <p className="text-base text-muted-foreground max-w-2xl">
+            BS 7671:2018+A3:2024 - Minor Electrical Installation Works Certificate
+          </p>
+          {/* Progress Bar */}
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Completion Progress</span>
+              <span className="font-medium text-elec-yellow">{getCompletionPercentage()}%</span>
             </div>
-            <Progress value={getCompletionPercentage()} className="h-1.5 sm:h-2" />
+            <Progress value={getCompletionPercentage()} className="h-2" />
           </div>
         </div>
 
         {/* Smart Defaults Alert */}
         {hasDefaults && !formData.contractorName && (
-          <div className="px-0 md:px-8 md:max-w-5xl mx-auto">
+          <div>
             <Alert className="bg-blue-500/10 border-blue-500/30">
               <Sparkles className="h-4 w-4 text-blue-400" />
               <AlertDescription>

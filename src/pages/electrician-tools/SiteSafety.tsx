@@ -140,13 +140,13 @@ const SiteSafety = () => {
   if (activeView) {
     return (
       <RAMSProvider>
-        <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-dark to-elec-gray animate-fade-in">
-          <div className="max-w-7xl mx-auto pl-4 pr-4 py-6">
-            <div className="mb-6">
-              <Button 
+        <div className="min-h-screen bg-background animate-fade-in">
+          <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6">
+            <div className="mb-4 sm:mb-6">
+              <Button
                 onClick={() => setActiveView(null)}
-                variant="outline" 
-                className="mb-4 border-elec-yellow/30 hover:border-elec-yellow/60 text-elec-yellow hover:bg-elec-yellow/10"
+                variant="outline"
+                className="h-10 border-white/10 hover:border-elec-yellow/30 text-white/60 hover:text-white hover:bg-white/5"
               >
                 <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
                 Back to Site Safety
@@ -161,74 +161,68 @@ const SiteSafety = () => {
 
   return (
     <RAMSProvider>
-      <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-dark to-elec-gray">
+      <div className="min-h-screen bg-background">
         {/* Hero Section */}
-        <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/5 to-transparent" />
-          <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6 relative">
-            <div className="text-center space-y-2">
-              <div className="flex justify-center mb-2 sm:mb-3">
-                <div className="p-2 rounded-full bg-elec-yellow/10 border border-elec-yellow/20">
-                  <Shield className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
-                </div>
+        <div className="border-b border-white/5">
+          <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                <Shield className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow" />
               </div>
-              
-              <h1 className="text-lg sm:text-xl font-bold tracking-tight">
-                Site Safety & Risk Assessment
-              </h1>
-              
-              <p className="text-xs sm:text-sm text-muted-foreground max-w-xl sm:max-w-2xl mx-auto leading-relaxed px-2">
-                <span className="hidden sm:inline">Comprehensive safety management tools for electrical contractors. Generate RAMS documents, assess risks, and maintain safety compliance on all your projects.</span>
-                <span className="sm:hidden">Essential safety tools for electrical contractors. Generate RAMS, assess risks, and maintain compliance.</span>
-              </p>
-              
-              <div className="flex justify-center pt-1 sm:pt-2">
-                <BackButton customUrl="/electrician" label="Back to Electrical Hub" />
+              <div className="flex-1">
+                <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">
+                  Site Safety & RAMS
+                </h1>
+                <p className="text-sm sm:text-base text-white/50">
+                  Generate RAMS documents, assess risks, and maintain safety compliance
+                </p>
               </div>
+              <BackButton customUrl="/electrician" label="Back" />
             </div>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 pb-12 space-y-12 animate-fade-in">
+        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 space-y-8 sm:space-y-10">
           {/* Featured Tools */}
           <section>
-            <div className="flex items-center gap-3 mb-8 pt-4">
-              <Star className="h-6 w-6 text-elec-yellow" />
-              <h2 className="text-2xl font-bold">Essential Safety Tools</h2>
+            <div className="flex items-center gap-2 mb-4 sm:mb-5">
+              <Star className="h-4 w-4 text-elec-yellow" />
+              <h2 className="text-lg sm:text-xl font-semibold text-white">Essential Tools</h2>
             </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {primaryTools.map((tool) => {
                 const IconComponent = tool.icon;
                 return (
-                  <Card 
+                  <Card
                     key={tool.id}
-                    className="group relative overflow-hidden border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-card/80 hover:border-elec-yellow/40 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                    className="group bg-[#1e1e1e] border border-white/10 hover:border-elec-yellow/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98]"
                     onClick={() => setActiveView(tool.id)}
                   >
-                    <CardHeader className="pb-3 sm:pb-4">
-                      <div className="flex items-start gap-3 sm:gap-4">
-                        <div className="p-2 sm:p-3 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
-                          <IconComponent className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
+                    <CardHeader className="p-4 sm:p-5">
+                      <div className="flex items-start gap-4">
+                        <div className="h-12 w-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0 group-hover:bg-elec-yellow/15 transition-colors">
+                          <IconComponent className="h-6 w-6 text-elec-yellow" />
                         </div>
-                        <div className="flex-1">
-                          <CardTitle className="text-lg sm:text-xl mb-2 group-hover:text-elec-yellow transition-colors">
-                            {tool.title}
-                          </CardTitle>
-                          <p className="text-foreground/90 text-sm leading-relaxed">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <CardTitle className="text-base sm:text-lg font-semibold text-white group-hover:text-elec-yellow transition-colors">
+                              {tool.title}
+                            </CardTitle>
+                            {tool.badge && (
+                              <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-[10px] px-1.5 py-0">
+                                {tool.badge}
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="text-sm text-white/50 line-clamp-2">
                             {tool.description}
                           </p>
                         </div>
+                        <ArrowRight className="h-5 w-5 text-white/30 group-hover:text-elec-yellow group-hover:translate-x-1 transition-all flex-shrink-0" />
                       </div>
                     </CardHeader>
-                    
-                    <CardContent className="pt-0">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-foreground/70">Click to open</span>
-                        <ArrowRight className="h-4 w-4 text-elec-yellow group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </CardContent>
                   </Card>
                 );
               })}
@@ -237,40 +231,36 @@ const SiteSafety = () => {
 
           {/* Safety Tools Grid */}
           <section>
-            <div className="flex items-center gap-3 mb-8">
-              <Zap className="h-6 w-6 text-elec-yellow" />
-              <h2 className="text-2xl font-bold">Safety Management Tools</h2>
+            <div className="flex items-center gap-2 mb-4 sm:mb-5">
+              <Zap className="h-4 w-4 text-elec-yellow" />
+              <h2 className="text-lg sm:text-xl font-semibold text-white">Safety Management</h2>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {safetyTools.map((tool) => {
                 const IconComponent = tool.icon;
                 return (
-                  <Card 
+                  <Card
                     key={tool.id}
-                    className="group border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-all duration-300 hover:scale-105 cursor-pointer flex flex-col h-full"
+                    className="group bg-[#1e1e1e] border border-white/10 hover:border-elec-yellow/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98]"
                     onClick={() => setActiveView(tool.id)}
                   >
-                    <CardHeader className="text-center pb-2">
+                    <CardHeader className="p-4 text-center">
                       <div className="flex justify-center mb-3">
-                        <div className="p-3 rounded-full bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
-                          <IconComponent className="h-6 w-6 text-elec-yellow" />
+                        <div className="h-11 w-11 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow/15 transition-colors">
+                          <IconComponent className="h-5 w-5 text-elec-yellow" />
                         </div>
                       </div>
-                      <CardTitle className="text-lg group-hover:text-elec-yellow transition-colors">
+                      <CardTitle className="text-sm sm:text-base font-medium text-white group-hover:text-elec-yellow transition-colors mb-1">
                         {tool.title}
                       </CardTitle>
-                    </CardHeader>
-                    
-                    <CardContent className="text-center flex-1 flex flex-col">
-                      <p className="text-foreground/90 text-sm mb-4 leading-relaxed">
+                      <p className="text-xs text-white/40 line-clamp-2 hidden sm:block">
                         {tool.description}
                       </p>
-                      <div className="flex items-center justify-center gap-2 text-xs text-elec-yellow/80 mt-auto">
-                        <span>{tool.category}</span>
-                        <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </CardContent>
+                      <Badge className="mt-2 bg-white/5 text-white/40 border-white/10 text-[10px]">
+                        {tool.category}
+                      </Badge>
+                    </CardHeader>
                   </Card>
                 );
               })}
@@ -279,33 +269,35 @@ const SiteSafety = () => {
 
           {/* Management Tools */}
           <section>
-            <div className="flex items-center gap-3 mb-8">
-              <Wrench className="h-6 w-6 text-elec-yellow" />
-              <h2 className="text-2xl font-bold">Equipment & Emergency</h2>
+            <div className="flex items-center gap-2 mb-4 sm:mb-5">
+              <Wrench className="h-4 w-4 text-elec-yellow" />
+              <h2 className="text-lg sm:text-xl font-semibold text-white">Equipment & Emergency</h2>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {managementTools.map((tool) => {
                 const IconComponent = tool.icon;
                 return (
-                  <Card 
+                  <Card
                     key={tool.id}
-                    className="group border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                    className="group bg-[#1e1e1e] border border-white/10 hover:border-elec-yellow/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98]"
                     onClick={() => setActiveView(tool.id)}
                   >
-                    <CardHeader className="flex-row items-center space-y-0 gap-4">
-                      <div className="p-3 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
-                        <IconComponent className="h-6 w-6 text-elec-yellow" />
+                    <CardHeader className="p-4 sm:p-5">
+                      <div className="flex items-center gap-4">
+                        <div className="h-11 w-11 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0 group-hover:bg-elec-yellow/15 transition-colors">
+                          <IconComponent className="h-5 w-5 text-elec-yellow" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <CardTitle className="text-sm sm:text-base font-medium text-white group-hover:text-elec-yellow transition-colors">
+                            {tool.title}
+                          </CardTitle>
+                          <p className="text-xs sm:text-sm text-white/40">
+                            {tool.description}
+                          </p>
+                        </div>
+                        <ArrowRight className="h-5 w-5 text-white/30 group-hover:text-elec-yellow group-hover:translate-x-1 transition-all flex-shrink-0" />
                       </div>
-                      <div className="flex-1">
-                        <CardTitle className="text-lg group-hover:text-elec-yellow transition-colors">
-                          {tool.title}
-                        </CardTitle>
-                        <p className="text-foreground/90 text-sm">
-                          {tool.description}
-                        </p>
-                      </div>
-                      <ArrowRight className="h-5 w-5 text-elec-yellow group-hover:translate-x-1 transition-transform" />
                     </CardHeader>
                   </Card>
                 );
@@ -316,67 +308,65 @@ const SiteSafety = () => {
 
           {/* Modern Safety Best Practices */}
           <section>
-            <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 to-transparent">
-              <CardHeader className="text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="p-3 rounded-full bg-elec-yellow/20">
-                    <Shield className="h-8 w-8 text-elec-yellow" />
+            <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl overflow-hidden">
+              <CardHeader className="p-4 sm:p-6 border-b border-white/5">
+                <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
+                    <Shield className="h-6 w-6 text-elec-yellow" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg sm:text-xl font-semibold text-white">
+                      Safety Best Practices
+                    </CardTitle>
+                    <p className="text-sm text-white/50">
+                      BS 7671 compliant electrical work guidelines
+                    </p>
                   </div>
                 </div>
-                <CardTitle className="text-2xl text-elec-yellow">
-                  Safety Best Practices
-                </CardTitle>
-                <p className="text-foreground/90">
-                  Essential guidelines for safe electrical work in compliance with BS 7671
-                </p>
               </CardHeader>
-              
-              <CardContent>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-                  <div className="space-y-5">
-                    <h4 className="font-semibold text-elec-yellow text-xl flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center text-base font-bold">1</div>
+
+              <CardContent className="p-4 sm:p-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                  <div className="space-y-4">
+                    <h4 className="font-medium text-white flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center text-sm font-bold text-elec-yellow">1</div>
                       Before Starting Work
                     </h4>
-                    <div className="space-y-3">
+                    <div className="space-y-2 pl-11">
                       {[
-                        { title: "Complete risk assessment for each task", detail: "Identify all electrical hazards and plan control measures" },
-                        { title: "Brief all team members on hazards", detail: "Ensure everyone understands risks and emergency procedures" },
-                        { title: "Check all safety equipment and PPE", detail: "Verify voltage detectors, insulated tools, and protective gear" },
-                        { title: "Document site conditions", detail: "Record existing hazards and environmental factors" },
-                        { title: "Verify isolation and permit to work", detail: "Confirm safe isolation and authorization to proceed" },
-                        { title: "Review method statements", detail: "Understand step-by-step safe working procedures" }
+                        { title: "Complete risk assessment for each task", detail: "Identify hazards and plan control measures" },
+                        { title: "Brief all team members on hazards", detail: "Ensure understanding of risks and emergency procedures" },
+                        { title: "Check all safety equipment and PPE", detail: "Verify voltage detectors and protective gear" },
+                        { title: "Verify isolation and permit to work", detail: "Confirm safe isolation and authorization" }
                       ].map((item, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                          <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                          <div className="text-left">
-                            <span className="text-foreground font-medium block">{item.title}</span>
-                            <span className="text-foreground/70 text-sm">{item.detail}</span>
+                        <div key={index} className="flex items-start gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                          <div>
+                            <span className="text-sm text-white/80 block">{item.title}</span>
+                            <span className="text-xs text-white/40">{item.detail}</span>
                           </div>
                         </div>
                       ))}
                     </div>
                   </div>
-                  
-                  <div className="space-y-5">
-                    <h4 className="font-semibold text-elec-yellow text-xl flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center text-base font-bold">2</div>
+
+                  <div className="space-y-4">
+                    <h4 className="font-medium text-white flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center text-sm font-bold text-elec-yellow">2</div>
                       During Work
                     </h4>
-                    <div className="space-y-3">
+                    <div className="space-y-2 pl-11">
                       {[
-                        { title: "Follow method statements precisely", detail: "Adhere to approved procedures without deviation" },
-                        { title: "Report near misses immediately", detail: "Document incidents to prevent future accidents" }, 
-                        { title: "Take photos of safety concerns", detail: "Create visual evidence of hazards and conditions" },
-                        { title: "Update risk assessments if conditions change", detail: "Re-evaluate when new hazards are discovered" },
-                        { title: "Maintain safe working distances", detail: "Keep appropriate clearance from live equipment" },
-                        { title: "Use proper tools and equipment", detail: "Only use correctly rated and calibrated instruments" }
+                        { title: "Follow method statements precisely", detail: "Adhere to approved procedures" },
+                        { title: "Report near misses immediately", detail: "Document incidents to prevent accidents" },
+                        { title: "Update risk assessments if conditions change", detail: "Re-evaluate when new hazards discovered" },
+                        { title: "Use proper tools and equipment", detail: "Only use correctly rated instruments" }
                       ].map((item, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                          <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                          <div className="text-left">
-                            <span className="text-foreground font-medium block">{item.title}</span>
-                            <span className="text-foreground/70 text-sm">{item.detail}</span>
+                        <div key={index} className="flex items-start gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                          <div>
+                            <span className="text-sm text-white/80 block">{item.title}</span>
+                            <span className="text-xs text-white/40">{item.detail}</span>
                           </div>
                         </div>
                       ))}

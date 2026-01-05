@@ -71,8 +71,8 @@ const InstrumentationModule1Section4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+      <div>
         <Link to="../instrumentation-module-1">
           <Button
             variant="ghost"
@@ -83,7 +83,7 @@ const InstrumentationModule1Section4 = () => {
           </Button>
         </Link>
         
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           {/* Header */}
           <div>
             <div className="flex items-center gap-4 mb-4">

@@ -43,7 +43,7 @@ const BS7671Module7Section5 = () => {
       </header>
 
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           <BS7671Module7Section5Intro />
           <BS7671Module7Section5LearningOutcomes />
           <ProsumerInstallationSection />
@@ -60,7 +60,7 @@ const BS7671Module7Section5 = () => {
       </main>
 
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex justify-start">
             <Link to="../bs7671-module-7-section-4">
               <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">

@@ -15,8 +15,8 @@ import BS7671Module8Section2FAQ from '@/components/upskilling/bs7671/BS7671Modul
 
 const BS7671Module8Section2 = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+      <div>
         <Link to="../bs7671-module-8">
           <Button
             variant="ghost"

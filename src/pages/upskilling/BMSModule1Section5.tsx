@@ -8,7 +8,7 @@ import { bmsModule1Section5QuizData } from '@/data/upskilling/bmsModule1Section5
 
 const BMSModule1Section5 = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Header Section */}
       <div className="px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-8 sm:pb-12">
         <Link to="../bms-module-1">

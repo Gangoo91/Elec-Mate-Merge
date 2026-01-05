@@ -71,7 +71,7 @@ const InstrumentationModule3Section1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-12">
         <Link to="../instrumentation-module-3">
           <Button

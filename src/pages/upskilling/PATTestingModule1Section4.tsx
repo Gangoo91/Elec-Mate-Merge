@@ -270,7 +270,7 @@ const PATTestingModule1Section4 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-8 pt-8 pb-12">
         <Link to="../pat-testing-module-1">
           <Button

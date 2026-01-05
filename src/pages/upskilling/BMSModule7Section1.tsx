@@ -36,7 +36,7 @@ const BMSModule7Section1 = () => {
         </div>
       </header>
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           <BMSModule7Section1Intro />
           <BMSModule7Section1LearningOutcomes />
           <BMSModule7Section1ContentPart1 />
@@ -50,7 +50,7 @@ const BMSModule7Section1 = () => {
         </div>
       </main>
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex flex-col sm:flex-row gap-4 sm:justify-between items-stretch sm:items-center">
             <Link to="../bms-module-7" className="flex-1 sm:flex-initial">
               <Button 

@@ -1,0 +1,422 @@
+/**
+ * Touch Optimization Styles
+ * Global CSS for mobile-first touch interactions
+ */
+
+/* ============================================
+   TOUCH TARGET STANDARDS
+   Minimum 48px for accessibility (WCAG 2.1)
+   ============================================ */
+
+.touch-target {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+.touch-target-lg {
+  min-height: 56px;
+  min-width: 56px;
+}
+
+.touch-target-sm {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* ============================================
+   MOBILE INPUT OPTIMIZATION
+   Prevents iOS zoom on focus (requires 16px+)
+   ============================================ */
+
+.input-mobile {
+  height: 56px;
+  font-size: 16px;
+  padding: 0.75rem 1rem;
+}
+
+.input-mobile-compact {
+  height: 48px;
+  font-size: 16px;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Prevent zoom on all form inputs in mobile */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="password"],
+  input[type="search"],
+  input[type="url"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* ============================================
+   TOUCH FEEDBACK
+   Visual response to touch interactions
+   ============================================ */
+
+.touch-feedback {
+  transition: transform 0.1s ease, opacity 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.touch-feedback:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+/* Stronger feedback for buttons */
+.touch-feedback-strong:active {
+  transform: scale(0.95);
+}
+
+/* Subtle feedback for list items */
+.touch-feedback-subtle:active {
+  transform: scale(0.99);
+  opacity: 0.95;
+}
+
+/* No transform, just opacity */
+.touch-feedback-opacity:active {
+  opacity: 0.7;
+}
+
+/* ============================================
+   TOUCH RIPPLE EFFECT
+   Material-style ripple on tap
+   ============================================ */
+
+.touch-ripple {
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.touch-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: currentColor;
+  opacity: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.touch-ripple:active::after {
+  width: 200%;
+  height: 200%;
+  opacity: 0.1;
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+}
+
+/* ============================================
+   SWIPE GESTURES
+   Styles for swipeable elements
+   ============================================ */
+
+.swipeable {
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.swipeable-x {
+  touch-action: pan-x;
+}
+
+.swipeable-none {
+  touch-action: none;
+}
+
+/* Prevent overscroll bounce on iOS */
+.no-overscroll {
+  overscroll-behavior: none;
+}
+
+/* ============================================
+   SCROLL OPTIMIZATION
+   Smooth native scrolling
+   ============================================ */
+
+.scroll-smooth {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-snap-y {
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-snap-item {
+  scroll-snap-align: start;
+}
+
+.scroll-snap-item-center {
+  scroll-snap-align: center;
+}
+
+/* Hide scrollbar but allow scrolling */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================================
+   SAFE AREAS
+   Account for notches and home indicators
+   ============================================ */
+
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-left {
+  padding-left: env(safe-area-inset-left);
+}
+
+.safe-right {
+  padding-right: env(safe-area-inset-right);
+}
+
+.safe-all {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Padding-bottom with safe area for fixed footers */
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+/* ============================================
+   BUTTON STYLES
+   Touch-optimized button variants
+   ============================================ */
+
+.btn-touch {
+  min-height: 48px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 0.75rem;
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-touch:active {
+  transform: scale(0.98);
+}
+
+.btn-touch-lg {
+  min-height: 56px;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
+
+.btn-touch-sm {
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* Icon-only touch button */
+.btn-touch-icon {
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   CARD STYLES
+   Touch-optimized interactive cards
+   ============================================ */
+
+.card-touch {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card-touch:active {
+  transform: scale(0.99);
+}
+
+.card-touch-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-touch-lift:active {
+  transform: translateY(0) scale(0.99);
+}
+
+/* ============================================
+   LIST ITEM STYLES
+   Touch-optimized list interactions
+   ============================================ */
+
+.list-item-touch {
+  min-height: 56px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: background-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.list-item-touch:active {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  .list-item-touch:active {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* ============================================
+   SELECTION STYLES
+   Touch-optimized selection controls
+   ============================================ */
+
+.selection-touch {
+  min-height: 48px;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: 2px solid transparent;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.selection-touch:active {
+  transform: scale(0.95);
+}
+
+.selection-touch[data-selected="true"] {
+  border-color: hsl(var(--primary));
+  background-color: hsl(var(--primary) / 0.1);
+}
+
+/* ============================================
+   FOCUS STYLES
+   Visible focus for accessibility
+   ============================================ */
+
+.focus-visible-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.3);
+}
+
+/* Remove focus ring on touch */
+@media (pointer: coarse) {
+  .focus-visible-ring:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+/* ============================================
+   LOADING STATES
+   Touch feedback during loading
+   ============================================ */
+
+.loading-touch {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.loading-touch::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ============================================
+   DISABLED STATES
+   Clear visual feedback for disabled elements
+   ============================================ */
+
+.disabled-touch {
+  pointer-events: none;
+  opacity: 0.5;
+  filter: grayscale(30%);
+}
+
+/* ============================================
+   PULL TO REFRESH INDICATOR
+   Custom pull-to-refresh styling
+   ============================================ */
+
+.pull-indicator {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pull-indicator.active {
+  height: 60px;
+}
+
+/* ============================================
+   BOTTOM SHEET HANDLE
+   Standard drag handle for sheets
+   ============================================ */
+
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: hsl(var(--muted-foreground) / 0.3);
+  margin: 0.75rem auto;
+}
+
+.sheet-handle:hover {
+  background-color: hsl(var(--muted-foreground) / 0.5);
+}

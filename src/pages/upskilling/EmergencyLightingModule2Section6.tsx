@@ -13,7 +13,7 @@ import { EmergencySystemTestingQuiz } from '@/components/upskilling/emergency-li
 
 const EmergencyLightingModule2Section6 = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-4 md:px-8 pt-4 pb-10">
         <div className="flex items-center gap-4 mb-6">
           <Link to="../emergency-lighting-module-2">
@@ -38,7 +38,7 @@ const EmergencyLightingModule2Section6 = () => {
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto space-y-8">
+          <div className="space-y-4 sm:space-y-6">
             <EmergencyLightingIntroSection2_6 />
             <EmergencyLightingLearningOutcomesSection2_6 />
             <EmergencyLightingContent2_6 />

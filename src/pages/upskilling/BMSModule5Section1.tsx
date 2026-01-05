@@ -21,7 +21,7 @@ import { BMSModule5Section1Quiz } from '@/components/upskilling/bms/BMSModule5Se
 
 const BMSModule5Section1 = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Header */}
       <div className="px-8 pt-8 pb-4">
         <Link to="../bms-module-5">

@@ -322,20 +322,31 @@ const PhotoDocumentation = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-8">
-        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-        <span className="ml-2 text-muted-foreground">Loading photos...</span>
-      </div>
+      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
+        <CardContent className="py-16">
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+            </div>
+            <div className="text-center">
+              <p className="text-white font-medium">Loading Photos</p>
+              <p className="text-sm text-white/50 mt-1">Fetching your documentation...</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
     <div className="space-y-6">
       {/* Photo Upload */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Camera className="h-5 w-5" />
+      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl overflow-hidden">
+        <CardHeader className="border-b border-white/5">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <Camera className="h-5 w-5 text-elec-yellow" />
+            </div>
             Photo Documentation
           </CardTitle>
         </CardHeader>
@@ -613,47 +624,49 @@ const PhotoDocumentation = () => {
 
       {/* Photo Statistics */}
       <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 md:grid-cols-4'}`}>
-        <Card className="border-primary/30 bg-card/50 hover:bg-card/70 transition-colors">
+        <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
           <CardContent className="p-6 text-center">
             <div className="text-3xl font-bold text-elec-yellow mb-2">{photos.length}</div>
-            <div className="text-sm font-medium text-muted-foreground">Total Photos</div>
+            <div className="text-sm font-medium text-white/50">Total Photos</div>
           </CardContent>
         </Card>
-        <Card className="border-primary/30 bg-card/50 hover:bg-card/70 transition-colors">
+        <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-elec-yellow mb-2">
+            <div className="text-3xl font-bold text-yellow-400 mb-2">
               {photos.filter(p => p.category === "Safety Procedure").length}
             </div>
-            <div className="text-sm font-medium text-muted-foreground">Safety Photos</div>
+            <div className="text-sm font-medium text-white/50">Safety Photos</div>
           </CardContent>
         </Card>
-        <Card className="border-primary/30 bg-card/50 hover:bg-card/70 transition-colors">
+        <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-elec-yellow mb-2">
+            <div className="text-3xl font-bold text-blue-400 mb-2">
               {photos.filter(p => p.category === "Before Work").length}
             </div>
-            <div className="text-sm font-medium text-muted-foreground">Before Photos</div>
+            <div className="text-sm font-medium text-white/50">Before Photos</div>
           </CardContent>
         </Card>
-        <Card className="border-primary/30 bg-card/50 hover:bg-card/70 transition-colors">
+        <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-elec-yellow mb-2">
+            <div className="text-3xl font-bold text-green-400 mb-2">
               {photos.filter(p => p.category === "After Work").length}
             </div>
-            <div className="text-sm font-medium text-muted-foreground">After Photos</div>
+            <div className="text-sm font-medium text-white/50">After Photos</div>
           </CardContent>
         </Card>
       </div>
 
       {/* Photo Gallery */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader className="pb-4">
+      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl overflow-hidden">
+        <CardHeader className="pb-4 border-b border-white/5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <CardTitle className="text-foreground flex items-center gap-2 text-lg">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+            <CardTitle className="text-white flex items-center gap-3 text-lg">
+              <div className="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <Eye className="h-5 w-5 text-blue-400" />
+              </div>
               Photo Gallery
             </CardTitle>
-            
+
             <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
               <MobileSelectWrapper
                 value={selectedFolderFilter}
@@ -663,22 +676,24 @@ const PhotoDocumentation = () => {
                   ...availableFolders.map(folder => ({ value: folder, label: folder }))
                 ]}
               />
-              <div className="text-sm text-muted-foreground whitespace-nowrap">
+              <div className="text-sm text-white/50 whitespace-nowrap">
                 {filteredPhotos.length} photo{filteredPhotos.length !== 1 ? 's' : ''}
                 {selectedFolderFilter !== "All Folders" && ` in ${selectedFolderFilter}`}
               </div>
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           {filteredPhotos.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">
-              <Camera className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p className="text-lg font-medium mb-2">
+            <div className="text-center py-12">
+              <div className="p-4 rounded-2xl bg-white/5 border border-white/10 w-fit mx-auto mb-4">
+                <Camera className="h-12 w-12 text-white/40" />
+              </div>
+              <p className="text-lg font-medium mb-2 text-white">
                 {selectedFolderFilter === "All Folders" ? "No photos uploaded yet" : `No photos in ${selectedFolderFilter}`}
               </p>
-              <p className="text-sm">
-                {selectedFolderFilter === "All Folders" 
+              <p className="text-sm text-white/50">
+                {selectedFolderFilter === "All Folders"
                   ? "Start documenting your work with the upload tool above"
                   : `No photos have been uploaded to the ${selectedFolderFilter} folder yet`
                 }
@@ -848,24 +863,38 @@ const PhotoDocumentation = () => {
 
       {/* Export Options */}
       {photos.length > 0 && (
-        <Card className="border-primary/30 bg-card/50">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
-              <Download className="h-5 w-5" />
+        <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl overflow-hidden">
+          <CardHeader className="border-b border-white/5">
+            <CardTitle className="text-white flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-green-500/10 border border-green-500/20">
+                <Download className="h-5 w-5 text-green-400" />
+              </div>
               Export Documentation
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <div className={`grid gap-3 ${isMobile ? 'grid-cols-1' : 'grid-cols-3'}`}>
-              <MobileButton variant="elec-outline" size={isMobile ? "wide" : "default"}>
+              <MobileButton
+                variant="elec-outline"
+                size={isMobile ? "wide" : "default"}
+                className="bg-[#1a1a1a] border-white/10 hover:border-elec-yellow/30 hover:bg-elec-yellow/10"
+              >
                 <Download className="h-4 w-4 mr-2" />
                 Export All Photos
               </MobileButton>
-              <MobileButton variant="elec-outline" size={isMobile ? "wide" : "default"}>
+              <MobileButton
+                variant="elec-outline"
+                size={isMobile ? "wide" : "default"}
+                className="bg-[#1a1a1a] border-white/10 hover:border-elec-yellow/30 hover:bg-elec-yellow/10"
+              >
                 <Download className="h-4 w-4 mr-2" />
                 Generate Photo Report
               </MobileButton>
-              <MobileButton variant="elec-outline" size={isMobile ? "wide" : "default"}>
+              <MobileButton
+                variant="elec-outline"
+                size={isMobile ? "wide" : "default"}
+                className="bg-[#1a1a1a] border-white/10 hover:border-elec-yellow/30 hover:bg-elec-yellow/10"
+              >
                 <Download className="h-4 w-4 mr-2" />
                 Export by Category
               </MobileButton>

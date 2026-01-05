@@ -67,7 +67,7 @@ const FireAlarmModule2Section3 = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-8 pt-8 pb-12">
         <Link to="../fire-alarm-module-2">
           <Button

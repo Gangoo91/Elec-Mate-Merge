@@ -1,6 +1,5 @@
 
 import { Outlet } from "react-router-dom";
-import { Toaster } from "@/components/ui/toaster";
 import Sidebar from "@/components/layout/Sidebar";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -36,8 +35,9 @@ const Layout = () => {
           className="flex-1 overflow-y-auto overflow-x-hidden"
           style={{ paddingTop: 'var(--header-height, 56px)' }}
         >
-          <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-4 sm:py-6 md:py-8">
-            <div className={cn("mobile-container mobile-safe-area p-0 min-w-0 max-w-screen-xl mx-auto")}>
+          {/* Reduced padding for more native feel - minimal on mobile, moderate on desktop */}
+          <div className="px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6">
+            <div className={cn("min-w-0")}>
               <Outlet />
             </div>
           </div>

@@ -47,7 +47,7 @@ const DataCablingModule4Section2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-4 sm:px-6 lg:px-8 pt-8 pb-12 max-w-6xl mx-auto">
         <Link to="../data-cabling-module-4">
           <Button

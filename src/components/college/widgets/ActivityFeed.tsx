@@ -127,7 +127,7 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
       case "assessor": return "bg-success/10 text-success border-success/20";
       case "iqa": return "bg-warning/10 text-warning border-warning/20";
       case "student": return "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20";
-      default: return "bg-muted text-muted-foreground";
+      default: return "bg-muted text-white/60";
     }
   };
 
@@ -148,10 +148,10 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
 
   if (compact) {
     return (
-      <Card className="border-elec-yellow/20">
+      <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-elec-yellow/30 transition-all duration-300">
         <CardHeader className="pb-2">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Activity className="h-4 w-4 text-elec-yellow" />
+            <div className="p-1.5 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/20 shadow-lg shadow-elec-yellow/5"><Activity className="h-3.5 w-3.5 text-elec-yellow" /></div>
             Recent Activity
           </CardTitle>
         </CardHeader>
@@ -164,9 +164,9 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
                   <p className="text-xs line-clamp-2">
                     <span className="font-medium">{activity.actor}</span>
                     {" "}{activity.action}{" "}
-                    <span className="text-muted-foreground">{activity.subject}</span>
+                    <span className="text-white/60">{activity.subject}</span>
                   </p>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">
+                  <p className="text-[10px] text-white/60 mt-0.5">
                     {formatTime(activity.timestamp)}
                   </p>
                 </div>
@@ -185,14 +185,14 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
   }
 
   return (
-    <Card className="border-elec-yellow/20">
+    <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-elec-yellow/30 transition-all duration-300">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base flex items-center gap-2">
-            <Activity className="h-5 w-5 text-elec-yellow" />
+            <div className="p-1.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/20 shadow-lg shadow-elec-yellow/5"><Activity className="h-4 w-4 text-elec-yellow" /></div>
             Activity Feed
           </CardTitle>
-          <Badge variant="outline" className="text-xs">
+          <Badge variant="outline" className="text-xs bg-success/10 text-success border-success/30">
             Live
             <span className="ml-1 h-2 w-2 rounded-full bg-success animate-pulse" />
           </Badge>
@@ -202,14 +202,14 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
         <ScrollArea className="h-[400px] pr-4">
           <div className="relative">
             {/* Timeline line */}
-            <div className="absolute left-[19px] top-0 bottom-0 w-px bg-border" />
+            <div className="absolute left-[19px] top-0 bottom-0 w-px bg-white/10" />
 
             <div className="space-y-4">
               {activities.map((activity, index) => (
                 <div key={activity.id} className="flex gap-4 relative">
                   {/* Timeline dot */}
                   <div className="relative z-10">
-                    <Avatar className="h-10 w-10 border-2 border-background">
+                    <Avatar className="h-10 w-10 border-2 border-elec-dark">
                       <AvatarFallback className={cn("text-xs font-semibold", getRoleColor(activity.actorRole))}>
                         {activity.actorInitials}
                       </AvatarFallback>
@@ -221,11 +221,11 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
                       <div>
                         <p className="text-sm">
                           <span className="font-medium">{activity.actor}</span>
-                          {" "}<span className="text-muted-foreground">{activity.action}</span>{" "}
+                          {" "}<span className="text-white/60">{activity.action}</span>{" "}
                           <span className="font-medium">{activity.subject}</span>
                           {activity.target && (
                             <>
-                              {" "}<span className="text-muted-foreground">for</span>{" "}
+                              {" "}<span className="text-white/60">for</span>{" "}
                               <span className="font-medium">{activity.target}</span>
                             </>
                           )}
@@ -238,14 +238,14 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
                               </Badge>
                             )}
                             {activity.metadata.mentions && (
-                              <Badge variant="outline" className="text-xs">
+                              <Badge variant="outline" className="text-xs bg-success/10 text-success border-success/30">
                                 {activity.metadata.mentions}
                               </Badge>
                             )}
                           </div>
                         )}
                       </div>
-                      <span className="text-xs text-muted-foreground shrink-0">
+                      <span className="text-xs text-white/60 shrink-0">
                         {formatTime(activity.timestamp)}
                       </span>
                     </div>

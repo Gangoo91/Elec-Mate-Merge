@@ -274,39 +274,57 @@ export const NearMissReporting: React.FC = () => {
   if (!showForm) {
     return (
       <div className="space-y-4">
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-xl font-semibold text-foreground">Near Miss Reports</h2>
-              <p className="text-sm text-muted-foreground">Record and track safety incidents</p>
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20">
+                <AlertTriangle className="h-5 w-5 text-red-400" />
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold text-white">Near Miss Reports</h2>
+                <p className="text-sm text-white/50">Record and track safety incidents</p>
+              </div>
             </div>
             {reports.length > 0 && (
-              <Badge variant="secondary" className="text-xs">
+              <Badge className="bg-white/5 border border-white/10 text-white/70">
                 {reports.length} report{reports.length !== 1 ? 's' : ''}
               </Badge>
             )}
           </div>
-          <Button onClick={() => setShowForm(true)} className="w-full h-14 text-base bg-primary text-primary-foreground touch-manipulation">
+          <Button
+            onClick={() => setShowForm(true)}
+            className="w-full h-14 text-base bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation active:scale-[0.98]"
+          >
             <Plus className="h-5 w-5 mr-2" />
             Report Near Miss
           </Button>
         </div>
-        
+
         {loadingReports ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-          </div>
-        ) : reports.length === 0 ? (
-          <Card className="border-dashed">
-            <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
-                <AlertTriangle className="h-8 w-8 text-muted-foreground" />
+          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
+            <CardContent className="py-16">
+              <div className="flex flex-col items-center justify-center gap-4">
+                <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+                  <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+                </div>
+                <p className="text-sm text-white/50">Loading reports...</p>
               </div>
-              <h3 className="text-lg font-medium text-foreground mb-2">No reports yet</h3>
-              <p className="text-sm text-muted-foreground mb-4 max-w-[280px]">
+            </CardContent>
+          </Card>
+        ) : reports.length === 0 ? (
+          <Card className="bg-[#1e1e1e] border border-white/10 border-dashed rounded-2xl">
+            <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+              <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 mb-4">
+                <AlertTriangle className="h-10 w-10 text-red-400" />
+              </div>
+              <h3 className="text-lg font-medium text-white mb-2">No reports yet</h3>
+              <p className="text-sm text-white/50 mb-6 max-w-[280px]">
                 Recording near misses helps prevent future accidents and keeps everyone safe.
               </p>
-              <Button onClick={() => setShowForm(true)} className="h-12 touch-manipulation">
+              <Button
+                onClick={() => setShowForm(true)}
+                className="h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation active:scale-[0.98]"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Submit your first report
               </Button>
@@ -315,9 +333,9 @@ export const NearMissReporting: React.FC = () => {
         ) : (
           <div className="space-y-3">
             {reports.map(report => (
-              <Card 
-                key={report.id} 
-                className={`border-l-4 ${getSeverityBorder(report.severity)} cursor-pointer hover:bg-muted/50 active:scale-[0.98] transition-all touch-manipulation`}
+              <Card
+                key={report.id}
+                className={`bg-[#1e1e1e] border border-white/10 rounded-2xl border-l-4 ${getSeverityBorder(report.severity)} cursor-pointer hover:border-white/20 active:scale-[0.98] transition-all touch-manipulation`}
                 onClick={() => setSelectedReport(report)}
               >
                 <CardContent className="p-4">
@@ -325,25 +343,25 @@ export const NearMissReporting: React.FC = () => {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2 flex-wrap">
                         {getSeverityBadge(report.severity)}
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs bg-white/5 border-white/10 text-white/70">
                           {getCategoryLabel(report.category)}
                         </Badge>
                       </div>
-                      <p className="text-sm text-foreground line-clamp-2 mb-3">
+                      <p className="text-sm text-white line-clamp-2 mb-3">
                         {report.description}
                       </p>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
+                      <div className="flex items-center gap-4 text-xs text-white/40">
+                        <span className="flex items-center gap-1.5">
                           <MapPin className="h-3 w-3" />
                           <span className="truncate max-w-[120px]">{report.location}</span>
                         </span>
-                        <span className="flex items-center gap-1">
+                        <span className="flex items-center gap-1.5">
                           <Clock className="h-3 w-3" />
                           {new Date(report.incident_date).toLocaleDateString('en-GB')}
                         </span>
                       </div>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0 mt-1" />
+                    <ChevronRight className="h-5 w-5 text-white/30 shrink-0 mt-1" />
                   </div>
                 </CardContent>
               </Card>
@@ -370,234 +388,239 @@ export const NearMissReporting: React.FC = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="icon" onClick={() => { resetForm(); setShowForm(false); }}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => { resetForm(); setShowForm(false); }}
+          className="bg-white/5 hover:bg-white/10 text-white"
+        >
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <div>
-          <h2 className="text-xl font-semibold text-foreground">Report Near Miss</h2>
-          <p className="text-sm text-muted-foreground">Fields with * are required</p>
+          <h2 className="text-xl font-semibold text-white">Report Near Miss</h2>
+          <p className="text-sm text-white/50">Fields with * are required</p>
         </div>
       </div>
-      
-      <div className="space-y-2">
-        <Label className="text-sm text-foreground">Quick templates</Label>
+
+      <div className="space-y-3">
+        <Label className="text-sm text-white/70">Quick templates</Label>
         <div className="grid grid-cols-2 gap-2">
           {QUICK_TEMPLATES.map(t => (
-            <button 
-              key={t.id} 
-              onClick={() => applyTemplate(t)} 
-              className={`flex items-center gap-2 p-3 rounded-lg border transition-colors text-left ${
-                selectedTemplate === t.id 
-                  ? 'border-primary bg-primary/20 ring-1 ring-primary' 
-                  : 'border-border bg-card hover:bg-muted/50'
+            <button
+              key={t.id}
+              onClick={() => applyTemplate(t)}
+              className={`flex items-center gap-3 p-3 rounded-xl border transition-all text-left active:scale-[0.98] ${
+                selectedTemplate === t.id
+                  ? 'border-elec-yellow bg-elec-yellow/10 ring-1 ring-elec-yellow/30'
+                  : 'border-white/10 bg-[#1a1a1a] hover:border-white/20'
               }`}
             >
-              <t.icon className={`h-5 w-5 ${selectedTemplate === t.id ? 'text-primary' : 'text-primary'}`} />
-              <span className="text-sm font-medium text-foreground">{t.label}</span>
+              <t.icon className={`h-5 w-5 ${selectedTemplate === t.id ? 'text-elec-yellow' : 'text-elec-yellow'}`} />
+              <span className="text-sm font-medium text-white">{t.label}</span>
             </button>
           ))}
         </div>
       </div>
-      
-      <Card>
+
+      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
         <CardContent className="p-4 space-y-6">
           {/* When & Where Section */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
-              <Clock className="h-4 w-4" />When & Where
+            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+              <Clock className="h-4 w-4 text-elec-yellow" />When & Where
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div id="field-incident_date" className="space-y-2">
-                <Label className="text-foreground">Date <span className="text-destructive">*</span></Label>
-                <Input type="date" value={formData.incident_date} onChange={(e) => setFormData(prev => ({ ...prev, incident_date: e.target.value }))} className={`h-14 text-base ${errors.incident_date ? 'border-destructive' : ''}`} />
-                {errors.incident_date && <p className="text-xs text-destructive">{errors.incident_date}</p>}
+                <Label className="text-white/70">Date <span className="text-red-400">*</span></Label>
+                <Input type="date" value={formData.incident_date} onChange={(e) => setFormData(prev => ({ ...prev, incident_date: e.target.value }))} className={`h-14 text-base bg-[#1a1a1a] border-white/10 text-white ${errors.incident_date ? 'border-red-500' : ''}`} />
+                {errors.incident_date && <p className="text-xs text-red-400">{errors.incident_date}</p>}
               </div>
               <div id="field-incident_time" className="space-y-2">
-                <Label className="text-foreground">Time <span className="text-destructive">*</span></Label>
-                <Input type="time" value={formData.incident_time} onChange={(e) => setFormData(prev => ({ ...prev, incident_time: e.target.value }))} className={`h-14 text-base ${errors.incident_time ? 'border-destructive' : ''}`} />
-                {errors.incident_time && <p className="text-xs text-destructive">{errors.incident_time}</p>}
+                <Label className="text-white/70">Time <span className="text-red-400">*</span></Label>
+                <Input type="time" value={formData.incident_time} onChange={(e) => setFormData(prev => ({ ...prev, incident_time: e.target.value }))} className={`h-14 text-base bg-[#1a1a1a] border-white/10 text-white ${errors.incident_time ? 'border-red-500' : ''}`} />
+                {errors.incident_time && <p className="text-xs text-red-400">{errors.incident_time}</p>}
               </div>
             </div>
             <div id="field-location" className="space-y-2">
-              <Label className="text-foreground">Location <span className="text-destructive">*</span></Label>
-              <Input placeholder="e.g. 123 High Street, London" value={formData.location} onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))} className={`h-14 text-base ${errors.location ? 'border-destructive' : ''}`} />
-              {errors.location && <p className="text-xs text-destructive">{errors.location}</p>}
+              <Label className="text-white/70">Location <span className="text-red-400">*</span></Label>
+              <Input placeholder="e.g. 123 High Street, London" value={formData.location} onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))} className={`h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30 ${errors.location ? 'border-red-500' : ''}`} />
+              {errors.location && <p className="text-xs text-red-400">{errors.location}</p>}
             </div>
           </div>
 
           {/* What Happened Section */}
-          <div className="space-y-4 pt-4 border-t border-border">
-            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4" />What Happened
+          <div className="space-y-4 pt-4 border-t border-white/10">
+            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 text-red-400" />What Happened
             </h3>
             <div id="field-category" className="space-y-2">
-              <Label className="text-foreground">Category <span className="text-destructive">*</span></Label>
+              <Label className="text-white/70">Category <span className="text-red-400">*</span></Label>
               <Select value={formData.category} onValueChange={(v) => setFormData(prev => ({ ...prev, category: v }))}>
-                <SelectTrigger className={`h-14 text-base ${errors.category ? 'border-destructive' : ''}`}>
+                <SelectTrigger className={`h-14 text-base bg-[#1a1a1a] border-white/10 text-white ${errors.category ? 'border-red-500' : ''}`}>
                   <SelectValue placeholder="Select hazard type" />
                 </SelectTrigger>
-                <SelectContent>
-                  {CATEGORIES.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}
+                <SelectContent className="bg-[#1a1a1a] border-white/10">
+                  {CATEGORIES.map(c => <SelectItem key={c.value} value={c.value} className="text-white">{c.label}</SelectItem>)}
                 </SelectContent>
               </Select>
-              {errors.category && <p className="text-xs text-destructive">{errors.category}</p>}
+              {errors.category && <p className="text-xs text-red-400">{errors.category}</p>}
             </div>
             <div id="field-severity" className="space-y-2">
-              <Label className="text-foreground">Severity <span className="text-destructive">*</span></Label>
+              <Label className="text-white/70">Severity <span className="text-red-400">*</span></Label>
               <div className="grid grid-cols-2 gap-2">
                 {SEVERITIES.map(s => (
-                  <button key={s.value} type="button" onClick={() => setFormData(prev => ({ ...prev, severity: s.value }))} className={`p-3 rounded-lg border text-left transition-all ${formData.severity === s.value ? `${s.colour} border-2` : 'border-border bg-card hover:bg-muted/50'}`}>
-                    <span className="font-medium text-sm text-foreground">{s.label}</span>
-                    <p className="text-xs text-muted-foreground mt-0.5">{s.description}</p>
+                  <button key={s.value} type="button" onClick={() => setFormData(prev => ({ ...prev, severity: s.value }))} className={`p-3 rounded-xl border text-left transition-all active:scale-[0.98] ${formData.severity === s.value ? `${s.colour} border-2` : 'border-white/10 bg-[#1a1a1a] hover:border-white/20'}`}>
+                    <span className="font-medium text-sm text-white">{s.label}</span>
+                    <p className="text-xs text-white/50 mt-0.5">{s.description}</p>
                   </button>
                 ))}
               </div>
-              {errors.severity && <p className="text-xs text-destructive">{errors.severity}</p>}
+              {errors.severity && <p className="text-xs text-red-400">{errors.severity}</p>}
             </div>
             <div id="field-description" className="space-y-2">
-              <Label className="text-foreground">Description <span className="text-destructive">*</span></Label>
-              <Textarea placeholder="Describe what happened..." value={formData.description} onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))} className={`min-h-[120px] text-base resize-none ${errors.description ? 'border-destructive' : ''}`} />
+              <Label className="text-white/70">Description <span className="text-red-400">*</span></Label>
+              <Textarea placeholder="Describe what happened..." value={formData.description} onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))} className={`min-h-[120px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30 ${errors.description ? 'border-red-500' : ''}`} />
               <div className="flex justify-between">
-                {errors.description ? <p className="text-xs text-destructive">{errors.description}</p> : <span />}
-                <span className="text-xs text-muted-foreground">{formData.description.length} chars</span>
+                {errors.description ? <p className="text-xs text-red-400">{errors.description}</p> : <span />}
+                <span className="text-xs text-white/40">{formData.description.length} chars</span>
               </div>
             </div>
           </div>
 
           {/* Actions (Optional) Section */}
-          <div className="space-y-4 pt-4 border-t border-border">
-            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
-              <Shield className="h-4 w-4" />Actions (Optional)
+          <div className="space-y-4 pt-4 border-t border-white/10">
+            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+              <Shield className="h-4 w-4 text-elec-yellow" />Actions (Optional)
             </h3>
             <div className="space-y-2">
-              <Label className="text-foreground">Potential Consequences</Label>
-              <Textarea placeholder="What could have happened?" value={formData.potential_consequences} onChange={(e) => setFormData(prev => ({ ...prev, potential_consequences: e.target.value }))} className="min-h-[80px] text-base resize-none" />
+              <Label className="text-white/70">Potential Consequences</Label>
+              <Textarea placeholder="What could have happened?" value={formData.potential_consequences} onChange={(e) => setFormData(prev => ({ ...prev, potential_consequences: e.target.value }))} className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30" />
             </div>
             <div className="space-y-2">
-              <Label className="text-foreground">Immediate Actions</Label>
-              <Textarea placeholder="What did you do?" value={formData.immediate_actions} onChange={(e) => setFormData(prev => ({ ...prev, immediate_actions: e.target.value }))} className="min-h-[80px] text-base resize-none" />
+              <Label className="text-white/70">Immediate Actions</Label>
+              <Textarea placeholder="What did you do?" value={formData.immediate_actions} onChange={(e) => setFormData(prev => ({ ...prev, immediate_actions: e.target.value }))} className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30" />
             </div>
             <div className="space-y-2">
-              <Label className="text-foreground">Preventive Measures</Label>
-              <Textarea placeholder="How to prevent this?" value={formData.preventive_measures} onChange={(e) => setFormData(prev => ({ ...prev, preventive_measures: e.target.value }))} className="min-h-[80px] text-base resize-none" />
+              <Label className="text-white/70">Preventive Measures</Label>
+              <Textarea placeholder="How to prevent this?" value={formData.preventive_measures} onChange={(e) => setFormData(prev => ({ ...prev, preventive_measures: e.target.value }))} className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30" />
             </div>
           </div>
 
           {/* People Involved (Optional) - Collapsible */}
-          <Collapsible open={peopleOpen} onOpenChange={setPeopleOpen} className="pt-4 border-t border-border">
-            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation">
-              <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
-                <Users className="h-4 w-4" />People Involved (Optional)
+          <Collapsible open={peopleOpen} onOpenChange={setPeopleOpen} className="pt-4 border-t border-white/10">
+            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation active:scale-[0.98]">
+              <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+                <Users className="h-4 w-4 text-elec-yellow" />People Involved (Optional)
               </h3>
-              {peopleOpen ? <ChevronUp className="h-5 w-5 text-foreground" /> : <ChevronDown className="h-5 w-5 text-foreground" />}
+              {peopleOpen ? <ChevronUp className="h-5 w-5 text-white/50" /> : <ChevronDown className="h-5 w-5 text-white/50" />}
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4 pt-4">
               {/* Witnesses */}
               <div className="space-y-3">
-                <Label className="text-foreground">Witnesses</Label>
+                <Label className="text-white/70">Witnesses</Label>
                 {formData.witnesses.map((witness, index) => (
                   <div key={index} className="flex gap-2 items-start">
                     <div className="flex-1 space-y-2">
-                      <Input placeholder="Name" value={witness.name} onChange={(e) => updateWitness(index, 'name', e.target.value)} className="h-14 text-base" />
-                      <Input placeholder="Contact (optional)" value={witness.contact} onChange={(e) => updateWitness(index, 'contact', e.target.value)} className="h-14 text-base" />
+                      <Input placeholder="Name" value={witness.name} onChange={(e) => updateWitness(index, 'name', e.target.value)} className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30" />
+                      <Input placeholder="Contact (optional)" value={witness.contact} onChange={(e) => updateWitness(index, 'contact', e.target.value)} className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30" />
                     </div>
-                    <Button variant="ghost" size="icon" onClick={() => removeWitness(index)} className="h-14 w-14 shrink-0">
-                      <Trash2 className="h-5 w-5 text-muted-foreground" />
+                    <Button variant="ghost" size="icon" onClick={() => removeWitness(index)} className="h-14 w-14 shrink-0 hover:bg-white/5">
+                      <Trash2 className="h-5 w-5 text-white/40" />
                     </Button>
                   </div>
                 ))}
-                <Button type="button" variant="outline" onClick={addWitness} className="w-full h-12">
+                <Button type="button" variant="outline" onClick={addWitness} className="w-full h-12 border-white/10 bg-[#1a1a1a] text-white hover:bg-white/5 hover:border-white/20">
                   <Plus className="h-4 w-4 mr-2" />Add Witness
                 </Button>
               </div>
-              
+
               {/* Third Party */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <Label className="text-foreground">Third party involved?</Label>
+                  <Label className="text-white/70">Third party involved?</Label>
                   <Switch checked={formData.third_party_involved} onCheckedChange={(checked) => setFormData(prev => ({ ...prev, third_party_involved: checked }))} />
                 </div>
                 {formData.third_party_involved && (
-                  <Textarea placeholder="Details about third party..." value={formData.third_party_details} onChange={(e) => setFormData(prev => ({ ...prev, third_party_details: e.target.value }))} className="min-h-[80px] text-base resize-none" />
+                  <Textarea placeholder="Details about third party..." value={formData.third_party_details} onChange={(e) => setFormData(prev => ({ ...prev, third_party_details: e.target.value }))} className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30" />
                 )}
               </div>
             </CollapsibleContent>
           </Collapsible>
 
           {/* Environment & Equipment (Optional) - Collapsible */}
-          <Collapsible open={environmentOpen} onOpenChange={setEnvironmentOpen} className="pt-4 border-t border-border">
-            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation">
-              <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
-                <CloudSun className="h-4 w-4" />Environment & Equipment (Optional)
+          <Collapsible open={environmentOpen} onOpenChange={setEnvironmentOpen} className="pt-4 border-t border-white/10">
+            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation active:scale-[0.98]">
+              <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+                <CloudSun className="h-4 w-4 text-elec-yellow" />Environment & Equipment (Optional)
               </h3>
-              {environmentOpen ? <ChevronUp className="h-5 w-5 text-foreground" /> : <ChevronDown className="h-5 w-5 text-foreground" />}
+              {environmentOpen ? <ChevronUp className="h-5 w-5 text-white/50" /> : <ChevronDown className="h-5 w-5 text-white/50" />}
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4 pt-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <Label className="text-foreground">Weather Conditions</Label>
+                  <Label className="text-white/70">Weather Conditions</Label>
                   <Select value={formData.weather_conditions} onValueChange={(v) => setFormData(prev => ({ ...prev, weather_conditions: v }))}>
-                    <SelectTrigger className="h-14 text-base"><SelectValue placeholder="Select weather" /></SelectTrigger>
-                    <SelectContent>
-                      {WEATHER_CONDITIONS.map(w => <SelectItem key={w.value} value={w.value}>{w.label}</SelectItem>)}
+                    <SelectTrigger className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white"><SelectValue placeholder="Select weather" /></SelectTrigger>
+                    <SelectContent className="bg-[#1a1a1a] border-white/10">
+                      {WEATHER_CONDITIONS.map(w => <SelectItem key={w.value} value={w.value} className="text-white">{w.label}</SelectItem>)}
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-foreground">Lighting Conditions</Label>
+                  <Label className="text-white/70">Lighting Conditions</Label>
                   <Select value={formData.lighting_conditions} onValueChange={(v) => setFormData(prev => ({ ...prev, lighting_conditions: v }))}>
-                    <SelectTrigger className="h-14 text-base"><SelectValue placeholder="Select lighting" /></SelectTrigger>
-                    <SelectContent>
-                      {LIGHTING_CONDITIONS.map(l => <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>)}
+                    <SelectTrigger className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white"><SelectValue placeholder="Select lighting" /></SelectTrigger>
+                    <SelectContent className="bg-[#1a1a1a] border-white/10">
+                      {LIGHTING_CONDITIONS.map(l => <SelectItem key={l.value} value={l.value} className="text-white">{l.label}</SelectItem>)}
                     </SelectContent>
                   </Select>
                 </div>
               </div>
-              
+
               <div className="space-y-2">
-                <Label className="text-foreground">Equipment Involved</Label>
-                <Input placeholder="e.g. Power drill, scaffold, cable" value={formData.equipment_involved} onChange={(e) => setFormData(prev => ({ ...prev, equipment_involved: e.target.value }))} className="h-14 text-base" />
+                <Label className="text-white/70">Equipment Involved</Label>
+                <Input placeholder="e.g. Power drill, scaffold, cable" value={formData.equipment_involved} onChange={(e) => setFormData(prev => ({ ...prev, equipment_involved: e.target.value }))} className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30" />
               </div>
-              
+
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <Label className="text-foreground">Equipment faulty?</Label>
+                  <Label className="text-white/70">Equipment faulty?</Label>
                   <Switch checked={formData.equipment_faulty} onCheckedChange={(checked) => setFormData(prev => ({ ...prev, equipment_faulty: checked }))} />
                 </div>
                 {formData.equipment_faulty && (
-                  <Textarea placeholder="Describe the fault..." value={formData.equipment_fault_details} onChange={(e) => setFormData(prev => ({ ...prev, equipment_fault_details: e.target.value }))} className="min-h-[80px] text-base resize-none" />
+                  <Textarea placeholder="Describe the fault..." value={formData.equipment_fault_details} onChange={(e) => setFormData(prev => ({ ...prev, equipment_fault_details: e.target.value }))} className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30" />
                 )}
               </div>
             </CollapsibleContent>
           </Collapsible>
 
           {/* Investigation (Optional) - Collapsible */}
-          <Collapsible open={investigationOpen} onOpenChange={setInvestigationOpen} className="pt-4 border-t border-border">
-            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation">
-              <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
-                <UserCheck className="h-4 w-4" />Investigation (Optional)
+          <Collapsible open={investigationOpen} onOpenChange={setInvestigationOpen} className="pt-4 border-t border-white/10">
+            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation active:scale-[0.98]">
+              <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+                <UserCheck className="h-4 w-4 text-elec-yellow" />Investigation (Optional)
               </h3>
-              {investigationOpen ? <ChevronUp className="h-5 w-5 text-foreground" /> : <ChevronDown className="h-5 w-5 text-foreground" />}
+              {investigationOpen ? <ChevronUp className="h-5 w-5 text-white/50" /> : <ChevronDown className="h-5 w-5 text-white/50" />}
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4 pt-4">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <Label className="text-foreground">Supervisor notified?</Label>
+                  <Label className="text-white/70">Supervisor notified?</Label>
                   <Switch checked={formData.supervisor_notified} onCheckedChange={(checked) => setFormData(prev => ({ ...prev, supervisor_notified: checked }))} />
                 </div>
                 {formData.supervisor_notified && (
-                  <Input placeholder="Supervisor name" value={formData.supervisor_name} onChange={(e) => setFormData(prev => ({ ...prev, supervisor_name: e.target.value }))} className="h-14 text-base" />
+                  <Input placeholder="Supervisor name" value={formData.supervisor_name} onChange={(e) => setFormData(prev => ({ ...prev, supervisor_name: e.target.value }))} className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30" />
                 )}
               </div>
-              
+
               <div className="space-y-2">
-                <Label className="text-foreground">Previous similar incidents?</Label>
+                <Label className="text-white/70">Previous similar incidents?</Label>
                 <Select value={formData.previous_similar_incidents} onValueChange={(v) => setFormData(prev => ({ ...prev, previous_similar_incidents: v }))}>
-                  <SelectTrigger className="h-14 text-base"><SelectValue placeholder="Select" /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="yes">Yes</SelectItem>
-                    <SelectItem value="no">No</SelectItem>
-                    <SelectItem value="unknown">Unknown</SelectItem>
+                  <SelectTrigger className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white"><SelectValue placeholder="Select" /></SelectTrigger>
+                  <SelectContent className="bg-[#1a1a1a] border-white/10">
+                    <SelectItem value="yes" className="text-white">Yes</SelectItem>
+                    <SelectItem value="no" className="text-white">No</SelectItem>
+                    <SelectItem value="unknown" className="text-white">Unknown</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -605,40 +628,40 @@ export const NearMissReporting: React.FC = () => {
           </Collapsible>
 
           {/* Photos Section */}
-          <div className="space-y-4 pt-4 border-t border-border">
-            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
-              <Camera className="h-4 w-4" />Photos (Optional)
+          <div className="space-y-4 pt-4 border-t border-white/10">
+            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
+              <Camera className="h-4 w-4 text-elec-yellow" />Photos (Optional)
             </h3>
             <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhotoSelect} className="hidden" />
             {photoPreviewUrls.length > 0 && (
               <div className="grid grid-cols-3 gap-2">
                 {photoPreviewUrls.map((url, i) => (
-                  <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-muted">
+                  <div key={i} className="relative aspect-square rounded-xl overflow-hidden bg-[#1a1a1a] border border-white/10">
                     <img src={url} alt="" className="w-full h-full object-cover" />
-                    <button onClick={() => removePhoto(i)} className="absolute top-1 right-1 p-1 rounded-full bg-background/80">
-                      <X className="h-4 w-4" />
+                    <button onClick={() => removePhoto(i)} className="absolute top-1.5 right-1.5 p-1.5 rounded-full bg-black/70 hover:bg-black/90 transition-colors">
+                      <X className="h-4 w-4 text-white" />
                     </button>
                   </div>
                 ))}
               </div>
             )}
             {photos.length < 5 && (
-              <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} className="w-full h-12">
+              <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} className="w-full h-12 border-white/10 bg-[#1a1a1a] text-white hover:bg-white/5 hover:border-white/20">
                 <Camera className="h-4 w-4 mr-2" />Add Photo ({photos.length}/5)
               </Button>
             )}
           </div>
 
           {/* Reporter Name */}
-          <div className="space-y-2 pt-4 border-t border-border">
-            <Label className="text-foreground">Your Name</Label>
-            <Input placeholder="Optional" value={formData.reporter_name} onChange={(e) => setFormData(prev => ({ ...prev, reporter_name: e.target.value }))} className="h-14 text-base" />
+          <div className="space-y-2 pt-4 border-t border-white/10">
+            <Label className="text-white/70">Your Name</Label>
+            <Input placeholder="Optional" value={formData.reporter_name} onChange={(e) => setFormData(prev => ({ ...prev, reporter_name: e.target.value }))} className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30" />
           </div>
         </CardContent>
       </Card>
-      
-      <div className="sticky bottom-0 bg-background/95 backdrop-blur-sm py-4 -mx-4 px-4 border-t border-border">
-        <Button onClick={submitReport} disabled={isSubmitting} className="w-full h-14 text-base font-medium bg-primary text-primary-foreground">
+
+      <div className="sticky bottom-0 bg-[#121212]/95 backdrop-blur-sm py-4 -mx-4 px-4 border-t border-white/10">
+        <Button onClick={submitReport} disabled={isSubmitting} className="w-full h-14 text-base font-medium bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-[0.98]">
           {isSubmitting ? <><Loader2 className="h-5 w-5 mr-2 animate-spin" />Submitting...</> : <><CheckCircle2 className="h-5 w-5 mr-2" />Submit Report</>}
         </Button>
       </div>

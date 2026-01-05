@@ -44,40 +44,40 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
 
       {/* Quick Stats */}
       <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
+        <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-elec-yellow/30 shrink-0 transition-all duration-300 cursor-pointer group">
           <CardContent className="p-3 flex items-center gap-2">
-            <GraduationCap className="h-4 w-4 text-elec-yellow" />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/20 shadow-lg shadow-elec-yellow/5 group-hover:scale-110 transition-transform duration-300"><GraduationCap className="h-4 w-4 text-elec-yellow" /></div>
             <div>
-              <p className="text-lg font-bold text-foreground">{activeStudents}</p>
-              <p className="text-xs text-muted-foreground">Students</p>
+              <p className="text-lg font-bold text-white">{activeStudents}</p>
+              <p className="text-xs text-white/60">Students</p>
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-info/10 border-info/20 shrink-0">
+        <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-info/30 shrink-0 transition-all duration-300 cursor-pointer group">
           <CardContent className="p-3 flex items-center gap-2">
-            <UserCog className="h-4 w-4 text-info" />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-info/20 to-info/5 border border-info/20 shadow-lg shadow-info/5 group-hover:scale-110 transition-transform duration-300"><UserCog className="h-4 w-4 text-info" /></div>
             <div>
-              <p className="text-lg font-bold text-foreground">{activeTutors}</p>
-              <p className="text-xs text-muted-foreground">Tutors</p>
+              <p className="text-lg font-bold text-white">{activeTutors}</p>
+              <p className="text-xs text-white/60">Tutors</p>
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-success/10 border-success/20 shrink-0">
+        <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-success/30 shrink-0 transition-all duration-300 cursor-pointer group">
           <CardContent className="p-3 flex items-center gap-2">
-            <UsersRound className="h-4 w-4 text-success" />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5 group-hover:scale-110 transition-transform duration-300"><UsersRound className="h-4 w-4 text-success" /></div>
             <div>
-              <p className="text-lg font-bold text-foreground">{activeCohorts}</p>
-              <p className="text-xs text-muted-foreground">Cohorts</p>
+              <p className="text-lg font-bold text-white">{activeCohorts}</p>
+              <p className="text-xs text-white/60">Cohorts</p>
             </div>
           </CardContent>
         </Card>
         {studentsAtRisk > 0 && (
-          <Card className="bg-warning/10 border-warning/20 shrink-0">
+          <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-warning/30 shrink-0 transition-all duration-300 cursor-pointer group">
             <CardContent className="p-3 flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-warning" />
+              <div className="p-2 rounded-xl bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5 group-hover:scale-110 transition-transform duration-300"><AlertTriangle className="h-4 w-4 text-warning" /></div>
               <div>
-                <p className="text-lg font-bold text-foreground">{studentsAtRisk}</p>
-                <p className="text-xs text-muted-foreground">At Risk</p>
+                <p className="text-lg font-bold text-white">{studentsAtRisk}</p>
+                <p className="text-xs text-white/60">At Risk</p>
               </div>
             </CardContent>
           </Card>
@@ -86,8 +86,8 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
 
       {/* Staff Management */}
       <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-info rounded-full"></span>
+        <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+          <span className="w-1 h-5 bg-gradient-to-b from-info to-blue-500 rounded-full"></span>
           Staff
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -110,8 +110,8 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
 
       {/* Students & Cohorts */}
       <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
+        <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+          <span className="w-1 h-5 bg-gradient-to-b from-elec-yellow to-amber-500 rounded-full"></span>
           Students & Groups
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -143,8 +143,8 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
 
       {/* Employers */}
       <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-success rounded-full"></span>
+        <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+          <span className="w-1 h-5 bg-gradient-to-b from-success to-green-500 rounded-full"></span>
           Employer Partners
         </h2>
         <CollegeFeatureTile
@@ -159,8 +159,8 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
       {/* At Risk Alert */}
       {studentsAtRisk > 0 && (
         <div>
-          <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1 h-5 bg-warning rounded-full"></span>
+          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+            <span className="w-1 h-5 bg-gradient-to-b from-warning to-orange-500 rounded-full"></span>
             Needs Attention
           </h2>
           <CollegeFeatureTile

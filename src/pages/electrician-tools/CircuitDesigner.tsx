@@ -1,109 +1,60 @@
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Zap, Home, ChevronRight } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { ArrowLeft, Zap } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AIInstallationDesigner } from "@/components/electrician-tools/circuit-designer/AIInstallationDesigner";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { Card, CardContent } from "@/components/ui/card";
 
 const CircuitDesigner = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const fromAgentSelector = location.state?.fromAgentSelector;
 
   return (
-    <div className="min-h-screen bg-elec-dark">
-      <div className="mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 2xl:px-16 max-w-[95vw] 2xl:max-w-[1800px] py-4 sm:py-6 pb-safe">
-        <div className="space-y-3 sm:space-y-4 animate-fade-in">
-          {/* Desktop Breadcrumb + Mobile Back Button */}
-          <div className="flex items-center justify-between">
-            {/* Breadcrumb - Hidden on mobile */}
-            <Breadcrumb className="hidden lg:block">
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to="/electrician" className="flex items-center gap-1">
-                      <Home className="h-3.5 w-3.5" />
-                      Dashboard
-                    </Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator>
-                  <ChevronRight className="h-4 w-4" />
-                </BreadcrumbSeparator>
-                <BreadcrumbItem>
-                  <BreadcrumbPage>AI Circuit Designer</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-
-            {/* Back Button - Mobile only */}
-            <Link to={fromAgentSelector ? "/electrician/agent-selector" : "/electrician"} className="lg:hidden">
-              <Button variant="outline" size="sm" className="gap-2 touch-manipulation h-10">
-                <ArrowLeft className="h-4 w-4" /> {fromAgentSelector ? "Back to Agent Selector" : "Back to Dashboard"}
-              </Button>
-            </Link>
-          </div>
-
-          {/* Header - Enhanced Design */}
-          <div className="relative overflow-hidden rounded-xl border border-primary/20 bg-gradient-to-br from-primary/5 via-background to-primary/5 shadow-lg">
-            {/* Decorative Grid Background */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(147,51,234,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(147,51,234,0.03)_1px,transparent_1px)] bg-[size:20px_20px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
-            
-            {/* Content */}
-            <div className="relative px-6 sm:px-8 py-6 sm:py-8">
-              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
-                {/* Icon with Glow */}
-                <div className="relative shrink-0">
-                  <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full animate-pulse" />
-                  <div className="relative p-4 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/30 shadow-lg">
-                    <Zap className="h-10 w-10 sm:h-12 sm:w-12 text-primary" strokeWidth={2.5} />
-                  </div>
-                </div>
-
-                {/* Text Content */}
-                <div className="flex-1 text-center sm:text-left space-y-3">
-                  {/* Title */}
-                  <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground via-foreground to-foreground/80 bg-clip-text text-transparent leading-tight">
-                    AI Circuit Designer
-                  </h1>
-
-                  {/* Subtitle with Badges */}
-                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 shadow-sm">
-                      <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-                      <span className="text-sm font-semibold text-foreground">
-                        BS 7671:2018+A3:2024 Compliant
-                      </span>
-                    </div>
-                    
-                    <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-accent/50 border border-accent">
-                      <span className="text-xs font-medium text-accent-foreground">
-                        18th Edition
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Optional: Additional Context */}
-                  <p className="text-sm text-muted-foreground max-w-2xl hidden lg:block">
-                    Professional electrical installation design with automated compliance checking and circuit calculations
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Accent Line */}
-            <div className="h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-          </div>
-
-          {/* Main Content */}
-          <AIInstallationDesigner />
+    <div className="min-h-screen bg-[#121212] pb-24">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-[#121212]/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3">
+          <button
+            onClick={() => navigate(fromAgentSelector ? "/electrician/agent-selector" : "/electrician")}
+            className="flex items-center gap-2 text-white active:opacity-70 transition-opacity touch-manipulation"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span className="text-sm font-medium">
+              {fromAgentSelector ? "Agent Selector" : "Electrician Hub"}
+            </span>
+          </button>
         </div>
       </div>
+
+      <main className="px-4 py-4 space-y-5">
+        {/* Hero Header */}
+        <div className="flex items-center gap-3">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-amber-500/20 to-yellow-500/10 border border-amber-500/20">
+            <Zap className="h-6 w-6 text-amber-400" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-white">AI Circuit Designer</h1>
+            <p className="text-sm text-white/50">BS 7671 compliant circuit design</p>
+          </div>
+        </div>
+
+        {/* Compliance Badge Card */}
+        <Card className="bg-[#1e1e1e] border border-amber-500/20 rounded-2xl">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-sm font-medium text-white">BS 7671:2018+A3:2024 Compliant</span>
+              </div>
+              <span className="px-2 py-1 text-xs bg-amber-500/10 text-amber-400 rounded-md border border-amber-500/20">
+                18th Edition
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Main Content */}
+        <AIInstallationDesigner />
+      </main>
     </div>
   );
 };

@@ -37,6 +37,7 @@ interface SyncResult {
   skipped: number;
   failed: number;
   totalAssigned: number;
+  firstError?: string | null;
   details?: {
     createdTools: string[];
     skippedTools: string[];
@@ -499,24 +500,28 @@ const VoiceSettingsPanel: React.FC = () => {
               <p className={`font-medium ${syncResult.success ? 'text-green-400' : 'text-red-400'}`}>
                 {syncResult.success ? '✓ ' : '✗ '}{syncResult.message}
               </p>
-              {syncResult.success && (
-                <div className="mt-2 grid grid-cols-4 gap-2 text-center text-xs">
-                  <div className="bg-green-500/20 rounded p-2">
-                    <div className="font-bold text-green-400">{syncResult.created}</div>
-                    <div className="text-muted-foreground">Created</div>
-                  </div>
-                  <div className="bg-blue-500/20 rounded p-2">
-                    <div className="font-bold text-blue-400">{syncResult.skipped}</div>
-                    <div className="text-muted-foreground">Existed</div>
-                  </div>
-                  <div className="bg-red-500/20 rounded p-2">
-                    <div className="font-bold text-red-400">{syncResult.failed}</div>
-                    <div className="text-muted-foreground">Failed</div>
-                  </div>
-                  <div className="bg-elec-yellow/20 rounded p-2">
-                    <div className="font-bold text-elec-yellow">{syncResult.totalAssigned}</div>
-                    <div className="text-muted-foreground">Total</div>
-                  </div>
+              <div className="mt-2 grid grid-cols-4 gap-2 text-center text-xs">
+                <div className="bg-green-500/20 rounded p-2">
+                  <div className="font-bold text-green-400">{syncResult.created}</div>
+                  <div className="text-muted-foreground">Created</div>
+                </div>
+                <div className="bg-blue-500/20 rounded p-2">
+                  <div className="font-bold text-blue-400">{syncResult.skipped}</div>
+                  <div className="text-muted-foreground">Existed</div>
+                </div>
+                <div className="bg-red-500/20 rounded p-2">
+                  <div className="font-bold text-red-400">{syncResult.failed}</div>
+                  <div className="text-muted-foreground">Failed</div>
+                </div>
+                <div className="bg-elec-yellow/20 rounded p-2">
+                  <div className="font-bold text-elec-yellow">{syncResult.totalAssigned}</div>
+                  <div className="text-muted-foreground">Total</div>
+                </div>
+              </div>
+              {syncResult.firstError && (
+                <div className="mt-2 p-2 bg-red-500/10 rounded text-xs">
+                  <p className="text-red-400 font-medium">Error:</p>
+                  <p className="text-red-300 break-all">{syncResult.firstError}</p>
                 </div>
               )}
               {syncResult.systemPromptUpdated && (

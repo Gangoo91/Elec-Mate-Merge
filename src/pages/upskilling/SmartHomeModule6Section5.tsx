@@ -35,7 +35,7 @@ const SmartHomeModule6Section5 = () => {
         </div>
       </header>
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4 sm:space-y-6">
           <SmartHomeModule6Section5Intro />
           <SmartHomeModule6Section5LearningOutcomes />
           <SmartHomeModule6Section5Causes />
@@ -49,7 +49,7 @@ const SmartHomeModule6Section5 = () => {
         </div>
       </main>
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div>
           <div className="flex justify-between items-center">
             <Link to="../smart-home-module-6-section-4">
               <Button variant="outline" className="bg-transparent border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-all duration-200">

@@ -8,7 +8,7 @@ import { evModule1Section1Questions } from '@/data/upskilling/evChargingQuizzes'
 
 const EVChargingModule2Section1 = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-8 pt-8 pb-12 max-w-6xl mx-auto">
         <Link to="../ev-charging-module-2">
           <Button
