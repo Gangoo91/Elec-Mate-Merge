@@ -86,7 +86,7 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
   return (
     <>
       <div className="min-h-screen mobile-safe-area">
-        <div className="space-y-8 md:space-y-10 animate-fade-in px-4 sm:px-6 md:px-8 pb-8 md:pb-12 max-w-7xl mx-auto">
+        <div className="space-y-8 md:space-y-10 animate-fade-in px-4 sm:px-6 pb-8 md:pb-12">
           {/* Header */}
           <div className="flex flex-col gap-4 pt-4 md:pt-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -106,14 +106,6 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
                   className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/10 border-blue-500/50 hover:from-blue-500/30 hover:to-cyan-500/20"
                 >
                   <HelpCircle className="h-5 w-5 text-blue-400" />
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => navigate('/settings')}
-                  className="h-10 gap-2"
-                >
-                  <Settings className="h-4 w-4" />
-                  <span className="hidden sm:inline">Settings</span>
                 </Button>
                 <Link to="/electrician" className="flex-1 sm:flex-none">
                   <Button variant="outline" className="w-full sm:w-auto h-10">
