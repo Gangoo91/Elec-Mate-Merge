@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Zap, Shield, CreditCard, Clock, Star, Users } from "lucide-react";
 import SubscriptionStatus from "@/components/subscriptions/SubscriptionStatus";
@@ -6,6 +6,104 @@ import PlanSelection from "@/components/subscriptions/PlanSelection";
 import SubscriptionFAQ from "@/components/subscriptions/SubscriptionFAQ";
 import SupportSection from "@/components/subscriptions/SupportSection";
 import FeatureComparison from "@/components/subscriptions/FeatureComparison";
+
+// Count-up animation hook
+const useCountUp = (target: number, duration = 800) => {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          const steps = 20;
+          const increment = target / steps;
+          let current = 0;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              setCount(target);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, duration / steps);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target, duration, hasAnimated]);
+
+  return { count, ref };
+};
+
+// Animated stat component
+const AnimatedStat = ({
+  target,
+  suffix = "",
+  label,
+  icon,
+  delay = 0
+}: {
+  target: number;
+  suffix?: string;
+  label: string;
+  icon?: React.ReactNode;
+  delay?: number;
+}) => {
+  const { count, ref } = useCountUp(target, 800);
+
+  return (
+    <div
+      ref={ref}
+      className="text-center p-5 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.04] hover:border-elec-yellow/20"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <div className="text-3xl md:text-4xl font-bold text-elec-yellow mb-2 tracking-tight">
+        {count.toLocaleString()}{suffix}
+      </div>
+      <div className="text-sm text-muted-foreground flex items-center justify-center gap-1.5">
+        {icon}
+        {label}
+      </div>
+    </div>
+  );
+};
+
+// Social proof section component
+const SocialProofSection = () => {
+  return (
+    <section className="py-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <AnimatedStat target={5000} suffix="+" label="Active Users" delay={0} />
+        <div
+          className="text-center p-5 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.04] hover:border-elec-yellow/20"
+        >
+          <div className="text-3xl md:text-4xl font-bold text-elec-yellow mb-2 tracking-tight">
+            4.9
+          </div>
+          <div className="text-sm text-muted-foreground flex items-center justify-center gap-1.5">
+            <Star className="h-3.5 w-3.5 fill-elec-yellow text-elec-yellow" />
+            Rating
+          </div>
+        </div>
+        <AnimatedStat
+          target={500}
+          suffix="+"
+          label="Companies"
+          icon={<Users className="h-3.5 w-3.5" />}
+          delay={200}
+        />
+        <AnimatedStat target={24} suffix="/7" label="Support" delay={300} />
+      </div>
+    </section>
+  );
+};
 
 const Subscriptions = () => {
   const { checkSubscriptionStatus, isSubscribed } = useAuth();
@@ -75,32 +173,7 @@ const Subscriptions = () => {
         </section>
 
         {/* Social Proof */}
-        <section className="py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-            <div className="text-center p-4">
-              <div className="text-3xl md:text-4xl font-bold text-elec-yellow mb-1">5,000+</div>
-              <div className="text-sm text-muted-foreground">Active Users</div>
-            </div>
-            <div className="text-center p-4">
-              <div className="text-3xl md:text-4xl font-bold text-elec-yellow mb-1">4.9</div>
-              <div className="text-sm text-muted-foreground flex items-center justify-center gap-1">
-                <Star className="h-3 w-3 fill-elec-yellow text-elec-yellow" />
-                Rating
-              </div>
-            </div>
-            <div className="text-center p-4">
-              <div className="text-3xl md:text-4xl font-bold text-elec-yellow mb-1">500+</div>
-              <div className="text-sm text-muted-foreground flex items-center justify-center gap-1">
-                <Users className="h-3 w-3" />
-                Companies
-              </div>
-            </div>
-            <div className="text-center p-4">
-              <div className="text-3xl md:text-4xl font-bold text-elec-yellow mb-1">24/7</div>
-              <div className="text-sm text-muted-foreground">Support</div>
-            </div>
-          </div>
-        </section>
+        <SocialProofSection />
 
         {/* Feature Comparison */}
         <section>
