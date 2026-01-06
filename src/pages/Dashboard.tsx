@@ -1,11 +1,26 @@
+import { useState, useEffect } from "react";
 import { HeroWelcome } from "@/components/dashboard/HeroWelcome";
 import { SmartStatsBar } from "@/components/dashboard/SmartStatsBar";
 import { HubGrid } from "@/components/dashboard/HubGrid";
 import { SecondaryQuickAccess } from "@/components/dashboard/SecondaryQuickAccess";
 import { ActionRequired } from "@/components/dashboard/ActionRequired";
 import TrialBanner from "@/components/dashboard/TrialBanner";
+import WelcomeModal from "@/components/onboarding/WelcomeModal";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Dashboard = () => {
+  const { profile, isLoading } = useAuth();
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  // Show welcome modal for first-time users
+  useEffect(() => {
+    if (!isLoading && profile && !profile.onboarding_completed) {
+      // Small delay to let the dashboard load first
+      const timer = setTimeout(() => setShowWelcome(true), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [profile, isLoading]);
+
   return (
     <div className="min-h-screen mobile-safe-area">
       <div className="space-y-4 sm:space-y-5 animate-fade-in px-4 sm:px-6 py-4 md:py-6 pb-8 md:pb-12">
@@ -45,6 +60,12 @@ const Dashboard = () => {
         {/* Footer spacing for mobile nav */}
         <div className="h-4 sm:h-6" />
       </div>
+
+      {/* Welcome modal for first-time users */}
+      <WelcomeModal
+        isOpen={showWelcome}
+        onClose={() => setShowWelcome(false)}
+      />
     </div>
   );
 };
