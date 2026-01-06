@@ -211,7 +211,7 @@ const Module4Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Kinking Faults - Complete Assessment</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Kinking Faults - Complete Assessment</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Visual symptoms:</strong> Visible inward buckle, sharp crease in conduit wall, localised compression.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Physical test:</strong> Run cable draw wire through - any resistance indicates internal diameter reduction.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Root causes breakdown:</strong></p>
@@ -233,7 +233,7 @@ const Module4Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Flattening Faults - Measurement Protocol</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Flattening Faults - Measurement Protocol</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Visual indicators:</strong> Oval cross-section, reduced height dimension, compression marks on sides.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Measurement process:</strong></p>
                     <ol className="text-xs text-white ml-4 mb-2 list-decimal space-y-1">
@@ -260,7 +260,7 @@ const Module4Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Angular Faults - Precision Troubleshooting</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Angular Faults - Precision Troubleshooting</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Over-bending identification:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Angle exceeds drawing specification by &gt;2°</li>
@@ -286,7 +286,7 @@ const Module4Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Misalignment Faults - 3D Assessment</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Misalignment Faults - 3D Assessment</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Types of misalignment:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Horizontal twist:</strong> Conduit rotated about its axis during bending</li>
@@ -461,7 +461,7 @@ const Module4Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Pre-Bending Preparation Checklist</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Pre-Bending Preparation Checklist</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Material assessment:</strong></p>
                     <ol className="text-xs text-white ml-4 mb-2 list-decimal space-y-1">
                       <li>Check conduit for pre-existing damage, stress marks, or defects</li>
@@ -487,7 +487,7 @@ const Module4Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Bending Technique Mastery</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Bending Technique Mastery</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Force application principles:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Start with minimal force - gradually increase as needed</li>
@@ -520,7 +520,7 @@ const Module4Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Real-Time Quality Monitoring</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Real-Time Quality Monitoring</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Progressive checking during bending:</strong></p>
                     <ol className="text-xs text-white ml-4 mb-2 list-decimal space-y-1">
                       <li>Check angle at 30°, 60°, and 90° intervals</li>
@@ -546,7 +546,7 @@ const Module4Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Template and Jig Systems</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Template and Jig Systems</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Creating bending templates for repetitive work:</strong></p>
                     <ol className="text-xs text-white ml-4 mb-2 list-decimal space-y-1">
                       <li>Use first successful bend as template pattern</li>
@@ -591,7 +591,7 @@ const Module4Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Dimensional Checks</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Dimensional Checks</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Verify bend angles with protractor, check radius against BS 7671 minimums, measure internal diameter retention.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>BS 7671:</strong> Minimum bend radius = 2.5 × external diameter for most cables
@@ -604,7 +604,7 @@ const Module4Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Visual Inspection</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Visual Inspection</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Check for cracks, kinks, excessive flattening, surface damage, professional appearance against installation drawings.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Reject criteria:</strong> Any visible crack or kink, &gt;10% diameter reduction
@@ -617,7 +617,7 @@ const Module4Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Functional Testing</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Functional Testing</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Test cable pull through bent sections, check fitting alignment, verify accessibility for maintenance.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Pull test:</strong> Cables should draw smoothly without snagging or resistance

@@ -270,7 +270,7 @@ const Module7Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Buzzing and Humming Sounds</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Buzzing and Humming Sounds</p>
                     <p className="text-base text-white mb-2"><strong>Transformer and choke buzzing:</strong> Magnetostriction causing core lamination vibration.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>50Hz or 100Hz humming from fluorescent ballasts and transformers</li>
@@ -315,7 +315,7 @@ const Module7Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Electrical Arcing Characteristics</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Electrical Arcing Characteristics</p>
                     <p className="text-base text-white mb-2"><strong>Arc formation:</strong> Electrical discharge through ionized air gap between conductors.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Arc temperatures exceeding 3000°C - hotter than steel melting point</li>
@@ -364,7 +364,7 @@ const Module7Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Immediate Response Protocol</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Immediate Response Protocol</p>
                     <p className="text-base text-white mb-2"><strong>Emergency isolation:</strong> Safe disconnection of electrical supply.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Isolate at the main switch if specific isolation unknown</li>

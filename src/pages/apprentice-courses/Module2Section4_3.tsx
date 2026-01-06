@@ -334,8 +334,8 @@ const Module2Section4_3 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Why RMS Matters</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                      <p className="text-emerald-200 text-sm mb-2"><strong>Power and Energy:</strong></p>
-                      <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-100">
+                      <p className="text-elec-yellow text-sm mb-2"><strong>Power and Energy:</strong></p>
+                      <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                         <li><strong>Heating effect:</strong> RMS voltage in AC produces same heat as DC voltage of same value</li>
                         <li><strong>Power calculation:</strong> P = V²rms/R gives true average power</li>
                         <li><strong>Energy bills:</strong> kWh meters measure based on RMS values</li>
@@ -360,8 +360,8 @@ const Module2Section4_3 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Converting Between Peak and RMS</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                      <p className="text-emerald-200 text-sm mb-2"><strong>Sine Wave Relationships:</strong></p>
-                      <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-100">
+                      <p className="text-elec-yellow text-sm mb-2"><strong>Sine Wave Relationships:</strong></p>
+                      <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                         <li><strong>RMS to Peak:</strong> Vpeak = Vrms × √2 ≈ Vrms × 1.414</li>
                         <li><strong>Peak to RMS:</strong> Vrms = Vpeak ÷ √2 ≈ Vpeak × 0.707</li>
                         <li><strong>UK Example:</strong> 230V RMS → 325V peak (matters for insulation)</li>
@@ -549,7 +549,7 @@ const Module2Section4_3 = () => {
             
             <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
               <h3 className="text-elec-yellow font-semibold mb-2">VFD Installation and RCD Issues</h3>
-              <p className="text-emerald-100 text-sm">
+              <p className="text-white text-sm">
                 <strong>Situation:</strong> New variable frequency drive causing RCD trips during motor starting.
                 <br /><br />
                 <strong>Investigation:</strong> Standard Type AC RCD couldn't handle pulsating DC component from drive's rectifier stage.

@@ -162,9 +162,9 @@ const Section6_6 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Title block */}
         <div className="flex items-start gap-4 mb-8">
-          <Crown className="h-8 w-8 text-emerald-400 mt-2" />
+          <Crown className="h-8 w-8 text-elec-yellow mt-2" />
           <div className="flex-1">
-            <div className="inline-flex px-3 py-1 bg-emerald-500 text-black rounded-full text-sm font-semibold mb-4">
+            <div className="inline-flex px-3 py-1 bg-elec-yellow text-black rounded-full text-sm font-semibold mb-4">
               Module 6.6
             </div>
             <h1 className="text-4xl font-bold text-white mb-4">
@@ -185,11 +185,11 @@ const Section6_6 = () => {
                 You've completed Module 1 on Health and Safety. These aren't just rules for assessments — they're the foundation for working safely and professionally on any job. Master these principles and they'll serve you throughout your electrical career.
               </p>
             </div>
-            <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
-              <h3 className="text-emerald-400 font-semibold mb-2 text-sm">Spot it / Use it</h3>
+            <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
+              <h3 className="text-elec-yellow font-semibold mb-2 text-sm">Spot it / Use it</h3>
               <div className="space-y-2 text-gray-300 text-sm">
-                <p><span className="text-emerald-400">Spot:</span> Personal responsibility, live working risks, safe isolation needs, PPE requirements, housekeeping issues</p>
-                <p><span className="text-emerald-400">Use:</span> Apply safety principles consistently, take responsibility, follow procedures, report incidents, stay competent</p>
+                <p><span className="text-elec-yellow">Spot:</span> Personal responsibility, live working risks, safe isolation needs, PPE requirements, housekeeping issues</p>
+                <p><span className="text-elec-yellow">Use:</span> Apply safety principles consistently, take responsibility, follow procedures, report incidents, stay competent</p>
               </div>
             </div>
           </div>
@@ -200,19 +200,19 @@ const Section6_6 = () => {
           <h2 className="text-2xl font-bold text-white mb-6">Learning Outcomes</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Reinforce the core safety concepts covered in Module 1</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Summarise the responsibilities of electricians regarding safety</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Prepare learners for real-world site behaviour</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Encourage the development of lifelong safe working habits</span>
             </div>
           </div>
@@ -234,35 +234,35 @@ const Section6_6 = () => {
                 <h3 className="font-semibold text-white mb-3">The Five Fundamentals</h3>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
+                    <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
                     <div>
                       <p className="text-white font-medium">Personal Responsibility</p>
                       <p className="text-gray-300 text-sm">You are responsible for your safety — and for the safety of others affected by your work</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
+                    <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
                     <div>
                       <p className="text-white font-medium">Live Working</p>
                       <p className="text-gray-300 text-sm">Never work on live circuits unless absolutely necessary — and only with the right training and controls</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
+                    <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
                     <div>
                       <p className="text-white font-medium">Safe Isolation</p>
                       <p className="text-gray-300 text-sm">Always use safe isolation procedures — isolate, lock off, and prove dead</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
+                    <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
                     <div>
                       <p className="text-white font-medium">PPE Usage</p>
                       <p className="text-gray-300 text-sm">Wear and maintain PPE — it's your last line of defence, not your first</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">5</div>
+                    <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">5</div>
                     <div>
                       <p className="text-white font-medium">Tool Safety</p>
                       <p className="text-gray-300 text-sm">Use the correct tools for the job — and inspect them regularly</p>
@@ -383,9 +383,9 @@ const Section6_6 = () => {
         </div>
 
         {/* Section 4: Real World Application */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-start gap-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
               4
             </div>
             <div className="flex-1">
@@ -471,26 +471,26 @@ const Section6_6 = () => {
         </div>
 
         {/* Real World Scenario */}
-        <Card className="p-6 bg-emerald-500/5 border border-emerald-400/20 mb-8">
+        <Card className="p-6 bg-elec-yellow/5 border border-elec-yellow/20 mb-8">
           <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-            <Zap className="h-5 w-5 text-emerald-400" />
+            <Zap className="h-5 w-5 text-elec-yellow" />
             Real World Scenario
           </h2>
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-4 mb-4">
-            <h3 className="font-semibold text-emerald-400 mb-2">The Scenario</h3>
-            <p className="text-emerald-200 text-sm">
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 mb-4">
+            <h3 className="font-semibold text-elec-yellow mb-2">The Scenario</h3>
+            <p className="text-elec-yellow text-sm">
               Two electricians with identical qualifications start their careers. One follows safety procedures religiously; the other takes shortcuts to work faster. After five years, the first has built a reputation for reliable, safe work and commands higher rates. The second has had three near misses and one reportable injury.
             </p>
           </div>
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-4 mb-4">
-            <h3 className="font-semibold text-emerald-400 mb-2">What Happened Next</h3>
-            <p className="text-emerald-200 text-sm">
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 mb-4">
+            <h3 className="font-semibold text-elec-yellow mb-2">What Happened Next</h3>
+            <p className="text-elec-yellow text-sm">
               The safety-conscious electrician becomes a team leader, mentors apprentices, and builds a successful career. The other struggles to find work as word spreads about their unsafe practices.
             </p>
           </div>
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
-            <h3 className="font-semibold text-emerald-400 mb-2">Why It Mattered</h3>
-            <ul className="space-y-1 text-emerald-200 text-sm">
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
+            <h3 className="font-semibold text-elec-yellow mb-2">Why It Mattered</h3>
+            <ul className="space-y-1 text-elec-yellow text-sm">
               <li>• Safety builds reputation and career opportunities</li>
               <li>• Employers value reliable, safe workers</li>
               <li>• Safe practices become second nature with consistency</li>
@@ -503,7 +503,7 @@ const Section6_6 = () => {
         <Card className="p-6 bg-card border-border/20 mb-8">
           <h2 className="text-xl font-bold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">Will following safety procedures make me slower than other electricians?</h3>
               <p className="text-gray-300 text-sm">Initially perhaps, but safe workers avoid rework, injuries, and accidents that cost far more time. Speed comes with practice, safety must be consistent.</p>
             </div>
@@ -523,7 +523,7 @@ const Section6_6 = () => {
               <h3 className="font-semibold text-white mb-1">How do I keep learning about safety throughout my career?</h3>
               <p className="text-gray-300 text-sm">Attend refresher training, read incident reports, learn from near misses, stay updated with regulations, and always ask questions when unsure.</p>
             </div>
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">What advice would you give to someone starting their electrical career?</h3>
               <p className="text-gray-300 text-sm">Build safety habits from day one. They're easier to develop than to change later. Your future self will thank you for the foundation you build now.</p>
             </div>

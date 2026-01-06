@@ -211,7 +211,7 @@ const Module6Section7_3 = () => {
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
                   <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">What a Minor Works Certificate Is</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">What a Minor Works Certificate Is</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -226,7 +226,7 @@ const Module6Section7_3 = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
                           <div>
                             <strong className="text-blue-900 dark:text-blue-200 block mb-2">Document Structure:</strong>
-                            <ul className="space-y-1 text-blue-800 dark:text-elec-yellow">
+                            <ul className="space-y-1 text-blue-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">•</span>
                                 <span>Single-page format for efficiency</span>
@@ -247,7 +247,7 @@ const Module6Section7_3 = () => {
                           </div>
                           <div>
                             <strong className="text-blue-900 dark:text-blue-200 block mb-2">Legal Status:</strong>
-                            <ul className="space-y-1 text-blue-800 dark:text-elec-yellow">
+                            <ul className="space-y-1 text-blue-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">•</span>
                                 <span>Legally binding document under BS 7671</span>
@@ -394,19 +394,19 @@ const Module6Section7_3 = () => {
                         </h4>
                         <p className="font-medium text-blue-900 dark:text-blue-200 mb-3">Ask yourself:</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3 text-sm">
-                          <div className="flex items-center gap-2 text-blue-800 dark:text-elec-yellow">
+                          <div className="flex items-center gap-2 text-blue-800 text-elec-yellow">
                             <span className="text-elec-yellow">🔍</span>
                             <span>Is this work limited to one existing circuit?</span>
                           </div>
-                          <div className="flex items-center gap-2 text-blue-800 dark:text-elec-yellow">
+                          <div className="flex items-center gap-2 text-blue-800 text-elec-yellow">
                             <span className="text-elec-yellow">📏</span>
                             <span>Does it involve less than one-third of circuit length?</span>
                           </div>
-                          <div className="flex items-center gap-2 text-blue-800 dark:text-elec-yellow">
+                          <div className="flex items-center gap-2 text-blue-800 text-elec-yellow">
                             <span className="text-elec-yellow">🔌</span>
                             <span>Are you NOT creating new circuits?</span>
                           </div>
-                          <div className="flex items-center gap-2 text-blue-800 dark:text-elec-yellow">
+                          <div className="flex items-center gap-2 text-blue-800 text-elec-yellow">
                             <span className="text-elec-yellow">⚡</span>
                             <span>Is the consumer unit unchanged?</span>
                           </div>
@@ -439,7 +439,7 @@ const Module6Section7_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3 text-base">Information Recorded on a MWC</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3 text-base">Information Recorded on a MWC</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -464,7 +464,7 @@ const Module6Section7_3 = () => {
                               <span className="text-elec-yellow">1️⃣</span>
                               Installation Details:
                             </strong>
-                            <ul className="space-y-1 text-purple-800 dark:text-elec-yellow ml-6">
+                            <ul className="space-y-1 text-purple-800 text-elec-yellow ml-6">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">•</span>
                                 <span>Client name and address</span>
@@ -488,7 +488,7 @@ const Module6Section7_3 = () => {
                               <span className="text-elec-yellow">2️⃣</span>
                               Work Description:
                             </strong>
-                            <ul className="space-y-1 text-purple-800 dark:text-elec-yellow ml-6">
+                            <ul className="space-y-1 text-purple-800 text-elec-yellow ml-6">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">•</span>
                                 <span>Exact location of work</span>
@@ -512,7 +512,7 @@ const Module6Section7_3 = () => {
                               <span className="text-elec-yellow">3️⃣</span>
                               Essential Test Results:
                             </strong>
-                            <ul className="space-y-1 text-purple-800 dark:text-elec-yellow ml-6">
+                            <ul className="space-y-1 text-purple-800 text-elec-yellow ml-6">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">•</span>
                                 <span>Earth continuity (where applicable)</span>
@@ -574,7 +574,7 @@ const Module6Section7_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Why MWCs Are Important</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3 text-base">Why MWCs Are Important</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -582,8 +582,8 @@ const Module6Section7_3 = () => {
                       </p>
 
                       <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-                        <h4 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Consequences of Missing MWCs:</h4>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-red-700 dark:text-elec-yellow">
+                        <h4 className="font-medium text-red-800 text-elec-yellow mb-2">Consequences of Missing MWCs:</h4>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-red-700 text-elec-yellow">
                           <div>
                             <strong>For the Electrician:</strong>
                             <ul className="mt-1 space-y-1 ml-4">
@@ -677,7 +677,7 @@ const Module6Section7_3 = () => {
               An electrician was asked to add an extra socket to a kitchen ring final circuit. The work was completed and tested, but no Minor Works Certificate was issued. Months later, when the house was being sold, the buyer's surveyor asked for certification of all electrical alterations. Because no certificate could be produced, the seller had to pay for an Electrical Installation Condition Report (EICR) before the sale could proceed. The delay and cost could have been avoided if a MWC had been issued at the time.
             </p>
             <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-              <p className="text-sm text-red-700 dark:text-elec-yellow">
+              <p className="text-sm text-red-700 text-elec-yellow">
                 <strong>Issue:</strong> No Minor Works Certificate issued for socket addition, causing sale delays and additional costs for EICR.
               </p>
             </div>

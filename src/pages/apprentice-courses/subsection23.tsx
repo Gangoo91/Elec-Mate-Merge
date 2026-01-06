@@ -141,7 +141,7 @@ const Section6_1 = () => {
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" asChild>
-            <Link to=".." className="inline-flex items-center gap-2 text-emerald-400 hover:text-white">
+            <Link to=".." className="inline-flex items-center gap-2 text-elec-yellow hover:text-white">
               <ArrowLeft className="h-4 w-4" />
               Back to Section 6
             </Link>
@@ -153,9 +153,9 @@ const Section6_1 = () => {
         {/* Title Block */}
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-6">
-            <AlertTriangle className="h-8 w-8 text-emerald-400" />
+            <AlertTriangle className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 6.1
               </span>
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
@@ -177,7 +177,7 @@ const Section6_1 = () => {
                 Electrical work presents multiple accident risks - from electric shock and burns to slips, falls, and manual handling injuries. Understanding these common accident types, their causes, and prevention methods is essential for maintaining a safe working environment and protecting yourself and colleagues.
               </p>
             </div>
-            <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
+            <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Spot it / Use it</h3>
               <p className="text-gray-300 text-sm leading-relaxed">
                 <strong>Spot:</strong> Trailing cables, poor lighting, damaged tools, rushed work practices.<br/>
@@ -192,19 +192,19 @@ const Section6_1 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
           <ul className="space-y-3">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Identify common accident types (shock, burns, slips/trips/falls, manual handling, cuts/impact, vehicle incidents)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Understand causes and risk factors</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Know prevention and control measures</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Understand reporting and response basics</span>
             </li>
           </ul>
@@ -360,9 +360,9 @@ const Section6_1 = () => {
         </div>
 
         {/* Section 5: Manual Handling */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-start gap-4 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
               5
             </div>
             <div className="flex-1">
@@ -399,9 +399,9 @@ const Section6_1 = () => {
         </div>
 
         {/* Section 6: Cuts and Impact */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-start gap-4 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
               6
             </div>
             <div className="flex-1">
@@ -562,23 +562,23 @@ const Section6_1 = () => {
                 <h3 className="font-medium text-white mb-3">Daily Prevention Checklist</h3>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Complete proper isolation and testing before work</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Maintain good housekeeping and cable management</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Use appropriate access equipment for height work</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Wear correct PPE and use proper manual handling techniques</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Report accidents, near misses, and unsafe conditions</span>
                   </li>
                 </ul>

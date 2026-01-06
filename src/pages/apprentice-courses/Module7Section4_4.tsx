@@ -267,7 +267,7 @@ const Module7Section4_4 = () => {
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base sm:text-lg">The Halving Method: Divide and Conquer</h3>
+                  <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-4 text-base sm:text-lg">The Halving Method: Divide and Conquer</h3>
                   <p className="text-sm sm:text-base text-white mb-4">
                     Dividing circuits into zones is essentially about halving the problem repeatedly. Instead of testing an entire circuit, electricians isolate sections and test each half separately, quickly determining which contains the fault.
                   </p>
@@ -444,7 +444,7 @@ const Module7Section4_4 = () => {
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-orange-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Lighting Circuits and Large Installations</h3>
+                  <h3 className="font-semibold text-orange-600 text-elec-yellow mb-4 text-base sm:text-lg">Lighting Circuits and Large Installations</h3>
                   <p className="text-sm sm:text-base text-white mb-4">
                     Zone division extends beyond ring finals to lighting circuits and large installations. Junction boxes, distribution boards, and sub-boards provide natural splitting points for systematic fault location.
                   </p>
@@ -542,7 +542,7 @@ const Module7Section4_4 = () => {
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Practical Guidance and Safety Considerations</h3>
+                  <h3 className="font-semibold text-purple-600 text-elec-yellow mb-4 text-base sm:text-lg">Practical Guidance and Safety Considerations</h3>
                   <p className="text-sm sm:text-base text-white mb-4">
                     Successful zone division requires meticulous labelling, careful record-keeping, and proper safety procedures. Working systematically with clear documentation prevents confusion and ensures safety.
                   </p>

@@ -261,7 +261,7 @@ const Module7Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">What "Sequence of Operation" Means</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">What "Sequence of Operation" Means</p>
                     <p className="text-sm sm:text-base text-white mb-2">The sequence of operation is essentially the "story" of how a circuit works from beginning to end. It describes the intended path of current flow and how each component should function in order.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>The logical order in which electrical events should occur</li>
@@ -321,7 +321,7 @@ const Module7Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Using Sequence to Fault-Find</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Using Sequence to Fault-Find</p>
                     <p className="text-sm sm:text-base text-white mb-2">When faults occur, electricians must mentally trace the sequence to predict where the fault might be located. This prevents random testing and component replacement.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Question 1:</strong> Has current reached the load? If not, work backwards</li>
@@ -356,7 +356,7 @@ const Module7Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Complex Systems: Motor Control Circuits</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Complex Systems: Motor Control Circuits</p>
                     <p className="text-sm sm:text-base text-white mb-2">Motor control systems demonstrate complex sequences involving safety interlocks, overload protection, and start/stop controls that must operate in specific order.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Stage 1:</strong> Supply available and emergency stops not activated</li>
@@ -439,7 +439,7 @@ const Module7Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-3">
                   <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div className="flex-1">
-                    <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Common Mistakes to Avoid</h3>
+                    <h3 className="font-semibold text-red-600 text-elec-yellow mb-3">Common Mistakes to Avoid</h3>
                     <ul className="text-sm space-y-2 text-white">
                       <li>• Starting testing without understanding the sequence</li>
                       <li>• Replacing components without confirming they are faulty</li>
@@ -464,11 +464,11 @@ const Module7Section3_2 = () => {
               <h3 className="font-semibold text-white mb-3">Domestic Lighting Fault</h3>
               <div className="grid sm:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-1">Situation</p>
+                  <p className="font-medium text-elec-yellow text-elec-yellow mb-1">Situation</p>
                   <p className="text-white">Homeowner reported one light fitting stopped working completely.</p>
                 </div>
                 <div>
-                  <p className="font-medium text-orange-600 dark:text-elec-yellow mb-1">Investigation</p>
+                  <p className="font-medium text-orange-600 text-elec-yellow mb-1">Investigation</p>
                   <p className="text-white">Apprentice replaced lamp holder first. Experienced electrician tested sequence: supply → switch → lamp holder.</p>
                 </div>
                 <div>
@@ -476,7 +476,7 @@ const Module7Section3_2 = () => {
                   <p className="text-white">Testing revealed loose line conductor at switch, interrupting the sequence before reaching lamp.</p>
                 </div>
                 <div>
-                  <p className="font-medium text-purple-600 dark:text-elec-yellow mb-1">Lesson Learned</p>
+                  <p className="font-medium text-purple-600 text-elec-yellow mb-1">Lesson Learned</p>
                   <p className="text-white">Understanding sequence prevents unnecessary component replacement and identifies real faults quickly.</p>
                 </div>
               </div>
@@ -486,11 +486,11 @@ const Module7Section3_2 = () => {
               <h3 className="font-semibold text-white mb-3">Factory Conveyor Motor</h3>
               <div className="grid sm:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-1">Situation</p>
+                  <p className="font-medium text-elec-yellow text-elec-yellow mb-1">Situation</p>
                   <p className="text-white">Factory conveyor belt would not start. Staff assumed motor failure and prepared for replacement.</p>
                 </div>
                 <div>
-                  <p className="font-medium text-orange-600 dark:text-elec-yellow mb-1">Investigation</p>
+                  <p className="font-medium text-orange-600 text-elec-yellow mb-1">Investigation</p>
                   <p className="text-white">Electrician tested control sequence systematically: supply → interlocks → contactor → motor.</p>
                 </div>
                 <div>
@@ -498,7 +498,7 @@ const Module7Section3_2 = () => {
                   <p className="text-white">Motor overload relay had tripped due to earlier fault condition. Reset relay and addressed overload cause.</p>
                 </div>
                 <div>
-                  <p className="font-medium text-purple-600 dark:text-elec-yellow mb-1">Lesson Learned</p>
+                  <p className="font-medium text-purple-600 text-elec-yellow mb-1">Lesson Learned</p>
                   <p className="text-white">Sequence understanding prevented expensive motor replacement and identified actual protective operation.</p>
                 </div>
               </div>
@@ -526,7 +526,7 @@ const Module7Section3_2 = () => {
           {/* Mobile-friendly grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="p-4 rounded-lg border border-border/30">
-              <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2">Know the Story</h3>
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-2">Know the Story</h3>
               <p className="text-xs sm:text-sm text-white">Understand how the circuit is supposed to work before diagnosing faults.</p>
             </div>
             
@@ -536,12 +536,12 @@ const Module7Section3_2 = () => {
             </div>
             
             <div className="p-4 rounded-lg border border-border/30">
-              <h3 className="font-semibold text-orange-600 dark:text-elec-yellow mb-2">Record and Confirm</h3>
+              <h3 className="font-semibold text-orange-600 text-elec-yellow mb-2">Record and Confirm</h3>
               <p className="text-xs sm:text-sm text-white">Document findings at each stage and verify complete sequence after repair.</p>
             </div>
             
             <div className="p-4 rounded-lg border border-border/30">
-              <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-2">Prevent Guesswork</h3>
+              <h3 className="font-semibold text-purple-600 text-elec-yellow mb-2">Prevent Guesswork</h3>
               <p className="text-xs sm:text-sm text-white">Systematic sequence checking eliminates random testing and part replacement.</p>
             </div>
             
@@ -551,7 +551,7 @@ const Module7Section3_2 = () => {
             </div>
             
             <div className="p-4 rounded-lg border border-border/30">
-              <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-2">Professional Practice</h3>
+              <h3 className="font-semibold text-red-600 text-elec-yellow mb-2">Professional Practice</h3>
               <p className="text-xs sm:text-sm text-white">Understanding sequence demonstrates systematic electrical knowledge and competence.</p>
             </div>
           </div>

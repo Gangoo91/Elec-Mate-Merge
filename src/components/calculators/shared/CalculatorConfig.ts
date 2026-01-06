@@ -7,6 +7,7 @@ import {
   Car,
   Lightbulb,
   Wrench,
+  Briefcase,
   LucideIcon
 } from "lucide-react";
 
@@ -18,7 +19,8 @@ export type CalculatorCategory =
   | 'testing'
   | 'ev-storage'
   | 'lighting'
-  | 'utilities';
+  | 'utilities'
+  | 'business';
 
 export interface CalculatorCategoryConfig {
   icon: LucideIcon;
@@ -120,6 +122,17 @@ export const CALCULATOR_CONFIG: Record<CalculatorCategory, CalculatorCategoryCon
     borderClass: 'border-slate-400/20',
     bgClass: 'bg-slate-400',
     label: 'Utilities',
+  },
+  'business': {
+    icon: Briefcase,
+    gradient: 'from-blue-400 to-indigo-500',
+    gradientFrom: '#60a5fa',
+    gradientTo: '#6366f1',
+    color: 'blue-400',
+    colorClass: 'text-blue-400',
+    borderClass: 'border-blue-400/20',
+    bgClass: 'bg-blue-400',
+    label: 'Business',
   },
 };
 

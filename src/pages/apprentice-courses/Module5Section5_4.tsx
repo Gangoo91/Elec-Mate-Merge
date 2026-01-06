@@ -270,7 +270,7 @@ const Module5Section5_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Definition and Impact</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Definition and Impact</p>
                     <p className="text-base text-white mb-2"><strong>Space conflicts:</strong> When two trades try to install equipment in the same space.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Trunking planned where pipework needs to be installed</li>
@@ -374,7 +374,7 @@ const Module5Section5_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Prevention Strategies</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Prevention Strategies</p>
                     <p className="text-base text-white mb-2"><strong>Check coordinated drawings:</strong> Follow coordinated site drawings before installation.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Review all trade drawings for potential clashes</li>
@@ -426,7 +426,7 @@ const Module5Section5_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Conflict Resolution Process</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Conflict Resolution Process</p>
                     <p className="text-base text-white mb-2"><strong>Immediate reporting:</strong> Report potential clashes immediately to your supervisor.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Stop work in the affected area immediately</li>
@@ -478,7 +478,7 @@ const Module5Section5_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Installation Best Practices</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Installation Best Practices</p>
                     <p className="text-base text-white mb-2"><strong>Route marking:</strong> Always mark out proposed routes before drilling or fixing.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Use chalk lines or temporary markers for long runs</li>
@@ -520,7 +520,7 @@ const Module5Section5_4 = () => {
         {/* Real-World Example */}
         <Card className="mb-8 p-6 border-elec-yellow/30">
           <div className="flex items-start gap-3 mb-4">
-            <AlertTriangle className="w-6 h-6 text-elec-yellow dark:text-elec-yellow mt-1 flex-shrink-0" />
+            <AlertTriangle className="w-6 h-6 text-elec-yellow text-elec-yellow mt-1 flex-shrink-0" />
             <div>
               <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">Real-World Example</h2>
               <div className="text-base text-white space-y-3">
@@ -601,7 +601,7 @@ const Module5Section5_4 = () => {
         {/* Recap */}
         <Card className="mb-8 p-6 border-elec-yellow/30">
           <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-emerald-600 dark:text-elec-yellow" />
+            <CheckCircle className="w-6 h-6 text-elec-yellow text-elec-yellow" />
             <h2 className="text-lg sm:text-xl font-semibold text-white">Recap</h2>
           </div>
           <div className="space-y-4">
@@ -632,8 +632,8 @@ const Module5Section5_4 = () => {
               </div>
             </div>
             
-            <div className="mt-4 p-3 rounded-lg border border-emerald-400/20">
-              <p className="text-sm font-medium text-emerald-700 dark:text-elec-yellow">
+            <div className="mt-4 p-3 rounded-lg border border-elec-yellow/20">
+              <p className="text-sm font-medium text-elec-yellow text-elec-yellow">
                 Remember: Effective coordination isn't just about avoiding problems – it's about creating a professional 
                 working environment where all trades can deliver quality installations efficiently and safely.
               </p>

@@ -234,7 +234,7 @@ const Module6Section2_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Safe Zone Requirements</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Safe Zone Requirements</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -270,22 +270,22 @@ const Module6Section2_3 = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Practical Tip</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Practical Tip</p>
                         <p className="text-xs sm:text-sm text-white">
                           Use chalk or temporary markers to map out safe zones before cable installation. This helps visualise the permitted routes and prevents errors during the installation process.
                         </p>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800 mt-3">
-                        <p className="font-medium text-emerald-700 dark:text-elec-yellow mb-2">Inspector's Note</p>
+                      <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20 mt-3">
+                        <p className="font-medium text-elec-yellow text-elec-yellow mb-2">Inspector's Note</p>
                         <p className="text-xs sm:text-sm text-white">
                           When inspecting renovations, pay special attention to areas where original safe zones may have been compromised by subsequent building work or changes to room layouts.
                         </p>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Zone Compliance Note</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Zone Compliance Note</p>
                         <p className="text-xs sm:text-sm text-white">
                           Safe zones ensure future workers can predict cable locations, reducing the risk of accidental damage during renovation or maintenance work.
                         </p>
@@ -318,7 +318,7 @@ const Module6Section2_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Depth Protection Standards</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Depth Protection Standards</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -355,14 +355,14 @@ const Module6Section2_3 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Best Practice</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Best Practice</p>
                         <p className="text-xs sm:text-sm text-white">
                           Even when depth requirements are met, RCD protection and mechanical protection provide additional safety margins and should be considered for all installations.
                         </p>
                       </div>
 
                       <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded border border-yellow-200 dark:border-yellow-800 mt-3">
-                        <p className="font-medium text-yellow-700 dark:text-elec-yellow mb-2">Measurement Technique</p>
+                        <p className="font-medium text-yellow-700 text-elec-yellow mb-2">Measurement Technique</p>
                         <p className="text-xs sm:text-sm text-white">
                           Always measure cable depth from the finished surface, not from structural elements. Consider floor screeds, ceiling finishes, and wall plaster thickness in your calculations.
                         </p>
@@ -402,7 +402,7 @@ const Module6Section2_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Safety and Compliance Risks</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Safety and Compliance Risks</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -439,21 +439,21 @@ const Module6Section2_3 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Critical Risk Alert</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Critical Risk Alert</p>
                         <p className="text-xs sm:text-sm text-white">
                           Diagonal cable runs and routes outside safe zones significantly increase the probability of accidental damage during future building work.
                         </p>
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800 mt-3">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Cost of Non-Compliance</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Cost of Non-Compliance</p>
                         <p className="text-xs sm:text-sm text-white">
                           Correcting routing violations often requires significant remedial work including: cable replacement, wall repairs, redecoration, and additional inspection costs. Prevention is always more cost-effective.
                         </p>
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800 mt-3">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Emergency Response</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Emergency Response</p>
                         <p className="text-xs sm:text-sm text-white">
                           If you discover cables outside safe zones during inspection, isolate affected circuits immediately and assess the risk. Mark areas clearly and arrange for immediate remedial action before system energisation.
                         </p>
@@ -536,8 +536,8 @@ const Module6Section2_3 = () => {
                         </p>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800 mt-3">
-                        <p className="font-medium text-emerald-700 dark:text-elec-yellow mb-2">Documentation Standards</p>
+                      <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20 mt-3">
+                        <p className="font-medium text-elec-yellow text-elec-yellow mb-2">Documentation Standards</p>
                         <p className="text-xs sm:text-sm text-white">
                           Create detailed as-built drawings showing actual cable routes, depths, and protection measures. This documentation is crucial for future maintenance and modifications.
                         </p>
@@ -570,7 +570,7 @@ const Module6Section2_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Frequent Installation Errors</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Frequent Installation Errors</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -607,7 +607,7 @@ const Module6Section2_3 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Prevention Strategy</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Prevention Strategy</p>
                         <p className="text-xs sm:text-sm text-white">
                           Proper planning, clear drawings, and systematic inspection at key stages prevent most routing errors and ensure compliance.
                         </p>
@@ -647,8 +647,8 @@ const Module6Section2_3 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           <div className="space-y-4">
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-              <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <h3 className="font-semibold text-blue-700 dark:text-elec-yellow mb-2">Detection and Verification</h3>
+              <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                <h3 className="font-semibold text-blue-700 text-elec-yellow mb-2">Detection and Verification</h3>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>• Use multiple cable detection methods for accuracy</li>
                   <li>• Cross-reference with as-built drawings and specifications</li>
@@ -668,7 +668,7 @@ const Module6Section2_3 = () => {
                 </ul>
               </div>
               <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                <h3 className="font-semibold text-purple-700 dark:text-elec-yellow mb-2">Documentation Standards</h3>
+                <h3 className="font-semibold text-purple-700 text-elec-yellow mb-2">Documentation Standards</h3>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>• Create detailed route maps with measurements</li>
                   <li>• Record protection methods and RCD settings</li>
@@ -708,8 +708,8 @@ const Module6Section2_3 = () => {
         {/* Real-World Example */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
-          <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-            <h3 className="font-semibold text-blue-700 dark:text-elec-yellow mb-3">Case Study: Housing Development Cable Strike</h3>
+          <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+            <h3 className="font-semibold text-blue-700 text-elec-yellow mb-3">Case Study: Housing Development Cable Strike</h3>
             <p className="text-xs sm:text-sm text-white mb-3">
               During a housing development project, electricians installed cables diagonally across walls to save time and reduce cable usage. Later, during a kitchen renovation, a contractor drilling for wall units struck a live cable, resulting in:
             </p>
@@ -721,7 +721,7 @@ const Module6Section2_3 = () => {
               <li>Insurance claims and potential legal action</li>
             </ul>
             <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-              <p className="font-semibold text-red-700 dark:text-elec-yellow mb-1">Prevention</p>
+              <p className="font-semibold text-red-700 text-elec-yellow mb-1">Prevention</p>
               <p className="text-xs sm:text-sm text-white">
                 This incident could have been prevented by following BS 7671 safe zone requirements and ensuring proper RCD protection for shallow cable runs.
               </p>
@@ -790,7 +790,7 @@ const Module6Section2_3 = () => {
             
             {/* Key Principles */}
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-5 rounded-lg border border-blue-200 dark:border-blue-800">
-              <h3 className="font-semibold text-blue-700 dark:text-elec-yellow mb-3">Core Safety Principles</h3>
+              <h3 className="font-semibold text-blue-700 text-elec-yellow mb-3">Core Safety Principles</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
@@ -816,8 +816,8 @@ const Module6Section2_3 = () => {
             </div>
 
             {/* Zone Requirements Summary */}
-            <div className="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-5 rounded-lg border border-emerald-200 dark:border-emerald-800">
-              <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Safe Zone Requirements</h3>
+            <div className="bg-gradient-to-r from-elec-yellow/5 to-green-50 from-elec-yellow/10 dark:to-green-900/20 p-5 rounded-lg border border-elec-yellow/30 border-elec-yellow/20">
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Safe Zone Requirements</h3>
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                 <div>
                   <p className="font-medium text-white mb-2">Horizontal Zones</p>
@@ -876,7 +876,7 @@ const Module6Section2_3 = () => {
 
             {/* Inspection Best Practices */}
             <div className="bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-5 rounded-lg border border-purple-200 dark:border-purple-800">
-              <h3 className="font-semibold text-purple-700 dark:text-elec-yellow mb-3">Professional Inspection Standards</h3>
+              <h3 className="font-semibold text-purple-700 text-elec-yellow mb-3">Professional Inspection Standards</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white mb-2">Essential Tools & Techniques</p>

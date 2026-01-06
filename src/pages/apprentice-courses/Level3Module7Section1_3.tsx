@@ -108,7 +108,7 @@ const Level3Module7Section1_3 = () => {
             <div className="p-2 rounded-lg bg-card/10">
               <Users className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs md:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs md:text-sm">
               Section 7.1.3
             </Badge>
           </div>
@@ -128,15 +128,15 @@ const Level3Module7Section1_3 = () => {
           </div>
           <div className="grid gap-4 md:grid-cols-2 md:gap-6 text-sm md:text-base text-foreground">
             <div className="rounded-lg p-3 md:p-4 bg-card border border-border/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Professional bodies certify electrical competence and quality.</li>
                 <li>Registration enables self-certification and industry recognition.</li>
                 <li>Ongoing CPD and assessment maintain professional standards.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 md:p-4 bg-card border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 md:p-4 bg-card border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> NICEIC/NAPIT certificates, ECA membership, JIB cards.</li>
                 <li><strong>Use:</strong> Check contractor credentials, verify competency schemes.</li>

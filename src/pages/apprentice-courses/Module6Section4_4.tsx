@@ -233,7 +233,7 @@ const Module6Section4_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Common Continuity Faults</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Common Continuity Faults</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -340,7 +340,7 @@ const Module6Section4_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Common Polarity Faults</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Common Polarity Faults</p>
                     
                     <div className="space-y-4">
                         <div>
@@ -414,7 +414,7 @@ const Module6Section4_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-3">Interpretation of Results</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Interpretation of Results</p>
                     
                     <div className="space-y-4">
                         <div>
@@ -641,15 +641,15 @@ const Module6Section4_4 = () => {
               <p>Open circuits, reversed polarity, high resistance joints, and disconnected CPCs</p>
             </div>
             <div className="p-4 rounded-lg border border-orange-500/20">
-              <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Consequences</p>
+              <p className="font-medium text-orange-700 text-elec-yellow mb-2">Consequences</p>
               <p>Shock hazards, fire risk, and failure of protective devices</p>
             </div>
             <div className="p-4 rounded-lg border border-elec-yellow/20">
-              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Testing</p>
+              <p className="font-medium text-blue-700 text-elec-yellow mb-2">Testing</p>
               <p>Use continuity and polarity tests to confirm conductor integrity</p>
             </div>
             <div className="p-4 rounded-lg border border-purple-500/20">
-              <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Action</p>
+              <p className="font-medium text-purple-700 text-elec-yellow mb-2">Action</p>
               <p>Always rectify and document faults before energising</p>
             </div>
           </div>
@@ -662,7 +662,7 @@ const Module6Section4_4 = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4 rounded-lg border border-red-500/20">
-              <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-2 flex items-center gap-2">
+              <h3 className="font-semibold text-red-600 text-elec-yellow mb-2 flex items-center gap-2">
                 <span className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
                 Know It
               </h3>
@@ -670,7 +670,7 @@ const Module6Section4_4 = () => {
             </div>
             
             <div className="p-4 rounded-lg border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 flex items-center gap-2">
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-2 flex items-center gap-2">
                 <span className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
                 Spot It
               </h3>
@@ -678,7 +678,7 @@ const Module6Section4_4 = () => {
             </div>
             
             <div className="p-4 rounded-lg border border-elec-yellow/20">
-              <h3 className="font-semibold text-emerald-600 dark:text-elec-yellow mb-2 flex items-center gap-2">
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-2 flex items-center gap-2">
                 <span className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
                 Test It
               </h3>

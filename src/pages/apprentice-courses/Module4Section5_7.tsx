@@ -223,7 +223,7 @@ const Module4Section5_7 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Pre-Installation Verification and Planning</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Pre-Installation Verification and Planning</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>First-fix completion check:</strong> Verify all preparatory work is complete and satisfactory.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>All cabling installed and tested for continuity and polarity</li>
@@ -275,7 +275,7 @@ const Module4Section5_7 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Conductor Preparation and Inspection</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Conductor Preparation and Inspection</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Stripping length verification:</strong> Ensure optimal conductor exposure for secure termination.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Follow manufacturer specifications for each accessory type</li>
@@ -327,7 +327,7 @@ const Module4Section5_7 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Precision Alignment Methods</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Precision Alignment Methods</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Spirit level application:</strong> Ensure professional appearance with accurate alignment.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Use quality spirit level appropriate for accessory size</li>

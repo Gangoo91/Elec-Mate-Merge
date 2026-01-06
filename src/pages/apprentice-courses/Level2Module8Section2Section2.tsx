@@ -15,7 +15,7 @@ const Level2Module8Section2Section2 = () => {
         <div className="flex items-center gap-4 mb-6">
           <Link 
             to=".." 
-            className="inline-flex items-center text-muted-foreground hover:text-emerald-400 transition-colors"
+            className="inline-flex items-center text-muted-foreground hover:text-elec-yellow transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to How to Pass Exams
@@ -23,9 +23,9 @@ const Level2Module8Section2Section2 = () => {
         </div>
         
         {/* Hero Section */}
-        <div className="text-center mb-6 p-4 bg-gradient-to-r from-card to-muted rounded-lg border border-emerald-500/30">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-emerald-500/20 rounded-full mb-3">
-            <Search className="h-6 w-6 text-emerald-400" />
+        <div className="text-center mb-6 p-4 bg-gradient-to-r from-card to-muted rounded-lg border border-elec-yellow/30">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-elec-yellow/20 rounded-full mb-3">
+            <Search className="h-6 w-6 text-elec-yellow" />
           </div>
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3">
             Question Analysis Techniques
@@ -38,26 +38,26 @@ const Level2Module8Section2Section2 = () => {
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-emerald-400 mb-1">78%</div>
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
+            <div className="text-2xl font-bold text-elec-yellow mb-1">78%</div>
             <div className="text-sm text-muted-foreground">Improvement with analysis</div>
           </div>
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-emerald-400 mb-1">5-step</div>
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
+            <div className="text-2xl font-bold text-elec-yellow mb-1">5-step</div>
             <div className="text-sm text-muted-foreground">Analysis process</div>
           </div>
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-emerald-400 mb-1">45 secs</div>
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
+            <div className="text-2xl font-bold text-elec-yellow mb-1">45 secs</div>
             <div className="text-sm text-muted-foreground">Average analysis time</div>
           </div>
         </div>
 
         <div className="space-y-6">
           {/* Pre-Exam Question Analysis Strategy */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <BookOpen className="h-6 w-6 text-emerald-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Pre-Exam Question Analysis Strategy
               </CardTitle>
             </CardHeader>
@@ -65,12 +65,12 @@ const Level2Module8Section2Section2 = () => {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-emerald-400" />
+                    <Zap className="h-4 w-4 text-elec-yellow" />
                     Question Decoding Framework
                   </h4>
                   <div className="space-y-3">
-                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm">Pre-Reading Techniques</div>
+                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm">Pre-Reading Techniques</div>
                       <div className="text-sm text-muted-foreground mb-2">Essential first steps before attempting any question</div>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>• Read question stem twice before viewing options</div>
@@ -80,8 +80,8 @@ const Level2Module8Section2Section2 = () => {
                         <div>• Determine required answer format</div>
                       </div>
                     </div>
-                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm">Question Type Recognition</div>
+                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm">Question Type Recognition</div>
                       <div className="text-sm text-muted-foreground mb-2">Identify approach needed for different question types</div>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>• Knowledge: Direct recall of facts and regulations</div>
@@ -107,38 +107,38 @@ const Level2Module8Section2Section2 = () => {
                 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <Target className="h-4 w-4 text-emerald-400" />
+                    <Target className="h-4 w-4 text-elec-yellow" />
                     Strategic Analysis Preparation
                   </h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Context mapping:</strong> Link questions to real installation scenarios</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Regulation linking:</strong> Connect questions to specific BS7671 parts</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Pattern recognition:</strong> Identify recurring question structures</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Trap identification:</strong> Recognise common misleading options</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Safety prioritisation:</strong> Always consider safety implications first</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Elimination strategy:</strong> Systematically remove incorrect options</span>
                     </div>
                   </div>
                   
                   <div className="mt-4 p-3 bg-card rounded-lg border border-border/30">
-                    <h5 className="font-semibold text-emerald-400 mb-2">Question Analysis Checklist</h5>
+                    <h5 className="font-semibold text-elec-yellow mb-2">Question Analysis Checklist</h5>
                     <div className="text-sm text-muted-foreground space-y-1">
                       <div>✓ Subject area identified (Part 1-7 BS7671)</div>
                       <div>✓ Installation context understood (domestic/commercial)</div>
@@ -150,8 +150,8 @@ const Level2Module8Section2Section2 = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-emerald-500/10 to-transparent p-4 rounded-lg border border-emerald-500/30">
-                <h5 className="font-semibold text-emerald-400 mb-2">Pro Tip: The 25% Rule & Elimination Strategy</h5>
+              <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
+                <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: The 25% Rule & Elimination Strategy</h5>
                 <p className="text-sm text-muted-foreground mb-3">
                   If you can eliminate just one wrong answer from a 4-option multiple choice question, 
                   your chances improve from 25% to 33% - that's a significant advantage over random guessing!
@@ -181,10 +181,10 @@ const Level2Module8Section2Section2 = () => {
           </Card>
 
           {/* Written Exam Question Analysis */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <Timer className="h-6 w-6 text-emerald-400" />
+                <Timer className="h-6 w-6 text-elec-yellow" />
                 Written Exam Question Analysis
               </CardTitle>
             </CardHeader>
@@ -229,16 +229,16 @@ const Level2Module8Section2Section2 = () => {
                     </div>
                   </div>
                   
-                  <div className="relative p-5 bg-gradient-to-r from-emerald-500/10 to-transparent rounded-lg border border-border/30">
-                    <div className="absolute top-3 left-3 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
+                  <div className="relative p-5 bg-gradient-to-r from-elec-yellow/10 to-transparent rounded-lg border border-border/30">
+                    <div className="absolute top-3 left-3 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">UNDERSTAND - Deep Question Analysis</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">UNDERSTAND - Deep Question Analysis</h5>
                       <p className="text-sm text-muted-foreground mb-3">
                         Extract all relevant information and understand exactly what answer format is required.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">KEY INFORMATION EXTRACTION:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">KEY INFORMATION EXTRACTION:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Circuit details and specifications</div>
                             <div>• Installation type and environment</div>
@@ -248,7 +248,7 @@ const Level2Module8Section2Section2 = () => {
                           </div>
                         </div>
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">CONTEXT ANALYSIS:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">CONTEXT ANALYSIS:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Domestic (230V) vs commercial (400V) applications</div>
                             <div>• Special location requirements (bathrooms, etc.)</div>
@@ -259,7 +259,7 @@ const Level2Module8Section2Section2 = () => {
                         </div>
                       </div>
                       <div className="mt-3 space-y-2">
-                        <div className="p-2 bg-emerald-500/20 rounded text-xs">
+                        <div className="p-2 bg-elec-yellow/20 rounded text-xs">
                           <strong>Analysis Strategy:</strong> Highlight/underline circuit details, installation type, environmental conditions, load characteristics
                         </div>
                         <div className="p-2 bg-purple-500/20 rounded text-xs">
@@ -272,13 +272,13 @@ const Level2Module8Section2Section2 = () => {
                   <div className="relative p-5 bg-gradient-to-r from-purple-500/10 to-transparent rounded-lg border border-border/30">
                     <div className="absolute top-3 left-3 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">PLAN - Solution Strategy Development</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">PLAN - Solution Strategy Development</h5>
                       <p className="text-sm text-muted-foreground mb-3">
                         Determine your approach before looking at answer options to avoid being misled by distractors.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">FOR CALCULATIONS:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">FOR CALCULATIONS:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Identify required formulas (Ohm's law, power, etc.)</div>
                             <div>• List all known values and units</div>
@@ -289,7 +289,7 @@ const Level2Module8Section2Section2 = () => {
                           </div>
                         </div>
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">FOR REGULATIONS:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">FOR REGULATIONS:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Identify relevant BS7671 part and chapter</div>
                             <div>• Recall key regulation numbers</div>
@@ -309,7 +309,7 @@ const Level2Module8Section2Section2 = () => {
                   <div className="relative p-5 bg-gradient-to-r from-orange-500/10 to-transparent rounded-lg border border-border/30">
                     <div className="absolute top-3 left-3 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-sm">4</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">EXECUTE - Systematic Answer Selection</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">EXECUTE - Systematic Answer Selection</h5>
                       <p className="text-sm text-muted-foreground mb-3">
                         Work through your planned approach systematically, using proven elimination techniques effectively.
                       </p>
@@ -322,7 +322,7 @@ const Level2Module8Section2Section2 = () => {
                         </div>
                         <div className="grid md:grid-cols-2 gap-3">
                           <div>
-                            <h6 className="text-xs font-medium text-emerald-400 mb-1">ELIMINATION PRIORITIES:</h6>
+                            <h6 className="text-xs font-medium text-elec-yellow mb-1">ELIMINATION PRIORITIES:</h6>
                             <div className="space-y-1 text-xs text-muted-foreground">
                               <div>1. Safety violations or dangerous practices</div>
                               <div>2. Regulation non-compliance</div>
@@ -331,7 +331,7 @@ const Level2Module8Section2Section2 = () => {
                             </div>
                           </div>
                           <div>
-                            <h6 className="text-xs font-medium text-emerald-400 mb-1">SELECTION CRITERIA:</h6>
+                            <h6 className="text-xs font-medium text-elec-yellow mb-1">SELECTION CRITERIA:</h6>
                             <div className="space-y-1 text-xs text-muted-foreground">
                               <div>• Most technically accurate option</div>
                               <div>• Best compliance with BS7671</div>
@@ -347,13 +347,13 @@ const Level2Module8Section2Section2 = () => {
                   <div className="relative p-5 bg-gradient-to-r from-red-500/10 to-transparent rounded-lg border border-border/30">
                     <div className="absolute top-3 left-3 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center font-bold text-sm">5</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">VERIFY - Comprehensive Answer Validation</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">VERIFY - Comprehensive Answer Validation</h5>
                       <p className="text-sm text-muted-foreground mb-3">
                         Always double-check your answer makes complete sense in the context of the question and real-world application.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">TECHNICAL VERIFICATION:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">TECHNICAL VERIFICATION:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Answer matches the question asked</div>
                             <div>• Calculation units are correct</div>
@@ -363,7 +363,7 @@ const Level2Module8Section2Section2 = () => {
                           </div>
                         </div>
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">SAFETY VERIFICATION:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">SAFETY VERIFICATION:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Answer ensures safe installation</div>
                             <div>• Protects against electrical hazards</div>
@@ -381,8 +381,8 @@ const Level2Module8Section2Section2 = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-emerald-500/10 to-transparent p-4 rounded-lg border border-emerald-500/30">
-                <h5 className="font-semibold text-emerald-400 mb-2">Pro Tip: BS7671 Reference Navigation for Question Analysis</h5>
+              <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
+                <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: BS7671 Reference Navigation for Question Analysis</h5>
                 <p className="text-sm text-muted-foreground mb-3">
                   Efficient BS7671 navigation during question analysis can save 30-60 seconds per regulation question:
                 </p>
@@ -397,10 +397,10 @@ const Level2Module8Section2Section2 = () => {
           </Card>
 
           {/* Practical Assessment Question Analysis */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <CheckCircle className="h-6 w-6 text-emerald-400" />
+                <CheckCircle className="h-6 w-6 text-elec-yellow" />
                 Practical Assessment Question Analysis
               </CardTitle>
             </CardHeader>
@@ -413,12 +413,12 @@ const Level2Module8Section2Section2 = () => {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <Users className="h-4 w-4 text-emerald-400" />
+                    <Users className="h-4 w-4 text-elec-yellow" />
                     Task Briefing Analysis Framework
                   </h4>
                   <div className="space-y-3">
-                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm">Circuit Installation Requirements</div>
+                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm">Circuit Installation Requirements</div>
                       <div className="text-sm text-muted-foreground mb-2">Complete analysis of installation specifications</div>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>• Circuit type analysis (ring final, radial, lighting configurations)</div>
@@ -429,8 +429,8 @@ const Level2Module8Section2Section2 = () => {
                         <div>• Environmental condition impact assessment</div>
                       </div>
                     </div>
-                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm">Testing Protocol Analysis</div>
+                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm">Testing Protocol Analysis</div>
                       <div className="text-sm text-muted-foreground mb-2">Required tests and acceptable value ranges</div>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>• Continuity testing procedures and sequence</div>
@@ -457,28 +457,28 @@ const Level2Module8Section2Section2 = () => {
                 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <TrendingUp className="h-4 w-4 text-emerald-400" />
+                    <TrendingUp className="h-4 w-4 text-elec-yellow" />
                     Marking Criteria Strategic Analysis
                   </h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Planning (15%):</strong> Circuit design accuracy, cable selection justification, protection sizing calculations</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Installation (35%):</strong> Workmanship quality, BS7671 compliance, safety practice demonstration</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Testing (25%):</strong> Correct procedures, accurate measurements, proper documentation</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Documentation (15%):</strong> Certificate completion, test result accuracy, schedule information</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Safety (10%):</strong> PPE usage, risk assessment, safe working practice demonstration</span>
                     </div>
                   </div>
@@ -495,7 +495,7 @@ const Level2Module8Section2Section2 = () => {
                     </div>
                     
                     <div className="p-3 bg-card rounded-lg border border-border/30">
-                      <h5 className="font-semibold text-emerald-400 mb-2">Assessment Priority Matrix</h5>
+                      <h5 className="font-semibold text-elec-yellow mb-2">Assessment Priority Matrix</h5>
                       <div className="text-sm text-muted-foreground space-y-1">
                         <div><strong>High Impact:</strong> Safety compliance, circuit functionality, test accuracy</div>
                         <div><strong>Medium Impact:</strong> Installation neatness, documentation completeness</div>
@@ -507,7 +507,7 @@ const Level2Module8Section2Section2 = () => {
               </div>
 
               <div className="bg-gradient-to-r from-purple-500/10 to-transparent p-4 rounded-lg border border-border/30">
-                <h5 className="font-semibold text-emerald-400 mb-2">Advanced Task Analysis Techniques</h5>
+                <h5 className="font-semibold text-elec-yellow mb-2">Advanced Task Analysis Techniques</h5>
                 <p className="text-sm text-muted-foreground mb-3">
                   Professional analysis methods for complex practical assessment scenarios:
                 </p>
@@ -524,10 +524,10 @@ const Level2Module8Section2Section2 = () => {
           </Card>
 
           {/* Advanced Analysis Techniques & Emergency Strategies */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <AlertTriangle className="h-6 w-6 text-emerald-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Advanced Analysis Techniques & Emergency Strategies
               </CardTitle>
             </CardHeader>
@@ -537,27 +537,27 @@ const Level2Module8Section2Section2 = () => {
                   <h4 className="font-semibold mb-3 text-foreground">Complex Scenario Analysis Methods</h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Scenario decomposition:</strong> Break complex scenarios into manageable component parts</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Priority analysis:</strong> Identify primary vs. secondary safety and compliance considerations</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Interconnection mapping:</strong> Look for interconnected requirements affecting multiple regulations</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Stakeholder perspective:</strong> Consider all stakeholder viewpoints (installer, user, inspector)</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Lifecycle analysis:</strong> Consider installation, operation, maintenance, and modification phases</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Environmental impact:</strong> Analyse how environmental factors affect all requirements</span>
                     </div>
                   </div>
@@ -567,27 +567,27 @@ const Level2Module8Section2Section2 = () => {
                   <h4 className="font-semibold mb-3 text-foreground">Pattern Recognition & Intuition Development</h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Question pattern library:</strong> Build mental database of recurring question structures</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Trap pattern recognition:</strong> Identify common misleading answer option types</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Solution template application:</strong> Apply familiar solution approaches to similar problems</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Elimination sequence optimisation:</strong> Use most effective elimination order for question type</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Intuitive validation:</strong> Trust trained electrical intuition for reasonableness checks</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Meta-analysis skills:</strong> Analyse your own analysis process for continuous improvement</span>
                     </div>
                   </div>
@@ -596,13 +596,13 @@ const Level2Module8Section2Section2 = () => {
 
               <div className="space-y-4">
                 <div className="bg-gradient-to-r from-red-500/10 to-transparent p-4 rounded-lg border border-border/30">
-                  <h5 className="font-semibold text-emerald-400 mb-2">Emergency Analysis Protocol - When Stuck or Short on Time</h5>
+                  <h5 className="font-semibold text-elec-yellow mb-2">Emergency Analysis Protocol - When Stuck or Short on Time</h5>
                   <p className="text-sm text-muted-foreground mb-3">
                     When you're stuck or running out of time, follow this systematic emergency decision-making process:
                   </p>
                   <div className="grid md:grid-cols-2 gap-3">
                     <div>
-                      <h6 className="text-xs font-medium text-emerald-400 mb-1">IMMEDIATE ACTIONS (10 seconds):</h6>
+                      <h6 className="text-xs font-medium text-elec-yellow mb-1">IMMEDIATE ACTIONS (10 seconds):</h6>
                       <div className="space-y-1 text-xs text-muted-foreground">
                         <div>Step 1: Re-read question stem only (ignore options temporarily)</div>
                         <div>Step 2: Apply basic electrical safety principles first</div>
@@ -610,7 +610,7 @@ const Level2Module8Section2Section2 = () => {
                       </div>
                     </div>
                     <div>
-                      <h6 className="text-xs font-medium text-emerald-400 mb-1">DECISION CRITERIA (20 seconds):</h6>
+                      <h6 className="text-xs font-medium text-elec-yellow mb-1">DECISION CRITERIA (20 seconds):</h6>
                       <div className="space-y-1 text-xs text-muted-foreground">
                         <div>Step 4: Choose most conservative/safest available option</div>
                         <div>Step 5: Eliminate any options violating basic regulations</div>
@@ -621,7 +621,7 @@ const Level2Module8Section2Section2 = () => {
                 </div>
 
                 <div className="bg-gradient-to-r from-orange-500/10 to-transparent p-4 rounded-lg border border-border/30">
-                  <h5 className="font-semibold text-emerald-400 mb-2">Regulatory Compliance Quick Analysis</h5>
+                  <h5 className="font-semibold text-elec-yellow mb-2">Regulatory Compliance Quick Analysis</h5>
                   <p className="text-sm text-muted-foreground mb-3">
                     Fast compliance checking for pressure situations:
                   </p>
@@ -641,7 +641,7 @@ const Level2Module8Section2Section2 = () => {
                     <div className="p-2 bg-green-500/20 rounded text-xs">
                       <strong>Holistic Analysis:</strong> Consider installation as complete system - cables, protection, earthing, testing all interconnected
                     </div>
-                    <div className="p-2 bg-emerald-500/20 rounded text-xs">
+                    <div className="p-2 bg-elec-yellow/20 rounded text-xs">
                       <strong>Risk-Based Prioritisation:</strong> Weight analysis towards highest electrical safety risks first
                     </div>
                     <div className="p-2 bg-purple-500/20 rounded text-xs">

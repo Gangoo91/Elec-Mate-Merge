@@ -266,7 +266,7 @@ const Module5Section1_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Typical Documentation Problems</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Typical Documentation Problems</p>
                     <div className="grid md:grid-cols-2 gap-4 mb-4">
                       <div>
                         <p className="text-base text-white mb-2"><strong>Missing information:</strong></p>
@@ -335,7 +335,7 @@ const Module5Section1_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Serious Consequences</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Serious Consequences</p>
                     <div className="grid md:grid-cols-2 gap-4 mb-4">
                       <div>
                         <p className="text-base text-white mb-2"><strong>Safety risks:</strong></p>
@@ -404,7 +404,7 @@ const Module5Section1_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Verification Process</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Verification Process</p>
                     <div className="space-y-3">
                       <div>
                         <p className="text-base text-white mb-2"><strong>Document verification:</strong></p>
@@ -549,7 +549,7 @@ const Module5Section1_6 = () => {
               <div className="flex items-start gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                 <div className="flex-1">
-                  <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Professional Standards</p>
+                  <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Professional Standards</p>
                   <div className="space-y-3">
                     <div>
                       <p className="text-base text-white mb-2"><strong>Golden rules:</strong></p>

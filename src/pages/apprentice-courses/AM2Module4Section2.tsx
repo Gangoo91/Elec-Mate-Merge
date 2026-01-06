@@ -194,7 +194,7 @@ const AM2Module4Section2 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Shield className="w-4 h-4" />
             Module 4 – Section 2
           </div>
@@ -210,15 +210,15 @@ const AM2Module4Section2 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
                   CRITICAL: GS38 Compliance is Non-Negotiable
                 </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
                   Using non-compliant leads, damaged equipment, or skipping proving steps will result in automatic AM2 failure. HSE GS38 requirements protect lives and must be followed exactly.
                 </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
                   Unsafe practices with test equipment have caused serious injuries and deaths in the electrical industry. Assessors will stop the test immediately if unsafe practices are observed.
                 </p>
               </div>
@@ -227,9 +227,9 @@ const AM2Module4Section2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -238,27 +238,27 @@ const AM2Module4Section2 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 State the GS38 requirements for test instruments and leads
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Prove test equipment before and after use correctly
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Use voltage indicators safely for live/dead testing
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Avoid unsafe practices that lead to instant fails
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Understand exactly what assessors are looking for when you use test equipment
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Handle multifunction testers safely and competently
               </li>
             </ul>
@@ -266,18 +266,18 @@ const AM2Module4Section2 = () => {
         </Card>
 
         {/* GS38 Requirements */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
               1. GS38 Requirements for Test Instruments
             </h2>
             
             <div className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 sm:mb-3 text-sm sm:text-base">Test Probes Must Be:</h4>
-                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                     <li>• Shrouded tips, with only 2–4 mm of metal exposed</li>
                     <li>• Finger barriers or insulated handles</li>
                     <li>• In good condition with no damage</li>
@@ -295,7 +295,7 @@ const AM2Module4Section2 = () => {
                 
                 <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2 sm:mb-3 text-sm sm:text-base">Instruments Must Be:</h4>
-                  <ul className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow space-y-1">
                     <li>• Category rated (CAT II / CAT III depending on use)</li>
                     <li>• Regularly calibrated and in good working order</li>
                     <li>• Suitable for the intended application</li>
@@ -315,9 +315,9 @@ const AM2Module4Section2 = () => {
         />
 
         {/* Complete Safe Isolation Procedure */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               2. Complete Safe Isolation Procedure
             </h2>
@@ -327,7 +327,7 @@ const AM2Module4Section2 = () => {
                 <AlertTriangle className="w-4 h-4" />
                 CRITICAL: Complete 6-Step Safe Isolation Procedure
               </h4>
-              <p className="text-sm text-red-700 dark:text-emerald-400">
+              <p className="text-sm text-red-700 dark:text-elec-yellow">
                 This is the complete safe isolation procedure as per HSE GS38 and BS 7671. Every step must be completed in order. 
                 Skipping any step or changing the sequence = instant AM2 failure.
               </p>
@@ -336,15 +336,15 @@ const AM2Module4Section2 = () => {
             <div className="space-y-6">
               {/* Step 1: Identify */}
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
                 <div className="flex-1">
                   <h5 className="font-medium text-foreground mb-2">IDENTIFY the Circuit/Supply to be Isolated</h5>
                   <p className="text-sm text-muted-foreground mb-3">
                     Clearly identify which circuit or supply needs to be made safe for work. Use circuit charts, labels, and visual inspection.
                   </p>
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 rounded p-3 text-sm">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded p-3 text-sm">
                     <strong className="text-blue-800 dark:text-blue-200">AM2 Actions:</strong>
-                    <ul className="text-blue-700 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-blue-700 dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Check circuit labels and documentation</li>
                       <li>• Verify circuit routes and connections</li>
                       <li>• Confirm the scope of isolation required</li>
@@ -356,15 +356,15 @@ const AM2Module4Section2 = () => {
 
               {/* Step 2: Isolate */}
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
                 <div className="flex-1">
                   <h5 className="font-medium text-foreground mb-2">ISOLATE the Circuit/Supply</h5>
                   <p className="text-sm text-muted-foreground mb-3">
                     Switch off the circuit using appropriate isolation devices. Turn off MCBs, remove fuses, or operate isolator switches.
                   </p>
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 rounded p-3 text-sm">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded p-3 text-sm">
                     <strong className="text-blue-800 dark:text-blue-200">AM2 Actions:</strong>
-                    <ul className="text-blue-700 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-blue-700 dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Switch off appropriate MCB/isolator</li>
                       <li>• Remove fuses where applicable</li>
                       <li>• Ensure all supply sources are isolated</li>
@@ -376,15 +376,15 @@ const AM2Module4Section2 = () => {
 
               {/* Step 3: Secure */}
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
                 <div className="flex-1">
                   <h5 className="font-medium text-foreground mb-2">SECURE the Isolation</h5>
                   <p className="text-sm text-muted-foreground mb-3">
                     Prevent accidental re-energisation by locking off the isolation device and/or removing fuses completely.
                   </p>
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 rounded p-3 text-sm">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded p-3 text-sm">
                     <strong className="text-blue-800 dark:text-blue-200">AM2 Actions:</strong>
-                    <ul className="text-blue-700 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-blue-700 dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Apply lock-off device if available</li>
                       <li>• Remove fuses and keep them with you</li>
                       <li>• Place warning notices if required</li>
@@ -404,7 +404,7 @@ const AM2Module4Section2 = () => {
                   </p>
                   <div className="bg-red-50 dark:bg-red-950/20 rounded p-3 text-sm">
                     <strong className="text-red-800 dark:text-red-200">AM2 Critical Requirements:</strong>
-                    <ul className="text-red-700 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-red-700 dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Use proving unit or reliable known live source</li>
                       <li>• Confirm clear positive voltage indication</li>
                       <li>• Must be demonstrated to assessor</li>
@@ -424,7 +424,7 @@ const AM2Module4Section2 = () => {
                   </p>
                   <div className="bg-red-50 dark:bg-red-950/20 rounded p-3 text-sm">
                     <strong className="text-red-800 dark:text-red-200">AM2 Test Points (All Must Show Dead):</strong>
-                    <ul className="text-red-700 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-red-700 dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Line to Neutral (L-N)</li>
                       <li>• Line to Earth (L-E)</li>
                       <li>• Neutral to Earth (N-E)</li>
@@ -444,7 +444,7 @@ const AM2Module4Section2 = () => {
                   </p>
                   <div className="bg-red-50 dark:bg-red-950/20 rounded p-3 text-sm">
                     <strong className="text-red-800 dark:text-red-200">AM2 Critical - This Confirms:</strong>
-                    <ul className="text-red-700 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-red-700 dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Voltage tester has not failed during testing</li>
                       <li>• "Dead" readings were genuine, not due to faulty tester</li>
                       <li>• Safe to proceed with work</li>
@@ -481,9 +481,9 @@ const AM2Module4Section2 = () => {
         />
 
         {/* Voltage Indicators and Proving Units - Detailed Guide */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
               4. Voltage Indicators & Proving Units - NET AM2 Standards
             </h2>
@@ -491,12 +491,12 @@ const AM2Module4Section2 = () => {
             <div className="space-y-6">
               {/* Types of Voltage Indicators */}
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Approved Voltage Indicators:</h4>
                   <div className="space-y-3 text-sm">
                     <div>
-                      <strong className="text-blue-700 dark:text-emerald-400">Two-Pole Voltage Indicators:</strong>
-                      <ul className="text-emerald-400 dark:text-emerald-400 mt-1 space-y-1">
+                      <strong className="text-blue-700 dark:text-elec-yellow">Two-Pole Voltage Indicators:</strong>
+                      <ul className="text-elec-yellow dark:text-elec-yellow mt-1 space-y-1">
                         <li>• Most common in NET AM2 centres</li>
                         <li>• LED or LCD display</li>
                         <li>• GS38 compliant probes essential</li>
@@ -504,8 +504,8 @@ const AM2Module4Section2 = () => {
                       </ul>
                     </div>
                     <div>
-                      <strong className="text-blue-700 dark:text-emerald-400">Approved Socket Testers:</strong>
-                      <ul className="text-emerald-400 dark:text-emerald-400 mt-1 space-y-1">
+                      <strong className="text-blue-700 dark:text-elec-yellow">Approved Socket Testers:</strong>
+                      <ul className="text-elec-yellow dark:text-elec-yellow mt-1 space-y-1">
                         <li>• 13A socket testing units</li>
                         <li>• RCD test functionality</li>
                         <li>• Polarity and earth testing</li>
@@ -584,7 +584,7 @@ const AM2Module4Section2 = () => {
                     <p className="text-sm text-red-800 dark:text-red-200 font-medium">
                       ⚠️ NET AM2 Critical: Missing any step = Automatic Failure
                     </p>
-                    <p className="text-xs text-red-700 dark:text-emerald-400 mt-1">
+                    <p className="text-xs text-red-700 dark:text-elec-yellow mt-1">
                       Assessors will specifically watch for the complete sequence. Shortcuts or assumptions about equipment functionality are not acceptable.
                     </p>
                   </div>
@@ -597,7 +597,7 @@ const AM2Module4Section2 = () => {
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <strong className="text-yellow-700 dark:text-yellow-300">Equipment Issues:</strong>
-                    <ul className="text-emerald-400 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-elec-yellow dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Using non-GS38 compliant indicators</li>
                       <li>• Assuming proving unit is working</li>
                       <li>• Not checking battery levels</li>
@@ -606,7 +606,7 @@ const AM2Module4Section2 = () => {
                   </div>
                   <div>
                     <strong className="text-yellow-700 dark:text-yellow-300">Procedure Failures:</strong>
-                    <ul className="text-emerald-400 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-elec-yellow dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Skipping initial or final prove</li>
                       <li>• Not testing all conductor combinations</li>
                       <li>• Rushing through the sequence</li>
@@ -620,9 +620,9 @@ const AM2Module4Section2 = () => {
         </Card>
 
         {/* Using Multifunction Tester */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
               3. Using a Multifunction Tester (MFT) Safely
             </h2>
@@ -650,9 +650,9 @@ const AM2Module4Section2 = () => {
                 </div>
               </div>
               
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Key MFT Safety Points for AM2:</h4>
-                <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                   <li>• Always check function selector before connecting to circuit</li>
                   <li>• Use appropriate test voltage for the circuit being tested</li>
                   <li>• Never force connections - use appropriate test accessories</li>
@@ -683,7 +683,7 @@ const AM2Module4Section2 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <h4 className="font-medium text-red-800 dark:text-red-200">Equipment-Related Fails:</h4>
-                <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                   <li>• Using damaged or taped-up leads</li>
                   <li>• Using probes with long exposed metal tips</li>
                   <li>• Non-GS38 compliant equipment</li>
@@ -693,7 +693,7 @@ const AM2Module4Section2 = () => {
               
               <div className="space-y-3">
                 <h4 className="font-medium text-red-800 dark:text-red-200">Procedure-Related Fails:</h4>
-                <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                   <li>• Failing to prove/re-prove the tester</li>
                   <li>• Holding probes dangerously (fingers over barriers)</li>
                   <li>• Applying incorrect voltage or current range</li>
@@ -711,9 +711,9 @@ const AM2Module4Section2 = () => {
         </Card>
 
         {/* What the Assessor is Looking For */}
-        <Card className="bg-gradient-to-r from-card/20 to-emerald-500/5 border-emerald-500/30 mb-8">
+        <Card className="bg-gradient-to-r from-card/20 to-elec-yellow/5 border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               What the Assessor is Looking For
             </h2>
@@ -734,7 +734,7 @@ const AM2Module4Section2 = () => {
                 </div>
                 
                 <div className="bg-background/50 rounded-lg p-4">
-                  <h4 className="font-medium text-emerald-400 dark:text-emerald-400 mb-2 flex items-center gap-2">
+                  <h4 className="font-medium text-elec-yellow dark:text-elec-yellow mb-2 flex items-center gap-2">
                     <Shield className="w-4 h-4" />
                     Safe Working Practices
                   </h4>
@@ -749,7 +749,7 @@ const AM2Module4Section2 = () => {
               
               <div className="space-y-4">
                 <div className="bg-background/50 rounded-lg p-4">
-                  <h4 className="font-medium text-purple-600 dark:text-emerald-400 mb-2 flex items-center gap-2">
+                  <h4 className="font-medium text-purple-600 dark:text-elec-yellow mb-2 flex items-center gap-2">
                     <BookOpen className="w-4 h-4" />
                     Professional Competence
                   </h4>
@@ -762,7 +762,7 @@ const AM2Module4Section2 = () => {
                 </div>
                 
                 <div className="bg-background/50 rounded-lg p-4">
-                  <h4 className="font-medium text-orange-600 dark:text-emerald-400 mb-2 flex items-center gap-2">
+                  <h4 className="font-medium text-orange-600 dark:text-elec-yellow mb-2 flex items-center gap-2">
                     <Lightbulb className="w-4 h-4" />
                     Assessment Excellence
                   </h4>
@@ -779,18 +779,18 @@ const AM2Module4Section2 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
               5. Practical Guidance for AM2 Success
             </h2>
             
             <div className="space-y-6">
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Before You Start:</h4>
-                  <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                     <li>• Inspect your kit first</li>
                     <li>• Check leads, fuses, and probe tips</li>
                     <li>• Verify calibration dates</li>
@@ -810,7 +810,7 @@ const AM2Module4Section2 = () => {
                 
                 <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-4">
                   <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">After Testing:</h4>
-                  <ul className="text-sm text-purple-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-sm text-purple-700 dark:text-elec-yellow space-y-1">
                     <li>• Reset to safe mode (voltage)</li>
                     <li>• Switch tester off safely</li>
                     <li>• Store leads properly</li>
@@ -833,9 +833,9 @@ const AM2Module4Section2 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
               Real-World Examples
             </h2>
@@ -843,20 +843,20 @@ const AM2Module4Section2 = () => {
             <div className="space-y-4">
               <div className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20 p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">Example 1: Non-GS38 Leads</h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                   Candidate used non-GS38 leads with 20 mm exposed metal. Assessor stopped the test immediately → <strong>Automatic Fail</strong>
                 </p>
-                <p className="text-xs text-red-600 dark:text-emerald-400">
+                <p className="text-xs text-red-600 dark:text-elec-yellow">
                   Lesson: Always check probe tip exposure before starting. Only 2-4mm is acceptable.
                 </p>
               </div>
               
               <div className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20 p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">Example 2: Forgot Re-proving</h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                   Candidate forgot to re-prove tester after safe isolation sequence. → <strong>Automatic Fail</strong>
                 </p>
-                <p className="text-xs text-red-600 dark:text-emerald-400">
+                <p className="text-xs text-red-600 dark:text-elec-yellow">
                   Lesson: The proving sequence is Prove → Test → Re-prove. All three steps are mandatory.
                 </p>
               </div>
@@ -871,12 +871,12 @@ const AM2Module4Section2 = () => {
                 </p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 bg-yellow-50 dark:bg-yellow-950/20 p-4">
+              <div className="border-l-4 border-elec-yellow bg-yellow-50 dark:bg-yellow-950/20 p-4">
                 <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-2">Example 4: Real-Life Consequence</h4>
                 <p className="text-sm text-yellow-700 dark:text-yellow-300 mb-2">
                   In real life, an electrician used a damaged probe, which arced and caused serious burns. Same unsafe practice in AM2 = fail.
                 </p>
-                <p className="text-xs text-emerald-400 dark:text-emerald-400">
+                <p className="text-xs text-elec-yellow dark:text-elec-yellow">
                   Lesson: GS38 requirements exist to prevent real injuries. Assessors treat safety breaches very seriously.
                 </p>
               </div>
@@ -885,9 +885,9 @@ const AM2Module4Section2 = () => {
         </Card>
 
         {/* Section Summary */}
-        <Card className="bg-gradient-to-r from-emerald-500/5 to-card/5 border-emerald-500/30 mb-8">
+        <Card className="bg-gradient-to-r from-elec-yellow/5 to-card/5 border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Section Summary
             </h2>
@@ -919,8 +919,8 @@ const AM2Module4Section2 = () => {
                 </ul>
               </div>
               
-              <div className="bg-emerald-500/10 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">Next Steps:</h4>
+              <div className="bg-elec-yellow/10 rounded-lg p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Next Steps:</h4>
                 <p className="text-sm text-muted-foreground">
                   You're now ready to move on to Module 4 Section 3, where we'll cover the specific testing procedures 
                   and measurement techniques required for AM2 assessment success.
@@ -931,9 +931,9 @@ const AM2Module4Section2 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               Test Your Knowledge
             </h2>

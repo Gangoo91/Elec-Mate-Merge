@@ -44,7 +44,7 @@ const ScenarioCard = ({
         <Target className="w-5 h-5 text-elec-yellow" />
         {title}
       </h4>
-      <div className="bg-emerald-50/50 dark:bg-emerald-950/20 p-4 rounded-lg mb-4">
+      <div className="bg-elec-yellow/5/50 dark:bg-elec-yellow/10 p-4 rounded-lg mb-4">
         <p className="text-xs sm:text-sm text-white">{scenario}</p>
       </div>
       
@@ -61,7 +61,7 @@ const ScenarioCard = ({
                   ? index === correctAnswer
                     ? 'bg-green-500/20 border-green-400/50 text-green-800 dark:text-green-200'
                     : 'bg-red-500/20 border-red-400/50 text-red-800 dark:text-red-200'
-                  : 'bg-elec-yellow/20 border-emerald-400/20 text-blue-800 dark:text-blue-200'
+                  : 'bg-elec-yellow/20 border-elec-yellow/20 text-blue-800 dark:text-blue-200'
                 : showAnswer && index === correctAnswer
                 ? 'bg-green-500/20 border-green-400/50 text-green-800 dark:text-green-200'
                 : 'bg-white dark:bg-card border-gray-300 dark:border-gray-600 hover:border-blue-300 dark:hover:border-elec-yellow text-gray-900 dark:text-gray-100'
@@ -74,7 +74,7 @@ const ScenarioCard = ({
                     ? index === correctAnswer
                       ? 'border-green-400 bg-green-400'
                       : 'border-red-400 bg-red-400'
-                    : 'border-emerald-400 bg-emerald-400'
+                    : 'border-elec-yellow bg-elec-yellow'
                   : showAnswer && index === correctAnswer
                   ? 'border-green-400 bg-green-400'
                   : 'border-gray-400 bg-transparent'

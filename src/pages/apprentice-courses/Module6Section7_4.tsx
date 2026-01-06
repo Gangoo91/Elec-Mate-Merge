@@ -211,7 +211,7 @@ const Module6Section7_4 = () => {
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
                   <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Who Can Sign Off Electrical Work</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Who Can Sign Off Electrical Work</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -226,7 +226,7 @@ const Module6Section7_4 = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
                           <div>
                             <strong className="text-blue-900 dark:text-blue-200 block mb-2">Qualifications Needed:</strong>
-                            <ul className="space-y-1 text-blue-800 dark:text-elec-yellow">
+                            <ul className="space-y-1 text-blue-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">•</span>
                                 <span>Recognised electrical qualification (Level 3 minimum)</span>
@@ -247,7 +247,7 @@ const Module6Section7_4 = () => {
                           </div>
                           <div>
                             <strong className="text-blue-900 dark:text-blue-200 block mb-2">Experience Requirements:</strong>
-                            <ul className="space-y-1 text-blue-800 dark:text-elec-yellow">
+                            <ul className="space-y-1 text-blue-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">•</span>
                                 <span>Practical electrical installation experience</span>
@@ -406,7 +406,7 @@ const Module6Section7_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3 text-base">What Level 2 Electricians Can Do</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3 text-base">What Level 2 Electricians Can Do</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -426,7 +426,7 @@ const Module6Section7_4 = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
                           <div>
                             <strong className="text-purple-900 dark:text-purple-200 block mb-2">Testing Activities:</strong>
-                            <ul className="space-y-1 text-purple-800 dark:text-elec-yellow">
+                            <ul className="space-y-1 text-purple-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">✓</span>
                                 <span>Continuity testing under supervision</span>
@@ -447,7 +447,7 @@ const Module6Section7_4 = () => {
                           </div>
                           <div>
                             <strong className="text-purple-900 dark:text-purple-200 block mb-2">Documentation Support:</strong>
-                            <ul className="space-y-1 text-purple-800 dark:text-elec-yellow">
+                            <ul className="space-y-1 text-purple-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">✓</span>
                                 <span>Recording test results accurately</span>
@@ -478,7 +478,7 @@ const Module6Section7_4 = () => {
                           <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                           Progression Path for Level 2 Electricians
                         </h4>
-                        <div className="space-y-2 text-sm text-blue-800 dark:text-elec-yellow">
+                        <div className="space-y-2 text-sm text-blue-800 text-elec-yellow">
                           <div className="flex items-center gap-3">
                             <span className="text-elec-yellow font-bold">1.</span>
                             <span><strong>Current Stage:</strong> Supervised practice and skill development</span>
@@ -519,7 +519,7 @@ const Module6Section7_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Importance of Supervision and Integrity</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3 text-base">Importance of Supervision and Integrity</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -527,8 +527,8 @@ const Module6Section7_4 = () => {
                       </p>
 
                       <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-                        <h4 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Importance of Supervision:</h4>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-red-700 dark:text-elec-yellow">
+                        <h4 className="font-medium text-red-800 text-elec-yellow mb-2">Importance of Supervision:</h4>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-red-700 text-elec-yellow">
                           <div>
                             <strong>Legal Protection:</strong>
                             <ul className="mt-1 space-y-1 ml-4">
@@ -624,7 +624,7 @@ const Module6Section7_4 = () => {
               On a small domestic rewiring job, an apprentice filled out and signed a Minor Works Certificate while the supervising electrician was off-site. Months later, a fault caused repeated RCD tripping, and the certificate was checked. Because the apprentice was not legally competent to sign, the certificate was invalid, and the contractor faced penalties for non-compliance. The client demanded retesting and full certification, costing the company time and money.
             </p>
             <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-              <p className="text-sm text-red-700 dark:text-elec-yellow">
+              <p className="text-sm text-red-700 text-elec-yellow">
                 <strong>Issue:</strong> Apprentice signed certificate without authority, making it invalid and leading to compliance penalties and additional costs.
               </p>
             </div>

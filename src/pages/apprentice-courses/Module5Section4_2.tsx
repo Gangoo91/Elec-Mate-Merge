@@ -300,11 +300,11 @@ const Module5Section4_2 = () => {
             Efficient ordering and delivery management is the backbone of successful electrical installations. A well-planned procurement system ensures the right materials arrive at the right time, in the right quantities, maintaining project momentum and profitability. Poor ordering practices can cause critical shortages, project delays, cost overruns, or resource waste through overstocking.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   Professional procurement systems reduce project delays by 25% and improve cash flow through optimised inventory management and supplier relationships.
                 </p>
@@ -317,7 +317,7 @@ const Module5Section4_2 = () => {
               <strong>Financial Impact:</strong> Well-managed deliveries can reduce project costs by 5-15% through reduced emergency orders, bulk discounts, and elimination of storage-related losses.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Professional Standard:</strong> Effective material management demonstrates competence and builds long-term supplier relationships that benefit future projects.
               </p>
@@ -439,7 +439,7 @@ const Module5Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Order Planning Process</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Order Planning Process</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -455,7 +455,7 @@ const Module5Section4_2 = () => {
                         </div>
                         
                         <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded border border-yellow-200 dark:border-yellow-800 mt-3">
-                          <p className="font-medium text-yellow-700 dark:text-elec-yellow mb-2">Critical Considerations</p>
+                          <p className="font-medium text-yellow-700 text-elec-yellow mb-2">Critical Considerations</p>
                           <div className="grid grid-cols-2 gap-3 text-xs sm:text-sm text-white">
                             <div>
                               <p><strong>Lead Times:</strong> Standard vs. Special Order</p>
@@ -497,7 +497,7 @@ const Module5Section4_2 = () => {
 
                       <div>
                         <p className="text-base text-white mb-2"><strong>Procurement Timeline Planning:</strong></p>
-                        <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
                           <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li><strong>Standard items:</strong> 5-10 working days lead time</li>
                             <li><strong>Special orders:</strong> 2-6 weeks depending on manufacturer</li>
@@ -579,7 +579,7 @@ const Module5Section4_2 = () => {
 
                       <div>
                         <p className="text-base text-white mb-2"><strong>Delivery coordination factors:</strong></p>
-                        <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
                           <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li><strong>Site access:</strong> Coordinate with other trades and site management</li>
                             <li><strong>Crane availability:</strong> Schedule heavy items when lifting equipment available</li>
@@ -591,7 +591,7 @@ const Module5Section4_2 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Risk Management</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Risk Management</p>
                         <p className="text-xs sm:text-sm text-white">
                           Early bulk deliveries increase theft risk by 60% and weather damage by 40%. Phased deliveries reduce these risks while maintaining project flow.
                         </p>
@@ -668,7 +668,7 @@ const Module5Section4_2 = () => {
 
                       <div>
                         <p className="text-base text-white mb-2"><strong>Building supplier partnerships:</strong></p>
-                        <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+                        <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
                           <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li><strong>Preferred supplier agreements:</strong> Negotiate better terms through volume commitments</li>
                             <li><strong>Regular performance reviews:</strong> Assess delivery reliability, quality, and service</li>
@@ -706,7 +706,7 @@ const Module5Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Delivery Inspection Process</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Delivery Inspection Process</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -727,7 +727,7 @@ const Module5Section4_2 = () => {
                         <p className="text-base text-white mb-2"><strong>Critical inspection checkpoints:</strong></p>
                         <div className="grid md:grid-cols-2 gap-4">
                           <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                            <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Rejection Criteria</p>
+                            <p className="font-medium text-red-700 text-elec-yellow mb-2">Rejection Criteria</p>
                             <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                               <li>Physical damage to packaging or products</li>
                               <li>Incorrect specifications or part numbers</li>
@@ -762,8 +762,8 @@ const Module5Section4_2 = () => {
                         </div>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Professional Tip</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Professional Tip</p>
                         <p className="text-xs sm:text-sm text-white">
                           Never accept deliveries "subject to later inspection"—once signed, proving subsequent damage or discrepancies becomes extremely difficult and may void warranty claims.
                         </p>
@@ -843,7 +843,7 @@ const Module5Section4_2 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Storage Cost Impact</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Storage Cost Impact</p>
                         <p className="text-xs sm:text-sm text-white">
                           Poor storage can result in 5-15% material losses through theft, damage, and deterioration. Professional storage systems pay for themselves through loss prevention.
                         </p>
@@ -867,14 +867,14 @@ const Module5Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Critical Mistakes to Avoid</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Critical Mistakes to Avoid</p>
                     
                     <div className="space-y-4">
                       <div>
                         <p className="text-base text-white mb-2"><strong>Most common procurement errors:</strong></p>
                         <div className="space-y-3">
                           <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                            <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Specification Errors</p>
+                            <p className="font-medium text-red-700 text-elec-yellow mb-2">Specification Errors</p>
                             <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                               <li>Ordering incorrect cable sizes or core configurations</li>
                               <li>Wrong protective device ratings or types</li>
@@ -895,8 +895,8 @@ const Module5Section4_2 = () => {
                             </ul>
                           </div>
                           
-                          <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                            <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Quality Control Failures</p>
+                          <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                            <p className="font-medium text-blue-700 text-elec-yellow mb-2">Quality Control Failures</p>
                             <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                               <li>Inadequate delivery inspection procedures</li>
                               <li>Accepting deliveries without proper checking</li>
@@ -933,8 +933,8 @@ const Module5Section4_2 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Worked Examples</h2>
           
           <div className="space-y-6">
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-              <h3 className="font-semibold text-blue-700 dark:text-elec-yellow mb-3">Example 1: Office Building Electrical Installation</h3>
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+              <h3 className="font-semibold text-blue-700 text-elec-yellow mb-3">Example 1: Office Building Electrical Installation</h3>
               
               <div className="space-y-4">
                 <div>
@@ -1128,7 +1128,7 @@ const Module5Section4_2 = () => {
           
           <div className="space-y-4">
             <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-              <h3 className="font-semibold text-red-700 dark:text-elec-yellow mb-2">Case Study: Housing Project Storage Disaster</h3>
+              <h3 className="font-semibold text-red-700 text-elec-yellow mb-2">Case Study: Housing Project Storage Disaster</h3>
               <p className="text-white leading-relaxed mb-3">
                 A contractor on a 50-house development decided to order all electrical materials at the start of the project to secure bulk discounts. The £85,000 worth of materials was delivered to an unsecured compound with basic weather protection.
               </p>
@@ -1152,7 +1152,7 @@ const Module5Section4_2 = () => {
               </ul>
             </div>
             
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
               <p className="text-white leading-relaxed">
                 <strong>Lesson learned:</strong> The "savings" from bulk ordering were completely eliminated by losses and additional costs. Phased delivery with proper storage would have been cheaper and eliminated project delays.
               </p>
@@ -1196,8 +1196,8 @@ const Module5Section4_2 = () => {
             </p>
             
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <h4 className="font-semibold text-blue-700 dark:text-elec-yellow mb-2">Key Competencies Developed</h4>
+              <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                <h4 className="font-semibold text-blue-700 text-elec-yellow mb-2">Key Competencies Developed</h4>
                 <ul className="text-sm text-white list-disc ml-4 space-y-1">
                   <li>Strategic procurement planning and order preparation</li>
                   <li>Delivery scheduling and coordination with project phases</li>

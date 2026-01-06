@@ -108,7 +108,7 @@ const Level2Module6Section6_5 = () => {
             <div className="p-1.5 sm:p-2 rounded-lg bg-card">
               <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 6.5
             </Badge>
           </div>
@@ -148,7 +148,7 @@ const Level2Module6Section6_5 = () => {
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-card border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
@@ -207,11 +207,11 @@ const Level2Module6Section6_5 = () => {
           {/* 1. Why Recording Results Matters */}
           <section className="mb-4 sm:mb-6">
             <div className="space-y-4 sm:space-y-6">
-              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-elec-yellow bg-card">
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
-                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-2 sm:mb-3 text-sm sm:text-base">Why Recording Results Matters</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Why Recording Results Matters</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-foreground">
@@ -285,7 +285,7 @@ const Level2Module6Section6_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-3 text-base">Accurate Recording Procedures</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base">Accurate Recording Procedures</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-foreground">
@@ -322,7 +322,7 @@ const Level2Module6Section6_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3 text-base">Legal and Professional Implications</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3 text-base">Legal and Professional Implications</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-foreground">
@@ -399,71 +399,71 @@ const Level2Module6Section6_5 = () => {
         {/* Practical Guidance */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-background border-border/20">
           <div className="flex items-center gap-3 mb-4 sm:mb-6">
-            <div className="p-2 sm:p-3 rounded-lg bg-emerald-500/10">
-              <Target className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
+            <div className="p-2 sm:p-3 rounded-lg bg-elec-yellow/10">
+              <Target className="w-5 h-5 sm:w-6 sm:h-6 text-elec-yellow" />
             </div>
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Practical Guidance</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <FileText className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Pre-Testing Preparation</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Complete all header information including client details, installation description, and test parameters before beginning any testing work</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Error Correction Procedure</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Cross out errors with single neat line, write correct information, and initial with date. Never use correction fluid or erasers</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Recording Standards</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Use permanent ink for all test results and maintain neat, legible handwriting. Never use pencil for final documentation</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <Eye className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Environmental Conditions</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Record relevant environmental conditions (temperature, humidity) that might affect test results or interpretation</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <Target className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Actual Value Recording</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Record actual test readings with appropriate units, not just pass/fail indicators. This provides valuable trend data for future reference</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <Shield className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Authentication Requirements</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Sign, date, and retain all documentation according to professional requirements. Include tester qualifications and certification details</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <Settings className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Instrument Documentation</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Include all relevant instrument details: make, model, serial numbers, and current calibration information for traceability</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <Database className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <Database className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Backup and Storage</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Implement secure storage systems with appropriate backup procedures for indefinite retention and easy retrieval when required</p>
@@ -471,9 +471,9 @@ const Level2Module6Section6_5 = () => {
             </div>
           </div>
           
-          <div className="mt-4 sm:mt-6 p-3 sm:p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+          <div className="mt-4 sm:mt-6 p-3 sm:p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
             <div className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base mb-2">Professional Tip</p>
                 <p className="text-xs sm:text-sm text-muted-foreground">
@@ -550,7 +550,7 @@ const Level2Module6Section6_5 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-br from-primary/5 to-emerald-500/10 border border-primary/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-br from-primary/5 to-elec-yellow/10 border border-primary/20">
           <div className="flex items-center gap-3 mb-4 sm:mb-6">
             <div className="p-2 sm:p-3 rounded-lg bg-primary/10">
               <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
@@ -569,7 +569,7 @@ const Level2Module6Section6_5 = () => {
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-card border border-border/20">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Permanent Ink</p>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1">All test results must be recorded in permanent ink</p>
@@ -579,7 +579,7 @@ const Level2Module6Section6_5 = () => {
             
             <div className="space-y-3">
               <div className="flex items-start gap-3 p-3 rounded-lg bg-card border border-border/20">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Legal Evidence</p>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1">Documentation provides proof of compliance and professional competence</p>
@@ -587,7 +587,7 @@ const Level2Module6Section6_5 = () => {
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-card border border-border/20">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Retention Requirements</p>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1">Records must be retained indefinitely for legal protection</p>

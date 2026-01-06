@@ -236,7 +236,7 @@ const Module6Section5_4 = () => {
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
                   <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Minimum Values according to BS 7671</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Minimum Values according to BS 7671</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -245,7 +245,7 @@ const Module6Section5_4 = () => {
                       
                       <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
                         <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Critical Failure Thresholds:</h4>
-                        <ul className="text-sm space-y-1 text-red-700 dark:text-elec-yellow">
+                        <ul className="text-sm space-y-1 text-red-700 text-elec-yellow">
                           <li>• <strong>≤ 1 MΩ:</strong> Automatic failure - circuit must not be energised</li>
                           <li>• <strong>0.5 - 1 MΩ:</strong> Serious insulation breakdown requiring immediate investigation</li>
                           <li>• <strong>&lt; 0.5 MΩ:</strong> Dangerous condition - potential imminent failure</li>
@@ -313,7 +313,7 @@ const Module6Section5_4 = () => {
 
                       <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
                         <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Low Readings (Failure Conditions):</h4>
-                        <ul className="text-sm space-y-1 text-red-700 dark:text-elec-yellow">
+                        <ul className="text-sm space-y-1 text-red-700 text-elec-yellow">
                           <li>• <strong>0.8-1 MΩ:</strong> Insulation breakdown, investigate immediately</li>
                           <li>• <strong>0.3-0.8 MΩ:</strong> Significant deterioration, likely moisture/damage</li>
                           <li>• <strong>&lt; 0.3 MΩ:</strong> Dangerous condition, potential short circuit risk</li>
@@ -345,16 +345,16 @@ const Module6Section5_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base">Factors Affecting Results</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3 text-base">Factors Affecting Results</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
                         Multiple factors can significantly influence insulation resistance readings. Understanding these helps distinguish between genuine insulation faults and temporary conditions that might resolve naturally.
                       </p>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
                         <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Environmental Factors:</h4>
-                        <ul className="text-sm space-y-1 text-blue-700 dark:text-elec-yellow">
+                        <ul className="text-sm space-y-1 text-blue-700 text-elec-yellow">
                           <li>• <strong>Temperature:</strong> Higher temps reduce readings by ~2% per °C above 20°C</li>
                           <li>• <strong>Humidity:</strong> &gt;80% relative humidity can halve resistance values</li>
                           <li>• <strong>Moisture:</strong> Direct water contact can drop readings to &lt;0.1 MΩ</li>
@@ -364,7 +364,7 @@ const Module6Section5_4 = () => {
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-3">
                         <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">Cable Age and Condition:</h4>
-                        <ul className="text-sm space-y-1 text-purple-700 dark:text-elec-yellow">
+                        <ul className="text-sm space-y-1 text-purple-700 text-elec-yellow">
                           <li>• <strong>New cables (0-5 years):</strong> Typically 20-100 MΩ+</li>
                           <li>• <strong>Mature cables (5-15 years):</strong> Usually 5-20 MΩ in good condition</li>
                           <li>• <strong>Older cables (15-25 years):</strong> May show 2-8 MΩ if well maintained</li>
@@ -409,7 +409,7 @@ const Module6Section5_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Making Safety Decisions</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3 text-base">Making Safety Decisions</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -418,7 +418,7 @@ const Module6Section5_4 = () => {
 
                       <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
                         <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Immediate Action Required (Do NOT Energise):</h4>
-                        <ul className="text-sm space-y-1 text-red-700 dark:text-elec-yellow">
+                        <ul className="text-sm space-y-1 text-red-700 text-elec-yellow">
                           <li>• Any reading ≤ 1 MΩ - automatic failure requiring fault investigation</li>
                           <li>• Significant reading variation between repeat tests</li>
                           <li>• Evidence of physical damage or moisture ingress</li>
@@ -462,9 +462,9 @@ const Module6Section5_4 = () => {
                         </div>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
                         <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Documentation Requirements:</h4>
-                        <ul className="text-sm space-y-1 text-blue-700 dark:text-elec-yellow">
+                        <ul className="text-sm space-y-1 text-blue-700 text-elec-yellow">
                           <li>• Always record actual readings, not just "PASS/FAIL"</li>
                           <li>• Note environmental conditions during testing</li>
                           <li>• Document any remedial actions taken</li>
@@ -581,7 +581,7 @@ const Module6Section5_4 = () => {
           <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <div className="p-3 sm:p-4 rounded-lg border border-elec-yellow/20">
-              <h3 className="font-medium text-blue-700 dark:text-elec-yellow mb-2 text-sm">Minimum Values</h3>
+              <h3 className="font-medium text-blue-700 text-elec-yellow mb-2 text-sm">Minimum Values</h3>
               <p className="text-xs text-white">1 MΩ minimum for LV circuits per BS 7671, higher values expected</p>
             </div>
             <div className="p-3 sm:p-4 rounded-lg border border-green-500/20">
@@ -589,11 +589,11 @@ const Module6Section5_4 = () => {
               <p className="text-xs text-white">High readings = good insulation, low readings = investigate</p>
             </div>
             <div className="p-3 sm:p-4 rounded-lg border border-orange-500/20">
-              <h3 className="font-medium text-orange-700 dark:text-elec-yellow mb-2 text-sm">Factors</h3>
+              <h3 className="font-medium text-orange-700 text-elec-yellow mb-2 text-sm">Factors</h3>
               <p className="text-xs text-white">Environment, moisture, temperature affect readings</p>
             </div>
             <div className="p-3 sm:p-4 rounded-lg border border-red-500/20">
-              <h3 className="font-medium text-red-700 dark:text-elec-yellow mb-2 text-sm">Safety Decisions</h3>
+              <h3 className="font-medium text-red-700 text-elec-yellow mb-2 text-sm">Safety Decisions</h3>
               <p className="text-xs text-white">When in doubt, investigate — never compromise safety</p>
             </div>
           </div>

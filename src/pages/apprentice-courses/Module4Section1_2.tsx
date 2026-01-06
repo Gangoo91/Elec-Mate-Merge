@@ -266,7 +266,7 @@ const Module4Section1_2 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{factor.factor}</p>
+                      <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">{factor.factor}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">{factor.description}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Why it matters:</strong> {factor.importance} - Essential for professional installation standards.
@@ -339,7 +339,7 @@ const Module4Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Outside Safe Zones</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Outside Safe Zones</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Cables outside safe zones need mechanical protection or earthed metallic covering.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Protection methods:</strong> Steel conduit, armoured cable, or mechanical protection at 50mm depth minimum. 
@@ -369,7 +369,7 @@ const Module4Section1_2 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{cable.cableType}</p>
+                      <p className="font-semibold text-purple-600 text-elec-yellow mb-1">{cable.cableType}</p>
                       <div className="grid md:grid-cols-2 gap-4 mb-2">
                         <div>
                           <p className="text-xs text-white/70">Vertical Spacing</p>
@@ -462,7 +462,7 @@ const Module4Section1_2 = () => {
 
             <div className="space-y-3">
               <div className="rounded-lg p-4 border-l-4 border-l-red-500 ">
-                <p className="font-semibold text-red-600 dark:text-elec-yellow mb-2">Mechanical Hazards</p>
+                <p className="font-semibold text-red-600 text-elec-yellow mb-2">Mechanical Hazards</p>
                 <div className="text-xs sm:text-sm text-white space-y-1">
                   <p>• <strong>Sharp edges:</strong> Building steelwork, metal corners, rough surfaces</p>
                   <p>• <strong>Moving parts:</strong> Door hinges, sliding mechanisms, lifting equipment</p>
@@ -472,7 +472,7 @@ const Module4Section1_2 = () => {
               </div>
 
               <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow ">
-                <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2">Environmental Factors</p>
+                <p className="font-semibold text-elec-yellow text-elec-yellow mb-2">Environmental Factors</p>
                 <div className="text-xs sm:text-sm text-white space-y-1">
                   <p>• <strong>Temperature extremes:</strong> Attics, plant rooms, external locations</p>
                   <p>• <strong>UV exposure:</strong> Use UV-resistant cables for outdoor installations</p>
@@ -495,7 +495,7 @@ const Module4Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Route Planning and Marking</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Route Planning and Marking</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Use professional tools for accurate, straight cable routes.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Tools available:</strong> Chalk lines for long runs, laser levels for precise horizontal/vertical alignment, 
@@ -509,7 +509,7 @@ const Module4Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Fixing Position Identification</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Fixing Position Identification</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Mark all fixing points before drilling to ensure correct spacing.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Method:</strong> Measure and mark fixing centres along the route using the correct spacing for cable type. 
@@ -523,7 +523,7 @@ const Module4Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Measurement Verification</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Measurement Verification</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Double-check all measurements against drawings and specifications.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Process:</strong> Compare marked route with installation drawings, verify dimensions, 
@@ -537,7 +537,7 @@ const Module4Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Pre-Installation Safety Checks</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Pre-Installation Safety Checks</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Essential safety checks before any drilling or fixing work begins.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Critical steps:</strong> Use cable/pipe detector to locate hidden services, check wall construction type, 
@@ -551,7 +551,7 @@ const Module4Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Wall Construction Assessment</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Wall Construction Assessment</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Identify wall type to select appropriate fixing methods and tools.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Assessment methods:</strong> Visual inspection, test drilling, checking building drawings. 
@@ -565,7 +565,7 @@ const Module4Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Coordination with Other Trades</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Coordination with Other Trades</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Confirm route doesn't conflict with other contractors' work.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Coordination areas:</strong> Plumbing routes, HVAC ducting, structural modifications, 

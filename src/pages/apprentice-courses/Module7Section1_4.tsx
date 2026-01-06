@@ -201,11 +201,11 @@ const Module7Section1_4 = () => {
             Not all electrical faults are the same—they arise from different causes and require different approaches for prevention and correction. Understanding the four main categories of electrical faults helps electricians identify root causes, assign responsibility, and implement effective prevention strategies. This classification system is essential for proper fault diagnosis and long-term system reliability.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   Proper fault categorisation helps determine liability, guides maintenance strategies, and prevents recurrence. It's the difference between reactive repairs and proactive system management.
                 </p>
@@ -218,7 +218,7 @@ const Module7Section1_4 = () => {
               <strong>Professional Benefit:</strong> Understanding fault categories allows electricians to provide better advice to clients, implement targeted prevention measures, and maintain safer electrical systems.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> BS 7671 emphasises the importance of understanding fault origins to ensure appropriate protective measures and maintenance schedules are implemented.
               </p>
@@ -260,7 +260,7 @@ const Module7Section1_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Design Fault Characteristics</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Design Fault Characteristics</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -331,7 +331,7 @@ const Module7Section1_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Installation Fault Types</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Installation Fault Types</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -441,7 +441,7 @@ const Module7Section1_4 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Key Understanding</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Key Understanding</p>
                         <p className="text-xs sm:text-sm text-white">
                           Deterioration is inevitable but manageable. Regular inspection and maintenance can identify degradation before it becomes dangerous or causes system failure.
                         </p>
@@ -474,7 +474,7 @@ const Module7Section1_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">External Damage Sources</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">External Damage Sources</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -507,7 +507,7 @@ const Module7Section1_4 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Critical Point</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Critical Point</p>
                         <p className="text-xs sm:text-sm text-white">
                           While external damage may be unpredictable, proper installation practices and protective measures can significantly reduce the risk and severity of such incidents.
                         </p>

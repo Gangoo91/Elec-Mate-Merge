@@ -110,7 +110,7 @@ const Level2Module6Section6_1 = () => {
             <div className="p-1.5 sm:p-2 rounded-lg bg-card">
               <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 6.1
             </Badge>
           </div>
@@ -150,7 +150,7 @@ const Level2Module6Section6_1 = () => {
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-card border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
@@ -209,11 +209,11 @@ const Level2Module6Section6_1 = () => {
           {/* 1. Why Recording Results Matters */}
           <section className="mb-4 sm:mb-6">
             <div className="space-y-4 sm:space-y-6">
-              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-elec-yellow bg-card">
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
-                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-2 sm:mb-3 text-sm sm:text-base">Why Recording Results Matters</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Why Recording Results Matters</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-foreground">
@@ -290,7 +290,7 @@ const Level2Module6Section6_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-3 text-base">Compliance and Certification</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base">Compliance and Certification</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-foreground">
@@ -330,7 +330,7 @@ const Level2Module6Section6_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3 text-base">Consequences of Poor Record-Keeping</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Consequences of Poor Record-Keeping</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-foreground">
@@ -477,7 +477,7 @@ const Level2Module6Section6_1 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-br from-primary/5 to-emerald-500/10 border border-primary/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-br from-primary/5 to-elec-yellow/10 border border-primary/20">
           <div className="flex items-center gap-3 mb-4 sm:mb-6">
             <div className="p-2 sm:p-3 rounded-lg bg-primary/10">
               <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
@@ -496,7 +496,7 @@ const Level2Module6Section6_1 = () => {
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-card border border-border/20">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Complete Documentation</p>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1">Date, time, readings, equipment, tester details required</p>
@@ -506,7 +506,7 @@ const Level2Module6Section6_1 = () => {
             
             <div className="space-y-3">
               <div className="flex items-start gap-3 p-3 rounded-lg bg-card border border-border/20">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Serious Consequences</p>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1">Poor records risk prosecution, liability claims, lost registration</p>
@@ -514,7 +514,7 @@ const Level2Module6Section6_1 = () => {
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-card border border-border/20">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Professional Protection</p>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1">Proper records protect career, reputation, and finances</p>

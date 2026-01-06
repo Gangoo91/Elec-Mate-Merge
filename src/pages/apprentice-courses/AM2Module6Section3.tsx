@@ -147,7 +147,7 @@ const AM2Module6Section3 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <BookOpen className="w-4 h-4" />
             Module 6 – Section 3
           </div>
@@ -166,15 +166,15 @@ const AM2Module6Section3 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
                   CRITICAL: Time Management is Everything
                 </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
                   Many candidates fail the knowledge test not due to lack of knowledge, but poor time management. Getting stuck on difficult questions and leaving others blank is a guaranteed route to failure.
                 </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
                   You must attempt every question. There's no penalty for guessing, but blank answers guarantee lost marks.
                 </p>
               </div>
@@ -183,9 +183,9 @@ const AM2Module6Section3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -194,23 +194,23 @@ const AM2Module6Section3 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Plan how to use the 90 minutes effectively
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply strategies for handling tricky or time-consuming questions
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Keep track of progress without panicking
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Ensure every question is attempted, with nothing left blank
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Demonstrate exam discipline under assessment conditions
               </li>
             </ul>
@@ -220,7 +220,7 @@ const AM2Module6Section3 = () => {
         {/* How to Pace Yourself */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               1. How to Pace Yourself
             </h2>
@@ -232,7 +232,7 @@ const AM2Module6Section3 = () => {
                 <li>• <strong>Aim to finish with 10 minutes spare for review</strong></li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Detailed Pacing Strategy:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Detailed Pacing Strategy:</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 bg-background border border-border rounded-lg">
                   <h4 className="font-semibold text-foreground mb-2">Time Allocation Breakdown:</h4>
@@ -278,7 +278,7 @@ const AM2Module6Section3 = () => {
         {/* Strategies for Tricky Questions */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Brain className="w-5 h-5" />
               2. Strategies for Tricky Questions
             </h2>
@@ -290,7 +290,7 @@ const AM2Module6Section3 = () => {
                 <li>• <strong>Don't overthink.</strong> Usually the most straightforward answer is correct</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Advanced Question Handling:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Advanced Question Handling:</h3>
               <div className="space-y-4">
                 <div className="p-4 bg-background border border-border rounded-lg">
                   <h4 className="font-semibold text-foreground mb-2">The FLAGGING System:</h4>
@@ -337,7 +337,7 @@ const AM2Module6Section3 = () => {
         {/* Staying Calm Under Pressure */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               3. Staying Calm Under Pressure
             </h2>
@@ -349,7 +349,7 @@ const AM2Module6Section3 = () => {
                 <li>• <strong>Think of it as 3 small 30-minute tests</strong> rather than one long one</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Stress Management Techniques:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Stress Management Techniques:</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 bg-background border border-border rounded-lg">
                   <h4 className="font-semibold text-foreground mb-2">Physical Calm Techniques:</h4>
@@ -371,9 +371,9 @@ const AM2Module6Section3 = () => {
                 </div>
               </div>
 
-              <div className="mt-4 p-4 bg-emerald-50 dark:bg-emerald-950/20 rounded-lg border border-blue-200 dark:border-blue-800/30">
+              <div className="mt-4 p-4 bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded-lg border border-blue-200 dark:border-blue-800/30">
                 <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">The "Chunk" Method Explained:</h4>
-                <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-blue-700 dark:text-emerald-400">
+                <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-blue-700 dark:text-elec-yellow">
                   <div>
                     <p className="font-medium mb-1">Chunk 1 (Questions 1-13):</p>
                     <p>"First third done - building momentum"</p>
@@ -406,7 +406,7 @@ const AM2Module6Section3 = () => {
         {/* Assessor Expectations */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               4. Assessor Expectations
             </h2>
@@ -421,7 +421,7 @@ const AM2Module6Section3 = () => {
                 <li>• <strong>Manage time</strong> without panicking or skipping whole sections</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">What Assessors Look For:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">What Assessors Look For:</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 bg-background border border-border rounded-lg">
                   <h4 className="font-semibold text-foreground mb-2">✅ Good Exam Discipline:</h4>
@@ -447,7 +447,7 @@ const AM2Module6Section3 = () => {
 
               <div className="mt-4 p-4 bg-purple-50 dark:bg-purple-950/20 rounded-lg border border-purple-200 dark:border-purple-800/30">
                 <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">Professional Standards Expected:</h4>
-                <div className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 space-y-2">
+                <div className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow space-y-2">
                   <p>Assessors expect the same professionalism you'd show on a job site:</p>
                   <ul className="space-y-1 ml-4">
                     <li>• <strong>Systematic approach:</strong> Like conducting a proper inspection</li>
@@ -473,7 +473,7 @@ const AM2Module6Section3 = () => {
         <Card className="bg-blue-100 dark:bg-blue-900/40 border-blue-300 dark:border-blue-700/50 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-blue-700 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <Lightbulb className="w-5 h-5 text-blue-700 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 text-sm sm:text-base">
                   Practical Guidance
@@ -493,7 +493,7 @@ const AM2Module6Section3 = () => {
         {/* Real-World Examples */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Search className="w-5 h-5" />
               Real-World Examples
             </h2>
@@ -519,32 +519,32 @@ const AM2Module6Section3 = () => {
         {/* FAQs */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Frequently Asked Questions
             </h2>
             
             <div className="space-y-4 text-sm sm:text-base">
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-semibold text-foreground mb-1">Q1: Should I guess if I don't know the answer?</p>
                 <p className="text-muted-foreground">A: Yes — there's no negative marking.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-semibold text-foreground mb-1">Q2: How many questions should I aim to finish in the first 30 minutes?</p>
                 <p className="text-muted-foreground">A: Around 10–12.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-semibold text-foreground mb-1">Q3: What happens if I run out of time?</p>
                 <p className="text-muted-foreground">A: Any unanswered questions are marked wrong.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-semibold text-foreground mb-1">Q4: Can I change answers once selected?</p>
                 <p className="text-muted-foreground">A: Yes — until you submit at the end.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-semibold text-foreground mb-1">Q5: Should I spend equal time on every question?</p>
                 <p className="text-muted-foreground">A: No — answer easy ones quickly, spend more time on hard ones later.</p>
               </div>
@@ -579,7 +579,7 @@ const AM2Module6Section3 = () => {
         {/* Quiz */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Test Your Understanding
             </h2>
             <Quiz questions={quizQuestions} />

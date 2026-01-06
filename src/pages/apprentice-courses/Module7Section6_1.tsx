@@ -236,7 +236,7 @@ const Module7Section6_1 = () => {
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base">Legal Requirements and Standards</h3>
+                  <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-4 text-base">Legal Requirements and Standards</h3>
                   
                   <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>BS 7671 requires that every electrical installation be provided with appropriate documentation. This includes test results, inspection schedules, and certificates that demonstrate compliance with regulations. These records serve as legal evidence that proper testing procedures were followed and installations meet safety standards.</p>
@@ -326,7 +326,7 @@ const Module7Section6_1 = () => {
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-4 text-base">Common Mistakes and Quality Control</h3>
+                  <h3 className="font-semibold text-red-600 text-elec-yellow mb-4 text-base">Common Mistakes and Quality Control</h3>
                   
                   <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>Vague or incomplete descriptions are a major problem. Writing "socket not working" provides little useful information. Instead, record specific details: "Socket outlet in bedroom 2: no output voltage measured, loose neutral connection found at socket terminals, connection remade and tested satisfactory."</p>
@@ -357,7 +357,7 @@ const Module7Section6_1 = () => {
           
           <div className="space-y-6">
             <div className="border border-border/30 rounded-lg p-4 bg-muted/30">
-              <h4 className="font-semibold text-red-600 dark:text-elec-yellow mb-3">❌ Poor Practice Example</h4>
+              <h4 className="font-semibold text-red-600 text-elec-yellow mb-3">❌ Poor Practice Example</h4>
               <p className="text-xs sm:text-sm text-white mb-4">
                 An electrician completing periodic inspection of office building wrote "All circuits tested - satisfactory" without recording specific test values or circuit details. Three months later, a socket outlet failed causing a small fire. When questioned, the electrician could not prove which circuits had been tested or what results were obtained. The inadequate records provided no defence against negligence claims.
               </p>

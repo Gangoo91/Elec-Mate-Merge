@@ -269,7 +269,7 @@ export default function Module5Section7_5() {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Essential Documentation Categories</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Essential Documentation Categories</p>
                     <p className="text-base text-white mb-2"><strong>Drawings and as-builts:</strong> Visual records of electrical installations.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Design drawings showing intended installation layouts and specifications</li>
@@ -446,7 +446,7 @@ export default function Module5Section7_5() {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Serious Risks from Poor Documentation Management</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Serious Risks from Poor Documentation Management</p>
                     <p className="text-base text-white mb-2"><strong>Operational failures and mistakes:</strong> Work quality and accuracy impacts.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Lost drawings lead to mistakes, incorrect installations, and costly rework</li>

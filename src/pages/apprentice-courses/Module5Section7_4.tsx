@@ -269,7 +269,7 @@ export default function Module5Section7_4() {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Definition and Purpose of As-Built Drawings</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Definition and Purpose of As-Built Drawings</p>
                     <p className="text-base text-white mb-2"><strong>Final documentation:</strong> The definitive record of the completed installation.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Updated versions of the original design drawings and specifications</li>
@@ -439,7 +439,7 @@ export default function Module5Section7_4() {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Serious Risks from Inaccurate Documentation</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Serious Risks from Inaccurate Documentation</p>
                     <p className="text-base text-white mb-2"><strong>Safety hazards:</strong> Increased risk of accidents and incidents.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Wrong isolation procedures due to incorrect circuit information</li>

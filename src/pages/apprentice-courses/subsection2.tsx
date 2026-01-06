@@ -184,7 +184,7 @@ const Section1_2 = () => {
             <div className="p-2 rounded-lg bg-card">
               <Shield className="w-6 h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 1.2
             </Badge>
           </div>
@@ -200,16 +200,16 @@ const Section1_2 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>EAWR is UK law requiring all electrical systems and work to prevent danger.</li>
                 <li>Covers system construction, safe isolation, live working, and competence requirements.</li>
                 <li>Applies to all electrical work regardless of who performs it.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Safe isolation procedures, competence checks, danger prevention measures.</li>
                 <li><strong>Use:</strong> Proper isolation techniques, live work justification, supervision protocols.</li>
@@ -257,11 +257,11 @@ const Section1_2 = () => {
         {/* Content Sections */}
         {/* Section 1: EAWR Framework */}
         <div className="space-y-6 mb-8">
-          <div className="rounded-lg p-6 border-l-4 border-l-emerald-500 bg-card">
+          <div className="rounded-lg p-6 border-l-4 border-l-elec-yellow bg-card">
             <div className="flex items-start gap-4">
-              <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+              <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-emerald-400 dark:text-emerald-400 mb-3">EAWR Legal Framework and Principles</h3>
+                <h3 className="text-lg font-semibold text-elec-yellow dark:text-elec-yellow mb-3">EAWR Legal Framework and Principles</h3>
                 
                 <div className="space-y-4">
                   <div>
@@ -320,7 +320,7 @@ const Section1_2 = () => {
 
             <div className="grid gap-4">
               <div className="bg-muted/50 p-4 rounded-lg">
-                <h4 className="font-medium text-sm text-emerald-400 mb-2">Regulation 4 - Construction & Maintenance</h4>
+                <h4 className="font-medium text-sm text-elec-yellow mb-2">Regulation 4 - Construction & Maintenance</h4>
                 <p className="text-sm text-muted-foreground">Systems must be constructed and maintained to prevent danger. This covers design, installation, and ongoing maintenance.</p>
               </div>
 
@@ -503,7 +503,7 @@ const Section1_2 = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-emerald-50 border border-blue-200 p-4 rounded-lg">
+              <div className="bg-elec-yellow/5 border border-blue-200 p-4 rounded-lg">
                 <h4 className="font-medium text-blue-800 mb-2 text-sm">As an Apprentice:</h4>
                 <ul className="space-y-1 text-sm text-blue-700">
                   <li>• Work under supervision when required</li>
@@ -564,7 +564,7 @@ const Section1_2 = () => {
               </ul>
             </div>
 
-            <div className="bg-emerald-50 border border-blue-200 p-4 rounded-lg">
+            <div className="bg-elec-yellow/5 border border-blue-200 p-4 rounded-lg">
               <h4 className="font-medium text-blue-800 mb-2 text-sm">Practical Application:</h4>
               <p className="text-sm text-blue-700 mb-2">
                 When designing or installing electrical systems, following BS 7671 provides a recognised method of meeting EAWR's requirement to prevent danger. However, EAWR is the legal requirement - BS 7671 is the technical means.

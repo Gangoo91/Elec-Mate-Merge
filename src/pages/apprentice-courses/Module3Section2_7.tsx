@@ -397,8 +397,8 @@ const Module3Section2_7: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-                <p className="font-medium text-emerald-200 mb-2">Alignment and spacing standards</p>
-                <ul className="list-disc pl-4 space-y-1 text-emerald-200">
+                <p className="font-medium text-elec-yellow mb-2">Alignment and spacing standards</p>
+                <ul className="list-disc pl-4 space-y-1 text-elec-yellow">
                   <li><strong>Straight runs:</strong> Use string lines and levels for accurate alignment</li>
                   <li><strong>Consistent spacing:</strong> Follow manufacturer and BS 7671 recommendations</li>
                   <li><strong>Smooth bends:</strong> Maintain minimum bend radius to prevent cable damage</li>

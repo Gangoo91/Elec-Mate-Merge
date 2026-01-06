@@ -157,7 +157,7 @@ const AM2Module3Section6 = () => {
       <div className="max-w-4xl mx-auto px-6 py-12 space-y-8">
         {/* Title Section */}
         <div className="mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Clock className="w-4 h-4" />
             Module 3 – Section 6
           </div>
@@ -173,15 +173,15 @@ const AM2Module3Section6 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-8">
           <div className="p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
                   CRITICAL: Time Management Determines AM2 Success
                 </h3>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
                   The AM2 composite installation is long (around 8.5 hours) and intense. Time management is critical: you need to pace yourself so you finish all circuits to specification, without rushing and making safety or neatness errors. Many candidates fail not from lack of skill but from incomplete work.
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400 font-medium">
+                <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
                   Assessors observe whether you can plan, organise, and complete a job on time, just as you'd be expected to do on-site. Rushing causes failures.
                 </p>
               </div>
@@ -190,9 +190,9 @@ const AM2Module3Section6 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -201,27 +201,27 @@ const AM2Module3Section6 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Break down the installation into clear stages with realistic time targets
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Prioritise accuracy and safety under time pressure without compromising standards
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Avoid rushing and cutting corners that cause marks to be lost or failures
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply practical strategies to stay on schedule during AM2 assessment
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Recognise what assessors expect regarding time management and pacing
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Develop professional time management skills for real-world electrical work
               </li>
             </ul>
@@ -229,33 +229,33 @@ const AM2Module3Section6 = () => {
         </Card>
 
         {/* Why Time Management Matters */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               1. Why Time Management Matters in AM2
             </h2>
             
             <div className="space-y-4">
               <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">Critical Impact on Assessment Outcome</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">Critical Impact on Assessment Outcome</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">•</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
                     <div>
                       <strong>Installation section heavily weighted in marking</strong>
                       <p className="text-xs mt-1">The practical installation carries the highest mark allocation - incomplete work severely impacts overall score</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">•</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
                     <div>
                       <strong>Many candidates fail from incomplete work, not lack of skill</strong>
                       <p className="text-xs mt-1">Technical competence is often present, but poor time management prevents completion</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">•</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
                     <div>
                       <strong>Rushing causes multiple failure points</strong>
                       <p className="text-xs mt-1">Untidy workmanship, missed terminations, unsafe energisation - all lose marks or cause failure</p>
@@ -266,7 +266,7 @@ const AM2Module3Section6 = () => {
 
               <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-2">Real-World Professional Expectations</h4>
-                <ul className="space-y-1 text-sm text-orange-700 dark:text-emerald-400">
+                <ul className="space-y-1 text-sm text-orange-700 dark:text-elec-yellow">
                   <li>• <strong>Job completion within deadlines</strong> - Essential professional skill</li>
                   <li>• <strong>Quality maintained under pressure</strong> - Client expectations don't change</li>
                   <li>• <strong>Safety never compromised for speed</strong> - Legal and ethical requirements</li>
@@ -286,21 +286,21 @@ const AM2Module3Section6 = () => {
         />
 
         {/* Typical Time Allocation */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               2. Typical Time Allocation Guidance
             </h2>
             
             <div className="space-y-4">
               <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">Recommended Phase Breakdown (8.5 hour total)</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">Recommended Phase Breakdown (8.5 hour total)</h4>
                 <div className="space-y-3">
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 rounded p-3">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded p-3">
                     <div className="flex justify-between items-center mb-2">
                       <h5 className="font-medium text-foreground">Phase 1: Marking Out & Containment</h5>
-                      <span className="text-sm font-medium text-emerald-400 dark:text-emerald-400">~2 hours</span>
+                      <span className="text-sm font-medium text-elec-yellow dark:text-elec-yellow">~2 hours</span>
                     </div>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• Reading specifications and drawings thoroughly</li>
@@ -326,7 +326,7 @@ const AM2Module3Section6 = () => {
                   <div className="bg-yellow-50 dark:bg-yellow-950/20 rounded p-3">
                     <div className="flex justify-between items-center mb-2">
                       <h5 className="font-medium text-foreground">Phase 3: Terminations & Connections</h5>
-                      <span className="text-sm font-medium text-emerald-400 dark:text-emerald-400">~2.5 hours</span>
+                      <span className="text-sm font-medium text-elec-yellow dark:text-elec-yellow">~2.5 hours</span>
                     </div>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• All accessory terminations and connections</li>
@@ -339,7 +339,7 @@ const AM2Module3Section6 = () => {
                   <div className="bg-purple-50 dark:bg-purple-950/20 rounded p-3">
                     <div className="flex justify-between items-center mb-2">
                       <h5 className="font-medium text-foreground">Phase 4: Testing & Documentation</h5>
-                      <span className="text-sm font-medium text-purple-600 dark:text-emerald-400">~2 hours</span>
+                      <span className="text-sm font-medium text-purple-600 dark:text-elec-yellow">~2 hours</span>
                     </div>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• Complete electrical testing sequence</li>
@@ -351,8 +351,8 @@ const AM2Module3Section6 = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-emerald-500/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">Important Time Management Notes</h4>
+              <div className="bg-card border border-elec-yellow/20 rounded-lg p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Important Time Management Notes</h4>
                 <ul className="space-y-1 text-sm text-muted-foreground">
                   <li>• Times vary between candidates - use as guidance only</li>
                   <li>• Must pace yourself to cover all essential tasks</li>
@@ -366,47 +366,47 @@ const AM2Module3Section6 = () => {
         </Card>
 
         {/* Common Time-Related Mistakes */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" />
               3. Common Time-Related Mistakes
             </h2>
             
             <div className="space-y-4">
               <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">Critical Time Management Errors</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">Critical Time Management Errors</h4>
                 <ol className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[30px]">1.</span>
+                    <span className="font-medium text-elec-yellow min-w-[30px]">1.</span>
                     <div>
                       <strong>Perfectionism on containment details</strong>
                       <p className="text-xs mt-1">Spending too long making perfect bends in conduit/trunking, then running out of time for critical terminations</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[30px]">2.</span>
+                    <span className="font-medium text-elec-yellow min-w-[30px]">2.</span>
                     <div>
                       <strong>End-phase rushing syndrome</strong>
                       <p className="text-xs mt-1">Rushing final stages leads to untidy DB wiring, missed CPC sleeving, exposed copper - causing failures</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[30px]">3.</span>
+                    <span className="font-medium text-elec-yellow min-w-[30px]">3.</span>
                     <div>
                       <strong>Delayed documentation approach</strong>
                       <p className="text-xs mt-1">Not recording test results during installation, leading to rushed and incomplete paperwork</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[30px]">4.</span>
+                    <span className="font-medium text-elec-yellow min-w-[30px]">4.</span>
                     <div>
                       <strong>Single-problem fixation</strong>
                       <p className="text-xs mt-1">Over-focusing on one tricky bend or fault instead of moving on and maintaining overall progress</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[30px]">5.</span>
+                    <span className="font-medium text-elec-yellow min-w-[30px]">5.</span>
                     <div>
                       <strong>No milestone monitoring</strong>
                       <p className="text-xs mt-1">Working without time checkpoints, only realising time pressure when it's too late to recover</p>
@@ -417,7 +417,7 @@ const AM2Module3Section6 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">Real Assessment Consequences</h4>
-                <ul className="space-y-2 text-sm text-red-700 dark:text-emerald-400">
+                <ul className="space-y-2 text-sm text-red-700 dark:text-elec-yellow">
                   <li><strong>Incomplete circuits:</strong> Automatic mark loss for unfinished work, often below pass threshold</li>
                   <li><strong>Rushed terminations:</strong> Safety failures from exposed copper or loose connections</li>
                   <li><strong>Poor documentation:</strong> Incomplete test sheets fail the paperwork section entirely</li>
@@ -429,40 +429,40 @@ const AM2Module3Section6 = () => {
         </Card>
 
         {/* Assessor Expectations */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
               4. Assessor Expectations on Time Management
             </h2>
             
             <div className="space-y-4">
               <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">Professional Working Standards Expected</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">Professional Working Standards Expected</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">•</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
                     <div>
                       <strong>Steady, methodical work pace</strong>
                       <p className="text-xs mt-1">Assessors expect consistent professional pace, not rushed panic or excessive slowness</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">•</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
                     <div>
                       <strong>Understanding of nervous impact</strong>
                       <p className="text-xs mt-1">Assessors know nerves slow candidates down, but major incomplete sections still lose marks</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">•</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
                     <div>
                       <strong>Completion within timeframe</strong>
                       <p className="text-xs mt-1">Time runs out = assessment stops. Only completed work can be marked and credited</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">•</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
                     <div>
                       <strong>Safety priority maintained</strong>
                       <p className="text-xs mt-1">No compromise on safety standards acceptable, regardless of time pressure</p>
@@ -493,33 +493,33 @@ const AM2Module3Section6 = () => {
         />
 
         {/* Practical Strategies */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
               5. Practical Strategies for Time Management
             </h2>
             
             <div className="space-y-4">
               <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">Pre-Installation Planning Phase</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">Pre-Installation Planning Phase</h4>
                 <ol className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">1.</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                     <div>
                       <strong>Detailed specification review (15-20 minutes)</strong>
                       <p className="text-xs mt-1">Read specifications thoroughly, mark key requirements, identify potential challenges before starting</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">2.</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
                     <div>
                       <strong>Position marking and layout planning</strong>
                       <p className="text-xs mt-1">Mark all accessory positions accurately, plan cable routes, visualise installation sequence</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">3.</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
                     <div>
                       <strong>Work sequence optimisation</strong>
                       <p className="text-xs mt-1">Plan logical progression through phases, identify dependencies, prepare for efficient workflow</p>
@@ -529,38 +529,38 @@ const AM2Module3Section6 = () => {
               </div>
 
               <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">During Installation Strategies</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">During Installation Strategies</h4>
                 <ol className="space-y-2 text-sm text-muted-foreground" start={4}>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">4.</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
                     <div>
                       <strong>Milestone-based progress monitoring</strong>
                       <p className="text-xs mt-1">Set specific time targets (containment complete by 11:00, cables pulled by lunch, terminations by 3:00)</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">5.</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
                     <div>
                       <strong>Professional standard focus</strong>
                       <p className="text-xs mt-1">Work to consistent professional standard across all areas rather than seeking perfection in one area</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">6.</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
                     <div>
                       <strong>Continuous documentation approach</strong>
                       <p className="text-xs mt-1">Record test results and complete labels circuit by circuit, not all at the end</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">7.</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
                     <div>
                       <strong>Quality verification checkpoints</strong>
                       <p className="text-xs mt-1">30-second recheck saves 30-minute rework - verify before moving to next phase</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-medium text-emerald-400 min-w-[20px]">8.</span>
+                    <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
                     <div>
                       <strong>Stress management techniques</strong>
                       <p className="text-xs mt-1">Stay calm under pressure - nervous candidates rush and make mistakes, breathe and work methodically</p>
@@ -591,39 +591,39 @@ const AM2Module3Section6 = () => {
         />
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Square className="w-5 h-5" />
               6. Real-World Examples and Case Studies
             </h2>
             
             <div className="space-y-4">
               <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">AM2 Assessment Case Studies</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">AM2 Assessment Case Studies</h4>
                 <div className="space-y-3">
                   <div className="bg-red-50 dark:bg-red-950/20 rounded p-3">
                     <h5 className="font-medium text-red-800 dark:text-red-200 mb-2">Failure Example 1: Perfectionist Approach</h5>
-                    <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                    <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                       <strong>Scenario:</strong> Candidate spent 90 minutes perfecting a conduit bend, pursuing absolute perfection.
                     </p>
-                    <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                    <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                       <strong>Consequence:</strong> Ran out of time, left cooker circuit completely un-terminated.
                     </p>
-                    <p className="text-sm text-red-700 dark:text-emerald-400">
+                    <p className="text-sm text-red-700 dark:text-elec-yellow">
                       <strong>Result:</strong> Failed section - incomplete critical circuit despite perfect containment.
                     </p>
                   </div>
                   
                   <div className="bg-red-50 dark:bg-red-950/20 rounded p-3">
                     <h5 className="font-medium text-red-800 dark:text-red-200 mb-2">Failure Example 2: Documentation Delay</h5>
-                    <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                    <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                       <strong>Scenario:</strong> Candidate completed installation but left only 5 minutes for paperwork.
                     </p>
-                    <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                    <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                       <strong>Consequence:</strong> Test sheets rushed, incomplete, several results missing.
                     </p>
-                    <p className="text-sm text-red-700 dark:text-emerald-400">
+                    <p className="text-sm text-red-700 dark:text-elec-yellow">
                       <strong>Result:</strong> Failed paperwork section despite good practical work.
                     </p>
                   </div>
@@ -644,16 +644,16 @@ const AM2Module3Section6 = () => {
               </div>
 
               <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">Real-World Professional Parallel</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">Real-World Professional Parallel</h4>
                 <div className="bg-orange-50 dark:bg-orange-950/20 rounded p-3">
                   <h5 className="font-medium text-orange-800 dark:text-orange-200 mb-2">Industry Example: Contract Deadline Management</h5>
-                  <p className="text-sm text-orange-700 dark:text-emerald-400 mb-2">
+                  <p className="text-sm text-orange-700 dark:text-elec-yellow mb-2">
                     A contractor missed a crucial project deadline because they spent excessive time reworking one cable run to absolute perfection.
                   </p>
-                  <p className="text-sm text-orange-700 dark:text-emerald-400 mb-2">
+                  <p className="text-sm text-orange-700 dark:text-elec-yellow mb-2">
                     <strong>Consequence:</strong> Client rejected the entire job due to delayed completion, despite excellent quality work.
                   </p>
-                  <p className="text-sm text-orange-700 dark:text-emerald-400">
+                  <p className="text-sm text-orange-700 dark:text-elec-yellow">
                     <strong>Lesson:</strong> Professional standards must be balanced with practical deadline management - same principle applies in AM2.
                   </p>
                 </div>
@@ -663,16 +663,16 @@ const AM2Module3Section6 = () => {
         </Card>
 
         {/* Summary and Key Takeaways */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Section Summary - Time Management Mastery
             </h2>
             
             <div className="space-y-4">
-              <div className="bg-card border border-emerald-500/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">Golden Rule of AM2 Time Management</h4>
+              <div className="bg-card border border-elec-yellow/20 rounded-lg p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Golden Rule of AM2 Time Management</h4>
                 <p className="text-sm text-muted-foreground italic mb-3">
                   "Plan, pace, and deliver methodically. Incomplete but safe is better than unsafe. Professional standards maintained throughout."
                 </p>
@@ -706,9 +706,9 @@ const AM2Module3Section6 = () => {
         </Card>
 
         {/* Knowledge Check Quiz */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Knowledge Check - Time Management Strategies
             </h2>
@@ -736,12 +736,12 @@ const AM2Module3Section6 = () => {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <span className="hidden sm:inline">Section 6 of 6</span>
             <div className="flex gap-1">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-              <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-              <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-              <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-              <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-              <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
             </div>
           </div>
 

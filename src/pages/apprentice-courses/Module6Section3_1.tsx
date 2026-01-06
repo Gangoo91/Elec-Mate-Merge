@@ -260,7 +260,7 @@ const Module6Section3_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Multimeter Fundamentals</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Multimeter Fundamentals</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -316,15 +316,15 @@ const Module6Section3_1 = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Critical Limitation</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Critical Limitation</p>
                         <p className="text-xs sm:text-sm text-white">
                           Multimeters are NOT suitable for insulation resistance checks as they cannot apply the high voltages (250V-1000V) required for proper insulation testing. Maximum test voltage is typically only 3-9V DC.
                         </p>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800 mt-3">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Practical Application Tips</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800 mt-3">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Practical Application Tips</p>
                         <p className="text-xs sm:text-sm text-white">
                           Always start measurements on the highest range to protect the instrument, then step down for better resolution. Use the hold function to freeze readings in difficult-to-reach locations.
                         </p>
@@ -357,7 +357,7 @@ const Module6Section3_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">IR Tester Operation and Applications</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">IR Tester Operation and Applications</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -426,14 +426,14 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Critical Safety Protocol</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Critical Safety Protocol</p>
                         <p className="text-xs sm:text-sm text-white">
                           Always ensure complete circuit isolation and disconnection before IR testing. Remove all electronic equipment, LED lamps, RCD devices, and surge protectors. High test voltages WILL damage sensitive equipment.
                         </p>
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800 mt-3">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Environmental Considerations</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Environmental Considerations</p>
                         <p className="text-xs sm:text-sm text-white">
                           Temperature and humidity significantly affect readings. Test in consistent conditions where possible, and apply temperature correction factors when comparing historical data.
                         </p>
@@ -717,15 +717,15 @@ const Module6Section3_1 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="border-l-4 border-l-emerald-400 pl-4">
+            <div className="border-l-4 border-l-elec-yellow pl-4">
               <p className="font-medium text-white mb-1">Q: Can a multimeter test insulation resistance?</p>
               <p className="text-base text-white">A: No. A dedicated insulation resistance tester must be used as multimeters cannot apply the high voltages required.</p>
             </div>
-            <div className="border-l-4 border-l-emerald-400 pl-4">
+            <div className="border-l-4 border-l-elec-yellow pl-4">
               <p className="font-medium text-white mb-1">Q: Why do we zero a continuity tester?</p>
               <p className="text-base text-white">A: To eliminate lead resistance and ensure accurate results by compensating for the resistance of the test leads themselves.</p>
             </div>
-            <div className="border-l-4 border-l-emerald-400 pl-4">
+            <div className="border-l-4 border-l-elec-yellow pl-4">
               <p className="font-medium text-white mb-1">Q: What's the difference between a continuity tester and a multimeter?</p>
               <p className="text-base text-white">A: A continuity tester is specialised for checking unbroken circuits, while a multimeter has broader applications including voltage, resistance, and current measurements.</p>
             </div>
@@ -733,7 +733,7 @@ const Module6Section3_1 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-elec-yellow/30">
+        <Card className="mb-8 p-6 bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border border-elec-yellow/30">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide – Test Instruments</h2>
           <div className="grid gap-3">
             <div className="flex items-center gap-2">
@@ -759,14 +759,14 @@ const Module6Section3_1 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Recap</h2>
           <div className="grid md:grid-cols-5 gap-4">
-            <div className="text-center p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700">
+            <div className="text-center p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700">
               <Zap className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
-              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-1">Multimeter Versatility</p>
+              <p className="font-medium text-blue-700 text-elec-yellow mb-1">Multimeter Versatility</p>
               <p className="text-xs text-white">Voltage, current, resistance</p>
             </div>
             <div className="text-center p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-700">
               <Shield className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-              <p className="font-medium text-purple-700 dark:text-elec-yellow mb-1">IR Testing</p>
+              <p className="font-medium text-purple-700 text-elec-yellow mb-1">IR Testing</p>
               <p className="text-xs text-white">Insulation quality assessment</p>
             </div>
             <div className="text-center p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700">
@@ -776,7 +776,7 @@ const Module6Section3_1 = () => {
             </div>
             <div className="text-center p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-700">
               <AlertTriangle className="w-8 h-8 text-orange-600 mx-auto mb-2" />
-              <p className="font-medium text-orange-700 dark:text-elec-yellow mb-1">Safety Standards</p>
+              <p className="font-medium text-orange-700 text-elec-yellow mb-1">Safety Standards</p>
               <p className="text-xs text-white">GS38 compliance essential</p>
             </div>
             <div className="text-center p-4 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-700">

@@ -194,11 +194,11 @@ const Module5Section3_1 = () => {
             Large electrical installation projects can feel overwhelming if approached all at once. Job breakdown and sequencing is the method of dividing tasks into smaller, logical steps and planning them in the most efficient order. This ensures work is completed safely, efficiently, and without unnecessary delays or clashes with other trades.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   In the electrical industry, poor planning and sequencing account for approximately 30% of project delays and cost overruns. 
                   Mastering these skills will make you a valuable team member and help ensure project success.
@@ -213,7 +213,7 @@ const Module5Section3_1 = () => {
               and reduce project completion time by 1-2 weeks compared to poorly planned work.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> BS 7671 emphasises the importance of proper installation planning and sequencing 
                 to ensure electrical safety and compliance throughout the construction process.
@@ -251,7 +251,7 @@ const Module5Section3_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Breaking Down Large Projects</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Breaking Down Large Projects</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -356,7 +356,7 @@ const Module5Section3_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Systematic Planning Process</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Systematic Planning Process</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -413,8 +413,8 @@ const Module5Section3_1 = () => {
                         </div>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Dependencies Example</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Dependencies Example</p>
                         <p className="text-xs sm:text-sm text-white">
                           You cannot install socket outlets until: containment is secure, cables are pulled, 
                           plastering is complete, and wall surfaces are ready for fixing.
@@ -436,7 +436,7 @@ const Module5Section3_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Benefits of Proper Sequencing</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Benefits of Proper Sequencing</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -465,7 +465,7 @@ const Module5Section3_1 = () => {
                             </ul>
                           </div>
                           <div>
-                            <p className="font-medium mb-2 text-red-600 dark:text-elec-yellow">Poor Sequencing:</p>
+                            <p className="font-medium mb-2 text-red-600 text-elec-yellow">Poor Sequencing:</p>
                             <ul className="list-disc ml-4 space-y-1 text-white">
                               <li>20-30% increased costs</li>
                               <li>Extended project timelines</li>
@@ -478,7 +478,7 @@ const Module5Section3_1 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Industry Insight</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Industry Insight</p>
                         <p className="text-xs sm:text-sm text-white">
                           Studies show that electrical contractors who implement structured sequencing and planning 
                           complete projects 15% faster and with 25% fewer defects than those who don't.
@@ -500,7 +500,7 @@ const Module5Section3_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Consequences of Poor Planning</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Consequences of Poor Planning</p>
                     
                     <ul className="list-disc ml-4 space-y-2 text-base text-white">
                       <li><strong>Wasted time and materials</strong> - rework costs money and delays completion</li>
@@ -532,7 +532,7 @@ const Module5Section3_1 = () => {
           
           <div className="space-y-4">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">On-Site Best Practices</h3>
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">On-Site Best Practices</h3>
               <ul className="list-disc pl-6 space-y-2 text-base text-white">
                 <li><strong>Use planning tools:</strong> Task lists or Gantt charts to track work stages and dependencies</li>
                 <li><strong>Coordinate daily:</strong> Don't run cables if ductwork or plastering is due in that area</li>
@@ -593,7 +593,7 @@ const Module5Section3_1 = () => {
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-4">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-                <h3 className="font-semibold text-emerald-600 dark:text-elec-yellow mb-3">Quick Task Breakdown</h3>
+                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Quick Task Breakdown</h3>
                 <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                   <li>Break down big jobs into smaller, manageable tasks</li>
                   <li>Sequence logically: containment → cabling → terminations → testing</li>
@@ -606,7 +606,7 @@ const Module5Section3_1 = () => {
             
             <div className="space-y-4">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Planning Tools</h3>
+                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Planning Tools</h3>
                 <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                   <li>Use Gantt charts for complex projects</li>
                   <li>Create task lists with dependencies</li>

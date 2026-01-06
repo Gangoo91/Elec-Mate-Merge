@@ -201,7 +201,7 @@ const Section2_3 = () => {
             <div className="p-2 rounded-lg bg-card">
               <Shield className="w-6 h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 2.3
             </Badge>
           </div>
@@ -217,8 +217,8 @@ const Section2_3 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Electrical fires and explosions cause devastating damage and loss of life each year.</li>
                 <li>Fire triangle requires heat, fuel, and oxygen - electrical faults provide dangerous heat sources.</li>
@@ -226,8 +226,8 @@ const Section2_3 = () => {
                 <li>BS 7671 and DSEAR regulations provide specific fire safety and explosion prevention requirements.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Burning smells, hot surfaces, sparking equipment, ATEX zone markings.</li>
                 <li><strong>Use:</strong> Fire triangle principles, Ex-rated equipment, gas detection, emergency procedures.</li>
@@ -262,11 +262,11 @@ const Section2_3 = () => {
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow bg-card">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Fire Triangle Elements</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Fire Triangle Elements</p>
                     <p className="text-base text-foreground mb-2"><strong>Heat source:</strong> Electrical faults, overheating, arcing, sparking.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Overloaded cables:</strong> Carrying more current than design capacity</li>
@@ -308,7 +308,7 @@ const Section2_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-1">ATEX Zone Classification</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">ATEX Zone Classification</p>
                     <p className="text-base text-foreground mb-2"><strong>Zone classification:</strong> Based on frequency and duration of explosive atmosphere presence.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Zone 0:</strong> Explosive atmosphere present continuously or for long periods</li>
@@ -381,12 +381,12 @@ const Section2_3 = () => {
         {/* Real World Scenario */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real world scenario</h2>
-          <div className="bg-emerald-50 dark:bg-blue-950/30 border-l-4 border-emerald-400 rounded-lg p-4">
-            <h4 className="text-blue-700 dark:text-emerald-400 font-semibold mb-2">Industrial Facility Fire Investigation</h4>
-            <p className="text-blue-700 dark:text-emerald-400 mb-4">
+          <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border-l-4 border-elec-yellow rounded-lg p-4">
+            <h4 className="text-blue-700 dark:text-elec-yellow font-semibold mb-2">Industrial Facility Fire Investigation</h4>
+            <p className="text-blue-700 dark:text-elec-yellow mb-4">
               A small fire occurred in a factory's electrical distribution room adjacent to a spray booth. Investigation revealed loose terminations caused overheating, highlighting the need for regular thermal imaging and proper maintenance near ATEX zones.
             </p>
-            <p className="text-blue-700 dark:text-emerald-400">
+            <p className="text-blue-700 dark:text-elec-yellow">
               <strong>Key lessons:</strong> Regular torque checking, thermal imaging surveys, understanding ATEX zone implications, and proper ventilation in electrical rooms prevent similar incidents.
             </p>
           </div>
@@ -420,7 +420,7 @@ const Section2_3 = () => {
               <li>• Regular inspection and thermal imaging can detect problems before they cause fires</li>
               <li>• Emergency procedures should be established and practised regularly</li>
             </ul>
-            <p className="text-emerald-400 dark:text-emerald-400 font-semibold">
+            <p className="text-elec-yellow dark:text-elec-yellow font-semibold">
               Remember: Most electrical fires are preventable with proper attention to safety and quality installation practices.
             </p>
           </div>
@@ -446,11 +446,11 @@ const Section2_3 = () => {
             </div>
             
             <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
-              <h4 className="text-red-700 dark:text-emerald-400 font-semibold mb-3 flex items-center gap-2">
+              <h4 className="text-red-700 dark:text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" />
                 DON'T
               </h4>
-              <ul className="space-y-2 text-red-700 dark:text-emerald-400">
+              <ul className="space-y-2 text-red-700 dark:text-elec-yellow">
                 <li>• Ignore warning signs of overheating or damage</li>
                 <li>• Use standard tools in explosive atmosphere areas</li>
                 <li>• Overload circuits or use inappropriate cable sizes</li>
@@ -465,7 +465,7 @@ const Section2_3 = () => {
         {/* Quick Reference Pocket Card */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick reference pocket card</h2>
-          <div className="bg-emerald-50 border border-blue-200 rounded-lg p-4">
+          <div className="bg-elec-yellow/5 border border-blue-200 rounded-lg p-4">
             <h4 className="text-blue-700 font-semibold mb-3">Fire Safety Emergency Actions</h4>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>

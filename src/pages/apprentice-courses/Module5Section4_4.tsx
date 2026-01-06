@@ -395,7 +395,7 @@ const Module5Section4_4 = () => {
               <h3 className="text-lg font-medium text-white">Common Wastage Causes</h3>
               
               <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Over-ordering Materials</p>
+                <p className="font-medium text-red-700 text-elec-yellow mb-2">Over-ordering Materials</p>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   Ordering excessive quantities due to poor planning or fear of shortages.
                 </p>
@@ -407,7 +407,7 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Poor Storage Conditions</p>
+                <p className="font-medium text-orange-700 text-elec-yellow mb-2">Poor Storage Conditions</p>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   Improper storage leading to material damage and deterioration.
                 </p>
@@ -433,7 +433,7 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Transport and Handling</p>
+                <p className="font-medium text-purple-700 text-elec-yellow mb-2">Transport and Handling</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Damage during site transport</li>
                   <li>Improper lifting and moving techniques</li>
@@ -444,11 +444,11 @@ const Module5Section4_4 = () => {
             </div>
           </div>
           
-          <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
+          <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Cost Impact</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Cost Impact</p>
                 <p className="text-xs sm:text-sm text-white">
                   Material wastage typically accounts for 5-10% of total project costs. Effective management can reduce this to 2-3%, providing significant savings on larger projects.
                 </p>
@@ -487,7 +487,7 @@ const Module5Section4_4 = () => {
               <h3 className="text-lg font-medium text-white">Planning Issues</h3>
               
               <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Underestimating Requirements</p>
+                <p className="font-medium text-red-700 text-elec-yellow mb-2">Underestimating Requirements</p>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   Insufficient material orders due to poor planning or calculation errors.
                 </p>
@@ -500,7 +500,7 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Communication Failures</p>
+                <p className="font-medium text-orange-700 text-elec-yellow mb-2">Communication Failures</p>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   Poor coordination between teams leading to missed requirements.
                 </p>
@@ -526,7 +526,7 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Site Issues</p>
+                <p className="font-medium text-purple-700 text-elec-yellow mb-2">Site Issues</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Theft or misplacement of materials</li>
                   <li>Damage requiring replacement</li>
@@ -539,9 +539,9 @@ const Module5Section4_4 = () => {
           
           <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded border border-red-200 dark:border-red-800">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Impact of Shortages</p>
+                <p className="font-medium text-red-700 text-elec-yellow mb-2">Impact of Shortages</p>
                 <p className="text-xs sm:text-sm text-white">
                   Material shortages can delay projects by days or weeks, incurring penalty costs and affecting team productivity. Emergency procurement often costs 20-30% more than planned orders.
                 </p>
@@ -580,7 +580,7 @@ const Module5Section4_4 = () => {
               <h3 className="text-lg font-medium text-white">Financial Impact</h3>
               
               <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 h-fit">
-                <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Increased Project Costs</p>
+                <p className="font-medium text-red-700 text-elec-yellow mb-2">Increased Project Costs</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Direct cost of wasted materials</li>
                   <li>Emergency procurement at premium prices</li>
@@ -591,7 +591,7 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 h-fit">
-                <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Timeline Impact</p>
+                <p className="font-medium text-orange-700 text-elec-yellow mb-2">Timeline Impact</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Work delays while waiting for replacements</li>
                   <li>Rescheduling of other trades</li>
@@ -628,9 +628,9 @@ const Module5Section4_4 = () => {
           
           <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded border border-purple-200 dark:border-purple-800">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-purple-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-purple-600 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Business Reputation</p>
+                <p className="font-medium text-purple-700 text-elec-yellow mb-2">Business Reputation</p>
                 <p className="text-xs sm:text-sm text-white">
                   Poor material management affects client relationships, subcontractor partnerships, and company reputation. Environmental responsibility is increasingly important for winning contracts.
                 </p>
@@ -668,8 +668,8 @@ const Module5Section4_4 = () => {
             <div className="space-y-4">
               <h3 className="text-lg font-medium text-white">Planning and Measurement</h3>
               
-              <div className="p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 h-fit">
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Measure and Cut Carefully</p>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 h-fit">
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Measure and Cut Carefully</p>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   Accurate measurement and cutting techniques prevent costly errors.
                 </p>
@@ -709,7 +709,7 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 h-fit">
-                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Staff Training</p>
+                <p className="font-medium text-purple-700 text-elec-yellow mb-2">Staff Training</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Correct handling and installation techniques</li>
                   <li>Measurement and cutting best practices</li>
@@ -762,8 +762,8 @@ const Module5Section4_4 = () => {
             <div className="space-y-4">
               <h3 className="text-lg font-medium text-white">Planning and Estimation</h3>
               
-              <div className="p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 h-fit">
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Accurate Estimation</p>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 h-fit">
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Accurate Estimation</p>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   Thorough planning during the estimation stage prevents shortages.
                 </p>
@@ -803,7 +803,7 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 h-fit">
-                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Buffer Stock Strategy</p>
+                <p className="font-medium text-purple-700 text-elec-yellow mb-2">Buffer Stock Strategy</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Hold small buffer stock of critical items</li>
                   <li>Focus on items with long lead times</li>
@@ -814,11 +814,11 @@ const Module5Section4_4 = () => {
             </div>
           </div>
           
-          <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
+          <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
             <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Best Practice</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Best Practice</p>
                 <p className="text-xs sm:text-sm text-white">
                   Implement weekly material planning meetings with the site team to review upcoming requirements, check stock levels, and coordinate deliveries. This prevents most shortage-related delays.
                 </p>
@@ -869,8 +869,8 @@ const Module5Section4_4 = () => {
                 </ul>
               </div>
               
-              <div className="p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 h-fit">
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Return Policies</p>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 h-fit">
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Return Policies</p>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   Work with suppliers to return unused materials.
                 </p>
@@ -897,7 +897,7 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 h-fit">
-                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Digital Documentation</p>
+                <p className="font-medium text-purple-700 text-elec-yellow mb-2">Digital Documentation</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Electronic delivery notes and invoices</li>
                   <li>Digital stock management systems</li>
@@ -950,7 +950,7 @@ const Module5Section4_4 = () => {
                 </p>
                 
                 <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                  <p className="text-sm font-medium text-red-700 dark:text-elec-yellow mb-1">Consequences:</p>
+                  <p className="text-sm font-medium text-red-700 text-elec-yellow mb-1">Consequences:</p>
                   <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                     <li>£12,000 worth of cable unusable</li>
                     <li>2-week project delay</li>
@@ -978,7 +978,7 @@ const Module5Section4_4 = () => {
               </div>
             </div>
             
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Lesson Learned:</strong> Proper material storage is an investment, not a cost. The project manager now includes weatherproof storage in all project planning and has avoided similar losses on subsequent projects.
               </p>
@@ -991,7 +991,7 @@ const Module5Section4_4 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-4">
             {practicalGuidance.map((guidance, index) => (
-              <div key={index} className="border-l-4 border-elec-blue pl-4 bg-emerald-50/50 dark:bg-blue-900/10 py-3 rounded-r">
+              <div key={index} className="border-l-4 border-elec-blue pl-4 bg-elec-yellow/5/50 dark:bg-blue-900/10 py-3 rounded-r">
                 <p className="text-white">{guidance}</p>
               </div>
             ))}

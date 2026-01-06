@@ -270,7 +270,7 @@ const Module5Section1_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Title Block Information</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Title Block Information</p>
                     <p className="text-base text-white mb-2"><strong>Title block gives:</strong> Drawing type, project details, scale, and date.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Drawing type (layout, schematic, detail drawing)</li>
@@ -360,7 +360,7 @@ const Module5Section1_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Circuit Codes and References</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Circuit Codes and References</p>
                     <p className="text-base text-white mb-2"><strong>Circuits labelled</strong> with numbers or codes (e.g., L1/03).</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Circuit numbers link to distribution board schedules</li>
@@ -398,7 +398,7 @@ const Module5Section1_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Cable Routes and Safe Zones</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Cable Routes and Safe Zones</p>
                     <p className="text-base text-white mb-2"><strong>Drawings show intended routes</strong> within walls, floors, and ceilings.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Horizontal routes typically 150mm from ceiling or floor</li>
@@ -481,7 +481,7 @@ const Module5Section1_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Common Interpretation Errors</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Common Interpretation Errors</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Ignoring notes:</strong> Missing critical material or method requirements</li>
                       <li><strong>Misreading symbols:</strong> Installing wrong accessory or material types</li>

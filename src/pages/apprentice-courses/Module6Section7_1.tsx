@@ -211,16 +211,16 @@ const Module6Section7_1 = () => {
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
                   <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">The Purpose of Certification</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">The Purpose of Certification</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
                         Certification exists to prove that an installation is safe, compliant, and fit for use. It confirms that testing has been carried out and that results meet the requirements of BS 7671. Certificates also provide a record for clients, insurers, and building control authorities. Without certification, there is no proof that the installation has been tested or meets legal requirements.
                       </p>
                       
-                      <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
-                        <h4 className="font-medium text-blue-800 dark:text-elec-yellow mb-2">Key Functions of Certification:</h4>
-                        <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
+                      <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                        <h4 className="font-medium text-blue-800 text-elec-yellow mb-2">Key Functions of Certification:</h4>
+                        <ul className="text-sm text-blue-700 text-elec-yellow space-y-1">
                           <li>• <strong>Legal Evidence:</strong> Proves compliance with statutory requirements</li>
                           <li>• <strong>Safety Assurance:</strong> Confirms the installation is safe to energise and use</li>
                           <li>• <strong>Quality Record:</strong> Documents that proper procedures were followed</li>
@@ -331,7 +331,7 @@ const Module6Section7_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base">Proving Compliance and Accountability</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3 text-base">Proving Compliance and Accountability</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -339,8 +339,8 @@ const Module6Section7_1 = () => {
                       </p>
 
                       <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg p-3">
-                        <h4 className="font-medium text-orange-800 dark:text-elec-yellow mb-2">Accountability Elements in Certification:</h4>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-orange-700 dark:text-elec-yellow">
+                        <h4 className="font-medium text-orange-800 text-elec-yellow mb-2">Accountability Elements in Certification:</h4>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-orange-700 text-elec-yellow">
                           <div>
                             <strong>Designer Accountability:</strong>
                             <ul className="mt-1 space-y-1 ml-4">
@@ -371,8 +371,8 @@ const Module6Section7_1 = () => {
                       </p>
 
                       <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800 rounded-lg p-3">
-                        <h4 className="font-medium text-purple-800 dark:text-elec-yellow mb-2">Certificate as Legal Evidence:</h4>
-                        <ul className="text-sm text-purple-700 dark:text-elec-yellow space-y-1">
+                        <h4 className="font-medium text-purple-800 text-elec-yellow mb-2">Certificate as Legal Evidence:</h4>
+                        <ul className="text-sm text-purple-700 text-elec-yellow space-y-1">
                           <li>• Admissible in court proceedings as evidence of compliance</li>
                           <li>• Demonstrates due diligence in safety matters</li>
                           <li>• Shows professional competence and proper procedures</li>
@@ -407,7 +407,7 @@ const Module6Section7_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Consequences of Non-Certification</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3 text-base">Consequences of Non-Certification</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -415,8 +415,8 @@ const Module6Section7_1 = () => {
                       </p>
 
                       <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-                        <h4 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Immediate Consequences:</h4>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-red-700 dark:text-elec-yellow">
+                        <h4 className="font-medium text-red-800 text-elec-yellow mb-2">Immediate Consequences:</h4>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-red-700 text-elec-yellow">
                           <div>
                             <strong>Financial Impact:</strong>
                             <ul className="mt-1 space-y-1 ml-4">
@@ -516,8 +516,8 @@ const Module6Section7_1 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
           <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-4">
-            <h3 className="font-semibold text-red-800 dark:text-elec-yellow mb-2">Certification Failure Leads to Personal Liability</h3>
-            <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
+            <h3 className="font-semibold text-red-800 text-elec-yellow mb-2">Certification Failure Leads to Personal Liability</h3>
+            <p className="text-sm text-red-700 text-elec-yellow mb-3">
               A small electrical contractor completed a new shop fit-out but failed to issue an Electrical Installation Certificate. Months later, a fire broke out in the premises. During the investigation, the contractor had no documentation to prove that the installation complied with BS 7671. The insurance company refused the claim, and the contractor was held personally liable for damages running into tens of thousands of pounds.
             </p>
           </div>

@@ -369,8 +369,8 @@ const Module5Section4_3 = () => {
                 <p className="text-sm font-medium text-amber-700 dark:text-amber-400 mb-2">Safety</p>
                 <p className="text-xs sm:text-sm text-white">Wrong tools can slip, break, or cause electrical hazards</p>
               </div>
-              <div className="p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow mb-2">Quality</p>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                <p className="text-sm font-medium text-blue-700 text-elec-yellow mb-2">Quality</p>
                 <p className="text-xs sm:text-sm text-white">Correct tools ensure precise connections and professional finish</p>
               </div>
               <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
@@ -378,7 +378,7 @@ const Module5Section4_3 = () => {
                 <p className="text-xs sm:text-sm text-white">Right tools complete tasks faster with better results</p>
               </div>
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <p className="text-sm font-medium text-purple-700 dark:text-elec-yellow mb-2">Compliance</p>
+                <p className="text-sm font-medium text-purple-700 text-elec-yellow mb-2">Compliance</p>
                 <p className="text-xs sm:text-sm text-white">Specialist tools may be required for BS 7671 compliance</p>
               </div>
             </div>
@@ -410,9 +410,9 @@ const Module5Section4_3 = () => {
           
           <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded border border-red-200 dark:border-red-800">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Never Use Makeshift Alternatives</p>
+                <p className="font-medium text-red-700 text-elec-yellow mb-2">Never Use Makeshift Alternatives</p>
                 <p className="text-xs sm:text-sm text-white">
                   Using the wrong tool or makeshift alternatives significantly increases injury risk and can result in poor workmanship that fails compliance standards. Wait for the correct tool to be available.
                 </p>
@@ -450,8 +450,8 @@ const Module5Section4_3 = () => {
             <div className="space-y-4">
               <h3 className="text-lg font-medium text-white">Essential Specialist Tools</h3>
               
-              <div className="p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Torque Screwdrivers</p>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Torque Screwdrivers</p>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   Required for terminations that must meet specific torque values (e.g., MCB connections, cable glands).
                 </p>
@@ -489,7 +489,7 @@ const Module5Section4_3 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Quality Benefits</p>
+                <p className="font-medium text-purple-700 text-elec-yellow mb-2">Quality Benefits</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Consistent, repeatable results</li>
                   <li>Reduced risk of over-tightening</li>
@@ -502,9 +502,9 @@ const Module5Section4_3 = () => {
           
           <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded border border-yellow-200 dark:border-yellow-800">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-yellow-700 dark:text-elec-yellow mb-2">Calibration Requirements</p>
+                <p className="font-medium text-yellow-700 text-elec-yellow mb-2">Calibration Requirements</p>
                 <p className="text-xs sm:text-sm text-white">
                   All measuring and testing equipment must be calibrated regularly and have valid calibration certificates. Uncalibrated equipment cannot be used for compliance testing.
                 </p>
@@ -542,8 +542,8 @@ const Module5Section4_3 = () => {
             <div className="space-y-4">
               <h3 className="text-lg font-medium text-white">Planning Tool Requirements</h3>
               
-              <div className="p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Pre-Project Planning</p>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Pre-Project Planning</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Review project specifications and drawings</li>
                   <li>Identify all required tools and equipment</li>
@@ -577,7 +577,7 @@ const Module5Section4_3 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Backup Strategies</p>
+                <p className="font-medium text-purple-700 text-elec-yellow mb-2">Backup Strategies</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Maintain spare essential tools</li>
                   <li>Establish emergency procurement procedures</li>
@@ -590,9 +590,9 @@ const Module5Section4_3 = () => {
           
           <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded border border-red-200 dark:border-red-800 mb-4">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Impact of Poor Tool Planning</p>
+                <p className="font-medium text-red-700 text-elec-yellow mb-2">Impact of Poor Tool Planning</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Work delays and missed deadlines</li>
                   <li>Increased safety risks from using wrong tools</li>
@@ -705,7 +705,7 @@ const Module5Section4_3 = () => {
                 </div>
               </div>
               
-              <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+              <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
                 <p className="text-xs sm:text-sm text-white">
                   <strong>Management Benefit:</strong> Systematic tool management reduces downtime by 40% and improves compliance with health and safety requirements.
                 </p>
@@ -719,7 +719,7 @@ const Module5Section4_3 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-4">
             {practicalGuidance.map((guidance, index) => (
-              <div key={index} className="border-l-4 border-elec-blue pl-4 bg-emerald-50/50 dark:bg-blue-900/10 py-3 rounded-r">
+              <div key={index} className="border-l-4 border-elec-blue pl-4 bg-elec-yellow/5/50 dark:bg-blue-900/10 py-3 rounded-r">
                 <p className="text-white">{guidance}</p>
               </div>
             ))}
@@ -731,8 +731,8 @@ const Module5Section4_3 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Key Reference Values</h2>
           <div className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <h3 className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Common Torque Values</h3>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                <h3 className="font-medium text-blue-700 text-elec-yellow mb-2">Common Torque Values</h3>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>• MCB terminals: 2.5 Nm (typically)</li>
                   <li>• Cable glands: 5-10 Nm (size dependent)</li>

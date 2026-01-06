@@ -210,7 +210,7 @@ const Section2_1_ElectricShock = () => {
             <div className="p-2 rounded-lg bg-card/10">
               <Zap className="w-6 h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 2.1
             </Badge>
           </div>
@@ -227,7 +227,7 @@ const Section2_1_ElectricShock = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
             <div className="rounded-lg p-4 bg-card/10 border border-border/20">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Electric shock occurs when current passes through the body, potentially causing cardiac arrest.</li>
                 <li>Arc flash creates extreme heat (up to 20,000°C) causing severe burns and pressure waves.</li>
@@ -235,8 +235,8 @@ const Section2_1_ElectricShock = () => {
                 <li>Prevention through safe isolation procedures and appropriate PPE is essential.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Exposed live parts, damaged equipment, wet conditions, missing covers.</li>
                 <li><strong>Use:</strong> Safe isolation procedures, GS38 voltage testers, appropriate PPE ratings.</li>
@@ -271,11 +271,11 @@ const Section2_1_ElectricShock = () => {
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow bg-card">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Current Effects on the Human Body</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Current Effects on the Human Body</p>
                     <p className="text-base text-foreground mb-2"><strong>Threshold levels:</strong> Different current levels cause different physiological effects.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li><strong>1-5 mA:</strong> Perception threshold - barely noticeable tingling</li>
@@ -329,7 +329,7 @@ const Section2_1_ElectricShock = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-1">Arc Flash Characteristics and Hazards</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Arc Flash Characteristics and Hazards</p>
                     <p className="text-base text-foreground mb-2"><strong>Arc flash formation:</strong> Electrical arc creates multiple severe hazards.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li>Temperature: up to 20,000°C (four times hotter than sun's surface)</li>
@@ -385,7 +385,7 @@ const Section2_1_ElectricShock = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Immediate Response Procedure</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Immediate Response Procedure</p>
                     <p className="text-base text-foreground mb-2"><strong>Step 1 - Make safe:</strong> Isolate the electrical supply immediately if safe to do so.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li>Do NOT touch the casualty while power is on</li>
@@ -559,7 +559,7 @@ const Section2_1_ElectricShock = () => {
               </ul>
             </div>
             <div className="space-y-3">
-              <h3 className="font-medium text-red-600 dark:text-emerald-400">❌ Don'ts</h3>
+              <h3 className="font-medium text-red-600 dark:text-elec-yellow">❌ Don'ts</h3>
               <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                 <li>• Never touch someone receiving electric shock while power is on</li>
                 <li>• Don't use non-contact voltage pens for proving dead</li>

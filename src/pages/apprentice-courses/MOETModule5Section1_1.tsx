@@ -27,7 +27,7 @@ const MOETModule5Section1_1 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-6 sm:mb-8">
           <div className="flex items-center gap-4 mb-6">
-            <Gauge className="h-8 w-8 text-emerald-400" />
+            <Gauge className="h-8 w-8 text-elec-yellow" />
             <div>
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Section 5.1.1: Principles of Sensing (analogue vs digital)
@@ -40,8 +40,8 @@ const MOETModule5Section1_1 = () => {
         </div>
 
         <div className="prose prose-invert max-w-none">
-          <div className="bg-card/30 border border-emerald-500/30 rounded-lg p-6 mb-8">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">Learning Objectives</h2>
+          <div className="bg-card/30 border border-elec-yellow/30 rounded-lg p-6 mb-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">Learning Objectives</h2>
             <ul className="space-y-2 text-muted-foreground">
               <li>• Understand the difference between analogue and digital signals</li>
               <li>• Learn the principles of sensor operation and signal conversion</li>

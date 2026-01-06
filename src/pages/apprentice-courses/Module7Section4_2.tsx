@@ -267,7 +267,7 @@ const Module7Section4_2 = () => {
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base sm:text-lg">Understanding Sequence of Operation</h3>
+                  <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-4 text-base sm:text-lg">Understanding Sequence of Operation</h3>
                   <p className="text-sm sm:text-base text-white mb-4">
                     The sequence of operation describes the intended flow of electrical events in a circuit, from initial energisation through normal operation to controlled shutdown. This understanding forms the foundation of effective fault diagnosis.
                   </p>
@@ -505,7 +505,7 @@ const Module7Section4_2 = () => {
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-orange-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Complex Control System Sequences</h3>
+                  <h3 className="font-semibold text-orange-600 text-elec-yellow mb-4 text-base sm:text-lg">Complex Control System Sequences</h3>
                   <p className="text-sm sm:text-base text-white mb-4">
                     Industrial and commercial systems involve intricate sequences with multiple decision points, safety interlocks, and coordinated operations that require systematic analysis for effective fault diagnosis.
                   </p>
@@ -640,7 +640,7 @@ const Module7Section4_2 = () => {
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Applying Sequence Analysis to Fault Finding</h3>
+                  <h3 className="font-semibold text-purple-600 text-elec-yellow mb-4 text-base sm:text-lg">Applying Sequence Analysis to Fault Finding</h3>
                   <p className="text-sm sm:text-base text-white mb-4">
                     Understanding normal sequences allows systematic identification of where faults interrupt expected operation.
                   </p>

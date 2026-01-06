@@ -1,439 +1,629 @@
 import * as React from "react";
 import { Helmet } from "react-helmet";
-import BackButton from "@/components/common/BackButton";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Progress } from "@/components/ui/progress";
-import { MobileInput } from "@/components/ui/mobile-input";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
-import { 
-  Calculator, 
-  TrendingUp, 
-  AlertTriangle, 
-  CheckCircle2, 
+import {
+  Calculator,
+  TrendingUp,
+  AlertTriangle,
+  CheckCircle2,
   Info,
   Zap,
   PoundSterling,
   Clock,
-  Wrench
+  Wrench,
+  ChevronDown,
+  BookOpen,
+  RotateCcw,
 } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorInput,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 
 const currency = (n: number) => `£${n.toFixed(2)}`;
 
 const BreakEvenCalculator: React.FC = () => {
-  const [annualOverheads, setAnnualOverheads] = React.useState(32000);
-  const [chargeableHours, setChargeableHours] = React.useState(1200);
-  const [labourCostHr, setLabourCostHr] = React.useState(28);
-  const [materialShare, setMaterialShare] = React.useState(30);
-  const [materialMarkup, setMaterialMarkup] = React.useState(18);
-  const [targetMargin, setTargetMargin] = React.useState(20);
-  const [vatRegistered, setVatRegistered] = React.useState(true);
-  const [vatRate, setVatRate] = React.useState(20);
-  const [exampleHours, setExampleHours] = React.useState(4);
-  const [exampleMats, setExampleMats] = React.useState(130);
+  const config = CALCULATOR_CONFIG["business"];
 
-  const overheadPerHour = annualOverheads / Math.max(1, chargeableHours);
-  const breakEvenHr = labourCostHr + overheadPerHour;
+  // Business settings
+  const [annualOverheads, setAnnualOverheads] = React.useState<string>("32000");
+  const [chargeableHours, setChargeableHours] = React.useState<string>("1200");
+  const [labourCostHr, setLabourCostHr] = React.useState<string>("28");
+  const [materialShare, setMaterialShare] = React.useState<string>("30");
+  const [materialMarkup, setMaterialMarkup] = React.useState<string>("18");
+  const [targetMargin, setTargetMargin] = React.useState<string>("20");
+  const [vatRegistered, setVatRegistered] = React.useState(true);
+  const [vatRate, setVatRate] = React.useState<string>("20");
+
+  // Example job
+  const [exampleHours, setExampleHours] = React.useState<string>("4");
+  const [exampleMats, setExampleMats] = React.useState<string>("130");
+
+  // UI state
+  const [showAdvanced, setShowAdvanced] = React.useState(false);
+  const [showGuidance, setShowGuidance] = React.useState(false);
+  const [showReference, setShowReference] = React.useState(false);
+
+  // Parse values
+  const overheadsNum = parseFloat(annualOverheads) || 0;
+  const hoursNum = parseFloat(chargeableHours) || 1;
+  const labourNum = parseFloat(labourCostHr) || 0;
+  const markupNum = parseFloat(materialMarkup) || 0;
+  const marginNum = parseFloat(targetMargin) || 0;
+  const vatNum = parseFloat(vatRate) || 0;
+  const exHoursNum = parseFloat(exampleHours) || 0;
+  const exMatsNum = parseFloat(exampleMats) || 0;
+
+  // Calculations
+  const overheadPerHour = overheadsNum / Math.max(1, hoursNum);
+  const breakEvenHr = labourNum + overheadPerHour;
   const breakEvenDay = breakEvenHr * 8;
 
   // Example job pricing
-  const exLabourCost = breakEvenHr * exampleHours;
-  const exMatsSell = exampleMats * (1 + materialMarkup / 100);
+  const exLabourCost = breakEvenHr * exHoursNum;
+  const exMatsSell = exMatsNum * (1 + markupNum / 100);
   const basePrice = exLabourCost + exMatsSell;
-  const targetUplift = targetMargin > 0 ? basePrice / (1 - targetMargin / 100) : basePrice;
+  const targetUplift = marginNum > 0 ? basePrice / (1 - marginNum / 100) : basePrice;
   const priceExVat = targetUplift;
-  const priceIncVat = vatRegistered ? priceExVat * (1 + vatRate / 100) : priceExVat;
+  const priceIncVat = vatRegistered ? priceExVat * (1 + vatNum / 100) : priceExVat;
 
   // Health checks
-  const marginHealth = targetMargin >= 20 ? 'excellent' : targetMargin >= 15 ? 'good' : targetMargin >= 10 ? 'acceptable' : 'low';
-  const utilisationRate = (chargeableHours / 2080) * 100; // 2080 = 52 weeks * 40 hours
-  const utilisationHealth = utilisationRate >= 60 ? 'excellent' : utilisationRate >= 50 ? 'good' : utilisationRate >= 40 ? 'acceptable' : 'low';
-  const markupHealth = materialMarkup >= 25 ? 'excellent' : materialMarkup >= 18 ? 'good' : materialMarkup >= 10 ? 'acceptable' : 'low';
+  const utilisationRate = (hoursNum / 2080) * 100;
 
-  const getHealthColor = (health: string) => {
-    switch (health) {
-      case 'excellent': return 'text-green-400 bg-green-500/20 border-green-500/30';
-      case 'good': return 'text-blue-400 bg-blue-500/20 border-blue-500/30';
-      case 'acceptable': return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30';
-      case 'low': return 'text-red-400 bg-red-500/20 border-red-500/30';
-      default: return 'text-elec-light/60';
-    }
+  const getMarginHealth = () => {
+    if (marginNum >= 20) return { label: "Excellent", color: "text-green-400", bg: "bg-green-500/10 border-green-500/30" };
+    if (marginNum >= 15) return { label: "Good", color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/30" };
+    if (marginNum >= 10) return { label: "Fair", color: "text-amber-400", bg: "bg-amber-500/10 border-amber-500/30" };
+    return { label: "Low", color: "text-red-400", bg: "bg-red-500/10 border-red-500/30" };
   };
 
+  const getUtilisationHealth = () => {
+    if (utilisationRate >= 60) return { label: "Excellent", color: "text-green-400", bg: "bg-green-500/10 border-green-500/30" };
+    if (utilisationRate >= 50) return { label: "Good", color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/30" };
+    if (utilisationRate >= 40) return { label: "Fair", color: "text-amber-400", bg: "bg-amber-500/10 border-amber-500/30" };
+    return { label: "Low", color: "text-red-400", bg: "bg-red-500/10 border-red-500/30" };
+  };
+
+  const getMarkupHealth = () => {
+    if (markupNum >= 25) return { label: "Excellent", color: "text-green-400", bg: "bg-green-500/10 border-green-500/30" };
+    if (markupNum >= 18) return { label: "Good", color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/30" };
+    if (markupNum >= 10) return { label: "Fair", color: "text-amber-400", bg: "bg-amber-500/10 border-amber-500/30" };
+    return { label: "Low", color: "text-red-400", bg: "bg-red-500/10 border-red-500/30" };
+  };
+
+  const marginHealth = getMarginHealth();
+  const utilisationHealth = getUtilisationHealth();
+  const markupHealth = getMarkupHealth();
+
+  const reset = () => {
+    setAnnualOverheads("32000");
+    setChargeableHours("1200");
+    setLabourCostHr("28");
+    setMaterialShare("30");
+    setMaterialMarkup("18");
+    setTargetMargin("20");
+    setVatRegistered(true);
+    setVatRate("20");
+    setExampleHours("4");
+    setExampleMats("130");
+  };
+
+  const isValid = overheadsNum > 0 && hoursNum > 0 && labourNum > 0;
+
   return (
-    <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-5xl overflow-x-hidden">
+    <div className="min-h-screen px-4 py-8">
       <Helmet>
         <title>Break-even & Margin Guard | Electrician UK</title>
-        <meta name="description" content="Work out your break-even point and minimum margin to protect profit on electrical jobs in the UK." />
-        <link rel="canonical" href="/electrician/business-development/tools/break-even" />
+        <meta
+          name="description"
+          content="Work out your break-even point and minimum margin to protect profit on electrical jobs in the UK."
+        />
       </Helmet>
 
-      <header className="mb-4 sm:mb-6 text-center">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-elec-light mb-2 sm:mb-3 flex items-center justify-center gap-2 sm:gap-3">
-          <Calculator className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
-          Break-even & Margin Guard
-        </h1>
-        <p className="text-sm sm:text-base text-elec-light/80 px-2">
-          Know the minimum price you must charge to cover costs and lock in your target margin.
-        </p>
-      </header>
+      <div className="max-w-4xl mx-auto space-y-4">
+        {/* Business Health Snapshot */}
+        <div className="calculator-card p-4" style={{ borderColor: "#60a5fa20" }}>
+          <div className="flex items-center gap-2 mb-4">
+            <Zap className="h-5 w-5 text-blue-400" />
+            <span className="text-sm font-medium text-white">Business Health Snapshot</span>
+          </div>
 
-      <BackButton customUrl="/electrician/business-development/tools" />
-
-      <WhyThisMatters
-        points={[
-          "Prevents underquoting and protects target margins on every job.",
-          "Adapts instantly to VAT registration and material markup changes.",
-          "Shows real-time sensitivity to utilisation and overhead variations.",
-        ]}
-      />
-
-      {/* Quick Health Dashboard */}
-      <Card className="mt-4 sm:mt-6 bg-gradient-to-br from-elec-card to-elec-dark/50 border-elec-yellow/30 animate-fade-in">
-        <CardHeader className="pb-3 sm:pb-4">
-          <CardTitle className="text-base sm:text-lg text-elec-light flex items-center gap-2">
-            <Zap className="h-5 w-5 text-elec-yellow" />
-            Business Health Snapshot
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-3 gap-3">
             {/* Margin Health */}
-            <div className="p-3 sm:p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs sm:text-sm text-elec-light/70">Target Margin</span>
-                <Badge className={getHealthColor(marginHealth) + " text-xs"}>
-                  {marginHealth.charAt(0).toUpperCase() + marginHealth.slice(1)}
-                </Badge>
+            <div className={cn("p-3 rounded-xl border", marginHealth.bg)}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs text-white/60">Target Margin</span>
+                <span className={cn("text-xs font-medium", marginHealth.color)}>
+                  {marginHealth.label}
+                </span>
               </div>
-              <div className="text-2xl sm:text-3xl font-bold text-elec-light">{targetMargin}%</div>
-              <Progress value={Math.min(targetMargin * 4, 100)} className="mt-2 h-2" />
+              <div className="text-2xl font-bold text-white">{marginNum}%</div>
+              <div className="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden">
+                <div
+                  className="h-full bg-blue-400 transition-all"
+                  style={{ width: `${Math.min(marginNum * 4, 100)}%` }}
+                />
+              </div>
             </div>
 
             {/* Utilisation */}
-            <div className="p-3 sm:p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs sm:text-sm text-elec-light/70">Utilisation</span>
-                <Badge className={getHealthColor(utilisationHealth) + " text-xs"}>
-                  {utilisationHealth.charAt(0).toUpperCase() + utilisationHealth.slice(1)}
-                </Badge>
+            <div className={cn("p-3 rounded-xl border", utilisationHealth.bg)}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs text-white/60">Utilisation</span>
+                <span className={cn("text-xs font-medium", utilisationHealth.color)}>
+                  {utilisationHealth.label}
+                </span>
               </div>
-              <div className="text-2xl sm:text-3xl font-bold text-elec-light">{utilisationRate.toFixed(0)}%</div>
-              <Progress value={utilisationRate} className="mt-2 h-2" />
+              <div className="text-2xl font-bold text-white">{utilisationRate.toFixed(0)}%</div>
+              <div className="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden">
+                <div
+                  className="h-full bg-blue-400 transition-all"
+                  style={{ width: `${Math.min(utilisationRate, 100)}%` }}
+                />
+              </div>
             </div>
 
             {/* Material Markup */}
-            <div className="p-3 sm:p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs sm:text-sm text-elec-light/70">Material Markup</span>
-                <Badge className={getHealthColor(markupHealth) + " text-xs"}>
-                  {markupHealth.charAt(0).toUpperCase() + markupHealth.slice(1)}
-                </Badge>
+            <div className={cn("p-3 rounded-xl border", markupHealth.bg)}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs text-white/60">Mat. Markup</span>
+                <span className={cn("text-xs font-medium", markupHealth.color)}>
+                  {markupHealth.label}
+                </span>
               </div>
-              <div className="text-2xl sm:text-3xl font-bold text-elec-light">{materialMarkup}%</div>
-              <Progress value={Math.min(materialMarkup * 3, 100)} className="mt-2 h-2" />
+              <div className="text-2xl font-bold text-white">{markupNum}%</div>
+              <div className="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden">
+                <div
+                  className="h-full bg-blue-400 transition-all"
+                  style={{ width: `${Math.min(markupNum * 3, 100)}%` }}
+                />
+              </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
-      {/* Business Inputs */}
-      <section className="mt-4 sm:mt-6 grid gap-4 sm:gap-6">
-        <Card className="bg-elec-card border-elec-yellow/20">
-          <CardHeader className="pb-3 sm:pb-6">
-            <CardTitle className="text-base sm:text-lg text-elec-light flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-elec-yellow" />
-              Business Settings
-            </CardTitle>
-            <CardDescription className="text-xs sm:text-sm text-elec-light/60">
-              Set your annual overheads and working capacity
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4 sm:gap-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              <div className="space-y-2">
-                <MobileInput
-                  label="Annual Overheads (ex VAT)"
-                  value={annualOverheads ?? ''}
-                  onChange={(e) => setAnnualOverheads(Number(e.target.value) || 0)}
-                  type="text"
-                  inputMode="decimal"
-                  unit="£"
-                  hint="Insurance, van, tools, software, rent, etc."
-                />
-              </div>
-              <div className="space-y-2">
-                <MobileInput
-                  label="Chargeable Hours / Year"
-                  value={chargeableHours ?? ''}
-                  onChange={(e) => setChargeableHours(Number(e.target.value) || 1)}
-                  type="text"
-                  inputMode="numeric"
-                  hint={`Current utilisation: ${utilisationRate.toFixed(0)}%`}
-                />
-              </div>
+        <CalculatorCard
+          category="business"
+          title="Break-Even Calculator"
+          description="Calculate your minimum hourly rate to cover all costs before profit"
+          badge="Finance"
+        >
+          {/* Business Settings */}
+          <div className="flex items-center gap-2 mb-3">
+            <TrendingUp className="h-4 w-4 text-blue-400" />
+            <span className="text-sm font-medium text-white/80">Business Settings</span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <CalculatorInput
+              label="Annual Overheads"
+              unit="£"
+              type="text"
+              inputMode="decimal"
+              value={annualOverheads}
+              onChange={setAnnualOverheads}
+              placeholder="e.g., 32000"
+              hint="Insurance, van, tools, etc."
+            />
+
+            <CalculatorInput
+              label="Chargeable Hours/Year"
+              type="text"
+              inputMode="numeric"
+              value={chargeableHours}
+              onChange={setChargeableHours}
+              placeholder="e.g., 1200"
+              hint={`Utilisation: ${utilisationRate.toFixed(0)}%`}
+            />
+          </div>
+
+          {/* Labour & Materials */}
+          <div className="pt-4 border-t border-white/10">
+            <div className="flex items-center gap-2 mb-3">
+              <Wrench className="h-4 w-4 text-blue-400" />
+              <span className="text-sm font-medium text-white/80">Labour & Materials</span>
             </div>
 
-            <Alert className="bg-blue-500/10 border-blue-500/30">
-              <Info className="h-4 w-4 text-blue-400" />
-              <AlertDescription className="text-xs sm:text-sm text-elec-light/80">
-                <strong>Tip:</strong> Typical utilisation is 50-60% (1,040-1,248 hours/year). 
-                The rest covers holidays, admin, quotes, and downtime.
-              </AlertDescription>
-            </Alert>
-          </CardContent>
-        </Card>
-
-        {/* Labour & Materials */}
-        <Card className="bg-elec-card border-elec-yellow/20">
-          <CardHeader className="pb-3 sm:pb-6">
-            <CardTitle className="text-base sm:text-lg text-elec-light flex items-center gap-2">
-              <Wrench className="h-5 w-5 text-elec-yellow" />
-              Labour & Materials
-            </CardTitle>
-            <CardDescription className="text-xs sm:text-sm text-elec-light/60">
-              Configure your cost structure and pricing strategy
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4 sm:gap-6">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              <MobileInput
-                label="Labour Cost / Hour"
-                value={labourCostHr ?? ''}
-                onChange={(e) => setLabourCostHr(Number(e.target.value) || 0)}
-                type="text"
-                inputMode="decimal"
+            <div className="grid grid-cols-3 gap-3">
+              <CalculatorInput
+                label="Labour Cost/Hour"
                 unit="£"
-                hint="Your hourly cost inc. NI, pension"
-              />
-              <MobileInput
-                label="Materials Share %"
-                value={materialShare ?? ''}
-                onChange={(e) => setMaterialShare(Number(e.target.value) || 0)}
                 type="text"
                 inputMode="decimal"
-                unit="%"
-                hint="Typical job materials %"
+                value={labourCostHr}
+                onChange={setLabourCostHr}
+                placeholder="e.g., 28"
+                hint="Inc. NI, pension"
               />
-              <MobileInput
-                label="Material Markup %"
-                value={materialMarkup ?? ''}
-                onChange={(e) => setMaterialMarkup(Number(e.target.value) || 0)}
+
+              <CalculatorInput
+                label="Materials Share"
+                unit="%"
                 type="text"
                 inputMode="decimal"
+                value={materialShare}
+                onChange={setMaterialShare}
+                placeholder="e.g., 30"
+              />
+
+              <CalculatorInput
+                label="Material Markup"
                 unit="%"
-                hint="Add for time, waste, storage"
+                type="text"
+                inputMode="decimal"
+                value={materialMarkup}
+                onChange={setMaterialMarkup}
+                placeholder="e.g., 18"
               />
             </div>
 
-            {materialMarkup < 15 && (
-              <Alert variant="destructive" className="animate-fade-in">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription className="text-xs sm:text-sm">
-                  <strong>Warning:</strong> Material markup below 15% may not cover procurement time, 
-                  wastage, and storage costs. Industry standard is 18-25%.
-                </AlertDescription>
-              </Alert>
+            {markupNum < 15 && markupNum > 0 && (
+              <div className="mt-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30">
+                <div className="flex items-center gap-2 text-amber-400 text-sm">
+                  <AlertTriangle className="h-4 w-4" />
+                  <span>
+                    Markup below 15% may not cover procurement time and wastage
+                  </span>
+                </div>
+              </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Margin & VAT */}
-        <Card className="bg-elec-card border-elec-yellow/20">
-          <CardHeader className="pb-3 sm:pb-6">
-            <CardTitle className="text-base sm:text-lg text-elec-light flex items-center gap-2">
-              <PoundSterling className="h-5 w-5 text-elec-yellow" />
-              Margin & VAT Settings
-            </CardTitle>
-            <CardDescription className="text-xs sm:text-sm text-elec-light/60">
-              Set your profit margin target and VAT configuration
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4 sm:gap-6">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              <MobileInput
-                label="Target Margin %"
-                value={targetMargin ?? ''}
-                onChange={(e) => setTargetMargin(Number(e.target.value) || 0)}
-                type="text"
-                inputMode="decimal"
+          {/* Margin & VAT */}
+          <div className="pt-4 border-t border-white/10">
+            <div className="flex items-center gap-2 mb-3">
+              <PoundSterling className="h-4 w-4 text-blue-400" />
+              <span className="text-sm font-medium text-white/80">Margin & VAT</span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <CalculatorInput
+                label="Target Margin"
                 unit="%"
-                hint="Aim for 15-25% for sustainability"
-              />
-              <MobileInput
-                label="VAT Rate %"
-                value={vatRate ?? ''}
-                onChange={(e) => setVatRate(Number(e.target.value) || 0)}
                 type="text"
                 inputMode="decimal"
+                value={targetMargin}
+                onChange={setTargetMargin}
+                placeholder="e.g., 20"
+                hint="Aim for 15-25%"
+              />
+
+              <CalculatorInput
+                label="VAT Rate"
                 unit="%"
-              />
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-elec-light">VAT Registered?</label>
-                <div className="inline-flex rounded-xl overflow-hidden border border-elec-yellow/30 w-full">
-                  <button 
-                    className={`flex-1 h-12 px-4 font-medium transition-all touch-manipulation ${
-                      vatRegistered 
-                        ? "bg-elec-yellow text-black" 
-                        : "text-elec-yellow hover:bg-elec-yellow/10"
-                    }`} 
-                    onClick={() => setVatRegistered(true)}
-                  >
-                    Yes
-                  </button>
-                  <button 
-                    className={`flex-1 h-12 px-4 font-medium transition-all touch-manipulation ${
-                      !vatRegistered 
-                        ? "bg-elec-yellow text-black" 
-                        : "text-elec-yellow hover:bg-elec-yellow/10"
-                    }`} 
-                    onClick={() => setVatRegistered(false)}
-                  >
-                    No
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {targetMargin < 10 && (
-              <Alert variant="destructive" className="animate-fade-in">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription className="text-xs sm:text-sm">
-                  <strong>Critical:</strong> Target margin below 10% leaves little room for 
-                  unexpected costs or business growth. Consider raising to 15-20%.
-                </AlertDescription>
-              </Alert>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Break-even Results */}
-        <Card className="bg-gradient-to-br from-elec-card to-elec-dark/50 border-elec-yellow/30 animate-scale-in">
-          <CardHeader className="pb-3 sm:pb-6">
-            <CardTitle className="text-base sm:text-lg text-elec-light flex items-center gap-2">
-              <CheckCircle2 className="h-5 w-5 text-green-400" />
-              Your Break-Even Rates
-            </CardTitle>
-            <CardDescription className="text-xs sm:text-sm text-elec-light/60">
-              Minimum rates to cover all costs before profit
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              <div className="p-4 rounded-lg bg-elec-dark/50 border border-green-500/20">
-                <div className="text-xs text-elec-light/60 mb-1">Overhead / Hour</div>
-                <div className="text-2xl sm:text-3xl font-bold text-green-400">{currency(overheadPerHour)}</div>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/30">
-                <div className="text-xs text-elec-light/60 mb-1">Break-Even / Hour</div>
-                <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">{currency(breakEvenHr)}</div>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-dark/50 border border-blue-500/20">
-                <div className="text-xs text-elec-light/60 mb-1">Break-Even Day (8h)</div>
-                <div className="text-2xl sm:text-3xl font-bold text-blue-400">{currency(breakEvenDay)}</div>
-              </div>
-            </div>
-
-            <Alert className="bg-green-500/10 border-green-500/30">
-              <CheckCircle2 className="h-4 w-4 text-green-400" />
-              <AlertDescription className="text-xs sm:text-sm text-elec-light/80">
-                <strong>Key Insight:</strong> Any quote below {currency(breakEvenHr)}/hour will lose money. 
-                Add your {targetMargin}% target margin on top to hit {currency(breakEvenHr * (1 + targetMargin / 100))}/hour.
-              </AlertDescription>
-            </Alert>
-          </CardContent>
-        </Card>
-
-        {/* Example Job Calculator */}
-        <Card className="bg-elec-card border-elec-yellow/20">
-          <CardHeader className="pb-3 sm:pb-6">
-            <CardTitle className="text-base sm:text-lg text-elec-light flex items-center gap-2">
-              <Clock className="h-5 w-5 text-elec-yellow" />
-              Example Job Pricing
-            </CardTitle>
-            <CardDescription className="text-xs sm:text-sm text-elec-light/60">
-              Test your pricing on a sample job with your target margin built in
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4 sm:gap-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              <MobileInput
-                label="Labour Hours"
-                value={exampleHours ?? ''}
-                onChange={(e) => setExampleHours(Number(e.target.value) || 0)}
                 type="text"
                 inputMode="decimal"
-                hint="Time on-site + travel"
-              />
-              <MobileInput
-                label="Materials Cost (ex VAT)"
-                value={exampleMats ?? ''}
-                onChange={(e) => setExampleMats(Number(e.target.value) || 0)}
-                type="text"
-                inputMode="decimal"
-                unit="£"
-                hint="Your cost, not selling price"
+                value={vatRate}
+                onChange={setVatRate}
+                placeholder="e.g., 20"
               />
             </div>
 
-            {/* Breakdown */}
-            <div className="p-4 rounded-lg bg-elec-dark/30 border border-elec-yellow/20 space-y-3">
-              <h4 className="font-semibold text-elec-light text-sm flex items-center gap-2">
-                <Info className="h-4 w-4 text-elec-yellow" />
-                Price Breakdown
-              </h4>
-              <div className="space-y-2 text-xs sm:text-sm">
-                <div className="flex justify-between text-elec-light/70">
-                  <span>Labour cost ({exampleHours}h × {currency(breakEvenHr)})</span>
-                  <strong className="text-elec-light">{currency(exLabourCost)}</strong>
-                </div>
-                <div className="flex justify-between text-elec-light/70">
-                  <span>Materials sell ({currency(exampleMats)} + {materialMarkup}%)</span>
-                  <strong className="text-elec-light">{currency(exMatsSell)}</strong>
-                </div>
-                <div className="flex justify-between text-elec-light/70">
-                  <span>Base price (before margin)</span>
-                  <strong className="text-elec-light">{currency(basePrice)}</strong>
-                </div>
-                <div className="flex justify-between text-elec-light/70 pt-2 border-t border-elec-yellow/20">
-                  <span>Target margin uplift ({targetMargin}%)</span>
-                  <strong className="text-green-400">+{currency(targetUplift - basePrice)}</strong>
-                </div>
-              </div>
-            </div>
-
-            {/* Final Prices */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              <div className="p-4 rounded-lg bg-gradient-to-br from-green-500/20 to-green-500/10 border border-green-500/30">
-                <div className="text-xs text-green-300/80 mb-1">Quote Price (ex VAT)</div>
-                <div className="text-3xl sm:text-4xl font-bold text-green-400">{currency(priceExVat)}</div>
-                <div className="text-xs text-green-300/60 mt-1">Includes {targetMargin}% margin</div>
-              </div>
-              <div className="p-4 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 border border-elec-yellow/30">
-                <div className="text-xs text-elec-light/60 mb-1">
-                  Total Price {vatRegistered ? "(inc VAT)" : ""}
-                </div>
-                <div className="text-3xl sm:text-4xl font-bold text-elec-yellow">{currency(priceIncVat)}</div>
-                {vatRegistered && (
-                  <div className="text-xs text-elec-light/60 mt-1">
-                    VAT: {currency(priceIncVat - priceExVat)}
-                  </div>
+            <div className="mt-3 flex gap-2">
+              <button
+                onClick={() => setVatRegistered(true)}
+                className={cn(
+                  "flex-1 h-12 rounded-xl font-medium text-sm transition-all",
+                  vatRegistered
+                    ? "text-black"
+                    : "bg-white/5 border border-white/10 text-white/70"
                 )}
-              </div>
+                style={
+                  vatRegistered
+                    ? {
+                        background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }
+                    : undefined
+                }
+              >
+                VAT Registered
+              </button>
+              <button
+                onClick={() => setVatRegistered(false)}
+                className={cn(
+                  "flex-1 h-12 rounded-xl font-medium text-sm transition-all",
+                  !vatRegistered
+                    ? "text-black"
+                    : "bg-white/5 border border-white/10 text-white/70"
+                )}
+                style={
+                  !vatRegistered
+                    ? {
+                        background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }
+                    : undefined
+                }
+              >
+                Not Registered
+              </button>
             </div>
 
-            <Alert className="bg-blue-500/10 border-blue-500/30">
-              <Info className="h-4 w-4 text-blue-400" />
-              <AlertDescription className="text-xs sm:text-sm text-elec-light/80">
-                <strong>Pro Tip:</strong> This quote protects your {targetMargin}% margin. 
-                If competing on price, know that anything below {currency(basePrice)} will eat into profit.
-              </AlertDescription>
-            </Alert>
-          </CardContent>
-        </Card>
-      </section>
-    </main>
+            {marginNum < 10 && marginNum > 0 && (
+              <div className="mt-3 p-3 rounded-xl bg-red-500/10 border border-red-500/30">
+                <div className="flex items-center gap-2 text-red-400 text-sm">
+                  <AlertTriangle className="h-4 w-4" />
+                  <span>
+                    Margin below 10% leaves little room for unexpected costs
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Reset Button */}
+          <button
+            onClick={reset}
+            className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Reset to Defaults
+          </button>
+        </CalculatorCard>
+
+        {/* Break-Even Results */}
+        {isValid && (
+          <div className="space-y-4 animate-fade-in">
+            <CalculatorResult category="business">
+              <div className="flex items-center gap-2 mb-4">
+                <CheckCircle2 className="h-5 w-5 text-green-400" />
+                <span className="text-sm font-medium text-white">Your Break-Even Rates</span>
+              </div>
+
+              <ResultsGrid columns={3}>
+                <ResultValue
+                  label="Overhead/Hour"
+                  value={currency(overheadPerHour)}
+                  category="business"
+                  size="sm"
+                />
+                <div className="text-center">
+                  <p className="text-xs text-white/60 mb-1">Break-Even/Hour</p>
+                  <div
+                    className="text-2xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    {currency(breakEvenHr)}
+                  </div>
+                </div>
+                <ResultValue
+                  label="Break-Even Day (8h)"
+                  value={currency(breakEvenDay)}
+                  category="business"
+                  size="sm"
+                />
+              </ResultsGrid>
+
+              <div className="mt-4 p-3 rounded-xl bg-green-500/10 border border-green-500/30">
+                <div className="flex items-start gap-2 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-green-400 mt-0.5" />
+                  <span className="text-green-200/80">
+                    Any quote below {currency(breakEvenHr)}/hour will lose money. Add your{" "}
+                    {marginNum}% margin to hit{" "}
+                    <strong className="text-green-400">
+                      {currency(breakEvenHr * (1 + marginNum / 100))}/hour
+                    </strong>
+                  </span>
+                </div>
+              </div>
+            </CalculatorResult>
+
+            {/* Example Job Calculator */}
+            <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+                <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                  <div className="flex items-center gap-3">
+                    <Clock className="h-4 w-4 text-blue-400" />
+                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                      Example Job Pricing
+                    </span>
+                  </div>
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      showAdvanced && "rotate-180"
+                    )}
+                  />
+                </CollapsibleTrigger>
+
+                <CollapsibleContent className="p-4 pt-0 space-y-4">
+                  <div className="grid grid-cols-2 gap-3">
+                    <CalculatorInput
+                      label="Labour Hours"
+                      type="text"
+                      inputMode="decimal"
+                      value={exampleHours}
+                      onChange={setExampleHours}
+                      placeholder="e.g., 4"
+                      hint="Time on-site + travel"
+                    />
+                    <CalculatorInput
+                      label="Materials Cost"
+                      unit="£"
+                      type="text"
+                      inputMode="decimal"
+                      value={exampleMats}
+                      onChange={setExampleMats}
+                      placeholder="e.g., 130"
+                      hint="Your cost, not selling"
+                    />
+                  </div>
+
+                  {/* Price Breakdown */}
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Info className="h-4 w-4 text-blue-400" />
+                      <span className="text-sm font-medium text-white">Price Breakdown</span>
+                    </div>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between text-white/60">
+                        <span>Labour ({exHoursNum}h × {currency(breakEvenHr)})</span>
+                        <span className="text-white">{currency(exLabourCost)}</span>
+                      </div>
+                      <div className="flex justify-between text-white/60">
+                        <span>Materials ({currency(exMatsNum)} + {markupNum}%)</span>
+                        <span className="text-white">{currency(exMatsSell)}</span>
+                      </div>
+                      <div className="flex justify-between text-white/60">
+                        <span>Base price (before margin)</span>
+                        <span className="text-white">{currency(basePrice)}</span>
+                      </div>
+                      <div className="flex justify-between text-white/60 pt-2 border-t border-white/10">
+                        <span>Margin uplift ({marginNum}%)</span>
+                        <span className="text-green-400">+{currency(targetUplift - basePrice)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Final Prices */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-center">
+                      <p className="text-xs text-green-300/80 mb-1">Quote (ex VAT)</p>
+                      <div className="text-3xl font-bold text-green-400">
+                        {currency(priceExVat)}
+                      </div>
+                      <p className="text-xs text-green-300/60 mt-1">
+                        Includes {marginNum}% margin
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-xl border text-center" style={{ borderColor: `${config.gradientFrom}30`, background: `linear-gradient(135deg, ${config.gradientFrom}10, ${config.gradientTo}10)` }}>
+                      <p className="text-xs text-white/60 mb-1">
+                        Total {vatRegistered ? "(inc VAT)" : ""}
+                      </p>
+                      <div
+                        className="text-3xl font-bold bg-clip-text text-transparent"
+                        style={{
+                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                        }}
+                      >
+                        {currency(priceIncVat)}
+                      </div>
+                      {vatRegistered && (
+                        <p className="text-xs text-white/60 mt-1">
+                          VAT: {currency(priceIncVat - priceExVat)}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </CollapsibleContent>
+              </div>
+            </Collapsible>
+
+            {/* What This Means */}
+            <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+                <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                  <div className="flex items-center gap-3">
+                    <Info className="h-4 w-4 text-blue-400" />
+                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                      What This Means
+                    </span>
+                  </div>
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      showGuidance && "rotate-180"
+                    )}
+                  />
+                </CollapsibleTrigger>
+
+                <CollapsibleContent className="p-4 pt-0">
+                  <ul className="space-y-2 text-sm text-blue-200/80">
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-400 mt-1">•</span>
+                      <span>
+                        <strong className="text-blue-300">Break-even rate:</strong> The minimum
+                        you must charge per hour just to cover your costs with zero profit
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-400 mt-1">•</span>
+                      <span>
+                        <strong className="text-blue-300">Overhead/hour:</strong> Your fixed
+                        costs (van, insurance, tools) spread across billable hours
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-400 mt-1">•</span>
+                      <span>
+                        <strong className="text-blue-300">Utilisation:</strong> Percentage of
+                        working time you can actually bill (target 50-60%)
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-400 mt-1">•</span>
+                      <span>
+                        <strong className="text-blue-300">Target margin:</strong> Your profit
+                        buffer for growth, emergencies, and investment
+                      </span>
+                    </li>
+                  </ul>
+                </CollapsibleContent>
+              </div>
+            </Collapsible>
+          </div>
+        )}
+
+        {/* Quick Reference */}
+        <Collapsible open={showReference} onOpenChange={setShowReference}>
+          <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+            <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-4 w-4 text-amber-400" />
+                <span className="text-sm sm:text-base font-medium text-amber-300">
+                  Break-Even Reference
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  showReference && "rotate-180"
+                )}
+              />
+            </CollapsibleTrigger>
+
+            <CollapsibleContent className="p-4 pt-0">
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">Typical Overheads</p>
+                  <p className="text-amber-200/70">Sole trader: £15-25k/yr</p>
+                  <p className="text-amber-200/70">Small firm: £30-50k/yr</p>
+                  <p className="text-amber-200/70">With premises: £50k+/yr</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">Utilisation Targets</p>
+                  <p className="text-amber-200/70">Excellent: 60%+ (1,248h)</p>
+                  <p className="text-amber-200/70">Good: 50-60% (1,040h)</p>
+                  <p className="text-amber-200/70">Low: &lt;40% (832h)</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">Material Markup</p>
+                  <p className="text-amber-200/70">Standard: 15-25%</p>
+                  <p className="text-amber-200/70">Specialist: 25-40%</p>
+                  <p className="text-amber-200/70">Emergency: 30-50%</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">Target Margins</p>
+                  <p className="text-amber-200/70">Minimum: 10-15%</p>
+                  <p className="text-amber-200/70">Target: 15-25%</p>
+                  <p className="text-amber-200/70">Premium: 25-35%</p>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+      </div>
+    </div>
   );
 };
 

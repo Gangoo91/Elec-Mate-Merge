@@ -175,9 +175,9 @@ const Section3_2 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <ClipboardList className="h-8 w-8 text-emerald-400" />
+            <ClipboardList className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 3.2
               </span>
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
@@ -194,8 +194,8 @@ const Section3_2 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Step 1:</strong> Identify the hazards that could cause harm.</li>
                 <li><strong>Step 2:</strong> Decide who might be harmed and how.</li>
@@ -204,8 +204,8 @@ const Section3_2 = () => {
                 <li><strong>Step 5:</strong> Review and update your assessment.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> New work activities, equipment changes, incident follow-ups, regulatory updates.</li>
                 <li><strong>Use:</strong> Before starting electrical work, during planning stages, method statement preparation.</li>
@@ -221,19 +221,19 @@ const Section3_2 = () => {
           <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply the HSE's five-step risk assessment process systematically</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Use risk matrices to evaluate likelihood and consequences</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Select appropriate control measures using the hierarchy of controls</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Document and communicate risk assessment findings effectively</span>
             </li>
           </ul>
@@ -241,9 +241,9 @@ const Section3_2 = () => {
 
         {/* Section 1: Step 1 - Identify the Hazards */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Step 1: Identify the Hazards
             </h2>
             <div className="space-y-4 text-foreground">
@@ -294,9 +294,9 @@ const Section3_2 = () => {
 
         {/* Section 2: Step 2 - Decide Who Might Be Harmed */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               Step 2: Decide Who Might Be Harmed and How
             </h2>
             <div className="space-y-4 text-foreground">
@@ -345,9 +345,9 @@ const Section3_2 = () => {
 
         {/* Section 3: Step 3 - Evaluate the Risks */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Step 3: Evaluate the Risks and Decide on Precautions
             </h2>
             <div className="space-y-4 text-foreground">
@@ -400,7 +400,7 @@ const Section3_2 = () => {
         <div className="mb-8">
           <div className="border-l-4 border-orange-500 bg-card p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <Scale className="h-6 w-6 text-emerald-400" />
+              <Scale className="h-6 w-6 text-elec-yellow" />
               5x5 Risk Assessment Matrix
             </h2>
             <div className="space-y-4 text-foreground">
@@ -518,9 +518,9 @@ const Section3_2 = () => {
 
         {/* Section 4: Step 4 - Record Findings and Implement */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Step 4: Record Findings and Implement Them
             </h2>
             <div className="space-y-4 text-foreground">
@@ -569,9 +569,9 @@ const Section3_2 = () => {
 
         {/* Section 5: Step 5 - Review and Update */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">5</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">5</span>
               Step 5: Review and Update Your Assessment
             </h2>
             <div className="space-y-4 text-foreground">
@@ -648,7 +648,7 @@ const Section3_2 = () => {
         <div className="mb-8">
           <div className="border-l-4 border-purple-500 bg-purple-50/50 dark:bg-purple-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-              <AlertTriangle className="h-6 w-6 text-emerald-400" />
+              <AlertTriangle className="h-6 w-6 text-elec-yellow" />
               Frequently Asked Questions
             </h2>
             <div className="space-y-6 text-foreground">

@@ -244,7 +244,7 @@ const Module6Section4_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Importance of Polarity in Electrical Safety</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Importance of Polarity in Electrical Safety</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -313,7 +313,7 @@ const Module6Section4_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Testing Methods and Procedures</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Testing Methods and Procedures</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -556,7 +556,7 @@ const Module6Section4_3 = () => {
           <div className="bg-card border border-elec-yellow/20 p-6 rounded-lg">
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Key Takeaways</h3>
+                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Key Takeaways</h3>
                 <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>• Polarity ensures correct connection of line, neutral, and CPC</li>
                   <li>• Switches must interrupt line conductors only</li>
@@ -566,7 +566,7 @@ const Module6Section4_3 = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Critical Points</h3>
+                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Critical Points</h3>
                 <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>• Wrong polarity = safety hazard</li>
                   <li>• Visual inspection is not enough</li>

@@ -225,10 +225,10 @@ const Module7Section2_3 = () => {
               
               <div className="text-xs sm:text-sm text-white space-y-4">
                 <div>
-                  <h4 className="font-medium mb-3 text-elec-yellow dark:text-elec-yellow">Definitions and Key Differences</h4>
+                  <h4 className="font-medium mb-3 text-elec-yellow text-elec-yellow">Definitions and Key Differences</h4>
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                      <h5 className="font-medium text-red-600 dark:text-elec-yellow mb-2">Earth Fault</h5>
+                      <h5 className="font-medium text-red-600 text-elec-yellow mb-2">Earth Fault</h5>
                       <p className="text-xs mb-2">An electrical fault where a live conductor makes direct contact with earth or exposed conductive parts, creating an immediate dangerous condition.</p>
                       <ul className="text-xs space-y-1">
                         <li>• Typically involves higher currents (hundreds of mA to several amps)</li>
@@ -251,11 +251,11 @@ const Module7Section2_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-3 text-elec-yellow dark:text-elec-yellow">Common Causes and Contributing Factors</h4>
+                  <h4 className="font-medium mb-3 text-elec-yellow text-elec-yellow">Common Causes and Contributing Factors</h4>
                   <div className="space-y-3">
                     <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg">
-                      <h5 className="font-medium text-red-700 dark:text-elec-yellow mb-2">Earth Fault Causes</h5>
-                      <ul className="text-xs text-red-600 dark:text-elec-yellow space-y-1">
+                      <h5 className="font-medium text-red-700 text-elec-yellow mb-2">Earth Fault Causes</h5>
+                      <ul className="text-xs text-red-600 text-elec-yellow space-y-1">
                         <li>• <strong>Mechanical damage:</strong> Nails, screws, or tools penetrating cable insulation</li>
                         <li>• <strong>Water ingress:</strong> Moisture entering electrical equipment or accessories</li>
                         <li>• <strong>Insulation failure:</strong> Age, heat, or chemical degradation of cable insulation</li>
@@ -277,9 +277,9 @@ const Module7Section2_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-3 text-elec-yellow dark:text-elec-yellow">Safety Risks and Effects</h4>
+                  <h4 className="font-medium mb-3 text-elec-yellow text-elec-yellow">Safety Risks and Effects</h4>
                   <div className="bg-card border border-border/30 rounded-lg p-3">
-                    <h5 className="font-medium text-red-600 dark:text-elec-yellow mb-2">Immediate Safety Risks</h5>
+                    <h5 className="font-medium text-red-600 text-elec-yellow mb-2">Immediate Safety Risks</h5>
                     <ul className="text-xs space-y-1">
                       <li>• <strong>Electric shock:</strong> Exposed metalwork becomes live and dangerous to touch</li>
                       <li>• <strong>Fire risk:</strong> Arcing at fault points can ignite combustible materials</li>
@@ -288,7 +288,7 @@ const Module7Section2_3 = () => {
                     </ul>
                   </div>
                   <div className="bg-card border border-border/30 rounded-lg p-3 mt-3">
-                    <h5 className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Operational Problems</h5>
+                    <h5 className="font-medium text-orange-600 text-elec-yellow mb-2">Operational Problems</h5>
                     <ul className="text-xs space-y-1">
                       <li>• <strong>Nuisance tripping:</strong> RCDs operate unnecessarily, causing supply interruption</li>
                       <li>• <strong>Reduced availability:</strong> Frequent supply interruptions affect productivity and safety systems</li>
@@ -352,9 +352,9 @@ const Module7Section2_3 = () => {
                 <div>
                   <h4 className="font-medium mb-3 text-green-600 dark:text-green-400">BS 7671 Requirements and Standards</h4>
                   <div className="space-y-3">
-                    <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 p-3 rounded-lg">
-                      <h5 className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Key BS 7671 Requirements</h5>
-                      <ul className="text-xs text-elec-yellow dark:text-elec-yellow space-y-1">
+                    <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 p-3 rounded-lg">
+                      <h5 className="font-medium text-blue-700 text-elec-yellow mb-2">Key BS 7671 Requirements</h5>
+                      <ul className="text-xs text-elec-yellow text-elec-yellow space-y-1">
                         <li>• <strong>Section 411:</strong> Protective measures - basic protection and fault protection</li>
                         <li>• <strong>Section 531:</strong> Selection and erection of RCDs and protective devices</li>
                         <li>• <strong>30mA additional protection:</strong> Required for socket outlets up to 20A and mobile equipment</li>
@@ -363,8 +363,8 @@ const Module7Section2_3 = () => {
                       </ul>
                     </div>
                     <div className="bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 p-3 rounded-lg">
-                      <h5 className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Design Considerations</h5>
-                      <ul className="text-xs text-purple-600 dark:text-elec-yellow space-y-1">
+                      <h5 className="font-medium text-purple-700 text-elec-yellow mb-2">Design Considerations</h5>
+                      <ul className="text-xs text-purple-600 text-elec-yellow space-y-1">
                         <li>• <strong>Discrimination and selectivity:</strong> Use time-delayed RCDs in series arrangements</li>
                         <li>• <strong>Split-load design:</strong> Separate circuits to prevent total loss of supply</li>
                         <li>• <strong>RCD sensitivity selection:</strong> Balance between protection and nuisance tripping</li>
@@ -415,7 +415,7 @@ const Module7Section2_3 = () => {
               
               <div className="text-xs sm:text-sm text-white space-y-4">
                 <div>
-                  <h4 className="font-medium mb-3 text-purple-600 dark:text-elec-yellow">Systematic Testing Process</h4>
+                  <h4 className="font-medium mb-3 text-purple-600 text-elec-yellow">Systematic Testing Process</h4>
                   <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                     <h5 className="font-medium mb-2">Step-by-Step Investigation</h5>
                     <ol className="list-decimal pl-4 space-y-2 text-xs">
@@ -433,7 +433,7 @@ const Module7Section2_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-3 text-purple-600 dark:text-elec-yellow">Testing Equipment and Techniques</h4>
+                  <h4 className="font-medium mb-3 text-purple-600 text-elec-yellow">Testing Equipment and Techniques</h4>
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                       <h5 className="font-medium mb-2">Essential Test Equipment</h5>
@@ -459,11 +459,11 @@ const Module7Section2_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-3 text-purple-600 dark:text-elec-yellow">Troubleshooting Common Issues</h4>
+                  <h4 className="font-medium mb-3 text-purple-600 text-elec-yellow">Troubleshooting Common Issues</h4>
                   <div className="space-y-3">
                     <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg">
-                      <h5 className="font-medium text-red-700 dark:text-elec-yellow mb-2">Nuisance RCD Tripping</h5>
-                      <ul className="text-xs text-red-600 dark:text-elec-yellow space-y-1">
+                      <h5 className="font-medium text-red-700 text-elec-yellow mb-2">Nuisance RCD Tripping</h5>
+                      <ul className="text-xs text-red-600 text-elec-yellow space-y-1">
                         <li>• <strong>Identify cumulative leakage:</strong> Test individual circuits to find high contributors</li>
                         <li>• <strong>Temporary disconnection:</strong> Isolate suspected circuits to confirm source</li>
                         <li>• <strong>Load redistribution:</strong> Move high-leakage equipment to separate RCD</li>
@@ -485,7 +485,7 @@ const Module7Section2_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-3 text-purple-600 dark:text-elec-yellow">Verification and Documentation</h4>
+                  <h4 className="font-medium mb-3 text-purple-600 text-elec-yellow">Verification and Documentation</h4>
                   <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 p-3 rounded-lg">
                     <h5 className="font-medium text-green-700 dark:text-green-300 mb-2">Post-Repair Verification</h5>
                     <ul className="text-xs text-green-600 dark:text-green-400 space-y-1">
@@ -536,7 +536,7 @@ const Module7Section2_3 = () => {
                   </ol>
                 </div>
                 <div className="bg-card p-4 rounded-lg border border-border/30">
-                  <h3 className="font-medium mb-3 text-elec-yellow dark:text-elec-yellow">Testing Equipment Required</h3>
+                  <h3 className="font-medium mb-3 text-elec-yellow text-elec-yellow">Testing Equipment Required</h3>
                   <ul className="list-disc pl-4 space-y-2">
                     <li><strong>RCD tester:</strong> For trip time and sensitivity testing</li>
                     <li><strong>Insulation resistance tester:</strong> 500V minimum for circuits</li>

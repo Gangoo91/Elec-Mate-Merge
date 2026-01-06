@@ -270,7 +270,7 @@ const Module5Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Drawing Types and Applications</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Drawing Types and Applications</p>
                     <p className="text-base text-white mb-2"><strong>Layout drawings:</strong> Show physical positions of electrical equipment.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Positions of sockets, switches, luminaires, and distribution boards</li>
@@ -388,7 +388,7 @@ const Module5Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Scale Interpretation and Application</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Scale Interpretation and Application</p>
                     <p className="text-base text-white mb-2"><strong>Common drawing scales:</strong> Understanding scale ratios and their applications.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>1:50 - detailed room layouts and equipment positioning</li>
@@ -447,7 +447,7 @@ const Module5Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Circuit Organisation and Identification</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Circuit Organisation and Identification</p>
                     <p className="text-base text-white mb-2"><strong>Circuit grouping:</strong> How circuits are organised and distributed.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Circuits grouped by function (lighting, power, heating)</li>
@@ -551,7 +551,7 @@ const Module5Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Avoiding Common Drawing Interpretation Errors</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Avoiding Common Drawing Interpretation Errors</p>
                     <p className="text-base text-white mb-2"><strong>Scale and dimension errors:</strong> Measurement and positioning mistakes.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Misreading scale ratios leading to wrong positioning</li>

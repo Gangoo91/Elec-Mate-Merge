@@ -317,7 +317,7 @@ const Module4Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Check the Title Block</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Check the Title Block</p>
                     <p className="text-sm text-white mb-2">Project name, drawing number, scale and date.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>What to look for:</strong> Drawing number for reference, revision letter/number, 
@@ -331,7 +331,7 @@ const Module4Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Understand the Scale</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Understand the Scale</p>
                     <p className="text-sm text-white mb-2">Ensure accurate measurement and placement.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Key considerations:</strong> Scale affects cable lengths, containment routes and positioning. 
@@ -345,7 +345,7 @@ const Module4Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Review the Key/Legend</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Review the Key/Legend</p>
                     <p className="text-sm text-white mb-2">Interpret symbols correctly.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Essential symbols:</strong> Socket outlets (13A, 20A), lighting points, switches (1-way, 2-way), 
@@ -359,7 +359,7 @@ const Module4Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Follow the Circuit</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Follow the Circuit</p>
                     <p className="text-sm text-white mb-2">Trace wiring routes and connections.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Systematic approach:</strong> Start from the distribution board, follow circuit numbers, 
@@ -373,7 +373,7 @@ const Module4Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Cross-Reference with Specifications</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Cross-Reference with Specifications</p>
                     <p className="text-sm text-white mb-2">Confirm compliance with written requirements.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Check against:</strong> Cable specifications, equipment schedules, installation methods, 
@@ -387,7 +387,7 @@ const Module4Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Verify Dimensions and Levels</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Verify Dimensions and Levels</p>
                     <p className="text-sm text-white mb-2">Check heights, depths and positioning requirements.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Critical measurements:</strong> Socket heights (450mm above floor), switch heights (1200mm), 

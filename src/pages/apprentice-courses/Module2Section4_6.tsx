@@ -547,7 +547,7 @@ const Module2Section4_6 = () => {
               <div className="space-y-4">
                 <div className="bg-card border border-elec-yellow/30 p-3 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Safety Priorities</h4>
-                  <ul className="space-y-1 text-emerald-200 text-xs">
+                  <ul className="space-y-1 text-elec-yellow text-xs">
                     <li>• <strong>Isolate:</strong> Lock-off all sources</li>
                     <li>• <strong>Prove dead:</strong> Before & after with proving unit</li>
                     <li>• <strong>CAT rating:</strong> III/IV for voltage range</li>

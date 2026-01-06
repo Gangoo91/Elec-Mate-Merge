@@ -223,7 +223,7 @@ const Module4Section5_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Positioning for Optimal Illumination</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Positioning for Optimal Illumination</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Room lighting principles:</strong> Centre points provide even distribution unless furniture layout dictates otherwise.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Task lighting considerations:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -249,7 +249,7 @@ const Module4Section5_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Ceiling Structure and Load Assessment</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Ceiling Structure and Load Assessment</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Structural considerations:</strong> Identify ceiling construction type before specifying fixing method.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Ceiling construction types:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -275,7 +275,7 @@ const Module4Section5_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Environmental and Special Location Requirements</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Environmental and Special Location Requirements</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>IP rating requirements by location:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Bathroom zones: IP44 minimum (IP65 in shower areas)</li>
@@ -420,7 +420,7 @@ const Module4Section5_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Circuit Design and Connection Methods</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Circuit Design and Connection Methods</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Loop-in ceiling rose wiring:</strong> Most common domestic lighting circuit configuration.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Connection arrangements:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -447,7 +447,7 @@ const Module4Section5_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Pendant Connection and Strain Relief</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Pendant Connection and Strain Relief</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Cord grip installation:</strong> Essential for preventing strain on electrical connections.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Pendant cable requirements:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -474,7 +474,7 @@ const Module4Section5_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Junction Box and Alternative Connection Methods</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Junction Box and Alternative Connection Methods</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Separate junction box systems:</strong> Modern alternative to loop-in ceiling roses.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Junction box applications:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -520,7 +520,7 @@ const Module4Section5_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Electrical Testing Requirements</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Electrical Testing Requirements</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Pre-energising tests:</strong> Essential safety verification before commissioning.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Test sequence (BS 7671 Part 6):</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -547,7 +547,7 @@ const Module4Section5_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Functional and Operational Testing</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Functional and Operational Testing</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Light output verification:</strong> Ensure adequate illumination levels for intended use.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Functional test procedures:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -574,7 +574,7 @@ const Module4Section5_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Safety Compliance and Final Inspection</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Safety Compliance and Final Inspection</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Visual inspection checklist:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Secure mounting: all fittings properly supported and stable</li>

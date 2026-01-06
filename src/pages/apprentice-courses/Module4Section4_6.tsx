@@ -213,7 +213,7 @@ const Module4Section4_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Safety Protection Functions</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Safety Protection Functions</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Fault current management:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Low-resistance path: {'<'}0.5Ω for most installations, enables rapid fault clearing</li>
@@ -239,7 +239,7 @@ const Module4Section4_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Fault Scenarios and Risk Assessment</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Fault Scenarios and Risk Assessment</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Common fault conditions:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Cable insulation failure: Direct contact with metallic containment surface</li>
@@ -381,7 +381,7 @@ const Module4Section4_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Mechanical and Material Limitations</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Mechanical and Material Limitations</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Insufficient mechanical robustness:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Thin-wall conduit: {'<'}1.2mm wall thickness insufficient for large circuit CPCs</li>
@@ -407,7 +407,7 @@ const Module4Section4_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Environmental and Maintenance Factors</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Environmental and Maintenance Factors</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Corrosive environment impacts:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Marine environments: Salt spray causing rapid degradation of joint surfaces</li>
@@ -445,7 +445,7 @@ const Module4Section4_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Earth Clamps and Bonding Conductor Selection</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Earth Clamps and Bonding Conductor Selection</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Earth clamp specifications and installation:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Clamp rating: Minimum 25A fault current capacity for final circuits, 63A+ for submains</li>
@@ -471,7 +471,7 @@ const Module4Section4_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Earth Straps and Expansion Joint Management</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Earth Straps and Expansion Joint Management</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Flexible earth strap applications:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Expansion joints: Braided copper strap rated for thermal movement range</li>
@@ -497,7 +497,7 @@ const Module4Section4_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Internal Earth Links and Specialist Solutions</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Internal Earth Links and Specialist Solutions</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Internal earth link systems:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Trunking earth links: Proprietary systems maintaining continuity across joints</li>
@@ -542,7 +542,7 @@ const Module4Section4_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Continuity Testing Standards and Procedures</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Continuity Testing Standards and Procedures</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Test equipment specifications:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Low-resistance ohmmeter: 200mA ± 10% test current minimum, 1mΩ resolution</li>
@@ -568,7 +568,7 @@ const Module4Section4_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Documentation and Compliance Verification</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Documentation and Compliance Verification</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Test record requirements:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Installation certificate: BS 7671 compliance, test results, and limitations</li>

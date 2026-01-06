@@ -211,7 +211,7 @@ const Module4Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Masonry and Blockwork Fixings</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Masonry and Blockwork Fixings</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Primary choice:</strong> Wall plugs (brown for masonry, grey for dense block) with corrosion-resistant screws.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Load capacity:</strong> 8mm plugs = 25kg, 10mm plugs = 40kg, 12mm plugs = 60kg per fixing point.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Installation process:</strong></p>
@@ -232,7 +232,7 @@ const Module4Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Concrete and Heavy-Duty Applications</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Concrete and Heavy-Duty Applications</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Drop-in anchors:</strong> M8 = 500kg, M10 = 800kg, M12 = 1200kg safe working load.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Chemical anchors:</strong> For highest loads and critical applications (up to 2000kg per point).</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Installation considerations:</strong></p>
@@ -253,7 +253,7 @@ const Module4Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Hollow Walls and Special Substrates</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Hollow Walls and Special Substrates</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Plasterboard:</strong> Spring toggles (25kg), metal cavity fixings (15kg), or find studs for screw fixing (40kg+).</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Steel framework:</strong> Self-drilling screws with EPDM washers, M6-M8 for light loads, M10-M12 for heavy.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Timber substrates:</strong> Coach screws minimum 50mm penetration, pilot holes at 80% thread diameter.</p>
@@ -268,7 +268,7 @@ const Module4Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Environmental and Corrosion Considerations</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Environmental and Corrosion Considerations</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Damp locations:</strong> Marine-grade stainless steel (316L) or hot-dip galvanised to BS EN ISO 1461.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>External installations:</strong> A4 stainless steel minimum, with appropriate gaskets and sealing.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Corrosion protection grades:</strong></p>
@@ -423,7 +423,7 @@ const Module4Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Pre-Installation Planning and Marking</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Pre-Installation Planning and Marking</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Service detection protocol:</strong></p>
                     <ol className="text-xs text-white ml-4 mb-2 list-decimal space-y-1">
                       <li>Use CAT scanner for electrical services (power off if possible)</li>
@@ -450,7 +450,7 @@ const Module4Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Drilling and Fixing Installation Process</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Drilling and Fixing Installation Process</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Drilling best practices:</strong></p>
                     <ol className="text-xs text-white ml-4 mb-2 list-decimal space-y-1">
                       <li>Start with slow speed to establish hole position</li>
@@ -477,7 +477,7 @@ const Module4Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Heavy Section Installation Techniques</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Heavy Section Installation Techniques</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Team lifting procedures:</strong></p>
                     <ol className="text-xs text-white ml-4 mb-2 list-decimal space-y-1">
                       <li>Pre-fit all brackets and check alignment before lifting</li>
@@ -523,7 +523,7 @@ const Module4Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Over-Tightening and Deformation Issues</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Over-Tightening and Deformation Issues</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Symptoms and causes:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Crushed PVC conduit from excessive clamp pressure</li>
@@ -549,7 +549,7 @@ const Module4Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Inappropriate Fixing Selection</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Inappropriate Fixing Selection</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Common mismatches and consequences:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Wall plugs in hollow blocks - inadequate grip, eventual failure</li>
@@ -576,7 +576,7 @@ const Module4Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Spacing and Alignment Errors</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Spacing and Alignment Errors</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Insufficient spacing problems:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Visible sagging between support points</li>
@@ -602,7 +602,7 @@ const Module4Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Vibration and Dynamic Load Issues</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Vibration and Dynamic Load Issues</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Vibration-related failures:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Gradual loosening of standard fixings near machinery</li>

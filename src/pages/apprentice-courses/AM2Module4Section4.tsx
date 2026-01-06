@@ -194,7 +194,7 @@ const AM2Module4Section4 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Zap className="w-4 h-4" />
             Module 4 – Section 4
           </div>
@@ -210,7 +210,7 @@ const AM2Module4Section4 = () => {
         <Card className="bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-700/50 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-700 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-700 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-900 dark:text-red-100 mb-2 text-sm sm:text-base">
                   CRITICAL: Functional Testing is Mandatory
@@ -227,9 +227,9 @@ const AM2Module4Section4 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -238,23 +238,23 @@ const AM2Module4Section4 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Perform functional testing of lighting, power, and motor circuits
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Carry out RCD testing and confirm trip times within specified limits
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Check polarity and operation of switches, sockets, and protective devices
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Demonstrate functional testing confidently to an assessor
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Record functional results correctly on certification
               </li>
             </ul>
@@ -262,20 +262,20 @@ const AM2Module4Section4 = () => {
         </Card>
 
         {/* What is Functional Testing */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
               1. What is Functional Testing?
             </h2>
             
             <div className="space-y-4 sm:space-y-6">
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 sm:mb-3 text-sm sm:text-base">Definition and Purpose:</h4>
-                <p className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 mb-3">
+                <p className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow mb-3">
                   Functional testing confirms the installation operates as intended. It goes beyond electrical tests — checks real-world usability and operational safety.
                 </p>
-                <p className="text-xs sm:text-sm text-emerald-400 dark:text-emerald-400">
+                <p className="text-xs sm:text-sm text-elec-yellow dark:text-elec-yellow">
                   <strong>Key Principle:</strong> Proving that circuits and equipment actually work correctly in practice, not just that they pass electrical measurements.
                 </p>
               </div>
@@ -295,7 +295,7 @@ const AM2Module4Section4 = () => {
                 
                 <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2 sm:mb-3 text-sm sm:text-base">Why It's Essential:</h4>
-                  <ul className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow space-y-1">
                     <li>• Confirms installation works as designed</li>
                     <li>• Identifies wiring errors not found in electrical tests</li>
                     <li>• Proves safety systems operate correctly</li>
@@ -318,9 +318,9 @@ const AM2Module4Section4 = () => {
         />
 
         {/* Key Functional Tests in AM2 */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Play className="w-5 h-5" />
               2. Key Functional Tests in AM2
             </h2>
@@ -328,12 +328,12 @@ const AM2Module4Section4 = () => {
             <div className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="space-y-4">
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 text-sm sm:text-base flex items-center gap-2">
                       <Lightbulb className="w-4 h-4" />
                       Lighting Circuits:
                     </h4>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                       <li>• Operate switches (one-way, two-way, intermediate)</li>
                       <li>• Confirm correct lamps switch on/off</li>
                       <li>• Test all switching combinations</li>
@@ -363,7 +363,7 @@ const AM2Module4Section4 = () => {
                       <Settings className="w-4 h-4" />
                       Motor Circuits:
                     </h4>
-                    <ul className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow space-y-1">
                       <li>• Confirm DOL starter operation</li>
                       <li>• Test stop/start controls</li>
                       <li>• Verify overload protection resets</li>
@@ -377,7 +377,7 @@ const AM2Module4Section4 = () => {
                       <Target className="w-4 h-4" />
                       RCD/RCBO Testing:
                     </h4>
-                    <ul className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow space-y-1">
                       <li>• Trip tests at ×1 and ×5 IΔn</li>
                       <li>• Must trip within limits (ms)</li>
                       <li>• Manual test button operation</li>
@@ -394,7 +394,7 @@ const AM2Module4Section4 = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div>
                     <strong className="text-yellow-700 dark:text-yellow-300 block mb-2">Standard RCD (30mA):</strong>
-                    <ul className="text-emerald-400 dark:text-emerald-400 space-y-1">
+                    <ul className="text-elec-yellow dark:text-elec-yellow space-y-1">
                       <li>• 1× test (30mA): Should trip but may take up to 300ms</li>
                       <li>• 5× test (150mA): Must trip within 40ms</li>
                       <li>• Manual test: Must operate and cut supply</li>
@@ -403,7 +403,7 @@ const AM2Module4Section4 = () => {
                   </div>
                   <div>
                     <strong className="text-yellow-700 dark:text-yellow-300 block mb-2">Recording Requirements:</strong>
-                    <ul className="text-emerald-400 dark:text-emerald-400 space-y-1">
+                    <ul className="text-elec-yellow dark:text-elec-yellow space-y-1">
                       <li>• Record actual trip times in milliseconds</li>
                       <li>• Note if RCD fails to trip within limits</li>
                       <li>• Record both test currents and times</li>
@@ -483,9 +483,9 @@ const AM2Module4Section4 = () => {
         />
 
         {/* Assessor Expectations */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               4. Assessor Expectations
             </h2>
@@ -505,12 +505,12 @@ const AM2Module4Section4 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 sm:mb-3 text-sm sm:text-base flex items-center gap-2">
                     <Target className="w-4 h-4" />
                     Technical Requirements:
                   </h4>
-                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                     <li>• Record results in correct units (ms for RCDs)</li>
                     <li>• Leave installation in a safe state after functional tests</li>
                     <li>• Complete all required test combinations</li>
@@ -524,8 +524,8 @@ const AM2Module4Section4 = () => {
                 <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3 text-sm sm:text-base">What Assessors Specifically Look For:</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div>
-                    <strong className="text-purple-700 dark:text-emerald-400 block mb-2">Systematic Testing:</strong>
-                    <ul className="text-purple-600 dark:text-emerald-400 space-y-1">
+                    <strong className="text-purple-700 dark:text-elec-yellow block mb-2">Systematic Testing:</strong>
+                    <ul className="text-purple-600 dark:text-elec-yellow space-y-1">
                       <li>• Logical sequence of testing</li>
                       <li>• Complete coverage of all circuits</li>
                       <li>• Proper use of test equipment</li>
@@ -533,8 +533,8 @@ const AM2Module4Section4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <strong className="text-purple-700 dark:text-emerald-400 block mb-2">Professional Communication:</strong>
-                    <ul className="text-purple-600 dark:text-emerald-400 space-y-1">
+                    <strong className="text-purple-700 dark:text-elec-yellow block mb-2">Professional Communication:</strong>
+                    <ul className="text-purple-600 dark:text-elec-yellow space-y-1">
                       <li>• Clear explanation of each test</li>
                       <li>• Identification of any issues found</li>
                       <li>• Demonstration of problem-solving skills</li>
@@ -548,9 +548,9 @@ const AM2Module4Section4 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
               5. Comprehensive Practical Guidance
             </h2>
@@ -558,23 +558,23 @@ const AM2Module4Section4 = () => {
             <div className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="space-y-4">
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 text-sm sm:text-base">Lighting Circuit Testing:</h4>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-2">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-2">
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Always test every switching combination — don't assume</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Check one-way, two-way, and intermediate switches</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Verify correct lamp control from all switch positions</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Test dimmer operation through full range</span>
                       </li>
                     </ul>
@@ -606,21 +606,21 @@ const AM2Module4Section4 = () => {
                 <div className="space-y-4">
                   <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-2 text-sm sm:text-base">RCD Testing Procedure:</h4>
-                    <ul className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 space-y-2">
+                    <ul className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow space-y-2">
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Test at ×1 and ×5 IΔn with appropriate RCD tester</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Press manual test button operation</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Record trip times accurately in milliseconds</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Verify reset function operates correctly</span>
                       </li>
                     </ul>
@@ -628,21 +628,21 @@ const AM2Module4Section4 = () => {
                   
                   <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2 text-sm sm:text-base">Motor Circuit Testing:</h4>
-                    <ul className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 space-y-2">
+                    <ul className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow space-y-2">
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Check start and stop controls operate correctly</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Confirm overloads reset correctly</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Verify emergency stop functions</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Check motor rotation direction</span>
                       </li>
                     </ul>
@@ -687,9 +687,9 @@ const AM2Module4Section4 = () => {
         />
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Real-World Examples
             </h2>
@@ -700,7 +700,7 @@ const AM2Module4Section4 = () => {
                 <p className="text-xs sm:text-sm text-red-800 dark:text-red-200 mb-2">
                   Candidate did full electrical tests but didn't test two-way switching. Assessor flagged incomplete → <strong>lost marks</strong>
                 </p>
-                <p className="text-xs text-red-700 dark:text-emerald-400">
+                <p className="text-xs text-red-700 dark:text-elec-yellow">
                   Lesson: Every switching combination must be tested. Missing any combination could hide wiring errors.
                 </p>
               </div>
@@ -710,7 +710,7 @@ const AM2Module4Section4 = () => {
                 <p className="text-xs sm:text-sm text-red-800 dark:text-red-200 mb-2">
                   Candidate only did RCD ×1 trip test, forgot ×5. Incomplete → <strong>lost marks</strong>
                 </p>
-                <p className="text-xs text-red-700 dark:text-emerald-400">
+                <p className="text-xs text-red-700 dark:text-elec-yellow">
                   Lesson: Both ×1 and ×5 IΔn tests are mandatory. Incomplete testing = incomplete certification.
                 </p>
               </div>
@@ -725,12 +725,12 @@ const AM2Module4Section4 = () => {
                 </p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 bg-yellow-50 dark:bg-yellow-950/20 p-3 sm:p-4">
+              <div className="border-l-4 border-elec-yellow bg-yellow-50 dark:bg-yellow-950/20 p-3 sm:p-4">
                 <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-2 text-sm sm:text-base">Example 4: Real-Life Consequence</h4>
                 <p className="text-xs sm:text-sm text-yellow-700 dark:text-yellow-300 mb-2">
                   In real work, an electrician energised without testing motor overload. Motor burnt out. Same mistake in AM2 = fail.
                 </p>
-                <p className="text-xs text-emerald-400 dark:text-emerald-400">
+                <p className="text-xs text-elec-yellow dark:text-elec-yellow">
                   Lesson: Functional testing prevents costly equipment failures and safety incidents in real installations.
                 </p>
               </div>
@@ -739,9 +739,9 @@ const AM2Module4Section4 = () => {
         </Card>
 
         {/* Advanced Functional Testing Techniques */}
-        <Card className="bg-gradient-to-r from-card/10 to-emerald-500/10 border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-gradient-to-r from-card/10 to-elec-yellow/10 border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <TrendingUp className="w-5 h-5" />
               Advanced Functional Testing Techniques
             </h2>
@@ -769,8 +769,8 @@ const AM2Module4Section4 = () => {
                 </div>
               </div>
               
-              <div className="bg-emerald-500/10 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-emerald-400 mb-2 text-sm sm:text-base">Industry Best Practices:</h4>
+              <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
+                <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Industry Best Practices:</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   Professional electricians use functional testing to verify that installations will operate safely and reliably 
                   in service. This testing phase often reveals issues that purely electrical tests miss, making it essential 
@@ -782,9 +782,9 @@ const AM2Module4Section4 = () => {
         </Card>
 
         {/* Section Summary */}
-        <Card className="bg-gradient-to-r from-emerald-500/5 to-card/5 border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-gradient-to-r from-elec-yellow/5 to-card/5 border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Section Summary
             </h2>
@@ -816,8 +816,8 @@ const AM2Module4Section4 = () => {
                 </ul>
               </div>
               
-              <div className="bg-emerald-500/10 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-emerald-400 mb-2 text-sm sm:text-base">Next Steps:</h4>
+              <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
+                <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Next Steps:</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   You have now completed all essential testing procedures for AM2. The next section will cover 
                   final certification completion and handover procedures to complete your assessment successfully.
@@ -828,9 +828,9 @@ const AM2Module4Section4 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               Test Your Knowledge
             </h2>

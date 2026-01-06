@@ -134,9 +134,9 @@ const Section4_4 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Hammer className="h-8 w-8 text-emerald-400" />
+            <Hammer className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 4.4
               </span>
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
@@ -153,8 +153,8 @@ const Section4_4 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Manual handling:</strong> Lifting, carrying, pushing, pulling with proper technique.</li>
                 <li><strong>TILE principle:</strong> Task, Individual, Load, Environment assessment.</li>
@@ -163,8 +163,8 @@ const Section4_4 = () => {
                 <li><strong>Prevention:</strong> Training, equipment checks, safe practices.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Poor lifting posture, damaged tools, rushing tasks.</li>
                 <li><strong>Use:</strong> TILE assessments, daily tool checks, safe techniques.</li>
@@ -180,33 +180,33 @@ const Section4_4 = () => {
           <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand what manual handling includes</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Learn safe lifting techniques using TILE principle</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify good practices for tool use and maintenance</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise common tool hazards and how to avoid them</span>
             </li>
           </ul>
         </Card>
 
         {/* What Is Manual Handling? */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">What Is Manual Handling?</h2>
           </div>
           
           <div className="space-y-6">
-            <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
               <p className="font-medium text-blue-800 dark:text-blue-200 mb-3">
                 Manual handling includes lifting, carrying, pushing, pulling, lowering or holding objects by hand or bodily force.
               </p>
@@ -215,7 +215,7 @@ const Section4_4 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Package className="h-4 w-4 text-emerald-400" />
+                  <Package className="h-4 w-4 text-elec-yellow" />
                   Common Electrical Examples
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -229,7 +229,7 @@ const Section4_4 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-red-800 dark:text-red-200">Risks of Poor Handling</h4>
-                <ul className="text-red-700 dark:text-emerald-400 text-sm space-y-1">
+                <ul className="text-red-700 dark:text-elec-yellow text-sm space-y-1">
                   <li>• Back strain or slipped discs</li>
                   <li>• Shoulder and wrist injuries</li>
                   <li>• Cuts or trapped fingers</li>
@@ -249,26 +249,26 @@ const Section4_4 = () => {
         />
 
         {/* Safe Lifting Techniques - The TILE Principle */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">Safe Lifting Techniques - The TILE Principle</h2>
           </div>
           
           <div className="space-y-6">
-            <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4">
-              <p className="font-medium text-emerald-800 dark:text-emerald-200 mb-3">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20 rounded-lg p-4">
+              <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-3">
                 Follow the TILE principle before any lifting operation to assess risks and plan safely.
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200 flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">T</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">T</span>
                   Task
                 </h4>
-                <ul className="text-blue-700 dark:text-emerald-400 text-sm space-y-1">
+                <ul className="text-blue-700 dark:text-elec-yellow text-sm space-y-1">
                   <li>• Is help needed?</li>
                   <li>• Can mechanical aids be used?</li>
                   <li>• Is the lift awkward or unusual?</li>
@@ -292,7 +292,7 @@ const Section4_4 = () => {
                   <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">L</span>
                   Load
                 </h4>
-                <ul className="text-purple-700 dark:text-emerald-400 text-sm space-y-1">
+                <ul className="text-purple-700 dark:text-elec-yellow text-sm space-y-1">
                   <li>• Is it heavy, bulky, or sharp?</li>
                   <li>• Is it stable or could it shift?</li>
                   <li>• Can you get a good grip?</li>
@@ -304,7 +304,7 @@ const Section4_4 = () => {
                   <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">E</span>
                   Environment
                 </h4>
-                <ul className="text-orange-700 dark:text-emerald-400 text-sm space-y-1">
+                <ul className="text-orange-700 dark:text-elec-yellow text-sm space-y-1">
                   <li>• Is there space to move safely?</li>
                   <li>• Are floors stable and level?</li>
                   <li>• Is lighting adequate?</li>
@@ -339,7 +339,7 @@ const Section4_4 = () => {
             <div className="grid gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">1</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">1</span>
                   Plan Your Lift
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -352,7 +352,7 @@ const Section4_4 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">2</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">2</span>
                   Position Yourself
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -365,7 +365,7 @@ const Section4_4 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">3</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">3</span>
                   Get a Good Grip
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -378,7 +378,7 @@ const Section4_4 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">4</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">4</span>
                   Lift Smoothly
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -391,7 +391,7 @@ const Section4_4 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">5</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">5</span>
                   Move and Place
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -404,7 +404,7 @@ const Section4_4 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">6</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">6</span>
                   After Lifting
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -429,7 +429,7 @@ const Section4_4 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Eye className="h-4 w-4 text-emerald-400" />
+                  <Eye className="h-4 w-4 text-elec-yellow" />
                   Before Use
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -443,7 +443,7 @@ const Section4_4 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Settings className="h-4 w-4 text-emerald-400" />
+                  <Settings className="h-4 w-4 text-elec-yellow" />
                   During Use
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -457,7 +457,7 @@ const Section4_4 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Wrench className="h-4 w-4 text-emerald-400" />
+                  <Wrench className="h-4 w-4 text-elec-yellow" />
                   After Use
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -471,7 +471,7 @@ const Section4_4 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <AlertCircle className="h-4 w-4 text-emerald-400" />
+                  <AlertCircle className="h-4 w-4 text-elec-yellow" />
                   Red Flags
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -511,12 +511,12 @@ const Section4_4 = () => {
             </div>
 
             <div className="grid gap-4">
-              <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200">Hand Tools</h4>
                 <div className="grid md:grid-cols-2 gap-3">
                   <div>
-                    <p className="text-sm font-medium text-blue-700 dark:text-emerald-400 mb-1">Common Tools:</p>
-                    <ul className="text-sm text-emerald-400 dark:text-emerald-400 space-y-0.5">
+                    <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow mb-1">Common Tools:</p>
+                    <ul className="text-sm text-elec-yellow dark:text-elec-yellow space-y-0.5">
                       <li>• Screwdrivers (insulated)</li>
                       <li>• Wire strippers</li>
                       <li>• Pliers and cutters</li>
@@ -524,8 +524,8 @@ const Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-blue-700 dark:text-emerald-400 mb-1">Safety Points:</p>
-                    <ul className="text-sm text-emerald-400 dark:text-emerald-400 space-y-0.5">
+                    <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow mb-1">Safety Points:</p>
+                    <ul className="text-sm text-elec-yellow dark:text-elec-yellow space-y-0.5">
                       <li>• Check insulation ratings</li>
                       <li>• Inspect for damage daily</li>
                       <li>• Keep cutting edges sharp</li>
@@ -539,8 +539,8 @@ const Section4_4 = () => {
                 <h4 className="font-semibold mb-2 text-purple-800 dark:text-purple-200">Power Tools</h4>
                 <div className="grid md:grid-cols-2 gap-3">
                   <div>
-                    <p className="text-sm font-medium text-purple-700 dark:text-emerald-400 mb-1">Common Tools:</p>
-                    <ul className="text-sm text-purple-600 dark:text-emerald-400 space-y-0.5">
+                    <p className="text-sm font-medium text-purple-700 dark:text-elec-yellow mb-1">Common Tools:</p>
+                    <ul className="text-sm text-purple-600 dark:text-elec-yellow space-y-0.5">
                       <li>• Drills and impact drivers</li>
                       <li>• Angle grinders</li>
                       <li>• Reciprocating saws</li>
@@ -548,8 +548,8 @@ const Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-purple-700 dark:text-emerald-400 mb-1">Safety Points:</p>
-                    <ul className="text-sm text-purple-600 dark:text-emerald-400 space-y-0.5">
+                    <p className="text-sm font-medium text-purple-700 dark:text-elec-yellow mb-1">Safety Points:</p>
+                    <ul className="text-sm text-purple-600 dark:text-elec-yellow space-y-0.5">
                       <li>• Check PAT test status</li>
                       <li>• Use RCD protection</li>
                       <li>• Inspect cords for damage</li>
@@ -587,8 +587,8 @@ const Section4_4 = () => {
                 <h4 className="font-semibold mb-2 text-orange-800 dark:text-orange-200">Access Equipment</h4>
                 <div className="grid md:grid-cols-2 gap-3">
                   <div>
-                    <p className="text-sm font-medium text-orange-700 dark:text-emerald-400 mb-1">Common Equipment:</p>
-                    <ul className="text-sm text-orange-600 dark:text-emerald-400 space-y-0.5">
+                    <p className="text-sm font-medium text-orange-700 dark:text-elec-yellow mb-1">Common Equipment:</p>
+                    <ul className="text-sm text-orange-600 dark:text-elec-yellow space-y-0.5">
                       <li>• Step ladders</li>
                       <li>• Extension ladders</li>
                       <li>• Mobile towers</li>
@@ -596,8 +596,8 @@ const Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-orange-700 dark:text-emerald-400 mb-1">Safety Points:</p>
-                    <ul className="text-sm text-orange-600 dark:text-emerald-400 space-y-0.5">
+                    <p className="text-sm font-medium text-orange-700 dark:text-elec-yellow mb-1">Safety Points:</p>
+                    <ul className="text-sm text-orange-600 dark:text-elec-yellow space-y-0.5">
                       <li>• Check stability and locks</li>
                       <li>• 4:1 angle rule for ladders</li>
                       <li>• Three points of contact</li>
@@ -627,7 +627,7 @@ const Section4_4 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-emerald-400" />
+                  <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Back Injuries
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1 mb-2">
@@ -635,12 +635,12 @@ const Section4_4 = () => {
                   <li>• Disc problems from twisting</li>
                   <li>• Cumulative damage from repetition</li>
                 </ul>
-                <p className="text-xs text-red-600 dark:text-emerald-400 font-medium">Prevention: Use legs, not back. Get help for heavy items.</p>
+                <p className="text-xs text-red-600 dark:text-elec-yellow font-medium">Prevention: Use legs, not back. Get help for heavy items.</p>
               </div>
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-emerald-400" />
+                  <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Shoulder/Arm Injuries
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1 mb-2">
@@ -648,12 +648,12 @@ const Section4_4 = () => {
                   <li>• Tennis elbow from repetitive actions</li>
                   <li>• Wrist injuries from awkward grips</li>
                 </ul>
-                <p className="text-xs text-red-600 dark:text-emerald-400 font-medium">Prevention: Keep loads close to body. Use proper grip.</p>
+                <p className="text-xs text-red-600 dark:text-elec-yellow font-medium">Prevention: Keep loads close to body. Use proper grip.</p>
               </div>
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-emerald-400" />
+                  <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Crush Injuries
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1 mb-2">
@@ -661,12 +661,12 @@ const Section4_4 = () => {
                   <li>• Foot injuries from dropped items</li>
                   <li>• Hand injuries from poor grip</li>
                 </ul>
-                <p className="text-xs text-red-600 dark:text-emerald-400 font-medium">Prevention: Use appropriate PPE. Plan lifting route.</p>
+                <p className="text-xs text-red-600 dark:text-elec-yellow font-medium">Prevention: Use appropriate PPE. Plan lifting route.</p>
               </div>
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-emerald-400" />
+                  <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Cuts and Lacerations
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1 mb-2">
@@ -674,7 +674,7 @@ const Section4_4 = () => {
                   <li>• Damaged tool handles</li>
                   <li>• Metal burrs and splinters</li>
                 </ul>
-                <p className="text-xs text-red-600 dark:text-emerald-400 font-medium">Prevention: Use cut-resistant gloves. Inspect materials first.</p>
+                <p className="text-xs text-red-600 dark:text-elec-yellow font-medium">Prevention: Use cut-resistant gloves. Inspect materials first.</p>
               </div>
             </div>
           </div>
@@ -697,7 +697,7 @@ const Section4_4 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Settings className="h-4 w-4 text-emerald-400" />
+                  <Settings className="h-4 w-4 text-elec-yellow" />
                   Common Mechanical Aids
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -711,7 +711,7 @@ const Section4_4 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Package className="h-4 w-4 text-emerald-400" />
+                  <Package className="h-4 w-4 text-elec-yellow" />
                   Team Lifting Guidelines
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -725,7 +725,7 @@ const Section4_4 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-400" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow" />
                   Benefits of Mechanical Aids
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -739,7 +739,7 @@ const Section4_4 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Clipboard className="h-4 w-4 text-emerald-400" />
+                  <Clipboard className="h-4 w-4 text-elec-yellow" />
                   When to Use Aids
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -757,13 +757,13 @@ const Section4_4 = () => {
         {/* FAQs */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Lightbulb className="h-5 w-5 text-emerald-400" />
+            <Lightbulb className="h-5 w-5 text-elec-yellow" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border pb-4 last:border-b-0">
-                <h3 className="font-semibold mb-2 text-emerald-400">{faq.question}</h3>
+                <h3 className="font-semibold mb-2 text-elec-yellow">{faq.question}</h3>
                 <p className="text-muted-foreground text-sm">{faq.answer}</p>
               </div>
             ))}
@@ -775,15 +775,15 @@ const Section4_4 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Use TILE principle for all manual handling assessments</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Inspect all tools before each use to prevent injuries</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Proper techniques prevent most workplace injuries</span>
             </li>
           </ul>

@@ -92,7 +92,7 @@ const Level2Module8MockExam1 = () => {
     
     if (!isAnswered) return { type: "unanswered", color: "text-muted-foreground" };
     if (isCorrect) return { type: "correct", color: "text-green-500" };
-    return { type: "incorrect", color: "text-emerald-400" };
+    return { type: "incorrect", color: "text-elec-yellow" };
   };
 
   const getFilteredQuestions = () => {
@@ -141,34 +141,34 @@ const Level2Module8MockExam1 = () => {
     return (
       <div className="min-h-screen bg-background p-2 sm:p-4">
         <div>
-          <Card className="border-emerald-500/30 bg-card">
+          <Card className="border-elec-yellow/30 bg-card">
             <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
-              <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-emerald-500/10">
-                <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
+              <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-elec-yellow/10">
+                <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
               </div>
               <CardTitle className="text-lg sm:text-xl md:text-2xl text-foreground mb-1">Mock Exam 1</CardTitle>
-              <h2 className="text-xs sm:text-sm md:text-lg text-emerald-400">Health and Safety in Building Services Engineering</h2>
+              <h2 className="text-xs sm:text-sm md:text-lg text-elec-yellow">Health and Safety in Building Services Engineering</h2>
             </CardHeader>
             
             <CardContent className="space-y-4 sm:space-y-6 px-3 sm:px-6">
               <div className="bg-background p-3 sm:p-4 rounded-lg sm:rounded-xl border border-muted/40">
                 <div className="flex items-center gap-2 mb-3 sm:mb-3">
-                  <div className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md sm:rounded-lg bg-emerald-500/20">
-                    <CheckCircle className="h-3 w-3 sm:h-3 sm:w-3 text-emerald-400" />
+                  <div className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md sm:rounded-lg bg-elec-yellow/20">
+                    <CheckCircle className="h-3 w-3 sm:h-3 sm:w-3 text-elec-yellow" />
                   </div>
                   <h3 className="font-semibold text-foreground text-sm sm:text-base">Instructions</h3>
                 </div>
                 <div className="grid gap-2 sm:gap-2">
                   <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <p className="text-sm sm:text-sm text-muted-foreground leading-relaxed">30 questions randomly selected from Module 1 content</p>
                   </div>
                   <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <p className="text-sm sm:text-sm text-muted-foreground leading-relaxed">45 minutes time limit</p>
                   </div>
                   <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <p className="text-sm sm:text-sm text-muted-foreground leading-relaxed">Progress automatically saved</p>
                   </div>
                 </div>
@@ -176,7 +176,7 @@ const Level2Module8MockExam1 = () => {
 
               <Button 
                 onClick={startExam}
-                className="w-full bg-emerald-500 hover:bg-emerald-500/90 text-black font-bold py-3 sm:py-3 text-base sm:text-base touch-manipulation min-h-[48px] rounded-lg"
+                className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold py-3 sm:py-3 text-base sm:text-base touch-manipulation min-h-[48px] rounded-lg"
                 size="lg"
               >
                 <div className="flex items-center justify-center gap-3">
@@ -214,7 +214,7 @@ const Level2Module8MockExam1 = () => {
                   onClick={() => setReviewMode(false)}
                   variant="ghost"
                   size="sm"
-                  className="text-muted-foreground hover:text-emerald-400"
+                  className="text-muted-foreground hover:text-elec-yellow"
                 >
                   <X className="h-4 w-4 mr-2" />
                   Exit Review
@@ -241,7 +241,7 @@ const Level2Module8MockExam1 = () => {
                   onClick={() => setReviewFilter(reviewFilter === "incorrect" ? "all" : "incorrect")}
                 >
                   <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-emerald-400">{stats.incorrect}</div>
+                    <div className="text-lg font-bold text-elec-yellow">{stats.incorrect}</div>
                     <div className="text-xs text-muted-foreground">Incorrect</div>
                   </CardContent>
                 </Card>
@@ -257,13 +257,13 @@ const Level2Module8MockExam1 = () => {
                   </CardContent>
                 </Card>
                 <Card 
-                  className={`bg-card border-emerald-500/30 cursor-pointer hover:bg-emerald-500/5 transition-colors ${
-                    reviewFilter === "flagged" ? "ring-2 ring-emerald-500/50" : ""
+                  className={`bg-card border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 transition-colors ${
+                    reviewFilter === "flagged" ? "ring-2 ring-elec-yellow/50" : ""
                   }`}
                   onClick={() => setReviewFilter(reviewFilter === "flagged" ? "all" : "flagged")}
                 >
                   <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-emerald-400">{stats.flagged}</div>
+                    <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
                     <div className="text-xs text-muted-foreground">Flagged</div>
                   </CardContent>
                 </Card>
@@ -280,7 +280,7 @@ const Level2Module8MockExam1 = () => {
                 const isFlagged = flaggedQuestions.has(questionIndex);
                 
                 return (
-                  <Card key={questionIndex} className="bg-card border-emerald-500/30">
+                  <Card key={questionIndex} className="bg-card border-elec-yellow/30">
                     <CardHeader className="pb-3">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-base text-foreground">
@@ -288,7 +288,7 @@ const Level2Module8MockExam1 = () => {
                         </CardTitle>
                         <div className="flex items-center gap-2">
                           {isFlagged && (
-                            <Badge variant="outline" className="text-emerald-400 border-emerald-500/40">
+                            <Badge variant="outline" className="text-elec-yellow border-elec-yellow/40">
                               <Flag className="h-3 w-3 mr-1 fill-current" />
                               Flagged
                             </Badge>
@@ -299,7 +299,7 @@ const Level2Module8MockExam1 = () => {
                               status.type === "correct" 
                                 ? "bg-green-500/20 text-green-500 border-green-500/40" 
                                 : status.type === "incorrect"
-                                ? "bg-red-500/20 text-emerald-400 border-red-500/40"
+                                ? "bg-red-500/20 text-elec-yellow border-red-500/40"
                                 : "bg-muted/20 text-muted-foreground border-muted/40"
                             }
                           >
@@ -323,7 +323,7 @@ const Level2Module8MockExam1 = () => {
                                 isCorrectAnswer
                                   ? "border-green-500 bg-card text-green-500"
                                   : isUserAnswer && !isCorrectAnswer
-                                  ? "border-red-500 bg-card text-emerald-400"
+                                  ? "border-red-500 bg-card text-elec-yellow"
                                   : "border-muted/40 bg-muted/5"
                               }`}
                             >
@@ -344,7 +344,7 @@ const Level2Module8MockExam1 = () => {
                                   <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
                                 )}
                                 {isUserAnswer && !isCorrectAnswer && (
-                                  <X className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                                  <X className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                                 )}
                               </div>
                             </div>
@@ -353,10 +353,10 @@ const Level2Module8MockExam1 = () => {
                       </div>
                       
                       {question.explanation && (
-                        <div className="mt-4 p-3 bg-card rounded-lg border border-emerald-500/30">
+                        <div className="mt-4 p-3 bg-card rounded-lg border border-elec-yellow/30">
                           <div className="flex items-start gap-2">
-                            <div className="flex h-5 w-5 items-center justify-center rounded-md bg-emerald-500/20 flex-shrink-0 mt-0.5">
-                              <Eye className="h-3 w-3 text-emerald-400" />
+                            <div className="flex h-5 w-5 items-center justify-center rounded-md bg-elec-yellow/20 flex-shrink-0 mt-0.5">
+                              <Eye className="h-3 w-3 text-elec-yellow" />
                             </div>
                             <div>
                               <h4 className="text-sm font-semibold text-foreground mb-1">Explanation</h4>
@@ -378,18 +378,18 @@ const Level2Module8MockExam1 = () => {
     return (
       <div className="min-h-screen bg-background p-2 sm:p-4">
         <div>
-          <Card className="border-emerald-500/30 bg-card">
+          <Card className="border-elec-yellow/30 bg-card">
             <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
-              <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-emerald-500/10">
-                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
+              <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-elec-yellow/10">
+                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
               </div>
               <CardTitle className="text-lg sm:text-xl md:text-2xl text-foreground mb-1">Exam Complete!</CardTitle>
-              <h2 className="text-xs sm:text-sm md:text-lg text-emerald-400">Health and Safety in Building Services Engineering</h2>
+              <h2 className="text-xs sm:text-sm md:text-lg text-elec-yellow">Health and Safety in Building Services Engineering</h2>
             </CardHeader>
             
             <CardContent className="space-y-4 sm:space-y-6 px-3 sm:px-6">
               <div className="text-center bg-background p-4 sm:p-6 rounded-xl">
-                <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-emerald-400 mb-2">{percentage}%</div>
+                <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-elec-yellow mb-2">{percentage}%</div>
                 <p className="text-xs sm:text-sm text-muted-foreground">You scored {score} out of {examQuestions.length} questions correctly</p>
               </div>
               
@@ -400,15 +400,15 @@ const Level2Module8MockExam1 = () => {
                   <div className="text-xs text-muted-foreground">Correct</div>
                 </div>
                 <div className="text-center p-3 bg-card rounded-lg border border-red-500/20">
-                  <div className="text-lg font-bold text-emerald-400">{stats.incorrect}</div>
+                  <div className="text-lg font-bold text-elec-yellow">{stats.incorrect}</div>
                   <div className="text-xs text-muted-foreground">Incorrect</div>
                 </div>
                 <div className="text-center p-3 bg-muted/10 rounded-lg border border-muted/20">
                   <div className="text-lg font-bold text-muted-foreground">{stats.unanswered}</div>
                   <div className="text-xs text-muted-foreground">Unanswered</div>
                 </div>
-                <div className="text-center p-3 bg-emerald-500/10 rounded-lg border border-emerald-500/30">
-                  <div className="text-lg font-bold text-emerald-400">{stats.flagged}</div>
+                <div className="text-center p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
+                  <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
                   <div className="text-xs text-muted-foreground">Flagged</div>
                 </div>
               </div>
@@ -419,7 +419,7 @@ const Level2Module8MockExam1 = () => {
                     setReviewFilter("all");
                     setReviewMode(true);
                   }}
-                  className="w-full bg-emerald-500 hover:bg-emerald-500/90 text-black touch-manipulation min-h-[44px]"
+                  className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation min-h-[44px]"
                 >
                   <Eye className="h-4 w-4 mr-2" />
                   Review Answers
@@ -436,13 +436,13 @@ const Level2Module8MockExam1 = () => {
                       setReviewFilter("all");
                     }}
                     variant="outline"
-                    className="flex-1 border-emerald-500/40 text-emerald-400 hover:bg-background bg-background touch-manipulation min-h-[44px]"
+                    className="flex-1 border-elec-yellow/40 text-elec-yellow hover:bg-background bg-background touch-manipulation min-h-[44px]"
                   >
                     <RotateCcw className="h-4 w-4 mr-2" />
                     Retake Exam
                   </Button>
                   <Link to=".." className="flex-1">
-                    <Button variant="outline" className="w-full border-emerald-500/40 text-emerald-400 hover:bg-background bg-background touch-manipulation min-h-[44px]">
+                    <Button variant="outline" className="w-full border-elec-yellow/40 text-elec-yellow hover:bg-background bg-background touch-manipulation min-h-[44px]">
                       Back to Mock Exams
                     </Button>
                   </Link>
@@ -463,12 +463,12 @@ const Level2Module8MockExam1 = () => {
           <div className="flex items-center justify-between">
             <Link 
               to=".." 
-              className="text-sm text-muted-foreground hover:text-emerald-400 transition-colors flex items-center gap-2"
+              className="text-sm text-muted-foreground hover:text-elec-yellow transition-colors flex items-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
               Exit Exam
             </Link>
-            <div className="text-2xl font-bold font-mono text-emerald-400">
+            <div className="text-2xl font-bold font-mono text-elec-yellow">
               {formatTime(timeRemaining)}
             </div>
           </div>
@@ -479,7 +479,7 @@ const Level2Module8MockExam1 = () => {
       <div className="max-w-7xl mx-auto p-4">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Question Panel */}
-          <Card className="lg:col-span-3 bg-card border border-emerald-500/30">
+          <Card className="lg:col-span-3 bg-card border border-elec-yellow/30">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <div>
@@ -494,10 +494,10 @@ const Level2Module8MockExam1 = () => {
                   onClick={toggleFlag}
                   variant="outline"
                   size="sm"
-                  className={`border-emerald-500/30 ${
+                  className={`border-elec-yellow/30 ${
                     flaggedQuestions.has(currentQuestion) 
-                      ? 'bg-emerald-500/20 text-emerald-400' 
-                      : 'text-foreground hover:bg-emerald-500/10'
+                      ? 'bg-elec-yellow/20 text-elec-yellow' 
+                      : 'text-foreground hover:bg-elec-yellow/10'
                   }`}
                 >
                   <Flag className="h-4 w-4 mr-2" />
@@ -517,8 +517,8 @@ const Level2Module8MockExam1 = () => {
                       onClick={() => handleAnswerSelect(index)}
                       className={`w-full p-4 text-left rounded-lg border transition-colors ${
                         selectedAnswers[currentQuestion] === index
-                          ? 'bg-emerald-500/20 border-emerald-500 text-foreground'
-                          : 'bg-background/30 border-emerald-500/30 text-muted-foreground hover:bg-emerald-500/10 hover:border-emerald-500/40'
+                          ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
+                          : 'bg-background/30 border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -533,12 +533,12 @@ const Level2Module8MockExam1 = () => {
               </div>
 
               {/* Navigation */}
-              <div className="flex justify-between items-center pt-6 border-t border-emerald-500/30">
+              <div className="flex justify-between items-center pt-6 border-t border-elec-yellow/30">
                 <Button
                   onClick={handlePrevious}
                   disabled={currentQuestion === 0}
                   variant="outline"
-                  className="border-emerald-500/30 text-foreground hover:bg-emerald-500/10 disabled:opacity-50"
+                  className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10 disabled:opacity-50"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Previous
@@ -549,7 +549,7 @@ const Level2Module8MockExam1 = () => {
                     <Button
                       onClick={handleSubmit}
                       disabled={answeredQuestions === 0}
-                      className="bg-emerald-500 hover:bg-emerald-500/90 text-black disabled:opacity-50 text-sm sm:text-sm px-6 py-3 sm:py-3 min-h-[52px] touch-manipulation font-semibold rounded-xl flex-shrink-0"
+                      className="bg-elec-yellow hover:bg-elec-yellow/90 text-black disabled:opacity-50 text-sm sm:text-sm px-6 py-3 sm:py-3 min-h-[52px] touch-manipulation font-semibold rounded-xl flex-shrink-0"
                       size="sm"
                     >
                       <span className="hidden xs:inline">Submit Exam</span>
@@ -559,7 +559,7 @@ const Level2Module8MockExam1 = () => {
                   ) : (
                     <Button
                       onClick={handleNext}
-                      className="flex-1 sm:flex-initial sm:px-8 bg-emerald-500 hover:bg-emerald-500/90 text-black font-bold py-3 sm:py-3 text-base sm:text-base touch-manipulation min-h-[48px] rounded-lg"
+                      className="flex-1 sm:flex-initial sm:px-8 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold py-3 sm:py-3 text-base sm:text-base touch-manipulation min-h-[48px] rounded-lg"
                       size="lg"
                     >
                       Next
@@ -572,17 +572,17 @@ const Level2Module8MockExam1 = () => {
           </Card>
 
           {/* Enhanced Sidebar */}
-          <Card className="bg-card border border-emerald-500/30 shadow-lg">
+          <Card className="bg-card border border-elec-yellow/30 shadow-lg">
             <CardContent className="p-4">
               <div className="space-y-6">
                 {/* Enhanced Timer */}
                 <div className="text-center">
-                  <div className="bg-gradient-to-br from-emerald-500/20 to-emerald-500/10 p-4 rounded-xl border border-emerald-500/30">
+                  <div className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 p-4 rounded-xl border border-elec-yellow/30">
                     <div className="flex items-center justify-center gap-2 mb-2">
-                      <Clock className="h-5 w-5 text-emerald-400" />
+                      <Clock className="h-5 w-5 text-elec-yellow" />
                       <span className="text-sm font-medium text-foreground">Time Remaining</span>
                     </div>
-                    <div className="font-mono text-2xl font-bold text-emerald-400">
+                    <div className="font-mono text-2xl font-bold text-elec-yellow">
                       {formatTime(timeRemaining)}
                     </div>
                     <div className="text-xs text-muted-foreground mt-1">
@@ -593,10 +593,10 @@ const Level2Module8MockExam1 = () => {
 
                 {/* Enhanced Progress */}
                 <div>
-                  <div className="bg-background/50 p-4 rounded-lg border border-emerald-500/30">
+                  <div className="bg-background/50 p-4 rounded-lg border border-elec-yellow/30">
                     <div className="flex justify-between items-center mb-3">
                       <span className="text-sm font-medium text-foreground">Progress</span>
-                      <span className="text-lg font-bold text-emerald-400">{answeredQuestions}/{examQuestions.length}</span>
+                      <span className="text-lg font-bold text-elec-yellow">{answeredQuestions}/{examQuestions.length}</span>
                     </div>
                     <Progress value={progressPercentage} className="h-3 mb-3" />
                     <div className="text-xs text-center text-muted-foreground">
@@ -608,7 +608,7 @@ const Level2Module8MockExam1 = () => {
                 {/* Enhanced Stats */}
                 <div className="space-y-3">
                   <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <Target className="h-4 w-4 text-emerald-400" />
+                    <Target className="h-4 w-4 text-elec-yellow" />
                     Statistics
                   </h3>
                   
@@ -624,17 +624,17 @@ const Level2Module8MockExam1 = () => {
                     <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-red-500/20">
                       <div className="flex items-center gap-2">
                         <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                        <span className="text-sm text-emerald-400">Remaining</span>
+                        <span className="text-sm text-elec-yellow">Remaining</span>
                       </div>
-                      <span className="font-bold text-emerald-400">{examQuestions.length - answeredQuestions}</span>
+                      <span className="font-bold text-elec-yellow">{examQuestions.length - answeredQuestions}</span>
                     </div>
                     
-                    <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-emerald-500/20">
+                    <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-elec-yellow/20">
                       <div className="flex items-center gap-2">
-                        <Flag className="w-3 h-3 text-emerald-400" />
-                        <span className="text-sm text-emerald-400">Flagged</span>
+                        <Flag className="w-3 h-3 text-elec-yellow" />
+                        <span className="text-sm text-elec-yellow">Flagged</span>
                       </div>
-                      <span className="font-bold text-emerald-400">{flaggedQuestions.size}</span>
+                      <span className="font-bold text-elec-yellow">{flaggedQuestions.size}</span>
                     </div>
                   </div>
                 </div>
@@ -642,7 +642,7 @@ const Level2Module8MockExam1 = () => {
                 {/* Enhanced Question Grid */}
                 <div>
                   <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 text-emerald-400" />
+                    <BookOpen className="h-4 w-4 text-elec-yellow" />
                     Questions
                   </h3>
                   <div className="grid grid-cols-5 gap-2">
@@ -658,16 +658,16 @@ const Level2Module8MockExam1 = () => {
                           className={`
                             relative w-10 h-10 text-xs font-bold rounded-lg transition-all duration-200 border-2
                             ${isCurrent 
-                              ? 'bg-emerald-500 text-black border-emerald-500 shadow-lg scale-110' 
+                              ? 'bg-elec-yellow text-black border-elec-yellow shadow-lg scale-110' 
                               : isAnswered 
                                 ? 'bg-green-500/30 text-green-400 border-green-500/50 hover:bg-green-500/40' 
-                                : 'bg-background/30 text-muted-foreground border-emerald-500/30 hover:bg-emerald-500/20 hover:border-emerald-500/40'
+                                : 'bg-background/30 text-muted-foreground border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'
                             }
                           `}
                         >
                           {index + 1}
                           {isFlagged && (
-                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full flex items-center justify-center">
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-elec-yellow rounded-full flex items-center justify-center">
                               <Flag className="w-2 h-2 text-white fill-current" />
                             </div>
                           )}
@@ -684,13 +684,13 @@ const Level2Module8MockExam1 = () => {
                     disabled={flaggedQuestions.size === 0}
                     variant="outline"
                     size="sm"
-                    className="w-full text-xs border-border/30 text-emerald-400 hover:bg-card disabled:opacity-50"
+                    className="w-full text-xs border-border/30 text-elec-yellow hover:bg-card disabled:opacity-50"
                   >
                     <Flag className="h-3 w-3 mr-2" />
                     Next Flagged ({flaggedQuestions.size})
                   </Button>
                   
-                  <div className="text-xs text-center text-muted-foreground pt-2 border-t border-emerald-500/30">
+                  <div className="text-xs text-center text-muted-foreground pt-2 border-t border-elec-yellow/30">
                     <div>Exam: Module 1</div>
                     <div>Health & Safety</div>
                   </div>

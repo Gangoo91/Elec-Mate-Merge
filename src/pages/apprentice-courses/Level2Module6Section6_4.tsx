@@ -108,7 +108,7 @@ const Level2Module6Section6_4 = () => {
             <div className="p-1.5 sm:p-2 rounded-lg bg-card">
               <Settings className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 6.4
             </Badge>
           </div>
@@ -148,7 +148,7 @@ const Level2Module6Section6_4 = () => {
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-card border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
@@ -207,11 +207,11 @@ const Level2Module6Section6_4 = () => {
           {/* 1. Why Corrective Action is Essential */}
           <section className="mb-4 sm:mb-6">
             <div className="space-y-4 sm:space-y-6">
-              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-elec-yellow bg-card">
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
-                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-2 sm:mb-3 text-sm sm:text-base">Why Corrective Action is Essential</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Why Corrective Action is Essential</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-foreground">
@@ -285,7 +285,7 @@ const Level2Module6Section6_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-3 text-base">The Critical Importance of Retesting</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base">The Critical Importance of Retesting</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-foreground">
@@ -322,7 +322,7 @@ const Level2Module6Section6_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3 text-base">Professional and Legal Responsibilities</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3 text-base">Professional and Legal Responsibilities</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-foreground">
@@ -364,7 +364,7 @@ const Level2Module6Section6_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3 text-base">Documentation Requirements for Corrective Action</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Documentation Requirements for Corrective Action</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-foreground">
@@ -399,71 +399,71 @@ const Level2Module6Section6_4 = () => {
         {/* Practical Guidance */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-background border-border/20">
           <div className="flex items-center gap-3 mb-4 sm:mb-6">
-            <div className="p-2 sm:p-3 rounded-lg bg-emerald-500/10">
-              <Settings className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
+            <div className="p-2 sm:p-3 rounded-lg bg-elec-yellow/10">
+              <Settings className="w-5 h-5 sm:w-6 sm:h-6 text-elec-yellow" />
             </div>
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Practical Guidance</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <Settings className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Systematic Investigation</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Always investigate the root cause of test failures, not just the immediate symptom. Use structured fault finding methods</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Comprehensive Retesting</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Retest comprehensively after any corrective action to verify effectiveness and ensure no new problems created</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <Target className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Competence Requirements</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Ensure you have the competence for any corrective action—involve specialists when necessary for complex repairs</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Safety Priority</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Never energise circuits that haven't passed all required tests. Safety requirements are absolute</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <FileText className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Documentation Standards</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Document everything clearly: fault details, action taken, and retest results with dates and signatures</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <Eye className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Visual Inspection</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Combine systematic testing with thorough visual inspection to identify all related problems</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <Shield className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Legal Compliance</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Understand EAWR 1989 requirements and maintain compliance throughout corrective action process</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-emerald-500/30 hover:bg-card transition-colors">
-              <Database className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-card/80 border border-elec-yellow/30 hover:bg-card transition-colors">
+              <Database className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Complete Verification</p>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1">Verify that all safety issues are resolved before energisation, regardless of commercial pressures</p>
@@ -471,9 +471,9 @@ const Level2Module6Section6_4 = () => {
             </div>
           </div>
           
-          <div className="mt-4 sm:mt-6 p-3 sm:p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+          <div className="mt-4 sm:mt-6 p-3 sm:p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
             <div className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base mb-2">Professional Tip</p>
                 <p className="text-xs sm:text-sm text-muted-foreground">
@@ -550,7 +550,7 @@ const Level2Module6Section6_4 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-br from-primary/5 to-emerald-500/10 border border-primary/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-br from-primary/5 to-elec-yellow/10 border border-primary/20">
           <div className="flex items-center gap-3 mb-4 sm:mb-6">
             <div className="p-2 sm:p-3 rounded-lg bg-primary/10">
               <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
@@ -569,7 +569,7 @@ const Level2Module6Section6_4 = () => {
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-card border border-border/20">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Always Retest</p>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1">Verify corrective action success through comprehensive retesting</p>
@@ -579,7 +579,7 @@ const Level2Module6Section6_4 = () => {
             
             <div className="space-y-3">
               <div className="flex items-start gap-3 p-3 rounded-lg bg-card border border-border/20">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Legal Requirements</p>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1">EAWR 1989 mandates safe systems before energisation</p>
@@ -587,7 +587,7 @@ const Level2Module6Section6_4 = () => {
               </div>
               
               <div className="flex items-start gap-3 p-3 rounded-lg bg-card border border-border/20">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Documentation</p>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1">Record all corrective actions and retest results clearly</p>

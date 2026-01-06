@@ -207,7 +207,7 @@ const AM2Module7Section3 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Shield className="w-4 h-4" />
             Module 7 – Section 3
           </div>
@@ -223,15 +223,15 @@ const AM2Module7Section3 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
                   CRITICAL: Safety is Everything in AM2
                 </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
                   Unsafe electricians put lives at risk — so unsafe behaviour equals instant failure. Safety behaviours must be demonstrated consistently throughout the entire exam, not just once.
                 </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
                   NET's primary objective is to prove you are safe to work unsupervised. Every action is being assessed for safety compliance.
                 </p>
               </div>
@@ -240,9 +240,9 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -251,23 +251,23 @@ const AM2Module7Section3 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Explain why NET places safety above everything else in AM2
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Demonstrate safe working behaviours consistently, not just during isolation and testing
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Identify the critical "instant fail" safety errors to avoid
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Build habits that prove to the assessor you prioritise safety
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Leave every stage of AM2 in a safe condition
               </li>
             </ul>
@@ -275,9 +275,9 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Why Safety is Everything */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
               1. Why Safety is Everything in AM2
             </h2>
@@ -287,9 +287,9 @@ const AM2Module7Section3 = () => {
             </p>
 
             <div className="space-y-4 sm:space-y-6">
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 sm:mb-3 text-sm sm:text-base">Key Safety Principles:</h4>
-                <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                   <li>• NET's primary objective is to prove you are safe to work unsupervised</li>
                   <li>• Unsafe electricians put lives at risk — so unsafe behaviour = fail</li>
                   <li>• Safety behaviours must be demonstrated throughout the exam, not just once</li>
@@ -320,9 +320,9 @@ const AM2Module7Section3 = () => {
         />
 
         {/* Key Safety Behaviours */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               2. Key Safety Behaviours Assessors Look For
             </h2>
@@ -334,15 +334,15 @@ const AM2Module7Section3 = () => {
             <div className="space-y-6">
               {/* Strategy 1 */}
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
                 <div className="flex-1">
                   <h5 className="font-medium text-foreground mb-2">Safe Isolation</h5>
                   <p className="text-xs sm:text-sm text-muted-foreground mb-3">
                     Following the 10-step process, including prove/re-prove. This is the foundation of electrical safety.
                   </p>
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 rounded p-3 text-xs sm:text-sm">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded p-3 text-xs sm:text-sm">
                     <strong className="text-blue-800 dark:text-blue-200">Critical Steps:</strong>
-                    <ul className="text-blue-700 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-blue-700 dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Select appropriate point of isolation</li>
                       <li>• Secure isolation - lock off/remove fuses</li>
                       <li>• Prove tester before use</li>
@@ -381,7 +381,7 @@ const AM2Module7Section3 = () => {
                     Tidy workspace, no trailing leads or trip hazards, organised approach.
                   </p>
                   <div className="bg-orange-50 dark:bg-orange-950/20 rounded p-3 text-xs sm:text-sm">
-                    <ul className="text-orange-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-orange-700 dark:text-elec-yellow space-y-1">
                       <li>• Keep walkways clear of tools and cables</li>
                       <li>• Organise tools methodically on work surface</li>
                       <li>• Coil test leads properly when not in use</li>
@@ -391,7 +391,7 @@ const AM2Module7Section3 = () => {
                     </ul>
                     <div className="mt-3 p-2 bg-orange-100 dark:bg-orange-900/30 rounded">
                       <strong className="text-orange-800 dark:text-orange-200 text-xs">Remember:</strong>
-                      <p className="text-orange-700 dark:text-emerald-400 text-xs mt-1">Untidy work areas suggest poor safety culture and can lead to accidents.</p>
+                      <p className="text-orange-700 dark:text-elec-yellow text-xs mt-1">Untidy work areas suggest poor safety culture and can lead to accidents.</p>
                     </div>
                   </div>
                 </div>
@@ -409,9 +409,9 @@ const AM2Module7Section3 = () => {
         />
 
         {/* Instant Fail Errors */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" />
               3. "Instant Fail" Safety Errors (NET Published)
             </h2>
@@ -423,7 +423,7 @@ const AM2Module7Section3 = () => {
             <div className="space-y-4 sm:space-y-6">
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-2 sm:mb-3 text-sm sm:text-base">Critical Safety Errors:</h4>
-                <ul className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow space-y-2">
                   <li>• Skipping any step in safe isolation</li>
                   <li>• Using unsafe test equipment (non-GS38 probes, taped leads)</li>
                   <li>• Energising a circuit with exposed copper or missing CPCs</li>
@@ -436,7 +436,7 @@ const AM2Module7Section3 = () => {
 
             <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800/30 rounded-lg p-4 mt-6">
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+                <AlertTriangle className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-2">Warning:</h4>
                   <p className="text-xs sm:text-sm text-yellow-700 dark:text-yellow-300">
@@ -457,9 +457,9 @@ const AM2Module7Section3 = () => {
         />
 
         {/* Showing the Assessor */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               4. Showing the Assessor You Are Safe
             </h2>
@@ -469,9 +469,9 @@ const AM2Module7Section3 = () => {
             </p>
 
             <div className="space-y-6">
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3 text-sm sm:text-base">Visible Safety Practices:</h4>
-                <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-2">
                   <li>• <strong>Talk through steps:</strong> e.g., "I am now proving my tester on a known live source"</li>
                   <li>• <strong>Double-check visibly:</strong> show that you re-sleeve CPCs, torque terminals, re-fit trunking lids</li>
                   <li>• <strong>Label clearly:</strong> DBs, circuits, and accessories must all be identifiable</li>
@@ -493,9 +493,9 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
               Practical Guidance
             </h2>
@@ -506,12 +506,12 @@ const AM2Module7Section3 = () => {
 
             <div className="space-y-6">
               {/* Scenario 1 */}
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
                   <Brain className="w-4 h-4" />
                   Scenario: Beginning Any Task
                 </h4>
-                <div className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-2">
+                <div className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-2">
                   <p><strong>Do:</strong> Check your test equipment is GS38-compliant, prove on known live source</p>
                   <p><strong>Say:</strong> "I'm checking my tester before use on this known live source"</p>
                   <p><strong>Why:</strong> Shows methodical approach and compliance with safety standards</p>
@@ -537,7 +537,7 @@ const AM2Module7Section3 = () => {
                   <TestTube className="w-4 h-4" />
                   Scenario: Before Energising
                 </h4>
-                <div className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 space-y-2">
+                <div className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow space-y-2">
                   <p><strong>Do:</strong> Double-check all connections, verify CPC continuity, check polarity</p>
                   <p><strong>Say:</strong> "Checking all connections secure before energising, verifying CPC continuity"</p>
                   <p><strong>Why:</strong> Prevents dangerous situations and shows systematic approach</p>
@@ -550,7 +550,7 @@ const AM2Module7Section3 = () => {
                   <Users className="w-4 h-4" />
                   Scenario: If You Make a Mistake
                 </h4>
-                <div className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 space-y-2">
+                <div className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow space-y-2">
                   <p><strong>Do:</strong> Stop immediately, isolate if necessary, correct properly</p>
                   <p><strong>Say:</strong> "I need to isolate and correct this connection properly"</p>
                   <p><strong>Why:</strong> Shows honesty, safety-first mindset, and professional integrity</p>
@@ -599,22 +599,22 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Real-world Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Real-world Examples
             </h2>
 
             <div className="space-y-4">
               <div className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20 pl-4 py-3 rounded-r">
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow">
                   <strong>Example 1:</strong> Candidate skipped re-prove of tester in safe isolation → assessor stopped exam → fail.
                 </p>
               </div>
 
               <div className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20 pl-4 py-3 rounded-r">
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow">
                   <strong>Example 2:</strong> Candidate completed installation correctly but left bare copper exposed in a socket → unsafe workmanship → marks lost.
                 </p>
               </div>
@@ -625,7 +625,7 @@ const AM2Module7Section3 = () => {
                 </p>
               </div>
 
-              <div className="border-l-4 border-emerald-500 bg-yellow-50 dark:bg-yellow-950/20 pl-4 py-3 rounded-r">
+              <div className="border-l-4 border-elec-yellow bg-yellow-50 dark:bg-yellow-950/20 pl-4 py-3 rounded-r">
                 <p className="text-xs sm:text-sm text-yellow-700 dark:text-yellow-300">
                   <strong>Example 4:</strong> In industry, an electrician energised a circuit with no CPC → shock incident. Same behaviour in AM2 = instant fail.
                 </p>
@@ -635,9 +635,9 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Brain className="w-5 h-5" />
               Frequently Asked Questions
             </h2>
@@ -682,25 +682,25 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Summary
             </h2>
 
-            <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
-              <p className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 mb-4 font-medium">
+            <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <p className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow mb-4 font-medium">
                 In AM2, safety is the foundation of everything. You must:
               </p>
-              <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+              <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                 <li>• Follow safe isolation correctly</li>
                 <li>• Use PPE and tools properly</li>
                 <li>• Terminate and test safely with GS38 compliance</li>
                 <li>• Keep your work area tidy and circuits safe</li>
                 <li>• Show the assessor, clearly and confidently, that safety is always your first priority</li>
               </ul>
-              <p className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 mt-4 font-bold">
+              <p className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow mt-4 font-bold">
                 Unsafe = fail. Safe = pass.
               </p>
             </div>
@@ -708,9 +708,9 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <TestTube className="w-5 h-5" />
               10-Question Quiz
             </h2>

@@ -295,11 +295,11 @@ const Module5Section4_5 = () => {
             Electrical installation projects often involve multiple team members working on different tasks at the same time. Without proper coordination of tools, materials, and equipment, delays, shortages, and inefficiencies can occur. Effective coordination ensures everyone has what they need, when they need it, to complete their work safely and efficiently.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   Effective equipment coordination can improve team productivity by 20-30% and significantly reduce project delays and workplace conflicts.
                 </p>
@@ -312,7 +312,7 @@ const Module5Section4_5 = () => {
               <strong>Real Impact:</strong> Projects with proper equipment coordination show 40% fewer delays and improved team satisfaction compared to poorly coordinated sites.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> BS 7671 requires proper planning of resources to ensure safe and efficient electrical installations.
               </p>
@@ -590,7 +590,7 @@ const Module5Section4_5 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-4">
             {practicalGuidance.map((guidance, index) => (
-              <div key={index} className="border-l-4 border-elec-blue pl-4 bg-emerald-50/50 dark:bg-blue-900/10 py-3 rounded-r">
+              <div key={index} className="border-l-4 border-elec-blue pl-4 bg-elec-yellow/5/50 dark:bg-blue-900/10 py-3 rounded-r">
                 <p className="text-white">{guidance}</p>
               </div>
             ))}
@@ -619,7 +619,7 @@ const Module5Section4_5 = () => {
               </p>
               
               <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                <p className="text-sm font-medium text-red-700 dark:text-elec-yellow mb-1">Consequences:</p>
+                <p className="text-sm font-medium text-red-700 text-elec-yellow mb-1">Consequences:</p>
                 <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                   <li>4 hours of lost productivity</li>
                   <li>Team frustration and conflicts</li>
@@ -647,7 +647,7 @@ const Module5Section4_5 = () => {
             </div>
           </div>
           
-          <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+          <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
             <p className="text-xs sm:text-sm text-white">
               <strong>Lesson Learned:</strong> The project manager now uses digital booking systems on all projects, reducing equipment conflicts by 90% and improving team satisfaction significantly.
             </p>

@@ -246,7 +246,7 @@ const Module4Section6_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Regulatory Requirements and Compliance Framework</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Regulatory Requirements and Compliance Framework</p>
                     <p className="text-base text-white mb-2"><strong>BS 7671 compliance verification:</strong> Ensuring installations meet current wiring regulations.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Regulation 611.3: Visual inspection shall precede testing and be carried out with the installation de-energised</li>
@@ -298,7 +298,7 @@ const Module4Section6_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Critical Safety and Compliance Checkpoints</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Critical Safety and Compliance Checkpoints</p>
                     <p className="text-base text-white mb-2"><strong>Accessory verification:</strong> Ensuring correct type, rating, and installation of electrical accessories.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Socket outlets: Correct type for location, proper earthing, secure mounting, and appropriate IP rating</li>
@@ -416,7 +416,7 @@ const Module4Section6_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Professional Documentation and Quality Assurance</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Professional Documentation and Quality Assurance</p>
                     <p className="text-base text-white mb-2"><strong>Observation recording standards:</strong> Clear, accurate, and comprehensive defect documentation.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Location specification: Precise identification of defect location for rectification</li>
@@ -578,7 +578,7 @@ const Module4Section6_1 = () => {
             </div>
 
             <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-              <h3 className="font-medium text-elec-yellow dark:text-elec-yellow mb-3">Professional Standards</h3>
+              <h3 className="font-medium text-elec-yellow text-elec-yellow mb-3">Professional Standards</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white mb-2">Documentation Excellence</p>
@@ -608,7 +608,7 @@ const Module4Section6_1 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Mistakes</h2>
           <div className="space-y-4">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-red-600 dark:text-elec-yellow mb-3">Inspection Process Errors</h3>
+              <h3 className="font-medium text-red-600 text-elec-yellow mb-3">Inspection Process Errors</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white mb-2">❌ Avoid These Mistakes:</p>
@@ -739,7 +739,7 @@ const Module4Section6_1 = () => {
             
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <h3 className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Key Benefits</h3>
+                <h3 className="font-medium text-elec-yellow text-elec-yellow mb-2">Key Benefits</h3>
                 <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Early defect identification</li>
                   <li>Cost-effective problem resolution</li>
@@ -757,7 +757,7 @@ const Module4Section6_1 = () => {
                 </ul>
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <h3 className="font-medium text-purple-600 dark:text-elec-yellow mb-2">Quality Outcomes</h3>
+                <h3 className="font-medium text-purple-600 text-elec-yellow mb-2">Quality Outcomes</h3>
                 <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Safer installations</li>
                   <li>Reduced rework costs</li>
@@ -799,7 +799,7 @@ const Module4Section6_1 = () => {
               </ul>
             </div>
             <div className="space-y-3">
-              <h3 className="font-medium text-red-600 dark:text-elec-yellow">❌ DON'T</h3>
+              <h3 className="font-medium text-red-600 text-elec-yellow">❌ DON'T</h3>
               <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />

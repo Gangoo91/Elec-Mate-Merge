@@ -15,7 +15,7 @@ const Level2Module8Section2Section1 = () => {
         <div className="flex items-center gap-4 mb-6">
           <Link 
             to=".." 
-            className="inline-flex items-center text-muted-foreground hover:text-emerald-400 transition-colors"
+            className="inline-flex items-center text-muted-foreground hover:text-elec-yellow transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to How to Pass Exams
@@ -23,9 +23,9 @@ const Level2Module8Section2Section1 = () => {
         </div>
         
         {/* Hero Section */}
-        <div className="text-center mb-6 p-4 bg-gradient-to-r from-card to-muted rounded-lg border border-emerald-500/30">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-emerald-500/20 rounded-full mb-3">
-            <Clock className="h-6 w-6 text-emerald-400" />
+        <div className="text-center mb-6 p-4 bg-gradient-to-r from-card to-muted rounded-lg border border-elec-yellow/30">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-elec-yellow/20 rounded-full mb-3">
+            <Clock className="h-6 w-6 text-elec-yellow" />
           </div>
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3">
             Time Management Mastery
@@ -38,26 +38,26 @@ const Level2Module8Section2Section1 = () => {
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-emerald-400 mb-1">2 mins</div>
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
+            <div className="text-2xl font-bold text-elec-yellow mb-1">2 mins</div>
             <div className="text-sm text-muted-foreground">Average per question</div>
           </div>
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-emerald-400 mb-1">85%</div>
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
+            <div className="text-2xl font-bold text-elec-yellow mb-1">85%</div>
             <div className="text-sm text-muted-foreground">Pass rate with good timing</div>
           </div>
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-emerald-400 mb-1">15 mins</div>
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
+            <div className="text-2xl font-bold text-elec-yellow mb-1">15 mins</div>
             <div className="text-sm text-muted-foreground">Reserve for final review</div>
           </div>
         </div>
 
         <div className="space-y-6">
           {/* Pre-Exam Planning */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <BookOpen className="h-6 w-6 text-emerald-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Pre-Exam Planning Strategy
               </CardTitle>
             </CardHeader>
@@ -65,12 +65,12 @@ const Level2Module8Section2Section1 = () => {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-emerald-400" />
+                    <Zap className="h-4 w-4 text-elec-yellow" />
                     Know Your Exam Format Inside Out
                   </h4>
                   <div className="space-y-3">
-                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm">Written Exam (C&G 2365-02)</div>
+                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm">Written Exam (C&G 2365-02)</div>
                       <div className="text-sm text-muted-foreground mb-2">2 hours • 60 questions • 2 minutes per question</div>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>• Multiple choice format with 4 options per question</div>
@@ -80,8 +80,8 @@ const Level2Module8Section2Section1 = () => {
                         <div>• No negative marking - wrong answers don't lose points</div>
                       </div>
                     </div>
-                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm">Practical Assessment (C&G 2365-03)</div>
+                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm">Practical Assessment (C&G 2365-03)</div>
                       <div className="text-sm text-muted-foreground mb-2">5-6 hours • Multiple tasks • Skill demonstration</div>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>• Circuit installation (ring final, radial, lighting circuits)</div>
@@ -92,8 +92,8 @@ const Level2Module8Section2Section1 = () => {
                         <div>• Typically worth 100 marks total - need 60+ to pass</div>
                       </div>
                     </div>
-                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm">Online Exam Environment</div>
+                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm">Online Exam Environment</div>
                       <div className="text-sm text-muted-foreground mb-2">Timer on screen • Instant feedback • No going back</div>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>• Questions appear one at a time in some formats</div>
@@ -108,38 +108,38 @@ const Level2Module8Section2Section1 = () => {
                 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <Target className="h-4 w-4 text-emerald-400" />
+                    <Target className="h-4 w-4 text-elec-yellow" />
                     Advanced Time Allocation Strategies
                   </h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>90 seconds rule:</strong> Start with this target, adjust based on question complexity</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>15-20 minute buffer:</strong> Essential for review and panic prevention</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>3-minute maximum:</strong> Absolute ceiling - move on regardless of progress</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Flag system:</strong> Mark difficult questions with symbols (?, *, !) for prioritised return</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Never blank rule:</strong> Even wild guesses have 25% success rate in multiple choice</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Checkpoint system:</strong> Review progress every 15 questions (every 30 minutes)</span>
                     </div>
                   </div>
                   
                   <div className="mt-4 p-3 bg-card rounded-lg border border-border/30">
-                    <h5 className="font-semibold text-emerald-400 mb-2">Time Allocation Calculator</h5>
+                    <h5 className="font-semibold text-elec-yellow mb-2">Time Allocation Calculator</h5>
                     <div className="text-sm text-muted-foreground space-y-1">
                       <div>Question 1-15: 22.5 minutes (1.5 min each - easy wins)</div>
                       <div>Question 16-30: 30 minutes (2 min each - moderate difficulty)</div>
@@ -150,8 +150,8 @@ const Level2Module8Section2Section1 = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-emerald-500/10 to-transparent p-4 rounded-lg border border-emerald-500/30">
-                <h5 className="font-semibold text-emerald-400 mb-2">Pro Tip: The 25% Rule & Elimination Strategy</h5>
+              <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
+                <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: The 25% Rule & Elimination Strategy</h5>
                 <p className="text-sm text-muted-foreground mb-3">
                   If you can eliminate just one wrong answer from a 4-option multiple choice question, 
                   your chances improve from 25% to 33% - that's a significant advantage over random guessing!
@@ -181,10 +181,10 @@ const Level2Module8Section2Section1 = () => {
           </Card>
 
           {/* Written Exam Strategies */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <Timer className="h-6 w-6 text-emerald-400" />
+                <Timer className="h-6 w-6 text-elec-yellow" />
                 Written Exam Time Management
               </CardTitle>
             </CardHeader>
@@ -212,7 +212,7 @@ const Level2Module8Section2Section1 = () => {
                           </div>
                         </div>
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">SKIP FOR NOW:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">SKIP FOR NOW:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Complex cable calculations</div>
                             <div>• Voltage drop scenarios</div>
@@ -231,13 +231,13 @@ const Level2Module8Section2Section1 = () => {
                   <div className="relative p-5 bg-gradient-to-r from-orange-500/10 to-transparent rounded-lg border border-border/30">
                     <div className="absolute top-3 left-3 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">Pass 2: Calculated Answers (45-50 minutes)</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">Pass 2: Calculated Answers (45-50 minutes)</h5>
                       <p className="text-sm text-muted-foreground mb-3">
                         Return to skipped questions requiring calculations and BS7671 references.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">CALCULATION PRIORITIES:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">CALCULATION PRIORITIES:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Cable current-carrying capacity (Appendix 4)</div>
                             <div>• Voltage drop calculations (Appendix 4)</div>
@@ -247,7 +247,7 @@ const Level2Module8Section2Section1 = () => {
                           </div>
                         </div>
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">BS7671 QUICK FINDS:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">BS7671 QUICK FINDS:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Part 4: Protection for safety</div>
                             <div>• Part 5: Selection & erection</div>
@@ -260,23 +260,23 @@ const Level2Module8Section2Section1 = () => {
                         <div className="p-2 bg-orange-500/20 rounded text-xs">
                           <strong>Time Management:</strong> Allocate maximum 4 minutes per calculation question
                         </div>
-                        <div className="p-2 bg-emerald-500/20 rounded text-xs">
+                        <div className="p-2 bg-elec-yellow/20 rounded text-xs">
                           <strong>Calculator Tip:</strong> Use memory functions for repeated values (cable factors, etc.)
                         </div>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="relative p-5 bg-gradient-to-r from-emerald-500/10 to-transparent rounded-lg border border-border/30">
-                    <div className="absolute top-3 left-3 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
+                  <div className="relative p-5 bg-gradient-to-r from-elec-yellow/10 to-transparent rounded-lg border border-border/30">
+                    <div className="absolute top-3 left-3 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">Pass 3: Review & Strategic Guessing (15-20 minutes)</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">Pass 3: Review & Strategic Guessing (15-20 minutes)</h5>
                       <p className="text-sm text-muted-foreground mb-3">
                         Review all answers, ensure no blanks, make educated guesses using elimination.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">REVIEW CHECKLIST:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">REVIEW CHECKLIST:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Check for mathematical errors</div>
                             <div>• Verify units in calculations (mm², A, V, Ω)</div>
@@ -286,7 +286,7 @@ const Level2Module8Section2Section1 = () => {
                           </div>
                         </div>
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">GUESSING STRATEGY:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">GUESSING STRATEGY:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Eliminate obviously dangerous options</div>
                             <div>• Choose compliant BS7671 answers</div>
@@ -295,7 +295,7 @@ const Level2Module8Section2Section1 = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="mt-3 p-2 bg-emerald-500/20 rounded text-xs">
+                      <div className="mt-3 p-2 bg-elec-yellow/20 rounded text-xs">
                         <strong>Final Check:</strong> Ensure every question is answered - blank answers guarantee 0 marks
                       </div>
                     </div>
@@ -308,7 +308,7 @@ const Level2Module8Section2Section1 = () => {
                   <h4 className="font-semibold mb-3 text-foreground">Question Analysis Timing Breakdown</h4>
                   <div className="space-y-2">
                     {[
-                      { task: "Read question carefully", time: "15-20 sec", color: "bg-emerald-500" },
+                      { task: "Read question carefully", time: "15-20 sec", color: "bg-elec-yellow" },
                       { task: "Identify key requirements", time: "10-15 sec", color: "bg-green-500" },
                       { task: "Locate BS7671 reference", time: "30-45 sec", color: "bg-orange-500" },
                       { task: "Calculate/determine answer", time: "45-60 sec", color: "bg-red-500" },
@@ -317,7 +317,7 @@ const Level2Module8Section2Section1 = () => {
                       <div key={index} className="flex items-center gap-3 p-2 bg-muted/30 rounded">
                         <div className={`w-3 h-3 ${item.color} rounded-full`}></div>
                         <span className="text-sm flex-1">{item.task}</span>
-                        <span className="text-xs font-medium text-emerald-400">{item.time}</span>
+                        <span className="text-xs font-medium text-elec-yellow">{item.time}</span>
                       </div>
                     ))}
                   </div>
@@ -334,7 +334,7 @@ const Level2Module8Section2Section1 = () => {
                       "Changing answers without good reason"
                     ].map((item, index) => (
                       <div key={index} className="flex items-center gap-3 p-2 bg-card rounded border border-red-500/20">
-                        <AlertTriangle className="w-4 h-4 text-emerald-400" />
+                        <AlertTriangle className="w-4 h-4 text-elec-yellow" />
                         <span className="text-sm">{item}</span>
                       </div>
                     ))}
@@ -345,10 +345,10 @@ const Level2Module8Section2Section1 = () => {
           </Card>
 
           {/* Practical Assessment Timing */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <Target className="h-6 w-6 text-emerald-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 Practical Assessment Time Management
               </CardTitle>
             </CardHeader>
@@ -367,8 +367,8 @@ const Level2Module8Section2Section1 = () => {
                         <div>• <strong>Cable selection & sizing:</strong> Shows technical knowledge</div>
                       </div>
                     </div>
-                    <div className="p-4 bg-gradient-to-r from-emerald-500/10 to-transparent rounded-lg border border-border/30">
-                      <h5 className="font-medium text-emerald-400 mb-2">Tier 2: Major Circuit Work</h5>
+                    <div className="p-4 bg-gradient-to-r from-elec-yellow/10 to-transparent rounded-lg border border-border/30">
+                      <h5 className="font-medium text-elec-yellow mb-2">Tier 2: Major Circuit Work</h5>
                       <p className="text-sm text-muted-foreground mb-2">Substantial marks but time-intensive</p>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>• <strong>Ring final circuit:</strong> 20-25 marks, needs careful testing</div>
@@ -378,7 +378,7 @@ const Level2Module8Section2Section1 = () => {
                       </div>
                     </div>
                     <div className="p-4 bg-gradient-to-r from-orange-500/10 to-transparent rounded-lg border border-border/30">
-                      <h5 className="font-medium text-emerald-400 mb-2">Tier 3: Testing & Verification</h5>
+                      <h5 className="font-medium text-elec-yellow mb-2">Tier 3: Testing & Verification</h5>
                       <p className="text-sm text-muted-foreground mb-2">Essential but can be done efficiently</p>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>• <strong>Dead testing sequence:</strong> 10-15 marks, methodical approach</div>
@@ -388,7 +388,7 @@ const Level2Module8Section2Section1 = () => {
                       </div>
                     </div>
                     <div className="p-4 bg-gradient-to-r from-purple-500/10 to-transparent rounded-lg border border-border/30">
-                      <h5 className="font-medium text-emerald-400 mb-2">Tier 4: Documentation & Finishing</h5>
+                      <h5 className="font-medium text-elec-yellow mb-2">Tier 4: Documentation & Finishing</h5>
                       <p className="text-sm text-muted-foreground mb-2">Important for completion but lower individual marks</p>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>• <strong>Electrical Installation Certificate:</strong> 5-10 marks</div>
@@ -422,7 +422,7 @@ const Level2Module8Section2Section1 = () => {
                         task: "Circuit cable installation", 
                         time: "2.5 hrs", 
                         percentage: "42%", 
-                        color: "bg-emerald-500",
+                        color: "bg-elec-yellow",
                         details: "Ring final, radials, lighting - routing, fixing, terminations"
                       },
                       { 
@@ -436,7 +436,7 @@ const Level2Module8Section2Section1 = () => {
                         task: "Testing sequence (dead)", 
                         time: "45 mins", 
                         percentage: "12%", 
-                        color: "bg-emerald-500",
+                        color: "bg-elec-yellow",
                         details: "Continuity, polarity, insulation resistance tests"
                       },
                       { 
@@ -464,7 +464,7 @@ const Level2Module8Section2Section1 = () => {
                       <div key={index} className="relative">
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-sm font-medium">{item.task}</span>
-                          <span className="text-xs text-emerald-400 font-bold">{item.time}</span>
+                          <span className="text-xs text-elec-yellow font-bold">{item.time}</span>
                         </div>
                         <div className="w-full bg-muted rounded-full h-3 mb-1">
                           <div className={`h-3 ${item.color} rounded-full`} style={{width: item.percentage}}></div>
@@ -476,8 +476,8 @@ const Level2Module8Section2Section1 = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-emerald-500/10 to-transparent p-4 rounded-lg border border-emerald-500/30">
-                <h5 className="font-semibold text-emerald-400 mb-2 flex items-center gap-2">
+              <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
+                <h5 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                   <TrendingUp className="h-4 w-4" />
                   Time Boxing Technique
                 </h5>
@@ -496,7 +496,7 @@ const Level2Module8Section2Section1 = () => {
           <Card className="border-red-500/20 bg-gradient-to-br from-red-500/5 to-card">
             <CardHeader className="bg-gradient-to-r from-red-500/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <AlertTriangle className="h-6 w-6 text-emerald-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Emergency Time Management
               </CardTitle>
             </CardHeader>
@@ -527,7 +527,7 @@ const Level2Module8Section2Section1 = () => {
                       { 
                         priority: "MEDIUM", 
                         action: "Complete minimum viable testing sequence", 
-                        color: "border-emerald-500 bg-emerald-500/10",
+                        color: "border-elec-yellow bg-elec-yellow/10",
                         detail: "Dead tests first (continuity, polarity), then essential live tests (earth loop)."
                       },
                       { 
@@ -546,7 +546,7 @@ const Level2Module8Section2Section1 = () => {
                   </div>
                   
                   <div className="mt-4 p-3 bg-card rounded-lg border border-border/30">
-                    <h5 className="font-semibold text-emerald-400 mb-2">Last 30 Minutes Protocol</h5>
+                    <h5 className="font-semibold text-elec-yellow mb-2">Last 30 Minutes Protocol</h5>
                     <div className="text-xs text-muted-foreground space-y-1">
                       <div>• Stop all new installation work</div>
                       <div>• Complete basic testing on installed circuits</div>
@@ -564,7 +564,7 @@ const Level2Module8Section2Section1 = () => {
                   
                   <div className="space-y-3">
                     <div className="p-3 bg-card rounded-lg border border-border/30">
-                      <h5 className="font-medium text-emerald-400 mb-2">Essential Bookmark Tabs</h5>
+                      <h5 className="font-medium text-elec-yellow mb-2">Essential Bookmark Tabs</h5>
                       <div className="space-y-1 text-xs text-muted-foreground">
                         <div><strong>Red Tab:</strong> Appendix 4 (Current-carrying capacity)</div>
                         <div><strong>Orange Tab:</strong> Section 433 (Overload protection)</div>
@@ -580,29 +580,29 @@ const Level2Module8Section2Section1 = () => {
                       <div className="space-y-2 text-xs">
                         <div className="flex justify-between">
                           <span>Standard cable sizes:</span>
-                          <span className="text-emerald-400">1.5, 2.5, 4, 6, 10mm²</span>
+                          <span className="text-elec-yellow">1.5, 2.5, 4, 6, 10mm²</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Ring final protection:</span>
-                          <span className="text-emerald-400">30A or 32A MCB/RCBO</span>
+                          <span className="text-elec-yellow">30A or 32A MCB/RCBO</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Socket radial 20A:</span>
-                          <span className="text-emerald-400">2.5mm² cable maximum</span>
+                          <span className="text-elec-yellow">2.5mm² cable maximum</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Lighting circuits:</span>
-                          <span className="text-emerald-400">1.5mm² / 6A or 10A MCB</span>
+                          <span className="text-elec-yellow">1.5mm² / 6A or 10A MCB</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Cooker circuits:</span>
-                          <span className="text-emerald-400">6mm² minimum / 32A+</span>
+                          <span className="text-elec-yellow">6mm² minimum / 32A+</span>
                         </div>
                       </div>
                     </div>
                     
                     <div className="p-3 bg-card rounded-lg border border-border/30">
-                      <h5 className="font-medium text-emerald-400 mb-2">Quick Calculation Formulas</h5>
+                      <h5 className="font-medium text-elec-yellow mb-2">Quick Calculation Formulas</h5>
                       <div className="space-y-1 text-xs text-muted-foreground">
                         <div><strong>Voltage drop:</strong> (mV/A/m × Ib × L) ÷ 1000</div>
                         <div><strong>Earth fault loop:</strong> Zs = Ze + R1 + R2</div>
@@ -618,10 +618,10 @@ const Level2Module8Section2Section1 = () => {
           </Card>
 
           {/* Practice Techniques */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <TrendingUp className="h-6 w-6 text-emerald-400" />
+                <TrendingUp className="h-6 w-6 text-elec-yellow" />
                 Advanced Practice Techniques
               </CardTitle>
             </CardHeader>
@@ -631,7 +631,7 @@ const Level2Module8Section2Section1 = () => {
                   <h4 className="font-semibold mb-3 text-foreground">Mock Exam Mastery</h4>
                   <div className="space-y-3">
                     <div className="p-3 bg-muted/30 rounded-lg">
-                      <h5 className="font-medium text-emerald-400 mb-2">Progressive Training Method</h5>
+                      <h5 className="font-medium text-elec-yellow mb-2">Progressive Training Method</h5>
                       <div className="text-sm text-muted-foreground space-y-1">
                         <div>Week 1: Untimed practice (focus on accuracy)</div>
                         <div>Week 2: 2.5 hour limit (more time than real exam)</div>
@@ -664,26 +664,26 @@ const Level2Module8Section2Section1 = () => {
                   <h4 className="font-semibold mb-3 text-foreground">Speed Reading BS7671</h4>
                   <div className="space-y-3">
                     <div className="p-3 bg-card rounded-lg border border-border/30">
-                      <h5 className="font-medium text-emerald-400 mb-2">Structure Mastery</h5>
+                      <h5 className="font-medium text-elec-yellow mb-2">Structure Mastery</h5>
                       <div className="text-sm text-muted-foreground">
                         Learn the logical flow: Parts → Chapters → Sections → Regulations
                       </div>
                     </div>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center gap-2">
-                        <Target className="w-4 h-4 text-emerald-400" />
+                        <Target className="w-4 h-4 text-elec-yellow" />
                         <span>Use index efficiently - practice finding regulations in under 30 seconds</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Target className="w-4 h-4 text-emerald-400" />
+                        <Target className="w-4 h-4 text-elec-yellow" />
                         <span>Memorise key table locations (Appendix 4, etc.)</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Target className="w-4 h-4 text-emerald-400" />
+                        <Target className="w-4 h-4 text-elec-yellow" />
                         <span>Use colour-coded tabs for frequent sections</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Target className="w-4 h-4 text-emerald-400" />
+                        <Target className="w-4 h-4 text-elec-yellow" />
                         <span>Practice scanning techniques for keywords</span>
                       </div>
                     </div>
@@ -707,8 +707,8 @@ const Level2Module8Section2Section1 = () => {
                     </div>
                   </div>
                   
-                  <div className="p-4 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-lg border border-border/30">
-                    <h5 className="font-medium text-emerald-400 mb-2 flex items-center gap-2">
+                  <div className="p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent rounded-lg border border-border/30">
+                    <h5 className="font-medium text-elec-yellow mb-2 flex items-center gap-2">
                       <Clock className="h-4 w-4" />
                       During Exam
                     </h5>
@@ -721,7 +721,7 @@ const Level2Module8Section2Section1 = () => {
                   </div>
                   
                   <div className="p-4 bg-gradient-to-br from-purple-500/10 to-transparent rounded-lg border border-border/30">
-                    <h5 className="font-medium text-emerald-400 mb-2 flex items-center gap-2">
+                    <h5 className="font-medium text-elec-yellow mb-2 flex items-center gap-2">
                       <CheckCircle className="h-4 w-4" />
                       Mindset
                     </h5>
@@ -738,9 +738,9 @@ const Level2Module8Section2Section1 = () => {
           </Card>
 
           {/* Key Reminders */}
-          <Card className="bg-gradient-to-br from-emerald-500/10 to-card border-emerald-500/40">
+          <Card className="bg-gradient-to-br from-elec-yellow/10 to-card border-elec-yellow/40">
             <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-emerald-400 text-center justify-center">
+              <CardTitle className="flex items-center gap-3 text-elec-yellow text-center justify-center">
                 <Clock className="h-6 w-6" />
                 Essential Time Management Reminders
               </CardTitle>
@@ -766,7 +766,7 @@ const Level2Module8Section2Section1 = () => {
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-emerald-400 mb-3 text-center">✗ AVOID THESE</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-3 text-center">✗ AVOID THESE</h4>
                   <div className="space-y-2">
                     {[
                       "Spending more than 3 minutes on one question",
@@ -777,7 +777,7 @@ const Level2Module8Section2Section1 = () => {
                       "Perfectionist tendencies under pressure"
                     ].map((item, index) => (
                       <div key={index} className="flex items-center gap-3 p-2 bg-card rounded border border-red-500/20">
-                        <AlertTriangle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                        <AlertTriangle className="w-4 h-4 text-elec-yellow flex-shrink-0" />
                         <span className="text-sm">{item}</span>
                       </div>
                     ))}
@@ -785,8 +785,8 @@ const Level2Module8Section2Section1 = () => {
                 </div>
               </div>
               
-              <div className="mt-6 p-4 bg-gradient-to-r from-emerald-500/20 to-transparent rounded-lg border border-emerald-500/50 text-center">
-                <p className="font-medium text-emerald-400 mb-2">Remember: Time management is a skill that improves with practice</p>
+              <div className="mt-6 p-4 bg-gradient-to-r from-elec-yellow/20 to-transparent rounded-lg border border-elec-yellow/50 text-center">
+                <p className="font-medium text-elec-yellow mb-2">Remember: Time management is a skill that improves with practice</p>
                 <p className="text-sm text-muted-foreground">
                   The difference between a pass and fail often comes down to effective time allocation, 
                   not just knowledge. Master these techniques and you'll significantly improve your chances of success.

@@ -223,7 +223,7 @@ const Module4Section5_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Safety and Operational Benefits</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Safety and Operational Benefits</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Heat management:</strong> Improves airflow and reduces heat build-up in enclosures.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Prevents hotspots that can cause insulation degradation</li>
@@ -275,7 +275,7 @@ const Module4Section5_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Strategic Layout Planning</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Strategic Layout Planning</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Pre-installation planning:</strong> Review all documentation before cable installation begins.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Study wiring diagrams and circuit allocation schedules</li>
@@ -327,7 +327,7 @@ const Module4Section5_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Professional Securing Techniques</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Professional Securing Techniques</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Cable tie selection and application:</strong> Choose appropriate ties for the environment and load.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Nylon ties: Standard indoor applications up to 85°C</li>
@@ -353,7 +353,7 @@ const Module4Section5_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Voltage Separation Requirements</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Voltage Separation Requirements</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>ELV and mains separation:</strong> Prevent interference and ensure safety compliance.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Maintain minimum 50mm separation or use barriers</li>
@@ -398,7 +398,7 @@ const Module4Section5_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Common Dressing Problems to Avoid</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Common Dressing Problems to Avoid</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Overcrowding enclosures making access difficult or impossible</li>
                       <li>Excessive slack creating untidy loops that waste space</li>

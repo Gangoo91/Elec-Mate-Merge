@@ -384,23 +384,23 @@ const Module2Section5_1 = () => {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Resistance Changes</h5>
-                      <div className="space-y-2 text-emerald-200 text-sm">
+                      <div className="space-y-2 text-elec-yellow text-sm">
                         <p><strong>Temperature Coefficient:</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Copper: α ≈ 0.00393/°C</li>
                           <li>Aluminium: α ≈ 0.00403/°C</li>
                           <li>Resistance increases linearly with temperature</li>
                         </ul>
-                        <div className="bg-emerald-600/20 p-2 rounded text-xs font-mono">
+                        <div className="bg-elec-yellow/20 p-2 rounded text-xs font-mono">
                           <p>R₂ = R₁[1 + α(T₂ - T₁)]</p>
-                          <p className="text-emerald-100">Where R₁ is resistance at T₁, R₂ at T₂</p>
+                          <p className="text-white">Where R₁ is resistance at T₁, R₂ at T₂</p>
                         </div>
                       </div>
                     </div>
                     
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Current Capacity Impact</h5>
-                      <div className="space-y-2 text-emerald-200 text-sm">
+                      <div className="space-y-2 text-elec-yellow text-sm">
                         <p><strong>Derating Factors (Appendix 4):</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Ambient temperature above 30°C</li>
@@ -419,7 +419,7 @@ const Module2Section5_1 = () => {
                   <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">PVC Systems</h5>
-                      <div className="text-emerald-200 text-sm space-y-1">
+                      <div className="text-elec-yellow text-sm space-y-1">
                         <p><strong>70°C conductor temperature</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Standard domestic installations</li>
@@ -432,7 +432,7 @@ const Module2Section5_1 = () => {
                     
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">XLPE Systems</h5>
-                      <div className="text-emerald-200 text-sm space-y-1">
+                      <div className="text-elec-yellow text-sm space-y-1">
                         <p><strong>90°C conductor temperature</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Higher current ratings possible</li>
@@ -445,7 +445,7 @@ const Module2Section5_1 = () => {
                     
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Special Applications</h5>
-                      <div className="text-emerald-200 text-sm space-y-1">
+                      <div className="text-elec-yellow text-sm space-y-1">
                         <p><strong>Up to 180°C+</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Mineral insulated (MI) cables</li>
@@ -752,7 +752,7 @@ const Module2Section5_1 = () => {
               <div className="space-y-4">
                 <div className="bg-card border border-elec-yellow/30 p-3 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Key Checks</h4>
-                  <ul className="space-y-1 text-emerald-200 text-xs">
+                  <ul className="space-y-1 text-elec-yellow text-xs">
                     <li>• <strong>Temperature:</strong> Apply derating factors (App 4)</li>
                     <li>• <strong>Environment:</strong> Match material to conditions</li>
                     <li>• <strong>Terminations:</strong> Correct lugs and torque</li>

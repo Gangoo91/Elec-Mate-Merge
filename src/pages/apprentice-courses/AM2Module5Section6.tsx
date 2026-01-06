@@ -114,7 +114,7 @@ const AM2Module5Section6 = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="text-center mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <FileText className="w-4 h-4" />
             Quick Reference Sheet
           </div>
@@ -128,23 +128,23 @@ const AM2Module5Section6 = () => {
 
         {/* Quick Access Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-          <Card className="bg-card border-emerald-500/30 hover:border-emerald-500/30 transition-colors">
+          <Card className="bg-card border-elec-yellow/30 hover:border-elec-yellow/30 transition-colors">
             <CardContent className="p-4 text-center">
-              <Search className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+              <Search className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
               <h3 className="font-semibold text-sm">8 Common Faults</h3>
               <p className="text-xs text-muted-foreground mt-1">Complete reference table</p>
             </CardContent>
           </Card>
-          <Card className="bg-card border-emerald-500/30 hover:border-emerald-500/30 transition-colors">
+          <Card className="bg-card border-elec-yellow/30 hover:border-elec-yellow/30 transition-colors">
             <CardContent className="p-4 text-center">
-              <Target className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+              <Target className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
               <h3 className="font-semibold text-sm">Golden Rules</h3>
               <p className="text-xs text-muted-foreground mt-1">Never lose marks again</p>
             </CardContent>
           </Card>
-          <Card className="bg-card border-emerald-500/30 hover:border-emerald-500/30 transition-colors">
+          <Card className="bg-card border-elec-yellow/30 hover:border-elec-yellow/30 transition-colors">
             <CardContent className="p-4 text-center">
-              <Zap className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+              <Zap className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
               <h3 className="font-semibold text-sm">Quick Testing</h3>
               <p className="text-xs text-muted-foreground mt-1">Right test for each fault</p>
             </CardContent>
@@ -152,9 +152,9 @@ const AM2Module5Section6 = () => {
         </div>
 
         {/* Fault Types Table */}
-        <Card className="bg-card border-emerald-500/30">
+        <Card className="bg-card border-elec-yellow/30">
           <div className="p-4 sm:p-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-emerald-400 mb-6 flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Wrench className="w-6 h-6" />
               Fault Types, Rectification & Re-Test
             </h2>
@@ -193,18 +193,18 @@ const AM2Module5Section6 = () => {
         </Card>
 
         {/* Golden Rules */}
-        <Card className="bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 border-emerald-500/30">
+        <Card className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border-elec-yellow/30">
           <div className="p-4 sm:p-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-emerald-400 mb-6 flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Target className="w-6 h-6" />
               Golden Rules
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {goldenRules.map((rule, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 bg-white/5 rounded-lg border border-emerald-500/10">
-                  <div className="w-6 h-6 bg-emerald-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-emerald-400">{index + 1}</span>
+                <div key={index} className="flex items-start gap-3 p-3 bg-white/5 rounded-lg border border-elec-yellow/10">
+                  <div className="w-6 h-6 bg-elec-yellow/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-xs font-bold text-elec-yellow">{index + 1}</span>
                   </div>
                   <p className="text-xs sm:text-sm text-foreground leading-relaxed">{rule}</p>
                 </div>
@@ -214,9 +214,9 @@ const AM2Module5Section6 = () => {
         </Card>
 
         {/* Common Test Equipment */}
-        <Card className="bg-card border-emerald-500/30">
+        <Card className="bg-card border-elec-yellow/30">
           <div className="p-4 sm:p-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-emerald-400 mb-6 flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Settings className="w-6 h-6" />
               Essential Test Equipment
             </h2>
@@ -243,9 +243,9 @@ const AM2Module5Section6 = () => {
         </Card>
 
         {/* Time Management Tips */}
-        <Card className="bg-card border-emerald-500/30">
+        <Card className="bg-card border-elec-yellow/30">
           <div className="p-4 sm:p-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-emerald-400 mb-6 flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Clock className="w-6 h-6" />
               AM2 Time Management
             </h2>
@@ -272,9 +272,9 @@ const AM2Module5Section6 = () => {
             </div>
           </div>
         </Card>
-        <Card className="bg-card border-emerald-500/30">
+        <Card className="bg-card border-elec-yellow/30">
           <div className="p-4 sm:p-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-emerald-400 mb-6 flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Zap className="w-6 h-6" />
               Quick Testing Guide
             </h2>
@@ -283,7 +283,7 @@ const AM2Module5Section6 = () => {
               {quickTestingGuide.map((item, index) => (
                 <div key={index} className="p-4 border border-border/20 rounded-lg bg-background/50">
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     <h4 className="font-semibold text-sm">{item.fault}</h4>
                   </div>
                   <p className="text-xs text-muted-foreground">→ {item.test}</p>
@@ -304,7 +304,7 @@ const AM2Module5Section6 = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 border border-red-300 dark:border-red-700 rounded-lg">
                 <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Before Any Work:</h4>
-                <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                   <li>• Prove circuit is dead</li>
                   <li>• Lock off and tag supply</li>
                   <li>• Use appropriate PPE</li>
@@ -313,7 +313,7 @@ const AM2Module5Section6 = () => {
               </div>
               <div className="p-4 border border-red-300 dark:border-red-700 rounded-lg">
                 <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">During Testing:</h4>
-                <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                   <li>• Use GS38 compliant leads</li>
                   <li>• Keep one hand in pocket when possible</li>
                   <li>• Never assume - always verify</li>
@@ -325,39 +325,39 @@ const AM2Module5Section6 = () => {
         </Card>
 
         {/* Success Formula */}
-        <Card className="bg-card border-emerald-500/30">
+        <Card className="bg-card border-elec-yellow/30">
           <div className="p-4 sm:p-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-emerald-400 mb-6 flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <CheckCircle className="w-6 h-6" />
               Success Formula
             </h2>
             
-            <div className="bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 border border-emerald-500/30 rounded-lg p-4 sm:p-6">
+            <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-lg p-4 sm:p-6">
               <p className="text-center text-base sm:text-lg font-bold text-foreground mb-6">
                 If apprentices memorise this sheet, they'll walk into fault-finding with a clear plan:
               </p>
               
               {/* Mobile-First Vertical Layout */}
               <div className="flex flex-col items-center space-y-3 sm:space-y-4">
-                <div className="w-full max-w-xs sm:max-w-sm bg-emerald-500/20 border border-emerald-500/30 px-4 py-3 rounded-xl text-center">
+                <div className="w-full max-w-xs sm:max-w-sm bg-elec-yellow/20 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
                   <span className="font-semibold text-foreground text-sm sm:text-base">1. Diagnose</span>
                 </div>
                 
-                <div className="text-emerald-400 font-bold text-xl">↓</div>
+                <div className="text-elec-yellow font-bold text-xl">↓</div>
                 
-                <div className="w-full max-w-xs sm:max-w-sm bg-emerald-500/20 border border-emerald-500/30 px-4 py-3 rounded-xl text-center">
+                <div className="w-full max-w-xs sm:max-w-sm bg-elec-yellow/20 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
                   <span className="font-semibold text-foreground text-sm sm:text-base">2. State Rectification</span>
                 </div>
                 
-                <div className="text-emerald-400 font-bold text-xl">↓</div>
+                <div className="text-elec-yellow font-bold text-xl">↓</div>
                 
-                <div className="w-full max-w-xs sm:max-w-sm bg-emerald-500/20 border border-emerald-500/30 px-4 py-3 rounded-xl text-center">
+                <div className="w-full max-w-xs sm:max-w-sm bg-elec-yellow/20 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
                   <span className="font-semibold text-foreground text-sm sm:text-base">3. State Re-Test</span>
                 </div>
                 
-                <div className="text-emerald-400 font-bold text-xl">↓</div>
+                <div className="text-elec-yellow font-bold text-xl">↓</div>
                 
-                <div className="w-full max-w-xs sm:max-w-sm bg-emerald-500/20 border border-emerald-500/30 px-4 py-3 rounded-xl text-center">
+                <div className="w-full max-w-xs sm:max-w-sm bg-elec-yellow/20 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
                   <span className="font-semibold text-foreground text-sm sm:text-base">4. Done ✓</span>
                 </div>
               </div>
@@ -378,7 +378,7 @@ const AM2Module5Section6 = () => {
           </Button>
 
           {/* Back to Module */}
-          <Button variant="outline" className="w-full h-auto p-4 bg-emerald-500 border-emerald-500 text-black hover:bg-emerald-500/80" asChild>
+          <Button variant="outline" className="w-full h-auto p-4 bg-elec-yellow border-elec-yellow text-black hover:bg-elec-yellow/80" asChild>
             <Link to="..">
               <div className="flex items-center justify-center gap-3">
                 <BookOpen className="w-5 h-5" />

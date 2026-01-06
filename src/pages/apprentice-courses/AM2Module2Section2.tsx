@@ -228,7 +228,7 @@ const AM2Module2Section2 = () => {
       <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-12">
         {/* Title Section */}
         <div className="mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <FileText className="w-4 h-4" />
             Module 2 – Section 2
           </div>
@@ -244,17 +244,17 @@ const AM2Module2Section2 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-8">
           <div className="p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
                   CRITICAL: RAMS Documentation Requirements
                 </h3>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
                   Risk Assessments and Method Statements (RAMS) are about proving you can plan safe work before starting. 
                   In the AM2, you will be expected to complete RAMS documentation for given tasks. This isn't just paperwork — 
                   it's a legal requirement in industry under the Management of Health and Safety at Work Regulations 1999 and Electricity at Work Regulations 1989.
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400 font-medium">
+                <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
                   Many candidates lose marks by rushing RAMS or writing vague answers. This section ensures you know how to complete them properly, both for AM2 and real-world site practice.
                 </p>
               </div>
@@ -263,9 +263,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckSquare className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -274,23 +274,23 @@ const AM2Module2Section2 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Explain the purpose of risk assessments and method statements
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Complete a RAMS form correctly for AM2 tasks
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Identify hazards, risks, and suitable control measures
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Demonstrate how RAMS links to electrical safety law
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Avoid the vague or incomplete entries that cost marks
               </li>
             </ul>
@@ -298,9 +298,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Purpose of RAMS */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               1. Purpose of RAMS
             </h2>
             <div className="space-y-4 text-xs sm:text-sm text-foreground">
@@ -320,9 +320,9 @@ const AM2Module2Section2 = () => {
                 <p className="text-muted-foreground">The combination demonstrates competent planning, legal compliance, and professional approach to electrical installation work.</p>
               </div>
             </div>
-            <div className="mt-6 p-4 bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg">
+            <div className="mt-6 p-4 bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg">
               <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Legal Framework</h4>
-              <ul className="space-y-1 text-sm text-blue-700 dark:text-emerald-400">
+              <ul className="space-y-1 text-sm text-blue-700 dark:text-elec-yellow">
                 <li>• Management of Health and Safety at Work Regulations 1999 (Regulation 3)</li>
                 <li>• Electricity at Work Regulations 1989 (Regulation 4)</li>
                 <li>• Construction (Design and Management) Regulations 2015</li>
@@ -334,9 +334,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Equipment and Documentation */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Equipment & Documentation Requirements
             </h2>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
@@ -344,23 +344,23 @@ const AM2Module2Section2 = () => {
                 <h3 className="font-semibold text-base mb-3">Essential Documentation</h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     RAMS form (provided by assessor)
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Site drawings/plans
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Equipment specifications
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Isolation procedures
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Emergency contact details
                   </li>
                 </ul>
@@ -369,23 +369,23 @@ const AM2Module2Section2 = () => {
                 <h3 className="font-semibold text-base mb-3">Reference Materials</h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     BS 7671 IET Wiring Regulations
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     IET Code of Practice
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     HSE Guidance Notes
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Manufacturer instructions
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Company safety policies
                   </li>
                 </ul>
@@ -395,9 +395,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Pre-RAMS Checklist */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Pre-RAMS Checklist
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
@@ -459,9 +459,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* How RAMS appears in AM2 */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               2. How RAMS appears in AM2
             </h2>
             <div className="space-y-6">
@@ -472,7 +472,7 @@ const AM2Module2Section2 = () => {
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-semibold text-sm mb-2 text-blue-700 dark:text-emerald-400">Time Allocation</h4>
+                    <h4 className="font-semibold text-sm mb-2 text-blue-700 dark:text-elec-yellow">Time Allocation</h4>
                     <ul className="space-y-1 text-xs sm:text-sm text-foreground">
                       <li>• Allow 15-20 minutes for completion</li>
                       <li>• Complete before starting practical work</li>
@@ -481,7 +481,7 @@ const AM2Module2Section2 = () => {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-sm mb-2 text-blue-700 dark:text-emerald-400">Marking Weighting</h4>
+                    <h4 className="font-semibold text-sm mb-2 text-blue-700 dark:text-elec-yellow">Marking Weighting</h4>
                     <ul className="space-y-1 text-xs sm:text-sm text-foreground">
                       <li>• Significant marks allocation in assessment</li>
                       <li>• Poor RAMS can cause overall failure</li>
@@ -497,8 +497,8 @@ const AM2Module2Section2 = () => {
                 <p className="text-sm text-muted-foreground mb-3">
                   What NET assessors specifically look for in RAMS documentation:
                 </p>
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 p-4 rounded-lg">
-                  <ul className="space-y-2 text-sm text-blue-700 dark:text-emerald-400">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 p-4 rounded-lg">
+                  <ul className="space-y-2 text-sm text-blue-700 dark:text-elec-yellow">
                     <li>• Task-specific hazard identification relevant to actual work</li>
                     <li>• Detailed control measures with specific PPE requirements</li>
                     <li>• Consideration of BS 7671 compliance and electrical safety</li>
@@ -556,28 +556,28 @@ const AM2Module2Section2 = () => {
             <h3 className="font-semibold text-base mb-3 mt-6">Must include:</h3>
             <ul className="space-y-2 text-xs sm:text-sm text-foreground mb-4">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Task description
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Identified hazards (electrical, slips, manual handling, working at height, etc.)
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Who may be harmed (self, others, public)
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Control measures (isolation, PPE, signage, supervision, permits)
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Residual risk
               </li>
             </ul>
             <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 p-4 rounded-lg">
-              <p className="text-sm text-red-700 dark:text-emerald-400 font-medium">
+              <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
                 Vague answers like "be careful" = no marks.
               </p>
             </div>
@@ -585,15 +585,15 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Step-by-Step RAMS Completion */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               3. Step-by-Step RAMS Completion Guide
             </h2>
             <div className="space-y-6">
               <div>
                 <h3 className="font-semibold text-base mb-3 flex items-center gap-2">
-                  <div className="w-6 h-6 bg-emerald-500 text-black rounded-full flex items-center justify-center text-xs font-bold">1</div>
+                  <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">1</div>
                   Task Description
                 </h3>
                 <p className="text-xs sm:text-sm text-foreground mb-2">
@@ -605,7 +605,7 @@ const AM2Module2Section2 = () => {
                   </p>
                 </div>
                 <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 p-3 rounded-lg">
-                  <p className="text-sm text-red-700 dark:text-emerald-400">
+                  <p className="text-sm text-red-700 dark:text-elec-yellow">
                     ❌ "Socket installation" (too vague)
                   </p>
                 </div>
@@ -613,7 +613,7 @@ const AM2Module2Section2 = () => {
 
               <div>
                 <h3 className="font-semibold text-base mb-3 flex items-center gap-2">
-                  <div className="w-6 h-6 bg-emerald-500 text-black rounded-full flex items-center justify-center text-xs font-bold">2</div>
+                  <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">2</div>
                   Hazard Identification
                 </h3>
                 <p className="text-xs sm:text-sm text-foreground mb-3">
@@ -661,7 +661,7 @@ const AM2Module2Section2 = () => {
 
               <div>
                 <h3 className="font-semibold text-base mb-3 flex items-center gap-2">
-                  <div className="w-6 h-6 bg-emerald-500 text-black rounded-full flex items-center justify-center text-xs font-bold">3</div>
+                  <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">3</div>
                   Who May Be Harmed
                 </h3>
                 <p className="text-xs sm:text-sm text-foreground mb-2">
@@ -679,7 +679,7 @@ const AM2Module2Section2 = () => {
 
               <div>
                 <h3 className="font-semibold text-base mb-3 flex items-center gap-2">
-                  <div className="w-6 h-6 bg-emerald-500 text-black rounded-full flex items-center justify-center text-xs font-bold">4</div>
+                  <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">4</div>
                   Control Measures
                 </h3>
                 <p className="text-xs sm:text-sm text-foreground mb-3">
@@ -690,16 +690,16 @@ const AM2Module2Section2 = () => {
                     <h4 className="font-semibold text-sm text-green-700 dark:text-green-300">Elimination/Substitution</h4>
                     <p className="text-sm text-muted-foreground">Remove hazard completely or replace with safer alternative</p>
                   </div>
-                  <div className="border-l-4 border-emerald-500 pl-4">
-                    <h4 className="font-semibold text-sm text-blue-700 dark:text-emerald-400">Engineering Controls</h4>
+                  <div className="border-l-4 border-elec-yellow pl-4">
+                    <h4 className="font-semibold text-sm text-blue-700 dark:text-elec-yellow">Engineering Controls</h4>
                     <p className="text-sm text-muted-foreground">Isolation procedures, earthing, RCD protection, barriers</p>
                   </div>
                   <div className="border-l-4 border-orange-500 pl-4">
-                    <h4 className="font-semibold text-sm text-orange-700 dark:text-emerald-400">Administrative Controls</h4>
+                    <h4 className="font-semibold text-sm text-orange-700 dark:text-elec-yellow">Administrative Controls</h4>
                     <p className="text-sm text-muted-foreground">Permits to work, signage, training, supervision, procedures</p>
                   </div>
                   <div className="border-l-4 border-l-red-500 pl-4">
-                    <h4 className="font-semibold text-sm text-red-700 dark:text-emerald-400">Personal Protective Equipment</h4>
+                    <h4 className="font-semibold text-sm text-red-700 dark:text-elec-yellow">Personal Protective Equipment</h4>
                     <p className="text-sm text-muted-foreground">Last resort - specify exact type and purpose</p>
                   </div>
                 </div>
@@ -713,50 +713,50 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Common Mistakes */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               4. Common Mistakes in AM2 RAMS (NET list)
             </h2>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <h3 className="font-semibold text-base mb-3 text-red-600 dark:text-emerald-400">Critical Failures</h3>
+                <h3 className="font-semibold text-base mb-3 text-red-600 dark:text-elec-yellow">Critical Failures</h3>
                 <ul className="space-y-3 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Writing "use PPE" without stating type (gloves, goggles, insulated mat)
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Not identifying all hazards (focusing only on electrical, ignoring environment)
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Failing to include signage, lock-off, or permits as control measures
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Copy-pasting generic answers without linking to task
                   </li>
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-base mb-3 text-orange-600 dark:text-emerald-400">Common Errors</h3>
+                <h3 className="font-semibold text-base mb-3 text-orange-600 dark:text-elec-yellow">Common Errors</h3>
                 <ul className="space-y-3 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Not writing a logical sequence in method statement
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Forgetting to mention isolation verification procedures
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Omitting emergency procedures and contact details
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Not considering building occupants' safety
                   </li>
                 </ul>
@@ -766,8 +766,8 @@ const AM2Module2Section2 = () => {
               <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Examples of Inadequate Entries</h4>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="font-semibold text-red-700 dark:text-emerald-400 mb-1">Wrong:</p>
-                  <ul className="space-y-1 text-red-600 dark:text-emerald-400">
+                  <p className="font-semibold text-red-700 dark:text-elec-yellow mb-1">Wrong:</p>
+                  <ul className="space-y-1 text-red-600 dark:text-elec-yellow">
                     <li>• "Use appropriate PPE"</li>
                     <li>• "Be careful with electricity"</li>
                     <li>• "Follow safe working practices"</li>
@@ -793,9 +793,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* RAMS Hazard Matrix */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               5. RAMS Hazard Identification Matrix
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
@@ -804,7 +804,7 @@ const AM2Module2Section2 = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm border border-border">
                 <thead>
-                  <tr className="bg-emerald-500/20">
+                  <tr className="bg-elec-yellow/20">
                     <th className="border border-border p-3 text-left">Hazard Category</th>
                     <th className="border border-border p-3 text-left">Specific Hazards</th>
                     <th className="border border-border p-3 text-left">Typical Control Measures</th>
@@ -886,9 +886,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Control Measures Library */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               6. Control Measures Library
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
@@ -988,9 +988,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Real-world Link */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               7. Real-world Link
             </h2>
             <ul className="space-y-3 text-xs sm:text-sm text-foreground">
@@ -1011,24 +1011,24 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Practice RAMS Scenarios */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               5. Practice RAMS Scenarios
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
               Typical AM2 scenarios you should be able to complete RAMS for:
             </p>
             <div className="space-y-6">
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 p-4 rounded-lg">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 p-4 rounded-lg">
                 <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Scenario 1: Socket Installation</h3>
-                <p className="text-sm text-blue-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-blue-700 dark:text-elec-yellow mb-3">
                   "Install new 13A twin socket outlet in domestic kitchen, including 2.5mm² T&E cable run from existing ring circuit"
                 </p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <h4 className="font-semibold mb-2">Key Hazards to Consider:</h4>
-                    <ul className="space-y-1 text-emerald-400 dark:text-emerald-400">
+                    <ul className="space-y-1 text-elec-yellow dark:text-elec-yellow">
                       <li>• Electric shock from existing ring circuit</li>
                       <li>• Water ingress in kitchen environment</li>
                       <li>• Dust from chasing walls</li>
@@ -1038,7 +1038,7 @@ const AM2Module2Section2 = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">Essential Control Measures:</h4>
-                    <ul className="space-y-1 text-emerald-400 dark:text-emerald-400">
+                    <ul className="space-y-1 text-elec-yellow dark:text-elec-yellow">
                       <li>• Isolate ring circuit at MCB</li>
                       <li>• Dust extraction during chasing</li>
                       <li>• Temporary barriers around work area</li>
@@ -1080,13 +1080,13 @@ const AM2Module2Section2 = () => {
 
               <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 p-4 rounded-lg">
                 <h3 className="font-semibold text-orange-800 dark:text-orange-200 mb-2">Scenario 3: Consumer Unit Replacement</h3>
-                <p className="text-sm text-orange-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-orange-700 dark:text-elec-yellow mb-3">
                   "Replace existing rewirable fuse consumer unit with modern RCBO unit in domestic premises"
                 </p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <h4 className="font-semibold mb-2">Key Hazards to Consider:</h4>
-                    <ul className="space-y-1 text-orange-600 dark:text-emerald-400">
+                    <ul className="space-y-1 text-orange-600 dark:text-elec-yellow">
                       <li>• DNO supply isolation requirements</li>
                       <li>• Old installation condition unknown</li>
                       <li>• Total loss of power to premises</li>
@@ -1096,7 +1096,7 @@ const AM2Module2Section2 = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">Essential Control Measures:</h4>
-                    <ul className="space-y-1 text-orange-600 dark:text-emerald-400">
+                    <ul className="space-y-1 text-orange-600 dark:text-elec-yellow">
                       <li>• Coordinate with DNO for isolation</li>
                       <li>• Pre-work installation condition survey</li>
                       <li>• Alternative power arrangements</li>
@@ -1111,9 +1111,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* What Assessors Look For */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               6. What Assessors Look For
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
@@ -1154,41 +1154,41 @@ const AM2Module2Section2 = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-base mb-3 text-red-600 dark:text-emerald-400">What Loses Marks</h3>
+                <h3 className="font-semibold text-base mb-3 text-red-600 dark:text-elec-yellow">What Loses Marks</h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Generic or vague descriptions
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Missing key hazards for the task
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Inappropriate or missing control measures
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Illogical or incomplete method sequence
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Failing to consider building occupants
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     No emergency planning
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     Copy-paste answers not relevant to task
                   </li>
                 </ul>
               </div>
             </div>
-            <div className="mt-6 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
-              <h4 className="font-semibold text-emerald-400 mb-2">Time Management Tips</h4>
+            <div className="mt-6 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
+              <h4 className="font-semibold text-elec-yellow mb-2">Time Management Tips</h4>
               <ul className="space-y-1 text-xs sm:text-sm text-foreground">
                 <li>• Allow 15-20 minutes for RAMS completion</li>
                 <li>• Read the task description twice before starting</li>
@@ -1201,9 +1201,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Real-world Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               8. Real-world Examples and Case Studies
             </h2>
             <div className="space-y-6">
@@ -1211,17 +1211,17 @@ const AM2Module2Section2 = () => {
                 <h3 className="font-semibold text-base mb-3">AM2 Assessment Examples</h3>
                 <div className="space-y-4 text-xs sm:text-sm text-foreground">
                   <div className="border-l-4 border-l-red-500 pl-4">
-                    <h4 className="font-semibold mb-1 text-red-700 dark:text-emerald-400">Example 1: Vague PPE Entry</h4>
+                    <h4 className="font-semibold mb-1 text-red-700 dark:text-elec-yellow">Example 1: Vague PPE Entry</h4>
                     <p className="mb-2">Candidate wrote "wear PPE" in risk assessment. No marks awarded because it didn't specify type.</p>
                     <p className="text-muted-foreground italic">Should have written: "Wear insulated gloves rated 1000V for electrical testing and safety glasses to BS EN 166 for drilling operations"</p>
                   </div>
                   <div className="border-l-4 border-l-red-500 pl-4">
-                    <h4 className="font-semibold mb-1 text-red-700 dark:text-emerald-400">Example 2: Missing Hazard</h4>
+                    <h4 className="font-semibold mb-1 text-red-700 dark:text-elec-yellow">Example 2: Missing Hazard</h4>
                     <p className="mb-2">RAMS omitted "unauthorised access" as a hazard. Candidate lost marks.</p>
                     <p className="text-muted-foreground italic">Should have included: "Risk of building occupants entering work area during electrical work"</p>
                   </div>
                   <div className="border-l-4 border-l-red-500 pl-4">
-                    <h4 className="font-semibold mb-1 text-red-700 dark:text-emerald-400">Example 3: Incomplete Documentation</h4>
+                    <h4 className="font-semibold mb-1 text-red-700 dark:text-elec-yellow">Example 3: Incomplete Documentation</h4>
                     <p className="mb-2">Candidate listed hazards but not control measures. RAMS marked incomplete.</p>
                     <p className="text-muted-foreground italic">Each hazard must have corresponding specific control measures</p>
                   </div>
@@ -1238,22 +1238,22 @@ const AM2Module2Section2 = () => {
                 <div className="space-y-4 text-sm">
                   <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 p-4 rounded-lg">
                     <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Case Study: Lock-off Failure</h4>
-                    <p className="text-red-700 dark:text-emerald-400 mb-2">
+                    <p className="text-red-700 dark:text-elec-yellow mb-2">
                       An electrician failed to lock off an isolator because it wasn't specified in the RAMS. 
                       An apprentice unknowingly re-energised the circuit while the electrician was working, 
                       resulting in electric shock and burns requiring hospital treatment.
                     </p>
-                    <p className="text-red-600 dark:text-emerald-400 font-semibold">
+                    <p className="text-red-600 dark:text-elec-yellow font-semibold">
                       Lesson: RAMS must specify lock-off procedures and responsibility for key control
                     </p>
                   </div>
                   <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 p-4 rounded-lg">
                     <h4 className="font-semibold text-orange-800 dark:text-orange-200 mb-2">Case Study: Inadequate Barriers</h4>
-                    <p className="text-orange-700 dark:text-emerald-400 mb-2">
+                    <p className="text-orange-700 dark:text-elec-yellow mb-2">
                       Office workers bypassed inadequate barriers around electrical work, leading to a trip incident 
                       over cables. Worker sustained injuries and work was delayed for incident investigation.
                     </p>
-                    <p className="text-orange-600 dark:text-emerald-400 font-semibold">
+                    <p className="text-orange-600 dark:text-elec-yellow font-semibold">
                       Lesson: RAMS must consider all building users and specify effective access control
                     </p>
                   </div>
@@ -1264,9 +1264,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Frequently Asked Questions
             </h2>
             <div className="space-y-4 text-sm">
@@ -1295,9 +1295,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Summary
             </h2>
             <p className="text-xs sm:text-sm text-foreground mb-4">
@@ -1305,19 +1305,19 @@ const AM2Module2Section2 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Identify specific hazards
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 State clear control measures
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Link PPE, signage, and lock-off to the actual task
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Write a logical method sequence
               </li>
             </ul>
@@ -1328,9 +1328,9 @@ const AM2Module2Section2 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-emerald-500/30">
+        <Card className="bg-card border-elec-yellow/30">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Test Your Knowledge
             </h2>
             <Quiz questions={quizQuestions} title="RAMS Quiz" />

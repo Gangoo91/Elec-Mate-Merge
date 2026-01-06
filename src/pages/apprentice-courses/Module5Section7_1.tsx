@@ -270,7 +270,7 @@ const Module5Section7_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Legal and Regulatory Compliance</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Legal and Regulatory Compliance</p>
                     <p className="text-base text-white mb-2"><strong>Compliance with BS 7671:</strong> Every installation must be documented to prove it meets current wiring regulations.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Installation certificates demonstrate compliance with electrical safety standards</li>
@@ -410,7 +410,7 @@ const Module5Section7_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Risks and Impact</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Risks and Impact</p>
                     <p className="text-base text-white mb-2"><strong>Legal penalties:</strong> If compliance cannot be proven.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Prosecution under health and safety legislation with unlimited fines</li>
@@ -473,7 +473,7 @@ const Module5Section7_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Strategic Advantages</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Strategic Advantages</p>
                     <p className="text-base text-white mb-2"><strong>Efficiency gains:</strong> Reduces mistakes and duplication of work.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Clear installation records prevent unnecessary re-testing</li>
@@ -594,7 +594,7 @@ const Module5Section7_1 = () => {
                 <li>• Use clear, legible handwriting for manual records</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800">
               <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
                 <Target className="w-4 h-4" />
                 Key Actions
@@ -630,7 +630,7 @@ const Module5Section7_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-red-600 dark:text-elec-yellow">Considerations:</p>
+                    <p className="text-sm font-medium text-red-600 text-elec-yellow">Considerations:</p>
                     <ul className="text-xs text-white list-disc ml-4 space-y-1">
                       <li>Requires reliable power and connectivity</li>
                       <li>Staff training on software systems</li>
@@ -654,7 +654,7 @@ const Module5Section7_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-red-600 dark:text-elec-yellow">Considerations:</p>
+                    <p className="text-sm font-medium text-red-600 text-elec-yellow">Considerations:</p>
                     <ul className="text-xs text-white list-disc ml-4 space-y-1">
                       <li>Risk of loss or damage</li>
                       <li>Difficult to search and analyse</li>
@@ -694,7 +694,7 @@ const Module5Section7_1 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-r from-card/10 to-emerald-500/10 border-white/10">
+        <Card className="mb-8 p-6 bg-gradient-to-r from-card/10 to-elec-yellow/10 border-white/10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Clipboard className="w-5 h-5" />
             Pocket Guide

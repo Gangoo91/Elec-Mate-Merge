@@ -300,7 +300,7 @@ const Module4Section1_5 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{access.category}</p>
+                      <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">{access.category}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">{access.description}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Factors:</strong> {access.factors}
@@ -375,7 +375,7 @@ const Module4Section1_5 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{lighting.task}</p>
+                      <p className="font-semibold text-purple-600 text-elec-yellow mb-1">{lighting.task}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">Minimum level: {lighting.minLux}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Requirements:</strong> {lighting.requirements}
@@ -411,7 +411,7 @@ const Module4Section1_5 = () => {
             </p>
             
             <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
-              <h4 className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Common Hazards and Controls</h4>
+              <h4 className="font-semibold text-orange-600 text-elec-yellow mb-3">Common Hazards and Controls</h4>
               <div className="grid md:grid-cols-2 gap-4 text-xs text-white">
                 <div className="space-y-2">
                   <div className="bg-[#121212]/50 p-2 rounded border">
@@ -456,7 +456,7 @@ const Module4Section1_5 = () => {
             </p>
             
             <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-              <h4 className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Key Regulations</h4>
+              <h4 className="font-semibold text-red-600 text-elec-yellow mb-3">Key Regulations</h4>
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs text-white">
                 <div className="bg-[#121212]/50 p-3 rounded border">
                   <strong className="block mb-2">Health and Safety at Work Act 1974</strong>
@@ -491,7 +491,7 @@ const Module4Section1_5 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-8 p-6 bg-emerald-50 dark:bg-emerald-950/20 border-blue-200 dark:border-blue-800">
+        <Card className="mb-8 p-6 bg-elec-yellow/5 dark:bg-elec-yellow/10 border-blue-200 dark:border-blue-800">
           <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
             <Eye className="w-5 h-5" />
             Real-World Example

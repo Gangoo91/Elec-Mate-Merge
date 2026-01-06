@@ -277,7 +277,7 @@ const Module2Section3_2 = () => {
                   <p className="font-bold">Voltage divider rule:</p>
                   <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                     <p className="text-elec-yellow font-mono">Vx = Vsupply × Rx / Rtotal</p>
-                    <p className="text-emerald-200 text-sm mt-2">Where Vx is voltage across component x</p>
+                    <p className="text-elec-yellow text-sm mt-2">Where Vx is voltage across component x</p>
                   </div>
                 </div>
 
@@ -521,7 +521,7 @@ const Module2Section3_2 = () => {
             <div className="space-y-3">
               <h4 className="font-bold text-elec-yellow">Key Formulas</h4>
               <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                <ul className="text-emerald-200 space-y-1 font-mono text-xs">
+                <ul className="text-elec-yellow space-y-1 font-mono text-xs">
                   <li>• I = Vs / Rt</li>
                   <li>• Vx = Vs × Rx / Rt</li>
                   <li>• Rt = R₁ + R₂ + R₃...</li>

@@ -464,7 +464,7 @@ const Module3Section2_1: React.FC = () => {
             <Target className="w-5 h-5" /> Real‑world scenario: Warehouse upgrade
           </h2>
           
-          <div className="p-4 border-l-4 border-emerald-400 bg-emerald-400/5 rounded-r-lg mb-4">
+          <div className="p-4 border-l-4 border-elec-yellow bg-elec-yellow/5 rounded-r-lg mb-4">
             <div className="flex items-start gap-3">
               <Factory className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
               <div className="text-blue-200">
@@ -495,7 +495,7 @@ const Module3Section2_1: React.FC = () => {
             </div>
             <div className="rounded-lg p-3 border border-elec-yellow/30">
               <p className="font-medium text-elec-yellow mb-2">Results Achieved</p>
-              <ul className="list-disc pl-4 space-y-1 text-emerald-200 text-sm">
+              <ul className="list-disc pl-4 space-y-1 text-elec-yellow text-sm">
                 <li>Zero cable damage incidents in 18 months</li>
                 <li>Easy access for maintenance via mobile platform</li>
                 <li>Future-proofed for additional circuits</li>
@@ -526,7 +526,7 @@ const Module3Section2_1: React.FC = () => {
         {/* Summary */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-elec-yellow/30">
           <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-2">Summary</h2>
-          <p className="text-emerald-200 text-sm leading-relaxed">
+          <p className="text-elec-yellow text-sm leading-relaxed">
             Containment is fundamental to safe, organised and compliant
             electrical work — protecting cables, supporting BS 7671 compliance
             and simplifying maintenance.

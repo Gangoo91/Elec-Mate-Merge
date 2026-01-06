@@ -270,7 +270,7 @@ const Module7Section3_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">MCB Protection Functions</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">MCB Protection Functions</p>
                     <p className="text-base text-white mb-2"><strong>Overcurrent protection:</strong> MCBs protect against excessive current flow.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Protects against overload conditions when circuit current exceeds safe limits</li>
@@ -367,7 +367,7 @@ const Module7Section3_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Systematic Investigation Procedure</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Systematic Investigation Procedure</p>
                     <p className="text-base text-white mb-2"><strong>Initial response:</strong> Safe isolation and circuit confirmation.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Isolate the affected circuit and confirm it is safe to work on</li>
@@ -434,7 +434,7 @@ const Module7Section3_1 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Examples</h2>
           <div className="space-y-6">
             <div className="border-l-4 border-l-red-500 p-4 rounded-r-lg">
-              <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-2">Student Flats RCD Tripping</h3>
+              <h3 className="font-semibold text-red-600 text-elec-yellow mb-2">Student Flats RCD Tripping</h3>
               <p className="text-base text-white mb-2">
                 In a block of student flats, residents reported that the RCD protecting their kitchen circuits tripped several times a day. Maintenance staff repeatedly reset it without investigation, telling students to "just plug things in more carefully."
               </p>

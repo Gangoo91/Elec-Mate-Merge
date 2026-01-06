@@ -208,7 +208,7 @@ const Module7Section5_4 = () => {
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base">PPE Essentials and Their Purpose</h3>
+                  <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-4 text-base">PPE Essentials and Their Purpose</h3>
                   
                   <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Insulated gloves:</strong> Reduce the chance of electric shock by providing a barrier between hands and live conductors. Must be regularly inspected for holes, tears, or degradation. Different voltage ratings available - ensure gloves match the system voltage being worked on.</p>
@@ -298,7 +298,7 @@ const Module7Section5_4 = () => {
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base">Quick Risk Assessment Routine</h3>
+                  <h3 className="font-semibold text-purple-600 text-elec-yellow mb-4 text-base">Quick Risk Assessment Routine</h3>
                   
                   <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Pre-work checks:</strong> Before any testing begins, ask: Is the area dry? Is there adequate lighting? Are escape routes clear? Are there trip hazards? Is appropriate PPE available and in good condition? If any answer is 'no', stop and address the issue.</p>
@@ -340,7 +340,7 @@ const Module7Section5_4 = () => {
             </div>
             
             <div className="rounded-lg p-4 border border-elec-yellow/30 bg-elec-yellow/5">
-              <h3 className="font-semibold text-emerald-600 dark:text-elec-yellow mb-2 text-sm sm:text-base">Case Study: Environmental Awareness</h3>
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-2 text-sm sm:text-base">Case Study: Environmental Awareness</h3>
               <p className="text-xs sm:text-xs sm:text-sm text-white mb-3">
                 An apprentice was asked to test circuits in a basement with a wet floor and poor lighting. Rather than proceeding, they stopped work and reported the unsafe conditions. Testing resumed only after temporary lighting was installed and rubber matting laid.
               </p>

@@ -207,7 +207,7 @@ const AM2Module7Section4 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <AlertTriangle className="w-4 h-4" />
             Module 7 – Section 4
           </div>
@@ -223,15 +223,15 @@ const AM2Module7Section4 = () => {
         <Card className="bg-orange-50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-800/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-orange-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-orange-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-orange-800 dark:text-orange-200 mb-2 text-sm sm:text-base">
                   IMPORTANT: Most Failures Are Avoidable
                 </h3>
-                <p className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow mb-3 leading-relaxed">
                   NET statistics show that most AM2 failures are due to repeated common mistakes, not lack of technical knowledge. These errors are predictable and preventable.
                 </p>
-                <p className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow font-medium leading-relaxed">
                   Know the pitfalls, prepare for them, and you'll avoid the traps that catch many candidates.
                 </p>
               </div>
@@ -240,9 +240,9 @@ const AM2Module7Section4 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -251,23 +251,23 @@ const AM2Module7Section4 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Identify the most common reasons candidates fail the AM2
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply strategies to avoid these mistakes in each section of the assessment
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Work more confidently by knowing the assessor's "red flags"
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Maintain accuracy and safety even under time pressure
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Finish AM2 with fewer lost marks from avoidable errors
               </li>
             </ul>
@@ -275,9 +275,9 @@ const AM2Module7Section4 = () => {
         </Card>
 
         {/* Safe Isolation Mistakes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
               1. Safe Isolation Mistakes
             </h2>
@@ -289,7 +289,7 @@ const AM2Module7Section4 = () => {
             <div className="space-y-6">
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3 text-sm sm:text-base">Most Common Isolation Errors:</h4>
-                <ul className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow space-y-2">
                   <li>• <strong>Skipping the re-prove step</strong> after testing dead</li>
                   <li>• <strong>Using wrong tester</strong> (multimeter instead of two-pole voltage indicator)</li>
                   <li>• <strong>Not locking off correctly</strong> or forgetting to secure isolation</li>
@@ -312,12 +312,12 @@ const AM2Module7Section4 = () => {
                 </ul>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Detailed Prevention Strategy:</h4>
                 <div className="space-y-3">
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 text-xs sm:text-sm">Before You Start:</h5>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1 ml-4">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1 ml-4">
                       <li>• Check test equipment is GS38-compliant and in good condition</li>
                       <li>• Verify you have correct PPE for the task</li>
                       <li>• Identify all possible sources of supply to the circuit</li>
@@ -326,7 +326,7 @@ const AM2Module7Section4 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 text-xs sm:text-sm">During Isolation:</h5>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1 ml-4">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1 ml-4">
                       <li>• Follow the 10-step process religiously - no shortcuts</li>
                       <li>• Verbalise each step to the assessor clearly</li>
                       <li>• Take your time - safety over speed always</li>
@@ -336,7 +336,7 @@ const AM2Module7Section4 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 text-xs sm:text-sm">After Testing Dead:</h5>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1 ml-4">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1 ml-4">
                       <li>• Always re-prove tester on known live source</li>
                       <li>• Confirm tester is working correctly</li>
                       <li>• Only then proceed with work on dead circuit</li>
@@ -358,9 +358,9 @@ const AM2Module7Section4 = () => {
         />
 
         {/* Installation Mistakes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
               2. Installation Mistakes
             </h2>
@@ -376,7 +376,7 @@ const AM2Module7Section4 = () => {
                 <div className="flex-1">
                   <h5 className="font-medium text-foreground mb-2">Common Installation Errors</h5>
                   <div className="bg-red-50 dark:bg-red-950/20 rounded p-3 text-xs sm:text-sm">
-                    <ul className="text-red-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-red-700 dark:text-elec-yellow space-y-1">
                       <li>• <strong>Untidy containment:</strong> conduit kinks, trunking lids not flush, poor bending radius</li>
                       <li>• <strong>Bare copper exposed</strong> at terminations - major safety issue</li>
                       <li>• <strong>CPCs unsleeved</strong> or left disconnected - BS 7671 non-compliance</li>
@@ -397,7 +397,7 @@ const AM2Module7Section4 = () => {
                 <div className="flex-1">
                   <h5 className="font-medium text-foreground mb-2">Why Installation Errors Happen</h5>
                   <div className="bg-orange-50 dark:bg-orange-950/20 rounded p-3 text-xs sm:text-sm">
-                    <ul className="text-orange-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-orange-700 dark:text-elec-yellow space-y-1">
                       <li>• <strong>Time pressure</strong> - rushing to complete tasks</li>
                       <li>• <strong>Poor planning</strong> - not measuring and marking out properly</li>
                       <li>• <strong>Lack of experience</strong> with commercial installation methods</li>
@@ -451,7 +451,7 @@ const AM2Module7Section4 = () => {
               </div>
 
               {/* Professional Standards */}
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
                   <Target className="w-4 h-4" />
                   Professional Standards Checklist
@@ -459,7 +459,7 @@ const AM2Module7Section4 = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Containment Quality:</h5>
-                    <ul className="text-blue-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-blue-700 dark:text-elec-yellow space-y-1">
                       <li>• No conduit kinks or damage</li>
                       <li>• Trunking lids flush and secure</li>
                       <li>• Proper bending radius maintained</li>
@@ -468,7 +468,7 @@ const AM2Module7Section4 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Termination Quality:</h5>
-                    <ul className="text-blue-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-blue-700 dark:text-elec-yellow space-y-1">
                       <li>• No bare copper visible</li>
                       <li>• All CPCs properly sleeved</li>
                       <li>• Correct termination sequence</li>
@@ -482,9 +482,9 @@ const AM2Module7Section4 = () => {
         </Card>
 
         {/* Inspection & Testing Mistakes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <TestTube className="w-5 h-5" />
               3. Inspection & Testing Mistakes
             </h2>
@@ -496,7 +496,7 @@ const AM2Module7Section4 = () => {
             <div className="space-y-6">
               <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-3">Common Testing Errors:</h4>
-                <ul className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow space-y-2">
                   <li>• <strong>Wrong order of tests</strong> (not following GN3 sequence exactly)</li>
                   <li>• <strong>Forgetting insulation resistance</strong> on individual circuits</li>
                   <li>• <strong>Not recording results</strong> as they go - leaving it to memory</li>
@@ -521,12 +521,12 @@ const AM2Module7Section4 = () => {
                 </ul>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Comprehensive Testing Strategy:</h4>
                 <div className="space-y-3">
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 text-xs sm:text-sm">Before Testing:</h5>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1 ml-4">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1 ml-4">
                       <li>• Have GN3 sequence clearly available for reference</li>
                       <li>• Prepare all test instruments and check calibration</li>
                       <li>• Set up documentation sheets ready for recording</li>
@@ -536,7 +536,7 @@ const AM2Module7Section4 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 text-xs sm:text-sm">During Testing:</h5>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1 ml-4">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1 ml-4">
                       <li>• Stick to GN3 order exactly - no shortcuts or variations</li>
                       <li>• Record results immediately after each test</li>
                       <li>• Use correct test methods and instrument settings</li>
@@ -547,7 +547,7 @@ const AM2Module7Section4 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 text-xs sm:text-sm">Realistic Values Guide:</h5>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1 ml-4">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1 ml-4">
                       <li>• <strong>Continuity:</strong> Typically 0.05-0.5 Ω depending on circuit length</li>
                       <li>• <strong>Insulation Resistance:</strong> Usually 50-500 MΩ, not "∞"</li>
                       <li>• <strong>Zs values:</strong> Realistic for circuit type and length, never "0"</li>
@@ -583,9 +583,9 @@ const AM2Module7Section4 = () => {
         />
 
         {/* Fault-finding Mistakes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               4. Fault-finding Mistakes
             </h2>
@@ -597,7 +597,7 @@ const AM2Module7Section4 = () => {
             <div className="space-y-6">
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">Common Fault-finding Errors:</h4>
-                <ul className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow space-y-2">
                   <li>• <strong>Guessing instead of testing logically</strong> - jumping to conclusions</li>
                   <li>• <strong>Not writing rectification clearly</strong> (e.g., "fix fault" instead of "reconnect CPC at socket and re-test continuity")</li>
                   <li>• <strong>Forgetting to state re-test</strong> after rectification</li>
@@ -654,10 +654,10 @@ const AM2Module7Section4 = () => {
                 </div>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Fault-finding Documentation Template:</h4>
-                <div className="space-y-2 text-xs sm:text-sm text-blue-700 dark:text-emerald-400">
-                  <div className="border-l-2 border-emerald-400 pl-3">
+                <div className="space-y-2 text-xs sm:text-sm text-blue-700 dark:text-elec-yellow">
+                  <div className="border-l-2 border-elec-yellow pl-3">
                     <p><strong>1. Symptom:</strong> [What is reported/observed]</p>
                     <p><strong>2. Tests carried out:</strong> [Specific tests and results]</p>
                     <p><strong>3. Fault identified:</strong> [Precise fault location and nature]</p>
@@ -679,9 +679,9 @@ const AM2Module7Section4 = () => {
         />
 
         {/* Knowledge Test Mistakes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Brain className="w-5 h-5" />
               5. Knowledge Test Mistakes
             </h2>
@@ -708,7 +708,7 @@ const AM2Module7Section4 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">Why Knowledge Test Errors Happen:</h4>
-                <ul className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow space-y-2">
                   <li>• <strong>Exam pressure</strong> causing rushed reading and poor concentration</li>
                   <li>• <strong>Overconfidence</strong> in familiar topics leading to careless mistakes</li>
                   <li>• <strong>Poor time management</strong> - not allocating time properly across questions</li>
@@ -718,12 +718,12 @@ const AM2Module7Section4 = () => {
                 </ul>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Comprehensive Knowledge Test Strategy:</h4>
                 <div className="space-y-3">
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 text-xs sm:text-sm">Before Starting:</h5>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1 ml-4">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1 ml-4">
                       <li>• Read instructions carefully and note time allocation</li>
                       <li>• Scan through all questions to gauge difficulty</li>
                       <li>• Plan time allocation (e.g., 2 minutes per question)</li>
@@ -732,7 +732,7 @@ const AM2Module7Section4 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 text-xs sm:text-sm">For Each Question:</h5>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1 ml-4">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1 ml-4">
                       <li>• Read question twice, underlining key words</li>
                       <li>• Check units required in answer</li>
                       <li>• Read all options before deciding</li>
@@ -743,7 +743,7 @@ const AM2Module7Section4 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 text-xs sm:text-sm">Time Management:</h5>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1 ml-4">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1 ml-4">
                       <li>• Don't spend more than allocated time per question</li>
                       <li>• Mark difficult questions and return to them</li>
                       <li>• Always attempt every question - never leave blanks</li>
@@ -781,9 +781,9 @@ const AM2Module7Section4 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
               Practical Guidance
             </h2>
@@ -794,12 +794,12 @@ const AM2Module7Section4 = () => {
 
             <div className="space-y-6">
               {/* Mindset */}
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
                   <Brain className="w-4 h-4" />
                   Professional Mindset
                 </h4>
-                <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-2">
                   <li>• Always think "What would the assessor mark as unsafe?" and avoid it</li>
                   <li>• Build habits of checking work: no bare copper, CPC sleeved, labels applied</li>
                   <li>• Slow down slightly on safety-critical steps - rushing isolation or testing = fail</li>
@@ -827,7 +827,7 @@ const AM2Module7Section4 = () => {
                   <CheckCircle className="w-4 h-4" />
                   Quality Control Habits
                 </h4>
-                <ul className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow space-y-2">
                   <li>• Self-check your work before calling the assessor</li>
                   <li>• Use a systematic checklist approach</li>
                   <li>• Document everything as you go, not at the end</li>
@@ -839,34 +839,34 @@ const AM2Module7Section4 = () => {
         </Card>
 
         {/* Real-world Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Real-world Examples
             </h2>
 
             <div className="space-y-4">
               <div className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20 pl-4 py-3 rounded-r">
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow">
                   <strong>Example 1:</strong> Candidate skipped re-prove in safe isolation procedure → assessor stopped exam immediately → automatic fail.
                 </p>
               </div>
 
               <div className="border-l-4 border-orange-500 bg-orange-50 dark:bg-orange-950/20 pl-4 py-3 rounded-r">
-                <p className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400">
+                <p className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow">
                   <strong>Example 2:</strong> Candidate installed everything neatly but didn't label circuits in DB → lost significant marks unnecessarily for incomplete work.
                 </p>
               </div>
 
-              <div className="border-l-4 border-emerald-500 bg-yellow-50 dark:bg-yellow-950/20 pl-4 py-3 rounded-r">
+              <div className="border-l-4 border-elec-yellow bg-yellow-50 dark:bg-yellow-950/20 pl-4 py-3 rounded-r">
                 <p className="text-xs sm:text-sm text-yellow-700 dark:text-yellow-300">
                   <strong>Example 3:</strong> Candidate wrote "fault fixed" instead of explaining specific rectification action → lost fault-finding marks for poor documentation.
                 </p>
               </div>
 
-              <div className="border-l-4 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/20 pl-4 py-3 rounded-r">
-                <p className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400">
+              <div className="border-l-4 border-elec-yellow bg-elec-yellow/5 dark:bg-elec-yellow/10 pl-4 py-3 rounded-r">
+                <p className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow">
                   <strong>Example 4:</strong> Candidate misread "minimum IR" and answered with recommended value instead of required minimum → lost marks in knowledge test.
                 </p>
               </div>
@@ -881,9 +881,9 @@ const AM2Module7Section4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Brain className="w-5 h-5" />
               Frequently Asked Questions
             </h2>
@@ -935,25 +935,25 @@ const AM2Module7Section4 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Summary
             </h2>
 
-            <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
-              <p className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 mb-4 font-medium">
+            <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <p className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow mb-4 font-medium">
                 Most AM2 failures are caused by avoidable mistakes, not lack of skill. Common errors include:
               </p>
-              <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+              <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                 <li>• Skipping safe isolation steps</li>
                 <li>• Poor workmanship in installation (bare copper, unsleeved CPCs, untidy containment)</li>
                 <li>• Wrong testing order or unrealistic results</li>
                 <li>• Guessing in fault-finding or incomplete rectification statements</li>
                 <li>• Misreading questions or leaving blanks in the knowledge test</li>
               </ul>
-              <p className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 mt-4 font-bold">
+              <p className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow mt-4 font-bold">
                 The solution is preparation, calm discipline, and self-checking. Avoid these traps and you put yourself in a strong position to pass.
               </p>
             </div>
@@ -961,9 +961,9 @@ const AM2Module7Section4 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <TestTube className="w-5 h-5" />
               10-Question Quiz
             </h2>

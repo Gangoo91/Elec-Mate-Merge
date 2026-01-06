@@ -40,7 +40,7 @@ const AM2Module1Section2 = () => {
       duration: "45 minutes",
       description: "Demonstrate risk assessment and correct circuit isolation procedures. Assessors are strict - shortcuts can lead to immediate failure.",
       icon: AlertTriangle,
-      color: "text-emerald-400"
+      color: "text-elec-yellow"
     },
     {
       section: "A2-A5",
@@ -48,7 +48,7 @@ const AM2Module1Section2 = () => {
       duration: "8.5 hours",
       description: "Install and terminate circuits including ring finals, lighting, three-phase distribution, data cabling, protective bonding, and heating controls.",
       icon: Settings,
-      color: "text-emerald-400"
+      color: "text-elec-yellow"
     },
     {
       section: "C",
@@ -64,7 +64,7 @@ const AM2Module1Section2 = () => {
       duration: "30 minutes",
       description: "Isolate different circuit types in specific scenarios - single-phase equipment, three-phase isolators, distribution board isolation.",
       icon: Zap,
-      color: "text-emerald-400"
+      color: "text-elec-yellow"
     },
     {
       section: "E",
@@ -72,7 +72,7 @@ const AM2Module1Section2 = () => {
       duration: "2 hours",
       description: "Find pre-programmed faults, identify fault types, explain corrections, and rectify with retesting. Logic over guessing.",
       icon: Target,
-      color: "text-emerald-400"
+      color: "text-elec-yellow"
     },
     {
       section: "F",
@@ -156,8 +156,8 @@ const AM2Module1Section2 = () => {
         {/* Statistics Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8 sm:mb-12">
           {assessmentStats.map((stat, index) => (
-            <Card key={index} className="bg-card border-emerald-500/30 p-4 sm:p-6 text-center">
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-emerald-400 mb-2">
+            <Card key={index} className="bg-card border-elec-yellow/30 p-4 sm:p-6 text-center">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-elec-yellow mb-2">
                 {stat.number}
               </div>
               <div className="text-sm sm:text-base font-semibold text-foreground mb-1 sm:mb-2">
@@ -182,10 +182,10 @@ const AM2Module1Section2 = () => {
           
           <div className="grid gap-4 sm:gap-6">
             {assessmentSections.map((section, index) => (
-              <Card key={index} className="bg-card border-emerald-500/30 p-4 sm:p-6">
+              <Card key={index} className="bg-card border-elec-yellow/30 p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-card/50 border border-emerald-500/30">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-card/50 border border-elec-yellow/30">
                       <section.icon className={`w-6 h-6 ${section.color}`} />
                     </div>
                   </div>
@@ -194,7 +194,7 @@ const AM2Module1Section2 = () => {
                       <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">
                         {section.section} - {section.title}
                       </h3>
-                      <span className="text-sm sm:text-base font-medium text-emerald-400 mt-1 sm:mt-0">
+                      <span className="text-sm sm:text-base font-medium text-elec-yellow mt-1 sm:mt-0">
                         {section.duration}
                       </span>
                     </div>
@@ -209,13 +209,13 @@ const AM2Module1Section2 = () => {
         </div>
 
         {/* Total Time */}
-        <Card className="bg-card border-emerald-500/30 p-4 sm:p-6 mb-8 sm:mb-12">
+        <Card className="bg-card border-elec-yellow/30 p-4 sm:p-6 mb-8 sm:mb-12">
           <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">
             Total Time
           </h3>
           <p className="text-sm sm:text-base text-muted-foreground">
-            The overall duration of the AM2 is around <span className="text-emerald-400 font-semibold">16.25 hours</span>, 
-            normally spread across <span className="text-emerald-400 font-semibold">two and a half days</span>. 
+            The overall duration of the AM2 is around <span className="text-elec-yellow font-semibold">16.25 hours</span>, 
+            normally spread across <span className="text-elec-yellow font-semibold">two and a half days</span>. 
             Some centres allow short breaks between sections, but you should be prepared for long sessions of focused work.
           </p>
         </Card>
@@ -227,10 +227,10 @@ const AM2Module1Section2 = () => {
           </h2>
           <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
             {timeManagementTips.map((tip, index) => (
-              <Card key={index} className="bg-card border-emerald-500/30 p-4 sm:p-6">
+              <Card key={index} className="bg-card border-elec-yellow/30 p-4 sm:p-6">
                 <div className="flex gap-3 sm:gap-4">
                   <div className="flex-shrink-0">
-                    <tip.icon className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 mt-1" />
+                    <tip.icon className="w-5 h-5 sm:w-6 sm:h-6 text-elec-yellow mt-1" />
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
@@ -247,21 +247,21 @@ const AM2Module1Section2 = () => {
         </div>
 
         {/* Additional Tips */}
-        <Card className="bg-card border-emerald-500/30 p-4 sm:p-6 mb-8 sm:mb-12">
+        <Card className="bg-card border-elec-yellow/30 p-4 sm:p-6 mb-8 sm:mb-12">
           <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">
             Additional Time Management Strategies
           </h3>
           <div className="space-y-3 sm:space-y-4">
             <p className="text-sm sm:text-base text-muted-foreground">
-              <span className="text-emerald-400 font-semibold">Treat each section as a reset.</span> If one task doesn't go perfectly, 
+              <span className="text-elec-yellow font-semibold">Treat each section as a reset.</span> If one task doesn't go perfectly, 
               don't carry the stress into the next. The AM2 is marked section by section, not on overall impression.
             </p>
             <p className="text-sm sm:text-base text-muted-foreground">
-              <span className="text-emerald-400 font-semibold">Practice under time pressure.</span> During your preparation, 
+              <span className="text-elec-yellow font-semibold">Practice under time pressure.</span> During your preparation, 
               time yourself on practice tasks to get used to working efficiently under pressure.
             </p>
             <p className="text-sm sm:text-base text-muted-foreground">
-              <span className="text-emerald-400 font-semibold">Know your weak areas.</span> Spend extra time practicing 
+              <span className="text-elec-yellow font-semibold">Know your weak areas.</span> Spend extra time practicing 
               the sections you find most challenging, but don't neglect the areas you're confident in.
             </p>
           </div>
@@ -273,7 +273,7 @@ const AM2Module1Section2 = () => {
             Typical Assessment Schedule
           </h2>
           <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
-            <Card className="bg-card border-emerald-500/30 p-4 sm:p-6">
+            <Card className="bg-card border-elec-yellow/30 p-4 sm:p-6">
               <h3 className="text-lg font-semibold text-foreground mb-3">
                 Day 1 (6-7 hours)
               </h3>
@@ -283,7 +283,7 @@ const AM2Module1Section2 = () => {
                 <p>• Break periods as centre allows</p>
               </div>
             </Card>
-            <Card className="bg-card border-emerald-500/30 p-4 sm:p-6">
+            <Card className="bg-card border-elec-yellow/30 p-4 sm:p-6">
               <h3 className="text-lg font-semibold text-foreground mb-3">
                 Day 2 (6-7 hours)
               </h3>
@@ -293,7 +293,7 @@ const AM2Module1Section2 = () => {
                 <p>• Complete paperwork</p>
               </div>
             </Card>
-            <Card className="bg-card border-emerald-500/30 p-4 sm:p-6">
+            <Card className="bg-card border-elec-yellow/30 p-4 sm:p-6">
               <h3 className="text-lg font-semibold text-foreground mb-3">
                 Day 3 (3-4 hours)
               </h3>
@@ -307,28 +307,28 @@ const AM2Module1Section2 = () => {
         </div>
 
         {/* Common Time Wasters */}
-        <Card className="bg-card border-emerald-500/30 p-4 sm:p-6 mb-8 sm:mb-12">
+        <Card className="bg-card border-elec-yellow/30 p-4 sm:p-6 mb-8 sm:mb-12">
           <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-6">
             Common Time Wasters to Avoid
           </h3>
           <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-foreground mb-1">Poor Planning</h4>
                   <p className="text-sm text-muted-foreground">Not reading the entire brief before starting work</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-foreground mb-1">Tool Organisation</h4>
                   <p className="text-sm text-muted-foreground">Wasting time looking for tools or components</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-foreground mb-1">Measurement Errors</h4>
                   <p className="text-sm text-muted-foreground">Having to re-run cables due to incorrect measurements</p>
@@ -337,21 +337,21 @@ const AM2Module1Section2 = () => {
             </div>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-foreground mb-1">Perfectionism</h4>
                   <p className="text-sm text-muted-foreground">Spending too long on cosmetic improvements</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-foreground mb-1">Test Equipment Issues</h4>
                   <p className="text-sm text-muted-foreground">Not checking equipment functionality beforehand</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-foreground mb-1">Paperwork Panic</h4>
                   <p className="text-sm text-muted-foreground">Leaving insufficient time for test certificates</p>
@@ -362,33 +362,33 @@ const AM2Module1Section2 = () => {
         </Card>
 
         {/* Preparation Focus Areas */}
-        <Card className="bg-card border-emerald-500/30 p-4 sm:p-6 mb-8 sm:mb-12">
+        <Card className="bg-card border-elec-yellow/30 p-4 sm:p-6 mb-8 sm:mb-12">
           <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-6">
             How to Prepare for Time Management
           </h3>
           <div className="space-y-4">
             <div>
-              <h4 className="font-semibold text-emerald-400 mb-2">Practice with Realistic Timings</h4>
+              <h4 className="font-semibold text-elec-yellow mb-2">Practice with Realistic Timings</h4>
               <p className="text-sm sm:text-base text-muted-foreground mb-2">
                 Set yourself challenges during training: "Can I complete this ring final in 45 minutes?" 
                 Time yourself regularly to build realistic expectations.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-emerald-400 mb-2">Master Your Test Equipment</h4>
+              <h4 className="font-semibold text-elec-yellow mb-2">Master Your Test Equipment</h4>
               <p className="text-sm sm:text-base text-muted-foreground mb-2">
                 Know exactly which buttons to press and in what sequence. Practice until testing procedures become automatic.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-emerald-400 mb-2">Memorise Key Calculations</h4>
+              <h4 className="font-semibold text-elec-yellow mb-2">Memorise Key Calculations</h4>
               <p className="text-sm sm:text-base text-muted-foreground mb-2">
                 Know cable length calculations, volt drop formulas, and certification requirements by heart. 
                 No time to look these up during the assessment.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-emerald-400 mb-2">Develop Work Sequences</h4>
+              <h4 className="font-semibold text-elec-yellow mb-2">Develop Work Sequences</h4>
               <p className="text-sm sm:text-base text-muted-foreground">
                 Create standard approaches for common tasks. Always do risk assessment → isolation → 
                 installation → testing → certification in that order.
@@ -398,14 +398,14 @@ const AM2Module1Section2 = () => {
         </Card>
 
         {/* Tips and Checklist */}
-        <Card className="bg-card border-emerald-500/30 p-4 sm:p-6">
+        <Card className="bg-card border-elec-yellow/30 p-4 sm:p-6">
           <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-6">
             Tips and Checklist
           </h3>
           <div className="space-y-3">
             {checklistItems.map((item, index) => (
               <div key={index} className="flex items-start gap-3">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <span className="text-sm sm:text-base text-muted-foreground">
                   {item}
                 </span>
@@ -418,7 +418,7 @@ const AM2Module1Section2 = () => {
         <div className="flex justify-between items-center gap-4">
           <Link 
             to="../section1"
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-emerald-400 transition-colors"
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-elec-yellow transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             <span className="hidden sm:inline">Previous: Purpose of AM2</span>
@@ -427,7 +427,7 @@ const AM2Module1Section2 = () => {
           
           <Link 
             to="../section3"
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-emerald-400 transition-colors"
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-elec-yellow transition-colors"
           >
             <span className="hidden sm:inline">Next: Marking Criteria & Pass/Fail Thresholds</span>
             <span className="sm:hidden">Next</span>

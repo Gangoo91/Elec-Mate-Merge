@@ -362,7 +362,7 @@ const Module2Section4_2 = () => {
                 <div>
                   <p className="font-bold">Types of DC sources:</p>
                   <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-200">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-elec-yellow">
                       <li><strong>Batteries:</strong> Lead-acid, Li-ion, NiMH; note capacity (Ah), C-rate, temperature effects</li>
                       <li><strong>Rectifiers/SMPS:</strong> AC→DC conversion; filtered output may have ripple</li>
                       <li><strong>PV arrays:</strong> Solar panels produce DC varying with light/temperature (Section 712)</li>

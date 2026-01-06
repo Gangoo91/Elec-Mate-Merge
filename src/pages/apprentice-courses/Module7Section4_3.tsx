@@ -267,7 +267,7 @@ const Module7Section4_3 = () => {
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base sm:text-lg">Concept and Benefits of Component-by-Component Testing</h3>
+                  <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-4 text-base sm:text-lg">Concept and Benefits of Component-by-Component Testing</h3>
                   <p className="text-sm sm:text-base text-white mb-4">
                     Testing one component or section at a time is a fundamental fault-finding principle that prevents confusion and builds confidence through systematic progression. This approach transforms complex circuit diagnosis into manageable, logical steps.
                   </p>
@@ -431,7 +431,7 @@ const Module7Section4_3 = () => {
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-orange-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Industrial Control Systems and Complex Installations</h3>
+                  <h3 className="font-semibold text-orange-600 text-elec-yellow mb-4 text-base sm:text-lg">Industrial Control Systems and Complex Installations</h3>
                   <p className="text-sm sm:text-base text-white mb-4">
                     In industrial environments, staged testing of control systems prevents time wasted on complex diagnostics when simple faults exist. Testing follows the control logic sequence systematically.
                   </p>
@@ -521,7 +521,7 @@ const Module7Section4_3 = () => {
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Practical Guidance and Time-Saving Techniques</h3>
+                  <h3 className="font-semibold text-purple-600 text-elec-yellow mb-4 text-base sm:text-lg">Practical Guidance and Time-Saving Techniques</h3>
                   <p className="text-sm sm:text-base text-white mb-4">
                     Effective component-by-component testing requires discipline, proper documentation, and systematic progression. These practical techniques maximise efficiency and prevent common mistakes.
                   </p>

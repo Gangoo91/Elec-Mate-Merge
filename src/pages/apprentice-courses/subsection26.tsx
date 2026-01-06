@@ -147,9 +147,9 @@ const Section6_4 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Title block */}
         <div className="flex items-start gap-4 mb-8">
-          <Shield className="h-8 w-8 text-emerald-400 mt-2" />
+          <Shield className="h-8 w-8 text-elec-yellow mt-2" />
           <div className="flex-1">
-            <div className="inline-flex items-center px-3 py-1 bg-emerald-500 text-black rounded-full text-sm font-semibold mb-4">
+            <div className="inline-flex items-center px-3 py-1 bg-elec-yellow text-black rounded-full text-sm font-semibold mb-4">
               Module 6.4
             </div>
             <h1 className="text-4xl font-bold text-white mb-4">
@@ -170,11 +170,11 @@ const Section6_4 = () => {
                 Site emergencies like fire, electric shock, and gas leaks can happen without warning. When they do, lives depend on following emergency procedures immediately. This covers alarm responses, evacuation routes, key roles (fire wardens, first aiders), and post-incident actions including roll calls and reporting.
               </p>
             </div>
-            <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
-              <h3 className="text-emerald-400 font-semibold mb-2 text-sm">Spot it / Use it</h3>
+            <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
+              <h3 className="text-elec-yellow font-semibold mb-2 text-sm">Spot it / Use it</h3>
               <div className="space-y-2 text-gray-300 text-sm">
-                <p><span className="text-emerald-400">Spot:</span> Alarm types, exit signage, assembly point, fire wardens/first aiders</p>
-                <p><span className="text-emerald-400">Use:</span> Stop work, evacuate via nearest exit, no lifts/no belongings, go to assembly point, wait for roll call</p>
+                <p><span className="text-elec-yellow">Spot:</span> Alarm types, exit signage, assembly point, fire wardens/first aiders</p>
+                <p><span className="text-elec-yellow">Use:</span> Stop work, evacuate via nearest exit, no lifts/no belongings, go to assembly point, wait for roll call</p>
               </div>
             </div>
           </div>
@@ -185,19 +185,19 @@ const Section6_4 = () => {
           <h2 className="text-2xl font-bold text-white mb-6">Learning Outcomes</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Understand emergency procedure content and legal expectations</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Follow evacuation routes and roles (fire wardens, roll call)</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Respond correctly to fire, electrical, and gas incidents</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Complete post-incident actions (roll call, preserve scene, reporting/RIDDOR)</span>
             </div>
           </div>
@@ -350,9 +350,9 @@ const Section6_4 = () => {
         </div>
 
         {/* Section 4 */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-start gap-4 mb-6">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
               4
             </div>
             <div>
@@ -486,27 +486,27 @@ const Section6_4 = () => {
         <Card className="p-6 bg-card border-border/20 mb-8">
           <h2 className="text-2xl font-bold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-6">
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Can I grab my personal items during evacuation?</h3>
               <p className="text-gray-300 text-sm">No. Never delay evacuation to collect personal belongings, tools, or equipment. Lives are more important than possessions, and these can be replaced. Every second counts in an emergency.</p>
             </div>
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Can I use the lift during evacuation?</h3>
               <p className="text-gray-300 text-sm">Never use lifts during emergency evacuation. Power failures can trap people, and lifts may automatically return to ground floor in fire mode. Always use stairs, even if it takes longer.</p>
             </div>
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">When can we re-enter the building?</h3>
               <p className="text-gray-300 text-sm">Only when the incident commander (usually fire service or senior site management) gives the "all clear." Never re-enter before official authorisation, even if the alarm stops.</p>
             </div>
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">How are visitors accounted for during evacuation?</h3>
               <p className="text-gray-300 text-sm">Sites must maintain visitor sign-in/out books or electronic systems. Fire wardens use these to account for visitors during roll call. Visitors should be inducted on emergency procedures upon arrival.</p>
             </div>
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">What if someone is missing at roll call?</h3>
               <p className="text-gray-300 text-sm">Report missing persons immediately to the incident commander. Provide last known location and any relevant medical information. Never re-enter to search - this is a job for emergency services with proper equipment.</p>
             </div>
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Do evacuation drills count as real training records?</h3>
               <p className="text-gray-300 text-sm">Yes, but separate formal training should also be provided. Drills are practical exercises, while training covers procedures, responsibilities, and emergency response theory. Both are important for compliance.</p>
             </div>

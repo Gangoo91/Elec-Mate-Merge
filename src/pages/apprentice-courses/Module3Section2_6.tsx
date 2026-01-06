@@ -446,8 +446,8 @@ const Module3Section2_6: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-                <p className="font-medium text-emerald-200 mb-2">Selection and sizing guidelines</p>
-                <ul className="list-disc pl-4 space-y-1 text-emerald-200">
+                <p className="font-medium text-elec-yellow mb-2">Selection and sizing guidelines</p>
+                <ul className="list-disc pl-4 space-y-1 text-elec-yellow">
                   <li><strong>Load rating:</strong> Choose fixings rated for cable weight plus 50% safety margin</li>
                   <li><strong>Cable diameter:</strong> Clips should accommodate cable without compression</li>
                   <li><strong>Bundle sizing:</strong> Cable ties sized for maximum anticipated cable bundle</li>

@@ -260,24 +260,24 @@ const Module5Section5_3 = () => {
             <CardContent className="space-y-4">
               <div className="space-y-3">
                 <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span><strong>Joiners/Carpenters:</strong> Install timber frameworks, flooring, and fitted units that often house electrical equipment</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span><strong>Plumbers:</strong> Install water supply, heating, and drainage systems that must be separated from electrical installations</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span><strong>Plasterers:</strong> Apply wall and ceiling finishes that require all electrical first-fix work to be completed</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span><strong>HVAC Technicians:</strong> Install heating, ventilation, and air conditioning systems using shared ceiling and wall spaces</span>
                 </div>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-blue-950/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+              <div className="bg-elec-yellow/5 dark:bg-blue-950/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
                 <p className="font-medium text-blue-900 dark:text-blue-100">
                   Each trade has specific installation sequences and requirements that directly impact electrical work timing and positioning.
                 </p>
@@ -327,7 +327,7 @@ const Module5Section5_3 = () => {
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-gray-50 dark:bg-[#121212]/30 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-3 text-blue-700 dark:text-elec-yellow">Typical Sequence:</h4>
+                    <h4 className="font-semibold mb-3 text-blue-700 text-elec-yellow">Typical Sequence:</h4>
                     <ol className="space-y-2 text-sm list-decimal pl-6">
                       <li><strong>Week 1-2:</strong> Structural/building fabric completion</li>
                       <li><strong>Week 3-4:</strong> Electrical first fix (cables, conduits, boxes)</li>
@@ -340,7 +340,7 @@ const Module5Section5_3 = () => {
                     </ol>
                   </div>
                   <div className="bg-gray-50 dark:bg-[#121212]/30 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-3 text-red-700 dark:text-elec-yellow">Critical Coordination Points:</h4>
+                    <h4 className="font-semibold mb-3 text-red-700 text-elec-yellow">Critical Coordination Points:</h4>
                     <ul className="space-y-2 text-sm">
                       <li><strong>Cable route planning:</strong> Avoid HVAC ducts and plumbing runs</li>
                       <li><strong>Ceiling void access:</strong> Coordinate with other services installation</li>
@@ -405,12 +405,12 @@ const Module5Section5_3 = () => {
                 <p><strong>Change management:</strong> Document and communicate any modifications to planned work</p>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-emerald-950/30 p-4 rounded-lg border border-emerald-200 dark:border-emerald-800">
-                <h4 className="font-semibold text-emerald-900 dark:text-emerald-100 mb-2 flex items-center gap-2">
+              <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-4 rounded-lg border border-elec-yellow/30 border-elec-yellow/20">
+                <h4 className="font-semibold text-elec-yellow dark:text-white mb-2 flex items-center gap-2">
                   <Eye className="w-4 h-4" />
                   Spot it / Use it
                 </h4>
-                <p className="text-emerald-800 dark:text-emerald-200">
+                <p className="text-elec-yellow dark:text-elec-yellow">
                   Look for coordination meetings on site programmes. These are your opportunities to raise concerns 
                   and understand how your work fits with other trades.
                 </p>

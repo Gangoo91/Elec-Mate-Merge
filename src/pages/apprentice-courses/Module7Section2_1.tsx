@@ -279,7 +279,7 @@ const Module7Section2_1 = () => {
 
               <div className="grid gap-3 sm:grid-cols-2 mb-4">
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-elec-yellow">Installation Issues</h4>
+                  <h4 className="font-medium text-sm mb-2 text-red-600 text-elec-yellow">Installation Issues</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Insufficient tightening of terminal screws</li>
                     <li>• Poor quality connections during installation</li>
@@ -290,7 +290,7 @@ const Module7Section2_1 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-elec-yellow">Physical Damage</h4>
+                  <h4 className="font-medium text-sm mb-2 text-orange-600 text-elec-yellow">Physical Damage</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Mechanical damage from drilling or nailing</li>
                     <li>• Cable crushing during construction work</li>
@@ -301,7 +301,7 @@ const Module7Section2_1 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-elec-yellow">Component Failures</h4>
+                  <h4 className="font-medium text-sm mb-2 text-purple-600 text-elec-yellow">Component Failures</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Blown fuses due to overload or fault conditions</li>
                     <li>• Switch or breaker contact failure</li>
@@ -312,7 +312,7 @@ const Module7Section2_1 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Environmental Factors</h4>
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Environmental Factors</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Corrosion due to moisture ingress</li>
                     <li>• Thermal damage from overheating</li>
@@ -352,7 +352,7 @@ const Module7Section2_1 = () => {
 
               <div className="space-y-3 mb-4">
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-elec-yellow">Immediate Effects</h4>
+                  <h4 className="font-medium text-sm mb-2 text-red-600 text-elec-yellow">Immediate Effects</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Complete loss of function in affected circuits</li>
                     <li>• Lighting circuits leaving areas without illumination</li>
@@ -374,7 +374,7 @@ const Module7Section2_1 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Secondary Effects</h4>
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Secondary Effects</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Business disruption and financial losses</li>
                     <li>• Data loss in computer systems</li>
@@ -387,10 +387,10 @@ const Module7Section2_1 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg">
                 <div className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-elec-yellow mt-0.5" />
+                  <AlertTriangle className="w-4 h-4 text-red-600 text-elec-yellow mt-0.5" />
                   <div>
-                    <h4 className="font-medium text-sm text-red-700 dark:text-elec-yellow mb-1">Critical Safety Note</h4>
-                    <p className="text-xs text-red-600 dark:text-elec-yellow">
+                    <h4 className="font-medium text-sm text-red-700 text-elec-yellow mb-1">Critical Safety Note</h4>
+                    <p className="text-xs text-red-600 text-elec-yellow">
                       Open circuit faults in protective conductors (CPC) are particularly dangerous as they remove earth fault protection while equipment may continue to operate normally. This creates a hidden danger that could result in electric shock or fire.
                     </p>
                   </div>
@@ -413,7 +413,7 @@ const Module7Section2_1 = () => {
 
               <div className="space-y-3 mb-4">
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Primary Testing Methods</h4>
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Primary Testing Methods</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Continuity testing:</strong> Using multimeter or dedicated continuity tester</li>
                     <li>• <strong>Visual inspection:</strong> Checking for obvious breaks or loose connections</li>
@@ -434,7 +434,7 @@ const Module7Section2_1 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-elec-yellow">Safety Considerations</h4>
+                  <h4 className="font-medium text-sm mb-2 text-orange-600 text-elec-yellow">Safety Considerations</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Always isolate before testing - never test live circuits for continuity</li>
                     <li>• Use appropriate test instruments for the voltage level</li>
@@ -474,7 +474,7 @@ const Module7Section2_1 = () => {
 
               <div className="space-y-3 mb-4">
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Repair Procedures</h4>
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Repair Procedures</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Reconnection:</strong> Clean and properly terminate loose connections</li>
                     <li>• <strong>Cable repair:</strong> Use appropriate junction boxes or replacement sections</li>
@@ -496,7 +496,7 @@ const Module7Section2_1 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-elec-yellow">BS 7671 Requirements</h4>
+                  <h4 className="font-medium text-sm mb-2 text-purple-600 text-elec-yellow">BS 7671 Requirements</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Continuity testing must be performed during installation</li>
                     <li>• Protective conductor continuity is critical for safety</li>
@@ -544,9 +544,9 @@ const Module7Section2_1 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 border-l-4 border-l-emerald-400 bg-emerald-400/20">
+              <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow bg-elec-yellow/20">
                 <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-400 text-black rounded-full flex items-center justify-center text-sm font-bold">
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold">
                     <Search className="w-4 h-4" />
                   </span>
                   <div className="flex-1">

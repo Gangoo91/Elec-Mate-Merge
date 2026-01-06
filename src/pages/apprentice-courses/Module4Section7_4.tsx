@@ -262,7 +262,7 @@ const Module4Section7_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Physical and Environmental Hazards</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Physical and Environmental Hazards</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Restricted access and egress</strong> - limited entry/exit routes increase risk of entrapment and emergency evacuation difficulties</li>
                       <li><strong>Hidden services</strong> - accidental contact with live electrical cables, gas pipes, or water services</li>
@@ -312,7 +312,7 @@ const Module4Section7_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Regulatory Framework and Compliance</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Regulatory Framework and Compliance</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Work at Height Regulations 2005</strong> - apply to all work above floor level including ceiling access</li>
                       <li><strong>Confined Space Regulations 1997</strong> - may apply in risers and enclosed voids with restricted access</li>
@@ -458,7 +458,7 @@ const Module4Section7_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Professional Safety Standards</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Professional Safety Standards</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Atmosphere testing</strong> - test air quality in risers or confined spaces where required</li>
                       <li><strong>Communication protocols</strong> - maintain contact with team members outside void/riser areas</li>
@@ -539,7 +539,7 @@ const Module4Section7_4 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 1: Ceiling Void Fall</h3>
+                  <h3 className="font-medium text-red-800 text-elec-yellow mb-2">Case Study 1: Ceiling Void Fall</h3>
                   <p className="text-xs sm:text-sm text-white mb-2">
                     During maintenance work in an office ceiling void, an apprentice stepped directly onto plasterboard rather than using a crawl board. The plasterboard gave way, causing a fall into the room below and minor injuries.
                   </p>
@@ -554,7 +554,7 @@ const Module4Section7_4 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 2: Hidden Service Contact</h3>
+                  <h3 className="font-medium text-red-800 text-elec-yellow mb-2">Case Study 2: Hidden Service Contact</h3>
                   <p className="text-xs sm:text-sm text-white mb-2">
                     An electrician drilling cable entry holes in a riser contacted a hidden gas pipe, causing a significant gas leak that required building evacuation and emergency service response.
                   </p>

@@ -147,9 +147,9 @@ const Section5_2 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Wrench className="h-8 w-8 text-emerald-400" />
+            <Wrench className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 5.2
               </span>
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
@@ -166,8 +166,8 @@ const Section5_2 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Lock-off kit:</strong> Prevents accidental re-energising during work.</li>
                 <li><strong>Voltage tester:</strong> GS38-compliant device to prove circuits dead.</li>
@@ -176,8 +176,8 @@ const Section5_2 = () => {
                 <li><strong>Never substitute:</strong> Each tool has a specific safety purpose.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Missing lock-off, using multimeters, untested testers, no warning signs.</li>
                 <li><strong>Use:</strong> Complete isolation kit, GS38 testers, prove-before-prove-after sequence.</li>
@@ -193,33 +193,33 @@ const Section5_2 = () => {
           <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify the correct tools for safe isolation</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand how to use each item correctly</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Learn how to check equipment is working before and after use</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Know why each part of the isolation kit is essential</span>
             </li>
           </ul>
         </Card>
 
         {/* Essential Equipment */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">Essential Equipment for Safe Isolation</h2>
           </div>
           
           <div className="space-y-6">
-            <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
               <p className="font-medium text-blue-800 dark:text-blue-200 mb-3">
                 To carry out safe isolation correctly, electricians need the right tools and equipment. Each item plays a vital role in keeping you and others protected from electric shock and accidental energising.
               </p>
@@ -229,7 +229,7 @@ const Section5_2 = () => {
               <h4 className="font-semibold mb-3 text-foreground">The Four Essential Components:</h4>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Lock-Off Kit</h5>
                     <p className="text-muted-foreground text-sm">Selection of lock-off devices, padlocks with unique keys, warning tags and labels</p>
@@ -237,7 +237,7 @@ const Section5_2 = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Proving Unit</h5>
                     <p className="text-muted-foreground text-sm">Battery-powered device providing known voltage to test your tester before and after use</p>
@@ -245,7 +245,7 @@ const Section5_2 = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Voltage Indicator (GS38 Compliant)</h5>
                     <p className="text-muted-foreground text-sm">Two-pole voltage tester rated for system voltage - NOT a multimeter</p>
@@ -253,7 +253,7 @@ const Section5_2 = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">4</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">4</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Warning Notices</h5>
                     <p className="text-muted-foreground text-sm">"Do Not Operate" or "Danger: Electrician Working" labels placed at isolation points</p>
@@ -264,10 +264,10 @@ const Section5_2 = () => {
 
             <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
               <div className="flex items-start gap-3">
-                <AlertTriangle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                <AlertTriangle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-red-800 dark:text-red-200 mb-2">Important: Why Not Multimeters?</p>
-                  <p className="text-red-700 dark:text-emerald-400 text-sm">
+                  <p className="text-red-700 dark:text-elec-yellow text-sm">
                     Multimeters are not suitable for proving dead circuits because they don't meet GS38 safety standards and have exposed metal parts that could be dangerous.
                   </p>
                 </div>
@@ -290,15 +290,15 @@ const Section5_2 = () => {
         />
 
         {/* Steps to Use Equipment */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">Steps to Use the Equipment</h2>
           </div>
           
           <div className="space-y-6">
-            <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4">
-              <p className="font-medium text-emerald-800 dark:text-emerald-200 mb-3">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20 rounded-lg p-4">
+              <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-3">
                 Follow this sequence every time to ensure safe isolation:
               </p>
             </div>
@@ -306,7 +306,7 @@ const Section5_2 = () => {
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Test Your Tester</h5>
                     <p className="text-muted-foreground text-sm">Use the proving unit to check your voltage tester is working (before use)</p>
@@ -314,7 +314,7 @@ const Section5_2 = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Isolate the Circuit</h5>
                     <p className="text-muted-foreground text-sm">Switch off using the correct MCB, fuse, or isolator</p>
@@ -322,7 +322,7 @@ const Section5_2 = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Apply Lock-Off Device</h5>
                     <p className="text-muted-foreground text-sm">Secure with padlock and keep the key with you</p>
@@ -330,7 +330,7 @@ const Section5_2 = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">4</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">4</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Place Warning Tag</h5>
                     <p className="text-muted-foreground text-sm">Attach warning notice to the isolation device</p>
@@ -338,7 +338,7 @@ const Section5_2 = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">5</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">5</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Test the Circuit</h5>
                     <p className="text-muted-foreground text-sm">Check all conductors: line to neutral, line to earth, neutral to earth</p>
@@ -346,7 +346,7 @@ const Section5_2 = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="bg-emerald-500 text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">6</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">6</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Retest Your Tester</h5>
                     <p className="text-muted-foreground text-sm">Use proving unit again to confirm tester is still working correctly</p>
@@ -434,19 +434,19 @@ const Section5_2 = () => {
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <ul className="space-y-3 text-foreground">
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                   <span><strong>Insulated test leads</strong> with finger barriers or shrouded probes</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                   <span><strong>Maximum 4mm exposed tip</strong> on test probes</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                   <span><strong>Appropriate voltage rating</strong> for the system being tested</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                   <span><strong>Clear indication</strong> when voltage is present</span>
                 </li>
               </ul>
@@ -650,9 +650,9 @@ const Section5_2 = () => {
                         <li>• Replace equipment at first sign of trouble</li>
                         <li>• Visual inspection not enough - circuits can look dead but be live</li>
                       </ul>
-                      <div className="mt-3 p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded text-sm">
-                        <strong className="text-emerald-800 dark:text-emerald-200">Result:</strong> 
-                        <span className="text-emerald-700 dark:text-emerald-400"> Site implemented mandatory proving unit checks - no incidents since.</span>
+                      <div className="mt-3 p-2 bg-elec-yellow/10 bg-elec-yellow/10 rounded text-sm">
+                        <strong className="text-elec-yellow dark:text-elec-yellow">Result:</strong> 
+                        <span className="text-elec-yellow dark:text-elec-yellow"> Site implemented mandatory proving unit checks - no incidents since.</span>
                       </div>
                     </div>
                   </div>
@@ -714,7 +714,7 @@ const Section5_2 = () => {
                         <li>• Team worked systematically through checklist</li>
                         <li>• No shortcuts taken despite time pressure</li>
                       </ul>
-                      <div className="mt-3 p-2 bg-emerald-600 dark:bg-emerald-700 rounded text-sm">
+                      <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                         <strong className="text-white">Result:</strong> 
                         <span className="text-emerald-50"> Zero incidents. Project completed safely and on time.</span>
                       </div>
@@ -743,23 +743,23 @@ const Section5_2 = () => {
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <ul className="space-y-2 text-foreground">
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                   <span className="text-sm">Complete isolation kit includes lock-off devices, GS38 voltage tester, proving unit, and warning labels</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                   <span className="text-sm">Always test your tester before and after use with a proving unit</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                   <span className="text-sm">Multimeters are not suitable for proving dead circuits in isolation procedures</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                   <span className="text-sm">Regular equipment inspection and maintenance is essential for safety</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                   <span className="text-sm">GS38 compliance ensures test equipment meets required safety standards</span>
                 </li>
               </ul>

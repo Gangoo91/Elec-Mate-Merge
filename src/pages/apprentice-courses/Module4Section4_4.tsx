@@ -213,7 +213,7 @@ const Module4Section4_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Containment Inspection and Preparation</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Containment Inspection and Preparation</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Sharp edge protection requirements:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Steel containment: Install insulating bushes at all entry points</li>
@@ -239,7 +239,7 @@ const Module4Section4_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Cable Drum Setup and Positioning</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Cable Drum Setup and Positioning</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Drum handling specifications:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Drum jacks: Rated 150% of drum weight, lockable rotation</li>
@@ -265,7 +265,7 @@ const Module4Section4_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Team Coordination and Communication</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Team Coordination and Communication</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Personnel requirements by cable type:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Single-core up to 25mm²: 2-person team (puller + feeder)</li>
@@ -407,7 +407,7 @@ const Module4Section4_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Single-Core Cable Installation Procedures</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Single-Core Cable Installation Procedures</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Simultaneous pulling requirements:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Phase grouping: Pull L1, L2, L3 together to maintain balanced tension</li>
@@ -433,7 +433,7 @@ const Module4Section4_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Multi-Core Cable Protection and Support</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Multi-Core Cable Protection and Support</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Bend radius calculations:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Standard cables: Minimum 8 × overall cable diameter</li>
@@ -459,7 +459,7 @@ const Module4Section4_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Damage Prevention and Quality Control</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Damage Prevention and Quality Control</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Abrasion protection measures:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Sharp edge inspection: Visual check every 5m of route</li>
@@ -504,7 +504,7 @@ const Module4Section4_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Common Mistakes and Prevention Strategies</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Common Mistakes and Prevention Strategies</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Critical errors to avoid:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Exceeding bend radius: Permanent conductor damage, early failure</li>
@@ -530,7 +530,7 @@ const Module4Section4_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Professional Installation Techniques</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Professional Installation Techniques</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Weight distribution strategies:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Vertical installations: Support every 3m maximum intervals</li>

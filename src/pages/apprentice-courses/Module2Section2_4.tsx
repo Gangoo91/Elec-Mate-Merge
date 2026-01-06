@@ -246,9 +246,9 @@ const Module2Section2_4: React.FC = () => {
                   
                   {/* P = V × I */}
                   <div className="group relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 rounded-xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                    <div className="relative bg-card/90 backdrop-blur-sm p-6 rounded-xl border border-border/30 hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/20 text-center">
-                       <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center mx-auto mb-4 shadow-lg flex-shrink-0">
+                    <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/10 rounded-xl blur-sm group-hover:blur-none transition-all duration-300"></div>
+                    <div className="relative bg-card/90 backdrop-blur-sm p-6 rounded-xl border border-border/30 hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg hover:shadow-elec-yellow/20 text-center">
+                       <div className="bg-gradient-to-br from-elec-yellow to-elec-yellow text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center mx-auto mb-4 shadow-lg flex-shrink-0">
                          <div className="text-base md:text-lg font-bold font-mono tracking-tight leading-none text-center whitespace-nowrap">
                            P = V×I
                          </div>
@@ -256,7 +256,7 @@ const Module2Section2_4: React.FC = () => {
                       <h4 className="font-semibold text-white mb-2">Most Common</h4>
                       <p className="text-sm text-white mb-3">When you know voltage and current</p>
                       <div className="bg-card rounded-lg p-3">
-                        <p className="text-xs text-blue-700 dark:text-elec-yellow font-medium">
+                        <p className="text-xs text-blue-700 text-elec-yellow font-medium">
                           ✓ Nameplate data<br/>
                           ✓ Meter readings<br/>
                           ✓ Quick estimates
@@ -277,7 +277,7 @@ const Module2Section2_4: React.FC = () => {
                       <h4 className="font-semibold text-white mb-2">For Heating</h4>
                       <p className="text-sm text-white mb-3">When you know current and resistance</p>
                       <div className="bg-card rounded-lg p-3">
-                        <p className="text-xs text-orange-700 dark:text-elec-yellow font-medium">
+                        <p className="text-xs text-orange-700 text-elec-yellow font-medium">
                           🔥 Cable losses<br/>
                           🔥 Heat generation<br/>
                           🔥 I²R calculations
@@ -298,7 +298,7 @@ const Module2Section2_4: React.FC = () => {
                       <h4 className="font-semibold text-white mb-2">Fixed Voltage</h4>
                       <p className="text-sm text-white mb-3">When you know voltage and resistance</p>
                       <div className="bg-card rounded-lg p-3">
-                        <p className="text-xs text-purple-700 dark:text-elec-yellow font-medium">
+                        <p className="text-xs text-purple-700 text-elec-yellow font-medium">
                           ⚡ Heater elements<br/>
                           ⚡ Resistive loads<br/>
                           ⚡ Component sizing
@@ -308,7 +308,7 @@ const Module2Section2_4: React.FC = () => {
                   </div>
                 </div>
                 
-                <div className="mt-6 bg-gradient-to-r from-emerald-500/20 to-emerald-500/10 border-l-4 border-elec-yellow p-4 rounded-r-lg">
+                <div className="mt-6 bg-gradient-to-r from-elec-yellow/20 to-elec-yellow/10 border-l-4 border-elec-yellow p-4 rounded-r-lg">
                   <div className="flex items-start gap-3">
                     <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-xs font-bold">!</span>

@@ -189,7 +189,7 @@ const AM2Module6Section1 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Clock className="w-4 h-4" />
             Module 6 – Section 1
           </div>
@@ -208,15 +208,15 @@ const AM2Module6Section1 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
                   CRITICAL: Time Management is Everything
                 </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
                   Many candidates fail the knowledge test not due to lack of knowledge, but poor time management. Getting stuck on difficult questions and leaving others blank is a guaranteed route to failure.
                 </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
                   You must attempt every question. There's no penalty for guessing, but blank answers guarantee lost marks.
                 </p>
               </div>
@@ -225,9 +225,9 @@ const AM2Module6Section1 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -236,23 +236,23 @@ const AM2Module6Section1 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Describe the format of the online AM2 knowledge test, including timing and number of questions
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Explain the types of questions asked (multiple-choice, scenario-based, regulation references)
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Recognise how marks are awarded and what score is needed to pass
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply strategies for working through the test efficiently
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Approach the assessment with confidence, knowing exactly what to expect
               </li>
             </ul>
@@ -262,7 +262,7 @@ const AM2Module6Section1 = () => {
         {/* Basic Structure and Understanding */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Monitor className="w-5 h-5" />
               1. Understanding the Test Structure
             </h2>
@@ -276,7 +276,7 @@ const AM2Module6Section1 = () => {
                 <strong>Test Environment and Logistics:</strong> You'll be seated at a computer workstation in a quiet examination room. The test is supervised by qualified invigilators who will ensure fair conditions throughout. Before beginning, you'll receive a brief demonstration of the test software and navigation features.
               </p>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Key Test Parameters:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Key Test Parameters:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• <strong>Duration:</strong> Exactly 90 minutes from when you start the test</li>
                 <li>• <strong>Question Count:</strong> 30 questions</li>
@@ -286,7 +286,7 @@ const AM2Module6Section1 = () => {
                 <li>• <strong>Results:</strong> Available immediately upon completion</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Time Management Breakdown:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Time Management Breakdown:</h3>
               <p>
                 With 90 minutes for 30 questions, you have exactly 3 minutes per question. However, this doesn't mean you should spend exactly this time on each question. The most effective approach is:
               </p>
@@ -297,7 +297,7 @@ const AM2Module6Section1 = () => {
                 <li>• <strong>Review time:</strong> Reserve 10-15 minutes at the end for flagged questions</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Important Test Rules:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Important Test Rules:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• No mobile phones, calculators, or reference materials allowed</li>
                 <li>• You cannot pause the test once started</li>
@@ -320,7 +320,7 @@ const AM2Module6Section1 = () => {
         {/* Types of Questions */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
               2. Question Types and Content Areas
             </h2>
@@ -330,7 +330,7 @@ const AM2Module6Section1 = () => {
                 The AM2 knowledge test covers five main types of questions, each designed to assess different aspects of your electrical knowledge and competence. Understanding these question types will help you recognise what each question is asking for and respond appropriately.
               </p>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Straight Knowledge Questions (25-30% of test)</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Straight Knowledge Questions (25-30% of test)</h3>
               <p>
                 These questions test your direct recall of facts, figures, and regulations from BS 7671 and related standards. They require precise knowledge of specific requirements and are often the quickest to answer if you know the information.
               </p>
@@ -341,7 +341,7 @@ const AM2Module6Section1 = () => {
                 <li>• <strong>Key tip:</strong> Look for absolute values and specific requirements rather than general principles</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Applied Scenario Questions (35-40% of test)</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Applied Scenario Questions (35-40% of test)</h3>
               <p>
                 These questions present real-world electrical situations and ask you to apply your knowledge to solve problems or make decisions. They often involve fault finding, testing procedures, or determining appropriate remedial actions.
               </p>
@@ -352,7 +352,7 @@ const AM2Module6Section1 = () => {
                 <li>• <strong>Key tip:</strong> These questions test understanding, not just memorisation. Think about cause and effect</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Regulation Reference Questions (15-20% of test)</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Regulation Reference Questions (15-20% of test)</h3>
               <p>
                 These questions require you to know which specific regulations apply in given situations. They test your familiarity with BS 7671 structure and specific regulation numbers.
               </p>
@@ -363,7 +363,7 @@ const AM2Module6Section1 = () => {
                 <li>• <strong>Key tip:</strong> Focus on commonly referenced regulations and those covered in your course materials</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Calculation and Science Questions (20-25% of test)</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Calculation and Science Questions (20-25% of test)</h3>
               <p>
                 These questions test your understanding of electrical principles and ability to perform basic calculations. They may involve Ohm's law, power calculations, current ratings, or fault current calculations.
               </p>
@@ -374,7 +374,7 @@ const AM2Module6Section1 = () => {
                 <li>• <strong>Key tip:</strong> Brush up on basic electrical formulas and unit conversions</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Health and Safety Questions (10-15% of test)</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Health and Safety Questions (10-15% of test)</h3>
               <p>
                 These questions cover safe working practices, risk assessment, PPE requirements, and legal obligations under health and safety legislation.
               </p>
@@ -397,9 +397,9 @@ const AM2Module6Section1 = () => {
         />
 
         {/* Assessor Expectations */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               4. Assessor Expectations
             </h2>
@@ -409,8 +409,8 @@ const AM2Module6Section1 = () => {
             </p>
             
             <div className="space-y-3">
-              <div className="flex items-start gap-3 p-3 bg-emerald-50 dark:bg-emerald-950/20 rounded-lg">
-                <CheckCircle className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <div className="flex items-start gap-3 p-3 bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded-lg">
+                <CheckCircle className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
                 <p className="text-sm text-blue-800 dark:text-blue-200">
                   Understand how to approach scenario-based questions, not just memorise facts
                 </p>
@@ -424,7 +424,7 @@ const AM2Module6Section1 = () => {
               </div>
               
               <div className="flex items-start gap-3 p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg">
-                <CheckCircle className="w-5 h-5 text-purple-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-purple-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
                 <p className="text-sm text-purple-800 dark:text-purple-200">
                   Manage your time and attempt every question (no blanks)
                 </p>
@@ -436,7 +436,7 @@ const AM2Module6Section1 = () => {
         {/* Practical Guidance */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
               5. Test-Taking Strategies and Practical Guidance
             </h2>
@@ -446,7 +446,7 @@ const AM2Module6Section1 = () => {
               Success in the AM2 knowledge test depends not just on what you know, but how effectively you apply your knowledge under time pressure. These proven strategies will help you maximise your performance.
             </p>
 
-            <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Before You Begin:</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Before You Begin:</h3>
             <ul className="space-y-2 ml-4">
               <li>• <strong>Arrive early:</strong> Get to the test centre 15-20 minutes before your appointment to avoid stress</li>
               <li>• <strong>Listen to the briefing:</strong> Pay attention to any last-minute instructions or system updates</li>
@@ -455,7 +455,7 @@ const AM2Module6Section1 = () => {
               <li>• <strong>Mental preparation:</strong> Take a deep breath and remind yourself you've prepared thoroughly</li>
             </ul>
 
-            <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Reading and Understanding Questions:</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Reading and Understanding Questions:</h3>
             <p>
               Many candidates lose marks not because they don't know the answer, but because they misread or misinterpret the question. Developing careful reading habits is crucial.
             </p>
@@ -467,7 +467,7 @@ const AM2Module6Section1 = () => {
               <li>• <strong>Re-read if unsure:</strong> A few extra seconds reading can prevent costly mistakes</li>
             </ul>
 
-            <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Elimination Strategy:</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Elimination Strategy:</h3>
             <p>
               Even when you're not completely certain of the correct answer, you can often eliminate obviously wrong options to improve your odds significantly.
             </p>
@@ -479,7 +479,7 @@ const AM2Module6Section1 = () => {
               <li>• <strong>Use your experience:</strong> What would you actually do in this situation on site?</li>
             </ul>
 
-            <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Time Management Techniques:</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Time Management Techniques:</h3>
             <ul className="space-y-2 ml-4">
               <li>• <strong>Quick scan first:</strong> Quickly scan all questions to identify easy ones you can answer immediately</li>
               <li>• <strong>Set time checkpoints:</strong> Aim to complete 50% of questions in 40 minutes, 75% in 60 minutes</li>
@@ -488,7 +488,7 @@ const AM2Module6Section1 = () => {
               <li>• <strong>Save time for review:</strong> Try to finish with 10-15 minutes remaining for flagged questions</li>
             </ul>
 
-            <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Dealing with Uncertainty:</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Dealing with Uncertainty:</h3>
             <ul className="space-y-2 ml-4">
               <li>• <strong>Make educated guesses:</strong> There's no penalty for wrong answers, so never leave questions blank</li>
               <li>• <strong>Trust your instincts:</strong> Your first instinct is often correct, especially if you've prepared well</li>
@@ -497,7 +497,7 @@ const AM2Module6Section1 = () => {
               <li>• <strong>Apply workplace logic:</strong> What would be the most sensible approach in a real electrical installation?</li>
             </ul>
 
-            <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Final Review Strategy:</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Final Review Strategy:</h3>
             <ul className="space-y-2 ml-4">
               <li>• <strong>Review flagged questions:</strong> Focus on questions you flagged rather than changing answered questions</li>
               <li>• <strong>Check for blanks:</strong> Quickly scan to ensure every question has an answer</li>
@@ -518,9 +518,9 @@ const AM2Module6Section1 = () => {
         />
 
         {/* Real-world Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               Real-world Examples
             </h2>
@@ -528,7 +528,7 @@ const AM2Module6Section1 = () => {
             <div className="space-y-4">
               <div className="bg-red-50 dark:bg-red-950/20 border-l-4 border-l-red-500 p-4 rounded-r-lg">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">❌ Example 1: Poor Time Management</h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400">
+                <p className="text-sm text-red-700 dark:text-elec-yellow">
                   Candidate spent 15 minutes stuck on one science question, ran out of time, and left 5 unanswered. <strong>Failed.</strong>
                 </p>
               </div>
@@ -551,35 +551,35 @@ const AM2Module6Section1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
               Frequently Asked Questions
             </h2>
             
             <div className="space-y-4">
-              <div className="border-l-4 border-emerald-500/50 pl-4">
+              <div className="border-l-4 border-elec-yellow/50 pl-4">
                 <h4 className="font-medium text-foreground mb-1">Q1: How many questions are in the knowledge test?</h4>
                 <p className="text-sm text-muted-foreground">A: 30 questions.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500/50 pl-4">
+              <div className="border-l-4 border-elec-yellow/50 pl-4">
                 <h4 className="font-medium text-foreground mb-1">Q2: How long do I have?</h4>
                 <p className="text-sm text-muted-foreground">A: 90 minutes.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500/50 pl-4">
+              <div className="border-l-4 border-elec-yellow/50 pl-4">
                 <h4 className="font-medium text-foreground mb-1">Q3: What's the pass mark?</h4>
                 <p className="text-sm text-muted-foreground">A: 60% (18 correct answers out of 30).</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500/50 pl-4">
+              <div className="border-l-4 border-elec-yellow/50 pl-4">
                 <h4 className="font-medium text-foreground mb-1">Q4: Can I skip and return to questions?</h4>
                 <p className="text-sm text-muted-foreground">A: Yes — flag them in the system.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500/50 pl-4">
+              <div className="border-l-4 border-elec-yellow/50 pl-4">
                 <h4 className="font-medium text-foreground mb-1">Q5: Are questions only on regs?</h4>
                 <p className="text-sm text-muted-foreground">A: No — they cover regs, science, and safety.</p>
               </div>
@@ -588,9 +588,9 @@ const AM2Module6Section1 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-gradient-to-r from-emerald-500/5 to-emerald-500/10 border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-gradient-to-r from-elec-yellow/5 to-elec-yellow/10 border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Summary
             </h2>
@@ -601,9 +601,9 @@ const AM2Module6Section1 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-emerald-500/30">
+        <Card className="bg-card border-elec-yellow/30">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
               10-Question Quiz
             </h2>
@@ -622,7 +622,7 @@ const AM2Module6Section1 = () => {
               Back to Module 6
             </Link>
           </Button>
-          <Button className="flex-1 bg-emerald-500 hover:bg-emerald-500/80 text-black" asChild>
+          <Button className="flex-1 bg-elec-yellow hover:bg-elec-yellow/80 text-black" asChild>
             <Link to="../section2">
               Module 6 Section 2
               <ArrowRight className="w-4 h-4 ml-2" />

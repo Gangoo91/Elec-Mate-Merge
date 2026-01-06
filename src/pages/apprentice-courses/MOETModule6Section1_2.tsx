@@ -30,7 +30,7 @@ const MOETModule6Section1_2 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-6 sm:mb-8">
           <div className="flex items-center gap-4 mb-6">
-            <Scale className="h-8 w-8 text-emerald-400" />
+            <Scale className="h-8 w-8 text-elec-yellow" />
             <div>
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Section 6.1.2: Legal and Safety Reasons (EAWR, BS 7671 Principles)
@@ -43,15 +43,15 @@ const MOETModule6Section1_2 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-8 bg-card/30 border-emerald-500/30">
+        <Card className="mb-8 bg-card/30 border-elec-yellow/30">
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-6">Introduction</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-6">Introduction</h2>
             
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               {/* In 30 seconds */}
               <div className="bg-background/50 rounded-lg p-4 border border-border/20">
                 <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5 text-emerald-400" />
+                  <AlertTriangle className="h-5 w-5 text-elec-yellow" />
                   In 30 seconds
                 </h3>
                 <p className="text-sm text-muted-foreground">
@@ -62,7 +62,7 @@ const MOETModule6Section1_2 = () => {
               {/* Spot it / Use it */}
               <div className="bg-background/50 rounded-lg p-4 border border-border/20">
                 <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
-                  <Scale className="h-5 w-5 text-emerald-400" />
+                  <Scale className="h-5 w-5 text-elec-yellow" />
                   Spot it / Use it
                 </h3>
                 <p className="text-sm text-muted-foreground">
@@ -74,9 +74,9 @@ const MOETModule6Section1_2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-8 bg-card/30 border-emerald-500/30">
+        <Card className="mb-8 bg-card/30 border-elec-yellow/30">
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">Learning Outcomes</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">Learning Outcomes</h2>
             <p className="text-sm text-muted-foreground mb-4">By the end of this subsection, you will be able to:</p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>• Identify the legal requirements for inspection and testing under EAWR 1989</li>
@@ -188,9 +188,9 @@ const MOETModule6Section1_2 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-8 bg-card border-emerald-500/20">
+        <Card className="mb-8 bg-card border-elec-yellow/20">
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">Practical Guidance</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">Practical Guidance</h2>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>• Always test and document results, even on small jobs</li>
               <li>• Keep up to date with Amendments to BS 7671 (currently 18th Edition with Amendment 2)</li>
@@ -222,7 +222,7 @@ const MOETModule6Section1_2 = () => {
         {/* Recap */}
         <Card className="mb-8 bg-card border-purple-500/20">
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">Recap</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">Recap</h2>
             <p className="text-sm text-muted-foreground">
               Inspection and testing are not just about professionalism – they are law and regulation. EAWR 1989 sets the legal duty, while BS 7671 provides the framework for compliance. Every electrician is personally responsible for ensuring systems are safe, tested, and properly certified.
             </p>
@@ -234,52 +234,52 @@ const MOETModule6Section1_2 = () => {
           <CardContent className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Quiz (10 Questions)</h2>
             <div className="space-y-6 text-sm">
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-medium text-foreground mb-1">1. What year were the Electricity at Work Regulations introduced?</p>
                 <p className="text-muted-foreground">Answer: 1989.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-medium text-foreground mb-1">2. What do Regulations 4(1) & 4(2) of EAWR require?</p>
                 <p className="text-muted-foreground">Answer: That systems must be safe and maintained in a safe condition.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-medium text-foreground mb-1">3. Which standard sets out the technical requirements for inspection and testing?</p>
                 <p className="text-muted-foreground">Answer: BS 7671 Wiring Regulations.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-medium text-foreground mb-1">4. True or False: It is acceptable to sign an installation certificate without testing if you trust the installer.</p>
                 <p className="text-muted-foreground">Answer: False.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-medium text-foreground mb-1">5. What are two key types of inspection required under BS 7671?</p>
                 <p className="text-muted-foreground">Answer: Initial verification and periodic inspection.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-medium text-foreground mb-1">6. What must all test instruments be?</p>
                 <p className="text-muted-foreground">Answer: Calibrated and approved.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-medium text-foreground mb-1">7. Give one legal consequence of failing to comply with EAWR 1989.</p>
                 <p className="text-muted-foreground">Answer: Prosecution, fines, or imprisonment.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-medium text-foreground mb-1">8. Who is legally responsible for safety once they sign the Electrical Installation Certificate?</p>
                 <p className="text-muted-foreground">Answer: The person who signs the certificate.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-medium text-foreground mb-1">9. What could happen to an employer if an employee is injured due to unsafe electrics?</p>
                 <p className="text-muted-foreground">Answer: The employer can be prosecuted and held liable.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="font-medium text-foreground mb-1">10. Why is BS 7671 updated periodically?</p>
                 <p className="text-muted-foreground">Answer: To keep regulations up to date with technology and safety requirements.</p>
               </div>

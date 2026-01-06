@@ -108,7 +108,7 @@ const Level3Module7Section1_5 = () => {
             <div className="p-2 rounded-lg bg-card/10">
               <TrendingUp className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs md:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs md:text-sm">
               Section 7.1.5
             </Badge>
           </div>
@@ -128,15 +128,15 @@ const Level3Module7Section1_5 = () => {
           </div>
           <div className="grid gap-4 md:grid-cols-2 md:gap-6 text-sm md:text-base text-foreground">
             <div className="rounded-lg p-3 md:p-4 bg-card border border-border/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>HNC/HND provide pathway to degree-level qualifications.</li>
                 <li>Higher qualifications open design and management roles.</li>
                 <li>Part-time study options available for working professionals.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 md:p-4 bg-card border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 md:p-4 bg-card border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> HNC/HND opportunities, degree pathways, career advancement.</li>
                 <li><strong>Use:</strong> Plan career progression, assess study options, research funding.</li>

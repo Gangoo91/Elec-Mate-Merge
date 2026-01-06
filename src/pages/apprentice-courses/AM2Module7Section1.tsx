@@ -173,7 +173,7 @@ const AM2Module7Section1 = () => {
       <div className="max-w-4xl mx-auto px-6 py-12 space-y-8">
         {/* Title Section */}
         <div className="space-y-4">
-          <Badge variant="secondary" className="bg-emerald-500 text-black font-medium">
+          <Badge variant="secondary" className="bg-elec-yellow text-black font-medium">
             Module 7 – Section 1
           </Badge>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -195,7 +195,7 @@ const AM2Module7Section1 = () => {
         <Card className="border-red-500/50 bg-card">
           <CardContent className="p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-6 h-6 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-foreground mb-2">Critical Assessment Component</h3>
                 <p className="text-muted-foreground leading-relaxed">
@@ -442,7 +442,7 @@ const AM2Module7Section1 = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-emerald-500/20 rounded-lg p-4">
+              <div className="bg-card border border-elec-yellow/20 rounded-lg p-4">
                 <p className="text-sm text-muted-foreground">
                   <strong>Strategy:</strong> Aim for 65-70% to comfortably pass. Perfect scores aren't necessary - focus on consistent accuracy.
                 </p>
@@ -480,8 +480,8 @@ const AM2Module7Section1 = () => {
                 </div>
                 
                 <div className="bg-card border border-red-500/20 rounded-lg p-4">
-                  <h3 className="font-medium text-emerald-400 mb-2">Common Failures</h3>
-                  <ul className="space-y-1 text-emerald-400/80 text-sm">
+                  <h3 className="font-medium text-elec-yellow mb-2">Common Failures</h3>
+                  <ul className="space-y-1 text-elec-yellow/80 text-sm">
                     <li>• Inadequate practice under time pressure</li>
                     <li>• Focusing only on preferred topics</li>
                     <li>• Poor exam technique and time management</li>

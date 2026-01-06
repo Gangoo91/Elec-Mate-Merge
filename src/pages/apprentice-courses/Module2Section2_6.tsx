@@ -481,7 +481,7 @@ const Module2Section2_6: React.FC = () => {
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-blue-200 dark:border-blue-800 bg-emerald-50/50 dark:bg-emerald-950/20 p-4 rounded-r-lg">
+              <div key={index} className="border-l-4 border-blue-200 dark:border-blue-800 bg-elec-yellow/5/50 dark:bg-elec-yellow/10 p-4 rounded-r-lg">
                 <p className="font-medium text-white mb-2">{faq.q}</p>
                 <p className="text-sm text-white">{faq.a}</p>
               </div>
@@ -490,7 +490,7 @@ const Module2Section2_6: React.FC = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 border-green-200 dark:border-green-800">
+        <Card className="mb-8 p-6 bg-gradient-to-r from-green-50 to-elec-yellow/5 dark:from-green-950/20 dark:to-elec-yellow/10 border-green-200 dark:border-green-800">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <CheckCircle className="w-5 h-5 text-green-600" />
             Key Takeaways
@@ -527,7 +527,7 @@ const Module2Section2_6: React.FC = () => {
           </div>
           <div className="mt-4 p-4 bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-700 rounded-lg">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <p className="text-xs sm:text-sm text-white">
                 <strong>Safety Reminder:</strong> Always isolate and prove dead before work. Follow BS 7671 and manufacturer instructions.
               </p>

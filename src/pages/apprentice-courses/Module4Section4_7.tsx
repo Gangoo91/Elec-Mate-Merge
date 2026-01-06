@@ -188,7 +188,7 @@ export default function Module4Section4_7() {
               </div>
               <div className="bg-card p-4 rounded-lg">
                 <h3 className="font-semibold mb-3 flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-emerald-600" />
+                  <Shield className="h-5 w-5 text-elec-yellow" />
                   Spot it / Use it
                 </h3>
                 <ul className="space-y-2 text-sm">

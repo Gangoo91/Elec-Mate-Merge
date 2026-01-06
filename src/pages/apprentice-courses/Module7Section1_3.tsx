@@ -194,11 +194,11 @@ const Module7Section1_3 = () => {
             Electrical faults are not just technical problems—they represent serious risks that can have devastating consequences for safety, legal compliance, and business operations. Understanding these risks is essential for every electrician, as it drives the urgency and care required when dealing with electrical installations. This section examines the three main categories of consequences: immediate safety risks, legal and financial implications, and business impact.
           </p>
           
-          <div className="rounded-lg p-3 md:p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-3 md:mt-4">
+          <div className="rounded-lg p-3 md:p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-3 md:mt-4">
             <div className="flex items-start gap-2 md:gap-3">
-              <Clock className="w-4 h-4 md:w-5 md:h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Clock className="w-4 h-4 md:w-5 md:h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-1 md:mb-2 text-sm md:text-base">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-1 md:mb-2 text-sm md:text-base">Why This Matters</p>
                 <p className="text-xs md:text-xs sm:text-sm text-white">
                   HSE statistics show that electrical incidents cause over 1,000 workplace accidents annually in the UK, with approximately 30% of structural fires being electrical in origin. Understanding consequences helps prioritise safety and drives proper fault management practices.
                 </p>
@@ -211,7 +211,7 @@ const Module7Section1_3 = () => {
               <strong>Real Impact:</strong> A single electrical fault can escalate from a minor inconvenience to a major incident causing injury, prosecution, and business failure if not properly managed.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-2 md:p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-2 md:p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs md:text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> BS 7671 requires that installations are safe for persons, livestock, and property. Any fault that compromises this safety must be treated as a priority requiring immediate action.
               </p>
@@ -261,7 +261,7 @@ const Module7Section1_3 = () => {
                 <div className="flex items-start gap-2 md:gap-3 mb-1 md:mb-2">
                   <span className="flex-shrink-0 w-6 h-6 md:w-8 md:h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-xs md:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-2 md:mb-3 text-sm md:text-base">Immediate Safety Hazards</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-2 md:mb-3 text-sm md:text-base">Immediate Safety Hazards</p>
                     
                     <div className="space-y-3 md:space-y-4">
                       <div>
@@ -299,7 +299,7 @@ const Module7Section1_3 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Critical Understanding</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Critical Understanding</p>
                         <p className="text-xs sm:text-sm text-white">
                           Electrical faults create unpredictable hazards that can escalate rapidly. Even apparently minor faults can become life-threatening under certain conditions, making immediate action essential.
                         </p>
@@ -332,7 +332,7 @@ const Module7Section1_3 = () => {
                 <div className="flex items-start gap-2 md:gap-3 mb-1 md:mb-2">
                   <span className="flex-shrink-0 w-6 h-6 md:w-8 md:h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs md:text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Legal and Financial Impact</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Legal and Financial Impact</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -407,7 +407,7 @@ const Module7Section1_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Business and Operational Impact</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Business and Operational Impact</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -430,7 +430,7 @@ const Module7Section1_3 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Long-term Consequences</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Long-term Consequences</p>
                         <p className="text-xs sm:text-sm text-white">
                           Business impact extends beyond immediate costs. Loss of customer confidence, difficulty obtaining insurance, and regulatory restrictions can affect operations for years after an electrical incident.
                         </p>

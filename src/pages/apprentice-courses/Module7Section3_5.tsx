@@ -322,7 +322,7 @@ const Module7Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Essential Information Gathering</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Essential Information Gathering</p>
                     <p className="text-base text-white mb-2"><strong>What specifically is the problem:</strong> Detailed description of observed symptoms.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Exact nature of the fault (flickering, tripping, shocks, smells, sounds)</li>
@@ -378,7 +378,7 @@ const Module7Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Diagnostic Complaint Patterns</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Diagnostic Complaint Patterns</p>
                     <p className="text-base text-white mb-2"><strong>Voltage drop indicators:</strong> Complaints suggesting supply or connection problems.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>"Lights dim when the kettle/washing machine starts" - circuit overloading</li>

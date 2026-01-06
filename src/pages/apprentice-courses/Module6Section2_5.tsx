@@ -235,7 +235,7 @@ const Module6Section2_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Safety and Compliance Benefits</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Safety and Compliance Benefits</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -271,8 +271,8 @@ const Module6Section2_5 = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Safety Critical</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Safety Critical</p>
                         <p className="text-xs sm:text-sm text-white">
                           Poor labelling is a contributing factor in many electrical accidents. Clear identification is not optional—it's a life-safety requirement.
                         </p>
@@ -305,7 +305,7 @@ const Module6Section2_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Essential Label Information</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Essential Label Information</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -342,7 +342,7 @@ const Module6Section2_5 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Best Practice</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Best Practice</p>
                         <p className="text-xs sm:text-sm text-white">
                           Use consistent naming conventions throughout the installation. Avoid abbreviations that may not be understood by others.
                         </p>
@@ -456,7 +456,7 @@ const Module6Section2_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Serious Consequences of Poor Labelling</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Serious Consequences of Poor Labelling</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -504,7 +504,7 @@ const Module6Section2_5 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Critical Warning</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Critical Warning</p>
                         <p className="text-xs sm:text-sm text-white">
                           Poor labelling has been identified as a contributing factor in electrical accidents. The consequences can include serious injury, death, and legal liability.
                         </p>
@@ -542,7 +542,7 @@ const Module6Section2_5 = () => {
             </div>
 
             <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded border border-yellow-200 dark:border-yellow-800">
-              <h4 className="font-medium text-yellow-700 dark:text-elec-yellow mb-3">Tools & Techniques</h4>
+              <h4 className="font-medium text-yellow-700 text-elec-yellow mb-3">Tools & Techniques</h4>
               <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                 <li><strong>Label Printers:</strong> Professional thermal or laser printers for consistent, durable labels</li>
                 <li><strong>Engraved/Laminated Tags:</strong> For harsh environments or permanent installations</li>
@@ -552,8 +552,8 @@ const Module6Section2_5 = () => {
               </ul>
             </div>
 
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
-              <h4 className="font-medium text-blue-700 dark:text-elec-yellow mb-3">Maintenance & Updates</h4>
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
+              <h4 className="font-medium text-blue-700 text-elec-yellow mb-3">Maintenance & Updates</h4>
               <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                 <li><strong>Regular Checks:</strong> Verify label legibility during routine inspections</li>
                 <li><strong>Standard Conventions:</strong> Maintain consistent naming throughout the installation</li>
@@ -650,10 +650,10 @@ const Module6Section2_5 = () => {
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-            <div className="p-4 bg-emerald-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800">
+            <div className="p-4 bg-elec-yellow/5 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800">
               <div className="flex items-center gap-3 mb-3">
-                <Shield className="w-5 h-5 text-elec-yellow dark:text-elec-yellow" />
-                <h3 className="font-medium text-blue-700 dark:text-elec-yellow">Safety & Isolation</h3>
+                <Shield className="w-5 h-5 text-elec-yellow text-elec-yellow" />
+                <h3 className="font-medium text-blue-700 text-elec-yellow">Safety & Isolation</h3>
               </div>
               <p className="text-xs sm:text-sm text-white">
                 Proper labelling enables quick circuit identification and safe isolation, preventing dangerous mistakes during maintenance.
@@ -662,8 +662,8 @@ const Module6Section2_5 = () => {
             
             <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded border border-purple-200 dark:border-purple-800">
               <div className="flex items-center gap-3 mb-3">
-                <FileText className="w-5 h-5 text-purple-600 dark:text-elec-yellow" />
-                <h3 className="font-medium text-purple-700 dark:text-elec-yellow">Information Completeness</h3>
+                <FileText className="w-5 h-5 text-purple-600 text-elec-yellow" />
+                <h3 className="font-medium text-purple-700 text-elec-yellow">Information Completeness</h3>
               </div>
               <p className="text-xs sm:text-sm text-white">
                 Labels must include circuit reference, load description, device ratings, and RCD/RCBO protection details.
@@ -682,8 +682,8 @@ const Module6Section2_5 = () => {
             
             <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded border border-orange-200 dark:border-orange-800">
               <div className="flex items-center gap-3 mb-3">
-                <AlertTriangle className="w-5 h-5 text-orange-600 dark:text-elec-yellow" />
-                <h3 className="font-medium text-orange-700 dark:text-elec-yellow">Maintenance & Updates</h3>
+                <AlertTriangle className="w-5 h-5 text-orange-600 text-elec-yellow" />
+                <h3 className="font-medium text-orange-700 text-elec-yellow">Maintenance & Updates</h3>
               </div>
               <p className="text-xs sm:text-sm text-white">
                 Labels must be updated immediately after any modifications. Use durable materials and consistent naming conventions.

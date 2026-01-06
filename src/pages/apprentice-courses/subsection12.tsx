@@ -227,9 +227,9 @@ const Section3_3 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <ClipboardList className="h-8 w-8 text-emerald-400" />
+            <ClipboardList className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 3.3
               </span>
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
@@ -246,8 +246,8 @@ const Section3_3 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Definition:</strong> Written procedures detailing how work will be done safely.</li>
                 <li><strong>Purpose:</strong> Link risk assessments to practical work methods.</li>
@@ -256,8 +256,8 @@ const Section3_3 = () => {
                 <li><strong>Updates:</strong> Living documents that should be updated as needed.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Complex installations, high-risk work, new procedures, regulatory requirements.</li>
                 <li><strong>Use:</strong> Before starting electrical projects, during planning stages, safety briefings.</li>
@@ -273,23 +273,23 @@ const Section3_3 = () => {
           <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand the purpose and legal requirements for method statements</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify when method statements are required for electrical work</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Create comprehensive method statements with all key components</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Link method statements effectively with risk assessments</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Implement best practices for method statement use and maintenance</span>
             </li>
           </ul>
@@ -297,9 +297,9 @@ const Section3_3 = () => {
 
         {/* Section 1: What is a Method Statement */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-card dark:bg-card p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               What is a Method Statement?
             </h2>
             <div className="space-y-4 text-foreground">
@@ -349,9 +349,9 @@ const Section3_3 = () => {
 
         {/* Section 2: When Required */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-card dark:bg-card p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               When Method Statements are Required
             </h2>
             <div className="space-y-4 text-foreground">
@@ -602,7 +602,7 @@ const Section3_3 = () => {
         {/* FAQs */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-            <Search className="h-6 w-6 text-emerald-400" />
+            <Search className="h-6 w-6 text-elec-yellow" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-6">
@@ -618,7 +618,7 @@ const Section3_3 = () => {
         {/* Pocket Card */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <List className="h-6 w-6 text-emerald-400" />
+            <List className="h-6 w-6 text-elec-yellow" />
             Method Statements - Quick Reference
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
@@ -679,7 +679,7 @@ const Section3_3 = () => {
         {/* Quiz */}
         <div className="mb-8">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-            <Award className="h-6 w-6 text-emerald-400" />
+            <Award className="h-6 w-6 text-elec-yellow" />
             Knowledge Check
           </h2>
           <Quiz questions={quizQuestions} />

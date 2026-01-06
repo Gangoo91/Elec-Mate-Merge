@@ -24,13 +24,13 @@ const FunctionalSkills = () => {
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-6 py-16">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 mb-6">
-            <BookOpen className="h-8 w-8 text-emerald-400" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10 mb-6">
+            <BookOpen className="h-8 w-8 text-elec-yellow" />
           </div>
           <h1 className="text-4xl font-bold text-foreground mb-4">
             Functional Skills
           </h1>
-          <div className="inline-block bg-emerald-500 text-black text-sm font-semibold uppercase tracking-wide px-4 py-2 rounded-full mb-6">
+          <div className="inline-block bg-elec-yellow text-black text-sm font-semibold uppercase tracking-wide px-4 py-2 rounded-full mb-6">
             Coming Soon
           </div>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
@@ -38,7 +38,7 @@ const FunctionalSkills = () => {
           </p>
         </div>
 
-        <div className="bg-card border border-emerald-500/30 rounded-lg p-8">
+        <div className="bg-card border border-elec-yellow/30 rounded-lg p-8">
           <h2 className="text-2xl font-semibold text-foreground mb-4">
             What to Expect
           </h2>
@@ -47,15 +47,15 @@ const FunctionalSkills = () => {
           </p>
           <ul className="space-y-3 text-muted-foreground">
             <li className="flex items-start">
-              <span className="text-emerald-400 mr-3 mt-1">•</span>
+              <span className="text-elec-yellow mr-3 mt-1">•</span>
               <span><strong className="text-foreground">Mathematics:</strong> Practical calculations, measurements, and problem-solving relevant to electrical work</span>
             </li>
             <li className="flex items-start">
-              <span className="text-emerald-400 mr-3 mt-1">•</span>
+              <span className="text-elec-yellow mr-3 mt-1">•</span>
               <span><strong className="text-foreground">English:</strong> Technical writing, documentation, and communication skills for the workplace</span>
             </li>
             <li className="flex items-start">
-              <span className="text-emerald-400 mr-3 mt-1">•</span>
+              <span className="text-elec-yellow mr-3 mt-1">•</span>
               <span><strong className="text-foreground">Digital Skills:</strong> IT competencies including software tools, digital documentation, and online research</span>
             </li>
           </ul>

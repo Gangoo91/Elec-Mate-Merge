@@ -194,11 +194,11 @@ const Module7Section4_5 = () => {
             Understanding how to interpret test readings is crucial for electrical safety and compliance. This section teaches you to recognise when readings indicate acceptable results versus when they suggest problems requiring investigation. Learn to spot patterns, understand limits, and make informed decisions about test results.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   Proper interpretation of test readings prevents 85% of electrical faults from going undetected and ensures installations meet safety standards.
                 </p>
@@ -211,7 +211,7 @@ const Module7Section4_5 = () => {
               <strong>Real Impact:</strong> Accurate reading interpretation reduces callback rates by 60% and prevents potential electrical hazards before they become dangerous.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> BS 7671 provides specific limits for test readings that must be understood and applied correctly for compliant installations.
               </p>
@@ -248,7 +248,7 @@ const Module7Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Continuity Testing</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Continuity Testing</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -341,7 +341,7 @@ const Module7Section4_5 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Safety Margin</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Safety Margin</p>
                         <p className="text-xs sm:text-sm text-white">
                           Readings above 80% of maximum should be investigated as they may indicate developing earth faults.
                         </p>
@@ -374,7 +374,7 @@ const Module7Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Investigation Triggers</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Investigation Triggers</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -388,7 +388,7 @@ const Module7Section4_5 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Professional Responsibility</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Professional Responsibility</p>
                         <p className="text-xs sm:text-sm text-white">
                           When in doubt, investigate. It's better to find nothing wrong than miss a developing fault.
                         </p>
@@ -424,8 +424,8 @@ const Module7Section4_5 = () => {
               </ul>
             </div>
             
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
-              <h3 className="font-medium text-blue-700 dark:text-elec-yellow mb-3">Common Mistakes to Avoid:</h3>
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
+              <h3 className="font-medium text-blue-700 text-elec-yellow mb-3">Common Mistakes to Avoid:</h3>
               <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                 <li>Accepting borderline readings without investigation</li>
                 <li>Assuming all similar circuits should give identical readings</li>

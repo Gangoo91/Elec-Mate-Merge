@@ -262,7 +262,7 @@ const Module4Section7_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">PPE at Work Regulations 1992</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">PPE at Work Regulations 1992</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Employer obligations</strong> - provide PPE free of charge when risks cannot be controlled by other means</li>
                       <li><strong>Suitability requirements</strong> - PPE must be appropriate for the risks and fit properly</li>
@@ -366,7 +366,7 @@ const Module4Section7_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Serious Injury Risks Without Proper PPE</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Serious Injury Risks Without Proper PPE</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Eye injuries from metal swarf</strong> - permanent vision damage or blindness from cutting and grinding operations</li>
                       <li><strong>Severe cuts and lacerations</strong> - from sharp conduit edges, cable tray, and cutting tools</li>
@@ -461,7 +461,7 @@ const Module4Section7_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Comprehensive Safety Integration</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Comprehensive Safety Integration</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Hierarchy of control</strong> - PPE is the last line of defence, not a substitute for safe methods</li>
                       <li><strong>Job planning</strong> - always plan the task first, then select appropriate PPE for identified hazards</li>
@@ -542,7 +542,7 @@ const Module4Section7_3 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 1: Eye Injury from Metal Fragment</h3>
+                  <h3 className="font-medium text-red-800 text-elec-yellow mb-2">Case Study 1: Eye Injury from Metal Fragment</h3>
                   <p className="text-xs sm:text-sm text-white mb-2">
                     On a commercial site, an electrician was cutting trunking with a hacksaw without safety glasses. A small metal fragment flew into his eye, requiring hospital treatment and three days off work.
                   </p>
@@ -557,7 +557,7 @@ const Module4Section7_3 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 2: Hearing Damage from Prolonged Tool Use</h3>
+                  <h3 className="font-medium text-red-800 text-elec-yellow mb-2">Case Study 2: Hearing Damage from Prolonged Tool Use</h3>
                   <p className="text-xs sm:text-sm text-white mb-2">
                     An experienced electrician developed significant hearing loss after years of using power tools without hearing protection. The condition was identified during a routine health check but the damage was irreversible.
                   </p>

@@ -187,7 +187,7 @@ const AM2Module4Section5 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Search className="w-4 h-4" />
             Module 4 – Section 5
           </div>
@@ -203,7 +203,7 @@ const AM2Module4Section5 = () => {
         <Card className="bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-700/50 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-700 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-700 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-900 dark:text-red-100 mb-2 text-sm sm:text-base">
                   CRITICAL: Missing Defects = Assessment Failure
@@ -220,9 +220,9 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -231,23 +231,23 @@ const AM2Module4Section5 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Define what a non-compliance is in the context of BS 7671
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Identify common installation faults and unsafe practices
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Interpret test results that fall outside permitted values
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Record non-compliances clearly and accurately on certification
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Explain to an assessor why something is non-compliant
               </li>
             </ul>
@@ -255,20 +255,20 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* What is a Non-Compliance */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" />
               1. What is a Non-Compliance?
             </h2>
             
             <div className="space-y-4 sm:space-y-6">
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 sm:mb-3 text-sm sm:text-base">Definition:</h4>
-                <p className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 mb-3">
+                <p className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow mb-3">
                   Any part of an installation that does not meet the requirements of BS 7671, manufacturer's instructions, or the installation specification.
                 </p>
-                <p className="text-xs sm:text-sm text-emerald-400 dark:text-emerald-400">
+                <p className="text-xs sm:text-sm text-elec-yellow dark:text-elec-yellow">
                   <strong>Key Principle:</strong> Non-compliances can range from safety-critical issues to workmanship standards that affect professional quality.
                 </p>
               </div>
@@ -289,7 +289,7 @@ const AM2Module4Section5 = () => {
                   
                   <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-2 text-sm sm:text-base">Design Non-Compliances:</h4>
-                    <ul className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow space-y-1">
                       <li>• Incorrect cable size for load</li>
                       <li>• Inadequate circuit protection</li>
                       <li>• Missing RCD protection where required</li>
@@ -313,7 +313,7 @@ const AM2Module4Section5 = () => {
                   
                   <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2 text-sm sm:text-base">Testing Non-Compliances:</h4>
-                    <ul className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow space-y-1">
                       <li>• Insulation resistance below 1 MΩ</li>
                       <li>• Continuity readings too high</li>
                       <li>• RCD trip times outside limits</li>
@@ -336,24 +336,24 @@ const AM2Module4Section5 = () => {
         />
 
         {/* How to Identify Non-Compliances */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               2. How to Identify Non-Compliances
             </h2>
             
             <div className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 text-sm sm:text-base flex items-center gap-2">
                     <Eye className="w-4 h-4" />
                     Visual Inspection:
                   </h4>
-                  <p className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 mb-2">
+                  <p className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow mb-2">
                     Before energising - systematic visual checks
                   </p>
-                  <ul className="text-xs sm:text-sm text-emerald-400 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-elec-yellow dark:text-elec-yellow space-y-1">
                     <li>• Damage to cables or accessories</li>
                     <li>• Missing or incorrect sleeving</li>
                     <li>• Poor alignment and workmanship</li>
@@ -384,10 +384,10 @@ const AM2Module4Section5 = () => {
                     <Target className="w-4 h-4" />
                     Functional Checks:
                   </h4>
-                  <p className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 mb-2">
+                  <p className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow mb-2">
                     Circuits not operating as intended
                   </p>
-                  <ul className="text-xs sm:text-sm text-purple-600 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-purple-600 dark:text-elec-yellow space-y-1">
                     <li>• Switches not controlling correct loads</li>
                     <li>• RCDs not tripping when tested</li>
                     <li>• Motors not starting or stopping</li>
@@ -488,28 +488,28 @@ const AM2Module4Section5 = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div className="space-y-3">
                     <div className="bg-red-50 dark:bg-red-950/20 rounded p-2">
-                      <strong className="text-red-700 dark:text-emerald-400">CPC Issues:</strong>
-                      <p className="text-red-600 dark:text-emerald-400 mt-1">
+                      <strong className="text-red-700 dark:text-elec-yellow">CPC Issues:</strong>
+                      <p className="text-red-600 dark:text-elec-yellow mt-1">
                         Unsleeved CPC at accessories, missing earth connections, or inadequate cross-sectional area
                       </p>
                     </div>
                     <div className="bg-red-50 dark:bg-red-950/20 rounded p-2">
-                      <strong className="text-red-700 dark:text-emerald-400">Zs Failures:</strong>
-                      <p className="text-red-600 dark:text-emerald-400 mt-1">
+                      <strong className="text-red-700 dark:text-elec-yellow">Zs Failures:</strong>
+                      <p className="text-red-600 dark:text-elec-yellow mt-1">
                         Values exceeding maximum for MCB type (e.g., B32 = 1.44Ω max at 230V)
                       </p>
                     </div>
                   </div>
                   <div className="space-y-3">
                     <div className="bg-red-50 dark:bg-red-950/20 rounded p-2">
-                      <strong className="text-red-700 dark:text-emerald-400">RCD Problems:</strong>
-                      <p className="text-red-600 dark:text-emerald-400 mt-1">
+                      <strong className="text-red-700 dark:text-elec-yellow">RCD Problems:</strong>
+                      <p className="text-red-600 dark:text-elec-yellow mt-1">
                         Trip times &gt;300ms at ×1 or &gt;40ms at ×5 for 30mA devices
                       </p>
                     </div>
                     <div className="bg-red-50 dark:bg-red-950/20 rounded p-2">
-                      <strong className="text-red-700 dark:text-emerald-400">Ring Circuit Faults:</strong>
-                      <p className="text-red-600 dark:text-emerald-400 mt-1">
+                      <strong className="text-red-700 dark:text-elec-yellow">Ring Circuit Faults:</strong>
+                      <p className="text-red-600 dark:text-elec-yellow mt-1">
                         Broken conductors, incorrect connections, or cross-connections
                       </p>
                     </div>
@@ -529,9 +529,9 @@ const AM2Module4Section5 = () => {
         />
 
         {/* How to Report Non-Compliances */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
               4. How to Report Non-Compliances
             </h2>
@@ -560,23 +560,23 @@ const AM2Module4Section5 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 text-sm sm:text-base">What to Include in Reports:</h4>
-                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-2">
+                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                       <span>Specific location of non-compliance</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                       <span>Actual measured values where applicable</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                       <span>BS 7671 requirement that is not met</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                       <span>Clear description of the defect</span>
                     </li>
                   </ul>
@@ -590,15 +590,15 @@ const AM2Module4Section5 = () => {
                   <div className="space-y-2 text-xs sm:text-sm">
                     <div className="bg-background/50 rounded p-2">
                       <span className="text-red-800 dark:text-red-200">"Earth missing"</span>
-                      <p className="text-red-600 dark:text-emerald-400 text-xs mt-1">Too vague, no location specified</p>
+                      <p className="text-red-600 dark:text-elec-yellow text-xs mt-1">Too vague, no location specified</p>
                     </div>
                     <div className="bg-background/50 rounded p-2">
                       <span className="text-red-800 dark:text-red-200">"Ring fault"</span>
-                      <p className="text-red-600 dark:text-emerald-400 text-xs mt-1">No detail about nature of fault</p>
+                      <p className="text-red-600 dark:text-elec-yellow text-xs mt-1">No detail about nature of fault</p>
                     </div>
                     <div className="bg-background/50 rounded p-2">
                       <span className="text-red-800 dark:text-red-200">"RCD broken"</span>
-                      <p className="text-red-600 dark:text-emerald-400 text-xs mt-1">No test data or specific failure</p>
+                      <p className="text-red-600 dark:text-elec-yellow text-xs mt-1">No test data or specific failure</p>
                     </div>
                   </div>
                 </div>
@@ -627,8 +627,8 @@ const AM2Module4Section5 = () => {
                 <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3 text-sm sm:text-base">Documentation Requirements for AM2:</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div>
-                    <strong className="text-purple-700 dark:text-emerald-400 block mb-2">Certificate Entries:</strong>
-                    <ul className="text-purple-600 dark:text-emerald-400 space-y-1">
+                    <strong className="text-purple-700 dark:text-elec-yellow block mb-2">Certificate Entries:</strong>
+                    <ul className="text-purple-600 dark:text-elec-yellow space-y-1">
                       <li>• Mark relevant sections as non-compliant</li>
                       <li>• Include actual measured values</li>
                       <li>• Use observations/limitations section</li>
@@ -636,8 +636,8 @@ const AM2Module4Section5 = () => {
                     </ul>
                   </div>
                   <div>
-                    <strong className="text-purple-700 dark:text-emerald-400 block mb-2">Defect Reporting:</strong>
-                    <ul className="text-purple-600 dark:text-emerald-400 space-y-1">
+                    <strong className="text-purple-700 dark:text-elec-yellow block mb-2">Defect Reporting:</strong>
+                    <ul className="text-purple-600 dark:text-elec-yellow space-y-1">
                       <li>• Use standard defect report forms</li>
                       <li>• Categorise by safety significance</li>
                       <li>• Include recommendations</li>
@@ -651,9 +651,9 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* Assessor Expectations */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               5. Assessor Expectations
             </h2>
@@ -673,12 +673,12 @@ const AM2Module4Section5 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 sm:mb-3 text-sm sm:text-base flex items-center gap-2">
                     <Shield className="w-4 h-4" />
                     Safety Awareness:
                   </h4>
-                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                     <li>• Leaves installation safe, even if faults identified</li>
                     <li>• Prioritises safety-critical non-compliances</li>
                     <li>• Shows understanding of consequences</li>
@@ -725,9 +725,9 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
               6. Comprehensive Practical Guidance
             </h2>
@@ -735,19 +735,19 @@ const AM2Module4Section5 = () => {
             <div className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="space-y-4">
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 text-sm sm:text-base">Know the Limits:</h4>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-2">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-2">
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Memorise maximum Zs values for common MCBs (B32=1.44Ω, B20=2.30Ω)</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>RCD trip limits: 300ms at ×1, 40ms at ×5 for 30mA devices</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Minimum insulation resistance: 1MΩ for most circuits</span>
                       </li>
                     </ul>
@@ -775,17 +775,17 @@ const AM2Module4Section5 = () => {
                 <div className="space-y-4">
                   <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-2 text-sm sm:text-base">Test Result Analysis:</h4>
-                    <ul className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 space-y-2">
+                    <ul className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow space-y-2">
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Work logically - if reading looks wrong, re-test</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Record as non-compliant if still outside limits</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Compare all readings with BS 7671 requirements</span>
                       </li>
                     </ul>
@@ -793,17 +793,17 @@ const AM2Module4Section5 = () => {
                   
                   <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2 text-sm sm:text-base">Professional Approach:</h4>
-                    <ul className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 space-y-2">
+                    <ul className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow space-y-2">
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Don't cover up - never hide or ignore defects</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Recording them shows competence, not failure</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Explain findings clearly to assessor</span>
                       </li>
                     </ul>
@@ -816,8 +816,8 @@ const AM2Module4Section5 = () => {
                 <h4 className="font-medium text-foreground mb-3 text-sm sm:text-base">Advanced Non-Compliance Identification Techniques:</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div>
-                    <strong className="text-blue-700 dark:text-emerald-400 block mb-2">Pattern Recognition:</strong>
-                    <ul className="text-emerald-400 dark:text-emerald-400 space-y-1">
+                    <strong className="text-blue-700 dark:text-elec-yellow block mb-2">Pattern Recognition:</strong>
+                    <ul className="text-elec-yellow dark:text-elec-yellow space-y-1">
                       <li>• Multiple high Zs readings may indicate poor earthing</li>
                       <li>• Inconsistent ring continuity suggests breaks</li>
                       <li>• RCD failures often indicate earth leakage</li>
@@ -848,9 +848,9 @@ const AM2Module4Section5 = () => {
         />
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Real-World Examples
             </h2>
@@ -861,7 +861,7 @@ const AM2Module4Section5 = () => {
                 <p className="text-xs sm:text-sm text-red-800 dark:text-red-200 mb-2">
                   Candidate measured Zs of 2.5 Ω on a B32 breaker (limit 1.44Ω exceeded). Failed to report → <strong>lost marks</strong>
                 </p>
-                <p className="text-xs text-red-700 dark:text-emerald-400">
+                <p className="text-xs text-red-700 dark:text-elec-yellow">
                   Lesson: Always compare measured values with BS 7671 limits. High Zs values indicate potentially dangerous earth fault loop impedance.
                 </p>
               </div>
@@ -871,7 +871,7 @@ const AM2Module4Section5 = () => {
                 <p className="text-xs sm:text-sm text-red-800 dark:text-red-200 mb-2">
                   Candidate found socket polarity reversed, but didn't note it. Assessor flagged → <strong>fail</strong>
                 </p>
-                <p className="text-xs text-red-700 dark:text-emerald-400">
+                <p className="text-xs text-red-700 dark:text-elec-yellow">
                   Lesson: Even seemingly minor defects must be recorded. Reversed polarity creates serious safety hazards.
                 </p>
               </div>
@@ -886,12 +886,12 @@ const AM2Module4Section5 = () => {
                 </p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 bg-yellow-50 dark:bg-yellow-950/20 p-3 sm:p-4">
+              <div className="border-l-4 border-elec-yellow bg-yellow-50 dark:bg-yellow-950/20 p-3 sm:p-4">
                 <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-2 text-sm sm:text-base">Example 4: Real-World Audit Failure</h4>
                 <p className="text-xs sm:text-sm text-yellow-700 dark:text-yellow-300 mb-2">
                   In real work, electrician ignored a missing CPC. During audit, EICR flagged "Code C2." Same principle in AM2 = non-compliance.
                 </p>
-                <p className="text-xs text-emerald-400 dark:text-emerald-400">
+                <p className="text-xs text-elec-yellow dark:text-elec-yellow">
                   Lesson: Missing safety-critical items like CPCs can lead to serious consequences in real installations and immediate fails in AM2.
                 </p>
               </div>
@@ -900,9 +900,9 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* NET AM2 Specific Assessment Criteria */}
-        <Card className="bg-gradient-to-r from-card/10 to-emerald-500/10 border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-gradient-to-r from-card/10 to-elec-yellow/10 border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Award className="w-5 h-5" />
               NET AM2 Assessment Criteria for Non-Compliance Identification
             </h2>
@@ -932,8 +932,8 @@ const AM2Module4Section5 = () => {
                 </div>
               </div>
               
-              <div className="bg-emerald-500/10 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-emerald-400 mb-2 text-sm sm:text-base">Industry Relevance:</h4>
+              <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
+                <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Industry Relevance:</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   The ability to identify and report non-compliances is crucial for professional electricians. 
                   It demonstrates competence in quality assurance, safety awareness, and regulatory compliance - 
@@ -945,9 +945,9 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* Section Summary */}
-        <Card className="bg-gradient-to-r from-emerald-500/5 to-card/5 border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-gradient-to-r from-elec-yellow/5 to-card/5 border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Section Summary
             </h2>
@@ -983,8 +983,8 @@ const AM2Module4Section5 = () => {
                 </ul>
               </div>
               
-              <div className="bg-emerald-500/10 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-emerald-400 mb-2 text-sm sm:text-base">Module 4 Complete:</h4>
+              <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
+                <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Module 4 Complete:</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   You have now completed Module 4 - Testing and Commissioning. You understand test procedures, 
                   equipment safety, result recording, functional testing, and non-compliance identification. 
@@ -996,9 +996,9 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               Test Your Knowledge
             </h2>

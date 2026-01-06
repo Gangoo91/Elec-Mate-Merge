@@ -228,7 +228,7 @@ const Module5Section2_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Load Calculation Fundamentals</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Load Calculation Fundamentals</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -245,7 +245,7 @@ const Module5Section2_2 = () => {
                             <li><strong>V</strong> = Voltage in volts (V)</li>
                           </ul>
                         </div>
-                        <div className="text-xs sm:text-sm text-white bg-emerald-50 dark:bg-blue-900/20 p-2 rounded border">
+                        <div className="text-xs sm:text-sm text-white bg-elec-yellow/5 dark:bg-blue-900/20 p-2 rounded border">
                           <strong>Example:</strong> 3000W immersion heater ÷ 230V = 13.04A current draw
                         </div>
                       </div>
@@ -391,7 +391,7 @@ const Module5Section2_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Understanding Diversity</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Understanding Diversity</p>
                     <p className="text-base text-white mb-2"><strong>Concept:</strong> Not all equipment is used at the same time.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Reduces the assumed total load for practical design</li>
@@ -484,7 +484,7 @@ const Module5Section2_2 = () => {
             
             <div className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Step 1: Equipment Assessment</p>
+                <p className="font-medium text-elec-yellow text-elec-yellow mb-2">Step 1: Equipment Assessment</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Create equipment list:</strong> Note all appliances and their power ratings</li>
                   <li>✅ <strong>Convert to current:</strong> Use I = P ÷ V (current = power ÷ voltage)</li>
@@ -504,7 +504,7 @@ const Module5Section2_2 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-600 dark:text-elec-yellow mb-2">Step 3: Future Planning</p>
+                <p className="font-medium text-purple-600 text-elec-yellow mb-2">Step 3: Future Planning</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>EV charging provision:</strong> Consider 32A supply for future electric vehicle charging</li>
                   <li>✅ <strong>Heat pump readiness:</strong> Allow for potential heating system upgrades</li>
@@ -514,7 +514,7 @@ const Module5Section2_2 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Step 4: Protection Verification</p>
+                <p className="font-medium text-orange-600 text-elec-yellow mb-2">Step 4: Protection Verification</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Cable protection:</strong> Ensure protective device ratings don't exceed cable capacity</li>
                   <li>✅ <strong>Load compatibility:</strong> Verify protective devices can carry expected loads</li>
@@ -535,7 +535,7 @@ const Module5Section2_2 = () => {
                 <Building2 className="w-4 h-4" />
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-2">The Student House Circuit Overload</p>
+                <p className="font-semibold text-orange-600 text-elec-yellow mb-2">The Student House Circuit Overload</p>
                 <p className="text-base text-white mb-3">
                   <strong>The Scenario:</strong> An electrician installed a ring final circuit in a student house without considering diversity properly. Each bedroom had multiple high-power devices (heaters, kettles, hair dryers, laptop chargers, and gaming equipment).
                 </p>
@@ -551,7 +551,7 @@ const Module5Section2_2 = () => {
                 </div>
                 
                 <div className="bg-card p-4 rounded-lg mb-3 border border-red-500/20">
-                  <p className="font-medium text-red-600 dark:text-elec-yellow mb-2">The Consequences:</p>
+                  <p className="font-medium text-red-600 text-elec-yellow mb-2">The Consequences:</p>
                   <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                     <li><strong>Daily tripping:</strong> 32A breaker tripped multiple times daily, especially mornings</li>
                     <li><strong>Safety hazard:</strong> Students started bypassing the MCB (extremely dangerous)</li>
@@ -592,7 +592,7 @@ const Module5Section2_2 = () => {
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Load Calculation</p>
+                <p className="font-medium text-elec-yellow text-elec-yellow mb-2">Load Calculation</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>📝 List all expected loads with power ratings</li>
                   <li>🧮 Convert watts into amps (I = P ÷ V)</li>
@@ -616,7 +616,7 @@ const Module5Section2_2 = () => {
             
             <div className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-600 dark:text-elec-yellow mb-2">BS 7671 Compliance</p>
+                <p className="font-medium text-purple-600 text-elec-yellow mb-2">BS 7671 Compliance</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>📋 Reg 433.1 - Overload protection</li>
                   <li>⚡ Reg 434.1 - Fault current protection</li>
@@ -627,7 +627,7 @@ const Module5Section2_2 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Diversity Factors</p>
+                <p className="font-medium text-orange-600 text-elec-yellow mb-2">Diversity Factors</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>🔌 Socket outlets: 40-60%</li>
                   <li>💡 Lighting circuits: 66%</li>

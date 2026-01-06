@@ -270,7 +270,7 @@ const Module5Section5_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Types of Site Communications</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Types of Site Communications</p>
                     <p className="text-base text-white mb-2"><strong>Briefings:</strong> Provide daily updates on site activities, progress, and immediate concerns.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Daily work priorities and task allocation</li>
@@ -381,7 +381,7 @@ const Module5Section5_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Professional Meeting Behaviour</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Professional Meeting Behaviour</p>
                     <p className="text-base text-white mb-2"><strong>Arrive on time and prepared:</strong></p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Check meeting times and locations daily</li>
@@ -440,7 +440,7 @@ const Module5Section5_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Behaviours That Undermine Safety and Professionalism</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Behaviours That Undermine Safety and Professionalism</p>
                     <p className="text-base text-white mb-2"><strong>Not paying attention and missing key safety points:</strong></p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Using phone or having side conversations</li>
@@ -478,7 +478,7 @@ const Module5Section5_5 = () => {
           
           <div className="grid gap-6">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">📝 Meeting Preparation</h3>
+              <h3 className="font-medium text-elec-yellow text-elec-yellow mb-2">📝 Meeting Preparation</h3>
               <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-6">
                 <li>Keep a small notebook or use your phone (if permitted) to record key points</li>
                 <li>Review previous meeting notes before attending</li>
@@ -498,7 +498,7 @@ const Module5Section5_5 = () => {
             </div>
 
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-purple-600 dark:text-elec-yellow mb-2">⚠️ Safety Priority</h3>
+              <h3 className="font-medium text-purple-600 text-elec-yellow mb-2">⚠️ Safety Priority</h3>
               <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-6">
                 <li>Treat toolbox talks seriously — they are legal requirements for site safety</li>
                 <li>Pay special attention to new hazards and exclusion zones</li>
@@ -508,7 +508,7 @@ const Module5Section5_5 = () => {
             </div>
 
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-orange-600 dark:text-elec-yellow mb-2">✅ Follow-Through</h3>
+              <h3 className="font-medium text-orange-600 text-elec-yellow mb-2">✅ Follow-Through</h3>
               <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-6">
                 <li>Always act on instructions promptly to avoid delays</li>
                 <li>Set reminders for deadlines and action items</li>
@@ -527,7 +527,7 @@ const Module5Section5_5 = () => {
               <div className="flex items-start gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Active Listening Skills</p>
+                  <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Active Listening Skills</p>
                   <p className="text-base text-white mb-2"><strong>Listen with intent:</strong></p>
                   <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                     <li>Focus completely on the speaker without distractions</li>
@@ -566,7 +566,7 @@ const Module5Section5_5 = () => {
               <div className="flex items-start gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Health and Safety Legal Framework</p>
+                  <p className="font-semibold text-red-600 text-elec-yellow mb-1">Health and Safety Legal Framework</p>
                   <p className="text-base text-white mb-2"><strong>Health and Safety at Work Act 1974:</strong></p>
                   <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                     <li>Employers must provide information, instruction, training and supervision</li>
@@ -702,7 +702,7 @@ const Module5Section5_5 = () => {
         {/* Recap */}
         <Card className="mb-8 p-6 border-elec-yellow/30">
           <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-emerald-600 dark:text-elec-yellow" />
+            <CheckCircle className="w-6 h-6 text-elec-yellow text-elec-yellow" />
             <h2 className="text-lg sm:text-xl font-semibold text-white">Recap</h2>
           </div>
           <div className="grid gap-4">

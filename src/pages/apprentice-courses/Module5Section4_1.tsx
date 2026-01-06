@@ -295,11 +295,11 @@ const Module5Section4_1 = () => {
             Accurate estimation of materials is critical in electrical installation projects. Whether using technical drawings or conducting on-site walkthroughs, estimating ensures you have the right amount of cables, containment, accessories, and consumables. Poor estimating can lead to delays, shortages, overspending, or wasted resources.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Package className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Package className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   Accurate material estimation in electrical projects reduces waste by up to 30% and prevents costly delays that can impact entire construction schedules.
                 </p>
@@ -312,7 +312,7 @@ const Module5Section4_1 = () => {
               <strong>Real Impact:</strong> Projects with accurate material estimates show 40% fewer emergency orders and improved project profitability compared to poorly estimated installations.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> BS 7671 requires proper planning and adequate materials to ensure safe and compliant electrical installations.
               </p>
@@ -434,7 +434,7 @@ const Module5Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Project Success Benefits</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Project Success Benefits</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -488,7 +488,7 @@ const Module5Section4_1 = () => {
                         </div>
                         
                         <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded border border-yellow-200 dark:border-yellow-800 mt-3">
-                          <p className="font-medium text-yellow-700 dark:text-elec-yellow mb-2">Common Drawing Scales</p>
+                          <p className="font-medium text-yellow-700 text-elec-yellow mb-2">Common Drawing Scales</p>
                           <div className="grid grid-cols-2 gap-3 text-xs sm:text-sm text-white">
                             <div>
                               <p><strong>Plans:</strong> 1:50 or 1:100</p>
@@ -528,7 +528,7 @@ const Module5Section4_1 = () => {
 
                       <div>
                         <p className="text-base text-white mb-2"><strong>Measurement Techniques:</strong></p>
-                        <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
                           <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li><strong>Horizontal runs:</strong> Use plan views and scale rules</li>
                             <li><strong>Vertical runs:</strong> Check sections and elevations for heights</li>
@@ -587,7 +587,7 @@ const Module5Section4_1 = () => {
                         <p className="text-base text-white mb-2"><strong>Common site discoveries:</strong></p>
                         <div className="grid md:grid-cols-2 gap-4">
                           <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                            <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Potential Issues</p>
+                            <p className="font-medium text-red-700 text-elec-yellow mb-2">Potential Issues</p>
                             <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                               <li>Congested ceiling voids</li>
                               <li>Asbestos-containing materials</li>
@@ -611,7 +611,7 @@ const Module5Section4_1 = () => {
 
                       <div>
                         <p className="text-base text-white mb-2"><strong>Documentation during site visit:</strong></p>
-                        <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
                           <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li><strong>Photographs:</strong> Take photos of complex routing areas and obstacles</li>
                             <li><strong>Measurements:</strong> Record actual distances, especially vertical drops</li>
@@ -623,7 +623,7 @@ const Module5Section4_1 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Professional Tip</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Professional Tip</p>
                         <p className="text-xs sm:text-sm text-white">
                           Site conditions often differ from drawings by 10-20%—this is why experienced electricians never rely on drawings alone for material estimates.
                         </p>
@@ -670,8 +670,8 @@ const Module5Section4_1 = () => {
           <section className="mb-6">
             <h3 className="font-medium text-white mb-4">5. Materials Take-off Checklist</h3>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 bg-emerald-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                <h4 className="font-semibold text-blue-700 dark:text-elec-yellow mb-2">Primary Materials</h4>
+              <div className="p-4 bg-elec-yellow/5 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <h4 className="font-semibold text-blue-700 text-elec-yellow mb-2">Primary Materials</h4>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>• Cables (all types and sizes)</li>
                   <li>• Containment (conduit, trunking, cable tray)</li>
@@ -719,7 +719,7 @@ const Module5Section4_1 = () => {
           
           <div className="space-y-4">
             <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-              <h3 className="font-semibold text-red-700 dark:text-elec-yellow mb-2">Case Study: School Refurbishment Gone Wrong</h3>
+              <h3 className="font-semibold text-red-700 text-elec-yellow mb-2">Case Study: School Refurbishment Gone Wrong</h3>
               <p className="text-white leading-relaxed mb-3">
                 An experienced electrical contractor estimated a school refurbishment project based solely on architectural drawings. The drawings showed clear ceiling spaces and straightforward cable routes. The estimate included standard 5% wastage allowance.
               </p>
@@ -743,7 +743,7 @@ const Module5Section4_1 = () => {
               </ul>
             </div>
             
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
               <p className="text-white leading-relaxed">
                 <strong>Lesson learned:</strong> This contractor now allocates a full day for site surveys on refurbishment projects and has never had a major material shortage since. The initial time investment saves significant costs and maintains professional reputation.
               </p>
@@ -765,7 +765,7 @@ const Module5Section4_1 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-r from-elec-blue to-emerald-600 text-white">
+        <Card className="mb-8 p-6 bg-gradient-to-r from-elec-blue to-elec-yellow text-white">
           <h2 className="text-lg sm:text-xl font-semibold mb-4">Pocket Guide – Estimating Materials</h2>
           <div className="space-y-2">
             {pocketGuideItems.map((item, index) => (
@@ -787,8 +787,8 @@ const Module5Section4_1 = () => {
             </p>
             
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <h4 className="font-semibold text-blue-700 dark:text-elec-yellow mb-2">Key Skills Acquired</h4>
+              <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                <h4 className="font-semibold text-blue-700 text-elec-yellow mb-2">Key Skills Acquired</h4>
                 <ul className="text-sm text-white list-disc ml-4 space-y-1">
                   <li>Reading and interpreting electrical drawings and specifications</li>
                   <li>Using scale rules and measurement tools accurately</li>

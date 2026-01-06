@@ -526,7 +526,7 @@ const Module2Section4_5 = () => {
               <div className="space-y-4">
                 <div className="bg-card border border-elec-yellow/30 p-3 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Quick ID Checks</h4>
-                  <ul className="space-y-1 text-emerald-200 text-xs">
+                  <ul className="space-y-1 text-elec-yellow text-xs">
                     <li>• <strong>Nameplate:</strong> Look for AC/DC, V rating, Hz</li>
                     <li>• <strong>Waveform symbol:</strong> ~ = AC, ⎓ = DC</li>
                     <li>• <strong>Cable colours:</strong> AC = Brown/Blue/G&Y</li>

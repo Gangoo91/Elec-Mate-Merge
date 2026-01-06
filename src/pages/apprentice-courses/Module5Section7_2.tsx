@@ -270,7 +270,7 @@ const Module5Section7_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Safety and Emergency Response</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Safety and Emergency Response</p>
                     <p className="text-base text-white mb-2"><strong>Safety:</strong> Ensures circuits can be isolated quickly in emergencies.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Rapid identification of circuits during electrical emergencies</li>
@@ -399,7 +399,7 @@ const Module5Section7_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Safety and Operational Risks</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Safety and Operational Risks</p>
                     <p className="text-base text-white mb-2"><strong>Safety hazards:</strong> Risk of shock or injury when isolating the wrong circuit.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Electric shock from working on live circuits due to incorrect isolation</li>
@@ -526,7 +526,7 @@ const Module5Section7_2 = () => {
                 <li>• Include protective device ratings on labels</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800">
               <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
                 <Target className="w-4 h-4" />
                 Key Actions
@@ -644,7 +644,7 @@ const Module5Section7_2 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-r from-card/10 to-emerald-500/10 border-white/10">
+        <Card className="mb-8 p-6 bg-gradient-to-r from-card/10 to-elec-yellow/10 border-white/10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Clipboard className="w-5 h-5" />
             Pocket Guide

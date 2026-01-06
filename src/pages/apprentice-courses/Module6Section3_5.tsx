@@ -248,7 +248,7 @@ const Module6Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Why Use a Proving Unit?</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Why Use a Proving Unit?</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -364,7 +364,7 @@ const Module6Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">The Correct Sequence (Live-Dead-Live)</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">The Correct Sequence (Live-Dead-Live)</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -422,7 +422,7 @@ const Module6Section3_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Unsafe Practices to Avoid</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Unsafe Practices to Avoid</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -546,12 +546,12 @@ const Module6Section3_5 = () => {
         {/* Micro-challenge */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Micro-Challenge</h2>
-          <div className="bg-emerald-50/50 dark:bg-blue-900/20 border border-blue-200/50 p-6 rounded-lg">
+          <div className="bg-elec-yellow/5/50 dark:bg-blue-900/20 border border-blue-200/50 p-6 rounded-lg">
             <div className="space-y-4">
               <p className="text-white">
                 You arrive at a job and your colleague says "Don't worry, I've already tested it with my voltage pen - it's definitely dead." What do you do?
               </p>
-              <div className="bg-emerald-50/50 dark:bg-blue-900/10 p-4 rounded-lg border-l-4 border-l-elec-yellow">
+              <div className="bg-elec-yellow/5/50 dark:bg-blue-900/10 p-4 rounded-lg border-l-4 border-l-elec-yellow">
                 <p className="font-semibold text-white mb-2">Answer:</p>
                 <p className="text-white">
                   Never trust another person's testing, especially with non-GS38 equipment. Always perform your own complete live-dead-live procedure using proper two-pole voltage tester and proving unit. Voltage pens are not acceptable for proving dead.
@@ -622,7 +622,7 @@ const Module6Section3_5 = () => {
           <div className="bg-card border border-elec-yellow/20 p-6 rounded-lg">
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Equipment Checklist</h3>
+                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Equipment Checklist</h3>
                 <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>• Use two-pole testers only</li>
                   <li>• GS38-compliant with fused, shrouded leads</li>
@@ -631,7 +631,7 @@ const Module6Section3_5 = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Testing Sequence</h3>
+                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Testing Sequence</h3>
                 <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>• Always follow live-dead-live sequence</li>
                   <li>• Prove tester → Test circuit → Re-prove tester</li>

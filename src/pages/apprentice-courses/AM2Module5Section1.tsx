@@ -152,7 +152,7 @@ const AM2Module5Section1 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Search className="w-4 h-4" />
             Module 5 – Section 1
           </div>
@@ -171,15 +171,15 @@ const AM2Module5Section1 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
                   CRITICAL: Real vs Deliberate Faults
                 </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
                   If you discover what appears to be a genuine safety fault (not a deliberate test fault), stop work immediately and report it to your assessor. Never assume all faults are deliberate.
                 </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
                   Your safety assessment skills are being tested — both in finding deliberate faults and recognising genuine hazards.
                 </p>
               </div>
@@ -188,9 +188,9 @@ const AM2Module5Section1 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -199,23 +199,23 @@ const AM2Module5Section1 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Identify the most common types of faults set in AM2 assessments
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Recognise symptoms and testing methods for each fault type
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Understand where faults are typically located in test installations
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply systematic diagnosis techniques rather than random testing
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Know what assessors expect in fault-finding demonstrations
               </li>
             </ul>
@@ -223,9 +223,9 @@ const AM2Module5Section1 = () => {
         </Card>
 
         {/* Common Fault Types */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               1. Common Fault Types in AM2
             </h2>
@@ -235,19 +235,19 @@ const AM2Module5Section1 = () => {
                 <h4 className="font-medium text-foreground mb-3">TOP 4 Fault Categories You Must Know:</h4>
                 <ul className="text-sm text-muted-foreground space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 font-bold">1.</span>
+                    <span className="text-elec-yellow font-bold">1.</span>
                     <span><strong>Open Circuits:</strong> Complete break in conductor — circuit appears dead</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 font-bold">2.</span>
+                    <span className="text-elec-yellow font-bold">2.</span>
                     <span><strong>High Resistance Connections:</strong> Poor joints — circuit works but resistance too high</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 font-bold">3.</span>
+                    <span className="text-elec-yellow font-bold">3.</span>
                     <span><strong>Short Circuits:</strong> Direct L-N or L-E contact — protective devices trip</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 font-bold">4.</span>
+                    <span className="text-elec-yellow font-bold">4.</span>
                     <span><strong>Polarity Errors:</strong> Incorrect connections — switches in neutral, reversed sockets</span>
                   </li>
                 </ul>
@@ -265,9 +265,9 @@ const AM2Module5Section1 = () => {
         />
 
         {/* Fault Symptoms and Testing */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               2. How to Test for Each Fault Type
             </h2>
@@ -327,9 +327,9 @@ const AM2Module5Section1 = () => {
         />
 
         {/* Advanced Diagnostic Techniques */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
               3. Advanced Fault-Finding Techniques
             </h2>
@@ -377,7 +377,7 @@ const AM2Module5Section1 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">Dangerous Assumptions to Avoid:</h4>
-                <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-2">
                   <li>• <strong>Never assume</strong> all circuits are the same — test each individually</li>
                   <li>• <strong>Never assume</strong> cables follow logical routes — physically trace them</li>
                   <li>• <strong>Never assume</strong> colours indicate function — verify with testing</li>
@@ -390,17 +390,17 @@ const AM2Module5Section1 = () => {
         </Card>
 
         {/* Real-World Fault Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
               4. Real-World Fault Scenarios
             </h2>
             
             <div className="space-y-4">
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Scenario 1: "Lighting Circuit Dead"</h4>
-                <div className="text-sm text-blue-700 dark:text-emerald-400 space-y-2">
+                <div className="text-sm text-blue-700 dark:text-elec-yellow space-y-2">
                   <p><strong>Customer complaint:</strong> "Half the downstairs lights stopped working this morning"</p>
                   <p><strong>Your observation:</strong> MCB hasn't tripped, other circuits working normally</p>
                   <p><strong>Likely fault:</strong> Open circuit in lighting final circuit</p>
@@ -411,7 +411,7 @@ const AM2Module5Section1 = () => {
 
               <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-3">Scenario 2: "Socket Keeps Tripping RCD"</h4>
-                <div className="text-sm text-orange-700 dark:text-emerald-400 space-y-2">
+                <div className="text-sm text-orange-700 dark:text-elec-yellow space-y-2">
                   <p><strong>Customer complaint:</strong> "RCD trips every time I plug anything into the kitchen socket"</p>
                   <p><strong>Your observation:</strong> RCD operates immediately, other sockets work fine</p>
                   <p><strong>Likely fault:</strong> Earth fault on that socket circuit</p>
@@ -422,7 +422,7 @@ const AM2Module5Section1 = () => {
 
               <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Scenario 3: "Lights Work But Dim"</h4>
-                <div className="text-sm text-purple-700 dark:text-emerald-400 space-y-2">
+                <div className="text-sm text-purple-700 dark:text-elec-yellow space-y-2">
                   <p><strong>Customer complaint:</strong> "Lights come on but they're much dimmer than normal"</p>
                   <p><strong>Your observation:</strong> All lights on circuit affected equally</p>
                   <p><strong>Likely fault:</strong> High resistance in neutral or live conductor</p>
@@ -435,23 +435,23 @@ const AM2Module5Section1 = () => {
         </Card>
 
         {/* Where Faults Are Set */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
               5. Where NET Typically Places Faults
             </h2>
             
             <div className="space-y-4">
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Most Common Locations:</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-2">
+                  <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-2">
                     <li>• <strong>Junction boxes:</strong> Easy assessor access, realistic</li>
                     <li>• <strong>Socket outlets:</strong> Terminal connections visible</li>
                     <li>• <strong>Light fittings:</strong> Switch and rose connections</li>
                   </ul>
-                  <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-2">
+                  <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-2">
                     <li>• <strong>Consumer unit:</strong> MCB and neutral bar connections</li>
                     <li>• <strong>Cooker outlets:</strong> High current connections</li>
                     <li>• <strong>Motor controls:</strong> Stop/start and overload settings</li>
@@ -471,9 +471,9 @@ const AM2Module5Section1 = () => {
         />
 
         {/* What Assessors Look For */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               4. What Assessors Look For
             </h2>
@@ -489,9 +489,9 @@ const AM2Module5Section1 = () => {
                 </ul>
               </div>
               
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3 text-sm sm:text-base">Professional Qualities Demonstrated:</h4>
-                <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                   <li>• Methodical diagnosis under assessment pressure</li>
                   <li>• Safety prioritised throughout testing</li>
                   <li>• Clear communication of technical findings</li>
@@ -503,9 +503,9 @@ const AM2Module5Section1 = () => {
         </Card>
 
         {/* Practical Strategies */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
               5. Practical Fault-Finding Strategy
             </h2>
@@ -518,7 +518,7 @@ const AM2Module5Section1 = () => {
                       <Lightbulb className="w-4 h-4" />
                       Systematic Approach
                     </h4>
-                    <ul className="text-sm text-purple-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-purple-700 dark:text-elec-yellow space-y-1">
                       <li><strong>Step 1:</strong> Visual inspection for obvious faults</li>
                       <li><strong>Step 2:</strong> Dead testing in logical sequence</li>
                       <li><strong>Step 3:</strong> Compare results to expected values</li>
@@ -544,7 +544,7 @@ const AM2Module5Section1 = () => {
                       <Settings className="w-4 h-4" />
                       Testing Best Practice
                     </h4>
-                    <ul className="text-sm text-orange-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-orange-700 dark:text-elec-yellow space-y-1">
                       <li><strong>Always:</strong> Isolate before testing</li>
                       <li><strong>Use:</strong> Appropriate test instruments</li>
                       <li><strong>Verify:</strong> Test equipment functionality</li>
@@ -556,7 +556,7 @@ const AM2Module5Section1 = () => {
                       <AlertTriangle className="w-4 h-4" />
                       Common Mistakes
                     </h4>
-                    <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                       <li><strong>Avoid:</strong> Random testing without logic</li>
                       <li><strong>Don't:</strong> Guess fault locations</li>
                       <li><strong>Never:</strong> Compromise safety for speed</li>
@@ -569,9 +569,9 @@ const AM2Module5Section1 = () => {
         </Card>
 
         {/* Professional Testing Techniques */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
               6. Professional Testing Techniques
             </h2>
@@ -601,12 +601,12 @@ const AM2Module5Section1 = () => {
                 </div>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Industry-Standard Approach:</h4>
-                <p className="text-sm text-blue-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-blue-700 dark:text-elec-yellow mb-3">
                   Professional electricians follow this systematic sequence for any fault-finding scenario:
                 </p>
-                <ol className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                <ol className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                   <li><strong>1. Visual inspection</strong> — Check obvious issues first (finds 70% of faults)</li>
                   <li><strong>2. Safe isolation</strong> — Proper isolation and proving procedures</li>
                   <li><strong>3. Dead testing</strong> — Continuity and insulation resistance</li>
@@ -632,9 +632,9 @@ const AM2Module5Section1 = () => {
         </Card>
 
         {/* Real-World Application */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
               7. From AM2 to Professional Success
             </h2>
@@ -642,10 +642,10 @@ const AM2Module5Section1 = () => {
             <div className="space-y-6">
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">Career Development Value:</h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
                   Your fault-finding reputation will make or break your electrical career. Customers remember electricians who:
                 </p>
-                <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                   <li>• Find faults quickly without unnecessary work</li>
                   <li>• Explain problems clearly to non-technical customers</li>
                   <li>• Provide proper documentation and test certificates</li>
@@ -659,7 +659,7 @@ const AM2Module5Section1 = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h5 className="font-medium text-purple-800 dark:text-purple-200 mb-2">Domestic Faults:</h5>
-                    <ul className="text-sm text-purple-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-purple-700 dark:text-elec-yellow space-y-1">
                       <li>• DIY work with poor connections</li>
                       <li>• Rodent damage in roof spaces</li>
                       <li>• Moisture ingress causing earth faults</li>
@@ -668,7 +668,7 @@ const AM2Module5Section1 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-purple-800 dark:text-purple-200 mb-2">Commercial Faults:</h5>
-                    <ul className="text-sm text-purple-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-purple-700 dark:text-elec-yellow space-y-1">
                       <li>• Overloaded circuits from equipment changes</li>
                       <li>• Environmental damage (heat, dust, chemicals)</li>
                       <li>• Mechanical damage from building work</li>
@@ -696,16 +696,16 @@ const AM2Module5Section1 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               8. Section Summary: AM2 Fault-Finding Success
             </h2>
             
-            <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4 mb-4">
+            <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4 mb-4">
               <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Key Takeaways:</h4>
-              <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+              <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                 <li>• Most AM2 faults are open circuits — complete breaks in continuity</li>
                 <li>• High resistance connections show as elevated resistance readings</li>
                 <li>• Short circuits cause protective devices to operate immediately</li>

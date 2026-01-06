@@ -213,7 +213,7 @@ const Module4Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Mechanical Damage Sources</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Mechanical Damage Sources</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Abrasion damage mechanisms:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Sharp containment edges: File to 0.5mm radius minimum, deburr all cut edges</li>
@@ -239,7 +239,7 @@ const Module4Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Bend Radius and Tension Control</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Bend Radius and Tension Control</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Minimum bend radius requirements:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>PVC insulated cables: 6× overall diameter during installation, 4× when fixed</li>
@@ -265,7 +265,7 @@ const Module4Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Environmental and Chemical Damage</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Environmental and Chemical Damage</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Temperature damage prevention:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Installation temperature: PVC minimum 0°C, XLPE minimum -20°C</li>
@@ -381,7 +381,7 @@ const Module4Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Mechanical Protection Systems</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Mechanical Protection Systems</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Cable roller installation:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Horizontal runs: Position every 3-5m, align with cable direction</li>
@@ -407,7 +407,7 @@ const Module4Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Pulling Lubricant Application and Techniques</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Pulling Lubricant Application and Techniques</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Lubricant selection and application:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Application conditions: Runs {'>'}30m, multiple bends {'>'}45°, cable bundles</li>
@@ -433,7 +433,7 @@ const Module4Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Environmental Control and Timing</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Environmental Control and Timing</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Temperature and timing considerations:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Pull speed control: Maximum 1m/minute for SWA cables to prevent heating</li>
@@ -478,7 +478,7 @@ const Module4Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Support System Design and Spacing</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Support System Design and Spacing</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>BS 7671 Table 4A2 support spacing:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Horizontal runs: 300mm for cables ≤9mm diameter, 600mm for cables {'>'}20mm</li>
@@ -504,7 +504,7 @@ const Module4Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Installation Quality Control and Documentation</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Installation Quality Control and Documentation</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Installation quality standards:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Load distribution: Stagger heavy cables, avoid point loading</li>
@@ -542,7 +542,7 @@ const Module4Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">BS 7671 Regulatory Requirements</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">BS 7671 Regulatory Requirements</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Specific regulation compliance:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Regulation 522.6: Cables protected from damage under normal service conditions</li>

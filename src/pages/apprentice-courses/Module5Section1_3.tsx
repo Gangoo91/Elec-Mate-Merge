@@ -205,7 +205,7 @@ const Module5Section1_3 = () => {
             <div className="p-2 rounded-lg ">
               <Lightbulb className="w-6 h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 5.1.3
             </Badge>
           </div>
@@ -221,16 +221,16 @@ const Module5Section1_3 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Electrical drawings use standardised symbols from BS 7671 to communicate clearly.</li>
                 <li>Main categories include lighting, power, switches, and containment symbols.</li>
                 <li>Always check site legends for project-specific variations.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Circle with cross (lights), double circle (sockets), S in square (switches).</li>
                 <li><strong>Use:</strong> Legend to verify symbols, BS 7671 for standard meanings.</li>
@@ -264,11 +264,11 @@ const Module5Section1_3 = () => {
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 ">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-elec-yellow mb-1">Communication and Clarity</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Communication and Clarity</p>
                     <p className="text-base text-foreground mb-2"><strong>Universal understanding:</strong> Symbols provide a standardised language.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li>Clear communication across all electrical trades</li>
@@ -382,7 +382,7 @@ const Module5Section1_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Regulatory Compliance</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Regulatory Compliance</p>
                     <p className="text-base text-foreground mb-2"><strong>BS 7671 requirements:</strong> Standard symbols for all UK installations.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li>All drawings must use approved BS 7671 symbols</li>
@@ -427,7 +427,7 @@ const Module5Section1_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Site-Specific Adaptations</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Site-Specific Adaptations</p>
                     <p className="text-base text-foreground mb-2"><strong>Adapted symbols:</strong> Sites may modify symbols for clarity.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li>Arrows for cable run directions</li>
@@ -466,7 +466,7 @@ const Module5Section1_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Common Errors and Prevention</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Common Errors and Prevention</p>
                     <p className="text-base text-foreground mb-2"><strong>Symbol interpretation errors:</strong> Common mistakes and their consequences.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li>Not checking legends causes costly mistakes</li>

@@ -194,11 +194,11 @@ const Module5Section3_4 = () => {
             Construction projects involve multiple trades working alongside each other. Electrical installation must be carefully planned to avoid disrupting others, such as plasterers, carpenters, plumbers, or decorators. Poor coordination can cause delays, damage to work, and safety hazards. Minimising disruption ensures smoother progress for all trades and helps maintain good professional relationships.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   Poor trade coordination is responsible for up to 30% of construction delays and 20% of cost overruns, making effective collaboration essential for project success.
                 </p>
@@ -211,7 +211,7 @@ const Module5Section3_4 = () => {
               <strong>Real Impact:</strong> Well-coordinated projects show 40% fewer defects, 25% faster completion times, and significantly improved relationships between trades.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> CDM 2015 regulations require effective coordination between trades to ensure health, safety, and quality throughout construction projects.
               </p>
@@ -248,7 +248,7 @@ const Module5Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Project Management Benefits</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Project Management Benefits</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -394,7 +394,7 @@ const Module5Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">B</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Electrical vs Mechanical Services</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Electrical vs Mechanical Services</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -418,8 +418,8 @@ const Module5Section3_4 = () => {
                         </div>
                       </div>
                       
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Service Hierarchy</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Service Hierarchy</p>
                         <p className="text-xs sm:text-sm text-white">
                           Establish clear service hierarchy: gravity drainage (highest), pressurised water, HVAC ducts, cable trays, then individual cables (lowest). This prevents later conflicts over route priority.
                         </p>
@@ -434,7 +434,7 @@ const Module5Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">C</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Electrical vs Carpentry and Decoration</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Electrical vs Carpentry and Decoration</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -459,7 +459,7 @@ const Module5Section3_4 = () => {
                       </div>
                       
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Second Fix Coordination</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Second Fix Coordination</p>
                         <p className="text-xs sm:text-sm text-white">
                           Schedule electrical second fix after major carpentry and before final decoration. This minimises damage to finished work while ensuring electrical installations are properly integrated.
                         </p>
@@ -528,7 +528,7 @@ const Module5Section3_4 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Digital Planning Tools</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Digital Planning Tools</p>
                         <p className="text-xs sm:text-sm text-white">
                           Modern planning software with 4D scheduling capabilities can help visualise trade interactions over time, identifying potential conflicts before they occur on site.
                         </p>
@@ -636,7 +636,7 @@ const Module5Section3_4 = () => {
             <div className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                  <h4 className="font-medium text-red-700 dark:text-elec-yellow mb-3">Direct Consequences</h4>
+                  <h4 className="font-medium text-red-700 text-elec-yellow mb-3">Direct Consequences</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li><strong>Time Delays:</strong> Project schedule disruption and overruns</li>
                     <li><strong>Cost Increases:</strong> Rework, materials waste, extended site costs</li>
@@ -646,7 +646,7 @@ const Module5Section3_4 = () => {
                 </div>
 
                 <div className="rounded-lg p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
-                  <h4 className="font-medium text-orange-700 dark:text-elec-yellow mb-3">Indirect Consequences</h4>
+                  <h4 className="font-medium text-orange-700 text-elec-yellow mb-3">Indirect Consequences</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li><strong>Relationship Damage:</strong> Frustration and conflict between trades</li>
                     <li><strong>Reputation Impact:</strong> Reduced future work opportunities</li>
@@ -712,19 +712,19 @@ const Module5Section3_4 = () => {
               </div>
             </div>
 
-            <div className="rounded-lg p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
-              <h3 className="font-medium text-emerald-800 dark:text-emerald-200 mb-3">Digital Coordination Tools</h3>
+            <div className="rounded-lg p-4 bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20">
+              <h3 className="font-medium text-elec-yellow dark:text-elec-yellow mb-3">Digital Coordination Tools</h3>
               <div className="space-y-3">
                 <div>
-                  <p className="font-medium text-emerald-800 dark:text-emerald-200">Mobile Apps and Platforms:</p>
+                  <p className="font-medium text-elec-yellow dark:text-elec-yellow">Mobile Apps and Platforms:</p>
                   <p className="text-xs sm:text-sm text-white">Real-time communication tools, shared calendars, and progress tracking applications improve coordination efficiency.</p>
                 </div>
                 <div>
-                  <p className="font-medium text-emerald-800 dark:text-emerald-200">BIM (Building Information Modeling):</p>
+                  <p className="font-medium text-elec-yellow dark:text-elec-yellow">BIM (Building Information Modeling):</p>
                   <p className="text-xs sm:text-sm text-white">3D models help visualise trade interactions and identify conflicts before they occur on site.</p>
                 </div>
                 <div>
-                  <p className="font-medium text-emerald-800 dark:text-emerald-200">Digital Documentation:</p>
+                  <p className="font-medium text-elec-yellow dark:text-elec-yellow">Digital Documentation:</p>
                   <p className="text-xs sm:text-sm text-white">Cloud-based systems ensure all trades have access to current drawings, schedules, and updates.</p>
                 </div>
               </div>
@@ -793,14 +793,14 @@ const Module5Section3_4 = () => {
               </div>
             </div>
 
-            <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
               <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">Case Study 3: Hospital Renovation Multi-Trade Challenge</h3>
-              <p className="text-blue-700 dark:text-elec-yellow mb-3">
+              <p className="text-blue-700 text-elec-yellow mb-3">
                 During a hospital renovation, electrical, mechanical, and decoration trades needed to work simultaneously in occupied areas. Detailed hour-by-hour scheduling and noise control measures enabled work to continue without disrupting patient care or creating conflicts.
               </p>
               <div className="bg-blue-100 dark:bg-blue-900/40 p-3 rounded">
                 <p className="font-medium text-blue-800 dark:text-blue-200 mb-1">Key Strategies:</p>
-                <ul className="list-disc pl-5 text-sm text-blue-700 dark:text-elec-yellow">
+                <ul className="list-disc pl-5 text-sm text-blue-700 text-elec-yellow">
                   <li>Hour-by-hour detailed scheduling coordination</li>
                   <li>Noise and disruption control measures</li>
                   <li>Flexible working arrangements around patient needs</li>
@@ -825,9 +825,9 @@ const Module5Section3_4 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
-          <h2 className="text-lg sm:text-xl font-semibold text-emerald-800 dark:text-emerald-200 mb-4">Pocket Guide</h2>
-          <div className="space-y-2 text-emerald-700 dark:text-elec-yellow">
+        <Card className="mb-8 p-6 bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow dark:text-elec-yellow mb-4">Pocket Guide</h2>
+          <div className="space-y-2 text-elec-yellow text-elec-yellow">
             <p>✅ Review site programme regularly.</p>
             <p>✅ Sequence work with other trades.</p>
             <p>✅ Use coordination meetings to plan access.</p>

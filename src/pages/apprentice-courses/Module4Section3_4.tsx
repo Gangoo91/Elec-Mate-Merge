@@ -211,7 +211,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">PVC Conduit Tools</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">PVC Conduit Tools</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Fine-toothed hacksaw (24-32 TPI), PVC conduit cutter, rotary pipe cutter, mitre box for accurate angles.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Critical tip:</strong> Always support both sides of the cut to prevent cracking
@@ -224,7 +224,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Metal Conduit Tools</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Metal Conduit Tools</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Hacksaw with bi-metal blade, rotary pipe cutter, band saw (high-volume), reciprocating saw with metal blade.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Pro tip:</strong> Use cutting fluid to extend blade life and improve cut quality
@@ -237,7 +237,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Measurement Tools</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Measurement Tools</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Steel rule, engineer's square, permanent marker, measuring tape for accurate marking.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Accuracy:</strong> Measure twice, cut once - mistakes are costly to rectify
@@ -327,7 +327,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">External Deburring</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">External Deburring</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Use half-round file at 45° angle to chamfer outer edge. Run finger around edge - should be smooth to touch.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Test:</strong> If it's smooth to your finger, it's safe for cables
@@ -340,7 +340,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Internal Deburring</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Internal Deburring</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Insert round file or deburring tool, rotate to remove burrs. Visual inspection - no visible sharp edges or fragments.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Tools:</strong> Round file, tapered reamer, or dedicated deburring tool
@@ -353,7 +353,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Final Cable Test</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Final Cable Test</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Pass test cable through - should slide freely without snagging. Cable moves smoothly with no resistance points.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Gold standard:</strong> If the test cable passes easily, installation cables will too
@@ -385,7 +385,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Personal Protective Equipment</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Personal Protective Equipment</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Safety glasses for chip protection, work gloves for sharp edges, hearing protection with power tools.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Remember:</strong> Eye protection is mandatory - metal fragments can cause serious injury
@@ -398,7 +398,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Safe Working Practices</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Safe Working Practices</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Secure work at comfortable height, keep cutting area clear, never force tools - let them work.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Golden rule:</strong> If you're forcing it, you're doing it wrong
@@ -411,7 +411,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Tool Maintenance</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Tool Maintenance</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Keep blades sharp, clean tools after use, store safely. Dull tools require more force and are dangerous.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Efficiency:</strong> Sharp tools work faster and safer than dull ones
@@ -436,7 +436,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Cut Quality Verification</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Cut Quality Verification</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Check cuts are square and true, clean edges without damage, correct length as measured.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Standard:</strong> Cuts must fit neatly into couplings without gaps
@@ -449,7 +449,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Preparation Standards</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Preparation Standards</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Metal threads clean and free from swarf, chamfer applied where required, all debris removed.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>BS 7671:</strong> Installation must protect cables from mechanical damage
@@ -462,7 +462,7 @@ const Module4Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Final Documentation</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Final Documentation</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Record preparation methods used, note any non-standard procedures, maintain quality logs.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Traceability:</strong> Document your work for quality assurance and fault diagnosis
@@ -482,7 +482,7 @@ const Module4Section3_4 = () => {
             When cables were pulled, the insulation was nicked on a sharp edge, causing a fault during testing. 
             The conduit had to be dismantled, deburred, and re-pulled, costing an entire day of labour.
           </p>
-          <div className="rounded-lg p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500">
+          <div className="rounded-lg p-4 bg-gradient-to-r from-green-50 to-elec-yellow/5 border-l-4 border-green-500">
             <p className="font-medium text-green-800 mb-1">Lesson learned:</p>
             <p className="text-sm text-green-700">
               Proper preparation saves time and prevents costly rework. Always deburr thoroughly - 

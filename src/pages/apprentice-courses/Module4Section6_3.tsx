@@ -246,7 +246,7 @@ const Module4Section6_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Insulation Resistance Principles and Measurement</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Insulation Resistance Principles and Measurement</p>
                     <p className="text-base text-white mb-2"><strong>Definition and properties:</strong> The ability of insulating materials to resist current flow.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Measured in megohms (MΩ) representing millions of ohms resistance</li>
@@ -350,7 +350,7 @@ const Module4Section6_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Professional Testing Methodology and Equipment Protection</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Professional Testing Methodology and Equipment Protection</p>
                     <p className="text-base text-white mb-2"><strong>Pre-testing safety procedures:</strong> Essential preparation for safe and accurate testing.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Isolate circuit completely using main switch or appropriate protective device</li>
@@ -573,7 +573,7 @@ const Module4Section6_3 = () => {
             </div>
 
             <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-              <h3 className="font-medium text-elec-yellow dark:text-elec-yellow mb-3">Professional Standards</h3>
+              <h3 className="font-medium text-elec-yellow text-elec-yellow mb-3">Professional Standards</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white mb-2">Testing Excellence</p>
@@ -603,7 +603,7 @@ const Module4Section6_3 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Mistakes</h2>
           <div className="space-y-4">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-red-600 dark:text-elec-yellow mb-3">Testing Procedure Errors</h3>
+              <h3 className="font-medium text-red-600 text-elec-yellow mb-3">Testing Procedure Errors</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white mb-2">❌ Avoid These Mistakes:</p>
@@ -734,7 +734,7 @@ const Module4Section6_3 = () => {
             
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <h3 className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Safety Assurance</h3>
+                <h3 className="font-medium text-elec-yellow text-elec-yellow mb-2">Safety Assurance</h3>
                 <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Prevents electric shock hazards</li>
                   <li>Reduces fire risk from leakage</li>
@@ -752,7 +752,7 @@ const Module4Section6_3 = () => {
                 </ul>
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <h3 className="font-medium text-purple-600 dark:text-elec-yellow mb-2">Quality Outcomes</h3>
+                <h3 className="font-medium text-purple-600 text-elec-yellow mb-2">Quality Outcomes</h3>
                 <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Early fault detection</li>
                   <li>Reduced rework costs</li>
@@ -794,7 +794,7 @@ const Module4Section6_3 = () => {
               </ul>
             </div>
             <div className="space-y-3">
-              <h3 className="font-medium text-red-600 dark:text-elec-yellow">❌ DON'T</h3>
+              <h3 className="font-medium text-red-600 text-elec-yellow">❌ DON'T</h3>
               <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />

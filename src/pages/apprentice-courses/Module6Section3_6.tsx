@@ -246,7 +246,7 @@ const Module6Section3_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Multimeter</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Multimeter</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -316,7 +316,7 @@ const Module6Section3_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Insulation Resistance (IR) Tester</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Insulation Resistance (IR) Tester</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -459,7 +459,7 @@ const Module6Section3_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-3">Two-Pole Voltage Tester (GS38 compliant)</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Two-Pole Voltage Tester (GS38 compliant)</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -595,7 +595,7 @@ const Module6Section3_6 = () => {
 
         {/* Common Mistakes to Avoid */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-red-500/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-red-700 dark:text-elec-yellow mb-4">Common Mistakes to Avoid</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-red-700 text-elec-yellow mb-4">Common Mistakes to Avoid</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <h3 className="font-semibold text-white mb-3">Wrong Instrument Selection</h3>
@@ -644,7 +644,7 @@ const Module6Section3_6 = () => {
 
         {/* Best Practices */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-elec-yellow/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-emerald-700 dark:text-elec-yellow mb-4">Best Practices for Instrument Selection</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow text-elec-yellow mb-4">Best Practices for Instrument Selection</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <h3 className="font-semibold text-white mb-3">Before You Start</h3>
@@ -693,7 +693,7 @@ const Module6Section3_6 = () => {
 
         {/* Practical Guidance */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-elec-yellow/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-blue-700 dark:text-elec-yellow mb-4">Practical Guidance</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-blue-700 text-elec-yellow mb-4">Practical Guidance</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <h3 className="font-semibold text-white mb-3">Essential Guidelines</h3>
@@ -759,7 +759,7 @@ const Module6Section3_6 = () => {
             </div>
 
             <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-6 rounded-lg">
-              <h3 className="font-semibold text-red-700 dark:text-elec-yellow mb-3">Case Study 2: IR Testing Disaster</h3>
+              <h3 className="font-semibold text-red-700 text-elec-yellow mb-3">Case Study 2: IR Testing Disaster</h3>
               <p className="text-base text-white mb-3">
                 An apprentice was asked to test the insulation resistance of a new circuit. Without proper training, he connected the IR tester to a live circuit containing electronic equipment.
               </p>
@@ -772,7 +772,7 @@ const Module6Section3_6 = () => {
             </div>
 
             <div className="bg-card border border-elec-yellow/20 p-6 rounded-lg">
-              <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Case Study 3: The Right Tools Save the Day</h3>
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Case Study 3: The Right Tools Save the Day</h3>
               <p className="text-base text-white mb-3">
                 During an EICR inspection, an electrician noticed slightly high earth fault loop impedance readings. Using the correct loop impedance tester, he systematically tested each circuit.
               </p>
@@ -807,7 +807,7 @@ const Module6Section3_6 = () => {
           <div className="bg-card border border-elec-yellow/20 p-6 rounded-lg">
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Instrument Selection</h3>
+                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Instrument Selection</h3>
                 <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>✅ Multimeter = Diagnostics (voltage/current/resistance)</li>
                   <li>✅ IR Tester = Insulation quality (must be isolated)</li>
@@ -816,7 +816,7 @@ const Module6Section3_6 = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Never Use</h3>
+                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Never Use</h3>
                 <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>❌ Never use neon screwdrivers or voltage pens for proving dead</li>
                   <li>❌ Never use IR testers on live circuits</li>

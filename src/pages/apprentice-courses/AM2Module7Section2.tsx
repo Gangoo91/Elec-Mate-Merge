@@ -207,7 +207,7 @@ const AM2Module7Section2 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Brain className="w-4 h-4" />
             Module 7 – Section 2
           </div>
@@ -223,15 +223,15 @@ const AM2Module7Section2 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
                   CRITICAL: Managing Nerves is Essential for AM2 Success
                 </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
                   If nerves make you rush, skip safety procedures, or forget critical steps, marks are lost instantly. Safety-critical errors due to panic result in automatic failure.
                 </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
                   Assessors expect you to work safely and methodically under pressure - this is a core competency being tested in AM2.
                 </p>
               </div>
@@ -240,9 +240,9 @@ const AM2Module7Section2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -251,23 +251,23 @@ const AM2Module7Section2 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Explain how nerves can affect performance in AM2 and identify the risks if they are not managed
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Use practical strategies before and during the exam to control stress and stay focused
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply breathing, pacing, and positive routines to reduce anxiety and prevent panic
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Show professionalism under exam pressure by working safely and methodically
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Build confidence that nerves will not stop you demonstrating your competence
               </li>
             </ul>
@@ -275,9 +275,9 @@ const AM2Module7Section2 = () => {
         </Card>
 
         {/* Why Nerves Matter */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" />
               1. Why Nerves Matter in AM2
             </h2>
@@ -290,7 +290,7 @@ const AM2Module7Section2 = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-red-800 dark:text-red-200 mb-2 sm:mb-3 text-sm sm:text-base">Physical Effects:</h4>
-                  <ul className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow space-y-1">
                     <li>• Shaking hands make terminations sloppy or unsafe</li>
                     <li>• Sweating can affect grip on tools and instruments</li>
                     <li>• Increased heart rate affects fine motor control</li>
@@ -299,7 +299,7 @@ const AM2Module7Section2 = () => {
                 
                 <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-2 sm:mb-3 text-sm sm:text-base">Mental Effects:</h4>
-                  <ul className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow space-y-1">
                     <li>• Brain fog causes forgotten steps in safe isolation</li>
                     <li>• Memory lapses in GN3 test sequences</li>
                     <li>• Negative self-talk leads to loss of focus</li>
@@ -340,9 +340,9 @@ const AM2Module7Section2 = () => {
         />
 
         {/* Strategies to Reduce Nerves Before Exam */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               2. Strategies to Reduce Nerves Before the Exam
             </h2>
@@ -354,15 +354,15 @@ const AM2Module7Section2 = () => {
             <div className="space-y-6">
               {/* Strategy 1 */}
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
                 <div className="flex-1">
                   <h5 className="font-medium text-foreground mb-2">Preparation Builds Confidence</h5>
                   <p className="text-xs sm:text-sm text-muted-foreground mb-3">
                     Practise safe isolation daily and run through testing procedures until they feel automatic. The more natural the task feels, the less nerves will interfere.
                   </p>
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 rounded p-3 text-xs sm:text-sm">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded p-3 text-xs sm:text-sm">
                     <strong className="text-blue-800 dark:text-blue-200">Daily Practice Routine:</strong>
-                    <ul className="text-blue-700 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-blue-700 dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Safe isolation sequence every morning</li>
                       <li>• GN3 testing procedures until automatic</li>
                       <li>• Termination techniques with proper tools</li>
@@ -401,7 +401,7 @@ const AM2Module7Section2 = () => {
                   </p>
                   <div className="bg-purple-50 dark:bg-purple-950/20 rounded p-3 text-xs sm:text-sm">
                     <strong className="text-purple-800 dark:text-purple-200">Nutrition Plan:</strong>
-                    <ul className="text-purple-700 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-purple-700 dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Complex carbohydrates for sustained energy</li>
                       <li>• Avoid caffeine overdose or energy drinks</li>
                       <li>• Bring healthy snacks for breaks</li>
@@ -421,7 +421,7 @@ const AM2Module7Section2 = () => {
                   </p>
                   <div className="bg-orange-50 dark:bg-orange-950/20 rounded p-3 text-xs sm:text-sm">
                     <strong className="text-orange-800 dark:text-orange-200">Arrival Strategy:</strong>
-                    <ul className="text-orange-700 dark:text-emerald-400 mt-1 space-y-1">
+                    <ul className="text-orange-700 dark:text-elec-yellow mt-1 space-y-1">
                       <li>• Arrive 30 minutes early minimum</li>
                       <li>• Plan route and check travel times</li>
                       <li>• Have backup transport arrangements</li>
@@ -443,9 +443,9 @@ const AM2Module7Section2 = () => {
         />
 
         {/* Techniques During Exam */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Heart className="w-5 h-5" />
               3. Techniques During the Exam
             </h2>
@@ -456,15 +456,15 @@ const AM2Module7Section2 = () => {
 
             <div className="space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-3">
-                    <Lightbulb className="w-5 h-5 text-emerald-400 dark:text-emerald-400" />
+                    <Lightbulb className="w-5 h-5 text-elec-yellow dark:text-elec-yellow" />
                     <h4 className="font-medium text-blue-800 dark:text-blue-200 text-sm sm:text-base">Controlled Breathing</h4>
                   </div>
-                  <p className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 mb-3">
+                  <p className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow mb-3">
                     If panic rises, step back for 10 seconds, inhale slowly through your nose, exhale slowly through your mouth. This resets your focus.
                   </p>
-                  <div className="text-xs text-emerald-400 dark:text-emerald-400 font-medium">
+                  <div className="text-xs text-elec-yellow dark:text-elec-yellow font-medium">
                     4-7-8 Technique: Inhale for 4, hold for 7, exhale for 8
                   </div>
                 </div>
@@ -484,26 +484,26 @@ const AM2Module7Section2 = () => {
 
                 <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-3">
-                    <Brain className="w-5 h-5 text-purple-600 dark:text-emerald-400" />
+                    <Brain className="w-5 h-5 text-purple-600 dark:text-elec-yellow" />
                     <h4 className="font-medium text-purple-800 dark:text-purple-200 text-sm sm:text-base">Positive Self-Talk</h4>
                   </div>
-                  <p className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 mb-3">
+                  <p className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow mb-3">
                     Replace "I'm messing this up" with "I know the process, I've trained for this." Simple but stops panic spirals.
                   </p>
-                  <div className="text-xs text-purple-600 dark:text-emerald-400 font-medium">
+                  <div className="text-xs text-purple-600 dark:text-elec-yellow font-medium">
                     "I can do this safely and methodically"
                   </div>
                 </div>
 
                 <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-3">
-                    <Shield className="w-5 h-5 text-orange-600 dark:text-emerald-400" />
+                    <Shield className="w-5 h-5 text-orange-600 dark:text-elec-yellow" />
                     <h4 className="font-medium text-orange-800 dark:text-orange-200 text-sm sm:text-base">Ignore Others</h4>
                   </div>
-                  <p className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 mb-3">
+                  <p className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow mb-3">
                     Don't compare your speed with other candidates. The assessor only marks your work, not relative performance.
                   </p>
-                  <div className="text-xs text-orange-600 dark:text-emerald-400 font-medium">
+                  <div className="text-xs text-orange-600 dark:text-elec-yellow font-medium">
                     Focus on your own professional standard
                   </div>
                 </div>
@@ -513,9 +513,9 @@ const AM2Module7Section2 = () => {
         </Card>
 
         {/* Assessor Expectations */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Users className="w-5 h-5" />
               4. Assessor Expectations
             </h2>
@@ -535,9 +535,9 @@ const AM2Module7Section2 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3 text-sm sm:text-base">Safety Compliance:</h4>
-                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                     <li>• Keep to procedure (safe isolation, GN3 sequence) without skipping</li>
                     <li>• Never compromise safety due to time pressure</li>
                     <li>• Complete all safety-critical steps in correct order</li>
@@ -547,7 +547,7 @@ const AM2Module7Section2 = () => {
 
               <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3 text-sm sm:text-base">Time Management:</h4>
-                <p className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400">
+                <p className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow">
                   Complete sections within the set time without rushing. Quality and safety take priority over speed.
                 </p>
               </div>
@@ -564,19 +564,19 @@ const AM2Module7Section2 = () => {
         />
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
               Practical Guidance
             </h2>
             
-            <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4 mb-6">
+            <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4 mb-6">
               <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
                 <Lightbulb className="w-4 h-4" />
                 Think of AM2 Like a Real Job Handover
               </h4>
-              <p className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400">
+              <p className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow">
                 On-site, you may feel pressure from deadlines or customers, but you wouldn't skip earthing or rush unsafe terminations to finish quicker. Treat AM2 the same way — safe, steady, professional.
               </p>
             </div>
@@ -587,7 +587,7 @@ const AM2Module7Section2 = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-emerald-500 text-black rounded-full flex items-center justify-center text-xs font-bold">1</div>
+                    <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">1</div>
                     <div>
                       <h5 className="font-medium text-foreground text-xs sm:text-sm">Mental Checklists</h5>
                       <p className="text-xs text-muted-foreground">Make checklists in your head: safe isolation steps, test order. Stick to them regardless of nerves.</p>
@@ -595,7 +595,7 @@ const AM2Module7Section2 = () => {
                   </div>
                   
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-emerald-500 text-black rounded-full flex items-center justify-center text-xs font-bold">2</div>
+                    <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">2</div>
                     <div>
                       <h5 className="font-medium text-foreground text-xs sm:text-sm">If You Get Stuck</h5>
                       <p className="text-xs text-muted-foreground">Don't freeze. Move on, complete another part, and come back later.</p>
@@ -605,7 +605,7 @@ const AM2Module7Section2 = () => {
                 
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-emerald-500 text-black rounded-full flex items-center justify-center text-xs font-bold">3</div>
+                    <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">3</div>
                     <div>
                       <h5 className="font-medium text-foreground text-xs sm:text-sm">Record Results</h5>
                       <p className="text-xs text-muted-foreground">Write down test results as you go so you don't forget under pressure.</p>
@@ -613,7 +613,7 @@ const AM2Module7Section2 = () => {
                   </div>
                   
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-emerald-500 text-black rounded-full flex items-center justify-center text-xs font-bold">4</div>
+                    <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">4</div>
                     <div>
                       <h5 className="font-medium text-foreground text-xs sm:text-sm">Stay Hydrated</h5>
                       <p className="text-xs text-muted-foreground">Dehydration increases stress. Keep water with you throughout the assessment.</p>
@@ -626,9 +626,9 @@ const AM2Module7Section2 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Real-World Examples
             </h2>
@@ -637,18 +637,18 @@ const AM2Module7Section2 = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {/* Failure Examples */}
                 <div className="space-y-4">
-                  <h4 className="font-medium text-red-600 dark:text-emerald-400 text-sm sm:text-base">❌ Failure Examples:</h4>
+                  <h4 className="font-medium text-red-600 dark:text-elec-yellow text-sm sm:text-base">❌ Failure Examples:</h4>
                   
                   <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-3">
                     <h5 className="font-medium text-red-800 dark:text-red-200 text-xs sm:text-sm mb-2">Example 1:</h5>
-                    <p className="text-xs text-red-700 dark:text-emerald-400">
+                    <p className="text-xs text-red-700 dark:text-elec-yellow">
                       Candidate skipped re-proving tester in safe isolation due to nerves → instant fail.
                     </p>
                   </div>
                   
                   <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-3">
                     <h5 className="font-medium text-red-800 dark:text-red-200 text-xs sm:text-sm mb-2">Example 2:</h5>
-                    <p className="text-xs text-red-700 dark:text-emerald-400">
+                    <p className="text-xs text-red-700 dark:text-elec-yellow">
                       Candidate felt behind on time in the install section, rushed SWA glanding, armour not earthed → marks lost.
                     </p>
                   </div>
@@ -678,15 +678,15 @@ const AM2Module7Section2 = () => {
         </Card>
 
         {/* FAQ Section */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Frequently Asked Questions
             </h2>
             
             <div className="space-y-4">
-              <div className="border-l-4 border-emerald-500 pl-4">
+              <div className="border-l-4 border-elec-yellow pl-4">
                 <h5 className="font-medium text-foreground text-xs sm:text-sm mb-1">Q1: Will assessors fail me just for looking nervous?</h5>
                 <p className="text-xs text-muted-foreground">No — they only fail you if nerves cause unsafe or incomplete work.</p>
               </div>
@@ -715,9 +715,9 @@ const AM2Module7Section2 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Summary
             </h2>
@@ -754,11 +754,11 @@ const AM2Module7Section2 = () => {
               </div>
             </div>
             
-            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 mt-6">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4 mt-6">
               <div className="flex items-start gap-3">
-                <Target className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                <Target className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="font-medium text-emerald-400 mb-2">Key Takeaway:</h4>
+                  <h4 className="font-medium text-elec-yellow mb-2">Key Takeaway:</h4>
                   <p className="text-xs sm:text-xs sm:text-sm text-foreground">
                     NET assessors understand that you will feel nervous. What they're testing is your ability to work safely and professionally despite those nerves — just like you would on a real job site under pressure.
                   </p>

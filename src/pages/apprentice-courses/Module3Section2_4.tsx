@@ -445,8 +445,8 @@ const Module3Section2_4: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-                <p className="font-medium text-emerald-200 mb-2">Support spacing requirements</p>
-                <ul className="list-disc pl-4 space-y-1 text-emerald-200">
+                <p className="font-medium text-elec-yellow mb-2">Support spacing requirements</p>
+                <ul className="list-disc pl-4 space-y-1 text-elec-yellow">
                   <li><strong>Cable trays:</strong> 1.2-2.0m depending on width and load</li>
                   <li><strong>Cable baskets:</strong> 1.0-1.5m for typical data cable loads</li>
                   <li><strong>Ladder systems:</strong> 1.5-3.0m for heavy power cables</li>

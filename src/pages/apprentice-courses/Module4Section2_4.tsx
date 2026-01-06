@@ -331,7 +331,7 @@ const Module4Section2_4 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{error.error}</p>
+                      <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">{error.error}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">{error.description}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Example:</strong> {error.example} - <strong>Prevention:</strong> {error.prevention}
@@ -390,7 +390,7 @@ const Module4Section2_4 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{cause.cause}</p>
+                      <p className="font-semibold text-purple-600 text-elec-yellow mb-1">{cause.cause}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">{cause.description}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Consequences:</strong> {cause.consequences.join(', ')} - <strong>Solution:</strong> {cause.solution}
@@ -424,7 +424,7 @@ const Module4Section2_4 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">{practice.practice}</p>
+                      <p className="font-semibold text-orange-600 text-elec-yellow mb-1">{practice.practice}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">{practice.description}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Application:</strong> {practice.application} - <strong>Benefit:</strong> {practice.benefit}
@@ -465,7 +465,7 @@ const Module4Section2_4 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">{method.method}</p>
+                      <p className="font-semibold text-red-600 text-elec-yellow mb-1">{method.method}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">{method.description}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>When:</strong> {method.when} - <strong>Effectiveness:</strong> {method.effectiveness}
@@ -487,7 +487,7 @@ const Module4Section2_4 = () => {
               <div className="flex items-start gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                 <div className="flex-1">
-                  <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Impact of Measurement Errors</p>
+                  <p className="font-semibold text-red-600 text-elec-yellow mb-1">Impact of Measurement Errors</p>
                   <div className="text-xs sm:text-sm text-white space-y-2">
                     <p>• <strong>Project delays</strong> due to rework requirements</p>
                     <p>• <strong>Failed inspections</strong> from non-compliance issues</p>
@@ -504,7 +504,7 @@ const Module4Section2_4 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-8 p-6 bg-emerald-50 dark:bg-emerald-950/20 border-blue-200 dark:border-blue-800">
+        <Card className="mb-8 p-6 bg-elec-yellow/5 dark:bg-elec-yellow/10 border-blue-200 dark:border-blue-800">
           <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
             <Eye className="w-5 h-5" />
             Real-World Example

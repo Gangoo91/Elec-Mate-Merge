@@ -134,9 +134,9 @@ const Section4_3 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Trash2 className="h-8 w-8 text-emerald-400" />
+            <Trash2 className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 4.3
               </span>
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
@@ -153,8 +153,8 @@ const Section4_3 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Housekeeping:</strong> Clean, tidy, organised worksites prevent accidents.</li>
                 <li><strong>Safety first:</strong> Poor housekeeping causes trips, fires, and delays.</li>
@@ -163,8 +163,8 @@ const Section4_3 = () => {
                 <li><strong>Professional image:</strong> Clean sites impress clients and improve productivity.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Messy work areas, blocked exits, missing/damaged signs.</li>
                 <li><strong>Use:</strong> Tidy as you go, proper waste disposal, sign reporting systems.</li>
@@ -180,33 +180,33 @@ const Section4_3 = () => {
           <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand what housekeeping means in a construction or electrical setting</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise the dangers of poor housekeeping</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify different types of safety signage and what they mean</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply housekeeping and signage principles to real site situations</span>
             </li>
           </ul>
         </Card>
 
         {/* What Is Good Site Housekeeping? */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">What Is Good Site Housekeeping?</h2>
           </div>
           
           <div className="space-y-6">
-            <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
               <p className="font-medium text-blue-800 dark:text-blue-200 mb-3">
                 Housekeeping refers to how clean, tidy, and organised a worksite is — including how tools, materials, waste, and equipment are stored or managed.
               </p>
@@ -214,7 +214,7 @@ const Section4_3 = () => {
 
             <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
               <h4 className="font-semibold mb-2 text-red-800 dark:text-red-200">Poor housekeeping causes:</h4>
-              <ul className="text-red-700 dark:text-emerald-400 text-sm space-y-1">
+              <ul className="text-red-700 dark:text-elec-yellow text-sm space-y-1">
                 <li>• Trips on leads, tools, or packaging</li>
                 <li>• Fire risks from waste materials</li>
                 <li>• Blocked emergency exits</li>
@@ -234,9 +234,9 @@ const Section4_3 = () => {
         />
 
         {/* Good Housekeeping Practices */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">Good Housekeeping Practices</h2>
           </div>
           
@@ -244,7 +244,7 @@ const Section4_3 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-400" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow" />
                   Daily Practices
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -257,7 +257,7 @@ const Section4_3 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Settings className="h-4 w-4 text-emerald-400" />
+                  <Settings className="h-4 w-4 text-elec-yellow" />
                   Tool Management
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -270,7 +270,7 @@ const Section4_3 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-emerald-400" />
+                  <Shield className="h-4 w-4 text-elec-yellow" />
                   Safety Considerations
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -283,7 +283,7 @@ const Section4_3 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Trash2 className="h-4 w-4 text-emerald-400" />
+                  <Trash2 className="h-4 w-4 text-elec-yellow" />
                   Waste Management
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -317,14 +317,14 @@ const Section4_3 = () => {
                 <p className="text-yellow-700 dark:text-yellow-300 text-sm">Yellow with black symbol - Hazard present</p>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200">Mandatory Signs</h4>
-                <p className="text-blue-700 dark:text-emerald-400 text-sm">Blue with white symbol - Action required</p>
+                <p className="text-blue-700 dark:text-elec-yellow text-sm">Blue with white symbol - Action required</p>
               </div>
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-red-800 dark:text-red-200">Prohibition Signs</h4>
-                <p className="text-red-700 dark:text-emerald-400 text-sm">Red circle with line - Action not allowed</p>
+                <p className="text-red-700 dark:text-elec-yellow text-sm">Red circle with line - Action not allowed</p>
               </div>
 
               <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-4">
@@ -360,7 +360,7 @@ const Section4_3 = () => {
             <div className="grid gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-emerald-400" />
+                  <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Cable Management Issues
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -373,7 +373,7 @@ const Section4_3 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Trash2 className="h-4 w-4 text-emerald-400" />
+                  <Trash2 className="h-4 w-4 text-elec-yellow" />
                   Waste Accumulation
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -386,7 +386,7 @@ const Section4_3 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Settings className="h-4 w-4 text-emerald-400" />
+                  <Settings className="h-4 w-4 text-elec-yellow" />
                   Tool and Equipment Storage
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -417,7 +417,7 @@ const Section4_3 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <ClipboardList className="h-4 w-4 text-emerald-400" />
+                  <ClipboardList className="h-4 w-4 text-elec-yellow" />
                   Start of Day
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -431,7 +431,7 @@ const Section4_3 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Eye className="h-4 w-4 text-emerald-400" />
+                  <Eye className="h-4 w-4 text-elec-yellow" />
                   During Work
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -445,7 +445,7 @@ const Section4_3 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-emerald-400" />
+                  <MapPin className="h-4 w-4 text-elec-yellow" />
                   End of Day
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -459,7 +459,7 @@ const Section4_3 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-400" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow" />
                   Weekly Review
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -499,9 +499,9 @@ const Section4_3 = () => {
                 </ul>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200">PPE Requirement Signs</h4>
-                <ul className="text-blue-700 dark:text-emerald-400 text-sm space-y-1">
+                <ul className="text-blue-700 dark:text-elec-yellow text-sm space-y-1">
                   <li>• Hard hat required in designated areas</li>
                   <li>• Safety glasses must be worn</li>
                   <li>• Insulated gloves required near live equipment</li>
@@ -511,7 +511,7 @@ const Section4_3 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-red-800 dark:text-red-200">Emergency Information</h4>
-                <ul className="text-red-700 dark:text-emerald-400 text-sm space-y-1">
+                <ul className="text-red-700 dark:text-elec-yellow text-sm space-y-1">
                   <li>• Emergency shut-off switch locations</li>
                   <li>• First aid station identification</li>
                   <li>• Emergency contact numbers</li>
@@ -521,7 +521,7 @@ const Section4_3 = () => {
 
               <div className="bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-purple-800 dark:text-purple-200">Site-Specific Requirements</h4>
-                <ul className="text-purple-700 dark:text-emerald-400 text-sm space-y-1">
+                <ul className="text-purple-700 dark:text-elec-yellow text-sm space-y-1">
                   <li>• Permit to work area boundaries</li>
                   <li>• Hot work permit zones</li>
                   <li>• Confined space entry points</li>
@@ -582,13 +582,13 @@ const Section4_3 = () => {
         {/* FAQs */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Lightbulb className="h-5 w-5 text-emerald-400" />
+            <Lightbulb className="h-5 w-5 text-elec-yellow" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border pb-4 last:border-b-0">
-                <h3 className="font-semibold mb-2 text-emerald-400">{faq.question}</h3>
+                <h3 className="font-semibold mb-2 text-elec-yellow">{faq.question}</h3>
                 <p className="text-muted-foreground text-sm">{faq.answer}</p>
               </div>
             ))}
@@ -600,15 +600,15 @@ const Section4_3 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Good housekeeping prevents accidents and improves productivity</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Safety signage is a legal requirement with specific colour codes</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Everyone on site is responsible for maintaining standards</span>
             </li>
           </ul>

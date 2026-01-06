@@ -166,7 +166,7 @@ const AM2Module5Section5 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <RotateCcw className="w-4 h-4" />
             Module 5 – Section 5
           </div>
@@ -185,15 +185,15 @@ const AM2Module5Section5 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
                   CRITICAL: Re-testing is Mandatory for Every Rectification
                 </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
                   Forgetting to state the appropriate re-test after rectification will result in lost marks, even if your fault diagnosis was completely correct.
                 </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
                   Every fix must be verified — this demonstrates professional competence and compliance with BS 7671 Part 6.
                 </p>
               </div>
@@ -202,9 +202,9 @@ const AM2Module5Section5 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -213,23 +213,23 @@ const AM2Module5Section5 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 State why re-testing after rectification is mandatory for compliance
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Match each fault type to the correct verification test
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Carry out re-tests methodically and record results professionally
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Demonstrate complete diagnose → rectify → verify process
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Understand what assessors expect in re-testing documentation
               </li>
             </ul>
@@ -237,9 +237,9 @@ const AM2Module5Section5 = () => {
         </Card>
 
         {/* Why Re-testing Matters */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               1. Why Re-testing Matters
             </h2>
@@ -249,23 +249,23 @@ const AM2Module5Section5 = () => {
                 <h4 className="font-medium text-foreground mb-3">Essential Reasons for Re-testing:</h4>
                 <ul className="text-sm text-muted-foreground space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 font-bold">•</span>
+                    <span className="text-elec-yellow font-bold">•</span>
                     <span><strong>Safety Verification:</strong> Confirms the circuit is now safe to use</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 font-bold">•</span>
+                    <span className="text-elec-yellow font-bold">•</span>
                     <span><strong>Proof of Rectification:</strong> Demonstrates that fixes were carried out correctly</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 font-bold">•</span>
+                    <span className="text-elec-yellow font-bold">•</span>
                     <span><strong>Hidden Fault Detection:</strong> Prevents secondary faults being left in place</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 font-bold">•</span>
+                    <span className="text-elec-yellow font-bold">•</span>
                     <span><strong>BS 7671 Compliance:</strong> Satisfies Part 6 verification requirements</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 font-bold">•</span>
+                    <span className="text-elec-yellow font-bold">•</span>
                     <span><strong>Professional Documentation:</strong> Provides evidence for certification</span>
                   </li>
                 </ul>
@@ -283,9 +283,9 @@ const AM2Module5Section5 = () => {
         />
 
         {/* Re-testing Requirements by Fault Type */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <TestTube className="w-5 h-5" />
               2. Re-testing Requirements by Fault Type
             </h2>
@@ -345,9 +345,9 @@ const AM2Module5Section5 = () => {
         />
 
         {/* What Assessors Look For */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               3. What Assessors Look For
             </h2>
@@ -391,7 +391,7 @@ const AM2Module5Section5 = () => {
             <div className="space-y-4">
               <div className="border border-red-300 dark:border-red-700 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">Top Mistakes That Lose Marks:</h4>
-                <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="text-red-600 font-bold">✗</span>
                     <span><strong>Forgetting re-test:</strong> Stating rectification without mentioning verification</span>
@@ -427,7 +427,7 @@ const AM2Module5Section5 = () => {
         />
 
         {/* Professional Best Practices */}
-        <Card className="bg-card border-emerald-500/30 hover:border-emerald-500/30 transition-all duration-300 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 hover:border-elec-yellow/30 transition-all duration-300 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-blue-800 dark:text-blue-200 mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
@@ -437,7 +437,7 @@ const AM2Module5Section5 = () => {
             <div className="space-y-4">
               <div className="border border-blue-300 dark:border-blue-700 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">The "Fix and Verify" Formula:</h4>
-                <p className="text-sm text-blue-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-blue-700 dark:text-elec-yellow mb-3">
                   Always structure your answers as: <strong>Action + Re-test + Result + Compliance</strong>
                 </p>
                 <div className="bg-blue-100 dark:bg-blue-900/30 rounded p-3">
@@ -450,7 +450,7 @@ const AM2Module5Section5 = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="border border-blue-300 dark:border-blue-700 rounded-lg p-4">
                   <h5 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Time Management Tips:</h5>
-                  <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                     <li>• Plan rectification and re-test together</li>
                     <li>• Have test equipment ready before rectifying</li>
                     <li>• Document as you work, not afterwards</li>
@@ -459,7 +459,7 @@ const AM2Module5Section5 = () => {
                 
                 <div className="border border-blue-300 dark:border-blue-700 rounded-lg p-4">
                   <h5 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Documentation Standards:</h5>
-                  <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                     <li>• Use technical terminology consistently</li>
                     <li>• Include all relevant measurement units</li>
                     <li>• Reference BS 7671 compliance explicitly</li>
@@ -471,9 +471,9 @@ const AM2Module5Section5 = () => {
         </Card>
 
         {/* Real-World Applications */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
               6. Real-World Application Examples
             </h2>
@@ -491,10 +491,10 @@ const AM2Module5Section5 = () => {
               
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">✗ INCORRECT Example:</h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400 italic mb-2">
+                <p className="text-sm text-red-700 dark:text-elec-yellow italic mb-2">
                   "Open circuit detected in ring final circuit. Loose connection found at socket 4."
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400">
+                <p className="text-sm text-red-700 dark:text-elec-yellow">
                   "Fixed the connection." <em>(No re-test mentioned - marks lost!)</em>
                 </p>
               </div>
@@ -510,7 +510,7 @@ const AM2Module5Section5 = () => {
         </Card>
 
         {/* Advanced Re-testing Scenarios */}
-        <Card className="bg-card border-emerald-500/30 hover:border-emerald-500/30 transition-all duration-300 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 hover:border-elec-yellow/30 transition-all duration-300 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-purple-800 dark:text-purple-200 mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
@@ -520,10 +520,10 @@ const AM2Module5Section5 = () => {
             <div className="space-y-4">
               <div className="border border-purple-300 dark:border-purple-700 rounded-lg p-4">
                 <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Multiple Test Requirements:</h4>
-                <p className="text-sm text-purple-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-purple-700 dark:text-elec-yellow mb-3">
                   Some faults require multiple re-tests to fully verify rectification:
                 </p>
-                <ul className="text-sm text-purple-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-sm text-purple-700 dark:text-elec-yellow space-y-2">
                   <li>• <strong>Earth fault:</strong> IR test (L-E, N-E) + RCD operation test</li>
                   <li>• <strong>Damaged cable:</strong> Continuity + Insulation resistance + Zs</li>
                   <li>• <strong>Accessory replacement:</strong> Polarity + Functional operation + IR</li>
@@ -532,7 +532,7 @@ const AM2Module5Section5 = () => {
               
               <div className="border border-purple-300 dark:border-purple-700 rounded-lg p-4">
                 <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">System-Wide Verification:</h4>
-                <p className="text-sm text-purple-700 dark:text-emerald-400">
+                <p className="text-sm text-purple-700 dark:text-elec-yellow">
                   After major rectifications, consider testing related circuits to ensure no secondary effects were introduced.
                 </p>
               </div>
@@ -541,15 +541,15 @@ const AM2Module5Section5 = () => {
         </Card>
 
         {/* Professional Success Through Re-testing */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
               8. Professional Success Through Proper Re-testing
             </h2>
             
             <div className="space-y-4">
-              <div className="bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 border border-emerald-500/30 rounded-lg p-4">
+              <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-lg p-4">
                 <h4 className="font-medium text-foreground mb-3">Career Development Benefits:</h4>
                 <ul className="text-sm text-muted-foreground space-y-2">
                   <li>• <strong>Client confidence:</strong> Proper verification builds trust and repeat business</li>
@@ -571,9 +571,9 @@ const AM2Module5Section5 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Summary: The Re-testing Imperative
             </h2>
@@ -584,7 +584,7 @@ const AM2Module5Section5 = () => {
                 Every fix must be verified to ensure the circuit is safe and compliant.
               </p>
               
-              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
                 <h4 className="font-medium text-foreground mb-3">Remember the Golden Rules:</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• Every rectification requires an appropriate re-test</li>
@@ -603,9 +603,9 @@ const AM2Module5Section5 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-emerald-500/30">
+        <Card className="bg-card border-elec-yellow/30">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
               Test Your Knowledge
             </h2>
@@ -632,7 +632,7 @@ const AM2Module5Section5 = () => {
           </Button>
 
           {/* Next Section */}
-          <Button variant="outline" className="w-full h-auto p-4 bg-emerald-500 border-emerald-500 text-black hover:bg-emerald-500/80" asChild>
+          <Button variant="outline" className="w-full h-auto p-4 bg-elec-yellow border-elec-yellow text-black hover:bg-elec-yellow/80" asChild>
             <Link to="../section6">
               <div className="flex items-center justify-center gap-3">
                 <span className="text-base font-medium">Next: Quick Reference Sheet</span>

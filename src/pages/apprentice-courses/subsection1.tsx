@@ -178,7 +178,7 @@ const Section1_1 = () => {
             <div className="p-2 rounded-lg bg-card">
               <Shield className="w-6 h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 1.1.1
             </Badge>
           </div>
@@ -194,16 +194,16 @@ const Section1_1 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1 text-foreground">
                 <li>HASAWA is the main UK law covering workplace health, safety and welfare.</li>
                 <li>Sets out duties for employers, employees and others to prevent harm at work.</li>
                 <li>Provides the legal framework that underpins all workplace safety measures.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1 text-foreground">
                 <li><strong>Spot:</strong> RAMS, safety briefings, PPE requirements, risk assessments.</li>
                 <li><strong>Use:</strong> Safe systems of work, cooperation with procedures, reporting hazards.</li>
@@ -237,11 +237,11 @@ const Section1_1 = () => {
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow bg-card">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Purpose and Scope of HASAWA</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Purpose and Scope of HASAWA</p>
                     <p className="text-base text-foreground mb-2"><strong>Legislative framework:</strong> HASAWA sets the legal foundation for workplace safety.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li>Applies to all workplaces, employers, employees and others affected by work activities</li>
@@ -411,7 +411,7 @@ const Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">Daily Application of HASAWA Principles</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Daily Application of HASAWA Principles</p>
                     <p className="text-base text-foreground mb-2"><strong>Site induction and briefings:</strong> Starting work safely and informed.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li>Attend all site inductions covering site-specific hazards and procedures</li>
@@ -520,19 +520,19 @@ const Section1_1 = () => {
               <h3 className="font-medium text-foreground mb-3">Best Practice Tips</h3>
               <ul className="text-xs sm:text-sm text-foreground space-y-2">
                 <li className="flex items-start gap-2">
-                  <Target className="w-4 h-4 mt-0.5 text-emerald-400 flex-shrink-0" />
+                  <Target className="w-4 h-4 mt-0.5 text-elec-yellow flex-shrink-0" />
                   Always attend briefings and ask questions if unclear
                 </li>
                 <li className="flex items-start gap-2">
-                  <Target className="w-4 h-4 mt-0.5 text-emerald-400 flex-shrink-0" />
+                  <Target className="w-4 h-4 mt-0.5 text-elec-yellow flex-shrink-0" />
                   Keep safety training and competence records up to date
                 </li>
                 <li className="flex items-start gap-2">
-                  <Target className="w-4 h-4 mt-0.5 text-emerald-400 flex-shrink-0" />
+                  <Target className="w-4 h-4 mt-0.5 text-elec-yellow flex-shrink-0" />
                   Report hazards and near misses promptly and honestly
                 </li>
                 <li className="flex items-start gap-2">
-                  <Target className="w-4 h-4 mt-0.5 text-emerald-400 flex-shrink-0" />
+                  <Target className="w-4 h-4 mt-0.5 text-elec-yellow flex-shrink-0" />
                   Never bypass safety systems or take shortcuts
                 </li>
               </ul>

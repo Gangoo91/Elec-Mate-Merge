@@ -270,7 +270,7 @@ export default function Module5Section7_3() {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Safety and Communication</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Safety and Communication</p>
                     <p className="text-base text-white mb-2"><strong>Safety:</strong> Ensures critical safety information is passed between teams.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Identifies circuits that are isolated or energised</li>
@@ -383,7 +383,7 @@ export default function Module5Section7_3() {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Critical Handover Content</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Critical Handover Content</p>
                     <p className="text-base text-white mb-2"><strong>Outstanding Tasks:</strong> Work that needs completion.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Tasks started but not completed</li>
@@ -441,7 +441,7 @@ export default function Module5Section7_3() {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Consequences of Poor Documentation</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Consequences of Poor Documentation</p>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <p className="text-base text-white mb-2"><strong>Safety Risks:</strong></p>

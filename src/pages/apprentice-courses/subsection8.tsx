@@ -201,7 +201,7 @@ const Section2_4 = () => {
             <div className="p-2 rounded-lg bg-card">
               <Shield className="w-6 h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 2.4
             </Badge>
           </div>
@@ -217,8 +217,8 @@ const Section2_4 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Falls and atmospheric hazards are leading causes of construction fatalities.</li>
                 <li>Work at Height Regulations 2005: avoid, prevent, protect hierarchy.</li>
@@ -226,8 +226,8 @@ const Section2_4 = () => {
                 <li>Electrical work creates additional risks requiring specialized procedures and equipment.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Fall hazards, ladder defects, atmospheric risks, confined space entry points.</li>
                 <li><strong>Use:</strong> Height hierarchy, 3-point contact, gas detection, permit-to-work systems.</li>
@@ -262,11 +262,11 @@ const Section2_4 = () => {
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow bg-card">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Height Work Hierarchy</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Height Work Hierarchy</p>
                     <p className="text-base text-foreground mb-2"><strong>1. Avoid:</strong> Can the work be done from ground level? Use extension poles or design changes.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li><strong>2. Prevent:</strong> Use collective protection - platforms with guardrails, scaffolding, MEWPs</li>
@@ -306,7 +306,7 @@ const Section2_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-1">Confined Space Characteristics</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Confined Space Characteristics</p>
                     <p className="text-base text-foreground mb-2"><strong>Limited access:</strong> Restricted entry/exit making escape difficult in emergency.</p>
                     <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Atmospheric hazards:</strong> Oxygen deficiency (&lt;19.5%), toxic gases, explosive atmospheres</li>
@@ -377,12 +377,12 @@ const Section2_4 = () => {
         {/* Real World Scenario */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real world scenario</h2>
-          <div className="bg-emerald-50 dark:bg-blue-950/30 border-l-4 border-emerald-400 rounded-lg p-4">
-            <h4 className="text-blue-700 dark:text-emerald-400 font-semibold mb-2">Shopping Centre Installation</h4>
-            <p className="text-blue-700 dark:text-emerald-400 mb-4">
+          <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border-l-4 border-elec-yellow rounded-lg p-4">
+            <h4 className="text-blue-700 dark:text-elec-yellow font-semibold mb-2">Shopping Centre Installation</h4>
+            <p className="text-blue-700 dark:text-elec-yellow mb-4">
               Installing new lighting and power systems in a shopping centre involved both height work (4-metre atrium) and confined space entry (floor voids). Multiple safety challenges required coordinated solutions including scaffold towers, atmospheric testing, and standby personnel.
             </p>
-            <p className="text-blue-700 dark:text-emerald-400">
+            <p className="text-blue-700 dark:text-elec-yellow">
               <strong>Key lessons:</strong> Planning prevents incidents, proper equipment selection improves safety and efficiency, night work requires enhanced measures, multi-trade coordination essential.
             </p>
           </div>
@@ -417,7 +417,7 @@ const Section2_4 = () => {
               <li>• Emergency rescue procedures must be established before entry</li>
               <li>• Never work alone in either environment - communication is essential</li>
             </ul>
-            <p className="text-emerald-400 dark:text-emerald-400 font-semibold">
+            <p className="text-elec-yellow dark:text-elec-yellow font-semibold">
               Remember: Both environments require careful planning, proper equipment, and trained personnel. No job is worth rushing into without proper safety measures.
             </p>
           </div>
@@ -444,11 +444,11 @@ const Section2_4 = () => {
             </div>
             
             <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
-              <h4 className="text-red-700 dark:text-emerald-400 font-semibold mb-3 flex items-center gap-2">
+              <h4 className="text-red-700 dark:text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" />
                 DON'T
               </h4>
-              <ul className="space-y-2 text-red-700 dark:text-emerald-400">
+              <ul className="space-y-2 text-red-700 dark:text-elec-yellow">
                 <li>• Use chairs, boxes, or makeshift platforms</li>
                 <li>• Overreach or lean excessively from ladders</li>
                 <li>• Enter confined spaces without proper assessment</li>
@@ -464,8 +464,8 @@ const Section2_4 = () => {
         {/* Quick Reference Pocket Card */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick reference pocket card</h2>
-          <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <h4 className="text-blue-700 dark:text-emerald-400 font-semibold mb-3">Height Work & Confined Space Checklist</h4>
+          <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <h4 className="text-blue-700 dark:text-elec-yellow font-semibold mb-3">Height Work & Confined Space Checklist</h4>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h5 className="text-foreground font-semibold mb-2">Height Work Checklist:</h5>

@@ -208,7 +208,7 @@ const Module7Section5_5 = () => {
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base">Safe Isolation as the Default Approach</h3>
+                  <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-4 text-base">Safe Isolation as the Default Approach</h3>
                   
                   <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>Safe isolation is the foundation of electrical safety. Before investigating faults, the electrician should switch off the supply, lock it off where possible, and use a proving unit with a voltage indicator to confirm the circuit is dead. This removes the risk of shock, burns, and arc flash completely.</p>
@@ -298,7 +298,7 @@ const Module7Section5_5 = () => {
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base">Practical Guidance and Documentation</h3>
+                  <h3 className="font-semibold text-purple-600 text-elec-yellow mb-4 text-base">Practical Guidance and Documentation</h3>
                   
                   <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>The professional approach is always to ask: "Can this test be done with the power off?" If the answer is yes, isolation should take place immediately. Do not take shortcuts or assume live testing is quicker - the time saved is never worth the risk to life and safety.</p>
@@ -343,14 +343,14 @@ const Module7Section5_5 = () => {
 
             {/* Case Study 2 - Good practice */}
             <div className="rounded-lg p-4 sm:p-6 bg-elec-yellow/5 border border-elec-yellow/20">
-              <h3 className="font-semibold text-emerald-600 dark:text-elec-yellow mb-3 sm:mb-4 text-base">Case Study: Safe RCD Testing</h3>
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3 sm:mb-4 text-base">Case Study: Safe RCD Testing</h3>
               <p className="text-white mb-4">
                 On another site, an apprentice working under supervision needed to carry out RCD trip-time testing. The supervisor ensured all non-essential people were kept clear of the area, the apprentice wore full PPE, and GS38-compliant leads were used.
               </p>
               <p className="text-white mb-4">
                 The test was carried out safely, quickly, and in full compliance with regulations. The area was controlled, the equipment was appropriate, and the apprentice was closely supervised throughout.
               </p>
-              <p className="text-emerald-600 dark:text-elec-yellow font-medium">
+              <p className="text-elec-yellow text-elec-yellow font-medium">
                 Outcome: Essential testing completed safely with proper precautions and supervision.
               </p>
             </div>

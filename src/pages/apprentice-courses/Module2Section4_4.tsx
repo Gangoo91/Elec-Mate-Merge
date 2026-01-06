@@ -324,8 +324,8 @@ const Module2Section4_4 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Synchronous Speed Formula</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                      <p className="text-emerald-200 text-sm mb-2"><strong>Formula: ns = 120 × f ÷ poles</strong></p>
-                      <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-100">
+                      <p className="text-elec-yellow text-sm mb-2"><strong>Formula: ns = 120 × f ÷ poles</strong></p>
+                      <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                         <li><strong>ns:</strong> Synchronous speed in rpm</li>
                         <li><strong>f:</strong> Supply frequency in Hz</li>
                         <li><strong>poles:</strong> Number of magnetic poles (always even: 2, 4, 6, 8, etc.)</li>
@@ -350,8 +350,8 @@ const Module2Section4_4 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Induction Motor Slip</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                      <p className="text-emerald-200 text-sm mb-2"><strong>Slip Characteristics:</strong></p>
-                      <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-100">
+                      <p className="text-elec-yellow text-sm mb-2"><strong>Slip Characteristics:</strong></p>
+                      <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                         <li><strong>Definition:</strong> Difference between synchronous and actual speed</li>
                         <li><strong>Typical slip:</strong> 2-5% at full load for standard motors</li>
                         <li><strong>Calculation:</strong> Slip % = (ns - n)/ns × 100</li>
@@ -566,7 +566,7 @@ const Module2Section4_4 = () => {
             
             <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
               <h3 className="text-elec-yellow font-semibold mb-2">Import Equipment Frequency Issues</h3>
-              <p className="text-emerald-100 text-sm">
+              <p className="text-white text-sm">
                 <strong>Situation:</strong> 60Hz equipment from North America installed in UK facility without frequency compatibility check.
                 <br /><br />
                 <strong>Problem:</strong> Synchronous motors ran 17% slower (2500rpm vs 3000rpm), transformers ran cooler but with higher magnetizing current.

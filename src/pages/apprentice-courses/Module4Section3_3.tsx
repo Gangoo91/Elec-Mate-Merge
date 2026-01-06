@@ -225,7 +225,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Hand Bender (Conduit Bender)</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Hand Bender (Conduit Bender)</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Lever-operated tool with a bending shoe and handle for small-diameter conduit (typically 16–25 mm).</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Best for:</strong> Standard bends in metal conduit, precise angle control
@@ -238,7 +238,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Bending Spring</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Bending Spring</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Internal or external spring used to support PVC conduit during heating and bending.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Best for:</strong> PVC conduit support, preventing collapse during bending
@@ -251,7 +251,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Pipe Vice and Former</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Pipe Vice and Former</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Used for holding and shaping conduit manually during bending operations.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Best for:</strong> Securing conduit, manual forming operations
@@ -264,7 +264,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Hickey Bender</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Hickey Bender</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Short-handled bender for small adjustments and kick bends in metal conduit.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Best for:</strong> Fine adjustments, small corrections, kick bends
@@ -346,7 +346,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Marking</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Marking</p>
                     <p className="text-xs sm:text-sm text-white">Mark the start and end points of the bend before starting. Use a measuring tape and marker for accuracy.</p>
                   </div>
                 </div>
@@ -356,7 +356,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Forming</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Forming</p>
                     <p className="text-xs sm:text-sm text-white">Use a hand bender with smooth, steady pressure. Avoid jerky movements that can cause kinks.</p>
                   </div>
                 </div>
@@ -366,7 +366,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Adjustment</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Adjustment</p>
                     <p className="text-xs sm:text-sm text-white">Hickey benders can fine-tune bends without damaging the conduit. Make small corrections as needed.</p>
                   </div>
                 </div>
@@ -376,7 +376,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Checks</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Checks</p>
                     <p className="text-xs sm:text-sm text-white">Ensure bend radius meets BS 7671 requirements to protect cables and maintain installation integrity.</p>
                   </div>
                 </div>
@@ -405,7 +405,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Personal Protection</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Personal Protection</p>
                     <p className="text-xs sm:text-sm text-white">Wear gloves to protect hands from sharp edges and heated PVC. Use safety glasses when using heat guns.</p>
                   </div>
                 </div>
@@ -415,7 +415,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Work Position</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Work Position</p>
                     <p className="text-xs sm:text-sm text-white">Keep work at waist height for better control and reduced strain. Use proper lifting techniques.</p>
                   </div>
                 </div>
@@ -425,7 +425,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Controlled Force</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Controlled Force</p>
                     <p className="text-xs sm:text-sm text-white">Avoid forcing bends too quickly — this can damage the conduit and tools, and cause injury.</p>
                   </div>
                 </div>
@@ -445,7 +445,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Angle Verification</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Angle Verification</p>
                     <p className="text-xs sm:text-sm text-white">Use a level or protractor to confirm the angle meets specifications.</p>
                   </div>
                 </div>
@@ -455,7 +455,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Symmetry Check</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Symmetry Check</p>
                     <p className="text-xs sm:text-sm text-white">Check for symmetry in saddle bends and offsets to ensure professional appearance.</p>
                   </div>
                 </div>
@@ -465,7 +465,7 @@ const Module4Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Careful Adjustment</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Careful Adjustment</p>
                     <p className="text-xs sm:text-sm text-white">Small adjustments can be made, but avoid repeated bending in the same spot to prevent weakening.</p>
                   </div>
                 </div>
@@ -497,7 +497,7 @@ const Module4Section3_3 = () => {
                 This demonstrates how proper manual technique can deliver professional results even in challenging conditions.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
+            <div className="bg-gradient-to-br from-green-50 to-elec-yellow/5 dark:from-green-950/20 dark:to-elec-yellow/10 p-4 rounded-lg border border-green-200 dark:border-green-800">
               <div className="flex items-center gap-2 mb-2">
                 <CheckCircle className="w-4 h-4 text-green-600" />
                 <span className="font-medium text-green-700 dark:text-green-300">Lesson Learned</span>

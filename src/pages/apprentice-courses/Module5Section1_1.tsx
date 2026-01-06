@@ -270,7 +270,7 @@ const Module5Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Purpose and Function</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Purpose and Function</p>
                     <p className="text-base text-white mb-2"><strong>Reference point:</strong> Acts as a reference for contractors, installers, and inspectors.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Provides clear, unambiguous instructions for installation work</li>
@@ -360,7 +360,7 @@ const Module5Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Essential Specification Content</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Essential Specification Content</p>
                     <p className="text-base text-white mb-2"><strong>Materials to be used:</strong> Detailed specifications for all components.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Cables (type, size, insulation, armouring requirements)</li>
@@ -412,7 +412,7 @@ const Module5Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Critical Importance of Specification Compliance</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Critical Importance of Specification Compliance</p>
                     <p className="text-base text-white mb-2"><strong>Compliance:</strong> Ensures adherence to BS 7671 and building regulations.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Meets statutory requirements for electrical safety</li>
@@ -516,7 +516,7 @@ const Module5Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Serious Consequences of Non-Compliance</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Serious Consequences of Non-Compliance</p>
                     <p className="text-base text-white mb-2"><strong>Failed inspections:</strong> Regulatory and quality control failures.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Building Control rejection requiring rectification before occupation</li>

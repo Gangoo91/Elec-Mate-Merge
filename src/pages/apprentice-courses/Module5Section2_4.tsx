@@ -227,7 +227,7 @@ const Module5Section2_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">BS 7671 Safe Zone Requirements (Regulation 522.6.202)</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">BS 7671 Safe Zone Requirements (Regulation 522.6.202)</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -305,7 +305,7 @@ const Module5Section2_4 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Critical Safety Points</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Critical Safety Points</p>
                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li><strong>Never assume:</strong> Always check zone compliance before installation</li>
                           <li><strong>Document routes:</strong> Provide clear cable route drawings for future reference</li>
@@ -451,7 +451,7 @@ const Module5Section2_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Cable Selection for Different Applications</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Cable Selection for Different Applications</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -609,7 +609,7 @@ const Module5Section2_4 = () => {
             
             <div className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Safe Zone Compliance</p>
+                <p className="font-medium text-elec-yellow text-elec-yellow mb-2">Safe Zone Compliance</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Always route cables in safe zones</strong> unless mechanical protection is used</li>
                   <li>✅ <strong>Document cable routes:</strong> Provide drawings for future maintenance</li>
@@ -629,7 +629,7 @@ const Module5Section2_4 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-600 dark:text-elec-yellow mb-2">Derating and Calculations</p>
+                <p className="font-medium text-purple-600 text-elec-yellow mb-2">Derating and Calculations</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Check derating factors</strong> when grouping cables or running through insulation</li>
                   <li>✅ <strong>Use BS 7671 Appendix 4:</strong> Consult tables for correction factors</li>
@@ -639,7 +639,7 @@ const Module5Section2_4 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Special Applications</p>
+                <p className="font-medium text-orange-600 text-elec-yellow mb-2">Special Applications</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Use LSZH cables</strong> where fire safety is critical (e.g., schools, hospitals)</li>
                   <li>✅ <strong>Verify compliance:</strong> Using BS 7671 tables and manufacturer data</li>
@@ -660,7 +660,7 @@ const Module5Section2_4 = () => {
                 <Building2 className="w-4 h-4" />
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-2">The New-Build Site Cable Strike</p>
+                <p className="font-semibold text-orange-600 text-elec-yellow mb-2">The New-Build Site Cable Strike</p>
                 <p className="text-base text-white mb-3">
                   <strong>The Scenario:</strong> On a new-build site, an electrician ran T&E cables across a bathroom wall outside of safe zones. Later, when tiling, a worker drilled into the wall and hit a live cable. The installation should have either followed safe zones or used mechanical protection.
                 </p>
@@ -677,7 +677,7 @@ const Module5Section2_4 = () => {
                 </div>
                 
                 <div className="bg-card p-4 rounded-lg mb-3 border border-red-500/20">
-                  <p className="font-medium text-red-600 dark:text-elec-yellow mb-2">The Consequences:</p>
+                  <p className="font-medium text-red-600 text-elec-yellow mb-2">The Consequences:</p>
                   <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                     <li><strong>Cable strike incident:</strong> Live cable hit by drill during tiling work</li>
                     <li><strong>RCD tripped:</strong> Circuit lost power, affecting other bathroom circuits</li>
@@ -720,7 +720,7 @@ const Module5Section2_4 = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
             {/* Top Left - Safe Zone Rules */}
             <div className="bg-card p-5 rounded-lg border border-blue-200 dark:border-blue-800 h-full">
-              <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3 text-base">Safe Zone Rules</p>
+              <p className="font-semibold text-elec-yellow text-elec-yellow mb-3 text-base">Safe Zone Rules</p>
               <ul className="text-xs sm:text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 font-bold">✅</span>
@@ -747,7 +747,7 @@ const Module5Section2_4 = () => {
 
             {/* Top Right - Cable Selection */}
             <div className="bg-card p-5 rounded-lg border border-purple-200 dark:border-purple-800 h-full">
-              <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3 text-base">Cable Selection</p>
+              <p className="font-semibold text-purple-600 text-elec-yellow mb-3 text-base">Cable Selection</p>
               <ul className="text-xs sm:text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">🏠</span>
@@ -801,7 +801,7 @@ const Module5Section2_4 = () => {
 
             {/* Bottom Right - Derating & Protection */}
             <div className="bg-card p-5 rounded-lg border border-orange-200 dark:border-orange-800 h-full">
-              <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base">Derating & Protection</p>
+              <p className="font-semibold text-orange-600 text-elec-yellow mb-3 text-base">Derating & Protection</p>
               <ul className="text-xs sm:text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">📊</span>

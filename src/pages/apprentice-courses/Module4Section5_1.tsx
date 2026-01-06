@@ -223,7 +223,7 @@ const Module4Section5_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Building Regulations Part M Requirements</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Building Regulations Part M Requirements</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Socket outlet heights:</strong> 450mm to bottom edge from finished floor level in new builds.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Switch heights:</strong> 1200mm to centre from finished floor level for accessibility.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Special considerations:</strong></p>
@@ -244,7 +244,7 @@ const Module4Section5_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">BS 7671 Safety and Installation Requirements</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">BS 7671 Safety and Installation Requirements</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Safe zones for cable routes:</strong> Accessories must be positioned to maintain safe cable routes.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Environmental considerations:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -270,7 +270,7 @@ const Module4Section5_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Site-Specific Requirements and Client Specifications</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Site-Specific Requirements and Client Specifications</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Design drawings take precedence:</strong> Always follow project specifications over general guidelines.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Special environment considerations:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -406,7 +406,7 @@ const Module4Section5_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Cable Preparation and Stripping</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Cable Preparation and Stripping</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Conductor preparation:</strong> Strip insulation carefully to avoid nicking copper conductors.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Cable types and preparation:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -432,7 +432,7 @@ const Module4Section5_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Correct Terminal Connections</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Correct Terminal Connections</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>BS 7671 harmonised colours (post-2004):</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Live (Line): Brown conductor to L terminal</li>
@@ -463,7 +463,7 @@ const Module4Section5_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Spur Connections and Protection</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Spur Connections and Protection</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Unfused spur limitations:</strong> Maximum one single or one double socket per spur.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Fused spur requirements:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -508,7 +508,7 @@ const Module4Section5_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Pre-Energising Safety Tests</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Pre-Energising Safety Tests</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Continuity of protective conductors:</strong> Verify earth path integrity through all accessories.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Test sequence (BS 7671 Part 6):</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -534,7 +534,7 @@ const Module4Section5_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Functional Testing and RCD Verification</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Functional Testing and RCD Verification</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>RCD testing requirements:</strong> All socket circuits require 30mA RCD protection.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>RCD test procedure:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -561,7 +561,7 @@ const Module4Section5_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Visual Inspection and Professional Finish</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Visual Inspection and Professional Finish</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Visual inspection checklist:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>All accessories level, aligned, and securely fixed</li>

@@ -194,11 +194,11 @@ const Module5Section3_6 = () => {
             Health and safety must be built into planning from the very start of an electrical installation. Many risks can be avoided through proper preparation, safe systems of work, and compliance with legislation. Planning with safety in mind not only protects workers but also prevents costly delays and ensures legal compliance.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Critical Safety Statistics</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Critical Safety Statistics</p>
                 <p className="text-xs sm:text-sm text-white">
                   HSE data shows that electrical incidents cause 25% of all workplace fatalities, with 85% being preventable through proper planning and safe systems of work.
                 </p>
@@ -211,7 +211,7 @@ const Module5Section3_6 = () => {
               <strong>Legal Requirements:</strong> Employers have absolute duties under HASAWA 1974 to ensure worker safety, with unlimited fines and potential imprisonment for serious breaches.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Best Practice:</strong> Leading contractors achieve zero accidents through systematic safety planning, reducing project costs by 15% compared to reactive safety approaches.
               </p>
@@ -248,7 +248,7 @@ const Module5Section3_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Human and Moral Imperatives</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Human and Moral Imperatives</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -280,7 +280,7 @@ const Module5Section3_6 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Real Consequences</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Real Consequences</p>
                         <p className="text-xs sm:text-sm text-white">
                           In 2023, electrical incidents caused 67 workplace fatalities in the UK, with construction accounting for 45% of these deaths. Average compensation claims exceed £500,000.
                         </p>
@@ -313,7 +313,7 @@ const Module5Section3_6 = () => {
                   <p className="text-xs text-green-700 dark:text-green-300 mt-2">ROI: £4-6 for every £1 invested</p>
                 </div>
 
-                <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Operational Benefits</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Improved productivity</li>
@@ -322,7 +322,7 @@ const Module5Section3_6 = () => {
                     <li>Smoother project delivery</li>
                     <li>Reduced rework</li>
                   </ul>
-                  <p className="text-xs text-blue-700 dark:text-elec-yellow mt-2">Productivity: 15-25% improvement</p>
+                  <p className="text-xs text-blue-700 text-elec-yellow mt-2">Productivity: 15-25% improvement</p>
                 </div>
 
                 <div className="rounded-lg p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
@@ -334,7 +334,7 @@ const Module5Section3_6 = () => {
                     <li>Tender success</li>
                     <li>Market positioning</li>
                   </ul>
-                  <p className="text-xs text-purple-700 dark:text-elec-yellow mt-2">Contracts: 30% higher success rate</p>
+                  <p className="text-xs text-purple-700 text-elec-yellow mt-2">Contracts: 30% higher success rate</p>
                 </div>
               </div>
             </div>
@@ -352,7 +352,7 @@ const Module5Section3_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Health and Safety at Work etc. Act 1974 (HASAWA)</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Health and Safety at Work etc. Act 1974 (HASAWA)</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -414,7 +414,7 @@ const Module5Section3_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">⚡</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Key Requirements for Electrical Installation</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Key Requirements for Electrical Installation</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -535,7 +535,7 @@ const Module5Section3_6 = () => {
             
             <div className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Protection Principles</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Protection against electric shock</li>
@@ -572,7 +572,7 @@ const Module5Section3_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">⚠</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Electrical Hazards - High Risk Categories</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Electrical Hazards - High Risk Categories</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -656,7 +656,7 @@ const Module5Section3_6 = () => {
                     <li>Opening work near edges</li>
                     <li>Fragile surface work</li>
                   </ul>
-                  <p className="text-xs text-red-700 dark:text-elec-yellow mt-2">47% of construction fatalities</p>
+                  <p className="text-xs text-red-700 text-elec-yellow mt-2">47% of construction fatalities</p>
                 </div>
 
                 <div className="rounded-lg p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
@@ -707,7 +707,7 @@ const Module5Section3_6 = () => {
                     <li>Repetitive lifting and carrying</li>
                   </ul>
                   
-                  <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800 mt-auto">
+                  <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800 mt-auto">
                     <p className="text-xs sm:text-sm text-white">
                       <strong>TILE Assessment:</strong> Task, Individual, Load, Environment - comprehensive evaluation required for all manual handling operations.
                     </p>
@@ -747,7 +747,7 @@ const Module5Section3_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">📋</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Risk Assessment Process - 5 Steps to Safety</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Risk Assessment Process - 5 Steps to Safety</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -783,7 +783,7 @@ const Module5Section3_6 = () => {
                             <div className="bg-orange-200 dark:bg-orange-800 p-2 text-center rounded">High Risk<br/>5-8</div>
                             <div className="bg-red-200 dark:bg-red-800 p-2 text-center rounded">Very High<br/>9-15</div>
                           </div>
-                          <p className="text-xs text-purple-700 dark:text-elec-yellow mt-2">
+                          <p className="text-xs text-purple-700 text-elec-yellow mt-2">
                             Risk = Likelihood × Severity (Scale 1-5 each)
                           </p>
                         </div>
@@ -834,7 +834,7 @@ const Module5Section3_6 = () => {
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+              <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Essential Components of Method Statements</h4>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>

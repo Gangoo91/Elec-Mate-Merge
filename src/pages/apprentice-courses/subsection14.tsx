@@ -138,9 +138,9 @@ const Section4_1 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Shield className="h-8 w-8 text-emerald-400" />
+            <Shield className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 4.1
               </span>
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
@@ -157,8 +157,8 @@ const Section4_1 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Last Line:</strong> PPE is the final defense when other controls fail.</li>
                 <li><strong>Standards:</strong> Must meet BS EN standards for electrical protection.</li>
@@ -167,8 +167,8 @@ const Section4_1 = () => {
                 <li><strong>Training:</strong> Proper use and maintenance training is mandatory.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Live work, arc flash risks, overhead lines, confined spaces.</li>
                 <li><strong>Use:</strong> Risk assessments, method statements, job briefings.</li>
@@ -184,37 +184,37 @@ const Section4_1 = () => {
           <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand the role of PPE in the hierarchy of control</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify essential PPE items for different electrical work scenarios</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Know the relevant BS EN standards for electrical PPE</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand proper PPE inspection, maintenance, and replacement procedures</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise common PPE mistakes and how to avoid them</span>
             </li>
           </ul>
         </Card>
 
         {/* What is PPE */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">What is PPE?</h2>
           </div>
           
           <div className="space-y-4">
-            <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
               <p className="text-blue-800 dark:text-blue-200 font-medium">
                 Personal Protective Equipment (PPE) is specialised clothing or equipment worn by individuals to protect against safety and health risks. 
                 In electrical work, PPE serves as the last line of defence when other safety measures cannot completely eliminate risks.
@@ -248,9 +248,9 @@ const Section4_1 = () => {
         />
 
         {/* Common PPE for Electrical Work */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">Common PPE for Electrical Work</h2>
           </div>
           
@@ -258,7 +258,7 @@ const Section4_1 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <HardHat className="h-4 w-4 text-emerald-400" />
+                  <HardHat className="h-4 w-4 text-elec-yellow" />
                   Safety Helmet/Hard Hat
                 </h4>
                 <p className="text-sm text-muted-foreground mb-2">
@@ -273,7 +273,7 @@ const Section4_1 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Eye className="h-4 w-4 text-emerald-400" />
+                  <Eye className="h-4 w-4 text-elec-yellow" />
                   Safety Glasses/Goggles
                 </h4>
                 <p className="text-sm text-muted-foreground mb-2">
@@ -288,7 +288,7 @@ const Section4_1 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Wrench className="h-4 w-4 text-emerald-400" />
+                  <Wrench className="h-4 w-4 text-elec-yellow" />
                   Insulating Gloves
                 </h4>
                 <p className="text-sm text-muted-foreground mb-2">
@@ -303,7 +303,7 @@ const Section4_1 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-emerald-400" />
+                  <Shield className="h-4 w-4 text-elec-yellow" />
                   Safety Footwear
                 </h4>
                 <p className="text-sm text-muted-foreground mb-2">
@@ -330,10 +330,10 @@ const Section4_1 = () => {
             <div className="grid md:grid-cols-1 gap-4">
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-red-800 dark:text-red-200">Arc Flash Protection</h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                   Required when risk assessment identifies potential for arc flash incidents.
                 </p>
-                <ul className="text-xs text-red-600 dark:text-emerald-400 space-y-1">
+                <ul className="text-xs text-red-600 dark:text-elec-yellow space-y-1">
                   <li>• Arc-rated face shields (BS EN 61482)</li>
                   <li>• Flame-resistant clothing</li>
                   <li>• Full body coverage required</li>
@@ -343,10 +343,10 @@ const Section4_1 = () => {
 
               <div className="bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-purple-800 dark:text-purple-200">High Voltage Work</h4>
-                <p className="text-sm text-purple-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-purple-700 dark:text-elec-yellow mb-2">
                   Enhanced protection required for work above 1kV.
                 </p>
-                <ul className="text-xs text-purple-600 dark:text-emerald-400 space-y-1">
+                <ul className="text-xs text-purple-600 dark:text-elec-yellow space-y-1">
                   <li>• Class 2 or higher insulating gloves</li>
                   <li>• Insulating mats and blankets</li>
                   <li>• Arc flash suits</li>
@@ -415,7 +415,7 @@ const Section4_1 = () => {
                 <p className="text-orange-800 dark:text-orange-200 text-sm mb-2">
                   Arc flash protection is categorised by energy levels measured in calories per square centimetre (cal/cm²):
                 </p>
-                <ul className="text-orange-700 dark:text-emerald-400 text-xs space-y-1">
+                <ul className="text-orange-700 dark:text-elec-yellow text-xs space-y-1">
                   <li>• <strong>Category 1:</strong> 4 cal/cm² - Minimum for electrical work</li>
                   <li>• <strong>Category 2:</strong> 8 cal/cm² - Standard for most electrical installations</li>
                   <li>• <strong>Category 3:</strong> 25 cal/cm² - High-energy systems</li>
@@ -437,28 +437,28 @@ const Section4_1 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-red-800 dark:text-red-200">❌ Wrong Size/Fit</h4>
-                <p className="text-red-700 dark:text-emerald-400 text-sm">
+                <p className="text-red-700 dark:text-elec-yellow text-sm">
                   PPE that doesn't fit properly provides inadequate protection and can be dangerous.
                 </p>
               </div>
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-red-800 dark:text-red-200">❌ Skipping Inspection</h4>
-                <p className="text-red-700 dark:text-emerald-400 text-sm">
+                <p className="text-red-700 dark:text-elec-yellow text-sm">
                   Using damaged or worn PPE can be worse than using none at all.
                 </p>
               </div>
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-red-800 dark:text-red-200">❌ Wrong PPE for Task</h4>
-                <p className="text-red-700 dark:text-emerald-400 text-sm">
+                <p className="text-red-700 dark:text-elec-yellow text-sm">
                   Using inappropriate PPE for the specific electrical hazard present.
                 </p>
               </div>
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-red-800 dark:text-red-200">❌ Poor Maintenance</h4>
-                <p className="text-red-700 dark:text-emerald-400 text-sm">
+                <p className="text-red-700 dark:text-elec-yellow text-sm">
                   Not cleaning, storing, or maintaining PPE according to manufacturer instructions.
                 </p>
               </div>
@@ -479,9 +479,9 @@ const Section4_1 = () => {
         </div>
 
         {/* Real World Example */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">6</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">6</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">Real World Example</h2>
           </div>
           
@@ -513,13 +513,13 @@ const Section4_1 = () => {
         {/* FAQs */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Lightbulb className="h-5 w-5 text-emerald-400" />
+            <Lightbulb className="h-5 w-5 text-elec-yellow" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border pb-4 last:border-b-0">
-                <h4 className="font-semibold mb-2 text-emerald-400">{faq.question}</h4>
+                <h4 className="font-semibold mb-2 text-elec-yellow">{faq.question}</h4>
                 <p className="text-muted-foreground text-sm">{faq.answer}</p>
               </div>
             ))}
@@ -531,27 +531,27 @@ const Section4_1 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
           <ul className="space-y-2 text-foreground">
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>PPE is the last line of defence in the hierarchy of control</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Essential PPE includes safety boots, gloves, eye protection, and hard hats</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>All electrical PPE must meet relevant BS EN standards</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Pre-use inspection is mandatory for all PPE</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Arc flash protection may be required for specific high-risk tasks</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Proper training in PPE use and maintenance is legally required</span>
             </li>
           </ul>

@@ -262,7 +262,7 @@ const Module4Section6_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Legal and Professional Requirements</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Legal and Professional Requirements</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Provide legal proof of compliance</strong> with BS 7671 and statutory regulations - essential in legal proceedings</li>
                       <li><strong>Show the system has been tested</strong> to BS 7671 Part 6 standards with specific test values and dates</li>
@@ -367,7 +367,7 @@ const Module4Section6_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Official Documentation</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Official Documentation</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Electrical Installation Certificate (EIC)</strong> - for new installations, consumer unit replacements, and major alterations affecting the main protective bonding</li>
                       <li><strong>Minor Electrical Installation Works Certificate (MEIWC)</strong> - for additions like socket outlets, lighting points, or single circuit additions</li>
@@ -427,7 +427,7 @@ const Module4Section6_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Best Practice Recording</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Best Practice Recording</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Use the correct test forms</strong> issued by the IET (Institution of Engineering and Technology) - ensure current edition</li>
                       <li><strong>Enter results clearly</strong> in black ink or type - avoid pencil or erasable ink</li>
@@ -449,7 +449,7 @@ const Module4Section6_6 = () => {
                       </ul>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-emerald-50/50 dark:bg-blue-900/10 rounded border border-blue-200/30">
+                    <div className="mt-3 p-3 bg-elec-yellow/5/50 dark:bg-blue-900/10 rounded border border-blue-200/30">
                       <p className="text-xs sm:text-sm text-white mb-2"><strong>Digital vs. handwritten records:</strong></p>
                       <p className="text-xs text-white mb-2">
                         Digital test instruments with data logging capability can improve accuracy and reduce transcription errors. However, handwritten records remain valid provided they are clear, permanent, and properly signed.
@@ -478,7 +478,7 @@ const Module4Section6_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Legal Framework</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Legal Framework</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>BS 7671 Regulation 631.3</strong> – "The results of verification shall be recorded" - makes recording mandatory, not optional</li>
                       <li><strong>Electricity at Work Regulations 1989 Regulation 4(2)</strong> – Systems must be maintained to prevent danger</li>
@@ -543,7 +543,7 @@ const Module4Section6_6 = () => {
               </ul>
             </div>
             
-            <div className="rounded-lg p-4 bg-emerald-50/50 dark:bg-blue-900/10 border border-blue-200/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/5/50 dark:bg-blue-900/10 border border-blue-200/30">
               <h3 className="font-medium text-white mb-3">Record Keeping and Storage</h3>
               <ul className="text-xs sm:text-sm text-white space-y-2 list-disc pl-6">
                 <li><strong>Make multiple copies immediately:</strong> Original for client, copy for contractor, copy for competent person scheme</li>
@@ -609,7 +609,7 @@ const Module4Section6_6 = () => {
               </ul>
             </div>
             
-            <div className="rounded-lg p-4 bg-emerald-50/50 dark:bg-blue-900/10 border border-blue-200/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/5/50 dark:bg-blue-900/10 border border-blue-200/30">
               <h3 className="font-medium text-white mb-2">Case Study 2: The Missing Signature</h3>
               <p className="text-base text-white mb-3">
                 A domestic solar installation was completed with comprehensive test results recorded, but the apprentice who conducted the testing forgot to get the supervising electrician to sign the certificate before the supervisor left for another job.

@@ -201,11 +201,11 @@ const Module7Section1_5 = () => {
             Discovering an electrical fault creates immediate legal and professional responsibilities that cannot be ignored. The Electricity at Work Regulations 1989 (EAWR) place specific duties on anyone who works with electrical systems, making them personally accountable for electrical safety. Understanding these responsibilities is essential for every electrician, as non-compliance can result in prosecution, unlimited fines, and imprisonment.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   EAWR 1989 is criminal law with serious penalties. HSE prosecutions for electrical safety breaches result in average fines of £200,000+ and can include imprisonment. Personal liability means individuals face direct consequences for their decisions and actions.
                 </p>
@@ -218,7 +218,7 @@ const Module7Section1_5 = () => {
               <strong>Legal Reality:</strong> Courts take electrical safety seriously because of the potential for serious harm. Even well-intentioned electricians can face prosecution if they fail to follow proper procedures when dealing with faults.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Professional Standard:</strong> BS 7671 provides the technical standards, but EAWR 1989 makes compliance a legal requirement. Following proper procedures protects both safety and legal standing.
               </p>
@@ -260,7 +260,7 @@ const Module7Section1_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Legal Framework and Duties</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Legal Framework and Duties</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -343,7 +343,7 @@ const Module7Section1_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Safe Isolation Procedures</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Safe Isolation Procedures</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -432,7 +432,7 @@ const Module7Section1_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Documentation and Reporting Requirements</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Documentation and Reporting Requirements</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -468,7 +468,7 @@ const Module7Section1_5 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Legal Protection</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Legal Protection</p>
                         <p className="text-xs sm:text-sm text-white">
                           Proper documentation demonstrates that you acted responsibly and followed correct procedures. In legal proceedings, good records can be the difference between prosecution and exoneration.
                         </p>
@@ -501,7 +501,7 @@ const Module7Section1_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Consequences of Non-Compliance</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Consequences of Non-Compliance</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -535,7 +535,7 @@ const Module7Section1_5 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Critical Reality</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Critical Reality</p>
                         <p className="text-xs sm:text-sm text-white">
                           Courts increasingly impose severe penalties for electrical safety breaches because of the potential for serious harm. "I didn't know" or "I thought it would be OK" are not acceptable defences when dealing with electrical faults.
                         </p>

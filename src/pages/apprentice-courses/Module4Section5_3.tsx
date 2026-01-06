@@ -223,7 +223,7 @@ const Module4Section5_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Twin & Earth (T&E) Cable Construction</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Twin & Earth (T&E) Cable Construction</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Primary applications:</strong> Fixed wiring in domestic and commercial installations for socket and lighting circuits.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Construction details:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -250,7 +250,7 @@ const Module4Section5_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Single-Core Cable Systems</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Single-Core Cable Systems</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>System applications:</strong> Conduit and trunking installations where individual conductor routing is required.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Advantages of single-core systems:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -277,7 +277,7 @@ const Module4Section5_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Flexible Cables (Flex) Characteristics</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Flexible Cables (Flex) Characteristics</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Construction features:</strong> Stranded copper conductors for flexibility and movement capability.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Application categories:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -423,7 +423,7 @@ const Module4Section5_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Twin & Earth Termination Procedures</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Twin & Earth Termination Procedures</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Standard termination sequence:</strong> Systematic approach ensures consistent, safe connections.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Connection procedures:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -450,7 +450,7 @@ const Module4Section5_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Single-Core Cable Installation</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Single-Core Cable Installation</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Routing and management:</strong> Systematic approach to conductor routing within containment systems.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Installation procedures:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -477,7 +477,7 @@ const Module4Section5_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Flexible Cable Termination with Strain Relief</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Flexible Cable Termination with Strain Relief</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Mechanical protection:</strong> Essential to prevent strain on electrical connections.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Ferrule application:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -523,7 +523,7 @@ const Module4Section5_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Mechanical Security Testing</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Mechanical Security Testing</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Tug testing procedures:</strong> Verify mechanical integrity of all terminations.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Testing methodology:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -550,7 +550,7 @@ const Module4Section5_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Electrical Continuity and Polarity Verification</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Electrical Continuity and Polarity Verification</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Testing requirements:</strong> Verify electrical integrity and correct conductor identification.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Continuity testing:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -577,7 +577,7 @@ const Module4Section5_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">BS 7671 Compliance and Documentation</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">BS 7671 Compliance and Documentation</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Regulatory requirements:</strong> All terminations must provide mechanical and electrical security.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Compliance verification:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">

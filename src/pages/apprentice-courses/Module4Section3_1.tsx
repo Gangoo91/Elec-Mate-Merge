@@ -299,7 +299,7 @@ const Module4Section3_1 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{bend.type}</p>
+                      <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">{bend.type}</p>
                       <p className="text-xs sm:text-sm text-white mb-2"><strong>Purpose:</strong> {bend.purpose}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Applications:</strong> {bend.applications.join(", ")}
@@ -361,7 +361,7 @@ const Module4Section3_1 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{practice.practice}</p>
+                      <p className="font-semibold text-purple-600 text-elec-yellow mb-1">{practice.practice}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">{practice.description}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Application:</strong> {practice.application} - <strong>Benefit:</strong> {practice.benefit}
@@ -397,7 +397,7 @@ const Module4Section3_1 = () => {
             <Eye className="w-5 h-5" />
             Real-World Example
           </h3>
-          <p className="text-sm text-blue-700 dark:text-elec-yellow">
+          <p className="text-sm text-blue-700 text-elec-yellow">
             During an office refit, the electrical team had to run conduit above suspended ceilings, with multiple water pipes crossing the planned route. Instead of rerouting the entire run, the installer used double saddle bends, maintaining neatness and avoiding unnecessary joints. The run was installed in half the time compared to an alternative route.
           </p>
         </Card>

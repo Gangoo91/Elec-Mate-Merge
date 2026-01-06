@@ -227,7 +227,7 @@ const Module5Section2_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Essential Functions of Protective Devices</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Essential Functions of Protective Devices</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -433,8 +433,8 @@ const Module5Section2_3 = () => {
                         </div>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Enhanced Selection Criteria</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Enhanced Selection Criteria</p>
                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li><strong>Load analysis:</strong> Consider starting currents and load profiles</li>
                           <li><strong>Fault level assessment:</strong> Calculate prospective short-circuit current</li>
@@ -486,7 +486,7 @@ const Module5Section2_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">RCD Operation and Specifications</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">RCD Operation and Specifications</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -592,8 +592,8 @@ const Module5Section2_3 = () => {
                               <li><strong>Applications:</strong> Critical circuits, commercial installations</li>
                             </ul>
                           </div>
-                          <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                            <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-1">RCD + MCB (Split Protection)</p>
+                          <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                            <p className="font-medium text-elec-yellow text-elec-yellow mb-1">RCD + MCB (Split Protection)</p>
                             <ul className="text-xs text-white list-disc ml-4 space-y-1">
                               <li><strong>Advantages:</strong> Lower unit costs, shared RCD protection</li>
                               <li><strong>Disadvantage:</strong> Single RCD fault affects multiple circuits</li>
@@ -605,7 +605,7 @@ const Module5Section2_3 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Nuisance Tripping - Causes and Solutions</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Nuisance Tripping - Causes and Solutions</p>
                         <div className="grid md:grid-cols-2 gap-3">
                           <div>
                             <p className="text-sm font-medium text-white mb-1">Common Causes:</p>
@@ -631,7 +631,7 @@ const Module5Section2_3 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Critical Safety Points</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Critical Safety Points</p>
                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li><strong>Not a substitute:</strong> RCDs do not protect against overload or short circuits</li>
                           <li><strong>Test regularly:</strong> Monthly testing ensures continued protection</li>
@@ -673,8 +673,8 @@ const Module5Section2_3 = () => {
                   <li><strong>Outdoor supplies:</strong> Appropriate MCB + 30mA RCD (mandatory)</li>
                 </ul>
                 
-                <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800 mt-4">
-                  <p className="font-medium text-blue-700 dark:text-elec-yellow mb-1">Design Principle</p>
+                <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800 mt-4">
+                  <p className="font-medium text-blue-700 text-elec-yellow mb-1">Design Principle</p>
                   <p className="text-xs sm:text-sm text-white">
                     Each protection type addresses different risks: MCBs for overload/short circuit, RCDs for earth leakage/shock.
                   </p>
@@ -713,8 +713,8 @@ const Module5Section2_3 = () => {
               </div>
             </div>
 
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
-              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Key BS 7671 Tables for Device Selection:</p>
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
+              <p className="font-medium text-blue-700 text-elec-yellow mb-2">Key BS 7671 Tables for Device Selection:</p>
               <ul className="text-xs sm:text-sm text-white space-y-1">
                 <li><strong>Table 41.5:</strong> Maximum disconnection times for shock protection</li>
                 <li><strong>Appendix 3:</strong> Current-carrying capacity of cables</li>
@@ -799,7 +799,7 @@ const Module5Section2_3 = () => {
             
             <div className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Cable and MCB Compatibility</p>
+                <p className="font-medium text-elec-yellow text-elec-yellow mb-2">Cable and MCB Compatibility</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Always check:</strong> MCB rating must never exceed cable's current capacity</li>
                   <li>✅ <strong>Consider derating:</strong> Account for installation method and grouping</li>
@@ -819,7 +819,7 @@ const Module5Section2_3 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-600 dark:text-elec-yellow mb-2">Commercial/Industrial Considerations</p>
+                <p className="font-medium text-purple-600 text-elec-yellow mb-2">Commercial/Industrial Considerations</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Selectivity:</strong> Consider discrimination between protective devices</li>
                   <li>✅ <strong>Load analysis:</strong> Account for motor starting currents and inrush</li>
@@ -829,7 +829,7 @@ const Module5Section2_3 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-600 dark:text-elec-yellow mb-2">When in Doubt</p>
+                <p className="font-medium text-orange-600 text-elec-yellow mb-2">When in Doubt</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>BS 7671 tables:</strong> Use current-carrying capacity tables</li>
                   <li>✅ <strong>Manufacturer guidance:</strong> Follow device-specific instructions</li>
@@ -850,7 +850,7 @@ const Module5Section2_3 = () => {
                 <Building2 className="w-4 h-4" />
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-2">The Wrong MCB Type Mistake</p>
+                <p className="font-semibold text-orange-600 text-elec-yellow mb-2">The Wrong MCB Type Mistake</p>
                 <p className="text-base text-white mb-3">
                   <strong>The Scenario:</strong> In a small office installation, an electrician used a Type C MCB on a domestic lighting circuit. This caused nuisance tripping because Type C devices require higher fault currents to operate. The correct choice should have been a Type B MCB suitable for low domestic fault currents.
                 </p>
@@ -866,7 +866,7 @@ const Module5Section2_3 = () => {
                 </div>
                 
                 <div className="bg-card p-4 rounded-lg mb-3 border border-red-500/20">
-                  <p className="font-medium text-red-600 dark:text-elec-yellow mb-2">The Consequences:</p>
+                  <p className="font-medium text-red-600 text-elec-yellow mb-2">The Consequences:</p>
                   <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                     <li><strong>Nuisance tripping:</strong> MCB tripped during normal switching operations</li>
                     <li><strong>Slow fault clearance:</strong> Small faults took longer to clear</li>
@@ -906,7 +906,7 @@ const Module5Section2_3 = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
             {/* Top Left - MCB Quick Reference */}
             <div className="bg-card p-5 rounded-lg border border-blue-200 dark:border-blue-800 h-full">
-              <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3 text-base">MCB Quick Reference</p>
+              <p className="font-semibold text-elec-yellow text-elec-yellow mb-3 text-base">MCB Quick Reference</p>
               <ul className="text-xs sm:text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 font-bold">✅</span>
@@ -933,7 +933,7 @@ const Module5Section2_3 = () => {
 
             {/* Top Right - BS 7671 Key Regulations */}
             <div className="bg-card p-5 rounded-lg border border-purple-200 dark:border-purple-800 h-full">
-              <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3 text-base">BS 7671 Key Regulations</p>
+              <p className="font-semibold text-purple-600 text-elec-yellow mb-3 text-base">BS 7671 Key Regulations</p>
               <ul className="text-xs sm:text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">📋</span>
@@ -987,7 +987,7 @@ const Module5Section2_3 = () => {
 
             {/* Bottom Right - Selection Checklist */}
             <div className="bg-card p-5 rounded-lg border border-orange-200 dark:border-orange-800 h-full">
-              <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base">Selection Checklist</p>
+              <p className="font-semibold text-orange-600 text-elec-yellow mb-3 text-base">Selection Checklist</p>
               <ul className="text-xs sm:text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">🔍</span>

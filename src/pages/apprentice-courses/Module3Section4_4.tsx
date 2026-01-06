@@ -472,31 +472,31 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">Step-by-Step Process</p>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-2">
-                    <span className="bg-emerald-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                    <span className="bg-elec-yellow text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
                     <span>Strip outer sheath 50mm, inner sheath 25mm from cable end</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="bg-emerald-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                    <span className="bg-elec-yellow text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
                     <span>Cut armour wires to 35mm length, fan out evenly around cable</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="bg-emerald-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                    <span className="bg-elec-yellow text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
                     <span>Thread cable through gland body (backnut first)</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="bg-emerald-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                    <span className="bg-elec-yellow text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
                     <span>Position armour clamp cone over fanned armour wires</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="bg-emerald-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
+                    <span className="bg-elec-yellow text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
                     <span>Insert compression seal, ensuring correct orientation</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="bg-emerald-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">6</span>
+                    <span className="bg-elec-yellow text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">6</span>
                     <span>Tighten backnut to specified torque (typically 25-30 Nm)</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="bg-emerald-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">7</span>
+                    <span className="bg-elec-yellow text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">7</span>
                     <span>Test earth continuity between armour and earth terminal</span>
                   </div>
                 </div>
@@ -1224,27 +1224,27 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">Essential Tools</p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
                     <span>Adjustable spanners (various sizes)</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
                     <span>Torque wrench (0-50 Nm range)</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
                     <span>Cable stripping tools</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
                     <span>Junior hacksaw for armour cutting</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
                     <span>Wire brush for cleaning</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
                     <span>Digital callipers</span>
                   </div>
                 </div>
@@ -1405,7 +1405,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                 </div>
-                <div className="mt-3 p-3 bg-emerald-400/20 rounded">
+                <div className="mt-3 p-3 bg-elec-yellow/20 rounded">
                   <p className="font-medium text-yellow-200 mb-1">Action Required</p>
                   <p className="text-sm">Immediate disconnection if safe to do so, full joint replacement, thermal imaging post-repair, load testing.</p>
                 </div>

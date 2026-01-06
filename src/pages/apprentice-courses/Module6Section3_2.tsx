@@ -261,7 +261,7 @@ const Module6Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">What is GS38?</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">What is GS38?</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -315,7 +315,7 @@ const Module6Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">GS38 Safety Features</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">GS38 Safety Features</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -368,7 +368,7 @@ const Module6Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Dangers of Non-Compliant Equipment</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Dangers of Non-Compliant Equipment</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -462,7 +462,7 @@ const Module6Section3_2 = () => {
           
           <div className="space-y-6">
             {/* Equipment Selection Guide */}
-            <div className="bg-emerald-50/50 dark:bg-blue-900/20 p-5 rounded-lg border border-blue-200/50 dark:border-blue-800/50">
+            <div className="bg-elec-yellow/5/50 dark:bg-blue-900/20 p-5 rounded-lg border border-blue-200/50 dark:border-blue-800/50">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                 <Shield className="w-5 h-5 text-elec-yellow" />
                 Equipment Selection Criteria
@@ -650,8 +650,8 @@ const Module6Section3_2 = () => {
               </div>
             </div>
             
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800 mt-4">
-              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Professional Insight</p>
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800 mt-4">
+              <p className="font-medium text-blue-700 text-elec-yellow mb-2">Professional Insight</p>
               <p className="text-xs sm:text-sm text-white">
                 This incident demonstrates why GS38 compliance is not optional - it's a critical safety requirement that can prevent serious injury and save lives. The cost of compliant equipment is insignificant compared to the potential consequences of an accident.
               </p>
@@ -664,7 +664,7 @@ const Module6Section3_2 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-emerald-400 pl-4">
+              <div key={index} className="border-l-4 border-l-elec-yellow pl-4">
                 <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
                 <p className="text-sm text-white">{faq.answer}</p>
               </div>
@@ -673,7 +673,7 @@ const Module6Section3_2 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-elec-yellow/30">
+        <Card className="mb-8 p-6 bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border border-elec-yellow/30">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Shield className="w-5 h-5 text-elec-yellow" />
             Pocket Guide: GS38 Essentials
@@ -716,7 +716,7 @@ const Module6Section3_2 = () => {
           <div className="grid md:grid-cols-5 gap-4 mb-6">
             <div className="flex flex-col items-center text-center p-4 rounded-lg bg-[#121212] border border-border/30">
               <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 mb-3">
-                <Zap className="w-6 h-6 text-elec-yellow dark:text-elec-yellow" />
+                <Zap className="w-6 h-6 text-elec-yellow text-elec-yellow" />
               </div>
               <h4 className="font-semibold text-white text-sm mb-1">GS38 Purpose</h4>
               <p className="text-xs text-white">HSE safety guidance for test equipment</p>
@@ -732,7 +732,7 @@ const Module6Section3_2 = () => {
             
             <div className="flex flex-col items-center text-center p-4 rounded-lg bg-[#121212] border border-border/30">
               <div className="p-3 rounded-full bg-purple-100 dark:bg-purple-900/30 mb-3">
-                <FileText className="w-6 h-6 text-purple-600 dark:text-elec-yellow" />
+                <FileText className="w-6 h-6 text-purple-600 text-elec-yellow" />
               </div>
               <h4 className="font-semibold text-white text-sm mb-1">Compliance</h4>
               <p className="text-xs text-white">4mm max tip, CAT ratings</p>
@@ -740,7 +740,7 @@ const Module6Section3_2 = () => {
             
             <div className="flex flex-col items-center text-center p-4 rounded-lg bg-[#121212] border border-border/30">
               <div className="p-3 rounded-full bg-red-100 dark:bg-red-900/30 mb-3">
-                <AlertTriangle className="w-6 h-6 text-red-600 dark:text-elec-yellow" />
+                <AlertTriangle className="w-6 h-6 text-red-600 text-elec-yellow" />
               </div>
               <h4 className="font-semibold text-white text-sm mb-1">Risks</h4>
               <p className="text-xs text-white">Shock, arc flash, damage</p>

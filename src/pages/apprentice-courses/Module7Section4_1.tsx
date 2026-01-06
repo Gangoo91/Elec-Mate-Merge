@@ -272,7 +272,7 @@ const Module7Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base sm:text-lg">Information Gathering and Initial Assessment</h3>
+                    <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-4 text-base sm:text-lg">Information Gathering and Initial Assessment</h3>
                     
                     <p className="text-sm sm:text-base text-white mb-4">
                       Effective fault diagnosis begins with thorough information gathering. Understanding the circumstances and symptoms guides the entire diagnostic process and often reveals the fault location before any testing begins.
@@ -456,7 +456,7 @@ const Module7Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-orange-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Systematic Testing and Circuit Subdivision</h3>
+                    <h3 className="font-semibold text-orange-600 text-elec-yellow mb-4 text-base sm:text-lg">Systematic Testing and Circuit Subdivision</h3>
                     
                     <p className="text-sm sm:text-base text-white mb-4">
                       Once safety is established, systematic testing locates faults efficiently using logical subdivision methods rather than random testing approaches.
@@ -554,7 +554,7 @@ const Module7Section4_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Verification and Documentation</h3>
+                    <h3 className="font-semibold text-purple-600 text-elec-yellow mb-4 text-base sm:text-lg">Verification and Documentation</h3>
                     
                     <p className="text-sm sm:text-base text-white mb-4">
                       Completing the fault diagnosis process requires proper verification of repairs and comprehensive documentation for safety, compliance, and future reference.
@@ -654,7 +654,7 @@ const Module7Section4_1 = () => {
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-4">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-                <h3 className="font-medium text-emerald-600 dark:text-elec-yellow mb-2 flex items-center gap-2">
+                <h3 className="font-medium text-elec-yellow text-elec-yellow mb-2 flex items-center gap-2">
                   <CheckCircle className="w-4 h-4" />
                   Best Practices
                 </h3>
@@ -670,7 +670,7 @@ const Module7Section4_1 = () => {
             
             <div className="space-y-4">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <h3 className="font-medium text-red-600 dark:text-elec-yellow mb-2 flex items-center gap-2">
+                <h3 className="font-medium text-red-600 text-elec-yellow mb-2 flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4" />
                   Common Mistakes
                 </h3>

@@ -256,7 +256,7 @@ const Module6Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Why Zero Instruments?</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Why Zero Instruments?</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -315,7 +315,7 @@ const Module6Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Pre-Use Checks</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Pre-Use Checks</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -376,7 +376,7 @@ const Module6Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Zeroing a Continuity Tester or Multimeter</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Zeroing a Continuity Tester or Multimeter</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -615,7 +615,7 @@ const Module6Section3_3 = () => {
             </p>
           </div>
 
-          <div className="rounded-lg p-4 bg-emerald-950/20 border border-blue-700/30">
+          <div className="rounded-lg p-4 bg-elec-yellow/10 border border-blue-700/30">
             <p className="text-base text-white">
               <strong>Professional Insight:</strong> Always zero before use to avoid misdiagnosis and wasted work. A simple 30-second zeroing procedure can save hours of unnecessary troubleshooting.
             </p>
@@ -636,7 +636,7 @@ const Module6Section3_3 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border-elec-yellow/30">
+        <Card className="mb-8 p-6 bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border-elec-yellow/30">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <span>📋</span>
             Pocket Guide: Zeroing Essentials

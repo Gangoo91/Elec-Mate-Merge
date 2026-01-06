@@ -214,7 +214,7 @@ const Module7Section2_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">What Are Loose or Poor Connections?</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">What Are Loose or Poor Connections?</p>
                     <p className="text-xs sm:text-sm text-white mb-3">
                       A loose connection occurs when a conductor is not securely fastened within a terminal, or the contact surface is not clean and tight enough to carry current effectively. Poor connections can also result from incorrect termination, such as too much insulation stripped away, or multiple conductors crammed into a terminal not designed for them.
                     </p>
@@ -292,7 +292,7 @@ const Module7Section2_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Dangers and Consequences</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Dangers and Consequences</p>
                     <p className="text-xs sm:text-sm text-white mb-3">
                       Loose connections cause resistance, which generates heat according to I²R losses. The consequences escalate progressively:
                     </p>
@@ -334,7 +334,7 @@ const Module7Section2_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Detection, Correction, and Prevention</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Detection, Correction, and Prevention</p>
                     <p className="text-xs sm:text-sm text-white mb-3">
                       Early detection and proper correction techniques are essential for preventing serious consequences:
                     </p>
@@ -443,8 +443,8 @@ const Module7Section2_6 = () => {
                     </div>
                   </div>
                   
-                  <div className="mt-4 p-3 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
-                    <p className="font-medium text-emerald-700 dark:text-elec-yellow text-sm">
+                  <div className="mt-4 p-3 rounded-lg bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20">
+                    <p className="font-medium text-elec-yellow text-elec-yellow text-sm">
                       ✅ Lesson: Without quick response, this could have ignited the wall cavity, potentially causing a major fire in a crowded shopping centre. Quality installation and routine maintenance are essential fire prevention measures.
                     </p>
                   </div>
@@ -483,11 +483,11 @@ const Module7Section2_6 = () => {
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Professional Knowledge Summary</h2>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow border border-emerald-400/20">
+              <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow border border-elec-yellow/20">
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2">Definition & Physics:</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-2">Definition & Physics:</p>
                     <p className="text-xs sm:text-sm text-white">
                       Conductors not securely fastened create high resistance. Using P = I²R, even small resistance increases cause significant heat generation.
                     </p>
@@ -499,7 +499,7 @@ const Module7Section2_6 = () => {
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-2">Hidden Danger:</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-2">Hidden Danger:</p>
                     <p className="text-xs sm:text-sm text-white">
                       Can cause fires without tripping protective devices. Heat generation occurs without excess current draw.
                     </p>
@@ -511,7 +511,7 @@ const Module7Section2_6 = () => {
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-2">Progressive Nature:</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-2">Progressive Nature:</p>
                     <p className="text-xs sm:text-sm text-white">
                       Creates deterioration cycle: poor connection → resistance → heat → expansion → worse connection → more heat.
                     </p>
@@ -535,7 +535,7 @@ const Module7Section2_6 = () => {
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-2">Common Causes:</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-2">Common Causes:</p>
                     <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li>• Poor workmanship</li>
                       <li>• Incorrect torque settings</li>
@@ -545,11 +545,11 @@ const Module7Section2_6 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow bg-elec-yellow/10 border border-emerald-400/20">
+              <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow bg-elec-yellow/10 border border-elec-yellow/20">
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2">Prevention:</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-2">Prevention:</p>
                     <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li>• Calibrated torque tools</li>
                       <li>• Regular maintenance</li>
@@ -577,7 +577,7 @@ const Module7Section2_6 = () => {
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-2">Critical Professional Insight:</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-2">Critical Professional Insight:</p>
                     <p className="text-xs sm:text-sm text-white">
                       Loose connections are a leading cause of electrical fires, often developing slowly over years without obvious symptoms. The physics is unforgiving: poor connections create resistance, resistance creates heat, and heat causes damage that can ignite surrounding materials. Quality installation and regular maintenance are the only defences against this progressive threat to life and property.
                     </p>

@@ -235,7 +235,7 @@ const Module6Section2_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Systematic Inspection Benefits</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Systematic Inspection Benefits</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -271,8 +271,8 @@ const Module6Section2_6 = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Memory vs. Checklists</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Memory vs. Checklists</p>
                         <p className="text-xs sm:text-sm text-white">
                           Human memory is unreliable under pressure. Checklists provide systematic coverage regardless of experience level or working conditions.
                         </p>
@@ -305,7 +305,7 @@ const Module6Section2_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Essential Inspection Items</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Essential Inspection Items</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -342,7 +342,7 @@ const Module6Section2_6 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">BS 7671 Appendix 6</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">BS 7671 Appendix 6</p>
                         <p className="text-xs sm:text-sm text-white">
                           Use the model inspection schedule in BS 7671 Appendix 6 as the minimum standard for all visual inspections.
                         </p>
@@ -445,7 +445,7 @@ const Module6Section2_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Professional and Legal Benefits</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Professional and Legal Benefits</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -482,7 +482,7 @@ const Module6Section2_6 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Reputation and Trust</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Reputation and Trust</p>
                         <p className="text-xs sm:text-sm text-white">
                           Comprehensive records demonstrate professionalism and build client trust, leading to repeat business and referrals.
                         </p>
@@ -586,15 +586,15 @@ const Module6Section2_6 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="border-l-4 border-l-emerald-400 pl-4">
+            <div className="border-l-4 border-l-elec-yellow pl-4">
               <p className="font-medium text-white mb-1">Q: Can I make my own inspection checklist?</p>
               <p className="text-base text-white">A: Yes, but it must align with BS 7671's Appendix 6 requirements and cover all mandatory inspection items.</p>
             </div>
-            <div className="border-l-4 border-l-emerald-400 pl-4">
+            <div className="border-l-4 border-l-elec-yellow pl-4">
               <p className="font-medium text-white mb-1">Q: What if I spot a minor cosmetic issue (e.g., scratched faceplate)?</p>
               <p className="text-base text-white">A: Record only issues that affect safety or compliance. Cosmetic defects that don't impact safety shouldn't be documented.</p>
             </div>
-            <div className="border-l-4 border-l-emerald-400 pl-4">
+            <div className="border-l-4 border-l-elec-yellow pl-4">
               <p className="font-medium text-white mb-1">Q: Do inspection records need to be kept after handover?</p>
               <p className="text-base text-white">A: Yes — they form part of the installation's permanent documentation and must be retained for legal and maintenance purposes.</p>
             </div>
@@ -602,7 +602,7 @@ const Module6Section2_6 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-elec-yellow/30">
+        <Card className="mb-8 p-6 bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border border-elec-yellow/30">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide – Inspection & Records</h2>
           <div className="grid gap-3">
             <div className="flex items-center gap-2">
@@ -632,14 +632,14 @@ const Module6Section2_6 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Recap</h2>
           <div className="grid md:grid-cols-5 gap-4">
-            <div className="text-center p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700">
+            <div className="text-center p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700">
               <Shield className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
-              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-1">Systematic Coverage</p>
+              <p className="font-medium text-blue-700 text-elec-yellow mb-1">Systematic Coverage</p>
               <p className="text-xs text-white">Checklists ensure all items inspected</p>
             </div>
             <div className="text-center p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-700">
               <ClipboardCheck className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-              <p className="font-medium text-purple-700 dark:text-elec-yellow mb-1">BS 7671 Compliance</p>
+              <p className="font-medium text-purple-700 text-elec-yellow mb-1">BS 7671 Compliance</p>
               <p className="text-xs text-white">Appendix 6 inspection standards</p>
             </div>
             <div className="text-center p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700">
@@ -649,7 +649,7 @@ const Module6Section2_6 = () => {
             </div>
             <div className="text-center p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-700">
               <Shield className="w-8 h-8 text-orange-600 mx-auto mb-2" />
-              <p className="font-medium text-orange-700 dark:text-elec-yellow mb-1">Legal Protection</p>
+              <p className="font-medium text-orange-700 text-elec-yellow mb-1">Legal Protection</p>
               <p className="text-xs text-white">Professional due diligence</p>
             </div>
             <div className="text-center p-4 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-700">

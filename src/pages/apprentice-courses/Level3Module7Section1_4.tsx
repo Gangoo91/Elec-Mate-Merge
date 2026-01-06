@@ -108,7 +108,7 @@ const Level3Module7Section1_4 = () => {
             <div className="p-2 rounded-lg bg-card/10">
               <GraduationCap className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs md:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs md:text-sm">
               Section 7.1.4
             </Badge>
           </div>
@@ -128,15 +128,15 @@ const Level3Module7Section1_4 = () => {
           </div>
           <div className="grid gap-4 md:grid-cols-2 md:gap-6 text-sm md:text-base text-foreground">
             <div className="rounded-lg p-3 md:p-4 bg-card border border-border/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Apprenticeships combine workplace learning with college study.</li>
                 <li>NVQs demonstrate practical competence in real work situations.</li>
                 <li>AM2 assessment validates installation and testing skills.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 md:p-4 bg-card border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 md:p-4 bg-card border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Apprentice progress, NVQ portfolios, AM2 preparations.</li>
                 <li><strong>Use:</strong> Plan training progression, assess competence development.</li>

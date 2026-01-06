@@ -1,27 +1,55 @@
-
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { Zap, RotateCcw, AlertTriangle, Info, Shield, BookOpen, CheckCircle, XCircle, Calculator, Target } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
-import InfoBox from "@/components/common/InfoBox";
+import {
+  Zap,
+  RotateCcw,
+  AlertTriangle,
+  Info,
+  Shield,
+  BookOpen,
+  CheckCircle,
+  XCircle,
+  Calculator,
+  Target,
+  ChevronDown,
+} from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 
 const PFCCalculator = () => {
+  const config = CALCULATOR_CONFIG["protection"];
+
+  const [activeTab, setActiveTab] = useState<"calculator" | "guidance">("calculator");
   const [voltage, setVoltage] = useState("230");
   const [systemType, setSystemType] = useState("");
   const [zeValue, setZeValue] = useState("");
   const [r1r2Value, setR1r2Value] = useState("");
-  const [calculationMethod, setCalculationMethod] = useState("impedance");
+  const [showGuidance, setShowGuidance] = useState(false);
+  const [showStandards, setShowStandards] = useState(false);
   const [result, setResult] = useState<{
     pfcValue: number;
     assessmentLevel: string;
     recommendations: string[];
     breakingCapacity: string;
+    zsTotal: number;
   } | null>(null);
+
+  const systemTypeOptions = [
+    { value: "single-phase", label: "Single Phase (230V)" },
+    { value: "three-phase", label: "Three Phase (400V)" },
+  ];
 
   const calculatePFC = () => {
     if (!voltage || !zeValue || !r1r2Value || !systemType) {
@@ -31,20 +59,15 @@ const PFCCalculator = () => {
     const supplyVoltage = parseFloat(voltage);
     const ze = parseFloat(zeValue);
     const r1r2 = parseFloat(r1r2Value);
-    
+
     // Calculate fault loop impedance
     const zs = ze + r1r2;
-    
+
     // Calculate PFC using Ohm's law
     // For earth fault loop impedance, we use phase voltage (Uo = 230V)
     // regardless of single-phase or three-phase, as the fault path is phase-to-earth
-    // BS 7671: Ipf = Uo / Zs where Uo is nominal voltage to earth (230V)
-    let pfcValue: number;
-
-    // Use phase voltage (230V) for earth fault calculations
-    // Even for 3-phase systems, earth faults occur phase-to-earth at 230V
     const phaseVoltage = systemType === "three-phase" ? 230 : supplyVoltage;
-    pfcValue = phaseVoltage / zs;
+    const pfcValue = phaseVoltage / zs;
 
     // Assess the PFC level and provide recommendations
     let assessmentLevel: string;
@@ -56,7 +79,7 @@ const PFCCalculator = () => {
       recommendations = [
         "PFC is relatively low - standard MCBs should be adequate",
         "Check if protective device will operate within required time",
-        "Consider cable sizing and length factors"
+        "Consider cable sizing and length factors",
       ];
       breakingCapacity = "6kA MCBs typically adequate";
     } else if (pfcValue < 6000) {
@@ -64,7 +87,7 @@ const PFCCalculator = () => {
       recommendations = [
         "Moderate PFC - ensure MCBs have adequate breaking capacity",
         "Standard 6kA MCBs should be sufficient",
-        "Check manufacturer specifications for exact requirements"
+        "Check manufacturer specifications for exact requirements",
       ];
       breakingCapacity = "6kA MCBs recommended";
     } else if (pfcValue < 10000) {
@@ -72,7 +95,7 @@ const PFCCalculator = () => {
       recommendations = [
         "High PFC - use MCBs with higher breaking capacity",
         "Consider 10kA or higher rated protective devices",
-        "Additional protection coordination may be required"
+        "Additional protection coordination may be required",
       ];
       breakingCapacity = "10kA MCBs required";
     } else {
@@ -81,7 +104,7 @@ const PFCCalculator = () => {
         "Very high PFC - specialist equipment required",
         "Use MCBs with 16kA or higher breaking capacity",
         "Consider current limiting devices",
-        "Professional assessment recommended"
+        "Professional assessment recommended",
       ];
       breakingCapacity = "16kA or higher MCBs required";
     }
@@ -90,7 +113,8 @@ const PFCCalculator = () => {
       pfcValue,
       assessmentLevel,
       recommendations,
-      breakingCapacity
+      breakingCapacity,
+      zsTotal: zs,
     });
   };
 
@@ -99,617 +123,447 @@ const PFCCalculator = () => {
     setSystemType("");
     setZeValue("");
     setR1r2Value("");
-    setCalculationMethod("impedance");
     setResult(null);
   };
 
+  const isValid = systemType && zeValue && r1r2Value;
+
+  const getAssessmentColor = (level: string) => {
+    switch (level) {
+      case "Low":
+        return "text-green-400 border-green-500/30 bg-green-500/10";
+      case "Medium":
+        return "text-blue-400 border-blue-500/30 bg-blue-500/10";
+      case "High":
+        return "text-orange-400 border-orange-500/30 bg-orange-500/10";
+      case "Very High":
+        return "text-red-400 border-red-500/30 bg-red-500/10";
+      default:
+        return "text-white/60 border-white/10 bg-white/5";
+    }
+  };
+
+  const tabs = [
+    { key: "calculator" as const, label: "Calculator" },
+    { key: "guidance" as const, label: "Guidance" },
+  ];
+
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Prospective Fault Current Calculator</CardTitle>
+    <div className="space-y-4">
+      <CalculatorCard
+        category="protection"
+        title="Prospective Fault Current Calculator"
+        description="Calculate prospective fault current and assess protective device requirements"
+        badge="BS 7671"
+      >
+        {/* Tab Navigation */}
+        <div className="flex gap-1 p-1 rounded-xl bg-white/5 border border-white/10">
+          {tabs.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={cn(
+                "flex-1 h-10 rounded-lg text-sm font-medium transition-all touch-manipulation",
+                activeTab === tab.key
+                  ? "text-black"
+                  : "text-white/70 hover:text-white hover:bg-white/5"
+              )}
+              style={
+                activeTab === tab.key
+                  ? {
+                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }
+                  : undefined
+              }
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
-        <p className="text-sm text-muted-foreground">
-          Calculate prospective fault current and assess protective device requirements
-        </p>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <Tabs defaultValue="calculator" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="calculator">Calculator</TabsTrigger>
-            <TabsTrigger value="guidance">Guidance</TabsTrigger>
-          </TabsList>
 
-          <TabsContent value="calculator" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Input Section */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">System Parameters</h3>
-                
-                <MobileSelect value={systemType} onValueChange={setSystemType}>
-                  <MobileSelectTrigger label="System Type">
-                    <MobileSelectValue placeholder="Select system type" />
-                  </MobileSelectTrigger>
-                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-                    <MobileSelectItem value="single-phase">Single Phase (230V)</MobileSelectItem>
-                    <MobileSelectItem value="three-phase">Three Phase (400V)</MobileSelectItem>
-                  </MobileSelectContent>
-                </MobileSelect>
+        {/* Calculator Tab */}
+        {activeTab === "calculator" && (
+          <div className="space-y-4">
+            {/* System Parameters Header */}
+            <div className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-orange-400" />
+              <span className="text-sm font-medium text-white/80">System Parameters</span>
+            </div>
 
-                <div className="space-y-2">
-                  <MobileInput
-                    id="voltage"
-                    label="Supply Voltage (V)"
-                    type="text"
-                    inputMode="decimal"
-                    value={voltage}
-                    onChange={(e) => setVoltage(e.target.value)}
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                </div>
+            <CalculatorSelect
+              label="System Type"
+              value={systemType}
+              onChange={setSystemType}
+              options={systemTypeOptions}
+              placeholder="Select system type"
+            />
 
-                <div className="space-y-2">
-                  <MobileInput
-                    id="ze-value"
-                    label="Ze - External Loop Impedance (Ω)"
-                    type="text"
-                    inputMode="decimal"
-                    value={zeValue}
-                    onChange={(e) => setZeValue(e.target.value)}
-                    placeholder="e.g. 0.35"
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                </div>
+            <CalculatorInput
+              label="Supply Voltage"
+              unit="V"
+              type="text"
+              inputMode="decimal"
+              value={voltage}
+              onChange={setVoltage}
+              placeholder="e.g., 230"
+            />
 
-                <div className="space-y-2">
-                  <MobileInput
-                    id="r1r2-value"
-                    label="R1+R2 - Circuit Impedance (Ω)"
-                    type="text"
-                    inputMode="decimal"
-                    value={r1r2Value}
-                    onChange={(e) => setR1r2Value(e.target.value)}
-                    placeholder="e.g. 0.15"
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                </div>
+            <CalculatorInput
+              label="Ze - External Loop Impedance"
+              unit="Ω"
+              type="text"
+              inputMode="decimal"
+              value={zeValue}
+              onChange={setZeValue}
+              placeholder="e.g., 0.35"
+              hint="External earth loop impedance (supply authority)"
+            />
 
-                <div className="flex gap-2">
-                  <MobileButton onClick={calculatePFC} variant="elec" className="flex-1 min-h-[48px]">
-                    <Calculator className="mr-2 h-4 w-4" />
-                    Calculate PFC
-                  </MobileButton>
-                  <MobileButton onClick={resetCalculator} variant="elec-outline" className="min-h-[48px]">
-                    <RotateCcw className="h-4 w-4" />
-                  </MobileButton>
-                </div>
-              </div>
+            <CalculatorInput
+              label="R1+R2 - Circuit Impedance"
+              unit="Ω"
+              type="text"
+              inputMode="decimal"
+              value={r1r2Value}
+              onChange={setR1r2Value}
+              placeholder="e.g., 0.15"
+              hint="Circuit conductor resistance (line + protective)"
+            />
 
-              {/* Result Section */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Results</h3>
-                
-                {result ? (
-                  <div className="space-y-4 sm:space-y-6">
-                    {/* Primary Results */}
-                    <Card className="border-success/30 bg-success/5">
-                      <CardContent className="pt-4 sm:pt-6">
-                        <div className="space-y-4 sm:space-y-6">
-                          <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-                            <Badge 
-                              variant={
-                                result.assessmentLevel === 'Low' ? 'default' :
-                                result.assessmentLevel === 'Medium' ? 'secondary' :
-                                result.assessmentLevel === 'High' ? 'outline' :
-                                'destructive'
-                              } 
-                              className="text-sm font-medium w-fit"
-                            >
-                              {result.assessmentLevel} PFC Level
-                            </Badge>
-                            {result.assessmentLevel === 'Low' ? (
-                              <CheckCircle className="h-5 w-5 text-success" />
-                            ) : result.assessmentLevel === 'Very High' ? (
-                              <XCircle className="h-5 w-5 text-destructive" />
-                            ) : (
-                              <AlertTriangle className="h-5 w-5 text-warning" />
-                            )}
-                          </div>
-                          
-                          <div className="space-y-4">
-                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                              <span className="text-white text-sm sm:text-base">Zs (Total Impedance):</span>
-                              <span className="font-mono text-white font-medium text-lg">
-                                {(parseFloat(zeValue) + parseFloat(r1r2Value)).toFixed(3)} Ω
-                              </span>
-                            </div>
-                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 border-t border-border pt-4">
-                              <span className="text-white font-semibold text-sm sm:text-base">Prospective Fault Current:</span>
-                              <span className="font-mono text-white font-bold text-2xl sm:text-3xl">
-                                {result.pfcValue.toFixed(0)} A
-                              </span>
-                            </div>
-                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                              <span className="text-white text-sm sm:text-base">Required Breaking Capacity:</span>
-                              <span className="font-medium text-elec-yellow text-sm sm:text-base">{result.breakingCapacity}</span>
-                            </div>
-                          </div>
-
-                          {/* Safety Margin Assessment */}
-                          <div className="mt-6 p-4 bg-muted/10 rounded-lg border border-border">
-                            <div className="flex items-center gap-2 mb-3">
-                              <Shield className="h-4 w-4 text-elec-yellow" />
-                              <span className="font-medium text-white text-sm sm:text-base">Safety Margin Analysis</span>
-                            </div>
-                            <p className="text-white text-sm leading-relaxed">
-                              {result.pfcValue < 6000 
-                                ? "Adequate safety margin with standard equipment." 
-                                : result.pfcValue < 10000 
-                                ? "Moderate margin - ensure correct equipment specification."
-                                : "High current level - specialist assessment recommended."}
-                            </p>
-                          </div>
-
-                          {/* Key Assumptions */}
-                          <div className="mt-4 p-4 bg-muted/10 rounded-lg border border-border">
-                            <div className="flex items-center gap-2 mb-3">
-                              <Info className="h-4 w-4 text-elec-yellow" />
-                              <span className="font-medium text-white text-sm sm:text-base">Calculation Assumptions</span>
-                            </div>
-                            <ul className="text-white text-xs sm:text-sm space-y-1 leading-relaxed">
-                              <li>• Temperature factor: 20°C ambient</li>
-                              <li>• Voltage tolerance: ±6% (BS 7671)</li>
-                              <li>• Worst-case fault scenario considered</li>
-                              <li>• Supply impedance remains constant</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    {/* Installation Guidance */}
-                    <Card className="border-primary/30 bg-primary/5">
-                      <CardContent className="pt-4 sm:pt-6">
-                        <div className="space-y-4">
-                          <h4 className="text-white font-semibold flex items-center gap-2 text-sm sm:text-base">
-                            <Target className="h-4 w-4" />
-                            Next Steps & Recommendations
-                          </h4>
-                          <div className="space-y-3">
-                            {result.recommendations.map((rec, index) => (
-                              <div key={index} className="flex items-start gap-2 text-sm leading-relaxed">
-                                <span className="text-elec-yellow mt-1 flex-shrink-0">•</span>
-                                <span className="text-white">{rec}</span>
-                              </div>
-                            ))}
-                          </div>
-                          
-                          {/* Practical guidance based on PFC level */}
-                          <div className="mt-6 p-4 bg-primary/10 rounded-lg border border-primary/20">
-                            <p className="text-sm font-medium text-white mb-3">Practical Guidance:</p>
-                            <p className="text-sm text-white leading-relaxed">
-                              {result.pfcValue < 1000 
-                                ? "Standard installation practices apply. Verify protective device coordination and ensure adequate cable sizing for expected loads."
-                                : result.pfcValue < 6000
-                                ? "Standard MCBs adequate. Consider future load increases and ensure all downstream equipment is compatible with calculated fault levels."
-                                : result.pfcValue < 10000
-                                ? "Enhanced coordination required. Check manufacturer compliance certificates and consider discrimination studies for complex installations."
-                                : "Specialist assessment essential. May require current-limiting devices, enhanced earthing arrangements, or supply modification."}
-                            </p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    {/* Educational Content - Responsive Layout */}
-                    <div className="grid grid-cols-1 gap-4 sm:gap-6">
-                      <WhyThisMatters
-                        points={[
-                          "Ensures protective devices can safely interrupt fault currents without damage",
-                          "Prevents dangerous arcing and fire risk during fault conditions",
-                          "Critical for person protection - affects automatic disconnection times",
-                          "Required for equipment specification and installation compliance",
-                          "Determines earthing and bonding arrangement adequacy"
-                        ]}
-                        className="mb-0"
-                      />
-
-                      <InfoBox
-                        title="BS 7671 Requirements"
-                        icon={<BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />}
-                        points={[
-                          "Regulation 434.5.2: PFC must be determined at every relevant point",
-                          "Regulation 411.3.2: Maximum disconnection times must be verified",
-                          "Table 41.1: Maximum earth fault loop impedance values",
-                          "Section 612: Initial verification requirements include PFC measurement",
-                          "Appendix 3: Provides guidance on calculation methods and considerations"
-                        ]}
-                        className="mb-0"
-                        as="section"
-                      />
-
-                      <InfoBox
-                        title="Practical Guidance"
-                        icon={<Calculator className="h-5 w-5 sm:h-6 sm:w-6 text-accent" />}
-                        points={[
-                          "Measure Ze at origin using appropriate test equipment during dead tests",
-                          "Calculate R1+R2 from cable data or measure during continuity testing",
-                          "Apply correction factors for temperature and cable grouping where applicable",
-                          "Consider voltage variation (±6%) for worst-case scenarios",
-                          "Document all measurements and calculations for compliance records",
-                          "Review calculations when circuit modifications are made"
-                        ]}
-                        className="mb-0"
-                        as="section"
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <Card className="border-elec-yellow/20 bg-elec-yellow/5">
-                    <CardContent className="pt-4">
-                      <div className="text-center text-elec-yellow/80">
-                        <Zap className="h-8 w-8 mx-auto mb-2" />
-                        <p>Enter system parameters to calculate PFC</p>
-                      </div>
-                    </CardContent>
-                  </Card>
+            {/* Action Buttons */}
+            <div className="flex gap-2 pt-2">
+              <button
+                onClick={calculatePFC}
+                disabled={!isValid}
+                className={cn(
+                  "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
+                  isValid
+                    ? "text-black"
+                    : "bg-white/10 text-white/30 cursor-not-allowed"
                 )}
+                style={
+                  isValid
+                    ? {
+                        background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }
+                    : undefined
+                }
+              >
+                <Calculator className="h-5 w-5" />
+                Calculate PFC
+              </button>
+              <button
+                onClick={resetCalculator}
+                className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+              >
+                <RotateCcw className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Guidance Tab */}
+        {activeTab === "guidance" && (
+          <div className="space-y-4">
+            {/* Understanding PFC */}
+            <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/20">
+              <div className="flex items-center gap-2 mb-3">
+                <Zap className="h-4 w-4 text-orange-400" />
+                <span className="font-medium text-orange-300">Understanding PFC</span>
+              </div>
+              <p className="text-sm text-orange-200/80 mb-3">
+                Prospective Fault Current is the maximum current that would flow during a fault
+                with negligible impedance. It's essential for determining protective device
+                ratings.
+              </p>
+              <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20 font-mono text-sm">
+                <p className="text-orange-300 font-bold text-center">PFC = U₀ / Zs</p>
+                <div className="mt-2 space-y-1 text-xs text-orange-200/70">
+                  <p>U₀ = Nominal voltage to earth (230V)</p>
+                  <p>Zs = Earth fault loop impedance (Ze + R1 + R2)</p>
+                </div>
               </div>
             </div>
-          </TabsContent>
 
-          <TabsContent value="guidance">
-            <div className="space-y-6">
-              {/* Overview Section */}
-              <InfoBox
-                title="Understanding Prospective Fault Current (PFC)"
-                icon={<Zap className="h-5 w-5 text-elec-yellow" />}
-                as="section"
-              >
-                <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-                  <p className="text-elec-light">
-                    Prospective Fault Current is the maximum current that would flow during a fault with negligible impedance. 
-                    It's essential for determining protective device ratings and ensuring safe fault clearance.
-                  </p>
-                  
-                  <div className="bg-elec-card border border-elec-grey/30 rounded-lg p-4">
-                    <h4 className="font-semibold mb-4 flex items-center gap-2 text-elec-light text-base">
-                      <Calculator className="h-5 w-5 text-elec-yellow" />
-                      Calculation Formula
-                    </h4>
-                    <div className="space-y-4">
-                      <div className="font-mono bg-elec-grey/20 p-3 rounded border border-elec-grey/40 text-elec-light text-center font-bold">
-                        PFC = U₀ / Zs
-                      </div>
-                      <div className="space-y-2 text-elec-light text-sm">
-                        <div className="flex items-start gap-3">
-                          <span className="text-elec-yellow font-bold min-w-fit">U₀</span>
-                          <span>=</span>
-                          <span>Nominal voltage to earth (230V single phase, 400V three phase)</span>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="text-elec-yellow font-bold min-w-fit">Zs</span>
-                          <span>=</span>
-                          <span>Earth fault loop impedance (Ze + R1 + R2)</span>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="text-elec-yellow font-bold min-w-fit">Ze</span>
-                          <span>=</span>
-                          <span>External earth loop impedance (supply authority)</span>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="text-elec-yellow font-bold min-w-fit">R1+R2</span>
-                          <span>=</span>
-                          <span>Circuit conductor resistance (line + protective conductor)</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-warning/10 border border-warning/30 rounded p-3">
-                    <h5 className="text-warning font-medium text-sm mb-2 flex items-center gap-2">
-                      <AlertTriangle className="h-4 w-4" />
-                      Important Considerations
-                    </h5>
-                    <ul className="text-sm space-y-1">
-                      <li className="flex items-start gap-3">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                        <span>Account for voltage tolerance (±6% in UK)</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                        <span>Consider temperature effects on conductor resistance</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                        <span>Parallel earth paths may reduce actual fault current</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                        <span>Supply impedance can vary with network conditions</span>
-                      </li>
-                    </ul>
-                  </div>
+            {/* Measurement Guide */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <Target className="h-4 w-4 text-blue-400" />
+                  <span className="font-medium text-blue-300 text-sm">Ze Measurement</span>
                 </div>
-              </InfoBox>
+                <ul className="space-y-1 text-xs text-blue-200/80">
+                  <li>• At main earthing terminal</li>
+                  <li>• Installation isolated</li>
+                  <li>• Use loop tester</li>
+                  <li>• Record highest value</li>
+                </ul>
+              </div>
 
-              {/* Measurement and Testing */}
-              <InfoBox
-                title="Measurement and Testing Requirements"
-                icon={<Target className="h-5 w-5 text-elec-yellow" />}
-                as="section"
-              >
-                <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div className="bg-elec-card border border-primary/30 rounded p-4">
-                      <h4 className="font-semibold mb-3 text-elec-light text-sm">Ze Measurement</h4>
-                      <ul className="text-sm space-y-1">
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Measured at main earthing terminal</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Installation isolated from supply</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Use appropriate earth loop impedance tester</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Test between line and earth conductors</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Record highest reading if multiple phases</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-elec-card border border-accent/30 rounded p-4">
-                      <h4 className="font-semibold mb-3 text-elec-light text-sm">R1+R2 Measurement</h4>
-                      <ul className="text-sm space-y-1">
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Measured end-to-end during dead testing</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Test between line and cpc at distribution board</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Link line and cpc at furthest point</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Apply temperature correction if necessary</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="bg-success/10 border border-success/30 rounded p-3">
-                    <h5 className="text-success font-medium text-sm mb-2">Best Practice Tips</h5>
-                    <ul className="text-sm space-y-1">
-                      <li className="flex items-start gap-3">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                        <span>Always verify test equipment calibration before use</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                        <span>Record ambient temperature during testing</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                        <span>Check all connections are secure before testing</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                        <span>Consider parallel earth paths in fault current calculations</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                        <span>Document all readings and calculation methods used</span>
-                      </li>
-                    </ul>
-                  </div>
+              <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <Target className="h-4 w-4 text-purple-400" />
+                  <span className="font-medium text-purple-300 text-sm">R1+R2 Measurement</span>
                 </div>
-              </InfoBox>
-
-              {/* Device Selection Guide */}
-              <InfoBox
-                title="Protective Device Selection"
-                icon={<Shield className="h-5 w-5 text-elec-yellow" />}
-                as="section"
-              >
-                <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-                  <div className="overflow-x-auto">
-                    <div className="bg-elec-card border border-elec-grey/30 rounded-lg p-4">
-                      <h4 className="font-semibold mb-3 text-elec-light text-sm">Breaking Capacity Requirements</h4>
-                      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                        <div className="bg-success/10 border border-success/30 rounded p-3">
-                          <h5 className="text-success font-medium text-xs mb-1">Up to 1kA</h5>
-                          <p className="text-xs">3kA - 6kA MCB</p>
-                          <p className="text-xs text-muted-foreground">Domestic/small commercial</p>
-                        </div>
-                        <div className="bg-primary/10 border border-primary/30 rounded p-3">
-                          <h5 className="text-primary font-medium text-xs mb-1">1kA - 6kA</h5>
-                          <p className="text-xs">6kA MCB</p>
-                          <p className="text-xs text-muted-foreground">Most installations</p>
-                        </div>
-                        <div className="bg-warning/10 border border-warning/30 rounded p-3">
-                          <h5 className="text-warning font-medium text-xs mb-1">6kA - 10kA</h5>
-                          <p className="text-xs">10kA MCB</p>
-                          <p className="text-xs text-muted-foreground">Industrial/large commercial</p>
-                        </div>
-                        <div className="bg-red-500/20 border border-red-400/50 rounded p-3">
-                          <h5 className="text-red-400 font-medium text-xs mb-1">Above 10kA</h5>
-                          <p className="text-xs">16kA+ MCB/MCCB</p>
-                          <p className="text-xs text-muted-foreground">High fault current locations</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div className="bg-accent/10 border border-accent/30 rounded p-3">
-                      <h5 className="text-accent font-medium text-sm mb-2">Selection Factors</h5>
-                      <ul className="text-sm space-y-1">
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Breaking capacity must exceed calculated PFC</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Consider safety margin (typically 25-50%)</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Account for network changes and load growth</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Verify manufacturer specifications</span>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div className="bg-red-500/20 border border-red-400/50 rounded p-3">
-                      <h5 className="text-red-400 font-medium text-sm mb-2">Common Pitfalls</h5>
-                      <ul className="text-sm space-y-1">
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Using outdated Ze values from suppliers</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Ignoring cable temperature effects</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Inadequate breaking capacity margins</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span>Not considering parallel earth paths</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </InfoBox>
-
-              {/* Regulatory Compliance */}
-              <InfoBox
-                title="BS 7671 Compliance Requirements"
-                icon={<BookOpen className="h-5 w-5 text-elec-yellow" />}
-                as="section"
-              >
-                <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div className="bg-primary/10 border border-primary/30 rounded p-3">
-                      <h5 className="text-primary font-medium text-sm mb-2">Design Stage Requirements</h5>
-                      <ul className="text-sm space-y-1">
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span><strong>Regulation 434.5.2:</strong> PFC must be determined at every relevant point</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span><strong>Regulation 411.3.2:</strong> Maximum disconnection times must be achieved</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span><strong>Section 312:</strong> Protective device coordination requirements</span>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div className="bg-accent/10 border border-accent/30 rounded p-3">
-                      <h5 className="text-accent font-medium text-sm mb-2">Verification Requirements</h5>
-                      <ul className="text-sm space-y-1">
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span><strong>Section 612:</strong> Initial verification must include PFC verification</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span><strong>Table 61:</strong> Minimum test requirements and acceptance criteria</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                          <span><strong>Regulation 612.11:</strong> Earth fault loop impedance testing requirements</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="bg-warning/10 border border-warning/30 rounded p-3">
-                    <h5 className="text-warning font-medium text-sm mb-2">Documentation Requirements</h5>
-                    <div className="grid gap-3 sm:grid-cols-3">
-                      <div>
-                        <h6 className="text-elec-yellow font-medium text-xs mb-1">Design Records</h6>
-                        <ul className="text-xs space-y-0.5">
-                          <li className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                            <span>PFC calculations</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                            <span>Device specifications</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                            <span>Safety margins applied</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h6 className="text-elec-yellow font-medium text-xs mb-1">Test Results</h6>
-                        <ul className="text-xs space-y-0.5">
-                          <li className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                            <span>Ze measurements</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                            <span>R1+R2 values</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                            <span>PFC verification</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h6 className="text-elec-yellow font-medium text-xs mb-1">Certificates</h6>
-                        <ul className="text-xs space-y-0.5">
-                          <li className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                            <span>EIC compliance</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                            <span>Device certifications</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                            <span>Test certificates</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </InfoBox>
+                <ul className="space-y-1 text-xs text-purple-200/80">
+                  <li>• End-to-end during dead test</li>
+                  <li>• Link at furthest point</li>
+                  <li>• Test between line & cpc</li>
+                  <li>• Apply temp correction</li>
+                </ul>
+              </div>
             </div>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+
+            {/* Breaking Capacity Guide */}
+            <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <div className="flex items-center gap-2 mb-3">
+                <Shield className="h-4 w-4 text-blue-400" />
+                <span className="font-medium text-blue-300">Breaking Capacity Requirements</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <p className="text-green-300 font-medium text-xs">Up to 1kA</p>
+                  <p className="text-green-200/70 text-xs">3-6kA MCB • Domestic</p>
+                </div>
+                <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                  <p className="text-blue-300 font-medium text-xs">1kA - 6kA</p>
+                  <p className="text-blue-200/70 text-xs">6kA MCB • Most installations</p>
+                </div>
+                <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                  <p className="text-orange-300 font-medium text-xs">6kA - 10kA</p>
+                  <p className="text-orange-200/70 text-xs">10kA MCB • Industrial</p>
+                </div>
+                <div className="p-2 rounded-lg bg-red-500/10 border border-red-500/20">
+                  <p className="text-red-300 font-medium text-xs">Above 10kA</p>
+                  <p className="text-red-200/70 text-xs">16kA+ • High fault areas</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Important Notes */}
+            <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <div className="flex items-center gap-2 mb-3">
+                <AlertTriangle className="h-4 w-4 text-amber-400" />
+                <span className="font-medium text-amber-300">Important Considerations</span>
+              </div>
+              <ul className="space-y-1 text-sm text-amber-200/80">
+                <li>• Account for voltage tolerance (±6% in UK)</li>
+                <li>• Consider temperature effects on conductor resistance</li>
+                <li>• Parallel earth paths may reduce actual fault current</li>
+                <li>• Supply impedance can vary with network conditions</li>
+              </ul>
+            </div>
+
+            {/* BS 7671 References */}
+            <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <div className="flex items-center gap-2 mb-3">
+                <BookOpen className="h-4 w-4 text-blue-400" />
+                <span className="font-medium text-blue-300">BS 7671 Requirements</span>
+              </div>
+              <div className="space-y-2 text-sm text-blue-200/80">
+                <p>
+                  <strong className="text-blue-300">Reg 434.5.2:</strong> PFC must be determined
+                  at every relevant point
+                </p>
+                <p>
+                  <strong className="text-blue-300">Reg 411.3.2:</strong> Maximum disconnection
+                  times must be verified
+                </p>
+                <p>
+                  <strong className="text-blue-300">Section 612:</strong> Initial verification
+                  must include PFC verification
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </CalculatorCard>
+
+      {/* Results Section */}
+      {result && activeTab === "calculator" && (
+        <div className="space-y-4 animate-fade-in">
+          <CalculatorResult category="protection">
+            {/* Assessment Badge */}
+            <div className="flex items-center justify-center gap-3 pb-4 border-b border-white/10">
+              <div
+                className={cn(
+                  "px-3 py-1 rounded-full border font-medium text-sm",
+                  getAssessmentColor(result.assessmentLevel)
+                )}
+              >
+                {result.assessmentLevel} PFC Level
+              </div>
+              {result.assessmentLevel === "Low" ? (
+                <CheckCircle className="h-5 w-5 text-green-400" />
+              ) : result.assessmentLevel === "Very High" ? (
+                <XCircle className="h-5 w-5 text-red-400" />
+              ) : (
+                <AlertTriangle className="h-5 w-5 text-amber-400" />
+              )}
+            </div>
+
+            {/* Main Results */}
+            <div className="py-4 border-b border-white/10">
+              <ResultsGrid columns={2}>
+                <ResultValue
+                  label="Zs (Total Impedance)"
+                  value={result.zsTotal.toFixed(3)}
+                  unit="Ω"
+                  category="protection"
+                  size="sm"
+                />
+                <ResultValue
+                  label="Breaking Capacity"
+                  value={result.breakingCapacity.replace(" MCBs required", "").replace(" MCBs recommended", "").replace(" MCBs typically adequate", "")}
+                  category="protection"
+                  size="sm"
+                />
+              </ResultsGrid>
+
+              <div className="text-center mt-4">
+                <p className="text-sm text-white/60 mb-1">Prospective Fault Current</p>
+                <div
+                  className="text-4xl font-bold bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }}
+                >
+                  {result.pfcValue.toFixed(0)} A
+                </div>
+                <p className="text-sm text-white/50 mt-1">
+                  ({(result.pfcValue / 1000).toFixed(2)} kA)
+                </p>
+              </div>
+            </div>
+
+            {/* Safety Margin */}
+            <div className="p-3 rounded-xl bg-white/5 border border-white/10 mt-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className="h-4 w-4 text-orange-400" />
+                <span className="font-medium text-white/80 text-sm">Safety Margin Analysis</span>
+              </div>
+              <p className="text-sm text-white/60">
+                {result.pfcValue < 6000
+                  ? "Adequate safety margin with standard equipment."
+                  : result.pfcValue < 10000
+                  ? "Moderate margin - ensure correct equipment specification."
+                  : "High current level - specialist assessment recommended."}
+              </p>
+            </div>
+
+            {/* Recommendations */}
+            <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+              <CollapsibleTrigger className="w-full flex items-center justify-between p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/15 transition-colors mt-4">
+                <div className="flex items-center gap-3">
+                  <Target className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm font-medium text-blue-300">
+                    Recommendations ({result.recommendations.length})
+                  </span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    showGuidance && "rotate-180"
+                  )}
+                />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pt-3">
+                <div className="space-y-2">
+                  {result.recommendations.map((rec, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start gap-3 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20"
+                    >
+                      <span className="text-blue-400 mt-0.5">•</span>
+                      <span className="text-sm text-blue-200/80">{rec}</span>
+                    </div>
+                  ))}
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </CalculatorResult>
+
+          {/* Why This Matters */}
+          <Collapsible open={showStandards} onOpenChange={setShowStandards}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Info className="h-4 w-4 text-amber-400" />
+                  <span className="text-sm sm:text-base font-medium text-amber-300">
+                    Why PFC Matters
+                  </span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    showStandards && "rotate-180"
+                  )}
+                />
+              </CollapsibleTrigger>
+
+              <CollapsibleContent className="p-4 pt-0">
+                <ul className="space-y-2 text-sm text-amber-200/80">
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-400 mt-1">•</span>
+                    Ensures protective devices can safely interrupt fault currents without damage
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-400 mt-1">•</span>
+                    Prevents dangerous arcing and fire risk during fault conditions
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-400 mt-1">•</span>
+                    Critical for person protection - affects automatic disconnection times
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-400 mt-1">•</span>
+                    Required for equipment specification and installation compliance
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-400 mt-1">•</span>
+                    Determines earthing and bonding arrangement adequacy
+                  </li>
+                </ul>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+        </div>
+      )}
+
+      {/* Quick Reference */}
+      {!result && activeTab === "calculator" && (
+        <Collapsible>
+          <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+            <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-4 w-4 text-amber-400" />
+                <span className="text-sm sm:text-base font-medium text-amber-300">
+                  Quick Reference
+                </span>
+              </div>
+              <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+            </CollapsibleTrigger>
+
+            <CollapsibleContent className="p-4 pt-0">
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">Typical Ze Values</p>
+                  <p className="text-amber-200/70">TN-C-S: 0.35Ω max</p>
+                  <p className="text-amber-200/70">TN-S: 0.8Ω max</p>
+                  <p className="text-amber-200/70">TT: Check with DNO</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">Common Breaking Caps</p>
+                  <p className="text-amber-200/70">Domestic: 6kA</p>
+                  <p className="text-amber-200/70">Commercial: 10kA</p>
+                  <p className="text-amber-200/70">Industrial: 16kA+</p>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+      )}
+    </div>
   );
 };
 

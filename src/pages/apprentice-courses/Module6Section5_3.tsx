@@ -236,7 +236,7 @@ const Module6Section5_3 = () => {
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
                   <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Preparing the Circuit for Testing</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Preparing the Circuit for Testing</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -292,7 +292,7 @@ const Module6Section5_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base">Carrying Out the Test</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3 text-base">Carrying Out the Test</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -320,7 +320,7 @@ const Module6Section5_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Interpreting the Results</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3 text-base">Interpreting the Results</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -434,7 +434,7 @@ const Module6Section5_3 = () => {
           <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <div className="p-3 sm:p-4 rounded-lg border border-elec-yellow/20">
-              <h3 className="font-medium text-blue-700 dark:text-elec-yellow mb-2 text-sm">Preparation</h3>
+              <h3 className="font-medium text-blue-700 text-elec-yellow mb-2 text-sm">Preparation</h3>
               <p className="text-xs text-white">Isolate circuit, prove dead, and disconnect all sensitive equipment</p>
             </div>
             <div className="p-3 sm:p-4 rounded-lg border border-green-500/20">
@@ -442,11 +442,11 @@ const Module6Section5_3 = () => {
               <p className="text-xs text-white">Test all conductor combinations with secure test lead connections</p>
             </div>
             <div className="p-3 sm:p-4 rounded-lg border border-orange-500/20">
-              <h3 className="font-medium text-orange-700 dark:text-elec-yellow mb-2 text-sm">Testing</h3>
+              <h3 className="font-medium text-orange-700 text-elec-yellow mb-2 text-sm">Testing</h3>
               <p className="text-xs text-white">Apply correct voltage (usually 500V DC) and record results immediately</p>
             </div>
             <div className="p-3 sm:p-4 rounded-lg border border-red-500/20">
-              <h3 className="font-medium text-red-700 dark:text-elec-yellow mb-2 text-sm">Interpretation</h3>
+              <h3 className="font-medium text-red-700 text-elec-yellow mb-2 text-sm">Interpretation</h3>
               <p className="text-xs text-white">High readings = good insulation, low readings require investigation</p>
             </div>
           </div>

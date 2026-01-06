@@ -244,7 +244,7 @@ const Module6Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Importance of Recording</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Importance of Recording</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -377,7 +377,7 @@ const Module6Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">How to Record Correctly</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">How to Record Correctly</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -445,7 +445,7 @@ const Module6Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Actions Required</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Actions Required</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -515,7 +515,7 @@ const Module6Section4_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Consequences of Poor Record-Keeping</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Consequences of Poor Record-Keeping</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -673,7 +673,7 @@ const Module6Section4_5 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Legal Requirements</h3>
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Legal Requirements</h3>
               <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-primary">•</span>
@@ -707,7 +707,7 @@ const Module6Section4_5 = () => {
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-orange-500/20">
-              <h3 className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Recording Standards</h3>
+              <h3 className="font-semibold text-orange-600 text-elec-yellow mb-3">Recording Standards</h3>
               <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-primary">•</span>
@@ -724,7 +724,7 @@ const Module6Section4_5 = () => {
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-red-500/20">
-              <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Consequences</h3>
+              <h3 className="font-semibold text-red-600 text-elec-yellow mb-3">Consequences</h3>
               <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-primary">•</span>

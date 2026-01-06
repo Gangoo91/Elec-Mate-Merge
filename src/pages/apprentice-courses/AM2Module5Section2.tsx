@@ -175,7 +175,7 @@ const AM2Module5Section2 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Search className="w-4 h-4" />
             Module 5 – Section 2
           </div>
@@ -194,15 +194,15 @@ const AM2Module5Section2 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
                   CRITICAL: Safety Always Comes First
                 </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
                   If you forget safe isolation, it's an instant fail. Even in controlled AM2 conditions, you must demonstrate correct safety procedures — this proves to assessors that safety is always your first thought.
                 </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
                   Every test must begin with proper isolation and proving procedures. No exceptions.
                 </p>
               </div>
@@ -211,9 +211,9 @@ const AM2Module5Section2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -222,23 +222,23 @@ const AM2Module5Section2 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Follow a step-by-step diagnostic method for fault-finding in AM2
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Use safe isolation before working on faulted circuits
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Select and apply the correct test for the type of fault suspected
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Interpret test results logically instead of guessing
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Explain your reasoning clearly to the assessor
               </li>
             </ul>
@@ -246,9 +246,9 @@ const AM2Module5Section2 = () => {
         </Card>
 
         {/* The 7-Step Process */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               1. The 7-Step Logical Process
             </h2>
@@ -259,10 +259,10 @@ const AM2Module5Section2 = () => {
                   <Shield className="w-4 h-4" />
                   Step 1: Start with Safety
                 </h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
                   Every fault-finding exercise begins with safe isolation. Even though the circuits are prepared by NET and under controlled conditions, you must still demonstrate correct procedure.
                 </p>
-                <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                   <li>• Identify correct isolation point</li>
                   <li>• Secure isolation (lock off where possible)</li>
                   <li>• Test voltage indicator on known live source</li>
@@ -335,9 +335,9 @@ const AM2Module5Section2 = () => {
         />
 
         {/* Steps 4-7 */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
               2. Testing and Analysis Steps
             </h2>
@@ -345,10 +345,10 @@ const AM2Module5Section2 = () => {
             <div className="space-y-6">
               <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Step 4: Test Logically, Step by Step</h4>
-                <p className="text-sm text-purple-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-purple-700 dark:text-elec-yellow mb-3">
                   Start from the origin (CU) and work outwards. This avoids chasing faults randomly.
                 </p>
-                <div className="text-sm text-purple-700 dark:text-emerald-400">
+                <div className="text-sm text-purple-700 dark:text-elec-yellow">
                   <p className="font-medium mb-2">Example: Ring final circuit testing</p>
                   <ol className="space-y-1">
                     <li>1. Prove continuity of each conductor at the CU</li>
@@ -371,27 +371,27 @@ const AM2Module5Section2 = () => {
                 </ul>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Step 6: Record the Fault and Rectification</h4>
-                <p className="text-sm text-blue-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-blue-700 dark:text-elec-yellow mb-3">
                   When you find the fault, you must state clearly:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   <div className="bg-white dark:bg-card p-3 rounded border text-center">
-                    <p className="text-sm font-medium text-blue-700 dark:text-emerald-400">What the fault is</p>
-                    <p className="text-xs text-emerald-400 dark:text-emerald-400">(Type)</p>
+                    <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow">What the fault is</p>
+                    <p className="text-xs text-elec-yellow dark:text-elec-yellow">(Type)</p>
                   </div>
                   <div className="bg-white dark:bg-card p-3 rounded border text-center">
-                    <p className="text-sm font-medium text-blue-700 dark:text-emerald-400">Where it is located</p>
-                    <p className="text-xs text-emerald-400 dark:text-emerald-400">(Location)</p>
+                    <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow">Where it is located</p>
+                    <p className="text-xs text-elec-yellow dark:text-elec-yellow">(Location)</p>
                   </div>
                   <div className="bg-white dark:bg-card p-3 rounded border text-center">
-                    <p className="text-sm font-medium text-blue-700 dark:text-emerald-400">How you would rectify it</p>
-                    <p className="text-xs text-emerald-400 dark:text-emerald-400">(Rectification)</p>
+                    <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow">How you would rectify it</p>
+                    <p className="text-xs text-elec-yellow dark:text-elec-yellow">(Rectification)</p>
                   </div>
                 </div>
                 <div className="mt-3 p-3 bg-white dark:bg-card rounded border">
-                  <p className="text-sm text-blue-700 dark:text-emerald-400">
+                  <p className="text-sm text-blue-700 dark:text-elec-yellow">
                     <strong>Example:</strong> "Open CPC between CU and socket 2. Rectify by reconnecting CPC at CU terminal."
                   </p>
                 </div>
@@ -416,9 +416,9 @@ const AM2Module5Section2 = () => {
         />
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
               3. Practical Guidance for AM2 Success
             </h2>
@@ -431,7 +431,7 @@ const AM2Module5Section2 = () => {
                       <AlertTriangle className="w-4 h-4" />
                       Critical Success Factors
                     </h4>
-                    <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                       <li>• <strong>Always think safety first</strong> — if you forget isolation, it's an instant fail</li>
                       <li>• <strong>Talk through your logic</strong> — say what you're testing and why</li>
                       <li>• <strong>Work methodically</strong> — don't jump between circuits or tests</li>
@@ -454,12 +454,12 @@ const AM2Module5Section2 = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                     <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 flex items-center gap-2">
                       <Lightbulb className="w-4 h-4" />
                       Time Management Tips
                     </h4>
-                    <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                       <li>• Plan your test sequence before starting</li>
                       <li>• Don't waste time on obvious non-faults</li>
                       <li>• Document findings as you go</li>
@@ -494,9 +494,9 @@ const AM2Module5Section2 = () => {
         />
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               4. Real-World Examples
             </h2>
@@ -504,13 +504,13 @@ const AM2Module5Section2 = () => {
             <div className="space-y-4">
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">❌ Example 1: Poor Method</h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                   <strong>Scenario:</strong> Candidate saw an RCD tripping and immediately said "earth fault."
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                   <strong>Problem:</strong> Assessor asked "where exactly?" — candidate couldn't prove it.
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400 font-medium">
+                <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
                   <strong>Result:</strong> Marks lost for guessing instead of systematic diagnosis.
                 </p>
               </div>
@@ -541,15 +541,15 @@ const AM2Module5Section2 = () => {
                 </p>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">💡 Example 4: Real-World Application</h4>
-                <p className="text-sm text-blue-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-blue-700 dark:text-elec-yellow mb-2">
                   <strong>Scenario:</strong> On site, an electrician guessed at a short circuit.
                 </p>
-                <p className="text-sm text-blue-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-blue-700 dark:text-elec-yellow mb-2">
                   <strong>Problem:</strong> Replaced multiple accessories and wasted hours.
                 </p>
-                <p className="text-sm text-blue-700 dark:text-emerald-400 font-medium">
+                <p className="text-sm text-blue-700 dark:text-elec-yellow font-medium">
                   <strong>Lesson:</strong> Logical testing would have found the actual loose neutral in minutes.
                 </p>
               </div>
@@ -558,9 +558,9 @@ const AM2Module5Section2 = () => {
         </Card>
 
         {/* FAQ Section */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
               5. Frequently Asked Questions
             </h2>
@@ -581,16 +581,16 @@ const AM2Module5Section2 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               6. Section Summary
             </h2>
             
-            <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4 mb-4">
+            <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4 mb-4">
               <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">The Logical Fault-Finding Process:</h4>
-              <ol className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+              <ol className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                 <li>1. <strong>Apply safe isolation</strong></li>
                 <li>2. <strong>Observe the symptoms</strong></li>
                 <li>3. <strong>Plan the right test</strong></li>

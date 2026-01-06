@@ -223,11 +223,11 @@ const Module2Section6_4: React.FC = () => {
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Worked examples (conceptual)</h3>
             <ul className="space-y-4 text-xs sm:text-sm text-white">
-              <li className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-border/30">
+              <li className="rounded-lg p-4 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/10 border border-border/30">
                 <p className="font-medium">Long garden supply</p>
                 <p>A small cable over a long distance feeds outdoor sockets. Users report warm cable and dim lights under load. Upgrading cable size and route reduces heating and voltage drop.</p>
               </li>
-              <li className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-elec-yellow/30">
+              <li className="rounded-lg p-4 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/10 border border-elec-yellow/30">
                 <p className="font-medium">Loose connection at a spur</p>
                 <p>Brown discolouration is seen on a terminal. Re‑make the joint to the correct torque and check adjacent connections for damage or heat marks.</p>
               </li>
@@ -257,7 +257,7 @@ const Module2Section6_4: React.FC = () => {
             
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="rounded-lg p-4 bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-orange-700 dark:text-elec-yellow">Temperature effects</h4>
+                <h4 className="font-medium mb-2 text-orange-700 text-elec-yellow">Temperature effects</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li>Higher ambient temperature = higher conductor resistance</li>
                   <li>Grouping cables reduces heat dissipation</li>
@@ -268,7 +268,7 @@ const Module2Section6_4: React.FC = () => {
               </div>
               
               <div className="rounded-lg p-4 bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-purple-700 dark:text-elec-yellow">Installation quality</h4>
+                <h4 className="font-medium mb-2 text-purple-700 text-elec-yellow">Installation quality</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li>Cable routing: unnecessary bends and length increase resistance</li>
                   <li>Termination quality: proper torque and clean connections essential</li>
@@ -286,7 +286,7 @@ const Module2Section6_4: React.FC = () => {
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Economic impact of losses</h3>
             
-            <div className="rounded-lg p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-400/30">
+            <div className="rounded-lg p-4 bg-gradient-to-r from-green-500/10 to-elec-yellow/10 border border-green-400/30">
               <p className="text-sm mb-3">Understanding the financial impact helps justify better design and installation practices:</p>
               
               <div className="grid md:grid-cols-2 gap-4">
@@ -320,7 +320,7 @@ const Module2Section6_4: React.FC = () => {
             <h3 className="font-medium text-white mb-2">Identifying and troubleshooting excessive losses</h3>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-amber-500/10 border border-elec-yellow/30">
+              <div className="rounded-lg p-4 bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/30">
                 <h4 className="font-medium mb-2 text-yellow-700 dark:text-yellow-300">Warning signs to look for</h4>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <ul className="list-disc pl-6 space-y-1">
@@ -338,8 +338,8 @@ const Module2Section6_4: React.FC = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-blue-700 dark:text-elec-yellow">Investigation approach</h4>
+              <div className="rounded-lg p-4 bg-gradient-to-r from-elec-yellow/10 to-cyan-500/10 border border-border/30">
+                <h4 className="font-medium mb-2 text-blue-700 text-elec-yellow">Investigation approach</h4>
                 <ol className="list-decimal pl-6 space-y-1 text-sm">
                   <li><strong>Visual inspection:</strong> Look for signs of overheating, damage, poor workmanship</li>
                   <li><strong>Thermal imaging:</strong> Identify hot spots in cables, connections, equipment</li>
@@ -363,8 +363,8 @@ const Module2Section6_4: React.FC = () => {
                   <li>Consider higher voltage distributions for long runs</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-4 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-elec-yellow/30">
-                <p className="font-medium mb-2 text-emerald-700 dark:text-elec-yellow">Installation best practices</p>
+              <div className="rounded-lg p-4 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30">
+                <p className="font-medium mb-2 text-elec-yellow text-elec-yellow">Installation best practices</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Use calibrated torque tools for terminations</li>
                   <li>Allow adequate spacing between grouped cables</li>

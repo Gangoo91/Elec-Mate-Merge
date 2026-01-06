@@ -175,9 +175,9 @@ const Section3_1 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Target className="h-8 w-8 text-emerald-400" />
+            <Target className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 3.1
               </span>
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
@@ -194,8 +194,8 @@ const Section3_1 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Legal requirement:</strong> Risk assessments are mandatory under health and safety regulations.</li>
                 <li><strong>Protect lives:</strong> Identify electrical hazards before they cause harm or death.</li>
@@ -203,8 +203,8 @@ const Section3_1 = () => {
                 <li><strong>Business benefits:</strong> Reduce insurance costs, prevent prosecution, maintain reputation.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> New work activities, changed conditions, incident follow-ups, significant hazards.</li>
                 <li><strong>Use:</strong> Before starting any electrical work, when planning installations, during method statements.</li>
@@ -220,19 +220,19 @@ const Section3_1 = () => {
           <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Explain the fundamental purpose of risk assessment in electrical work</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand the legal requirements and business benefits</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise when risk assessments are required</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply the ALARP principle to electrical safety decisions</span>
             </li>
           </ul>
@@ -240,9 +240,9 @@ const Section3_1 = () => {
 
         {/* Section 1: Purpose of Risk Assessment */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Purpose of Risk Assessment
             </h2>
             <div className="space-y-4 text-foreground">
@@ -293,9 +293,9 @@ const Section3_1 = () => {
 
         {/* Section 2: The ALARP Principle */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               The ALARP Principle
             </h2>
             <div className="space-y-4 text-foreground">
@@ -342,9 +342,9 @@ const Section3_1 = () => {
 
         {/* Section 3: Legal Requirements */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Legal Requirements
             </h2>
             <div className="space-y-4 text-foreground">
@@ -391,9 +391,9 @@ const Section3_1 = () => {
 
         {/* Section 4: When Risk Assessments Are Required */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               When Risk Assessments Are Required
             </h2>
             <div className="space-y-4 text-foreground">
@@ -440,9 +440,9 @@ const Section3_1 = () => {
 
         {/* Section 5: Who Should Conduct Risk Assessments */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">5</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">5</span>
               Who Should Conduct Risk Assessments
             </h2>
             <div className="space-y-4 text-foreground">
@@ -489,9 +489,9 @@ const Section3_1 = () => {
 
         {/* Section 6: Documentation Requirements */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">6</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">6</span>
               Documentation Requirements
             </h2>
             <div className="space-y-4 text-foreground">
@@ -539,9 +539,9 @@ const Section3_1 = () => {
 
         {/* Section 7: Common Mistakes to Avoid */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-emerald-50/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">7</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">7</span>
               Common Mistakes to Avoid
             </h2>
             <div className="space-y-4 text-foreground">

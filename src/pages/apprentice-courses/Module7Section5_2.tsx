@@ -208,7 +208,7 @@ const Module7Section5_2 = () => {
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base">Visual Inspection and GS38 Compliance</h3>
+                  <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-4 text-base">Visual Inspection and GS38 Compliance</h3>
                   
                   <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Instrument casing integrity:</strong> Check for cracks, missing battery covers, damaged displays, or broken selector switches that could expose internal components. Any damage to the casing can compromise both safety and measurement accuracy. Look for signs of impact damage, overheating, or chemical corrosion that might affect the instrument's operation.</p>
@@ -303,7 +303,7 @@ const Module7Section5_2 = () => {
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-4 text-base">Safety Category Ratings and Energy Withstand</h3>
+                  <h3 className="font-semibold text-red-600 text-elec-yellow mb-4 text-base">Safety Category Ratings and Energy Withstand</h3>
                   
                   <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>CAT II - Local level equipment:</strong> Designed for socket outlets, portable appliances, and similar loads. Maximum working voltage 300V to earth. Suitable for final circuit testing but not distribution systems. Limited transient energy withstand capability suitable for loads connected to the fixed installation.</p>
@@ -333,7 +333,7 @@ const Module7Section5_2 = () => {
           <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Practical Guidance</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3">Before Testing</h3>
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-2 sm:mb-3">Before Testing</h3>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
                   <span className="text-white">•</span>
@@ -403,7 +403,7 @@ const Module7Section5_2 = () => {
           <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Real-World Examples</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-red-500/20">
-              <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-2 sm:mb-3">Case Study: Instrument Failure Leads to Shock</h3>
+              <h3 className="font-semibold text-red-600 text-elec-yellow mb-2 sm:mb-3">Case Study: Instrument Failure Leads to Shock</h3>
               <p className="text-xs sm:text-xs sm:text-sm text-white leading-relaxed">
                 On a commercial site, an electrician used a voltage indicator that had not been verified on a proving unit. It failed to register live voltage, and he mistakenly believed the circuit was safe. He received an electric shock, fortunately without serious injury. Investigation showed the instrument's internal fuse had blown months earlier, but because no checks were carried out, the fault went unnoticed.
               </p>

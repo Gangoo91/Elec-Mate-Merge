@@ -1,15 +1,36 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import BackButton from "@/components/common/BackButton";
-import { useToast } from "@/hooks/use-toast";
-import { PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Download, Lightbulb, Calculator } from "lucide-react";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
 import { Helmet } from "react-helmet";
+import {
+  PoundSterling,
+  TrendingUp,
+  AlertCircle,
+  CheckCircle,
+  Lightbulb,
+  Calculator,
+  ChevronDown,
+  BookOpen,
+  Info,
+  RotateCcw,
+  Calendar,
+  Percent,
+  Receipt,
+} from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
+import { useToast } from "@/hooks/use-toast";
 
 interface TaxInputs {
   annualIncome: number;
@@ -18,15 +39,15 @@ interface TaxInputs {
   pensionContributions: number;
   charitableDonations: number;
   marriageAllowanceTransfer: boolean;
-  hasBusinessPartner: boolean;
   vatRegistered: boolean;
   vatTurnover: number;
-  corporationTax: boolean;
   dividendIncome: number;
 }
 
 const TaxNIEstimator = () => {
+  const config = CALCULATOR_CONFIG["business"];
   const { toast } = useToast();
+
   const [inputs, setInputs] = useState<TaxInputs>({
     annualIncome: 0,
     businessExpenses: 0,
@@ -34,20 +55,23 @@ const TaxNIEstimator = () => {
     pensionContributions: 0,
     charitableDonations: 0,
     marriageAllowanceTransfer: false,
-    hasBusinessPartner: false,
     vatRegistered: false,
     vatTurnover: 0,
-    corporationTax: false,
     dividendIncome: 0,
   });
 
   const [calculated, setCalculated] = useState(false);
-  const [taxYear, setTaxYear] = useState<'2025/26' | '2024/25'>('2025/26');
+  const [taxYear, setTaxYear] = useState<"2025/26" | "2024/25">("2025/26");
+
+  // UI state
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showGuidance, setShowGuidance] = useState(false);
+  const [showReference, setShowReference] = useState(false);
 
   const updateInput = (field: keyof TaxInputs, value: number | boolean) => {
-    setInputs(prev => ({
+    setInputs((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
     setCalculated(false);
   };
@@ -57,7 +81,7 @@ const TaxNIEstimator = () => {
     toast({
       title: "Tax Estimation Complete",
       description: "Your tax and National Insurance calculations have been updated.",
-      variant: "success"
+      variant: "success",
     });
   };
 
@@ -69,17 +93,15 @@ const TaxNIEstimator = () => {
       pensionContributions: 0,
       charitableDonations: 0,
       marriageAllowanceTransfer: false,
-      hasBusinessPartner: false,
       vatRegistered: false,
       vatTurnover: 0,
-      corporationTax: false,
       dividendIncome: 0,
     });
     setCalculated(false);
     toast({
       title: "Calculator Reset",
       description: "All fields have been cleared.",
-      variant: "default"
+      variant: "default",
     });
   };
 
@@ -91,124 +113,130 @@ const TaxNIEstimator = () => {
       pensionContributions: 4000,
       charitableDonations: 500,
       marriageAllowanceTransfer: false,
-      hasBusinessPartner: false,
       vatRegistered: true,
       vatTurnover: 65000,
-      corporationTax: false,
       dividendIncome: 0,
     });
     setCalculated(false);
   };
 
-  // UK Tax rates and thresholds (selected year)
-  const getRates = (year: '2025/26' | '2024/25') => {
-    if (year === '2025/26') {
+  // UK Tax rates and thresholds
+  const getRates = (year: "2025/26" | "2024/25") => {
+    if (year === "2025/26") {
       return {
         personalAllowance: 12570,
         basicRateThreshold: 37700,
         higherRateThreshold: 125140,
-        basicRate: 0.20,
-        higherRate: 0.40,
+        basicRate: 0.2,
+        higherRate: 0.4,
         additionalRate: 0.45,
-        // NI (self-employed)
-        class2WeeklyRate: 0, // Class 2 abolished
-        class2SPT: 6725, // Small profits threshold (credits)
+        class2WeeklyRate: 0,
+        class2SPT: 6725,
         class4LowerRate: 0.06,
         class4HigherRate: 0.02,
         class4LowerProfitsLimit: 12570,
         class4UpperProfitsLimit: 50270,
         marriageAllowance: 1260,
         vatThreshold: 90000,
-        vatRate: 0.20,
+        vatRate: 0.2,
       };
     }
-    // 2024/25
     return {
       personalAllowance: 12570,
       basicRateThreshold: 37700,
       higherRateThreshold: 125140,
-      basicRate: 0.20,
-      higherRate: 0.40,
+      basicRate: 0.2,
+      higherRate: 0.4,
       additionalRate: 0.45,
-      // NI (self-employed)
       class2WeeklyRate: 3.45,
       class2SPT: 6725,
-      class4LowerRate: 0.06, // Reduced from 9%
+      class4LowerRate: 0.06,
       class4HigherRate: 0.02,
       class4LowerProfitsLimit: 12570,
       class4UpperProfitsLimit: 50270,
       marriageAllowance: 1260,
       vatThreshold: 90000,
-      vatRate: 0.20,
+      vatRate: 0.2,
     };
   };
-  const TAX_RATES = getRates(taxYear);
-  // Calculate tax and NI
-  const calculateEstimates = () => {
-    if (!calculated) return {
-      taxableIncome: 0,
-      incomeTax: 0,
-      nationalInsurance: 0,
-      totalTaxNI: 0,
-      netIncome: 0,
-      effectiveRate: 0,
-      vat: 0,
-      totalLiabilities: 0,
-      monthlyTaxNI: 0,
-      quarterlyTaxNI: 0
-    };
 
-    // Calculate taxable income
-    const grossProfit = inputs.annualIncome - inputs.businessExpenses - inputs.capitalAllowances;
+  const TAX_RATES = getRates(taxYear);
+
+  const calculateEstimates = () => {
+    if (!calculated)
+      return {
+        taxableIncome: 0,
+        incomeTax: 0,
+        nationalInsurance: 0,
+        totalTaxNI: 0,
+        netIncome: 0,
+        effectiveRate: 0,
+        vat: 0,
+        totalLiabilities: 0,
+        monthlyTaxNI: 0,
+        quarterlyTaxNI: 0,
+        grossProfit: 0,
+      };
+
+    const grossProfit =
+      inputs.annualIncome - inputs.businessExpenses - inputs.capitalAllowances;
     let personalAllowance = TAX_RATES.personalAllowance;
-    
-    // Reduce personal allowance for high earners
+
     if (grossProfit > 100000) {
       const reduction = Math.min(personalAllowance, (grossProfit - 100000) / 2);
       personalAllowance -= reduction;
     }
 
-    // Marriage allowance transfer
     if (inputs.marriageAllowanceTransfer) {
       personalAllowance += TAX_RATES.marriageAllowance;
     }
 
-    const taxableIncome = Math.max(0, grossProfit - personalAllowance - inputs.pensionContributions - inputs.charitableDonations);
+    const taxableIncome = Math.max(
+      0,
+      grossProfit -
+        personalAllowance -
+        inputs.pensionContributions -
+        inputs.charitableDonations
+    );
 
-    // Calculate income tax
     let incomeTax = 0;
     if (taxableIncome > 0) {
       if (taxableIncome <= TAX_RATES.basicRateThreshold) {
         incomeTax = taxableIncome * TAX_RATES.basicRate;
       } else if (taxableIncome <= TAX_RATES.higherRateThreshold) {
-        incomeTax = (TAX_RATES.basicRateThreshold * TAX_RATES.basicRate) + 
-                   ((taxableIncome - TAX_RATES.basicRateThreshold) * TAX_RATES.higherRate);
+        incomeTax =
+          TAX_RATES.basicRateThreshold * TAX_RATES.basicRate +
+          (taxableIncome - TAX_RATES.basicRateThreshold) * TAX_RATES.higherRate;
       } else {
-        incomeTax = (TAX_RATES.basicRateThreshold * TAX_RATES.basicRate) + 
-                   ((TAX_RATES.higherRateThreshold - TAX_RATES.basicRateThreshold) * TAX_RATES.higherRate) +
-                   ((taxableIncome - TAX_RATES.higherRateThreshold) * TAX_RATES.additionalRate);
+        incomeTax =
+          TAX_RATES.basicRateThreshold * TAX_RATES.basicRate +
+          (TAX_RATES.higherRateThreshold - TAX_RATES.basicRateThreshold) *
+            TAX_RATES.higherRate +
+          (taxableIncome - TAX_RATES.higherRateThreshold) *
+            TAX_RATES.additionalRate;
       }
     }
 
-    // Calculate National Insurance (Self-employed)
     let nationalInsurance = 0;
-    
-    // Class 2 NI (abolished in 2025/26; credits may apply)
     if (TAX_RATES.class2WeeklyRate > 0 && grossProfit >= TAX_RATES.class2SPT) {
-      nationalInsurance += TAX_RATES.class2WeeklyRate * 52; // Weekly rate
+      nationalInsurance += TAX_RATES.class2WeeklyRate * 52;
     }
 
-    // Class 4 NI
     if (grossProfit > TAX_RATES.class4LowerProfitsLimit) {
-      const class4AtLowerBand = Math.max(0, Math.min(grossProfit, TAX_RATES.class4UpperProfitsLimit) - TAX_RATES.class4LowerProfitsLimit);
+      const class4AtLowerBand = Math.max(
+        0,
+        Math.min(grossProfit, TAX_RATES.class4UpperProfitsLimit) -
+          TAX_RATES.class4LowerProfitsLimit
+      );
       nationalInsurance += class4AtLowerBand * TAX_RATES.class4LowerRate;
-      
+
       if (grossProfit > TAX_RATES.class4UpperProfitsLimit) {
-        nationalInsurance += (grossProfit - TAX_RATES.class4UpperProfitsLimit) * TAX_RATES.class4HigherRate;
+        nationalInsurance +=
+          (grossProfit - TAX_RATES.class4UpperProfitsLimit) *
+          TAX_RATES.class4HigherRate;
       }
     }
 
-    // Calculate VAT liability
     let vat = 0;
     if (inputs.vatRegistered && inputs.vatTurnover > 0) {
       vat = inputs.vatTurnover * TAX_RATES.vatRate;
@@ -232,525 +260,584 @@ const TaxNIEstimator = () => {
       totalLiabilities,
       monthlyTaxNI,
       quarterlyTaxNI,
-      grossProfit
+      grossProfit,
     };
   };
 
   const estimates = calculateEstimates();
 
-  const getTaxEfficiencyAssessment = () => {
+  const getTaxStatus = () => {
     if (!calculated) return null;
-    
     if (estimates.effectiveRate <= 15) {
       return {
-        status: "efficient",
-        icon: <CheckCircle className="h-5 w-5" />,
-        title: "Tax Efficient",
-        message: `Low effective rate of ${estimates.effectiveRate.toFixed(1)}% - good tax planning`,
-        color: "text-green-300",
-        bgColor: "bg-green-500/20 border-green-500/30"
+        label: "Efficient",
+        color: "text-green-400",
+        bg: "bg-green-500/10 border-green-500/30",
+        message: "Low effective rate - good tax planning",
       };
     } else if (estimates.effectiveRate <= 25) {
       return {
-        status: "moderate",
-        icon: <AlertCircle className="h-5 w-5" />,
-        title: "Moderate Tax Burden",
-        message: `Effective rate of ${estimates.effectiveRate.toFixed(1)}% - consider tax planning`,
-        color: "text-yellow-300",
-        bgColor: "bg-yellow-500/20 border-yellow-500/30"
-      };
-    } else {
-      return {
-        status: "high",
-        icon: <AlertCircle className="h-5 w-5" />,
-        title: "High Tax Burden",
-        message: `High effective rate of ${estimates.effectiveRate.toFixed(1)}% - seek professional advice`,
-        color: "text-red-300",
-        bgColor: "bg-red-500/20 border-red-500/30"
+        label: "Moderate",
+        color: "text-amber-400",
+        bg: "bg-amber-500/10 border-amber-500/30",
+        message: "Consider additional tax planning opportunities",
       };
     }
+    return {
+      label: "High",
+      color: "text-red-400",
+      bg: "bg-red-500/10 border-red-500/30",
+      message: "Seek professional advice for tax optimization",
+    };
   };
 
-  const taxAssessment = getTaxEfficiencyAssessment();
+  const taxStatus = getTaxStatus();
+  const isValid = inputs.annualIncome > 0;
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(amount);
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="min-h-screen px-4 py-8">
       <Helmet>
         <title>UK Tax & NI Estimator for Electricians | 2025/26</title>
-        <meta name="description" content="Estimate UK Income Tax, National Insurance and VAT impacts for electricians. Mobile-first and BS 7671 aligned." />
-        <link rel="canonical" href="/electrician/business-development/tools/tax-estimator" />
+        <meta
+          name="description"
+          content="Estimate UK Income Tax, National Insurance and VAT impacts for electricians."
+        />
       </Helmet>
-      <div className="flex flex-col items-center justify-center mb-8">
-        <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
-          <PoundSterling className="h-8 w-8 text-elec-yellow" />
-          Tax & NI Estimator
-        </h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-6">
-          Estimate your Income Tax and National Insurance liabilities for accurate financial planning.
-          Essential for BS7671 18th Edition compliant electrical contractors managing business finances.
-        </p>
-        <div className="bg-orange-500/20 border border-orange-500/30 rounded-lg p-4 mt-4 max-w-2xl">
+
+      <div className="max-w-4xl mx-auto space-y-4">
+        {/* Important Notice */}
+        <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30">
           <div className="flex items-start gap-3">
-            <AlertCircle className="h-5 w-5 text-orange-300 mt-0.5" />
+            <AlertCircle className="h-5 w-5 text-amber-400 mt-0.5" />
             <div>
-              <h4 className="text-orange-300 font-medium mb-2">Important Notice</h4>
-              <p className="text-sm text-orange-200">
-                This calculator uses {taxYear} UK rates. 
-                Always consult a qualified accountant for accurate tax advice and compliance.
+              <span className="text-amber-300 font-medium">Important Notice</span>
+              <p className="text-sm text-amber-200/80 mt-1">
+                This calculator uses {taxYear} UK rates. Always consult a qualified
+                accountant for accurate tax advice and compliance.
               </p>
             </div>
           </div>
         </div>
-        <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
-      </div>
 
-      <WhyThisMatters
-        points={[
-          "Shows likely tax/NI so you can plan payments and avoid surprises.",
-          "Explores impacts of VAT registration and allowances on net income.",
-          "Converts annual liabilities into monthly/quarterly figures for cash flow."
-        ]}
-      />
+        <CalculatorCard
+          category="business"
+          title="Tax & NI Estimator"
+          description="Estimate your Income Tax and National Insurance liabilities for financial planning"
+          badge="UK Tax"
+        >
+          {/* Tax Year Selection */}
+          <div className="flex items-center gap-2 mb-3">
+            <Calendar className="h-4 w-4 text-blue-400" />
+            <span className="text-sm font-medium text-white/80">Tax Year</span>
+          </div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
-        {/* Input Section */}
-        <Card className="border-elec-yellow/20 bg-elec-card">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <Calculator className="h-5 w-5 text-elec-yellow" />
-              Income & Deductions
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-3">
-              <MobileSelectWrapper
-                label="Tax Year"
-                value={taxYear}
-                onValueChange={(v) => setTaxYear(v as any)}
-                options={[
-                  { value: '2025/26', label: '2025/26' },
-                  { value: '2024/25', label: '2024/25' },
-                ]}
-                hint={`VAT threshold £${TAX_RATES.vatThreshold.toLocaleString()}`}
-              />
-            </div>
-            <div className="space-y-4">
-              <h4 className="text-white font-semibold">Business Income</h4>
-              
-              <MobileInput
-                label="Annual Business Income"
-                type="number"
-                value={inputs.annualIncome || ""}
-                onChange={(e) => updateInput('annualIncome', parseFloat(e.target.value) || 0)}
-                unit="£"
-                hint="Total revenue before expenses"
-              />
-
-              <MobileInput
-                label="Business Expenses"
-                type="number"
-                value={inputs.businessExpenses || ""}
-                onChange={(e) => updateInput('businessExpenses', parseFloat(e.target.value) || 0)}
-                unit="£"
-                hint="Deductible business costs"
-              />
-
-              <MobileInput
-                label="Capital Allowances"
-                type="number"
-                value={inputs.capitalAllowances || ""}
-                onChange={(e) => updateInput('capitalAllowances', parseFloat(e.target.value) || 0)}
-                unit="£"
-                hint="Equipment and vehicle allowances"
-              />
-            </div>
-
-            <Separator className="bg-elec-yellow/20" />
-
-            <div className="space-y-4">
-              <h4 className="text-white font-semibold">Additional Deductions</h4>
-              
-              <MobileInput
-                label="Pension Contributions"
-                type="number"
-                value={inputs.pensionContributions || ""}
-                onChange={(e) => updateInput('pensionContributions', parseFloat(e.target.value) || 0)}
-                unit="£"
-                hint="Annual pension payments"
-              />
-
-              <MobileInput
-                label="Charitable Donations"
-                type="number"
-                value={inputs.charitableDonations || ""}
-                onChange={(e) => updateInput('charitableDonations', parseFloat(e.target.value) || 0)}
-                unit="£"
-                hint="Gift Aid eligible donations"
-              />
-
-              <MobileInput
-                label="Dividend Income"
-                type="number"
-                value={inputs.dividendIncome || ""}
-                onChange={(e) => updateInput('dividendIncome', parseFloat(e.target.value) || 0)}
-                unit="£"
-                hint="If operating as a limited company"
-              />
-            </div>
-
-            <Separator className="bg-elec-yellow/20" />
-
-            <div className="space-y-4">
-              <h4 className="text-white font-semibold">VAT Registration</h4>
-              
-              <div className="space-y-2">
-                <label className="text-white text-sm font-medium">VAT Registered?</label>
-                <div className="flex gap-2">
-                  <Button
-                    variant={inputs.vatRegistered ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => updateInput('vatRegistered', true)}
-                    className={inputs.vatRegistered 
-                      ? "bg-elec-yellow text-black" 
-                      : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                    }
-                  >
-                    Yes
-                  </Button>
-                  <Button
-                    variant={!inputs.vatRegistered ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => updateInput('vatRegistered', false)}
-                    className={!inputs.vatRegistered 
-                      ? "bg-elec-yellow text-black" 
-                      : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                    }
-                  >
-                    No
-                  </Button>
-                </div>
-              </div>
-
-              {inputs.vatRegistered && (
-                <MobileInput
-                  label="VAT Taxable Turnover"
-                  type="number"
-                  value={inputs.vatTurnover || ""}
-                  onChange={(e) => updateInput('vatTurnover', parseFloat(e.target.value) || 0)}
-                  unit="£"
-                  hint="Annual VAT taxable sales"
-                />
+          <div className="flex gap-2 mb-4">
+            <button
+              onClick={() => setTaxYear("2025/26")}
+              className={cn(
+                "flex-1 h-12 rounded-xl font-medium text-sm transition-all",
+                taxYear === "2025/26"
+                  ? "text-black"
+                  : "bg-white/5 border border-white/10 text-white/70"
               )}
-            </div>
-
-            <Separator className="bg-elec-yellow/20" />
-
-            <div className="space-y-4">
-              <h4 className="text-white font-semibold">Personal Circumstances</h4>
-              
-              <div className="space-y-2">
-                <label className="text-white text-sm font-medium">Marriage Allowance Transfer?</label>
-                <div className="flex gap-2">
-                  <Button
-                    variant={inputs.marriageAllowanceTransfer ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => updateInput('marriageAllowanceTransfer', true)}
-                    className={inputs.marriageAllowanceTransfer 
-                      ? "bg-elec-yellow text-black" 
-                      : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              style={
+                taxYear === "2025/26"
+                  ? {
+                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
                     }
-                  >
-                    Yes
-                  </Button>
-                  <Button
-                    variant={!inputs.marriageAllowanceTransfer ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => updateInput('marriageAllowanceTransfer', false)}
-                    className={!inputs.marriageAllowanceTransfer 
-                      ? "bg-elec-yellow text-black" 
-                      : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                    }
-                  >
-                    No
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground">Receiving unused allowance from spouse</p>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <Button 
-                onClick={calculateTax}
-                className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-              >
-                <PoundSterling className="h-4 w-4 mr-2" />
-                Calculate
-              </Button>
-              <Button 
-                onClick={loadExample}
-                variant="outline"
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-              >
-                Example
-              </Button>
-            </div>
-
-            <Button 
-              onClick={resetCalculator}
-              variant="outline"
-              className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  : undefined
+              }
             >
-              Reset All
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Results Section */}
-        <Card className="border-elec-yellow/20 bg-elec-card lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-elec-yellow" />
-              Tax & NI Estimation
-              {calculated && (
-                <Badge variant="success" className="ml-auto">
-                  Calculated
-                </Badge>
+              2025/26
+            </button>
+            <button
+              onClick={() => setTaxYear("2024/25")}
+              className={cn(
+                "flex-1 h-12 rounded-xl font-medium text-sm transition-all",
+                taxYear === "2024/25"
+                  ? "text-black"
+                  : "bg-white/5 border border-white/10 text-white/70"
               )}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {!calculated ? (
-              <div className="text-center py-12">
-                <PoundSterling className="h-16 w-16 text-elec-yellow/50 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-white mb-2">Ready to Calculate</h3>
-                <p className="text-muted-foreground">
-                  Enter your income and expense details, then click "Calculate" to see your tax estimation.
-                </p>
+              style={
+                taxYear === "2024/25"
+                  ? {
+                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }
+                  : undefined
+              }
+            >
+              2024/25
+            </button>
+          </div>
+
+          {/* Business Income */}
+          <div className="flex items-center gap-2 mb-3">
+            <PoundSterling className="h-4 w-4 text-blue-400" />
+            <span className="text-sm font-medium text-white/80">Business Income</span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <CalculatorInput
+              label="Annual Income"
+              unit="£"
+              type="text"
+              inputMode="decimal"
+              value={inputs.annualIncome || ""}
+              onChange={(val) => updateInput("annualIncome", parseFloat(val) || 0)}
+              placeholder="e.g., 55000"
+              hint="Total revenue before expenses"
+            />
+
+            <CalculatorInput
+              label="Business Expenses"
+              unit="£"
+              type="text"
+              inputMode="decimal"
+              value={inputs.businessExpenses || ""}
+              onChange={(val) => updateInput("businessExpenses", parseFloat(val) || 0)}
+              placeholder="e.g., 8500"
+              hint="Deductible business costs"
+            />
+          </div>
+
+          <CalculatorInput
+            label="Capital Allowances"
+            unit="£"
+            type="text"
+            inputMode="decimal"
+            value={inputs.capitalAllowances || ""}
+            onChange={(val) => updateInput("capitalAllowances", parseFloat(val) || 0)}
+            placeholder="e.g., 3000"
+            hint="Equipment and vehicle allowances"
+          />
+
+          {/* Additional Deductions */}
+          <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
+            <CollapsibleTrigger className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+              <div className="flex items-center gap-2">
+                <Receipt className="h-4 w-4 text-amber-400" />
+                <span className="text-sm font-medium text-white/80">
+                  Additional Deductions & VAT
+                </span>
               </div>
-            ) : (
-              <>
-                {/* Summary Cards */}
-                <div className="grid md:grid-cols-4 gap-4">
-                  <Card className="border-elec-yellow/10 bg-elec-gray">
-                    <CardContent className="pt-6 text-center">
-                      <h4 className="text-white font-semibold mb-2">Income Tax</h4>
-                      <p className="text-2xl font-bold text-red-400">£{estimates.incomeTax.toFixed(2)}</p>
-                      <p className="text-sm text-muted-foreground mt-2">Annual</p>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="border-elec-yellow/10 bg-elec-gray">
-                    <CardContent className="pt-6 text-center">
-                      <h4 className="text-white font-semibold mb-2">National Insurance</h4>
-                      <p className="text-2xl font-bold text-orange-400">£{estimates.nationalInsurance.toFixed(2)}</p>
-                      <p className="text-sm text-muted-foreground mt-2">Annual</p>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="border-elec-yellow/10 bg-elec-gray">
-                    <CardContent className="pt-6 text-center">
-                      <h4 className="text-white font-semibold mb-2">Total Tax & NI</h4>
-                      <p className="text-2xl font-bold text-elec-yellow">£{estimates.totalTaxNI.toFixed(2)}</p>
-                      <p className="text-sm text-muted-foreground mt-2">Annual</p>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="border-elec-yellow/10 bg-elec-gray">
-                    <CardContent className="pt-6 text-center">
-                      <h4 className="text-white font-semibold mb-2">Effective Rate</h4>
-                      <p className={`text-2xl font-bold ${estimates.effectiveRate <= 20 ? 'text-green-400' : estimates.effectiveRate <= 30 ? 'text-yellow-400' : 'text-red-400'}`}>
-                        {estimates.effectiveRate.toFixed(1)}%
-                      </p>
-                      <p className="text-sm text-muted-foreground mt-2">Of profit</p>
-                    </CardContent>
-                  </Card>
+              <ChevronDown
+                className={cn(
+                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  showAdvanced && "rotate-180"
+                )}
+              />
+            </CollapsibleTrigger>
+
+            <CollapsibleContent className="pt-4 space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <CalculatorInput
+                  label="Pension Contributions"
+                  unit="£"
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.pensionContributions || ""}
+                  onChange={(val) =>
+                    updateInput("pensionContributions", parseFloat(val) || 0)
+                  }
+                  placeholder="e.g., 4000"
+                />
+
+                <CalculatorInput
+                  label="Charitable Donations"
+                  unit="£"
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.charitableDonations || ""}
+                  onChange={(val) =>
+                    updateInput("charitableDonations", parseFloat(val) || 0)
+                  }
+                  placeholder="e.g., 500"
+                />
+              </div>
+
+              <div className="pt-3 border-t border-white/10">
+                <div className="flex items-center gap-2 mb-3">
+                  <Percent className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm font-medium text-white/80">
+                    VAT Configuration
+                  </span>
                 </div>
 
-                <Separator className="bg-elec-yellow/30" />
-
-                {/* Detailed Breakdown */}
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold flex items-center gap-2">
-                    <PoundSterling className="h-4 w-4 text-elec-yellow" />
-                    Income Breakdown
-                  </h4>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-3">
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Business Income:</span>
-                          <span className="text-white">£{inputs.annualIncome.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Business Expenses:</span>
-                          <span className="text-red-400">-£{inputs.businessExpenses.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Capital Allowances:</span>
-                          <span className="text-red-400">-£{inputs.capitalAllowances.toFixed(2)}</span>
-                        </div>
-                        <Separator className="bg-elec-yellow/20" />
-                        <div className="flex justify-between font-semibold">
-                          <span className="text-white">Gross Profit:</span>
-                          <span className="text-elec-yellow">£{estimates.grossProfit.toFixed(2)}</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Personal Allowance:</span>
-                          <span className="text-green-400">-£{TAX_RATES.personalAllowance.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Pension Contributions:</span>
-                          <span className="text-green-400">-£{inputs.pensionContributions.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Charitable Donations:</span>
-                          <span className="text-green-400">-£{inputs.charitableDonations.toFixed(2)}</span>
-                        </div>
-                        <Separator className="bg-elec-yellow/20" />
-                        <div className="flex justify-between font-semibold">
-                          <span className="text-white">Taxable Income:</span>
-                          <span className="text-elec-yellow">£{estimates.taxableIncome.toFixed(2)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <Separator className="bg-elec-yellow/30" />
-
-                {/* Payment Schedule */}
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold">Payment Schedule</h4>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="text-center">
-                      <p className="text-muted-foreground text-sm">Monthly Reserve</p>
-                      <p className="text-2xl font-bold text-blue-400">£{estimates.monthlyTaxNI.toFixed(2)}</p>
-                      <p className="text-xs text-muted-foreground mt-1">Save monthly for tax</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-muted-foreground text-sm">Self Assessment</p>
-                      <p className="text-2xl font-bold text-orange-400">£{(estimates.totalTaxNI / 2).toFixed(2)}</p>
-                      <p className="text-xs text-muted-foreground mt-1">31st Jan payment</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-muted-foreground text-sm">Payment on Account</p>
-                      <p className="text-2xl font-bold text-yellow-400">£{(estimates.totalTaxNI / 2).toFixed(2)}</p>
-                      <p className="text-xs text-muted-foreground mt-1">31st July payment</p>
-                    </div>
-                  </div>
+                <div className="flex gap-2 mb-3">
+                  <button
+                    onClick={() => updateInput("vatRegistered", true)}
+                    className={cn(
+                      "flex-1 h-10 rounded-xl font-medium text-sm transition-all",
+                      inputs.vatRegistered
+                        ? "bg-blue-500/20 border border-blue-500/30 text-blue-300"
+                        : "bg-white/5 border border-white/10 text-white/60"
+                    )}
+                  >
+                    VAT Registered
+                  </button>
+                  <button
+                    onClick={() => updateInput("vatRegistered", false)}
+                    className={cn(
+                      "flex-1 h-10 rounded-xl font-medium text-sm transition-all",
+                      !inputs.vatRegistered
+                        ? "bg-blue-500/20 border border-blue-500/30 text-blue-300"
+                        : "bg-white/5 border border-white/10 text-white/60"
+                    )}
+                  >
+                    Not Registered
+                  </button>
                 </div>
 
                 {inputs.vatRegistered && (
-                  <>
-                    <Separator className="bg-elec-yellow/30" />
-                    <div className="space-y-4">
-                      <h4 className="text-white font-semibold">VAT Liability</h4>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="text-center">
-                          <p className="text-muted-foreground text-sm">Annual VAT</p>
-                          <p className="text-2xl font-bold text-purple-400">£{estimates.vat.toFixed(2)}</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="text-muted-foreground text-sm">Quarterly VAT</p>
-                          <p className="text-2xl font-bold text-purple-300">£{(estimates.vat / 4).toFixed(2)}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </>
+                  <CalculatorInput
+                    label="VAT Taxable Turnover"
+                    unit="£"
+                    type="text"
+                    inputMode="decimal"
+                    value={inputs.vatTurnover || ""}
+                    onChange={(val) => updateInput("vatTurnover", parseFloat(val) || 0)}
+                    placeholder="e.g., 65000"
+                    hint="Annual VAT taxable sales"
+                  />
                 )}
+              </div>
 
-                {/* Tax Efficiency Assessment */}
-                {taxAssessment && (
-                  <>
-                    <Separator className="bg-elec-yellow/30" />
-                    <div className={`p-6 rounded-lg border ${taxAssessment.bgColor}`}>
-                      <div className={`flex items-center gap-3 mb-3 ${taxAssessment.color}`}>
-                        {taxAssessment.icon}
-                        <h3 className="font-semibold text-lg">{taxAssessment.title}</h3>
-                      </div>
-                      <p className={`${taxAssessment.color.replace('300', '200')} mb-4`}>
-                        {taxAssessment.message}
-                      </p>
-                      
-                      <div className="bg-background/10 rounded-lg p-4 mt-4">
-                        <div className="flex items-start gap-3">
-                          <Lightbulb className="h-5 w-5 text-elec-yellow mt-0.5" />
-                          <div>
-                            <h4 className="text-white font-medium mb-2">Tax Planning Insight</h4>
-                            <p className="text-sm text-muted-foreground">
-                              {taxAssessment.status === "efficient"
-                                ? "You're managing your tax efficiently. Continue maximising allowable expenses and consider additional pension contributions for further savings."
-                                : taxAssessment.status === "moderate"
-                                ? "Consider reviewing your expense claims, capital allowances, and pension contributions. A qualified accountant could help optimize your tax position."
-                                : "Your tax burden is quite high. Professional tax advice is recommended to explore incorporation, expense optimization, and other tax-efficient strategies."
-                              }
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
+              <div className="pt-3 border-t border-white/10">
+                <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={inputs.marriageAllowanceTransfer}
+                    onChange={(e) =>
+                      updateInput("marriageAllowanceTransfer", e.target.checked)
+                    }
+                    className="h-4 w-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500/50"
+                  />
+                  <div>
+                    <span className="text-sm text-white/80">Marriage Allowance</span>
+                    <p className="text-xs text-white/50">
+                      Receiving unused allowance from spouse
+                    </p>
+                  </div>
+                </label>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
 
-                {/* Export Button */}
-                <div className="flex justify-end pt-4">
-                  <Button 
-                    variant="outline"
-                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                    onClick={() => {
-                      toast({
-                        title: "Export Feature",
-                        description: "Tax estimation export functionality coming soon!",
-                        variant: "default"
-                      });
-                    }}
-                  >
-                    <Download className="h-4 w-4 mr-2" />
-                    Export Estimates
-                  </Button>
+          {/* Action Buttons */}
+          <div className="flex gap-2 pt-2">
+            <button
+              onClick={calculateTax}
+              disabled={!isValid}
+              className={cn(
+                "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
+                isValid ? "text-black" : "bg-white/10 text-white/30 cursor-not-allowed"
+              )}
+              style={
+                isValid
+                  ? {
+                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }
+                  : undefined
+              }
+            >
+              <Calculator className="h-5 w-5" />
+              Calculate
+            </button>
+            <button
+              onClick={loadExample}
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+            >
+              <Lightbulb className="h-5 w-5" />
+            </button>
+            <button
+              onClick={resetCalculator}
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+            >
+              <RotateCcw className="h-5 w-5" />
+            </button>
+          </div>
+        </CalculatorCard>
+
+        {/* Results Section */}
+        {calculated && (
+          <div className="space-y-4 animate-fade-in">
+            {/* Tax Status */}
+            {taxStatus && (
+              <div className={cn("flex items-center gap-3 p-4 rounded-xl border", taxStatus.bg)}>
+                <div className={taxStatus.color}>
+                  {taxStatus.label === "Efficient" ? (
+                    <CheckCircle className="h-5 w-5" />
+                  ) : (
+                    <AlertCircle className="h-5 w-5" />
+                  )}
                 </div>
-              </>
+                <div>
+                  <span className={cn("font-medium", taxStatus.color)}>
+                    {taxStatus.label} Tax Burden ({estimates.effectiveRate.toFixed(1)}%)
+                  </span>
+                  <p className="text-sm text-white/60">{taxStatus.message}</p>
+                </div>
+              </div>
             )}
-          </CardContent>
-        </Card>
-      </div>
 
-      {/* Tips */}
-      <Card className="border-elec-yellow/20 bg-elec-card mt-8">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <HelpCircle className="h-5 w-5 text-elec-yellow" />
-            Tax Planning Tips
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="space-y-2">
-              <h4 className="text-elec-yellow font-semibold">Expense Management</h4>
-              <p className="text-sm text-muted-foreground">
-                Keep detailed records of all business expenses. Van costs, tools, insurance, and training are all deductible for electrical contractors.
-              </p>
+            <CalculatorResult category="business">
+              <div className="text-center pb-4 border-b border-white/10">
+                <p className="text-sm text-white/60 mb-1">Total Tax & NI</p>
+                <div
+                  className="text-4xl font-bold bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }}
+                >
+                  {formatCurrency(estimates.totalTaxNI)}
+                </div>
+                <p className="text-sm text-white/60 mt-1">per year</p>
+              </div>
+
+              <ResultsGrid columns={2}>
+                <ResultValue
+                  label="Income Tax"
+                  value={formatCurrency(estimates.incomeTax)}
+                  category="business"
+                  size="sm"
+                />
+                <ResultValue
+                  label="National Insurance"
+                  value={formatCurrency(estimates.nationalInsurance)}
+                  category="business"
+                  size="sm"
+                />
+                <ResultValue
+                  label="Effective Rate"
+                  value={`${estimates.effectiveRate.toFixed(1)}%`}
+                  category="business"
+                  size="sm"
+                />
+                <ResultValue
+                  label="Net Income"
+                  value={formatCurrency(estimates.netIncome)}
+                  category="business"
+                  size="sm"
+                />
+              </ResultsGrid>
+
+              {/* Payment Schedule */}
+              <div className="pt-4 mt-4 border-t border-white/10">
+                <p className="text-xs text-white/50 mb-3">Payment Schedule</p>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <div className="text-xs text-blue-400 mb-1">Monthly Reserve</div>
+                    <div className="text-white font-medium">
+                      {formatCurrency(estimates.monthlyTaxNI)}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-amber-400 mb-1">Jan 31st</div>
+                    <div className="text-white font-medium">
+                      {formatCurrency(estimates.totalTaxNI / 2)}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-green-400 mb-1">Jul 31st</div>
+                    <div className="text-white font-medium">
+                      {formatCurrency(estimates.totalTaxNI / 2)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* VAT if registered */}
+              {inputs.vatRegistered && estimates.vat > 0 && (
+                <div className="pt-4 mt-4 border-t border-white/10">
+                  <p className="text-xs text-white/50 mb-3">VAT Liability</p>
+                  <div className="grid grid-cols-2 gap-3 text-center">
+                    <div>
+                      <div className="text-xs text-purple-400 mb-1">Annual VAT</div>
+                      <div className="text-white font-medium">
+                        {formatCurrency(estimates.vat)}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-purple-400 mb-1">Quarterly VAT</div>
+                      <div className="text-white font-medium">
+                        {formatCurrency(estimates.vat / 4)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </CalculatorResult>
+
+            {/* Income Breakdown */}
+            <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+              <div
+                className="calculator-card overflow-hidden"
+                style={{ borderColor: "#60a5fa15" }}
+              >
+                <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                  <div className="flex items-center gap-3">
+                    <Info className="h-4 w-4 text-blue-400" />
+                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                      Income Breakdown
+                    </span>
+                  </div>
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      showGuidance && "rotate-180"
+                    )}
+                  />
+                </CollapsibleTrigger>
+
+                <CollapsibleContent className="p-4 pt-0">
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between text-white/60">
+                      <span>Business Income:</span>
+                      <span className="text-white">
+                        {formatCurrency(inputs.annualIncome)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-white/60">
+                      <span>Business Expenses:</span>
+                      <span className="text-red-400">
+                        -{formatCurrency(inputs.businessExpenses)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-white/60">
+                      <span>Capital Allowances:</span>
+                      <span className="text-red-400">
+                        -{formatCurrency(inputs.capitalAllowances)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between pt-2 border-t border-white/10 font-medium">
+                      <span className="text-white">Gross Profit:</span>
+                      <span className="text-blue-400">
+                        {formatCurrency(estimates.grossProfit)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-white/60">
+                      <span>Personal Allowance:</span>
+                      <span className="text-green-400">
+                        -{formatCurrency(TAX_RATES.personalAllowance)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-white/60">
+                      <span>Pension & Donations:</span>
+                      <span className="text-green-400">
+                        -
+                        {formatCurrency(
+                          inputs.pensionContributions + inputs.charitableDonations
+                        )}
+                      </span>
+                    </div>
+                    <div className="flex justify-between pt-2 border-t border-white/10 font-medium">
+                      <span className="text-white">Taxable Income:</span>
+                      <span className="text-blue-400">
+                        {formatCurrency(estimates.taxableIncome)}
+                      </span>
+                    </div>
+                  </div>
+                </CollapsibleContent>
+              </div>
+            </Collapsible>
+          </div>
+        )}
+
+        {/* Quick Reference */}
+        <Collapsible open={showReference} onOpenChange={setShowReference}>
+          <div
+            className="calculator-card overflow-hidden"
+            style={{ borderColor: "#fbbf2415" }}
+          >
+            <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-4 w-4 text-amber-400" />
+                <span className="text-sm sm:text-base font-medium text-amber-300">
+                  Tax Reference ({taxYear})
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  showReference && "rotate-180"
+                )}
+              />
+            </CollapsibleTrigger>
+
+            <CollapsibleContent className="p-4 pt-0">
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">Income Tax Bands</p>
+                  <p className="text-amber-200/70">
+                    Personal: £{TAX_RATES.personalAllowance.toLocaleString()}
+                  </p>
+                  <p className="text-amber-200/70">
+                    Basic (20%): £0-{TAX_RATES.basicRateThreshold.toLocaleString()}
+                  </p>
+                  <p className="text-amber-200/70">
+                    Higher (40%): £{TAX_RATES.basicRateThreshold.toLocaleString()}+
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">National Insurance</p>
+                  <p className="text-amber-200/70">
+                    Class 4: {(TAX_RATES.class4LowerRate * 100).toFixed(0)}% (£
+                    {TAX_RATES.class4LowerProfitsLimit.toLocaleString()}-
+                    {TAX_RATES.class4UpperProfitsLimit.toLocaleString()})
+                  </p>
+                  <p className="text-amber-200/70">
+                    Above £{TAX_RATES.class4UpperProfitsLimit.toLocaleString()}:{" "}
+                    {(TAX_RATES.class4HigherRate * 100).toFixed(0)}%
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">VAT</p>
+                  <p className="text-amber-200/70">
+                    Threshold: £{TAX_RATES.vatThreshold.toLocaleString()}
+                  </p>
+                  <p className="text-amber-200/70">Standard Rate: 20%</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">Payment Dates</p>
+                  <p className="text-amber-200/70">31st January</p>
+                  <p className="text-amber-200/70">31st July (on account)</p>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+
+        {/* Tax Tips */}
+        <div className="calculator-card p-4" style={{ borderColor: "#22c55e20" }}>
+          <div className="flex items-center gap-2 mb-3">
+            <Lightbulb className="h-5 w-5 text-green-400" />
+            <span className="text-sm font-medium text-green-300">Tax Planning Tips</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-green-200/70">
+            <div>
+              <p className="text-green-300 font-medium mb-1">Expenses</p>
+              <p>Keep records of van costs, tools, insurance, and training - all deductible.</p>
             </div>
-            <div className="space-y-2">
-              <h4 className="text-elec-yellow font-semibold">Capital Allowances</h4>
-              <p className="text-sm text-muted-foreground">
-                Claim Annual Investment Allowance on equipment purchases. BS7671 testing equipment and tools often qualify for immediate relief.
-              </p>
+            <div>
+              <p className="text-green-300 font-medium mb-1">Capital Allowances</p>
+              <p>Claim AIA on equipment. Testing equipment and tools often qualify.</p>
             </div>
-            <div className="space-y-2">
-              <h4 className="text-elec-yellow font-semibold">Payment Planning</h4>
-              <p className="text-sm text-muted-foreground">
-                Set aside money monthly for tax payments. Self Assessment deadlines are strict, and late payment penalties can be costly.
-              </p>
+            <div>
+              <p className="text-green-300 font-medium mb-1">Payment Planning</p>
+              <p>Set aside money monthly. Late payment penalties can be costly.</p>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

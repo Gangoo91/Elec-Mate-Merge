@@ -312,7 +312,7 @@ const Module2Section6_5: React.FC = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 to-orange-500/10 border-2 border-elec-yellow/30">
+        <Card className="mb-8 p-6 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10 border-2 border-elec-yellow/30">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Timer className="w-5 h-5 text-elec-yellow" />
             Energy Waste Reduction - Pocket Guide
@@ -332,7 +332,7 @@ const Module2Section6_5: React.FC = () => {
               </div>
 
               <div className="bg-[#121212]/50 rounded-lg p-3 border border-white/10">
-                <h4 className="font-semibold mb-2 text-emerald-600">Design Choices</h4>
+                <h4 className="font-semibold mb-2 text-elec-yellow">Design Choices</h4>
                 <ul className="space-y-1 text-xs">
                   <li>• Size cables for voltage drop, not just current</li>
                   <li>• Minimise cable runs where practical</li>

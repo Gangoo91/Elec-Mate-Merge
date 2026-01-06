@@ -262,7 +262,7 @@ const Module4Section7_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Safety and Productivity Hazards</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Safety and Productivity Hazards</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Slips, trips, and falls</strong> - from trailing cables, scattered tools, packaging materials, and debris</li>
                       <li><strong>Fire hazards</strong> - flammable waste materials left near heat sources, electrical equipment, or ignition points</li>
@@ -312,7 +312,7 @@ const Module4Section7_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Legislative Requirements and Responsibilities</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Legislative Requirements and Responsibilities</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Health and Safety at Work Act 1974</strong> - employers and employees have duty to keep workplaces safe and without risks to health</li>
                       <li><strong>CDM Regulations 2015</strong> - require housekeeping standards to be maintained throughout construction projects</li>
@@ -460,7 +460,7 @@ const Module4Section7_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Comprehensive Waste Management Systems</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Comprehensive Waste Management Systems</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Waste segregation</strong> - separate materials by type (metal, plastic, general) where recycling facilities are provided</li>
                       <li><strong>Designated disposal</strong> - use provided skips and bins, avoid accumulating waste near work areas</li>
@@ -544,7 +544,7 @@ const Module4Section7_5 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 1: Trip Hazard Injury</h3>
+                  <h3 className="font-medium text-red-800 text-elec-yellow mb-2">Case Study 1: Trip Hazard Injury</h3>
                   <p className="text-xs sm:text-sm text-white mb-2">
                     On a refurbishment project, an apprentice left offcuts of twin-and-earth cable and packaging across a corridor. A site supervisor tripped over the debris and injured his wrist, requiring hospital treatment and time off work.
                   </p>
@@ -559,7 +559,7 @@ const Module4Section7_5 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 2: Fire Hazard from Poor Waste Management</h3>
+                  <h3 className="font-medium text-red-800 text-elec-yellow mb-2">Case Study 2: Fire Hazard from Poor Waste Management</h3>
                   <p className="text-xs sm:text-sm text-white mb-2">
                     Flammable packaging materials were left near a temporary electrical distribution board on a construction site. Overheating equipment ignited the materials, causing a significant fire that damaged work already completed and delayed the project by several weeks.
                   </p>

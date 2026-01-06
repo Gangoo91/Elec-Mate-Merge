@@ -167,7 +167,7 @@ const Section6_5 = () => {
             <div className="p-2 rounded-lg bg-card">
               <AlertTriangle className="w-6 h-6 text-foreground" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 6.5
             </Badge>
           </div>
@@ -183,16 +183,16 @@ const Section6_5 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Near misses are events that could have caused harm but didn't.</li>
                 <li>They're warning signs that dangerous conditions exist for accidents.</li>
                 <li>Every near miss tells us something valuable about hidden workplace risks.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Unexpected live circuits, tools that nearly fell, cables you almost tripped on.</li>
                 <li><strong>Use:</strong> Report immediately to supervisor, include full details, suggest improvements.</li>
@@ -236,7 +236,7 @@ const Section6_5 = () => {
             <div className="flex items-start gap-4">
               <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-red-600 dark:text-emerald-400 mb-3">Definition and Recognition</h3>
+                <h3 className="text-lg font-semibold text-red-600 dark:text-elec-yellow mb-3">Definition and Recognition</h3>
                 
                 <div className="space-y-4">
                   <div>
@@ -333,11 +333,11 @@ const Section6_5 = () => {
 
         {/* Section 3: Reporting Procedure and Requirements */}
         <div className="space-y-6 mb-8">
-          <div className="rounded-lg p-6 border-l-4 border-l-emerald-500 bg-card">
+          <div className="rounded-lg p-6 border-l-4 border-l-elec-yellow bg-card">
             <div className="flex items-start gap-4">
-              <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+              <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Reporting Procedure and Requirements</h3>
+                <h3 className="text-lg font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Reporting Procedure and Requirements</h3>
                 
                 <div className="space-y-4">
                   <div>
@@ -423,7 +423,7 @@ const Section6_5 = () => {
               </div>
 
               <div className="bg-muted/50 p-4 rounded-lg">
-                <h4 className="font-medium text-sm text-emerald-400 mb-2">Improvements Made</h4>
+                <h4 className="font-medium text-sm text-elec-yellow mb-2">Improvements Made</h4>
                 <ul className="text-sm text-muted-foreground space-y-1 list-disc ml-4">
                   <li>Control measures added or changed</li>
                   <li>Training or signage improved</li>
@@ -465,13 +465,13 @@ const Section6_5 = () => {
                           <span className="text-foreground">Minor Injuries</span>
                         </div>
                         <div className="flex items-center gap-3 text-sm">
-                          <div className="w-8 h-8 bg-emerald-500 rounded flex items-center justify-center">
+                          <div className="w-8 h-8 bg-elec-yellow rounded flex items-center justify-center">
                             <span className="text-white font-bold">30</span>
                           </div>
                           <span className="text-foreground">Property Damage</span>
                         </div>
                         <div className="flex items-center gap-3 text-sm">
-                          <div className="w-8 h-8 bg-emerald-500 rounded flex items-center justify-center">
+                          <div className="w-8 h-8 bg-elec-yellow rounded flex items-center justify-center">
                             <span className="text-white font-bold">600</span>
                           </div>
                           <span className="text-foreground">Near Misses</span>
@@ -492,25 +492,25 @@ const Section6_5 = () => {
         </div>
 
         {/* Real World Scenario */}
-        <Card className="p-6 bg-emerald-500/5 border border-emerald-400/20 mb-8">
+        <Card className="p-6 bg-elec-yellow/5 border border-elec-yellow/20 mb-8">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Shield className="h-5 w-5 text-emerald-600" />
+            <Shield className="h-5 w-5 text-elec-yellow" />
             Real World Scenario
           </h2>
           <div className="space-y-4">
-            <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
+            <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="font-semibold text-foreground mb-2">The Scenario</h3>
               <p className="text-muted-foreground text-sm">
                 An apprentice almost drilled into a live cable hidden behind plaster. He stopped after a flash appeared through the drill hole. He reported it, and a scan of the wall showed more poorly routed cables.
               </p>
             </div>
-            <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
+            <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="font-semibold text-foreground mb-2">What Happened Next</h3>
               <p className="text-muted-foreground text-sm">
                 The site added mandatory cable detection before drilling anywhere — potentially preventing multiple injuries.
               </p>
             </div>
-            <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
+            <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="font-semibold text-foreground mb-2">Why It Mattered</h3>
               <ul className="space-y-1 text-muted-foreground text-sm list-disc ml-4">
                 <li>One person's honesty protected the whole team</li>
@@ -526,7 +526,7 @@ const Section6_5 = () => {
         <Card className="p-6 bg-card border-border/20 mb-8">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-foreground mb-1">Will I get in trouble for reporting a near miss?</h3>
               <p className="text-muted-foreground text-sm">No. Near miss reporting is about learning and improvement, not blame. Most companies have policies protecting those who report safety concerns.</p>
             </div>
@@ -546,7 +546,7 @@ const Section6_5 = () => {
               <h3 className="font-semibold text-foreground mb-1">What if I witness someone else's near miss?</h3>
               <p className="text-muted-foreground text-sm">Encourage them to report it, and if they won't, you should report it yourself. Safety is everyone's responsibility.</p>
             </div>
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-foreground mb-1">Do near miss reports affect safety statistics?</h3>
               <p className="text-muted-foreground text-sm">Near misses are typically recorded separately from accidents. High near miss reporting often indicates a positive safety culture.</p>
             </div>

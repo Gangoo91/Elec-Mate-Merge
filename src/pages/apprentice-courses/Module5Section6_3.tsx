@@ -656,7 +656,7 @@ const Module5Section6_3 = () => {
         <Separator className="my-8" />
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 border border-elec-yellow/30">
+        <Card className="mb-8 p-6 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30">
           <div className="flex items-center gap-3 mb-4">
             <BookOpen className="w-6 h-6 text-elec-yellow" />
             <h2 className="text-2xl font-bold text-white">Pocket Guide</h2>

@@ -234,7 +234,7 @@ const Module6Section1_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Visual Inspection Requirements</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Visual Inspection Requirements</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -286,7 +286,7 @@ const Module6Section1_4 = () => {
                       </div>
 
                       <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded border border-yellow-200 dark:border-yellow-800">
-                        <p className="font-medium text-yellow-700 dark:text-elec-yellow mb-2">Key Limitation of Inspection</p>
+                        <p className="font-medium text-yellow-700 text-elec-yellow mb-2">Key Limitation of Inspection</p>
                         <p className="text-xs sm:text-sm text-white">
                           Visual inspection cannot detect hidden faults such as loose connections inside accessories, degraded insulation, or incorrect internal wiring. This is why testing with instruments is essential to complete the verification process.
                         </p>
@@ -297,8 +297,8 @@ const Module6Section1_4 = () => {
               </div>
             </div>
 
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mt-4">
-              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">BS 7671 Inspection Requirements</p>
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mt-4">
+              <p className="font-medium text-blue-700 text-elec-yellow mb-2">BS 7671 Inspection Requirements</p>
               <p className="text-xs sm:text-sm text-white">
                 BS 7671 requires that inspection shall precede testing and shall normally be done with the installation disconnected from the supply. Appendix 6 provides comprehensive inspection schedules for different types of installation.
               </p>
@@ -326,7 +326,7 @@ const Module6Section1_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Instrumental Testing Requirements</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Instrumental Testing Requirements</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -529,7 +529,7 @@ const Module6Section1_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Documentation and Certification</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Documentation and Certification</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -651,7 +651,7 @@ const Module6Section1_4 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="border-l-4 border-l-elec-yellow pl-4 bg-emerald-50/50 dark:bg-emerald-950/20 py-3">
+            <div className="border-l-4 border-l-elec-yellow pl-4 bg-elec-yellow/5/50 dark:bg-elec-yellow/10 py-3">
               <p className="font-medium text-white mb-2">Q: Can I do inspection and testing at the same time?</p>
               <p className="text-xs sm:text-sm text-white">A: No. BS 7671 requires inspection to be completed before testing begins. Inspection must be done with the installation de-energised, while some tests require the installation to be energised.</p>
             </div>
@@ -678,8 +678,8 @@ const Module6Section1_4 = () => {
           </h2>
           <div className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Inspection Best Practice</p>
+              <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Inspection Best Practice</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>• Always carry out systematic inspection first, before energising</li>
                   <li>• Use BS 7671 Appendix 6 checklists for comprehensive coverage</li>

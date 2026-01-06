@@ -236,7 +236,7 @@ const Module6Section2_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Physical Damage Assessment</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Physical Damage Assessment</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -273,7 +273,7 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Critical Safety Alert</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Critical Safety Alert</p>
                         <p className="text-xs sm:text-sm text-white">
                           Any physical damage that exposes live conductors or shows signs of overheating must be treated as an immediate safety hazard. Isolate the circuit and make safe before proceeding.
                         </p>
@@ -306,7 +306,7 @@ const Module6Section2_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Deterioration and Wear Patterns</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Deterioration and Wear Patterns</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -432,7 +432,7 @@ const Module6Section2_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Workmanship-Related Safety Hazards</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Workmanship-Related Safety Hazards</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -495,7 +495,7 @@ const Module6Section2_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Safety vs. Cosmetic Assessment</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Safety vs. Cosmetic Assessment</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -532,8 +532,8 @@ const Module6Section2_2 = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Professional Judgement</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Professional Judgement</p>
                         <p className="text-xs sm:text-sm text-white">
                           When in doubt, err on the side of safety. Document all observations and seek advice from senior colleagues or regulatory bodies if uncertain about the significance of any defect.
                         </p>

@@ -194,11 +194,11 @@ const Module5Section3_3 = () => {
             Safe and efficient access to work areas is critical in electrical installation. Poor planning of access can cause delays, create unsafe working conditions, and lead to accidents. By organising access and selecting the right working platforms, electricians can complete tasks more effectively while maintaining compliance with health and safety regulations.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Hammer className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Hammer className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   Poor access planning is responsible for approximately 25% of construction site accidents, making proper planning essential for safe electrical installations.
                 </p>
@@ -211,7 +211,7 @@ const Module5Section3_3 = () => {
               <strong>Real Impact:</strong> Well-planned access routes and platforms can reduce installation time by 15% and significantly decrease the risk of accidents and injuries.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> The Work at Height Regulations 2005 require that access planning prioritises the lowest-risk methods available for each task.
               </p>
@@ -248,7 +248,7 @@ const Module5Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Critical Safety Benefits</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Critical Safety Benefits</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -388,7 +388,7 @@ const Module5Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">B</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Podium Steps</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Podium Steps</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -413,8 +413,8 @@ const Module5Section3_3 = () => {
                         </div>
                       </div>
                       
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Safety Features</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Safety Features</p>
                         <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                           <li>Built-in guardrails (minimum 950mm height)</li>
                           <li>Self-locking outriggers for stability</li>
@@ -432,7 +432,7 @@ const Module5Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">C</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Scaffold Towers</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Scaffold Towers</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -458,7 +458,7 @@ const Module5Section3_3 = () => {
                       </div>
                       
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Inspection Requirements</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Inspection Requirements</p>
                         <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                           <li>Competent person inspection before first use</li>
                           <li>Weekly inspections during use</li>
@@ -477,7 +477,7 @@ const Module5Section3_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">D</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Mobile Elevating Work Platforms (MEWPs)</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Mobile Elevating Work Platforms (MEWPs)</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -502,7 +502,7 @@ const Module5Section3_3 = () => {
                       </div>
                       
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Safety Considerations</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Safety Considerations</p>
                         <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                           <li>Ground stability and load bearing assessment</li>
                           <li>Overhead hazard identification (power lines, structures)</li>
@@ -576,7 +576,7 @@ const Module5Section3_3 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Route Documentation</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Route Documentation</p>
                         <p className="text-xs sm:text-sm text-white">
                           All access routes should be documented with plans showing dimensions, load limits, emergency procedures, and coordination with other trades' activities.
                         </p>
@@ -638,26 +638,26 @@ const Module5Section3_3 = () => {
             
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                <h4 className="font-medium text-red-700 dark:text-elec-yellow mb-3">Hierarchy of Controls</h4>
+                <h4 className="font-medium text-red-700 text-elec-yellow mb-3">Hierarchy of Controls</h4>
                 <div className="space-y-3">
                   <div className="flex gap-3">
                     <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</div>
                     <div>
-                      <p className="font-medium text-red-700 dark:text-elec-yellow">Avoid Work at Height</p>
+                      <p className="font-medium text-red-700 text-elec-yellow">Avoid Work at Height</p>
                       <p className="text-xs sm:text-sm text-white">Where reasonably practicable, complete work from ground level</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
                     <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</div>
                     <div>
-                      <p className="font-medium text-red-700 dark:text-elec-yellow">Prevent Falls</p>
+                      <p className="font-medium text-red-700 text-elec-yellow">Prevent Falls</p>
                       <p className="text-xs sm:text-sm text-white">Use guardrails, barriers, and working platforms</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
                     <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
                     <div>
-                      <p className="font-medium text-red-700 dark:text-elec-yellow">Mitigate Fall Distance</p>
+                      <p className="font-medium text-red-700 text-elec-yellow">Mitigate Fall Distance</p>
                       <p className="text-xs sm:text-sm text-white">Fall arrest systems, safety nets, air bags</p>
                     </div>
                   </div>
@@ -677,10 +677,10 @@ const Module5Section3_3 = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <h4 className="font-medium text-purple-700 dark:text-elec-yellow mb-3">Personal Protective Equipment</h4>
+                <h4 className="font-medium text-purple-700 text-elec-yellow mb-3">Personal Protective Equipment</h4>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">When Required:</p>
+                    <p className="font-medium text-purple-700 text-elec-yellow mb-2">When Required:</p>
                     <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                       <li>Work on MEWPs without adequate guardrails</li>
                       <li>Scaffold erection and dismantling</li>
@@ -689,7 +689,7 @@ const Module5Section3_3 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Equipment Types:</p>
+                    <p className="font-medium text-purple-700 text-elec-yellow mb-2">Equipment Types:</p>
                     <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                       <li>Full body harnesses</li>
                       <li>Lanyards with shock absorbers</li>
@@ -745,8 +745,8 @@ const Module5Section3_3 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
-                <h4 className="font-medium text-emerald-700 dark:text-elec-yellow mb-3">Shared Resources Management</h4>
+              <div className="rounded-lg p-4 bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20">
+                <h4 className="font-medium text-elec-yellow text-elec-yellow mb-3">Shared Resources Management</h4>
                 <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                   <li><strong>Equipment Scheduling:</strong> Book scaffold towers, MEWPs, and major platforms in advance</li>
                   <li><strong>Space Allocation:</strong> Define working areas and storage zones for each trade</li>
@@ -803,19 +803,19 @@ const Module5Section3_3 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <h4 className="font-medium text-blue-700 dark:text-elec-yellow mb-3">Formal Inspection Requirements</h4>
+              <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                <h4 className="font-medium text-blue-700 text-elec-yellow mb-3">Formal Inspection Requirements</h4>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-blue-700 dark:text-elec-yellow">Weekly Inspections:</p>
+                    <p className="font-medium text-blue-700 text-elec-yellow">Weekly Inspections:</p>
                     <p className="text-xs sm:text-sm text-white">Required for scaffolds and towers in use, conducted by competent person with written records.</p>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-700 dark:text-elec-yellow">Annual Inspections:</p>
+                    <p className="font-medium text-blue-700 text-elec-yellow">Annual Inspections:</p>
                     <p className="text-xs sm:text-sm text-white">Thorough examination of all access equipment by qualified inspector with certification.</p>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-700 dark:text-elec-yellow">Post-Incident Inspections:</p>
+                    <p className="font-medium text-blue-700 text-elec-yellow">Post-Incident Inspections:</p>
                     <p className="text-xs sm:text-sm text-white">Required after any incident, adverse weather, or substantial modification.</p>
                   </div>
                 </div>
@@ -881,19 +881,19 @@ const Module5Section3_3 = () => {
               </div>
             </div>
 
-            <div className="rounded-lg p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
-              <h3 className="font-medium text-emerald-800 dark:text-emerald-200 mb-3">Technology and Innovation</h3>
+            <div className="rounded-lg p-4 bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20">
+              <h3 className="font-medium text-elec-yellow dark:text-elec-yellow mb-3">Technology and Innovation</h3>
               <div className="space-y-3">
                 <div>
-                  <p className="font-medium text-emerald-800 dark:text-emerald-200">Digital Planning Tools:</p>
+                  <p className="font-medium text-elec-yellow dark:text-elec-yellow">Digital Planning Tools:</p>
                   <p className="text-xs sm:text-sm text-white">3D modeling software, VR planning systems, and mobile apps for equipment selection and risk assessment.</p>
                 </div>
                 <div>
-                  <p className="font-medium text-emerald-800 dark:text-emerald-200">Smart Equipment:</p>
+                  <p className="font-medium text-elec-yellow dark:text-elec-yellow">Smart Equipment:</p>
                   <p className="text-xs sm:text-sm text-white">GPS-enabled MEWPs, IoT sensors for stability monitoring, and automated inspection systems.</p>
                 </div>
                 <div>
-                  <p className="font-medium text-emerald-800 dark:text-emerald-200">Communication Systems:</p>
+                  <p className="font-medium text-elec-yellow dark:text-elec-yellow">Communication Systems:</p>
                   <p className="text-xs sm:text-sm text-white">Radio systems, emergency alarms, and digital coordination platforms for real-time updates.</p>
                 </div>
               </div>
@@ -938,14 +938,14 @@ const Module5Section3_3 = () => {
               </div>
             </div>
 
-            <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
               <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">Case Study 3: Hospital Renovation Challenges</h3>
-              <p className="text-blue-700 dark:text-elec-yellow mb-3">
+              <p className="text-blue-700 text-elec-yellow mb-3">
                 Hospital electrical work required 24/7 access planning due to critical operations. Mobile platforms and carefully planned access routes maintained patient safety while enabling complex electrical installations.
               </p>
               <div className="bg-blue-100 dark:bg-blue-900/40 p-3 rounded">
                 <p className="font-medium text-blue-800 dark:text-blue-200 mb-1">Key Strategies:</p>
-                <ul className="list-disc pl-5 text-sm text-blue-700 dark:text-elec-yellow">
+                <ul className="list-disc pl-5 text-sm text-blue-700 text-elec-yellow">
                   <li>Quiet, compact equipment to minimize disruption</li>
                   <li>Emergency response integration with hospital systems</li>
                   <li>Flexible scheduling around patient needs</li>
@@ -970,9 +970,9 @@ const Module5Section3_3 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
-          <h2 className="text-lg sm:text-xl font-semibold text-emerald-800 dark:text-emerald-200 mb-4">Pocket Guide</h2>
-          <div className="space-y-2 text-emerald-700 dark:text-elec-yellow">
+        <Card className="mb-8 p-6 bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow dark:text-elec-yellow mb-4">Pocket Guide</h2>
+          <div className="space-y-2 text-elec-yellow text-elec-yellow">
             <p>• Plan safe access routes before starting work.</p>
             <p>• Choose the right platform: step ladder, podium, scaffold, or MEWP.</p>
             <p>• Follow Work at Height Regulations 2005.</p>

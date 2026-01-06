@@ -6,17 +6,19 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
-import { Loader2, AlertTriangle, Zap, Mail, Lock, Eye, EyeOff, ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Loader2, AlertTriangle, Zap, Mail, Lock, Eye, EyeOff, ArrowRight, Sparkles, CheckCircle2, RefreshCw } from 'lucide-react';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isResending, setIsResending] = useState(false);
+  const [resendSuccess, setResendSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isEmailNotConfirmedError, setIsEmailNotConfirmedError] = useState(false);
 
-  const { signIn } = useAuth();
+  const { signIn, resendConfirmationEmail } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,6 +50,25 @@ const SignIn = () => {
       setError(err.message || 'An error occurred during sign in');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleResendConfirmation = async () => {
+    if (!email) {
+      setError('Please enter your email address first');
+      return;
+    }
+
+    setIsResending(true);
+    setResendSuccess(false);
+
+    try {
+      const { error } = await resendConfirmationEmail(email);
+      if (!error) {
+        setResendSuccess(true);
+      }
+    } finally {
+      setIsResending(false);
     }
   };
 
@@ -88,11 +109,36 @@ const SignIn = () => {
                 <div className="mb-5 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 animate-fade-in">
                   <div className="flex gap-2">
                     <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
-                    <div>
+                    <div className="flex-1">
                       <p className="font-medium text-amber-500 text-sm">Email not confirmed</p>
-                      <p className="text-xs text-gray-400 mt-1">
+                      <p className="text-xs text-gray-400 mt-1 mb-2">
                         Check your inbox and click the confirmation link.
                       </p>
+                      {resendSuccess ? (
+                        <p className="text-xs text-green-400 flex items-center gap-1">
+                          <CheckCircle2 className="h-3 w-3" />
+                          Confirmation email sent! Check your inbox.
+                        </p>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={handleResendConfirmation}
+                          disabled={isResending}
+                          className="text-xs text-yellow-400 hover:text-yellow-300 transition-colors flex items-center gap-1 disabled:opacity-50"
+                        >
+                          {isResending ? (
+                            <>
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                              Sending...
+                            </>
+                          ) : (
+                            <>
+                              <RefreshCw className="h-3 w-3" />
+                              Resend confirmation email
+                            </>
+                          )}
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

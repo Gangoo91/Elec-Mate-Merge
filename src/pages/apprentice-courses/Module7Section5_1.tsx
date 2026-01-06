@@ -208,7 +208,7 @@ const Module7Section5_1 = () => {
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base">Selecting the Right Instrument</h3>
+                  <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-4 text-base">Selecting the Right Instrument</h3>
                   
                   <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Match the instrument to the fault hypothesis:</strong> Different faults require different tests. Use continuity testers for suspected broken connections, insulation resistance testers for earth leakage or damp problems, loop impedance testers for protective device verification, and voltage indicators for proving dead or live.</p>
@@ -306,7 +306,7 @@ const Module7Section5_1 = () => {
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base">Earth Fault Loop and RCD Verification</h3>
+                  <h3 className="font-semibold text-purple-600 text-elec-yellow mb-4 text-base">Earth Fault Loop and RCD Verification</h3>
                   
                   <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Understanding loop impedance (Zs) verification:</strong> This test confirms protective devices can achieve required disconnection times under earth fault conditions. The measurement combines the resistance of the supply (Ze), line conductor (R1), and protective conductor (R2). Compare measured Zs values to tabulated maximum values for the specific protective device type, rating, and required disconnection time (0.4s for socket circuits, 5s for fixed equipment).</p>
@@ -342,7 +342,7 @@ const Module7Section5_1 = () => {
           <div className="space-y-6">
             {/* Before You Test */}
             <div className="rounded-lg p-4 bg-transparent border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3 text-sm sm:text-base">Before You Test</h3>
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3 text-sm sm:text-base">Before You Test</h3>
               <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow font-bold">•</span>
@@ -424,7 +424,7 @@ const Module7Section5_1 = () => {
             {/* Do/Don't Quick Reference */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="rounded-lg p-3 bg-elec-yellow/5 border border-elec-yellow/20">
-                <h4 className="font-semibold text-emerald-600 dark:text-elec-yellow mb-2 text-sm">✓ DO</h4>
+                <h4 className="font-semibold text-elec-yellow text-elec-yellow mb-2 text-sm">✓ DO</h4>
                 <ul className="space-y-1 text-xs text-white">
                   <li>• Check calibration before use</li>
                   <li>• Match instrument to circuit category</li>
@@ -433,7 +433,7 @@ const Module7Section5_1 = () => {
                 </ul>
               </div>
               <div className="rounded-lg p-3 border border-red-500/20">
-                <h4 className="font-semibold text-red-600 dark:text-elec-yellow mb-2 text-sm">✗ DON'T</h4>
+                <h4 className="font-semibold text-red-600 text-elec-yellow mb-2 text-sm">✗ DON'T</h4>
                 <ul className="space-y-1 text-xs text-white">
                   <li>• Test live circuits with IR testers</li>
                   <li>• Use damaged test leads</li>
@@ -452,16 +452,16 @@ const Module7Section5_1 = () => {
           <div className="space-y-6">
             {/* Lighting Circuit Fault - Expanded */}
             <div className="rounded-lg p-4 bg-transparent border border-elec-yellow/30">
-              <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3 text-base">Case 1: Lighting Circuit Fault</h3>
+              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3 text-base">Case 1: Lighting Circuit Fault</h3>
               
               <div className="space-y-3 text-xs sm:text-sm text-white">
                 <div>
-                  <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-1">Situation:</p>
+                  <p className="font-medium text-elec-yellow text-elec-yellow mb-1">Situation:</p>
                   <p>Multiple lighting fittings on a ground floor circuit became inoperative after recent decorating work. The customer reported that "some lights work, others don't" and suspected damaged cables.</p>
                 </div>
                 
                 <div>
-                  <p className="font-medium text-red-600 dark:text-elec-yellow mb-1">Wrong Approach:</p>
+                  <p className="font-medium text-red-600 text-elec-yellow mb-1">Wrong Approach:</p>
                   <p>An apprentice used a basic plug-in socket tester borrowed from a colleague. The device indicated "OK" when plugged into nearby sockets, leading to the incorrect assumption that the circuit wiring was sound. The lighting fault remained unresolved.</p>
                 </div>
                 
@@ -471,7 +471,7 @@ const Module7Section5_1 = () => {
                 </div>
                 
                 <div>
-                  <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-1">Result:</p>
+                  <p className="font-medium text-elec-yellow text-elec-yellow mb-1">Result:</p>
                   <p>The neutral connection was restored and secured. Follow-up testing verified polarity, insulation resistance, and earth fault loop impedance were all within acceptable limits. All lighting fittings were restored to operation and properly documented.</p>
                 </div>
                 
@@ -484,16 +484,16 @@ const Module7Section5_1 = () => {
 
             {/* RCD Tripping Issue - Expanded */}
             <div className="rounded-lg p-4 bg-transparent border border-red-500/20">
-              <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Case 2: RCD Tripping Issue</h3>
+              <h3 className="font-semibold text-red-600 text-elec-yellow mb-3 text-base">Case 2: RCD Tripping Issue</h3>
               
               <div className="space-y-3 text-xs sm:text-sm text-white">
                 <div>
-                  <p className="font-medium text-red-600 dark:text-elec-yellow mb-1">Situation:</p>
+                  <p className="font-medium text-red-600 text-elec-yellow mb-1">Situation:</p>
                   <p>A domestic RCD protecting garden circuits tripped intermittently during damp weather conditions. The customer reported that the trips occurred mainly after rain and seemed to affect exterior lighting and a pond pump circuit.</p>
                 </div>
                 
                 <div>
-                  <p className="font-medium text-red-600 dark:text-elec-yellow mb-1">Wrong Approach:</p>
+                  <p className="font-medium text-red-600 text-elec-yellow mb-1">Wrong Approach:</p>
                   <p>A contractor initially used an old digital multimeter to check voltages and resistances. The basic measurements appeared normal, and without RCD testing capability, the results were inconclusive. The RCD continued to trip randomly, leaving the customer frustrated.</p>
                 </div>
                 
@@ -503,13 +503,13 @@ const Module7Section5_1 = () => {
                 </div>
                 
                 <div>
-                  <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-1">Result:</p>
+                  <p className="font-medium text-elec-yellow text-elec-yellow mb-1">Result:</p>
                   <p>The junction box was replaced with a higher IP-rated enclosure and proper cable glands fitted. Insulation resistance values returned to &gt;999MΩ, and no further RCD trips occurred during subsequent wet weather testing.</p>
                 </div>
                 
                 <div className="bg-red-100 dark:bg-red-900/20 p-3 rounded border border-red-300 dark:border-red-700">
                   <p className="font-medium text-red-800 dark:text-red-200 mb-1">Lesson Learned:</p>
-                  <p className="text-red-700 dark:text-elec-yellow">Use the correct instrument mode for each diagnostic requirement. Isolating subcircuits during testing helps pinpoint moisture-related insulation breakdown that standard multimeters cannot detect.</p>
+                  <p className="text-red-700 text-elec-yellow">Use the correct instrument mode for each diagnostic requirement. Isolating subcircuits during testing helps pinpoint moisture-related insulation breakdown that standard multimeters cannot detect.</p>
                 </div>
               </div>
             </div>

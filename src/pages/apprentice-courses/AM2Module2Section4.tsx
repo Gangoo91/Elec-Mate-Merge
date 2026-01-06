@@ -228,7 +228,7 @@ const AM2Module2Section4 = () => {
       <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-6 md:py-12">
         {/* Title Section */}
         <div className="mb-8 md:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <FileText className="w-4 h-4" />
             Module 2 – Section 4
           </div>
@@ -244,17 +244,17 @@ const AM2Module2Section4 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-8">
           <div className="p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
                   CRITICAL: Paperwork Failure = Assessment Failure
                 </h3>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
                   In the AM2, paperwork is not an afterthought — it's part of the assessment. Candidates must complete certificates, 
                   test sheets, and RAMS forms accurately and efficiently within the strict time limit. Many otherwise competent 
                   electricians fail because their documentation is rushed, incomplete, or unrealistic.
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400 font-medium">
+                <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
                   In real life, poor paperwork means liability, invalid certificates, and disciplinary issues. In AM2, it means lost marks and possible failure.
                 </p>
               </div>
@@ -263,9 +263,9 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckSquare className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -274,23 +274,23 @@ const AM2Module2Section4 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Accurately complete electrical installation certificates (EICs), test result sheets, and other documents
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Record results clearly, with realistic measured values that reflect actual testing
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Manage time effectively to complete paperwork alongside practical tasks
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Recognise the paperwork errors that cause marks to be lost in AM2
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply efficient strategies to document under pressure without mistakes
               </li>
             </ul>
@@ -298,15 +298,15 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Types of Paperwork */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               1. Types of Paperwork in AM2
             </h2>
             <div className="space-y-4 text-xs sm:text-sm text-foreground">
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-                  <PenTool className="w-4 h-4 text-emerald-400" />
+                  <PenTool className="w-4 h-4 text-elec-yellow" />
                   Risk Assessments and Method Statements (RAMS)
                 </h3>
                 <p className="mb-2">Pre-work planning documentation showing hazard identification and safe working procedures.</p>
@@ -314,7 +314,7 @@ const AM2Module2Section4 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-                  <Eye className="w-4 h-4 text-emerald-400" />
+                  <Eye className="w-4 h-4 text-elec-yellow" />
                   Inspection & Testing Sheets
                 </h3>
                 <p className="mb-2">Records of visual inspection and electrical testing results.</p>
@@ -322,7 +322,7 @@ const AM2Module2Section4 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-emerald-400" />
+                  <FileText className="w-4 h-4 text-elec-yellow" />
                   Electrical Installation Certificate (EIC)
                 </h3>
                 <p className="mb-2">Formal certification that installation complies with BS 7671.</p>
@@ -330,7 +330,7 @@ const AM2Module2Section4 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-                  <BookOpen className="w-4 h-4 text-emerald-400" />
+                  <BookOpen className="w-4 h-4 text-elec-yellow" />
                   Schedule of Test Results
                 </h3>
                 <p className="mb-2">Detailed test measurements for each circuit.</p>
@@ -342,15 +342,15 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* NET Testing Procedures */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <TestTube className="w-5 h-5" />
               NET-Aligned Testing Procedures & Documentation
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="font-semibold mb-3 text-emerald-400">Initial Verification Tests (EIC)</h3>
+                <h3 className="font-semibold mb-3 text-elec-yellow">Initial Verification Tests (EIC)</h3>
                 <div className="space-y-3">
                   <div className="p-3 bg-background/50 rounded-lg">
                     <h4 className="font-medium text-sm mb-1">1. Continuity of Protective Conductors</h4>
@@ -391,7 +391,7 @@ const AM2Module2Section4 = () => {
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold mb-3 text-emerald-400">Live Testing & Documentation</h3>
+                <h3 className="font-semibold mb-3 text-elec-yellow">Live Testing & Documentation</h3>
                 <div className="space-y-3">
                   <div className="p-3 bg-background/50 rounded-lg">
                     <h4 className="font-medium text-sm mb-1">5. Earth Fault Loop Impedance (Zs)</h4>
@@ -436,96 +436,96 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Complete Documentation Package */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Clipboard className="w-5 h-5" />
               Complete Documentation Package (NET Standards)
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <h3 className="font-semibold mb-3 text-emerald-400">Design Stage Documentation</h3>
+                <h3 className="font-semibold mb-3 text-elec-yellow">Design Stage Documentation</h3>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Design calculations and load assessments</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Cable sizing and protection coordination</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Circuit schedules and distribution board layouts</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Installation method statements and routing</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Special location considerations (BS 7671 sections)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Earthing and bonding arrangements</span>
                   </li>
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold mb-3 text-emerald-400">Installation Stage Records</h3>
+                <h3 className="font-semibold mb-3 text-elec-yellow">Installation Stage Records</h3>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Installation method verification records</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Material compliance certificates (CE marking)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Progressive inspection records and hold points</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Amendment records and design variations</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Risk assessments and method statements</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Non-conformance reports and rectifications</span>
                   </li>
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold mb-3 text-emerald-400">Handover Documentation</h3>
+                <h3 className="font-semibold mb-3 text-elec-yellow">Handover Documentation</h3>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Complete test results and certificates (EIC/EICR)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Operation and maintenance manuals</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>As-built drawings and updated schedules</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Manufacturer warranties and technical data</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Periodic inspection recommendations and intervals</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Building Regulations compliance notifications</span>
                   </li>
                 </ul>
@@ -535,9 +535,9 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Legal Framework */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Scale className="w-5 h-5" />
               Legal Framework & NET Compliance
             </h2>
@@ -549,19 +549,19 @@ const AM2Module2Section4 = () => {
                 </p>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Special locations (bathrooms, kitchens) require notification</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>New circuits and consumer unit changes</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Outdoor electrical installations and garden supplies</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Certificate submission to Building Control within 30 days</span>
                   </li>
                 </ul>
@@ -573,55 +573,55 @@ const AM2Module2Section4 = () => {
                 </p>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Design verification and calculation documentation</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Installation method compliance verification</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Protection coordination and discrimination</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>RCD protection requirements (Section 411)</span>
                   </li>
                 </ul>
               </div>
             </div>
             <div className="mt-6 p-4 bg-background/50 rounded-lg">
-              <h3 className="font-semibold mb-2 text-emerald-400">NET Testing Standards & AM2 Requirements</h3>
+              <h3 className="font-semibold mb-2 text-elec-yellow">NET Testing Standards & AM2 Requirements</h3>
               <p className="text-sm text-muted-foreground mb-3">
                 National Electrical Testing requirements ensure competency in documentation and testing procedures.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>AM2 practical assessment documentation standards</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Portfolio evidence compilation requirements</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Health and safety documentation standards</span>
                   </li>
                 </ul>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Time-limited documentation completion skills</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Realistic test result recording techniques</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     <span>Industry-standard certificate completion</span>
                   </li>
                 </ul>
@@ -631,9 +631,9 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Pre-Paperwork Checklist */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Pre-Paperwork Checklist
             </h2>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
@@ -641,23 +641,23 @@ const AM2Module2Section4 = () => {
                 <h3 className="font-semibold text-base mb-3">Before You Start</h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Check all paperwork is provided and complete
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Understand the installation you're certifying
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Have testing equipment calibrated and ready
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Plan your testing sequence to match paperwork
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Ensure pen (not pencil) is available
                   </li>
                 </ul>
@@ -666,23 +666,23 @@ const AM2Module2Section4 = () => {
                 <h3 className="font-semibold text-base mb-3">Time Management Strategy</h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Allocate specific time for documentation
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Record results immediately after each test
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Don't leave all paperwork until the end
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Allow buffer time for final checks
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Practice timing on blank forms beforehand
                   </li>
                 </ul>
@@ -692,15 +692,15 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Common Paperwork Mistakes */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               2. Common Paperwork Mistakes (NET Guidance)
             </h2>
             <div className="space-y-4 text-xs sm:text-sm text-foreground">
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <h3 className="font-semibold text-base mb-3 text-emerald-400">Critical Errors to Avoid</h3>
+                  <h3 className="font-semibold text-base mb-3 text-elec-yellow">Critical Errors to Avoid</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
@@ -721,7 +721,7 @@ const AM2Module2Section4 = () => {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-base mb-3 text-emerald-400">Format and Technical Errors</h3>
+                  <h3 className="font-semibold text-base mb-3 text-elec-yellow">Format and Technical Errors</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
@@ -756,9 +756,9 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Time Pressure in AM2 */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               3. Time Pressure in AM2
             </h2>
@@ -779,7 +779,7 @@ const AM2Module2Section4 = () => {
               </div>
               <div className="mt-6 p-4 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg">
                 <h4 className="font-semibold text-orange-800 dark:text-orange-200 mb-2">Time Management Reality</h4>
-                <p className="text-sm text-orange-700 dark:text-emerald-400">
+                <p className="text-sm text-orange-700 dark:text-elec-yellow">
                   With approximately 3.5 hours to complete inspection, testing AND all documentation, 
                   you cannot afford to leave paperwork until the end. Successful candidates integrate 
                   documentation into their testing process, recording results immediately after each test.
@@ -791,9 +791,9 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Strategies for Success */}
-        <Card className="bg-gradient-to-r from-card to-card/80 border-emerald-500/30 mb-8">
+        <Card className="bg-gradient-to-r from-card to-card/80 border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               4. Strategies for Success
             </h2>
             <div className="space-y-6">
@@ -801,15 +801,15 @@ const AM2Module2Section4 = () => {
                 <h3 className="font-semibold text-base mb-3">Pre-Assessment Preparation</h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Practice certificates beforehand — fill in blank EICs and test sheets until it's second nature
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Time yourself completing full certificate sets to build muscle memory
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Familiarize yourself with typical test result ranges for common installations
                   </li>
                 </ul>
@@ -818,19 +818,19 @@ const AM2Module2Section4 = () => {
                 <h3 className="font-semibold text-base mb-3">During Assessment</h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Record results as you go — don't wait until the end of the section
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Be neat and legible — if assessors can't read it, you lose marks
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Use standard units (Ω, MΩ, V, A) consistently throughout
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Check every box before submission — blanks lose marks
                   </li>
                 </ul>
@@ -839,15 +839,15 @@ const AM2Module2Section4 = () => {
                 <h3 className="font-semibold text-base mb-3">Quality Control</h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Cross-check measurements against installation reality
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Ensure values are consistent across different test sheets
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Verify all mandatory tests are recorded (continuity, insulation, polarity, etc.)
                   </li>
                 </ul>
@@ -858,16 +858,16 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Real-world Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Real-world Examples
             </h2>
             <div className="grid gap-4">
               <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">Example 1: Polarity Omission</h3>
-                  <p className="text-sm text-red-700 dark:text-emerald-400">
+                  <p className="text-sm text-red-700 dark:text-elec-yellow">
                     Candidate completed all tests but rushed paperwork. Missed filling in the polarity results. 
                     Despite excellent practical work, the section failed due to incomplete mandatory test records.
                   </p>
@@ -876,7 +876,7 @@ const AM2Module2Section4 = () => {
               <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">Example 2: Book Value Detection</h3>
-                  <p className="text-sm text-red-700 dark:text-emerald-400">
+                  <p className="text-sm text-red-700 dark:text-elec-yellow">
                     Candidate wrote down "ideal textbook" insulation resistance values (999 MΩ). Assessor checked 
                     actual meter logs — values didn't match the recorded results. Automatic fail for false documentation.
                   </p>
@@ -905,52 +905,52 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="bg-gradient-to-br from-card to-card/60 border-emerald-500/30 mb-8">
+        <Card className="bg-gradient-to-br from-card to-card/60 border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
-              <Card className="bg-gradient-to-r from-emerald-500/5 to-background border-emerald-500/30">
+              <Card className="bg-gradient-to-r from-elec-yellow/5 to-background border-elec-yellow/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q1: Can I use pencil in AM2 paperwork?
                   </h3>
                   <p className="text-sm text-muted-foreground">A: No — all paperwork must be completed in pen for legal certification requirements.</p>
                 </div>
               </Card>
-              <Card className="bg-gradient-to-r from-emerald-500/5 to-background border-emerald-500/30">
+              <Card className="bg-gradient-to-r from-elec-yellow/5 to-background border-elec-yellow/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q2: Will assessors allow small mistakes?
                   </h3>
                   <p className="text-sm text-muted-foreground">A: Minor slips may not fail you, but repeated or major omissions will. Quality and accuracy are assessed holistically.</p>
                 </div>
               </Card>
-              <Card className="bg-gradient-to-r from-emerald-500/5 to-background border-emerald-500/30">
+              <Card className="bg-gradient-to-r from-elec-yellow/5 to-background border-elec-yellow/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q3: Do I need to write explanations for test results?
                   </h3>
                   <p className="text-sm text-muted-foreground">A: No, just accurate measured values in the correct boxes. Over-explanation can waste valuable time.</p>
                 </div>
               </Card>
-              <Card className="bg-gradient-to-r from-emerald-500/5 to-background border-emerald-500/30">
+              <Card className="bg-gradient-to-r from-elec-yellow/5 to-background border-elec-yellow/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q4: What happens if I don't complete the paperwork in time?
                   </h3>
                   <p className="text-sm text-muted-foreground">A: Marks are lost proportionally. Incomplete documentation may tip you below the pass threshold despite good practical work.</p>
                 </div>
               </Card>
-              <Card className="bg-gradient-to-r from-emerald-500/5 to-background border-emerald-500/30">
+              <Card className="bg-gradient-to-r from-elec-yellow/5 to-background border-elec-yellow/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q5: Can I bring pre-filled paperwork?
                   </h3>
                   <p className="text-sm text-muted-foreground">A: No — all paperwork must be completed during the assessment to demonstrate competency under exam conditions.</p>
@@ -961,9 +961,9 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-gradient-to-r from-emerald-500/5 to-card border-emerald-500/30 mb-8">
+        <Card className="bg-gradient-to-r from-elec-yellow/5 to-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Summary
             </h2>
             <div className="space-y-4 text-xs sm:text-sm text-foreground">
@@ -972,19 +972,19 @@ const AM2Module2Section4 = () => {
               </p>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   Fill in all sections (RAMS, test sheets, certificates) completely and accurately
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   Record realistic, measured values that reflect actual testing performed
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   Work neatly and legibly — illegible entries cannot be marked
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   Manage your time effectively — don't leave documentation until the end
                 </li>
               </ul>
@@ -998,9 +998,9 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Knowledge Check: 10-Question Quiz
             </h2>
             <p className="text-sm text-muted-foreground mb-6">
@@ -1014,14 +1014,14 @@ const AM2Module2Section4 = () => {
         <div className="flex flex-col sm:flex-row gap-3 justify-between">
           <Link 
             to="../section3"
-            className="flex items-center gap-2 px-4 py-3 bg-card border border-emerald-500/30 text-foreground rounded-lg hover:border-emerald-500/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
+            className="flex items-center gap-2 px-4 py-3 bg-card border border-elec-yellow/30 text-foreground rounded-lg hover:border-elec-yellow/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
           >
             <ArrowLeft className="h-4 w-4" />
             Previous: Section 3
           </Link>
           <Link 
             to="../section5"
-            className="flex items-center gap-2 px-4 py-3 bg-emerald-500 text-black rounded-lg hover:bg-emerald-500/90 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
+            className="flex items-center gap-2 px-4 py-3 bg-elec-yellow text-black rounded-lg hover:bg-elec-yellow/90 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
           >
             Next: Section 5
             <ArrowLeft className="h-4 w-4 rotate-180" />

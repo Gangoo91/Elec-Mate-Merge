@@ -201,11 +201,11 @@ const Module7Section1_1 = () => {
             In electrical systems, a fault is any condition where the circuit does not operate as intended. Faults may involve unexpected connections, breaks in continuity, or abnormal current flow that creates danger or disruption. Understanding what constitutes a fault is the foundation of fault diagnosis and rectification. Without this basic knowledge, electricians cannot properly test, interpret results, or carry out safe corrective action.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   According to industry statistics, approximately 60% of electrical accidents are caused by unidentified or misunderstood faults. 
                   Proper fault recognition and understanding can prevent serious injuries, fatalities, and property damage worth millions of pounds annually.
@@ -220,7 +220,7 @@ const Module7Section1_1 = () => {
               Many of these could be prevented through proper fault identification and understanding of what constitutes unsafe conditions.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> BS 7671:2018+A2:2022 (18th Edition Wiring Regulations) sets clear requirements for fault protection 
                 and defines the standards that electrical installations must meet. Any deviation from these standards constitutes a fault requiring immediate attention.
@@ -264,7 +264,7 @@ const Module7Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">What Constitutes a Fault</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">What Constitutes a Fault</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -381,7 +381,7 @@ const Module7Section1_1 = () => {
                         <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800 mb-3">
                           <div className="grid gap-3 lg:grid-cols-2">
                             <div>
-                              <p className="font-medium text-red-700 dark:text-elec-yellow mb-2 text-sm md:text-base">Immediate Dangers</p>
+                              <p className="font-medium text-red-700 text-elec-yellow mb-2 text-sm md:text-base">Immediate Dangers</p>
                               <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-white">
                                 <li>Current flowing through unintended paths</li>
                                 <li>Dangerous voltages on metalwork</li>
@@ -390,7 +390,7 @@ const Module7Section1_1 = () => {
                               </ul>
                             </div>
                             <div>
-                              <p className="font-medium text-red-700 dark:text-elec-yellow mb-2 text-sm md:text-base">Risk Consequences</p>
+                              <p className="font-medium text-red-700 text-elec-yellow mb-2 text-sm md:text-base">Risk Consequences</p>
                               <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-white">
                                 <li>Electric shock or electrocution risk</li>
                                 <li>Fire risk from overheating</li>
@@ -415,7 +415,7 @@ const Module7Section1_1 = () => {
                             </ul>
                           </div>
                           <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                            <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2 text-sm md:text-base">Hidden Faults</p>
+                            <p className="font-medium text-purple-700 text-elec-yellow mb-2 text-sm md:text-base">Hidden Faults</p>
                             <ul className="text-xs md:text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                               <li>Reversed polarity connections</li>
                               <li>High resistance earth faults</li>
@@ -453,7 +453,7 @@ const Module7Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Types of Electrical Faults</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Types of Electrical Faults</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -509,7 +509,7 @@ const Module7Section1_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Critical Importance</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Critical Importance</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -533,7 +533,7 @@ const Module7Section1_1 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Remember</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Remember</p>
                         <p className="text-xs sm:text-sm text-white">
                           Faults are not just technical issues — they are direct hazards that can cause serious injury or death if not properly identified and corrected.
                         </p>

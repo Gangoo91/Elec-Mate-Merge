@@ -253,10 +253,10 @@ const Module7Section2_2 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg mb-4">
                 <div className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-elec-yellow mt-0.5" />
+                  <AlertTriangle className="w-4 h-4 text-red-600 text-elec-yellow mt-0.5" />
                   <div>
-                    <h4 className="font-medium text-sm text-red-700 dark:text-elec-yellow mb-1">Immediate Danger</h4>
-                    <p className="text-xs text-red-600 dark:text-elec-yellow">
+                    <h4 className="font-medium text-sm text-red-700 text-elec-yellow mb-1">Immediate Danger</h4>
+                    <p className="text-xs text-red-600 text-elec-yellow">
                       Short circuits can generate fault currents of thousands of amperes within milliseconds, creating intense heat, dangerous arcing, and potential for explosion or fire.
                     </p>
                   </div>
@@ -292,7 +292,7 @@ const Module7Section2_2 = () => {
 
               <div className="grid gap-3 sm:grid-cols-2 mb-4">
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-elec-yellow">Installation Faults</h4>
+                  <h4 className="font-medium text-sm mb-2 text-red-600 text-elec-yellow">Installation Faults</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Incorrect or careless installation practices</li>
                     <li>• Stripped insulation left too long at terminations</li>
@@ -303,7 +303,7 @@ const Module7Section2_2 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-elec-yellow">Mechanical Damage</h4>
+                  <h4 className="font-medium text-sm mb-2 text-orange-600 text-elec-yellow">Mechanical Damage</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Drilling or nailing through cables</li>
                     <li>• Cable crushing during construction work</li>
@@ -314,7 +314,7 @@ const Module7Section2_2 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-elec-yellow">Environmental Factors</h4>
+                  <h4 className="font-medium text-sm mb-2 text-purple-600 text-elec-yellow">Environmental Factors</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Moisture ingress causing tracking and flashover</li>
                     <li>• Overheating leading to insulation failure</li>
@@ -325,7 +325,7 @@ const Module7Section2_2 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Equipment Failures</h4>
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Equipment Failures</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Internal faults in electrical equipment</li>
                     <li>• Insulation breakdown in motors and transformers</li>
@@ -365,7 +365,7 @@ const Module7Section2_2 = () => {
 
               <div className="space-y-3 mb-4">
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-elec-yellow">Immediate Physical Dangers</h4>
+                  <h4 className="font-medium text-sm mb-2 text-red-600 text-elec-yellow">Immediate Physical Dangers</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Arcing:</strong> Intense electrical arcs reaching thousands of degrees</li>
                     <li>• <strong>Fire risk:</strong> Ignition of surrounding materials</li>
@@ -387,7 +387,7 @@ const Module7Section2_2 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Economic Consequences</h4>
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Economic Consequences</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• Equipment replacement and repair costs</li>
                     <li>• Business interruption and lost productivity</li>
@@ -400,10 +400,10 @@ const Module7Section2_2 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg">
                 <div className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-elec-yellow mt-0.5" />
+                  <AlertTriangle className="w-4 h-4 text-red-600 text-elec-yellow mt-0.5" />
                   <div>
-                    <h4 className="font-medium text-sm text-red-700 dark:text-elec-yellow mb-1">Arc Flash Hazard</h4>
-                    <p className="text-xs text-red-600 dark:text-elec-yellow">
+                    <h4 className="font-medium text-sm text-red-700 text-elec-yellow mb-1">Arc Flash Hazard</h4>
+                    <p className="text-xs text-red-600 text-elec-yellow">
                       Arc flash incidents can reach temperatures of 20,000°C (four times hotter than the sun's surface) and produce pressure waves capable of causing severe burns and hearing damage. Proper PPE and safety procedures are essential when working on live equipment.
                     </p>
                   </div>
@@ -439,7 +439,7 @@ const Module7Section2_2 = () => {
 
               <div className="space-y-3 mb-4">
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Protective Device Types</h4>
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Protective Device Types</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Fuses (BS 88, BS 1361):</strong> Reliable interruption, high breaking capacity</li>
                     <li>• <strong>MCBs (BS EN 60898):</strong> Automatic reset, precise characteristics</li>
@@ -459,7 +459,7 @@ const Module7Section2_2 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-elec-yellow">Key Performance Criteria</h4>
+                  <h4 className="font-medium text-sm mb-2 text-purple-600 text-elec-yellow">Key Performance Criteria</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Prospective fault current (PFC):</strong> Maximum current available</li>
                     <li>• <strong>Breaking capacity (Icn/Icu):</strong> Maximum current device can interrupt</li>
@@ -498,7 +498,7 @@ const Module7Section2_2 = () => {
 
               <div className="space-y-3 mb-4">
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Detection Methods</h4>
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Detection Methods</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Insulation resistance testing:</strong> Low readings indicate potential problems</li>
                     <li>• <strong>Visual inspection:</strong> Signs of overheating, burning, or damage</li>
@@ -508,7 +508,7 @@ const Module7Section2_2 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-elec-yellow">Emergency Response</h4>
+                  <h4 className="font-medium text-sm mb-2 text-orange-600 text-elec-yellow">Emergency Response</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Immediate isolation:</strong> Switch off supply if safe to do so</li>
                     <li>• <strong>Evacuation:</strong> Clear area of personnel if arc flash risk</li>
@@ -518,7 +518,7 @@ const Module7Section2_2 = () => {
                 </div>
                 
                 <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-elec-yellow">Investigation Rules</h4>
+                  <h4 className="font-medium text-sm mb-2 text-red-600 text-elec-yellow">Investigation Rules</h4>
                   <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Never re-energise:</strong> Until fault is found and rectified</li>
                     <li>• <strong>Systematic approach:</strong> Logical fault-finding methodology</li>
@@ -578,9 +578,9 @@ const Module7Section2_2 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 border-l-4 border-l-emerald-400 bg-emerald-400/20">
+              <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow bg-elec-yellow/20">
                 <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-400 text-black rounded-full flex items-center justify-center text-sm font-bold">
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold">
                     <Target className="w-4 h-4" />
                   </span>
                   <div className="flex-1">
@@ -606,9 +606,9 @@ const Module7Section2_2 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 border-l-4 border-l-emerald-400 bg-emerald-400/20">
+              <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow bg-elec-yellow/20">
                 <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-400 text-black rounded-full flex items-center justify-center text-sm font-bold">
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold">
                     <Search className="w-4 h-4" />
                   </span>
                   <div className="flex-1">

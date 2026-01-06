@@ -223,7 +223,7 @@ const Module4Section5_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Safety and Compliance Benefits</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Safety and Compliance Benefits</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Prevents dangerous cross-connections:</strong> Identifies reversed polarity before energisation.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Prevents live conductors connected to neutral terminals</li>
@@ -275,7 +275,7 @@ const Module4Section5_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Essential Testing Instruments</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Essential Testing Instruments</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Low resistance ohmmeter:</strong> Primary instrument for continuity testing.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Test current: Minimum 200mA for accurate readings</li>
@@ -334,7 +334,7 @@ const Module4Section5_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Polarity Testing Procedure</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Polarity Testing Procedure</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Pre-test safety checks:</strong> Essential preparation before testing begins.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Isolate circuit completely from all sources of supply</li>
@@ -367,7 +367,7 @@ const Module4Section5_6 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Continuity Testing Procedure</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Continuity Testing Procedure</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Circuit preparation:</strong> Ensure safe and accurate testing conditions.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Verify complete isolation from all supply sources</li>

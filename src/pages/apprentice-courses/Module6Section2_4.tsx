@@ -234,7 +234,7 @@ const Module6Section2_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Proper Termination Standards</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Proper Termination Standards</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -270,15 +270,15 @@ const Module6Section2_4 = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Practical Tip</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Practical Tip</p>
                         <p className="text-xs sm:text-sm text-white">
                           Use the correct screwdriver size to avoid slipping or under/over tightening. Many terminal failures result from incorrect tools or excessive force during installation.
                         </p>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800 mt-3">
-                        <p className="font-medium text-emerald-700 dark:text-elec-yellow mb-2">Inspector's Note</p>
+                      <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20 mt-3">
+                        <p className="font-medium text-elec-yellow text-elec-yellow mb-2">Inspector's Note</p>
                         <p className="text-xs sm:text-sm text-white">
                           Check manufacturer's torque settings for devices like MCBs and RCBOs. Over-tightening can damage the device, while under-tightening creates high resistance connections.
                         </p>
@@ -311,7 +311,7 @@ const Module6Section2_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Polarity Requirements</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Polarity Requirements</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -348,7 +348,7 @@ const Module6Section2_4 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Safety Critical</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Safety Critical</p>
                         <p className="text-xs sm:text-sm text-white">
                           Incorrect polarity can leave appliances and fittings live when switches are off, creating a serious shock risk during maintenance or lamp replacement.
                         </p>
@@ -381,7 +381,7 @@ const Module6Section2_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Typical Installation Faults</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Typical Installation Faults</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -418,7 +418,7 @@ const Module6Section2_4 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Critical Warning</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Critical Warning</p>
                         <p className="text-xs sm:text-sm text-white">
                           Always confirm all conductors are correctly identified and sleeved before energising any circuit. Incorrect identification can cause serious safety hazards.
                         </p>
@@ -529,7 +529,7 @@ const Module6Section2_4 = () => {
         {/* Real-World Example */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
-          <div className="bg-gradient-to-r from-emerald-500/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
+          <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
             <p className="text-base text-white">
               In a commercial office fit-out, a lighting circuit was wired with reversed polarity. When an electrician replaced a lamp, the fitting remained live even though the switch was off, leading to an electric shock incident. Investigation found the live and neutral reversed at a junction box. The issue could have been avoided with a proper polarity check during installation.
             </p>
@@ -587,10 +587,10 @@ const Module6Section2_4 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Recap</h2>
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border border-emerald-400/20">
+              <div className="rounded-lg p-4 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/10 border border-elec-yellow/20">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-8 h-8 rounded-full bg-elec-yellow text-white flex items-center justify-center text-sm font-bold">1</div>
-                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow">Termination Safety</h3>
+                  <h3 className="font-semibold text-elec-yellow text-elec-yellow">Termination Safety</h3>
                 </div>
                 <p className="text-xs sm:text-sm text-white">
                   Good terminations prevent overheating and fire risks. Proper conductor preparation, correct tightness, and appropriate tools are essential for safe connections.
@@ -600,7 +600,7 @@ const Module6Section2_4 = () => {
               <div className="rounded-lg p-4 bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-400/20">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center text-sm font-bold">2</div>
-                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow">Polarity Requirements</h3>
+                  <h3 className="font-semibold text-purple-600 text-elec-yellow">Polarity Requirements</h3>
                 </div>
                 <p className="text-xs sm:text-sm text-white">
                   Correct polarity ensures safe operation of switches and outlets. Switches must break live conductors to prevent equipment remaining energised when 'off'.
@@ -622,17 +622,17 @@ const Module6Section2_4 = () => {
               <div className="rounded-lg p-4 bg-gradient-to-br from-red-500/10 to-red-600/10 border border-red-400/20">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center text-sm font-bold">4</div>
-                  <h3 className="font-semibold text-red-600 dark:text-elec-yellow">Common Hazards</h3>
+                  <h3 className="font-semibold text-red-600 text-elec-yellow">Common Hazards</h3>
                 </div>
                 <p className="text-xs sm:text-sm text-white">
                   Mistakes in terminations or polarity can lead to severe electrical hazards including shock, fire, and equipment damage. Prevention through proper procedures is critical.
                 </p>
               </div>
 
-              <div className="rounded-lg p-4 bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border border-emerald-400/20">
+              <div className="rounded-lg p-4 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/10 border border-elec-yellow/20">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-8 h-8 rounded-full bg-elec-yellow text-white flex items-center justify-center text-sm font-bold">5</div>
-                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow">Professional Standards</h3>
+                  <h3 className="font-semibold text-elec-yellow text-elec-yellow">Professional Standards</h3>
                 </div>
                 <p className="text-xs sm:text-sm text-white">
                   Follow manufacturer's instructions, use correct tools and torque settings, and maintain proper documentation. These practices ensure compliance and future maintainability.

@@ -211,16 +211,16 @@ const Module6Section7_2 = () => {
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
                   <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">What an EIC Is</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">What an EIC Is</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
                         An Electrical Installation Certificate (EIC) is an official document required by BS 7671 to confirm that new electrical work has been inspected, tested, and complies with the Wiring Regulations. It applies to all new installations, as well as major alterations or additions that significantly change the characteristics of an installation. The EIC demonstrates that the installation is safe to energise and use.
                       </p>
 
-                      <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
-                        <h4 className="font-medium text-blue-800 dark:text-elec-yellow mb-2">EIC Definition and Scope:</h4>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-blue-700 dark:text-elec-yellow">
+                      <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                        <h4 className="font-medium text-blue-800 text-elec-yellow mb-2">EIC Definition and Scope:</h4>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-blue-700 text-elec-yellow">
                           <div>
                             <strong>What it Covers:</strong>
                             <ul className="mt-1 space-y-1 ml-4">
@@ -332,8 +332,8 @@ const Module6Section7_2 = () => {
                       </p>
 
                       <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800 rounded-lg p-3">
-                        <h4 className="font-medium text-purple-800 dark:text-elec-yellow mb-2">Special Considerations:</h4>
-                        <ul className="text-sm text-purple-700 dark:text-elec-yellow space-y-1">
+                        <h4 className="font-medium text-purple-800 text-elec-yellow mb-2">Special Considerations:</h4>
+                        <ul className="text-sm text-purple-700 text-elec-yellow space-y-1">
                           <li>• Bathroom installations usually require EIC due to special location requirements</li>
                           <li>• Outdoor installations often need EIC for comprehensive earthing verification</li>
                           <li>• Commercial installations typically require EIC regardless of size</li>
@@ -363,7 +363,7 @@ const Module6Section7_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base">Information Included in an EIC</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3 text-base">Information Included in an EIC</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -379,8 +379,8 @@ const Module6Section7_2 = () => {
                       </p>
 
                       <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg p-3">
-                        <h4 className="font-medium text-orange-800 dark:text-elec-yellow mb-2">Detailed EIC Information Sections:</h4>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-orange-700 dark:text-elec-yellow">
+                        <h4 className="font-medium text-orange-800 text-elec-yellow mb-2">Detailed EIC Information Sections:</h4>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-orange-700 text-elec-yellow">
                           <div>
                             <strong>Installation Details:</strong>
                             <ul className="mt-1 space-y-1 ml-4">
@@ -447,7 +447,7 @@ const Module6Section7_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Legal and Professional Importance</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3 text-base">Legal and Professional Importance</p>
                     
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-white">
@@ -455,8 +455,8 @@ const Module6Section7_2 = () => {
                       </p>
 
                       <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-                        <h4 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Legal Standing of EICs:</h4>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-red-700 dark:text-elec-yellow">
+                        <h4 className="font-medium text-red-800 text-elec-yellow mb-2">Legal Standing of EICs:</h4>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-red-700 text-elec-yellow">
                           <div>
                             <strong>Legal Protection:</strong>
                             <ul className="mt-1 space-y-1 ml-4">
@@ -487,8 +487,8 @@ const Module6Section7_2 = () => {
                       </p>
 
                       <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800 rounded-lg p-3">
-                        <h4 className="font-medium text-purple-800 dark:text-elec-yellow mb-2">Professional Consequences of Missing EICs:</h4>
-                        <ul className="text-sm text-purple-700 dark:text-elec-yellow space-y-1">
+                        <h4 className="font-medium text-purple-800 text-elec-yellow mb-2">Professional Consequences of Missing EICs:</h4>
+                        <ul className="text-sm text-purple-700 text-elec-yellow space-y-1">
                           <li>• Potential removal from competent person schemes</li>
                           <li>• Difficulty obtaining professional insurance</li>
                           <li>• Loss of client confidence and repeat business</li>
@@ -563,8 +563,8 @@ const Module6Section7_2 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
           <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-4">
-            <h3 className="font-semibold text-red-800 dark:text-elec-yellow mb-2">Insurance Problems Due to Missing EIC</h3>
-            <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
+            <h3 className="font-semibold text-red-800 text-elec-yellow mb-2">Insurance Problems Due to Missing EIC</h3>
+            <p className="text-sm text-red-700 text-elec-yellow mb-3">
               A contractor installed a new three-phase distribution board in a small workshop but failed to issue an Electrical Installation Certificate. Months later, when the client applied for insurance cover, the insurer requested evidence of compliance. Without an EIC, the insurer refused to provide full cover until the installation was retested and certified, costing the client extra time and money. The contractor's reputation was damaged, and they lost repeat business.
             </p>
           </div>

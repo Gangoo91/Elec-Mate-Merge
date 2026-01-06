@@ -633,7 +633,7 @@ const Module5Section6_1 = () => {
                   </div>
                 </div>
 
-                <div className="mt-4 p-3 bg-emerald-50 rounded border border-blue-200">
+                <div className="mt-4 p-3 bg-elec-yellow/5 rounded border border-blue-200">
                   <p className="text-sm font-semibold text-blue-800">
                     Key Lesson: The extra 30 seconds spent giving clear, complete instructions saved hours of rework and prevented project delays. Clear communication is an investment, not a time cost.
                   </p>

@@ -204,7 +204,7 @@ const AM2Module4Section3 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <FileText className="w-4 h-4" />
             Module 4 – Section 3
           </div>
@@ -220,7 +220,7 @@ const AM2Module4Section3 = () => {
         <Card className="bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-700/50 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-700 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-700 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-900 dark:text-red-100 mb-2 text-sm sm:text-base">
                   CRITICAL: Poor Documentation = AM2 Failure
@@ -237,9 +237,9 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -248,23 +248,23 @@ const AM2Module4Section3 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Correctly complete test certificates used in AM2
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Record results in the correct units (Ω, MΩ, V, A)
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Avoid "book answers" and instead write realistic, measured values
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Understand what assessors are looking for when they inspect your paperwork
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply practical strategies to complete paperwork neatly under time pressure
               </li>
             </ul>
@@ -272,18 +272,18 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Paperwork Requirements */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <ClipboardList className="w-5 h-5" />
               1. Paperwork You'll Complete in AM2
             </h2>
             
             <div className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 sm:mb-3 text-sm sm:text-base">Primary Certificates:</h4>
-                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                     <li>• Electrical Installation Certificate (EIC)</li>
                     <li>• Schedule of test results (for each circuit)</li>
                     <li>• Schedule of inspections</li>
@@ -312,9 +312,9 @@ const AM2Module4Section3 = () => {
         />
 
         {/* What Assessors Look For */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               2. What Assessors Look For in Certification
             </h2>
@@ -339,7 +339,7 @@ const AM2Module4Section3 = () => {
                     <PenTool className="w-4 h-4" />
                     Professional Standards:
                   </h4>
-                  <ul className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow space-y-1">
                     <li>• No corrections by scribbling</li>
                     <li>• Use one clear strike-through if needed</li>
                     <li>• Consistent formatting throughout</li>
@@ -418,24 +418,24 @@ const AM2Module4Section3 = () => {
         />
 
         {/* Advanced Certificate Completion Techniques */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Award className="w-5 h-5" />
               Advanced Certificate Completion Techniques
             </h2>
             
             <div className="space-y-4 sm:space-y-6">
               {/* Certificate Types and Their Requirements */}
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3 text-sm sm:text-base flex items-center gap-2">
                   <FileText className="w-4 h-4" />
                   Detailed Certificate Requirements
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div>
-                    <strong className="text-blue-700 dark:text-emerald-400 block mb-2">Electrical Installation Certificate (EIC):</strong>
-                    <ul className="text-emerald-400 dark:text-emerald-400 space-y-1">
+                    <strong className="text-blue-700 dark:text-elec-yellow block mb-2">Electrical Installation Certificate (EIC):</strong>
+                    <ul className="text-elec-yellow dark:text-elec-yellow space-y-1">
                       <li>• Designer, Constructor, Inspector details</li>
                       <li>• Installation description and location</li>
                       <li>• Earthing and bonding arrangements</li>
@@ -445,8 +445,8 @@ const AM2Module4Section3 = () => {
                     </ul>
                   </div>
                   <div>
-                    <strong className="text-blue-700 dark:text-emerald-400 block mb-2">Schedule of Test Results:</strong>
-                    <ul className="text-emerald-400 dark:text-emerald-400 space-y-1">
+                    <strong className="text-blue-700 dark:text-elec-yellow block mb-2">Schedule of Test Results:</strong>
+                    <ul className="text-elec-yellow dark:text-elec-yellow space-y-1">
                       <li>• Circuit designation and description</li>
                       <li>• Reference method and cable details</li>
                       <li>• Continuity of protective conductors</li>
@@ -500,9 +500,9 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Recording Realistic Values */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Calculator className="w-5 h-5" />
               4. Recording Realistic Values
             </h2>
@@ -510,9 +510,9 @@ const AM2Module4Section3 = () => {
             <div className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="space-y-4">
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 text-sm sm:text-base">Continuity Tests:</h4>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                       <li>• <strong>Continuity of CPC:</strong> Expect small values (fractions of an ohm)</li>
                       <li>• <strong>Ring circuit continuity:</strong> Typically 0.05-0.5 Ω depending on cable size/length</li>
                       <li>• <strong>Units:</strong> Always in Ω (ohms)</li>
@@ -532,7 +532,7 @@ const AM2Module4Section3 = () => {
                 <div className="space-y-4">
                   <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2 text-sm sm:text-base">Earth Fault Loop Impedance (Zs):</h4>
-                    <ul className="text-xs sm:text-sm text-purple-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow space-y-1">
                       <li>• <strong>Realistic range:</strong> Typically 0.2-2.0 Ω for most circuits</li>
                       <li>• <strong>Must align:</strong> With max permitted for protective device</li>
                       <li>• <strong>Check BS 7671:</strong> Tables for maximum values</li>
@@ -541,7 +541,7 @@ const AM2Module4Section3 = () => {
                   
                   <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-3 sm:p-4">
                     <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-2 text-sm sm:text-base">RCD Testing:</h4>
-                    <ul className="text-xs sm:text-sm text-orange-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow space-y-1">
                       <li>• <strong>Trip times:</strong> Record at 1× and 5× IΔn in milliseconds (ms)</li>
                     <li>• <strong>Standard RCD:</strong> &lt;300ms at 1×IΔn, &lt;40ms at 5×IΔn</li>
                     <li>• <strong>Polarity:</strong> Tick "satisfactory" at each accessory</li>
@@ -562,9 +562,9 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Strategies for Success */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <TrendingUp className="w-5 h-5" />
               5. Strategies for AM2 Success
             </h2>
@@ -589,19 +589,19 @@ const AM2Module4Section3 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 sm:mb-3 text-sm sm:text-base">Quality Control:</h4>
-                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-emerald-400 space-y-2">
+                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                       <span>Double-check results against expected ranges</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                       <span>Compare with GN3 and BS 7671 guidance</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-emerald-400 mt-1 flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
                       <span>Keep paperwork tidy - no scribbles or rushed writing</span>
                     </li>
                   </ul>
@@ -642,9 +642,9 @@ const AM2Module4Section3 = () => {
         />
 
         {/* Troubleshooting Documentation Issues */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Calculator className="w-5 h-5" />
               Troubleshooting Documentation Issues
             </h2>
@@ -675,27 +675,27 @@ const AM2Module4Section3 = () => {
                   <div className="space-y-2 text-xs sm:text-sm">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-emerald-400">All mandatory fields completed</span>
+                      <span className="text-purple-700 dark:text-elec-yellow">All mandatory fields completed</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-emerald-400">Units specified for all numerical values</span>
+                      <span className="text-purple-700 dark:text-elec-yellow">Units specified for all numerical values</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-emerald-400">Signatures and dates in correct locations</span>
+                      <span className="text-purple-700 dark:text-elec-yellow">Signatures and dates in correct locations</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-emerald-400">Values within expected ranges</span>
+                      <span className="text-purple-700 dark:text-elec-yellow">Values within expected ranges</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-emerald-400">Cross-references match between documents</span>
+                      <span className="text-purple-700 dark:text-elec-yellow">Cross-references match between documents</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-emerald-400">Professional presentation throughout</span>
+                      <span className="text-purple-700 dark:text-elec-yellow">Professional presentation throughout</span>
                     </div>
                   </div>
                 </div>
@@ -706,8 +706,8 @@ const AM2Module4Section3 = () => {
                 <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-3 text-sm sm:text-base">Industry Standards and Compliance:</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div>
-                    <strong className="text-orange-700 dark:text-emerald-400 block mb-2">BS 7671 Requirements:</strong>
-                    <ul className="text-orange-600 dark:text-emerald-400 space-y-1">
+                    <strong className="text-orange-700 dark:text-elec-yellow block mb-2">BS 7671 Requirements:</strong>
+                    <ul className="text-orange-600 dark:text-elec-yellow space-y-1">
                       <li>• Schedule of inspections must be comprehensive</li>
                       <li>• Test results must demonstrate compliance</li>
                       <li>• Departures from BS 7671 must be recorded</li>
@@ -715,8 +715,8 @@ const AM2Module4Section3 = () => {
                     </ul>
                   </div>
                   <div>
-                    <strong className="text-orange-700 dark:text-emerald-400 block mb-2">Professional Body Standards:</strong>
-                    <ul className="text-orange-600 dark:text-emerald-400 space-y-1">
+                    <strong className="text-orange-700 dark:text-elec-yellow block mb-2">Professional Body Standards:</strong>
+                    <ul className="text-orange-600 dark:text-elec-yellow space-y-1">
                       <li>• NICEIC documentation requirements</li>
                       <li>• NAPIT certification standards</li>
                       <li>• ECS competency card criteria</li>
@@ -730,9 +730,9 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Real-World Examples
             </h2>
@@ -743,7 +743,7 @@ const AM2Module4Section3 = () => {
                 <p className="text-xs sm:text-sm text-red-800 dark:text-red-200 mb-2">
                   Candidate recorded all insulation resistance results as "∞." Assessor marked incorrect — <strong>failed paperwork section</strong>
                 </p>
-                <p className="text-xs text-red-700 dark:text-emerald-400">
+                <p className="text-xs text-red-700 dark:text-elec-yellow">
                   Lesson: Always record meter limit readings like "&gt;200 MΩ" instead of infinity symbols.
                 </p>
               </div>
@@ -753,7 +753,7 @@ const AM2Module4Section3 = () => {
                 <p className="text-xs sm:text-sm text-red-800 dark:text-red-200 mb-2">
                   Candidate left several boxes blank, assuming assessor wouldn't check. <strong>Lost easy marks</strong>
                 </p>
-                <p className="text-xs text-red-700 dark:text-emerald-400">
+                <p className="text-xs text-red-700 dark:text-elec-yellow">
                   Lesson: Every applicable section must be completed. Blanks = lost marks.
                 </p>
               </div>
@@ -768,12 +768,12 @@ const AM2Module4Section3 = () => {
                 </p>
               </div>
               
-              <div className="border-l-4 border-emerald-500 bg-yellow-50 dark:bg-yellow-950/20 p-3 sm:p-4">
+              <div className="border-l-4 border-elec-yellow bg-yellow-50 dark:bg-yellow-950/20 p-3 sm:p-4">
                 <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-2 text-sm sm:text-base">Example 4: Real-Life Consequence</h4>
                 <p className="text-xs sm:text-sm text-yellow-700 dark:text-yellow-300 mb-2">
                   On-site, a contractor handed over an EIC with unreadable handwriting. Work failed audit. Same problem in AM2 = marks lost.
                 </p>
-                <p className="text-xs text-emerald-400 dark:text-emerald-400">
+                <p className="text-xs text-elec-yellow dark:text-elec-yellow">
                   Lesson: Professional legibility is essential for client handover and regulatory compliance.
                 </p>
               </div>
@@ -782,9 +782,9 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* NET AM2 Specific Guidance */}
-        <Card className="bg-gradient-to-r from-card/10 to-emerald-500/10 border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-gradient-to-r from-card/10 to-elec-yellow/10 border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Award className="w-5 h-5" />
               NET AM2 Specific Assessment Criteria
             </h2>
@@ -812,8 +812,8 @@ const AM2Module4Section3 = () => {
                 </div>
               </div>
               
-              <div className="bg-emerald-500/10 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-emerald-400 mb-2 text-sm sm:text-base">Key Success Factors:</h4>
+              <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
+                <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Key Success Factors:</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   NET assessors specifically look for candidates who can demonstrate professional documentation skills that would be acceptable 
                   for client handover in real-world scenarios. This includes neat presentation, accurate technical data, and complete compliance records.
@@ -824,9 +824,9 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Section Summary */}
-        <Card className="bg-gradient-to-r from-emerald-500/5 to-card/5 border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-gradient-to-r from-elec-yellow/5 to-card/5 border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Section Summary
             </h2>
@@ -858,8 +858,8 @@ const AM2Module4Section3 = () => {
                 </ul>
               </div>
               
-              <div className="bg-emerald-500/10 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-emerald-400 mb-2 text-sm sm:text-base">Next Steps:</h4>
+              <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
+                <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Next Steps:</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   You're now ready to move on to Module 4 Section 4, where we'll cover the practical implementation 
                   and integration of all testing procedures in real AM2 scenarios.
@@ -870,9 +870,9 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               Test Your Knowledge
             </h2>

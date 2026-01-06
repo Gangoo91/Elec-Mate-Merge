@@ -15,7 +15,7 @@ const Level2Module8Section2Section3 = () => {
         <div className="flex items-center gap-3 mb-4 sm:mb-6">
           <Link 
             to=".." 
-            className="inline-flex items-center text-muted-foreground hover:text-emerald-400 transition-colors text-sm sm:text-base touch-target"
+            className="inline-flex items-center text-muted-foreground hover:text-elec-yellow transition-colors text-sm sm:text-base touch-target"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">Back to How to Pass Exams</span>
@@ -24,9 +24,9 @@ const Level2Module8Section2Section3 = () => {
         </div>
         
         {/* Hero Section */}
-        <div className="text-center mb-4 sm:mb-6 p-3 sm:p-4 lg:p-6 bg-gradient-to-r from-card to-muted rounded-lg border border-emerald-500/30">
-          <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/20 rounded-full mb-2 sm:mb-3">
-            <CheckSquare className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
+        <div className="text-center mb-4 sm:mb-6 p-3 sm:p-4 lg:p-6 bg-gradient-to-r from-card to-muted rounded-lg border border-elec-yellow/30">
+          <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-elec-yellow/20 rounded-full mb-2 sm:mb-3">
+            <CheckSquare className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
           </div>
           <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 sm:mb-3 leading-tight">
             Exam Day Preparation
@@ -39,26 +39,26 @@ const Level2Module8Section2Section3 = () => {
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-3 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-emerald-400 mb-1">24 hours</div>
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
+            <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">24 hours</div>
             <div className="text-xs sm:text-sm text-muted-foreground">Preparation window</div>
           </div>
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-3 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-emerald-400 mb-1">30 mins</div>
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
+            <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">30 mins</div>
             <div className="text-xs sm:text-sm text-muted-foreground">Early arrival time</div>
           </div>
-          <div className="bg-card border border-emerald-500/30 rounded-lg p-3 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-emerald-400 mb-1">95%</div>
+          <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
+            <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">95%</div>
             <div className="text-xs sm:text-sm text-muted-foreground">Success with good prep</div>
           </div>
         </div>
 
         <div className="space-y-4 sm:space-y-6">
           {/* Pre-Exam Day Preparation Strategy */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent p-3 sm:p-6">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-3 sm:p-6">
               <CardTitle className="flex items-center gap-2 sm:gap-3 text-foreground text-lg sm:text-xl">
-                <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
+                <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
                 Pre-Exam Day Preparation Strategy
               </CardTitle>
             </CardHeader>
@@ -66,12 +66,12 @@ const Level2Module8Section2Section3 = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2 text-base sm:text-lg">
-                    <Briefcase className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                    <Briefcase className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                     Essential Equipment Checklist
                   </h4>
                   <div className="space-y-3">
-                    <div className="p-3 sm:p-4 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm sm:text-base">Calculation Tools (CRITICAL)</div>
+                    <div className="p-3 sm:p-4 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm sm:text-base">Calculation Tools (CRITICAL)</div>
                       <div className="text-sm sm:text-sm text-muted-foreground space-y-2 mt-2">
                         <div className="flex items-start gap-2 sm:gap-3">
                           <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
@@ -91,8 +91,8 @@ const Level2Module8Section2Section3 = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm">BS7671 Wiring Regulations</div>
+                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm">BS7671 Wiring Regulations</div>
                       <div className="text-xs text-muted-foreground space-y-1 mt-2">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="h-3 w-3 text-green-400" />
@@ -113,7 +113,7 @@ const Level2Module8Section2Section3 = () => {
                       </div>
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-purple-500">
-                      <div className="font-medium text-emerald-400 text-sm">Writing & Identification</div>
+                      <div className="font-medium text-elec-yellow text-sm">Writing & Identification</div>
                       <div className="text-xs text-muted-foreground space-y-1 mt-2">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="h-3 w-3 text-green-400" />
@@ -138,32 +138,32 @@ const Level2Module8Section2Section3 = () => {
                 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <Heart className="h-4 w-4 text-emerald-400" />
+                    <Heart className="h-4 w-4 text-elec-yellow" />
                     Mental & Physical Preparation
                   </h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Sleep schedule:</strong> 7-8 hours sleep for 3 nights before exam</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Nutrition plan:</strong> Balanced meals, avoid heavy foods on exam day</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Hydration:</strong> Regular water intake, but not excessive before exam</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Exercise routine:</strong> Light exercise to reduce stress and improve focus</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Screen time:</strong> Reduce evening screen time for better sleep quality</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Relaxation:</strong> Practice breathing exercises or meditation</span>
                     </div>
                   </div>
@@ -184,8 +184,8 @@ const Level2Module8Section2Section3 = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-emerald-500/10 to-transparent p-4 rounded-lg border border-emerald-500/30">
-                <h5 className="font-semibold text-emerald-400 mb-2">Pro Tip: The Night Before Protocol</h5>
+              <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
+                <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: The Night Before Protocol</h5>
                 <p className="text-sm text-muted-foreground mb-3">
                   Avoid last-minute cramming! Instead, focus on confidence-building activities and practical preparation.
                 </p>
@@ -202,10 +202,10 @@ const Level2Module8Section2Section3 = () => {
           </Card>
 
           {/* Day of Exam Protocol */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent p-3 sm:p-6">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-3 sm:p-6">
               <CardTitle className="flex items-center gap-2 sm:gap-3 text-foreground text-lg sm:text-xl">
-                <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
+                <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
                 Day of Exam Protocol
               </CardTitle>
             </CardHeader>
@@ -213,14 +213,14 @@ const Level2Module8Section2Section3 = () => {
               <div>
                 <h4 className="font-semibold mb-3 sm:mb-4 text-foreground text-base sm:text-lg">Timeline for Success</h4>
                 <div className="space-y-3 sm:space-y-4">
-                  <div className="relative p-3 sm:p-4 lg:p-5 bg-gradient-to-r from-emerald-500/10 to-transparent rounded-lg border border-border/30">
+                  <div className="relative p-3 sm:p-4 lg:p-5 bg-gradient-to-r from-elec-yellow/10 to-transparent rounded-lg border border-border/30">
                     <div className="flex sm:block">
-                      <div className="flex-shrink-0 w-8 h-8 sm:absolute sm:top-3 sm:left-3 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3 sm:mr-0">6AM</div>
+                      <div className="flex-shrink-0 w-8 h-8 sm:absolute sm:top-3 sm:left-3 bg-elec-yellow text-white rounded-full flex items-center justify-center font-bold text-sm mr-3 sm:mr-0">6AM</div>
                       <div className="flex-1 sm:ml-12">
-                        <h5 className="font-medium text-emerald-400 text-base sm:text-lg mb-2">Morning Routine (2-3 hours before exam)</h5>
+                        <h5 className="font-medium text-elec-yellow text-base sm:text-lg mb-2">Morning Routine (2-3 hours before exam)</h5>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                           <div className="mb-4 sm:mb-0">
-                            <h6 className="text-sm font-medium text-emerald-400 mb-2">PHYSICAL PREPARATION:</h6>
+                            <h6 className="text-sm font-medium text-elec-yellow mb-2">PHYSICAL PREPARATION:</h6>
                             <div className="space-y-1.5 text-sm text-muted-foreground">
                               <div>• Wake up naturally - avoid rushing</div>
                               <div>• Shower and dress in comfortable layers</div>
@@ -230,7 +230,7 @@ const Level2Module8Section2Section3 = () => {
                             </div>
                           </div>
                           <div>
-                            <h6 className="text-sm font-medium text-emerald-400 mb-2">MENTAL PREPARATION:</h6>
+                            <h6 className="text-sm font-medium text-elec-yellow mb-2">MENTAL PREPARATION:</h6>
                             <div className="space-y-1.5 text-sm text-muted-foreground">
                               <div>• 5-minute breathing exercise</div>
                               <div>• Quick review of key formulas only</div>
@@ -247,10 +247,10 @@ const Level2Module8Section2Section3 = () => {
                   <div className="relative p-5 bg-gradient-to-r from-orange-500/10 to-transparent rounded-lg border border-border/30">
                     <div className="absolute top-3 left-3 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-sm">8AM</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">Departure & Travel (1 hour buffer)</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">Departure & Travel (1 hour buffer)</h5>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">TRAVEL CHECKLIST:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">TRAVEL CHECKLIST:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Allow 2x normal travel time</div>
                             <div>• Alternative route planned</div>
@@ -260,7 +260,7 @@ const Level2Module8Section2Section3 = () => {
                           </div>
                         </div>
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">FINAL BAG CHECK:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">FINAL BAG CHECK:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Photo ID and exam documentation</div>
                             <div>• Calculators + spare batteries</div>
@@ -297,7 +297,7 @@ const Level2Module8Section2Section3 = () => {
               </div>
 
               <div className="bg-gradient-to-r from-purple-500/10 to-transparent p-4 rounded-lg border border-border/30">
-                <h5 className="font-semibold text-emerald-400 mb-2">Venue Familiarisation Checklist</h5>
+                <h5 className="font-semibold text-elec-yellow mb-2">Venue Familiarisation Checklist</h5>
                 <p className="text-sm text-muted-foreground mb-3">
                   Getting comfortable with your environment reduces anxiety and improves focus.
                 </p>
@@ -324,10 +324,10 @@ const Level2Module8Section2Section3 = () => {
           </Card>
 
           {/* During Exam Management */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <Shield className="h-6 w-6 text-emerald-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 During Exam Management
               </CardTitle>
             </CardHeader>
@@ -335,12 +335,12 @@ const Level2Module8Section2Section3 = () => {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-emerald-400" />
+                    <MapPin className="h-4 w-4 text-elec-yellow" />
                     Environmental Control Strategies
                   </h4>
                   <div className="space-y-3">
-                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm">Temperature Management</div>
+                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm">Temperature Management</div>
                       <div className="text-xs text-muted-foreground space-y-1 mt-2">
                         <div>• Layer clothing for easy adjustment</div>
                         <div>• Request seating change if too hot/cold</div>
@@ -358,7 +358,7 @@ const Level2Module8Section2Section3 = () => {
                       </div>
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-purple-500">
-                      <div className="font-medium text-emerald-400 text-sm">Noise & Distraction Control</div>
+                      <div className="font-medium text-elec-yellow text-sm">Noise & Distraction Control</div>
                       <div className="text-xs text-muted-foreground space-y-1 mt-2">
                         <div>• Focus on your own workspace only</div>
                         <div>• Use controlled breathing to filter distractions</div>
@@ -371,39 +371,39 @@ const Level2Module8Section2Section3 = () => {
                 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <Heart className="h-4 w-4 text-emerald-400" />
+                    <Heart className="h-4 w-4 text-elec-yellow" />
                     Stress & Anxiety Management
                   </h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>4-7-8 breathing:</strong> Inhale 4, hold 7, exhale 8 counts</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Progressive relaxation:</strong> Tense and release muscle groups</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Positive self-talk:</strong> "I am prepared and capable"</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Grounding technique:</strong> 5 things you see, 4 hear, 3 feel</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Refocus strategy:</strong> Return attention to current question only</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Time perspective:</strong> "This feeling will pass soon"</span>
                     </div>
                   </div>
                   
                   <div className="mt-4 space-y-3">
                     <div className="p-3 bg-card rounded-lg border border-border/30">
-                      <h5 className="font-semibold text-emerald-400 mb-2">Panic Attack Protocol</h5>
+                      <h5 className="font-semibold text-elec-yellow mb-2">Panic Attack Protocol</h5>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div><strong>Step 1:</strong> Stop what you're doing, don't try to continue</div>
                         <div><strong>Step 2:</strong> Focus on slow, deep breathing</div>
@@ -415,7 +415,7 @@ const Level2Module8Section2Section3 = () => {
                     </div>
                     
                     <div className="p-3 bg-card rounded-lg border border-border/30">
-                      <h5 className="font-semibold text-emerald-400 mb-2">Mid-Exam Energy Management</h5>
+                      <h5 className="font-semibold text-elec-yellow mb-2">Mid-Exam Energy Management</h5>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>• Stand and stretch during natural breaks</div>
                         <div>• Drink water in small sips regularly</div>
@@ -428,8 +428,8 @@ const Level2Module8Section2Section3 = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-emerald-500/10 to-transparent p-4 rounded-lg border border-emerald-500/30">
-                <h5 className="font-semibold text-emerald-400 mb-2">Pro Tip: The 90-Minute Reset Strategy</h5>
+              <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
+                <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: The 90-Minute Reset Strategy</h5>
                 <p className="text-sm text-muted-foreground mb-3">
                   Human concentration naturally cycles every 90 minutes. Use this knowledge to maintain peak performance.
                 </p>
@@ -445,10 +445,10 @@ const Level2Module8Section2Section3 = () => {
           </Card>
 
           {/* Advanced Preparation Strategies */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <Target className="h-6 w-6 text-emerald-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 Advanced Preparation Strategies
               </CardTitle>
             </CardHeader>
@@ -456,12 +456,12 @@ const Level2Module8Section2Section3 = () => {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-emerald-400" />
+                    <FileText className="h-4 w-4 text-elec-yellow" />
                     Documentation & Reference Setup
                   </h4>
                   <div className="space-y-3">
-                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm">BS7671 Optimisation Techniques</div>
+                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm">BS7671 Optimisation Techniques</div>
                       <div className="text-xs text-muted-foreground space-y-1 mt-2">
                         <div>• Tab system: Use different colours for each Part (1-7)</div>
                         <div>• Index bookmarks for Appendices 1-15</div>
@@ -483,7 +483,7 @@ const Level2Module8Section2Section3 = () => {
                       </div>
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-purple-500">
-                      <div className="font-medium text-emerald-400 text-sm">Calculator Programming (if permitted)</div>
+                      <div className="font-medium text-elec-yellow text-sm">Calculator Programming (if permitted)</div>
                       <div className="text-xs text-muted-foreground space-y-1 mt-2">
                         <div>• Store frequently used constants (√3 = 1.732)</div>
                         <div>• Program common formulas if calculator allows</div>
@@ -497,38 +497,38 @@ const Level2Module8Section2Section3 = () => {
                 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <Brain className="h-4 w-4 text-emerald-400" />
+                    <Brain className="h-4 w-4 text-elec-yellow" />
                     Cognitive Performance Enhancement
                   </h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Memory palace technique:</strong> Associate regulation numbers with familiar locations</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Mnemonics:</strong> Create memorable phrases for complex sequences</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Visualisation:</strong> Picture circuit diagrams and installation methods</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Active recall:</strong> Test yourself without looking at notes</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Spaced repetition:</strong> Review difficult topics at increasing intervals</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Interleaving:</strong> Mix different topic types during revision</span>
                     </div>
                   </div>
                   
                   <div className="mt-4 p-3 bg-card rounded-lg border border-border/30">
-                    <h5 className="font-semibold text-emerald-400 mb-2">Week Before Exam Schedule</h5>
+                    <h5 className="font-semibold text-elec-yellow mb-2">Week Before Exam Schedule</h5>
                     <div className="text-xs text-muted-foreground space-y-1">
                       <div><strong>7 days:</strong> Final comprehensive review - identify weak areas</div>
                       <div><strong>6 days:</strong> Focus on identified weak topics only</div>
@@ -541,7 +541,7 @@ const Level2Module8Section2Section3 = () => {
                   </div>
                   
                   <div className="mt-4 p-3 bg-card rounded-lg border border-border/30">
-                    <h5 className="font-semibold text-emerald-400 mb-2">Peak Performance Nutrition</h5>
+                    <h5 className="font-semibold text-elec-yellow mb-2">Peak Performance Nutrition</h5>
                     <div className="text-xs text-muted-foreground space-y-1">
                       <div><strong>Breakfast:</strong> Porridge with berries (slow-release energy)</div>
                       <div><strong>Pre-exam snack:</strong> Banana or handful of nuts</div>
@@ -553,8 +553,8 @@ const Level2Module8Section2Section3 = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-emerald-500/10 to-transparent p-4 rounded-lg border border-emerald-500/30">
-                <h5 className="font-semibold text-emerald-400 mb-2">Pro Tip: The Confidence Anchor Technique</h5>
+              <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
+                <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: The Confidence Anchor Technique</h5>
                 <p className="text-sm text-muted-foreground mb-3">
                   Create a physical gesture or mental phrase that you associate with successful practice sessions. 
                   Use this "anchor" during the exam to trigger confident, focused thinking.
@@ -570,10 +570,10 @@ const Level2Module8Section2Section3 = () => {
           </Card>
 
           {/* Detailed Venue Intelligence */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <MapPin className="h-6 w-6 text-emerald-400" />
+                <MapPin className="h-6 w-6 text-elec-yellow" />
                 Venue Intelligence & Environment Mastery
               </CardTitle>
             </CardHeader>
@@ -581,13 +581,13 @@ const Level2Module8Section2Section3 = () => {
               <div>
                 <h4 className="font-semibold mb-4 text-foreground text-lg">Pre-Visit Reconnaissance</h4>
                 <div className="space-y-4">
-                  <div className="relative p-5 bg-gradient-to-r from-emerald-500/10 to-transparent rounded-lg border border-border/30">
-                    <div className="absolute top-3 left-3 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm">📍</div>
+                  <div className="relative p-5 bg-gradient-to-r from-elec-yellow/10 to-transparent rounded-lg border border-border/30">
+                    <div className="absolute top-3 left-3 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center font-bold text-sm">📍</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">Location Scouting (1-2 days before)</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">Location Scouting (1-2 days before)</h5>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">ROUTE PLANNING:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">ROUTE PLANNING:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Drive/walk the route at same time as exam day</div>
                             <div>• Identify alternative routes for traffic delays</div>
@@ -597,7 +597,7 @@ const Level2Module8Section2Section3 = () => {
                           </div>
                         </div>
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">FACILITY ASSESSMENT:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">FACILITY ASSESSMENT:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Main entrance and registration procedures</div>
                             <div>• Toilet locations and queue patterns</div>
@@ -642,13 +642,13 @@ const Level2Module8Section2Section3 = () => {
               </div>
 
               <div className="bg-gradient-to-r from-purple-500/10 to-transparent p-4 rounded-lg border border-border/30">
-                <h5 className="font-semibold text-emerald-400 mb-2">Environmental Adaptation Strategies</h5>
+                <h5 className="font-semibold text-elec-yellow mb-2">Environmental Adaptation Strategies</h5>
                 <p className="text-sm text-muted-foreground mb-3">
                   Every exam environment presents unique challenges. Prepare for common scenarios:
                 </p>
                 <div className="grid md:grid-cols-2 gap-3 text-xs text-muted-foreground">
                   <div>
-                    <h6 className="font-medium text-emerald-400 mb-1">COMMON CHALLENGES:</h6>
+                    <h6 className="font-medium text-elec-yellow mb-1">COMMON CHALLENGES:</h6>
                     <div className="space-y-1">
                       <div>• Room too hot/cold for optimal performance</div>
                       <div>• Distracting noises from other candidates</div>
@@ -658,7 +658,7 @@ const Level2Module8Section2Section3 = () => {
                     </div>
                   </div>
                   <div>
-                    <h6 className="font-medium text-emerald-400 mb-1">ADAPTATION TECHNIQUES:</h6>
+                    <h6 className="font-medium text-elec-yellow mb-1">ADAPTATION TECHNIQUES:</h6>
                     <div className="space-y-1">
                       <div>• Layers clothing for temperature adjustment</div>
                       <div>• Mental focus techniques to filter distractions</div>
@@ -673,10 +673,10 @@ const Level2Module8Section2Section3 = () => {
           </Card>
 
           {/* Emergency Protocols & Backup Plans */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <AlertTriangle className="h-6 w-6 text-emerald-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Emergency Protocols & Backup Plans
               </CardTitle>
             </CardHeader>
@@ -687,10 +687,10 @@ const Level2Module8Section2Section3 = () => {
                   <div className="relative p-5 bg-gradient-to-r from-red-500/10 to-transparent rounded-lg border border-border/30">
                     <div className="absolute top-3 left-3 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center font-bold text-sm">!</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">Technical Equipment Failures</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">Technical Equipment Failures</h5>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">CALCULATOR PROBLEMS:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">CALCULATOR PROBLEMS:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Immediately switch to backup calculator</div>
                             <div>• Signal invigilator for replacement if needed</div>
@@ -700,7 +700,7 @@ const Level2Module8Section2Section3 = () => {
                           </div>
                         </div>
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">COMPUTER/SYSTEM ISSUES:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">COMPUTER/SYSTEM ISSUES:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Raise hand immediately - don't try to fix</div>
                             <div>• Note exact time and question number</div>
@@ -719,10 +719,10 @@ const Level2Module8Section2Section3 = () => {
                   <div className="relative p-5 bg-gradient-to-r from-orange-500/10 to-transparent rounded-lg border border-border/30">
                     <div className="absolute top-3 left-3 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-sm">H</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">Health & Medical Emergencies</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">Health & Medical Emergencies</h5>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">SUDDEN ILLNESS:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">SUDDEN ILLNESS:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Signal invigilator immediately</div>
                             <div>• Don't leave seat without permission</div>
@@ -732,7 +732,7 @@ const Level2Module8Section2Section3 = () => {
                           </div>
                         </div>
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">ANXIETY/PANIC ATTACKS:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">ANXIETY/PANIC ATTACKS:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Use breathing techniques learned</div>
                             <div>• Signal for assistance if severe</div>
@@ -753,16 +753,16 @@ const Level2Module8Section2Section3 = () => {
                     </div>
                   </div>
                   
-                  <div className="relative p-5 bg-gradient-to-r from-emerald-500/10 to-transparent rounded-lg border border-border/30">
-                    <div className="absolute top-3 left-3 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm">T</div>
+                  <div className="relative p-5 bg-gradient-to-r from-elec-yellow/10 to-transparent rounded-lg border border-border/30">
+                    <div className="absolute top-3 left-3 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center font-bold text-sm">T</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">Travel & Timing Emergencies</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">Travel & Timing Emergencies</h5>
                       <div className="text-sm text-muted-foreground mb-3">
                         Transport delays and unexpected events can happen. Preparation minimises impact.
                       </div>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">LATE ARRIVAL:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">LATE ARRIVAL:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Call exam centre immediately</div>
                             <div>• Explain reason for delay</div>
@@ -772,7 +772,7 @@ const Level2Module8Section2Section3 = () => {
                           </div>
                         </div>
                         <div>
-                          <h6 className="text-xs font-medium text-emerald-400 mb-1">TRANSPORT FAILURE:</h6>
+                          <h6 className="text-xs font-medium text-elec-yellow mb-1">TRANSPORT FAILURE:</h6>
                           <div className="space-y-1 text-xs text-muted-foreground">
                             <div>• Use pre-planned alternative route</div>
                             <div>• Call taxi service as backup</div>
@@ -788,10 +788,10 @@ const Level2Module8Section2Section3 = () => {
                   <div className="relative p-5 bg-gradient-to-r from-purple-500/10 to-transparent rounded-lg border border-border/30">
                     <div className="absolute top-3 left-3 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm">📞</div>
                     <div className="ml-12">
-                      <h5 className="font-medium text-emerald-400 text-lg mb-2">Communication & Support Protocols</h5>
+                      <h5 className="font-medium text-elec-yellow text-lg mb-2">Communication & Support Protocols</h5>
                       <div className="space-y-3">
                         <div className="p-3 bg-purple-500/20 rounded-lg">
-                          <h6 className="font-medium text-emerald-400 text-sm mb-2">Essential Contact Numbers</h6>
+                          <h6 className="font-medium text-elec-yellow text-sm mb-2">Essential Contact Numbers</h6>
                           <div className="text-xs text-muted-foreground space-y-1">
                             <div>• Exam centre main number</div>
                             <div>• Emergency transport services</div>
@@ -801,7 +801,7 @@ const Level2Module8Section2Section3 = () => {
                           </div>
                         </div>
                         <div className="p-3 bg-purple-500/20 rounded-lg">
-                          <h6 className="font-medium text-emerald-400 text-sm mb-2">Communication Protocol</h6>
+                          <h6 className="font-medium text-elec-yellow text-sm mb-2">Communication Protocol</h6>
                           <div className="text-xs text-muted-foreground space-y-1">
                             <div>• Always speak to invigilator first</div>
                             <div>• Be clear and specific about the problem</div>
@@ -846,10 +846,10 @@ const Level2Module8Section2Section3 = () => {
           </Card>
 
           {/* Post-Exam Protocols */}
-          <Card className="border-emerald-500/30 bg-card">
-            <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-transparent">
+          <Card className="border-elec-yellow/30 bg-card">
+            <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
               <CardTitle className="flex items-center gap-3 text-foreground">
-                <CheckCircle className="h-6 w-6 text-emerald-400" />
+                <CheckCircle className="h-6 w-6 text-elec-yellow" />
                 Post-Exam Protocols & Results Management
               </CardTitle>
             </CardHeader>
@@ -857,7 +857,7 @@ const Level2Module8Section2Section3 = () => {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-emerald-400" />
+                    <Clock className="h-4 w-4 text-elec-yellow" />
                     Immediate Post-Exam Actions
                   </h4>
                   <div className="space-y-3">
@@ -872,8 +872,8 @@ const Level2Module8Section2Section3 = () => {
                         <div>• Note any technical issues experienced</div>
                       </div>
                     </div>
-                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-emerald-500">
-                      <div className="font-medium text-emerald-400 text-sm">Administrative Completion</div>
+                    <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
+                      <div className="font-medium text-elec-yellow text-sm">Administrative Completion</div>
                       <div className="text-xs text-muted-foreground space-y-1 mt-2">
                         <div>• Ensure all required documentation submitted</div>
                         <div>• Confirm contact details for results notification</div>
@@ -887,28 +887,28 @@ const Level2Module8Section2Section3 = () => {
                 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <Heart className="h-4 w-4 text-emerald-400" />
+                    <Heart className="h-4 w-4 text-elec-yellow" />
                     Emotional & Mental Recovery
                   </h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Positive reframing:</strong> Focus on what went well, not mistakes</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Emotional release:</strong> Allow yourself to feel relief and pride</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Social support:</strong> Contact supportive family/friends</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Physical activity:</strong> Light exercise to release tension</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 rounded">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span className="text-sm"><strong>Reward yourself:</strong> Planned celebration for completing exam</span>
                     </div>
                   </div>
@@ -926,8 +926,8 @@ const Level2Module8Section2Section3 = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-emerald-500/10 to-transparent p-4 rounded-lg border border-emerald-500/30">
-                <h5 className="font-semibold text-emerald-400 mb-2">Pro Tip: Learning from the Experience</h5>
+              <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
+                <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: Learning from the Experience</h5>
                 <p className="text-sm text-muted-foreground mb-3">
                   Regardless of results, every exam is a learning opportunity. Document insights while they're fresh.
                 </p>

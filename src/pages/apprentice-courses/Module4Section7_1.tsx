@@ -262,7 +262,7 @@ const Module4Section7_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Health and Safety Consequences</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Health and Safety Consequences</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Back injuries and spinal damage</strong> - herniated discs, muscle strains, and chronic pain conditions</li>
                       <li><strong>Repetitive strain injuries (RSI)</strong> - affecting shoulders, wrists, and knees from poor handling techniques</li>
@@ -312,7 +312,7 @@ const Module4Section7_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Legal Requirements and Responsibilities</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Legal Requirements and Responsibilities</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Manual Handling Operations Regulations 1992 (MHOR)</strong> - primary legislation covering all manual handling activities</li>
                       <li><strong>Employer duties</strong> - assess risks, provide training, supply equipment, and monitor compliance</li>
@@ -425,7 +425,7 @@ const Module4Section7_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Material-Specific Techniques</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Material-Specific Techniques</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Cable drums and reels</strong> - use drum jacks, trolleys, or mechanical lifts for weights over 25kg</li>
                       <li><strong>Conduit and trunking</strong> - carry long lengths with two people, support at multiple points</li>
@@ -445,7 +445,7 @@ const Module4Section7_1 = () => {
                       </ul>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-emerald-50/50 dark:bg-blue-900/10 rounded border border-blue-200/30">
+                    <div className="mt-3 p-3 bg-elec-yellow/5/50 dark:bg-blue-900/10 rounded border border-blue-200/30">
                       <p className="text-xs sm:text-sm text-white mb-2"><strong>Environmental considerations:</strong></p>
                       <p className="text-xs text-white">
                         Weather conditions significantly affect manual handling safety. Wet surfaces increase slip risk, cold weather reduces grip strength and flexibility, while hot conditions increase fatigue. Always adjust handling techniques and use appropriate PPE for conditions.
@@ -469,7 +469,7 @@ const Module4Section7_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Equipment and Teamwork Solutions</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Equipment and Teamwork Solutions</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Wheeled aids</strong> - sack trucks, platform trolleys, pallet trucks for ground-level transport</li>
                       <li><strong>Lifting equipment</strong> - hoists, cranes, and lifting tables for heavy items</li>
@@ -517,7 +517,7 @@ const Module4Section7_1 = () => {
               </p>
               
               <div className="space-y-4">
-                <div className="rounded-lg p-4 bg-emerald-50/50 dark:bg-blue-900/10 border border-blue-200/30">
+                <div className="rounded-lg p-4 bg-elec-yellow/5/50 dark:bg-blue-900/10 border border-blue-200/30">
                   <div className="flex items-start gap-3">
                     <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
@@ -625,7 +625,7 @@ const Module4Section7_1 = () => {
               </p>
             </div>
             
-            <div className="rounded-lg p-4 bg-emerald-50/50 dark:bg-blue-900/10 border border-blue-200/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/5/50 dark:bg-blue-900/10 border border-blue-200/30">
               <h3 className="font-medium text-white mb-2">Case Study 2: The Successful Team Approach</h3>
               <p className="text-base text-white mb-3">
                 A data centre installation required moving 200+ metres of heavy cable tray through a complex route. The contractor implemented a coordinated team approach with designated roles.

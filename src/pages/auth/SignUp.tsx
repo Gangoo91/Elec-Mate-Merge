@@ -22,9 +22,20 @@ import {
   Lock,
   Eye,
   EyeOff,
-  Shield
+  Shield,
+  Check,
+  X
 } from 'lucide-react';
 import { storeConsent } from '@/services/consentService';
+import { cn } from '@/lib/utils';
+
+// Password requirements for security
+const PASSWORD_REQUIREMENTS = [
+  { id: 'length', label: 'At least 8 characters', test: (p: string) => p.length >= 8 },
+  { id: 'uppercase', label: 'One uppercase letter', test: (p: string) => /[A-Z]/.test(p) },
+  { id: 'lowercase', label: 'One lowercase letter', test: (p: string) => /[a-z]/.test(p) },
+  { id: 'number', label: 'One number', test: (p: string) => /[0-9]/.test(p) },
+];
 
 type OnboardingStep = 'account' | 'profile' | 'elec-id' | 'consent' | 'complete';
 
@@ -99,6 +110,19 @@ const SignUp = () => {
     { value: 'technician', label: 'Technician' }
   ];
 
+  // Password strength calculation
+  const getPasswordStrength = (pwd: string) => {
+    const passed = PASSWORD_REQUIREMENTS.filter(req => req.test(pwd)).length;
+    if (passed === 0) return { level: 0, label: '', color: '' };
+    if (passed === 1) return { level: 1, label: 'Weak', color: 'bg-red-500' };
+    if (passed === 2) return { level: 2, label: 'Fair', color: 'bg-orange-500' };
+    if (passed === 3) return { level: 3, label: 'Good', color: 'bg-yellow-500' };
+    return { level: 4, label: 'Strong', color: 'bg-green-500' };
+  };
+
+  const passwordStrength = getPasswordStrength(password);
+  const allPasswordRequirementsMet = PASSWORD_REQUIREMENTS.every(req => req.test(password));
+
   const handleAccountSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -107,13 +131,13 @@ const SignUp = () => {
       return;
     }
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
+    if (!allPasswordRequirementsMet) {
+      setError('Please meet all password requirements');
       return;
     }
 
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters');
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
       return;
     }
 
@@ -369,7 +393,7 @@ const SignUp = () => {
                       <Input
                         id="password"
                         type={showPassword ? 'text' : 'password'}
-                        placeholder="Min. 6 characters"
+                        placeholder="Create a strong password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="pl-10 pr-10 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200"
@@ -384,6 +408,57 @@ const SignUp = () => {
                         {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </button>
                     </div>
+
+                    {/* Password strength indicator */}
+                    {password && (
+                      <div className="space-y-2 animate-fade-in">
+                        <div className="flex items-center gap-2">
+                          <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                            <div
+                              className={cn(
+                                "h-full transition-all duration-300",
+                                passwordStrength.color
+                              )}
+                              style={{ width: `${(passwordStrength.level / 4) * 100}%` }}
+                            />
+                          </div>
+                          {passwordStrength.label && (
+                            <span className={cn(
+                              "text-xs font-medium",
+                              passwordStrength.level <= 1 && "text-red-400",
+                              passwordStrength.level === 2 && "text-orange-400",
+                              passwordStrength.level === 3 && "text-yellow-400",
+                              passwordStrength.level === 4 && "text-green-400"
+                            )}>
+                              {passwordStrength.label}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Requirements list */}
+                        <div className="grid grid-cols-2 gap-1">
+                          {PASSWORD_REQUIREMENTS.map((req) => {
+                            const passed = req.test(password);
+                            return (
+                              <div
+                                key={req.id}
+                                className={cn(
+                                  "flex items-center gap-1 text-xs transition-colors",
+                                  passed ? "text-green-400" : "text-gray-500"
+                                )}
+                              >
+                                {passed ? (
+                                  <Check className="h-3 w-3" />
+                                ) : (
+                                  <X className="h-3 w-3" />
+                                )}
+                                {req.label}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -396,11 +471,23 @@ const SignUp = () => {
                         placeholder="Confirm password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="pl-10 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200"
+                        className={cn(
+                          "pl-10 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200",
+                          confirmPassword && password !== confirmPassword && "border-red-500/50"
+                        )}
                         autoComplete="new-password"
                         required
                       />
                     </div>
+                    {confirmPassword && password !== confirmPassword && (
+                      <p className="text-xs text-red-400 animate-fade-in">Passwords don't match</p>
+                    )}
+                    {confirmPassword && password === confirmPassword && allPasswordRequirementsMet && (
+                      <p className="text-xs text-green-400 animate-fade-in flex items-center gap-1">
+                        <Check className="h-3 w-3" />
+                        Passwords match
+                      </p>
+                    )}
                   </div>
 
                   <Button type="submit" className="w-full h-12 text-base font-semibold bg-yellow-400 hover:bg-yellow-300 text-black transition-all duration-200 hover:scale-[1.02]">

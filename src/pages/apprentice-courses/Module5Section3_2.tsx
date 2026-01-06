@@ -194,11 +194,11 @@ const Module5Section3_2 = () => {
             Timescales and milestones are essential in electrical installation projects. They provide structure, help manage resources, and ensure that work is completed on time without rushing or compromising quality. Unrealistic deadlines often lead to mistakes, poor workmanship, and safety risks. Setting achievable timescales ensures projects remain efficient and professional.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   Proper timescale planning in electrical projects reduces installation errors by up to 40% and prevents costly delays that can impact entire construction schedules.
                 </p>
@@ -211,7 +211,7 @@ const Module5Section3_2 = () => {
               <strong>Real Impact:</strong> Projects with realistic timescales and clear milestones show 25% fewer rework instances and improved team satisfaction compared to rushed installations.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> BS 7671 requires that electrical work be planned and executed with sufficient time to ensure safety standards and regulatory compliance.
               </p>
@@ -248,7 +248,7 @@ const Module5Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Purpose of Timescales</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Purpose of Timescales</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -341,7 +341,7 @@ const Module5Section3_2 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Buffer Time Rule</p>
+                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Buffer Time Rule</p>
                         <p className="text-xs sm:text-sm text-white">
                           Always add 10-20% extra time to account for unexpected delays like weather, material shortages, or site access issues.
                         </p>
@@ -378,7 +378,7 @@ const Module5Section3_2 = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                <h4 className="font-medium text-red-700 dark:text-elec-yellow mb-3">Risks of Unrealistic Timescales</h4>
+                <h4 className="font-medium text-red-700 text-elec-yellow mb-3">Risks of Unrealistic Timescales</h4>
                 <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                   <li>Increased mistakes and rework</li>
                   <li>Unsafe working practices from rushing</li>
@@ -406,8 +406,8 @@ const Module5Section3_2 = () => {
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <h4 className="font-medium text-blue-700 dark:text-elec-yellow mb-2">When to Adjust</h4>
+              <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                <h4 className="font-medium text-blue-700 text-elec-yellow mb-2">When to Adjust</h4>
                 <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                   <li>Material shortage or late deliveries</li>
                   <li>Unforeseen site conditions discovered</li>
@@ -417,7 +417,7 @@ const Module5Section3_2 = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <h4 className="font-medium text-purple-700 dark:text-elec-yellow mb-2">How to Adjust</h4>
+                <h4 className="font-medium text-purple-700 text-elec-yellow mb-2">How to Adjust</h4>
                 <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                   <li>Communicate changes with supervisors immediately</li>
                   <li>Adjust the programme with supervisor's approval</li>
@@ -465,9 +465,9 @@ const Module5Section3_2 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
-          <h2 className="text-lg sm:text-xl font-semibold text-emerald-800 dark:text-emerald-200 mb-4">Pocket Guide</h2>
-          <div className="space-y-2 text-emerald-700 dark:text-elec-yellow">
+        <Card className="mb-8 p-6 bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow dark:text-elec-yellow mb-4">Pocket Guide</h2>
+          <div className="space-y-2 text-elec-yellow text-elec-yellow">
             <p>• <strong>Timescales</strong> = planned duration for tasks.</p>
             <p>• <strong>Milestones</strong> = key checkpoints to track progress.</p>
             <p>• Always allow extra time for delays.</p>

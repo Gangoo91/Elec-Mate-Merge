@@ -367,8 +367,8 @@ const Module2Section4_1 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Visual Identification Methods</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                      <p className="text-emerald-200 text-sm mb-2"><strong>Nameplate Information:</strong></p>
-                      <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-100">
+                      <p className="text-elec-yellow text-sm mb-2"><strong>Nameplate Information:</strong></p>
+                      <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                         <li><strong>~ symbol:</strong> Indicates AC supply or output</li>
                         <li><strong>= symbol:</strong> Indicates DC supply or output</li>
                         <li><strong>Frequency rating:</strong> "50Hz" confirms AC; "0Hz" or no frequency = DC</li>
@@ -393,8 +393,8 @@ const Module2Section4_1 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Measurement Techniques</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                      <p className="text-emerald-200 text-sm mb-2"><strong>Multimeter Testing:</strong></p>
-                      <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-100">
+                      <p className="text-elec-yellow text-sm mb-2"><strong>Multimeter Testing:</strong></p>
+                      <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                         <li><strong>AC mode (V~):</strong> Will read near zero on pure DC sources</li>
                         <li><strong>DC mode (V=):</strong> Will read near zero on pure AC sources</li>
                         <li><strong>Mixed signals:</strong> Both modes may show readings if DC has ripple</li>
@@ -419,8 +419,8 @@ const Module2Section4_1 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Common Installation Locations</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-card border border-elec-yellow/30 p-3 rounded">
-                      <p className="text-emerald-200 font-medium mb-2">Typical AC Locations:</p>
-                      <ul className="list-disc pl-4 space-y-1 text-xs text-emerald-100">
+                      <p className="text-elec-yellow font-medium mb-2">Typical AC Locations:</p>
+                      <ul className="list-disc pl-4 space-y-1 text-xs text-white">
                         <li>Distribution boards and consumer units</li>
                         <li>Socket outlets and lighting circuits</li>
                         <li>Motor control centres</li>
@@ -455,7 +455,7 @@ const Module2Section4_1 = () => {
                     </div>
                     
                     <div className="bg-card border border-elec-yellow/30 p-3 rounded">
-                      <p className="text-sm text-emerald-100">
+                      <p className="text-sm text-white">
                         <strong>Safety Note:</strong> Always verify meter category rating (CAT II/III/IV) matches installation voltage levels. 
                         Use appropriate test leads and ensure meter is calibrated for accurate readings.
                       </p>

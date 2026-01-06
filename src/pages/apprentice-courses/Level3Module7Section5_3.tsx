@@ -89,11 +89,11 @@ const Level3Module7Section5_3 = () => {
         </p>
 
         {/* Spot it in 30 Seconds */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-emerald-500/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-elec-yellow/20">
           <div className="flex items-start gap-3 mb-4">
-            <Target className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-1" />
+            <Target className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
             <div className="flex-1">
-              <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 dark:text-emerald-400 mb-3 sm:mb-4">
+              <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow dark:text-elec-yellow mb-3 sm:mb-4">
                 Spot it in 30 Seconds
               </h2>
               <div className="space-y-2 text-xs sm:text-sm text-foreground">
@@ -147,11 +147,11 @@ const Level3Module7Section5_3 = () => {
 
           {/* Section 1: HMRC Registration */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-emerald-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-elec-yellow bg-card">
               <div className="flex items-start gap-3 mb-4">
-                <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-emerald-400 dark:text-emerald-400 mb-4 text-base">HMRC Registration Requirements</h3>
+                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base">HMRC Registration Requirements</h3>
                   <div className="space-y-4 text-xs sm:text-sm text-foreground">
                     <p>
                       <strong>Unique Taxpayer Reference (UTR):</strong> Essential for all self-employed individuals. 
@@ -280,7 +280,7 @@ const Level3Module7Section5_3 = () => {
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 dark:text-emerald-400 mb-4 text-base">Professional Memberships and Compliance</h3>
+                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base">Professional Memberships and Compliance</h3>
                   <div className="space-y-4 text-xs sm:text-sm text-foreground">
                     <p>
                       <strong>Competent Person Schemes:</strong> Join schemes like NICEIC, ELECSA, or NAPIT for 
@@ -326,7 +326,7 @@ const Level3Module7Section5_3 = () => {
           <CardContent className="space-y-6">
             {/* Case Study 1 */}
             <div className="rounded-lg p-4 border-l-4 border-l-red-500 bg-card">
-              <h4 className="font-semibold text-red-600 dark:text-emerald-400 mb-2">Case Study: Late Registration Penalties</h4>
+              <h4 className="font-semibold text-red-600 dark:text-elec-yellow mb-2">Case Study: Late Registration Penalties</h4>
               <p className="text-xs sm:text-sm text-foreground mb-2">
                 An electrician started working in April 2023 but forgot to register with HMRC. 
                 By missing the October 2024 deadline, they faced:
@@ -340,8 +340,8 @@ const Level3Module7Section5_3 = () => {
             </div>
 
             {/* Case Study 2 */}
-            <div className="rounded-lg p-4 border-l-4 border-l-emerald-500 bg-emerald-500/5">
-              <h4 className="font-semibold text-emerald-600 dark:text-emerald-400 mb-2">Case Study: Proper Insurance Saves Business</h4>
+            <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow bg-elec-yellow/5">
+              <h4 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2">Case Study: Proper Insurance Saves Business</h4>
               <p className="text-xs sm:text-sm text-foreground mb-2">
                 A self-employed electrician with comprehensive insurance faced a claim when their work 
                 allegedly caused damage to a customer's expensive home automation system:
@@ -364,19 +364,19 @@ const Level3Module7Section5_3 = () => {
           <CardContent>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <p className="text-xs sm:text-sm text-foreground">
                   <strong>Early Registration:</strong> Register with HMRC promptly and maintain accurate records to avoid penalties and ensure smooth operations.
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <p className="text-xs sm:text-sm text-foreground">
                   <strong>Comprehensive Insurance:</strong> Invest in proper coverage levels - it's essential business protection, not optional expense.
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <p className="text-xs sm:text-sm text-foreground">
                   <strong>Professional Development:</strong> Join competent person schemes and maintain ongoing training to enhance credibility and capability.
                 </p>

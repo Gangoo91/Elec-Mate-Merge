@@ -287,7 +287,7 @@ const Module4Section2_2 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{step.step}</p>
+                      <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">{step.step}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">{step.description}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Importance:</strong> {step.importance} - Tools: {step.tools.join(', ')}
@@ -348,7 +348,7 @@ const Module4Section2_2 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{req.type}</p>
+                      <p className="font-semibold text-purple-600 text-elec-yellow mb-1">{req.type}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">Spacing: <strong>{req.spacing}</strong> - {req.reason}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Considerations:</strong> {req.considerations.join(', ')}
@@ -390,7 +390,7 @@ const Module4Section2_2 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">{error.error}</p>
+                      <p className="font-semibold text-orange-600 text-elec-yellow mb-1">{error.error}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">Consequence: {error.consequence}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Prevention:</strong> {error.prevention}
@@ -422,7 +422,7 @@ const Module4Section2_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">BS 7671 Requirements</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">BS 7671 Requirements</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Containment must be installed in safe zones with correct support spacing.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Compliance areas:</strong> Safe zones, support spacing, cable segregation, and protection methods.
@@ -435,7 +435,7 @@ const Module4Section2_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Building Regulations Part M</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Building Regulations Part M</p>
                     <p className="text-xs sm:text-sm text-white mb-2">May dictate accessory mounting heights for accessibility.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Considerations:</strong> Switch heights, socket positions, accessibility requirements, and ergonomic guidelines.
@@ -448,7 +448,7 @@ const Module4Section2_2 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-8 p-6 bg-emerald-50 dark:bg-emerald-950/20 border-blue-200 dark:border-blue-800">
+        <Card className="mb-8 p-6 bg-elec-yellow/5 dark:bg-elec-yellow/10 border-blue-200 dark:border-blue-800">
           <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
             <Eye className="w-5 h-5" />
             Real-World Example

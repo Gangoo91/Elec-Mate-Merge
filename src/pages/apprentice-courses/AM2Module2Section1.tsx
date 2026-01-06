@@ -252,7 +252,7 @@ const AM2Module2Section1 = () => {
                   ~25 min read
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-emerald-400">
+              <div className="flex items-center gap-2 text-sm text-elec-yellow">
                 <AlertTriangle className="w-4 h-4" />
                 <span className="font-medium">Critical Content - Instant Fail</span>
               </div>
@@ -266,14 +266,14 @@ const AM2Module2Section1 = () => {
         {/* Hero Section */}
         <div className="mb-10 text-center">
           <div className="flex items-center justify-center mb-4">
-            <Shield className="h-10 w-10 text-emerald-400 mr-3" />
-            <AlertTriangle className="h-7 w-7 text-emerald-400" />
+            <Shield className="h-10 w-10 text-elec-yellow mr-3" />
+            <AlertTriangle className="h-7 w-7 text-elec-yellow" />
           </div>
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4">
             Safe Isolation Procedures
           </h1>
           <div className="bg-card border-l-4 border-l-red-500 p-4 mb-6 text-left max-w-4xl mx-auto">
-            <h2 className="text-lg font-bold text-emerald-400 mb-2 flex items-center">
+            <h2 className="text-lg font-bold text-elec-yellow mb-2 flex items-center">
               <XCircle className="h-5 w-5 mr-2" />
               INSTANT FAIL IF WRONG
             </h2>
@@ -286,9 +286,9 @@ const AM2Module2Section1 = () => {
         </div>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 bg-card border-emerald-500/30">
+        <Card className="mb-6 bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400 flex items-center">
+            <CardTitle className="text-lg text-elec-yellow flex items-center">
               <CheckCircle className="h-5 w-5 mr-2" />
               Learning Outcomes
             </CardTitle>
@@ -321,9 +321,9 @@ const AM2Module2Section1 = () => {
         </Card>
 
         {/* Equipment Required */}
-        <Card className="mb-6 bg-card border-emerald-500/30">
+        <Card className="mb-6 bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400 flex items-center">
+            <CardTitle className="text-lg text-elec-yellow flex items-center">
               <Wrench className="h-5 w-5 mr-2" />
               Equipment Required
             </CardTitle>
@@ -342,9 +342,9 @@ const AM2Module2Section1 = () => {
         </Card>
 
         {/* Pre-Isolation Checklist */}
-        <Card className="mb-6 bg-card border-emerald-500/30">
+        <Card className="mb-6 bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400 flex items-center">
+            <CardTitle className="text-lg text-elec-yellow flex items-center">
               <FileText className="h-5 w-5 mr-2" />
               Pre-Isolation Checklist
             </CardTitle>
@@ -354,7 +354,7 @@ const AM2Module2Section1 = () => {
             <div className="space-y-2">
               {preIsolationChecklist.map((item, index) => (
                 <div key={index} className="flex items-start p-2 bg-background/50 rounded border border-border/20">
-                  <div className="bg-emerald-500 text-black font-bold w-6 h-6 rounded-full flex items-center justify-center mr-2 flex-shrink-0 text-xs">
+                  <div className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center mr-2 flex-shrink-0 text-xs">
                     {index + 1}
                   </div>
                   <span className="text-sm">{item}</span>
@@ -365,9 +365,9 @@ const AM2Module2Section1 = () => {
         </Card>
 
         {/* Why Safe Isolation Matters - Enhanced */}
-        <Card className="mb-6 bg-card border-emerald-500/30">
+        <Card className="mb-6 bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400">Why Safe Isolation Matters</CardTitle>
+            <CardTitle className="text-lg text-elec-yellow">Why Safe Isolation Matters</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
@@ -375,11 +375,11 @@ const AM2Module2Section1 = () => {
                 <h3 className="text-base font-semibold text-foreground mb-3">Safety Reasons:</h3>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start">
-                    <AlertTriangle className="h-4 w-4 text-emerald-400 mr-2 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="h-4 w-4 text-elec-yellow mr-2 mt-0.5 flex-shrink-0" />
                     <span>Prevents electrocution, burns, and arc flash injuries</span>
                   </li>
                   <li className="flex items-start">
-                    <Shield className="h-4 w-4 text-emerald-400 mr-2 mt-0.5 flex-shrink-0" />
+                    <Shield className="h-4 w-4 text-elec-yellow mr-2 mt-0.5 flex-shrink-0" />
                     <span>Ensures no one else can accidentally re-energise the system</span>
                   </li>
                   <li className="flex items-start">
@@ -387,11 +387,11 @@ const AM2Module2Section1 = () => {
                     <span>Protects both you and others on site</span>
                   </li>
                   <li className="flex items-start">
-                    <XCircle className="h-4 w-4 text-emerald-400 mr-2 mt-0.5 flex-shrink-0" />
+                    <XCircle className="h-4 w-4 text-elec-yellow mr-2 mt-0.5 flex-shrink-0" />
                     <span>Eliminates risk of electrical shock from induced voltages</span>
                   </li>
                   <li className="flex items-start">
-                    <Lock className="h-4 w-4 text-emerald-400 mr-2 mt-0.5 flex-shrink-0" />
+                    <Lock className="h-4 w-4 text-elec-yellow mr-2 mt-0.5 flex-shrink-0" />
                     <span>Prevents equipment damage from short circuits</span>
                   </li>
                 </ul>
@@ -400,19 +400,19 @@ const AM2Module2Section1 = () => {
                 <h3 className="text-base font-semibold text-foreground mb-3">Legal & Assessment:</h3>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start">
-                    <FileText className="h-4 w-4 text-emerald-400 mr-2 mt-0.5 flex-shrink-0" />
+                    <FileText className="h-4 w-4 text-elec-yellow mr-2 mt-0.5 flex-shrink-0" />
                     <span>Mandatory legal requirement under the Electricity at Work Regulations 1989</span>
                   </li>
                   <li className="flex items-start">
-                    <XCircle className="h-4 w-4 text-emerald-400 mr-2 mt-0.5 flex-shrink-0" />
+                    <XCircle className="h-4 w-4 text-elec-yellow mr-2 mt-0.5 flex-shrink-0" />
                     <span>In AM2, failure = instant disqualification</span>
                   </li>
                   <li className="flex items-start">
-                    <AlertTriangle className="h-4 w-4 text-emerald-400 mr-2 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="h-4 w-4 text-elec-yellow mr-2 mt-0.5 flex-shrink-0" />
                     <span>No second chances or partial marks</span>
                   </li>
                   <li className="flex items-start">
-                    <Book className="h-4 w-4 text-emerald-400 mr-2 mt-0.5 flex-shrink-0" />
+                    <Book className="h-4 w-4 text-elec-yellow mr-2 mt-0.5 flex-shrink-0" />
                     <span>Demonstrates competency to IET Code of Practice</span>
                   </li>
                   <li className="flex items-start">
@@ -425,26 +425,26 @@ const AM2Module2Section1 = () => {
 
             {/* Statistics & Real Data */}
             <div className="bg-card border border-red-500/20 rounded p-4">
-              <h3 className="text-base font-semibold text-emerald-400 mb-3">Sobering Statistics:</h3>
+              <h3 className="text-base font-semibold text-elec-yellow mb-3">Sobering Statistics:</h3>
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-sm">
                 <div className="text-center p-3 bg-background/50 rounded border border-border/20">
-                  <div className="text-2xl font-bold text-emerald-400">30+</div>
+                  <div className="text-2xl font-bold text-elec-yellow">30+</div>
                   <div className="text-xs text-muted-foreground">Electrical deaths annually in UK workplace</div>
                 </div>
                 <div className="text-center p-3 bg-background/50 rounded border border-border/20">
-                  <div className="text-2xl font-bold text-emerald-400">1,000+</div>
+                  <div className="text-2xl font-bold text-elec-yellow">1,000+</div>
                   <div className="text-xs text-muted-foreground">Electrical injuries requiring hospital treatment</div>
                 </div>
                 <div className="text-center p-3 bg-background/50 rounded border border-border/20">
-                  <div className="text-2xl font-bold text-emerald-400">67%</div>
+                  <div className="text-2xl font-bold text-elec-yellow">67%</div>
                   <div className="text-xs text-muted-foreground">Of AM2 failures due to safe isolation errors</div>
                 </div>
               </div>
             </div>
 
             {/* Industry Examples */}
-            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded p-4">
-              <h3 className="text-base font-semibold text-emerald-400 mb-3">Real Industry Consequences:</h3>
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded p-4">
+              <h3 className="text-base font-semibold text-elec-yellow mb-3">Real Industry Consequences:</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex items-start">
                   <div className="w-2 h-2 bg-red-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
@@ -459,7 +459,7 @@ const AM2Module2Section1 = () => {
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mr-3 mt-2 flex-shrink-0"></div>
                   <div>
                     <span className="font-medium">AM2 Impact:</span> 2023 data shows 7 out of 10 AM2 failures directly linked to incomplete or incorrect safe isolation procedures.
                   </div>
@@ -469,7 +469,7 @@ const AM2Module2Section1 = () => {
 
             {/* Cost of Getting It Wrong */}
             <div className="bg-card border border-purple-500/20 rounded p-4">
-              <h3 className="text-base font-semibold text-emerald-400 mb-3">Cost of Getting It Wrong:</h3>
+              <h3 className="text-base font-semibold text-elec-yellow mb-3">Cost of Getting It Wrong:</h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <h4 className="font-medium text-foreground mb-2">Personal Costs:</h4>
@@ -495,8 +495,8 @@ const AM2Module2Section1 = () => {
             </div>
 
             {/* Professional Standards */}
-            <div className="bg-card border border-emerald-500/20 rounded p-4">
-              <h3 className="text-base font-semibold text-emerald-400 mb-3">Professional Standards & Expectations:</h3>
+            <div className="bg-card border border-elec-yellow/20 rounded p-4">
+              <h3 className="text-base font-semibold text-elec-yellow mb-3">Professional Standards & Expectations:</h3>
               <div className="text-sm space-y-2">
                 <p><strong>IET Code of Practice:</strong> Safe isolation is fundamental to electrical competency and must be demonstrated consistently.</p>
                 <p><strong>NET Requirements:</strong> Zero tolerance for shortcuts - any deviation from procedure results in immediate assessment failure.</p>
@@ -521,9 +521,9 @@ const AM2Module2Section1 = () => {
         </Card>
 
         {/* Step-by-Step Procedure */}
-        <Card className="mb-6 bg-card border-emerald-500/30">
+        <Card className="mb-6 bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400 flex items-center">
+            <CardTitle className="text-lg text-elec-yellow flex items-center">
               <Lock className="h-5 w-5 mr-2" />
               Step-by-Step Safe Isolation Procedure (NET Standard)
             </CardTitle>
@@ -532,7 +532,7 @@ const AM2Module2Section1 = () => {
             <div className="space-y-3">
               {safeIsolationSteps.map((step, index) => (
                 <div key={index} className="flex items-start p-3 bg-background/50 rounded border border-border/20">
-                  <div className="bg-emerald-500 text-black font-bold w-7 h-7 rounded-full flex items-center justify-center mr-3 flex-shrink-0 text-sm">
+                  <div className="bg-elec-yellow text-black font-bold w-7 h-7 rounded-full flex items-center justify-center mr-3 flex-shrink-0 text-sm">
                     {index + 1}
                   </div>
                   <div className="flex-1">
@@ -548,8 +548,8 @@ const AM2Module2Section1 = () => {
               ))}
             </div>
 
-            <div className="mt-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded">
-              <h4 className="text-sm font-semibold text-emerald-400 mb-2">Practical Tips:</h4>
+            <div className="mt-4 p-3 bg-elec-yellow/10 border border-elec-yellow/30 rounded">
+              <h4 className="text-sm font-semibold text-elec-yellow mb-2">Practical Tips:</h4>
               <ul className="text-xs text-foreground space-y-1">
                 <li>• Allow 10-15 minutes for complete isolation procedure</li>
                 <li>• Double-check circuit identification before switching</li>
@@ -576,9 +576,9 @@ const AM2Module2Section1 = () => {
         </Card>
 
         {/* 10-Point Test Sequence */}
-        <Card className="mb-6 bg-card border-emerald-500/30">
+        <Card className="mb-6 bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400">10-Point Test Sequence (Single-Phase Example)</CardTitle>
+            <CardTitle className="text-lg text-elec-yellow">10-Point Test Sequence (Single-Phase Example)</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">
@@ -596,8 +596,8 @@ const AM2Module2Section1 = () => {
                   ))}
                 </div>
               </div>
-              <div className="bg-emerald-500/10 border-l-4 border-emerald-500 p-3 rounded">
-                <h3 className="text-base font-semibold text-emerald-400 mb-2">Important Notes:</h3>
+              <div className="bg-elec-yellow/10 border-l-4 border-elec-yellow p-3 rounded">
+                <h3 className="text-base font-semibold text-elec-yellow mb-2">Important Notes:</h3>
                 <ul className="space-y-1 text-sm">
                   <li>• Test at both origin and point of work</li>
                   <li>• In three-phase, repeat across all phases</li>
@@ -624,7 +624,7 @@ const AM2Module2Section1 = () => {
         {/* Critical Fails */}
         <Card className="mb-6 bg-card border-border/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400 flex items-center">
+            <CardTitle className="text-lg text-elec-yellow flex items-center">
               <XCircle className="h-5 w-5 mr-2" />
               Common Critical Fails in AM2 Safe Isolation
             </CardTitle>
@@ -636,7 +636,7 @@ const AM2Module2Section1 = () => {
             <div className="space-y-2">
               {criticalFails.map((fail, index) => (
                 <div key={index} className="flex items-start p-3 bg-card rounded border border-red-500/20">
-                  <XCircle className="h-4 w-4 text-emerald-400 mr-2 mt-0.5 flex-shrink-0" />
+                  <XCircle className="h-4 w-4 text-elec-yellow mr-2 mt-0.5 flex-shrink-0" />
                   <span className="text-xs sm:text-sm text-foreground">{fail}</span>
                 </div>
               ))}
@@ -655,9 +655,9 @@ const AM2Module2Section1 = () => {
         </Card>
 
         {/* Practice Scenarios */}
-        <Card className="mb-6 bg-card border-emerald-500/30">
+        <Card className="mb-6 bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400 flex items-center">
+            <CardTitle className="text-lg text-elec-yellow flex items-center">
               <Settings className="h-5 w-5 mr-2" />
               Practice Scenarios
             </CardTitle>
@@ -673,7 +673,7 @@ const AM2Module2Section1 = () => {
                   <p className="text-xs text-muted-foreground mb-2">{scenario.description}</p>
                   <div className="flex flex-wrap gap-1">
                     {scenario.keyPoints.map((point, i) => (
-                      <span key={i} className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded">
+                      <span key={i} className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">
                         {point}
                       </span>
                     ))}
@@ -685,40 +685,40 @@ const AM2Module2Section1 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 bg-card border-emerald-500/30">
+        <Card className="mb-6 bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400">Real-World Examples</CardTitle>
+            <CardTitle className="text-lg text-elec-yellow">Real-World Examples</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="p-3 bg-card rounded border border-red-500/20">
-                <h3 className="font-semibold text-emerald-400 mb-1 text-sm">Example 1: Forgotten Re-Prove</h3>
+                <h3 className="font-semibold text-elec-yellow mb-1 text-sm">Example 1: Forgotten Re-Prove</h3>
                 <p className="text-xs text-foreground">A candidate did everything correctly but forgot to re-prove the tester during safe isolation. The assessor stopped the test and recorded a fail.</p>
-                <p className="text-xs text-emerald-400 mt-1">⚠️ Lesson: Never skip the final tester proving step</p>
+                <p className="text-xs text-elec-yellow mt-1">⚠️ Lesson: Never skip the final tester proving step</p>
               </div>
               <div className="p-3 bg-card rounded border border-red-500/20">
-                <h3 className="font-semibold text-emerald-400 mb-1 text-sm">Example 2: Wrong Lock-Off</h3>
+                <h3 className="font-semibold text-elec-yellow mb-1 text-sm">Example 2: Wrong Lock-Off</h3>
                 <p className="text-xs text-foreground">Candidate used tape instead of a lock-off device. Unsafe → instant fail.</p>
-                <p className="text-xs text-emerald-400 mt-1">⚠️ Lesson: Only proper padlocks are acceptable</p>
+                <p className="text-xs text-elec-yellow mt-1">⚠️ Lesson: Only proper padlocks are acceptable</p>
               </div>
               <div className="p-3 bg-card rounded border border-red-500/20">
-                <h3 className="font-semibold text-emerald-400 mb-1 text-sm">Example 3: Missing Warning Notice</h3>
+                <h3 className="font-semibold text-elec-yellow mb-1 text-sm">Example 3: Missing Warning Notice</h3>
                 <p className="text-xs text-foreground">A candidate isolated a lighting circuit correctly but didn't attach a warning notice. Lost critical marks, failed the section.</p>
-                <p className="text-xs text-emerald-400 mt-1">⚠️ Lesson: Lock-off AND warning notice are both mandatory</p>
+                <p className="text-xs text-elec-yellow mt-1">⚠️ Lesson: Lock-off AND warning notice are both mandatory</p>
               </div>
               <div className="p-3 bg-card rounded border border-red-500/20">
-                <h3 className="font-semibold text-emerald-400 mb-1 text-sm">Example 4: Wrong Circuit Isolated</h3>
+                <h3 className="font-semibold text-elec-yellow mb-1 text-sm">Example 4: Wrong Circuit Isolated</h3>
                 <p className="text-xs text-foreground">Candidate misread the circuit schedule and isolated the wrong circuit. Despite perfect procedure, this was a critical fail.</p>
-                <p className="text-xs text-emerald-400 mt-1">⚠️ Lesson: Always double-check circuit identification first</p>
+                <p className="text-xs text-elec-yellow mt-1">⚠️ Lesson: Always double-check circuit identification first</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Practical Guidance for Assessors */}
-        <Card className="mb-6 bg-card border-emerald-500/30">
+        <Card className="mb-6 bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400 flex items-center">
+            <CardTitle className="text-lg text-elec-yellow flex items-center">
               <Book className="h-5 w-5 mr-2" />
               What Assessors Look For
             </CardTitle>
@@ -746,9 +746,9 @@ const AM2Module2Section1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 bg-card border-emerald-500/30">
+        <Card className="mb-6 bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400">Frequently Asked Questions</CardTitle>
+            <CardTitle className="text-lg text-elec-yellow">Frequently Asked Questions</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="p-3 bg-background/50 rounded border border-border/20">
@@ -783,21 +783,21 @@ const AM2Module2Section1 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 bg-card border-emerald-500/30">
+        <Card className="mb-6 bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400">Summary</CardTitle>
+            <CardTitle className="text-lg text-elec-yellow">Summary</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-xs sm:text-sm text-foreground leading-relaxed mb-4">
               Safe isolation is the most important part of the AM2. It must be carried out exactly as NET describes, 
               with no shortcuts, no missed steps, and no unsafe practices.
             </p>
-            <div className="bg-emerald-500/10 border-l-4 border-emerald-500 p-3 rounded">
-              <h3 className="font-bold text-emerald-400 mb-2 text-sm">Remember the Sequence:</h3>
+            <div className="bg-elec-yellow/10 border-l-4 border-elec-yellow p-3 rounded">
+              <h3 className="font-bold text-elec-yellow mb-2 text-sm">Remember the Sequence:</h3>
               <p className="text-xs sm:text-sm text-foreground font-medium">
                 Prove tester → Isolate → Lock off → Warning notice → Test all combinations → Re-prove tester → Keep key
               </p>
-              <p className="text-sm text-emerald-400 font-semibold mt-2">
+              <p className="text-sm text-elec-yellow font-semibold mt-2">
                 Missing any step = automatic fail
               </p>
             </div>
@@ -816,9 +816,9 @@ const AM2Module2Section1 = () => {
         </Card>
 
         {/* Final Quiz */}
-        <Card className="bg-card border-emerald-500/30">
+        <Card className="bg-card border-elec-yellow/30">
           <CardHeader>
-            <CardTitle className="text-lg text-emerald-400">Knowledge Check: 10-Question Quiz</CardTitle>
+            <CardTitle className="text-lg text-elec-yellow">Knowledge Check: 10-Question Quiz</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">

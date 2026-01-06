@@ -216,7 +216,7 @@ const Module6Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Legal Framework and Enforcement Powers</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Legal Framework and Enforcement Powers</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -240,7 +240,7 @@ const Module6Section1_2 = () => {
                       </div>
 
                       <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded border border-yellow-200 dark:border-yellow-800">
-                        <p className="font-medium text-yellow-700 dark:text-elec-yellow mb-2">Critical Legal Point</p>
+                        <p className="font-medium text-yellow-700 text-elec-yellow mb-2">Critical Legal Point</p>
                         <p className="text-xs sm:text-sm text-white">
                           EAWR 1989 creates "absolute duties" – this means you cannot use cost, time pressure, or difficulty as excuses for non-compliance. If electrical danger exists, the law has been broken regardless of circumstances.
                         </p>
@@ -273,7 +273,7 @@ const Module6Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">BS 7671 Compliance Framework</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">BS 7671 Compliance Framework</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -312,8 +312,8 @@ const Module6Section1_2 = () => {
                         </div>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Legal Status of BS 7671</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Legal Status of BS 7671</p>
                         <p className="text-xs sm:text-sm text-white">
                           While BS 7671 is not directly law, courts accept it as the standard for safe electrical installation. Deviation from BS 7671 without equivalent safety measures can be used as evidence of EAWR non-compliance in legal proceedings.
                         </p>
@@ -384,7 +384,7 @@ const Module6Section1_2 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Criminal Liability Warning</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Criminal Liability Warning</p>
                         <p className="text-xs sm:text-sm text-white">
                           Fraudulent certification or gross negligence can result in prosecution under fraud laws or manslaughter charges if someone dies. Prison sentences are real – in 2019, a landlord received 12 months imprisonment after a tenant died in an electrical fire.
                         </p>
@@ -417,7 +417,7 @@ const Module6Section1_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Legal Precedents and Industry Impact</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Legal Precedents and Industry Impact</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -457,7 +457,7 @@ const Module6Section1_2 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Industry-Wide Impact</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Industry-Wide Impact</p>
                         <p className="text-xs sm:text-sm text-white">
                           Every incident of poor electrical work damages the reputation of the entire electrical industry and leads to increased regulation and scrutiny. Your professional conduct affects not just your own career, but the standing of all electrical workers.
                         </p>

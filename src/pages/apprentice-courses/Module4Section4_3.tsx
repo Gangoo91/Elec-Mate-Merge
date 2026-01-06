@@ -213,7 +213,7 @@ const Module4Section4_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Coupler Types and Applications</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Coupler Types and Applications</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Steel conduit couplers:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Compression type: 15-25Nm torque, no thread compound required</li>
@@ -239,7 +239,7 @@ const Module4Section4_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Assembly Sequence and Preparation</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Assembly Sequence and Preparation</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Pre-assembly requirements:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Cut to precise length: ±2mm tolerance for professional fit</li>
@@ -265,7 +265,7 @@ const Module4Section4_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Tray and Trunking Joining Systems</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Tray and Trunking Joining Systems</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Cable tray couplers:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Flange-to-flange: M8 bolts, 25Nm torque, spring washers</li>
@@ -407,7 +407,7 @@ const Module4Section4_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Bush Types and BS 7671 Requirements</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Bush Types and BS 7671 Requirements</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Regulatory compliance:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>BS 7671 Section 522: protection required at all cable entry points</li>
@@ -433,7 +433,7 @@ const Module4Section4_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Installation Techniques and Sizing</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Installation Techniques and Sizing</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Sizing criteria:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Bush bore: 25% larger than cable bundle diameter</li>
@@ -478,7 +478,7 @@ const Module4Section4_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Electrical Continuity Testing and Maintenance</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Electrical Continuity Testing and Maintenance</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Testing requirements (BS 7671):</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Continuity test: &lt;0.1Ω resistance between any two points</li>
@@ -504,7 +504,7 @@ const Module4Section4_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Professional Assembly Standards and Common Errors</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Professional Assembly Standards and Common Errors</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Assembly sequence checklist:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Measure and cut accurately: ±2mm tolerance maximum</li>
@@ -547,7 +547,7 @@ const Module4Section4_3 = () => {
           </ul>
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
             <h3 className="font-semibold text-white mb-2 flex items-center">
-              <CheckCircle className="w-5 h-5 mr-2 text-emerald-600" />
+              <CheckCircle className="w-5 h-5 mr-2 text-elec-yellow" />
               Lesson learned
             </h3>
             <p className="text-xs sm:text-sm text-white">

@@ -211,7 +211,7 @@ const Module4Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Hand-operated bending machines</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Hand-operated bending machines</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Lever-operated, suitable for small-diameter conduit (usually up to 25mm).</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Best for:</strong> Small domestic installations, light commercial work
@@ -224,7 +224,7 @@ const Module4Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Hydraulic bending machines</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Hydraulic bending machines</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Powered assistance for larger diameters or heavy-wall conduit.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Best for:</strong> Heavy-duty industrial applications, steel conduit over 25mm
@@ -237,7 +237,7 @@ const Module4Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Electric bending machines</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Electric bending machines</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Used in high-volume fabrication workshops for speed and consistency.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Best for:</strong> Workshop fabrication, repetitive bending operations
@@ -327,7 +327,7 @@ const Module4Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Machine Selection</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Machine Selection</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Requires more force — a fixed-former bending machine is essential.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Rule:</strong> Match machine capacity to conduit size and wall thickness
@@ -340,7 +340,7 @@ const Module4Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Setup and Alignment</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Setup and Alignment</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Align the conduit with the former and guide roller before bending.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Key:</strong> Proper alignment prevents twisted or uneven bends
@@ -353,7 +353,7 @@ const Module4Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Bending Technique</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Bending Technique</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Use smooth, steady pressure to avoid kinks. Mark start and finish points for accuracy.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Important:</strong> Always check bend radius meets BS 7671 requirements
@@ -376,7 +376,7 @@ const Module4Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Personal Protection</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Personal Protection</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Wear gloves when handling heated PVC or freshly bent metal conduit (edges may be sharp).</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>PPE Required:</strong> Heat-resistant gloves, safety glasses, protective clothing
@@ -389,7 +389,7 @@ const Module4Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Machine Safety</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Machine Safety</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Keep hands and clothing clear of moving parts. Ensure stable surface before use.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Never:</strong> Exceed machine ratings or force operations beyond capacity
@@ -412,7 +412,7 @@ const Module4Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">✓</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Angle Verification</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Angle Verification</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Use a protractor or angle gauge to confirm bend angles.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Tolerance:</strong> ±2 degrees is typically acceptable for most installations
@@ -425,7 +425,7 @@ const Module4Section3_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">✓</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Radius and Quality Check</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Radius and Quality Check</p>
                     <p className="text-xs sm:text-sm text-white mb-2">Check bend radius with template. Visually inspect for flattening or twisting.</p>
                     <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>BS 7671:</strong> Minimum bend radius must be maintained for cable protection

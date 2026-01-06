@@ -147,7 +147,7 @@ const AM2Module6Section2 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <BookOpen className="w-4 h-4" />
             Module 6 – Section 2
           </div>
@@ -166,15 +166,15 @@ const AM2Module6Section2 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
                   CRITICAL: Focus Your Revision
                 </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
                   The AM2 knowledge test covers three specific areas. Trying to revise everything will waste time and reduce your chances of success.
                 </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
                   Focus on these core topics: Regulations (BS 7671), Electrical Science, and Safety. These form 100% of the test content.
                 </p>
               </div>
@@ -183,9 +183,9 @@ const AM2Module6Section2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -194,23 +194,23 @@ const AM2Module6Section2 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Identify the three main categories of knowledge assessed: regulations, science, and safety
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Explain the specific regulation topics most likely to appear
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Recall key scientific principles relevant to electrical installation
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Understand the safety requirements that form the backbone of AM2 knowledge
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Prioritise revision effectively based on NET's published expectations
               </li>
             </ul>
@@ -220,7 +220,7 @@ const AM2Module6Section2 = () => {
         {/* Regulations Section */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               1. Regulations (BS 7671 Knowledge)
             </h2>
@@ -230,7 +230,7 @@ const AM2Module6Section2 = () => {
                 The test includes questions from the IET Wiring Regulations. You don't have the book in the exam, so you need to recall core principles and specific values from memory.
               </p>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Key Regulation Areas:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Key Regulation Areas:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• <strong>Maximum Zs values for protective devices:</strong> Know the specific values for different MCB types and RCBOs</li>
                 <li>• <strong>RCD requirements:</strong> Where they must be fitted, trip times (30mA/0.3s), and applications</li>
@@ -240,7 +240,7 @@ const AM2Module6Section2 = () => {
                 <li>• <strong>Inspection & testing sequence:</strong> GN3 order and specific test procedures</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Common Regulation Question Types:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Common Regulation Question Types:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• <strong>"What is the maximum Zs value for..."</strong> - Direct recall of tabulated values</li>
                 <li>• <strong>"Where must RCDs be fitted?"</strong> - Application requirements from Part 7</li>
@@ -248,7 +248,7 @@ const AM2Module6Section2 = () => {
                 <li>• <strong>"What is the maximum volt drop permitted?"</strong> - Design criteria from Appendix 4</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Essential Values to Memorise:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Essential Values to Memorise:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• <strong>Maximum Zs values:</strong> 1.44Ω (6A Type B), 0.72Ω (16A Type B), 0.48Ω (32A Type B)</li>
                 <li>• <strong>Bathroom zones:</strong> Zone 0 (inside bath), Zone 1 (above bath to 2.25m), Zone 2 (0.6m from Zone 1)</li>
@@ -271,7 +271,7 @@ const AM2Module6Section2 = () => {
         {/* Electrical Science Section */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Calculator className="w-5 h-5" />
               2. Electrical Science
             </h2>
@@ -281,7 +281,7 @@ const AM2Module6Section2 = () => {
                 Science questions test whether you understand the fundamental principles behind electrical behaviour. These aren't advanced calculations but core concepts that underpin all electrical work.
               </p>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Essential Scientific Principles:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Essential Scientific Principles:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• <strong>Ohm's Law (V = IR):</strong> The fundamental relationship between voltage, current, and resistance</li>
                 <li>• <strong>Power calculations:</strong> P = VI (apparent power), P = I²R (power loss in resistance)</li>
@@ -291,7 +291,7 @@ const AM2Module6Section2 = () => {
                 <li>• <strong>Three-phase fundamentals:</strong> Line voltage = √3 × phase voltage (400V/230V relationship)</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Typical Science Questions:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Typical Science Questions:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• <strong>"A 3kW heater operates at 230V. What current does it draw?"</strong> Answer: I = P/V = 3000/230 = 13A</li>
                 <li>• <strong>"What is the total resistance of 4Ω and 6Ω in parallel?"</strong> Answer: 1/R = 1/4 + 1/6 = 2.4Ω</li>
@@ -299,7 +299,7 @@ const AM2Module6Section2 = () => {
                 <li>• <strong>"Convert 2.5kW to watts"</strong> Answer: 2500W (multiply by 1000)</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Key Formulas to Know by Heart:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Key Formulas to Know by Heart:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• <strong>Ohm's Law:</strong> V = IR, I = V/R, R = V/I</li>
                 <li>• <strong>Power:</strong> P = VI, P = I²R, P = V²/R</li>
@@ -307,7 +307,7 @@ const AM2Module6Section2 = () => {
                 <li>• <strong>Three-phase:</strong> Line voltage = √3 × Phase voltage (1.732 × 230V = 400V)</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Calculation Tips:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Calculation Tips:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• <strong>No calculator allowed:</strong> Practice mental arithmetic and use round numbers for estimates</li>
                 <li>• <strong>Check your units:</strong> Ensure answers make practical sense (e.g., domestic current rarely exceeds 50A)</li>
@@ -321,7 +321,7 @@ const AM2Module6Section2 = () => {
         {/* Health & Safety Section */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
               3. Health & Safety
             </h2>
@@ -331,7 +331,7 @@ const AM2Module6Section2 = () => {
                 The knowledge test checks your understanding of legal and safe working practices. Safety questions are not just about knowing procedures but understanding why they exist and when they apply.
               </p>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Key Safety Legislation:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Key Safety Legislation:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• <strong>Electricity at Work Regulations (EAWR) 1989:</strong> Legal framework for electrical safety</li>
                 <li>• <strong>Risk assessments and method statements (RAMS):</strong> Required planning for all electrical work</li>
@@ -341,7 +341,7 @@ const AM2Module6Section2 = () => {
                 <li>• <strong>Working at height and confined spaces:</strong> Additional safety requirements for special environments</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">EAWR 1989 Key Regulations:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">EAWR 1989 Key Regulations:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• <strong>Regulation 4:</strong> Systems, work activities and protective equipment must be constructed, maintained and used to prevent danger</li>
                 <li>• <strong>Regulation 12:</strong> Adequate precautions must be taken to prevent electrical equipment becoming electrically charged</li>
@@ -349,7 +349,7 @@ const AM2Module6Section2 = () => {
                 <li>• <strong>Regulation 14:</strong> No work on live equipment except where safe to do so and reasonably practicable</li>
               </ul>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Safe Isolation Sequence:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Safe Isolation Sequence:</h3>
               <ol className="space-y-2 ml-4 list-decimal">
                 <li>Identify circuit to be worked on</li>
                 <li>Identify means of isolation</li>
@@ -363,7 +363,7 @@ const AM2Module6Section2 = () => {
                 <li>Remove isolation and restore supply</li>
               </ol>
 
-              <h3 className="text-base sm:text-lg font-semibold text-emerald-400 mt-6 mb-3">Essential PPE for Electrical Work:</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Essential PPE for Electrical Work:</h3>
               <ul className="space-y-2 ml-4">
                 <li>• <strong>Safety footwear:</strong> Insulated boots/shoes to prevent electric shock</li>
                 <li>• <strong>Hard hat:</strong> Protection from falling objects and head impact</li>
@@ -385,15 +385,15 @@ const AM2Module6Section2 = () => {
         />
 
         {/* Question Style Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
               4. Question Style Examples in Core Topics
             </h2>
             
             <div className="space-y-4">
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Regulations Example</h4>
                 <div className="bg-blue-100 dark:bg-blue-900/30 rounded p-3 text-sm">
                   <strong>Question:</strong> "What is the maximum disconnection time for a socket circuit under BS 7671?"<br/>
@@ -421,9 +421,9 @@ const AM2Module6Section2 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
               Practical Guidance
             </h2>
@@ -437,15 +437,15 @@ const AM2Module6Section2 = () => {
                   </p>
                 </div>
                 
-                <div className="flex items-start gap-3 p-3 bg-emerald-50 dark:bg-emerald-950/20 rounded-lg">
-                  <CheckCircle className="w-4 h-4 text-emerald-400 dark:text-emerald-400 mt-1 flex-shrink-0" />
+                <div className="flex items-start gap-3 p-3 bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded-lg">
+                  <CheckCircle className="w-4 h-4 text-elec-yellow dark:text-elec-yellow mt-1 flex-shrink-0" />
                   <p className="text-sm text-blue-800 dark:text-blue-200">
                     <strong>Practice science problems:</strong> Calculate quickly without a calculator until it becomes automatic
                   </p>
                 </div>
                 
                 <div className="flex items-start gap-3 p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg">
-                  <CheckCircle className="w-4 h-4 text-purple-600 dark:text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="w-4 h-4 text-purple-600 dark:text-elec-yellow mt-1 flex-shrink-0" />
                   <p className="text-sm text-purple-800 dark:text-purple-200">
                     <strong>Memorise critical values:</strong> Zs values, RCD times, bathroom zones must be recalled instantly
                   </p>
@@ -454,14 +454,14 @@ const AM2Module6Section2 = () => {
               
               <div className="space-y-3">
                 <div className="flex items-start gap-3 p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg">
-                  <CheckCircle className="w-4 h-4 text-orange-600 dark:text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="w-4 h-4 text-orange-600 dark:text-elec-yellow mt-1 flex-shrink-0" />
                   <p className="text-sm text-orange-800 dark:text-orange-200">
                     <strong>Revise safety regulations:</strong> EAWR questions appear frequently and are high-scoring
                   </p>
                 </div>
                 
                 <div className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-950/20 rounded-lg">
-                  <CheckCircle className="w-4 h-4 text-red-600 dark:text-emerald-400 mt-1 flex-shrink-0" />
+                  <CheckCircle className="w-4 h-4 text-red-600 dark:text-elec-yellow mt-1 flex-shrink-0" />
                   <p className="text-sm text-red-800 dark:text-red-200">
                     <strong>Use mock questions:</strong> Build confidence under exam conditions with timed practice tests
                   </p>
@@ -472,9 +472,9 @@ const AM2Module6Section2 = () => {
         </Card>
 
         {/* Real-world Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               Real-world Examples
             </h2>
@@ -482,7 +482,7 @@ const AM2Module6Section2 = () => {
             <div className="space-y-4">
               <div className="bg-red-50 dark:bg-red-950/20 border-l-4 border-l-red-500 p-4 rounded-r-lg">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">❌ Example 1: Weak Science Knowledge</h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400">
+                <p className="text-sm text-red-700 dark:text-elec-yellow">
                   Candidate didn't revise science, failed questions on resistance and Ohm's law → missed pass mark by 3%.
                 </p>
               </div>
@@ -505,35 +505,35 @@ const AM2Module6Section2 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
               Frequently Asked Questions
             </h2>
             
             <div className="space-y-4">
-              <div className="border-l-4 border-emerald-500/50 pl-4">
+              <div className="border-l-4 border-elec-yellow/50 pl-4">
                 <h4 className="font-medium text-foreground mb-1">Q1: Do I need to memorise all of BS 7671?</h4>
                 <p className="text-sm text-muted-foreground">A: No — focus on key requirements like Zs, RCDs, zones, earthing, and bonding.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500/50 pl-4">
+              <div className="border-l-4 border-elec-yellow/50 pl-4">
                 <h4 className="font-medium text-foreground mb-1">Q2: Are science questions advanced maths?</h4>
                 <p className="text-sm text-muted-foreground">A: No — only core formulas and units (Ohm's law, power, resistance).</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500/50 pl-4">
+              <div className="border-l-4 border-elec-yellow/50 pl-4">
                 <h4 className="font-medium text-foreground mb-1">Q3: How many questions are on safety?</h4>
                 <p className="text-sm text-muted-foreground">A: Roughly a third of the paper includes safety or regulations.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500/50 pl-4">
+              <div className="border-l-4 border-elec-yellow/50 pl-4">
                 <h4 className="font-medium text-foreground mb-1">Q4: Do I get to use BS 7671 book in the test?</h4>
                 <p className="text-sm text-muted-foreground">A: No — it's closed book.</p>
               </div>
               
-              <div className="border-l-4 border-emerald-500/50 pl-4">
+              <div className="border-l-4 border-elec-yellow/50 pl-4">
                 <h4 className="font-medium text-foreground mb-1">Q5: Will there be trick questions?</h4>
                 <p className="text-sm text-muted-foreground">A: No — but some are worded to test understanding, not memory.</p>
               </div>
@@ -542,9 +542,9 @@ const AM2Module6Section2 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Summary
             </h2>
@@ -555,9 +555,9 @@ const AM2Module6Section2 = () => {
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Regulations</h4>
-                  <p className="text-sm text-blue-700 dark:text-emerald-400">
+                  <p className="text-sm text-blue-700 dark:text-elec-yellow">
                     Zs, RCDs, bathroom zones, cable sizes, earthing/bonding, test sequences
                   </p>
                 </div>
@@ -571,7 +571,7 @@ const AM2Module6Section2 = () => {
                 
                 <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-4">
                   <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2">Safety</h4>
-                  <p className="text-sm text-purple-700 dark:text-emerald-400">
+                  <p className="text-sm text-purple-700 dark:text-elec-yellow">
                     EAWR 1989, RAMS, safe isolation, PPE, site safety
                   </p>
                 </div>
@@ -585,9 +585,9 @@ const AM2Module6Section2 = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
               10-Question Quiz
             </h2>
@@ -604,7 +604,7 @@ const AM2Module6Section2 = () => {
               Back to Module 6
             </Link>
           </Button>
-          <Button className="flex-1 bg-emerald-500 hover:bg-emerald-500/80 text-black" asChild>
+          <Button className="flex-1 bg-elec-yellow hover:bg-elec-yellow/80 text-black" asChild>
             <Link to="../section3">
               Module 6 Section 3
               <ArrowRight className="w-4 h-4 ml-2" />

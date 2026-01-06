@@ -211,7 +211,7 @@ const Module4Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Critical Safety Requirements</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Critical Safety Requirements</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Prevents mechanical strain:</strong> Maintains cable integrity and prevents insulation damage.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Structural integrity:</strong> Avoids long-term deformation and system failure.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Professional appearance:</strong> Maintains straight, aligned runs meeting inspection standards.</p>
@@ -226,7 +226,7 @@ const Module4Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Standard Spacing Guidelines (BS 7671)</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Standard Spacing Guidelines (BS 7671)</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Steel conduit spacing:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Horizontal runs: 2.5m maximum (2.0m preferred for appearance)</li>
@@ -250,7 +250,7 @@ const Module4Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Cable Tray and Trunking Specifications</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Cable Tray and Trunking Specifications</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Cable tray support intervals:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Light duty (up to 15kg/m): 2.0m maximum spacing</li>
@@ -380,7 +380,7 @@ const Module4Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Temperature and Thermal Effects</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Temperature and Thermal Effects</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>PVC thermal expansion:</strong> 0.6mm per metre per 10°C temperature rise.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Temperature adjustment factors:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -406,7 +406,7 @@ const Module4Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Vibration and Dynamic Loading</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Vibration and Dynamic Loading</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>High-vibration environments:</strong> Plant rooms, near machinery, transport links.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Vibration mitigation measures:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -432,7 +432,7 @@ const Module4Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">External and Corrosive Environments</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">External and Corrosive Environments</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Outdoor installation factors:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Wind loading: reduce spacing by 20% in exposed locations</li>
@@ -477,7 +477,7 @@ const Module4Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Planning and Measurement Errors</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Planning and Measurement Errors</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Common mistakes:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Guessing spacing instead of measuring accurately</li>
@@ -503,7 +503,7 @@ const Module4Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Load and Structural Failures</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Load and Structural Failures</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Critical failure points:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Inadequate spacing for heavy cables (SWA, large multicore)</li>
@@ -529,7 +529,7 @@ const Module4Section4_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Documentation and Compliance Issues</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Documentation and Compliance Issues</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Documentation requirements:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Record actual spacing used vs. design specifications</li>

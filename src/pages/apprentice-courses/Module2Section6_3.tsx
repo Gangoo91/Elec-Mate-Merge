@@ -206,8 +206,8 @@ const Module2Section6_3: React.FC = () => {
             </div>
             
             {/* Key terminology */}
-            <div className="mt-4 p-4 bg-gradient-to-r from-emerald-500/10 to-indigo-500/10 border border-border/30 rounded-lg">
-              <p className="font-medium mb-2 text-blue-700 dark:text-elec-yellow">Key terminology you'll see:</p>
+            <div className="mt-4 p-4 bg-gradient-to-r from-elec-yellow/10 to-indigo-500/10 border border-border/30 rounded-lg">
+              <p className="font-medium mb-2 text-blue-700 text-elec-yellow">Key terminology you'll see:</p>
               <ul className="grid md:grid-cols-2 gap-2 text-sm">
                 <li><strong>P<sub>in</sub> (or Pin):</strong> Input power - total electrical power consumed</li>
                 <li><strong>P<sub>out</sub> (or Pout):</strong> Output power - useful power delivered</li>
@@ -241,12 +241,12 @@ const Module2Section6_3: React.FC = () => {
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Worked examples</h3>
             <ul className="space-y-4 text-xs sm:text-sm text-white">
-              <li className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-border/30">
+              <li className="rounded-lg p-4 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/10 border border-border/30">
                 <p className="font-medium">Small motor</p>
                 <p><strong>Given:</strong> P<sub>in</sub> = 1200 W, η = 85%. <strong>Find P<sub>out</sub></strong></p>
                 <p><strong>P<sub>out</sub></strong> ≈ 1200 × 0.85 = 1020 W. <strong>Loss</strong> ≈ 180 W (heat) – ensure ventilation.</p>
               </li>
-              <li className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-elec-yellow/30">
+              <li className="rounded-lg p-4 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/10 border border-elec-yellow/30">
                 <p className="font-medium">Transformer</p>
                 <p><strong>Given:</strong> P<sub>in</sub> = 2.0 kW, P<sub>out</sub> = 1.92 kW. <strong>Find η</strong></p>
                 <p><strong>η</strong> ≈ 1.92/2.0 × 100 = 96%.</p>
@@ -285,8 +285,8 @@ const Module2Section6_3: React.FC = () => {
                   <li>Standby power: TVs, chargers, electronics drawing power when "off"</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-4 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-elec-yellow/30">
-                <p className="font-medium mb-2 text-emerald-700 dark:text-elec-yellow">Commercial/industrial</p>
+              <div className="rounded-lg p-4 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30">
+                <p className="font-medium mb-2 text-elec-yellow text-elec-yellow">Commercial/industrial</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Motor efficiency classes: IE1, IE2, IE3, IE4 (higher = more efficient)</li>
                   <li>Transformers: 95-98% typical, but 2-5% loss on large systems is significant</li>
@@ -304,8 +304,8 @@ const Module2Section6_3: React.FC = () => {
             <h3 className="font-medium text-white mb-2">Understanding efficiency in different equipment types</h3>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-blue-700 dark:text-elec-yellow">Electric Motors</h4>
+              <div className="rounded-lg p-4 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/10 border border-border/30">
+                <h4 className="font-medium mb-2 text-blue-700 text-elec-yellow">Electric Motors</h4>
                 <p className="text-sm mb-2">Motor efficiency varies with load, speed, and design quality.</p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li><strong>Efficiency classes:</strong> IE1 (standard), IE2 (high), IE3 (premium), IE4 (super premium)</li>
@@ -315,8 +315,8 @@ const Module2Section6_3: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-elec-yellow/30">
-                <h4 className="font-medium mb-2 text-emerald-700 dark:text-elec-yellow">Transformers</h4>
+              <div className="rounded-lg p-4 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/10 border border-elec-yellow/30">
+                <h4 className="font-medium mb-2 text-elec-yellow text-elec-yellow">Transformers</h4>
                 <p className="text-sm mb-2">High efficiency devices but losses matter on large installations.</p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li><strong>No-load losses:</strong> Core losses occur even when unloaded</li>
@@ -357,7 +357,7 @@ const Module2Section6_3: React.FC = () => {
               </div>
               
               <div className="rounded-lg p-4 bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-purple-700 dark:text-elec-yellow">Carbon footprint</h4>
+                <h4 className="font-medium mb-2 text-purple-700 text-elec-yellow">Carbon footprint</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li>Lower energy consumption = reduced carbon emissions</li>
                   <li>UK grid becoming cleaner, but efficiency still matters</li>

@@ -175,7 +175,7 @@ const AM2Module5Section3 = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
         {/* Title Section */}
         <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Activity className="w-4 h-4" />
             Module 5 – Section 3
           </div>
@@ -194,15 +194,15 @@ const AM2Module5Section3 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
                   CRITICAL: GS38 Safety Compliance
                 </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
                   The assessor is watching closely to see if you can handle test equipment in line with GS38 safety requirements. Unsafe equipment use equals instant fail.
                 </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-emerald-400 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
                   Never tape up damaged leads — replace them. Use only shrouded probes with 2-4mm exposed tips.
                 </p>
               </div>
@@ -211,9 +211,9 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -222,23 +222,23 @@ const AM2Module5Section3 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Select the correct test instrument for different types of faults
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply GS38 safety requirements when using test probes and leads
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Carry out continuity, insulation resistance, polarity, Zs, PSC, and RCD tests safely
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Use test results to identify fault types without guesswork
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Demonstrate safe, confident handling of instruments to an assessor
               </li>
             </ul>
@@ -246,9 +246,9 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Core Test Instruments */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
               1. Core Test Instruments in AM2 Fault Finding
             </h2>
@@ -286,9 +286,9 @@ const AM2Module5Section3 = () => {
         />
 
         {/* GS38 Safety Compliance */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
               2. Safe Use – GS38 Compliance
             </h2>
@@ -296,7 +296,7 @@ const AM2Module5Section3 = () => {
             <div className="space-y-6">
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">Essential GS38 Requirements:</h4>
-                <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-2">
                   <li>• <strong>Shrouded probes:</strong> Only 2–4 mm exposed metal tip</li>
                   <li>• <strong>Fused leads:</strong> Test leads must be fused and undamaged</li>
                   <li>• <strong>Finger barriers:</strong> Keep fingers behind probe barriers at all times</li>
@@ -333,18 +333,18 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Efficient Test Application */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
               3. Efficient Application of Tests
             </h2>
             
             <div className="space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                   <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Continuity Testing:</h4>
-                  <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                     <li>• <strong>Best for:</strong> Open circuits, broken rings, CPC faults</li>
                     <li>• <strong>Setup:</strong> Always zero leads first</li>
                     <li>• <strong>Current:</strong> Use 200mA test current</li>
@@ -366,7 +366,7 @@ const AM2Module5Section3 = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-4">
                   <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Polarity & Zs Testing:</h4>
-                  <ul className="text-sm text-purple-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-sm text-purple-700 dark:text-elec-yellow space-y-1">
                     <li>• <strong>Polarity:</strong> Confirm correct connections at sockets, switches, lighting</li>
                     <li>• <strong>Zs testing:</strong> Identify high resistance faults</li>
                     <li>• <strong>Compare:</strong> Against BS 7671 maximum values</li>
@@ -376,7 +376,7 @@ const AM2Module5Section3 = () => {
                 
                 <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-4">
                   <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-3">RCD Testing:</h4>
-                  <ul className="text-sm text-orange-700 dark:text-emerald-400 space-y-1">
+                  <ul className="text-sm text-orange-700 dark:text-elec-yellow space-y-1">
                     <li>• <strong>×1 test:</strong> Must trip within 300ms at rated current</li>
                     <li>• <strong>×5 test:</strong> Must trip within 40ms (30mA RCDs)</li>
                     <li>• <strong>×0.5 test:</strong> Should NOT trip (checks over-sensitivity)</li>
@@ -397,9 +397,9 @@ const AM2Module5Section3 = () => {
         />
 
         {/* Common Errors and Assessor Expectations */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               4. Common Errors and Assessor Expectations
             </h2>
@@ -407,7 +407,7 @@ const AM2Module5Section3 = () => {
             <div className="space-y-6">
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">Common Candidate Errors (NET Guidance):</h4>
-                <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-2">
+                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-2">
                   <li>• <strong>Wrong instrument:</strong> Using wrong instrument for fault type (e.g. trying to find open circuit with insulation tester)</li>
                   <li>• <strong>Forgot zeroing:</strong> Not zeroing continuity leads → false readings</li>
                   <li>• <strong>Equipment connected:</strong> Carrying out insulation resistance with lamps/equipment connected → damage or wrong results</li>
@@ -452,9 +452,9 @@ const AM2Module5Section3 = () => {
         />
 
         {/* Advanced Equipment Mastery */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
               6. Advanced Equipment Mastery
             </h2>
@@ -462,7 +462,7 @@ const AM2Module5Section3 = () => {
             <div className="space-y-6">
               <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Equipment Calibration and Maintenance:</h4>
-                <div className="text-sm text-purple-700 dark:text-emerald-400 space-y-3">
+                <div className="text-sm text-purple-700 dark:text-elec-yellow space-y-3">
                   <div>
                     <h5 className="font-medium mb-1">Before Every AM2 Assessment:</h5>
                     <ul className="space-y-1">
@@ -510,9 +510,9 @@ const AM2Module5Section3 = () => {
                 </div>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Troubleshooting Equipment Issues:</h4>
-                <div className="text-sm text-blue-700 dark:text-emerald-400 space-y-3">
+                <div className="text-sm text-blue-700 dark:text-elec-yellow space-y-3">
                   <div>
                     <h5 className="font-medium mb-1">Common Equipment Problems in AM2:</h5>
                     <ul className="space-y-1">
@@ -539,9 +539,9 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Industry Standards and Compliance */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
               7. Industry Standards and Compliance
             </h2>
@@ -565,7 +565,7 @@ const AM2Module5Section3 = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h5 className="font-medium text-red-800 dark:text-red-200 mb-2">BS EN 61010 (Test Equipment Safety):</h5>
-                    <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                       <li>• Equipment must be CAT rated for application</li>
                       <li>• Overvoltage protection essential</li>
                       <li>• Double insulation or earthing required</li>
@@ -574,7 +574,7 @@ const AM2Module5Section3 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-red-800 dark:text-red-200 mb-2">GS38 Key Requirements:</h5>
-                    <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                       <li>• Probe tips: 2-4mm exposed maximum</li>
                       <li>• Lead protection: HRC fused at source</li>
                       <li>• Finger barriers: Prevent accidental contact</li>
@@ -584,15 +584,15 @@ const AM2Module5Section3 = () => {
                 </div>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Professional Development Through Testing:</h4>
-                <p className="text-sm text-blue-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-blue-700 dark:text-elec-yellow mb-3">
                   Mastering test equipment use in AM2 builds skills essential for career progression:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Technical Skills:</h5>
-                    <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                       <li>• Systematic diagnostic thinking</li>
                       <li>• Precision in measurement techniques</li>
                       <li>• Understanding of electrical principles</li>
@@ -601,7 +601,7 @@ const AM2Module5Section3 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Professional Skills:</h5>
-                    <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                       <li>• Clear communication with clients</li>
                       <li>• Accurate record keeping</li>
                       <li>• Safety-first mentality</li>
@@ -615,21 +615,21 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Advanced Scenarios and Edge Cases */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               8. Advanced Scenarios and Edge Cases</h2>
             
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                     <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 flex items-center gap-2">
                       <Lightbulb className="w-4 h-4" />
                       Preparation Tips
                     </h4>
-                    <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                       <li>• Familiarise with MFT controls before assessment</li>
                       <li>• Practice until settings are second nature</li>
                       <li>• Think before you test — which fault type suspected?</li>
@@ -670,7 +670,7 @@ const AM2Module5Section3 = () => {
                       <AlertTriangle className="w-4 h-4" />
                       Avoid Time Wasters
                     </h4>
-                    <ul className="text-sm text-purple-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-purple-700 dark:text-elec-yellow space-y-1">
                       <li>• Swapping settings repeatedly</li>
                       <li>• Using wrong test for suspected fault</li>
                       <li>• Forgetting to disconnect equipment</li>
@@ -684,9 +684,9 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Equipment Maintenance and Calibration */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
               6. Equipment Maintenance and Professional Standards
             </h2>
@@ -694,7 +694,7 @@ const AM2Module5Section3 = () => {
             <div className="space-y-6">
               <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Equipment Calibration Requirements:</h4>
-                <div className="text-sm text-purple-700 dark:text-emerald-400 space-y-3">
+                <div className="text-sm text-purple-700 dark:text-elec-yellow space-y-3">
                   <div>
                     <h5 className="font-medium mb-1">Annual Calibration Standards:</h5>
                     <ul className="space-y-1">
@@ -744,17 +744,17 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Troubleshooting and Problem Solving */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               7. Advanced Troubleshooting Techniques
             </h2>
             
             <div className="space-y-6">
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Complex Fault Scenarios:</h4>
-                <div className="text-sm text-blue-700 dark:text-emerald-400 space-y-3">
+                <div className="text-sm text-blue-700 dark:text-elec-yellow space-y-3">
                   <div>
                     <h5 className="font-medium mb-1">Multiple Fault Interactions:</h5>
                     <ul className="space-y-1">
@@ -781,7 +781,7 @@ const AM2Module5Section3 = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h5 className="font-medium text-red-800 dark:text-red-200 mb-2">When Standard Tests Fail:</h5>
-                    <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                       <li>• Very high impedance circuits (&gt;10MΩ)</li>
                       <li>• Ultra-low resistance measurements (&lt;0.01Ω)</li>
                       <li>• Circuits with protective capacitors</li>
@@ -790,7 +790,7 @@ const AM2Module5Section3 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-red-800 dark:text-red-200 mb-2">Alternative Approaches:</h5>
-                    <ul className="text-sm text-red-700 dark:text-emerald-400 space-y-1">
+                    <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
                       <li>• Use lower test voltages for sensitive equipment</li>
                       <li>• Employ 4-wire measurement for precision</li>
                       <li>• Apply guard circuits for high impedance tests</li>
@@ -804,9 +804,9 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               6. Real-World Examples
             </h2>
@@ -814,26 +814,26 @@ const AM2Module5Section3 = () => {
             <div className="space-y-4">
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">❌ Example 1: Lead Zeroing Error</h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                   <strong>Scenario:</strong> Candidate forgot to zero continuity leads before testing.
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                   <strong>Result:</strong> Reading showed 0.7Ω on CPC loop instead of actual 0.05Ω.
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400 font-medium">
+                <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
                   <strong>Outcome:</strong> Assessor flagged as incorrect — marks lost for basic error.
                 </p>
               </div>
 
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">❌ Example 2: Equipment Not Disconnected</h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                   <strong>Scenario:</strong> Candidate performed insulation resistance without disconnecting lamps.
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-2">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
                   <strong>Result:</strong> Low reading due to lamp circuits, potential equipment damage.
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400 font-medium">
+                <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
                   <strong>Outcome:</strong> Assessor marked down for procedure error and false reading.
                 </p>
               </div>
@@ -868,9 +868,9 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* FAQ Section */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
               7. Frequently Asked Questions
             </h2>
@@ -891,16 +891,16 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-emerald-500/30 mb-6 sm:mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               8. Section Summary
             </h2>
             
-            <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4 mb-4">
+            <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4 mb-4">
               <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Efficient Test Equipment Use Means:</h4>
-              <ul className="text-sm text-blue-700 dark:text-emerald-400 space-y-1">
+              <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
                 <li>• <strong>Selecting</strong> the right instrument for the fault</li>
                 <li>• <strong>Using</strong> GS38-compliant probes and safe handling</li>
                 <li>• <strong>Setting up</strong> instruments correctly before testing</li>

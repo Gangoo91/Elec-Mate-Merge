@@ -262,7 +262,7 @@ const Module4Section7_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">PUWER 1998 (Provision and Use of Work Equipment Regulations)</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">PUWER 1998 (Provision and Use of Work Equipment Regulations)</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Suitable equipment</strong> - tools must be appropriate for the work and environment</li>
                       <li><strong>Maintenance requirements</strong> - regular inspection and maintenance to keep tools safe</li>
@@ -312,7 +312,7 @@ const Module4Section7_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Physical and Electrical Hazards</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Physical and Electrical Hazards</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Cuts, burns, and eye injuries</strong> - from sharp edges, hot surfaces, and flying debris</li>
                       <li><strong>Electric shock from damaged equipment</strong> - faulty cables, broken plugs, or compromised insulation</li>
@@ -462,7 +462,7 @@ const Module4Section7_2 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Tool Maintenance and Storage Systems</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Tool Maintenance and Storage Systems</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Daily inspection</strong> - check tools before and after each use for defects</li>
                       <li><strong>Immediate removal</strong> - tag and remove faulty tools from service immediately</li>
@@ -543,7 +543,7 @@ const Module4Section7_2 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 1: Improper Tool Use</h3>
+                  <h3 className="font-medium text-red-800 text-elec-yellow mb-2">Case Study 1: Improper Tool Use</h3>
                   <p className="text-xs sm:text-sm text-white mb-2">
                     On a housing development, an apprentice used a blunt screwdriver on a consumer unit, causing the tool to slip and cut his hand badly. The wrong-sized tool created excessive force requirements and loss of control.
                   </p>
@@ -558,7 +558,7 @@ const Module4Section7_2 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 2: Electrical Safety Failure</h3>
+                  <h3 className="font-medium text-red-800 text-elec-yellow mb-2">Case Study 2: Electrical Safety Failure</h3>
                   <p className="text-xs sm:text-sm text-white mb-2">
                     A contractor suffered electric shock when using a power drill with damaged cable insulation. The absence of RCD protection meant the fault was not detected until contact occurred.
                   </p>

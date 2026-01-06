@@ -182,7 +182,7 @@ const AM2Module4Section1 = () => {
       <div className="max-w-4xl mx-auto px-6 py-12 space-y-8">
         {/* Title Section */}
         <div className="mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Zap className="w-4 h-4" />
             Module 4 – Section 1
           </div>
@@ -198,15 +198,15 @@ const AM2Module4Section1 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-8">
           <div className="p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
                   CRITICAL: Test Sequence Determines AM2 Success
                 </h3>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
                   The test sequence follows IET Guidance Note 3 and BS 7671 Part 6 exactly. Deviation from this order will result in assessment failure. Live testing must ONLY be carried out after all dead tests are complete and satisfactory.
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400 font-medium">
+                <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
                   Assessors observe whether you can follow safe working practices and systematic procedures. Any unsafe practice results in immediate failure.
                 </p>
               </div>
@@ -215,9 +215,9 @@ const AM2Module4Section1 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -226,27 +226,27 @@ const AM2Module4Section1 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Execute the complete testing sequence in correct GN3 order
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Understand the safety rationale behind each test sequence step
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Perform comprehensive dead testing before any live work
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply correct test voltages and interpret results accurately
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Document test results systematically throughout the process
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Demonstrate professional competence in electrical testing procedures
               </li>
             </ul>
@@ -254,9 +254,9 @@ const AM2Module4Section1 = () => {
         </Card>
 
         {/* NET AM2 GN3 Testing Sequence */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
               1. NET AM2 GN3 Testing Sequence
             </h2>
@@ -270,7 +270,7 @@ const AM2Module4Section1 = () => {
                 
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                    <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
                     <div className="flex-1">
                       <h5 className="font-medium text-foreground mb-1">Continuity of Protective Conductors (R1 + R2)</h5>
                       <p className="text-xs text-muted-foreground mb-2">
@@ -283,7 +283,7 @@ const AM2Module4Section1 = () => {
                   </div>
                   
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                    <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
                     <div className="flex-1">
                       <h5 className="font-medium text-foreground mb-1">Continuity of Ring Final Circuit Conductors</h5>
                       <p className="text-xs text-muted-foreground mb-2">
@@ -296,7 +296,7 @@ const AM2Module4Section1 = () => {
                   </div>
                   
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                    <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
                     <div className="flex-1">
                       <h5 className="font-medium text-foreground mb-1">Insulation Resistance</h5>
                       <p className="text-xs text-muted-foreground mb-2">
@@ -311,7 +311,7 @@ const AM2Module4Section1 = () => {
                   </div>
                   
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
+                    <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
                     <div className="flex-1">
                       <h5 className="font-medium text-foreground mb-1">Polarity</h5>
                       <p className="text-xs text-muted-foreground mb-2">
@@ -324,7 +324,7 @@ const AM2Module4Section1 = () => {
                   </div>
                   
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</div>
+                    <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">5</div>
                     <div className="flex-1">
                       <h5 className="font-medium text-foreground mb-1">Earth Electrode Resistance (where applicable)</h5>
                       <p className="text-xs text-muted-foreground mb-2">
@@ -350,9 +350,9 @@ const AM2Module4Section1 = () => {
         />
 
         {/* Live Testing Phase - NET AM2 Requirements */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" />
               2. Live Testing Phase - Only After Dead Tests Complete
             </h2>
@@ -360,7 +360,7 @@ const AM2Module4Section1 = () => {
             <div className="space-y-4">
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">LIVE TESTS - STRICT SEQUENCE REQUIRED</h4>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-4">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-4">
                   Live testing ONLY after ALL dead tests are satisfactory. Performing live tests prematurely = automatic AM2 failure.
                 </p>
                 
@@ -453,21 +453,21 @@ const AM2Module4Section1 = () => {
         />
 
         {/* Critical Test Values and Procedures */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               3. Critical Test Values and Procedures
             </h2>
             
             <div className="space-y-4">
               <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">Key Test Parameters</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">Key Test Parameters</h4>
                 <div className="space-y-3">
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 rounded p-3">
+                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded p-3">
                     <div className="flex justify-between items-center mb-2">
                       <h5 className="font-medium text-foreground">Insulation Resistance Testing</h5>
-                      <span className="text-sm font-medium text-emerald-400 dark:text-emerald-400">500V DC</span>
+                      <span className="text-sm font-medium text-elec-yellow dark:text-elec-yellow">500V DC</span>
                     </div>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• Test voltage: 500V DC for circuits up to 500V</li>
@@ -493,7 +493,7 @@ const AM2Module4Section1 = () => {
                   <div className="bg-yellow-50 dark:bg-yellow-950/20 rounded p-3">
                     <div className="flex justify-between items-center mb-2">
                       <h5 className="font-medium text-foreground">RCD Testing</h5>
-                      <span className="text-sm font-medium text-emerald-400 dark:text-emerald-400">Trip Time</span>
+                      <span className="text-sm font-medium text-elec-yellow dark:text-elec-yellow">Trip Time</span>
                     </div>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• Test at ½ × IΔn (should not trip)</li>
@@ -506,7 +506,7 @@ const AM2Module4Section1 = () => {
                   <div className="bg-purple-50 dark:bg-purple-950/20 rounded p-3">
                     <div className="flex justify-between items-center mb-2">
                       <h5 className="font-medium text-foreground">Earth Fault Loop Impedance</h5>
-                      <span className="text-sm font-medium text-purple-600 dark:text-emerald-400">Zs Values</span>
+                      <span className="text-sm font-medium text-purple-600 dark:text-elec-yellow">Zs Values</span>
                     </div>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• Measure Ze (external loop impedance) first</li>
@@ -530,16 +530,16 @@ const AM2Module4Section1 = () => {
         />
 
         {/* Assessment Success Factors */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
               4. Assessment Success Factors
             </h2>
             
             <div className="space-y-4">
               <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-2">What Assessors Evaluate</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">What Assessors Evaluate</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-2">
                     <span className="font-medium text-green-400 min-w-[20px]">✓</span>
@@ -574,7 +574,7 @@ const AM2Module4Section1 = () => {
 
               <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-2">Common Failure Points</h4>
-                <ul className="space-y-1 text-sm text-orange-700 dark:text-emerald-400">
+                <ul className="space-y-1 text-sm text-orange-700 dark:text-elec-yellow">
                   <li>• <strong>Testing live before dead tests complete</strong> - Automatic failure</li>
                   <li>• <strong>Inadequate isolation verification</strong> - Safety breach</li>
                   <li>• <strong>Poor test lead technique</strong> - Unreliable results</li>
@@ -584,9 +584,9 @@ const AM2Module4Section1 = () => {
                 </ul>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Professional Standards Expected</h4>
-                <ul className="space-y-1 text-sm text-blue-700 dark:text-emerald-400">
+                <ul className="space-y-1 text-sm text-blue-700 dark:text-elec-yellow">
                   <li>• Methodical approach matching industry standards</li>
                   <li>• Clear understanding of safety implications</li>
                   <li>• Accurate documentation as work progresses</li>
@@ -608,9 +608,9 @@ const AM2Module4Section1 = () => {
         />
 
         {/* What the Assessor is Looking For */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               What the Assessor is Looking For
             </h2>
@@ -673,25 +673,25 @@ const AM2Module4Section1 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
                 <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">Common Failure Points</h4>
-                <ul className="space-y-2 text-sm text-red-700 dark:text-emerald-400">
+                <ul className="space-y-2 text-sm text-red-700 dark:text-elec-yellow">
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 text-xs mt-1">●</span>
+                    <span className="text-elec-yellow text-xs mt-1">●</span>
                     <span>Attempting live tests before completing all dead tests</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 text-xs mt-1">●</span>
+                    <span className="text-elec-yellow text-xs mt-1">●</span>
                     <span>Inadequate isolation procedures or failing to prove dead</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 text-xs mt-1">●</span>
+                    <span className="text-elec-yellow text-xs mt-1">●</span>
                     <span>Using incorrect test voltages or equipment settings</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 text-xs mt-1">●</span>
+                    <span className="text-elec-yellow text-xs mt-1">●</span>
                     <span>Poor documentation or inability to interpret results</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-400 text-xs mt-1">●</span>
+                    <span className="text-elec-yellow text-xs mt-1">●</span>
                     <span>Unsafe practices or inadequate risk assessment</span>
                   </li>
                 </ul>
@@ -701,9 +701,9 @@ const AM2Module4Section1 = () => {
         </Card>
 
         {/* Summary Section */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Section Summary
             </h2>
@@ -740,12 +740,12 @@ const AM2Module4Section1 = () => {
               </div>
 
               <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-emerald-400 mb-3">Next Steps</h4>
+                <h4 className="font-medium text-elec-yellow mb-3">Next Steps</h4>
                 <p className="text-sm text-muted-foreground mb-3">
                   Having mastered the testing sequence, you should now focus on practical application and timing. 
                   The next section covers specific test procedures and common scenarios you will encounter during your AM2 assessment.
                 </p>
-                <div className="flex items-center gap-2 text-sm text-emerald-400">
+                <div className="flex items-center gap-2 text-sm text-elec-yellow">
                   <Lightbulb className="w-4 h-4" />
                   <span>Practice the complete sequence until it becomes second nature</span>
                 </div>
@@ -755,9 +755,9 @@ const AM2Module4Section1 = () => {
         </Card>
 
         {/* Knowledge Check Quiz */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Knowledge Check - Testing Sequence Mastery
             </h2>
@@ -785,7 +785,7 @@ const AM2Module4Section1 = () => {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <span className="hidden sm:inline">Section 1 of 6</span>
             <div className="flex gap-1">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
               <div className="w-2 h-2 bg-border rounded-full"></div>
               <div className="w-2 h-2 bg-border rounded-full"></div>
               <div className="w-2 h-2 bg-border rounded-full"></div>

@@ -228,7 +228,7 @@ const AM2Module2Section5 = () => {
       <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-6 md:py-12">
         {/* Title Section */}
         <div className="mb-8 md:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
             <Shield className="w-4 h-4" />
             Module 2 – Section 5
           </div>
@@ -244,17 +244,17 @@ const AM2Module2Section5 = () => {
         <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-8">
           <div className="p-6">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
                   CRITICAL: Safety Errors = Instant Failure
                 </h3>
-                <p className="text-sm text-red-700 dark:text-emerald-400 mb-3">
+                <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
                   Critical safety errors result in immediate section failure with no second chances. These include unsafe isolation, 
                   energising faulted circuits, and serious health & safety breaches. AM2 simulates real work — unsafe practices 
                   could kill someone in real life, so NET's role is to confirm you are safe to work unsupervised.
                 </p>
-                <p className="text-sm text-red-700 dark:text-emerald-400 font-medium">
+                <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
                   Golden Rule: If it's unsafe in the real world, it's an instant fail in AM2. One critical mistake proves you're not ready for unsupervised work.
                 </p>
               </div>
@@ -263,9 +263,9 @@ const AM2Module2Section5 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckSquare className="w-5 h-5" />
               Learning Outcomes
             </h2>
@@ -274,23 +274,23 @@ const AM2Module2Section5 = () => {
             </p>
             <ul className="space-y-2 text-xs sm:text-sm text-foreground">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Identify which AM2 mistakes are classed as critical safety errors
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Understand why these errors lead to instant failure
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply strategies to avoid making these errors under pressure
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Recognise the link between AM2 safety errors and real-world risks on site
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Build habits that prevent critical errors in both assessment and practice
               </li>
             </ul>
@@ -298,9 +298,9 @@ const AM2Module2Section5 = () => {
         </Card>
 
         {/* Critical Safety Errors Definition */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               1. What Counts as a Critical Safety Error?
             </h2>
             <p className="text-sm text-muted-foreground mb-6">
@@ -309,7 +309,7 @@ const AM2Module2Section5 = () => {
             <div className="space-y-4 text-xs sm:text-sm text-foreground">
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-                  <Lock className="w-4 h-4 text-emerald-400" />
+                  <Lock className="w-4 h-4 text-elec-yellow" />
                   Failing Safe Isolation
                 </h3>
                 <ul className="space-y-1 text-muted-foreground ml-6">
@@ -321,7 +321,7 @@ const AM2Module2Section5 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-emerald-400" />
+                  <Zap className="w-4 h-4 text-elec-yellow" />
                   Energising Unsafe Circuits
                 </h3>
                 <ul className="space-y-1 text-muted-foreground ml-6">
@@ -333,7 +333,7 @@ const AM2Module2Section5 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-                  <HardHat className="w-4 h-4 text-emerald-400" />
+                  <HardHat className="w-4 h-4 text-elec-yellow" />
                   Serious Health & Safety Breaches
                 </h3>
                 <ul className="space-y-1 text-muted-foreground ml-6">
@@ -349,30 +349,30 @@ const AM2Module2Section5 = () => {
         </Card>
 
         {/* Why Instant Fails */}
-        <Card className="bg-gradient-to-br from-emerald-500/10 via-card to-card/80 border-emerald-500/30 mb-8">
+        <Card className="bg-gradient-to-br from-elec-yellow/10 via-card to-card/80 border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               2. Why These Are Instant Fails
             </h2>
             <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="p-4 bg-gradient-to-r from-background/80 to-background/60 rounded-lg border border-emerald-500/30">
-                <h3 className="font-semibold mb-2 text-emerald-400">Real-World Simulation</h3>
+              <div className="p-4 bg-gradient-to-r from-background/80 to-background/60 rounded-lg border border-elec-yellow/30">
+                <h3 className="font-semibold mb-2 text-elec-yellow">Real-World Simulation</h3>
                 <p className="text-muted-foreground">
                   AM2 simulates real work conditions. Unsafe practices in the assessment represent the same risks 
                   that could kill someone in real life - electric shock, fire, explosion, or serious injury. Every 
                   safety procedure you follow (or skip) directly translates to real-world competency.
                 </p>
               </div>
-              <div className="p-4 bg-gradient-to-r from-background/80 to-background/60 rounded-lg border border-emerald-500/30">
-                <h3 className="font-semibold mb-2 text-emerald-400">Competency Verification</h3>
+              <div className="p-4 bg-gradient-to-r from-background/80 to-background/60 rounded-lg border border-elec-yellow/30">
+                <h3 className="font-semibold mb-2 text-elec-yellow">Competency Verification</h3>
                 <p className="text-muted-foreground">
                   NET's role is to confirm you are safe to work unsupervised. One critical mistake proves you're 
                   not ready for independent work, regardless of your technical abilities. This isn't about being 
                   harsh - it's about ensuring public safety and protecting the electrical industry's reputation.
                 </p>
               </div>
-              <div className="p-4 bg-gradient-to-r from-background/80 to-background/60 rounded-lg border border-emerald-500/30">
-                <h3 className="font-semibold mb-2 text-emerald-400">Legal and Insurance Implications</h3>
+              <div className="p-4 bg-gradient-to-r from-background/80 to-background/60 rounded-lg border border-elec-yellow/30">
+                <h3 className="font-semibold mb-2 text-elec-yellow">Legal and Insurance Implications</h3>
                 <p className="text-muted-foreground">
                   Employers and insurance companies rely on NET certification. Critical safety errors indicate 
                   potential liability risks that could result in prosecution under the Electricity at Work Regulations, 
@@ -380,8 +380,8 @@ const AM2Module2Section5 = () => {
                 </p>
               </div>
               <div className="p-4 bg-gradient-to-r from-orange-50/50 to-orange-100/30 dark:from-orange-950/30 dark:to-orange-900/20 rounded-lg border border-orange-200/50 dark:border-orange-800/30">
-                <h3 className="font-semibold mb-2 text-orange-700 dark:text-emerald-400">Industry Standards</h3>
-                <p className="text-orange-600 dark:text-emerald-400 text-sm">
+                <h3 className="font-semibold mb-2 text-orange-700 dark:text-elec-yellow">Industry Standards</h3>
+                <p className="text-orange-600 dark:text-elec-yellow text-sm">
                   The electrical industry has zero tolerance for unsafe practices because the consequences are so severe. 
                   A single mistake can result in fatalities, major fires, or explosions. NET reflects this reality - 
                   safety isn't negotiable, and competency must be absolute.
@@ -392,14 +392,14 @@ const AM2Module2Section5 = () => {
         </Card>
 
         {/* Common Mistakes */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               3. Common Safety-Critical Mistakes Candidates Make
             </h2>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <h3 className="font-semibold text-base mb-3 text-emerald-400">Critical Isolation Failures</h3>
+                <h3 className="font-semibold text-base mb-3 text-elec-yellow">Critical Isolation Failures</h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
@@ -427,13 +427,13 @@ const AM2Module2Section5 = () => {
                   </li>
                 </ul>
                 <div className="mt-4 p-3 bg-red-50/50 dark:bg-red-950/20 rounded-lg border border-red-200/50 dark:border-red-800/30">
-                  <p className="text-xs text-red-700 dark:text-emerald-400 font-medium">
+                  <p className="text-xs text-red-700 dark:text-elec-yellow font-medium">
                     Remember: Safe isolation isn't just about switching off - it's a complete procedure that must be followed exactly.
                   </p>
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold text-base mb-3 text-emerald-400">Energising Errors & PPE Breaches</h3>
+                <h3 className="font-semibold text-base mb-3 text-elec-yellow">Energising Errors & PPE Breaches</h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                   <li className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
@@ -461,7 +461,7 @@ const AM2Module2Section5 = () => {
                   </li>
                 </ul>
                 <div className="mt-4 p-3 bg-orange-50/50 dark:bg-orange-950/20 rounded-lg border border-orange-200/50 dark:border-orange-800/30">
-                  <p className="text-xs text-orange-700 dark:text-emerald-400 font-medium">
+                  <p className="text-xs text-orange-700 dark:text-elec-yellow font-medium">
                     PPE isn't optional in AM2 - assessors watch for health & safety compliance throughout the entire assessment.
                   </p>
                 </div>
@@ -472,46 +472,46 @@ const AM2Module2Section5 = () => {
         </Card>
 
         {/* Strategies to Avoid Errors */}
-        <Card className="bg-gradient-to-br from-emerald-500/10 via-card to-card/60 border-emerald-500/30 mb-8">
+        <Card className="bg-gradient-to-br from-elec-yellow/10 via-card to-card/60 border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
               4. Strategies to Avoid Critical Errors
             </h2>
             <div className="space-y-6">
               <div>
-                <h3 className="font-semibold text-base mb-3 text-emerald-400">Safety-First Mindset</h3>
+                <h3 className="font-semibold text-base mb-3 text-elec-yellow">Safety-First Mindset</h3>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-gradient-to-r from-emerald-500/5 to-background/50 rounded-lg border border-emerald-500/30">
-                    <h4 className="font-medium text-sm mb-2 text-emerald-400">Slow Down on Safety</h4>
+                  <div className="p-4 bg-gradient-to-r from-elec-yellow/5 to-background/50 rounded-lg border border-elec-yellow/30">
+                    <h4 className="font-medium text-sm mb-2 text-elec-yellow">Slow Down on Safety</h4>
                     <p className="text-xs text-muted-foreground">Speed is irrelevant if unsafe. Take time with isolation procedures, PPE checks, and verification steps.</p>
                   </div>
-                  <div className="p-4 bg-gradient-to-r from-emerald-500/5 to-background/50 rounded-lg border border-emerald-500/30">
-                    <h4 className="font-medium text-sm mb-2 text-emerald-400">Real-Site Behavior</h4>
+                  <div className="p-4 bg-gradient-to-r from-elec-yellow/5 to-background/50 rounded-lg border border-elec-yellow/30">
+                    <h4 className="font-medium text-sm mb-2 text-elec-yellow">Real-Site Behavior</h4>
                     <p className="text-xs text-muted-foreground">Treat AM2 like a live site where others' lives depend on your work - because that's exactly what real work is.</p>
                   </div>
                 </div>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground mt-4">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Never skip safety procedures to save time - time pressure is no excuse for unsafe work
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Remember that in real work, your actions affect colleagues, customers, and the public
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Build safety habits that become automatic under pressure
                   </li>
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-base mb-3 text-emerald-400">Systematic Safety Procedures</h3>
+                <h3 className="font-semibold text-base mb-3 text-elec-yellow">Systematic Safety Procedures</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="p-4 bg-gradient-to-r from-blue-50/50 to-background/50 dark:from-blue-950/20 dark:to-background/50 rounded-lg border border-blue-200/50 dark:border-blue-800/30">
-                    <h4 className="font-medium text-sm mb-2 text-blue-700 dark:text-emerald-400">Safe Isolation Checklist</h4>
-                    <ul className="text-xs text-emerald-400 dark:text-emerald-400 space-y-1">
+                    <h4 className="font-medium text-sm mb-2 text-blue-700 dark:text-elec-yellow">Safe Isolation Checklist</h4>
+                    <ul className="text-xs text-elec-yellow dark:text-elec-yellow space-y-1">
                       <li>1. Identify correct circuit</li>
                       <li>2. Prove voltage indicator</li>
                       <li>3. Isolate at source</li>
@@ -534,25 +534,25 @@ const AM2Module2Section5 = () => {
                 </div>
                 <ul className="space-y-2 text-xs sm:text-sm text-foreground mt-4">
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Use written checklists every time - don't rely on memory under pressure
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Double-check circuit identification against drawings before isolating
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Never energise unless you've tested and certified the complete installation
                   </li>
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-base mb-3 text-emerald-400">Personal Protective Equipment (PPE) Protocol</h3>
+                <h3 className="font-semibold text-base mb-3 text-elec-yellow">Personal Protective Equipment (PPE) Protocol</h3>
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                   <div className="p-3 bg-gradient-to-r from-purple-50/50 to-background/50 dark:from-purple-950/20 dark:to-background/50 rounded-lg border border-purple-200/50 dark:border-purple-800/30">
-                    <h4 className="font-medium text-xs mb-1 text-purple-700 dark:text-emerald-400">Basic PPE</h4>
-                    <ul className="text-xs text-purple-600 dark:text-emerald-400 space-y-1">
+                    <h4 className="font-medium text-xs mb-1 text-purple-700 dark:text-elec-yellow">Basic PPE</h4>
+                    <ul className="text-xs text-purple-600 dark:text-elec-yellow space-y-1">
                       <li>• Hard hat at all times</li>
                       <li>• High-visibility clothing</li>
                       <li>• Safety footwear</li>
@@ -567,8 +567,8 @@ const AM2Module2Section5 = () => {
                     </ul>
                   </div>
                   <div className="p-3 bg-gradient-to-r from-red-50/50 to-background/50 dark:from-red-950/20 dark:to-background/50 rounded-lg border border-red-200/50 dark:border-red-800/30">
-                    <h4 className="font-medium text-xs mb-1 text-red-700 dark:text-emerald-400">Critical Reminders</h4>
-                    <ul className="text-xs text-red-600 dark:text-emerald-400 space-y-1">
+                    <h4 className="font-medium text-xs mb-1 text-red-700 dark:text-elec-yellow">Critical Reminders</h4>
+                    <ul className="text-xs text-red-600 dark:text-elec-yellow space-y-1">
                       <li>• Check condition before use</li>
                       <li>• Replace if damaged</li>
                       <li>• Wear throughout task</li>
@@ -582,9 +582,9 @@ const AM2Module2Section5 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Real-World Examples
             </h2>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
@@ -593,7 +593,7 @@ const AM2Module2Section5 = () => {
                   <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
                     AM2 Example 1: Isolation Failure
                   </h3>
-                  <p className="text-sm text-red-700 dark:text-emerald-400">
+                  <p className="text-sm text-red-700 dark:text-elec-yellow">
                     Candidate skipped re-proving tester after isolation. The assessor stopped the test 
                     immediately → instant fail. The candidate had completed 90% of excellent work but 
                     failed the entire section.
@@ -605,7 +605,7 @@ const AM2Module2Section5 = () => {
                   <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
                     AM2 Example 2: Energising Fault
                   </h3>
-                  <p className="text-sm text-red-700 dark:text-emerald-400">
+                  <p className="text-sm text-red-700 dark:text-elec-yellow">
                     Candidate completed most of installation but energised a circuit with a deliberate 
                     fault left in by NET. Despite excellent installation work, instant fail for critical 
                     safety error.
@@ -617,7 +617,7 @@ const AM2Module2Section5 = () => {
                   <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
                     AM2 Example 3: Lock-off Device
                   </h3>
-                  <p className="text-sm text-red-700 dark:text-emerald-400">
+                  <p className="text-sm text-red-700 dark:text-elec-yellow">
                     Candidate used tape instead of a proper lock-off device to secure isolation. 
                     This is considered unsafe isolation practice → instant fail, despite otherwise 
                     competent work.
@@ -629,7 +629,7 @@ const AM2Module2Section5 = () => {
                   <h3 className="font-semibold text-orange-800 dark:text-orange-200 mb-2">
                     Industry Example: Real Consequences
                   </h3>
-                  <p className="text-sm text-orange-700 dark:text-emerald-400">
+                  <p className="text-sm text-orange-700 dark:text-elec-yellow">
                     An apprentice failed to isolate properly; a colleague received a serious shock 
                     requiring hospital treatment. Company fined £50,000 under Electricity at Work 
                     Regulations. Individual faced disciplinary action.
@@ -641,68 +641,68 @@ const AM2Module2Section5 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="bg-gradient-to-br from-emerald-500/15 via-card to-card/70 border-emerald-500/40 mb-8">
+        <Card className="bg-gradient-to-br from-elec-yellow/15 via-card to-card/70 border-elec-yellow/40 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
-              <Card className="bg-gradient-to-br from-emerald-500/10 to-background border-emerald-500/30">
+              <Card className="bg-gradient-to-br from-elec-yellow/10 to-background border-elec-yellow/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q1: What's the biggest single cause of critical safety fails?
                   </h3>
                   <p className="text-sm text-muted-foreground mb-2">A: Incorrect safe isolation procedures, particularly skipping the re-prove step or using inadequate lock-off methods.</p>
-                  <div className="text-xs text-emerald-400 font-medium">
+                  <div className="text-xs text-elec-yellow font-medium">
                     💡 Remember: Safe isolation is a complete 6-step procedure, not just switching off
                   </div>
                 </div>
               </Card>
-              <Card className="bg-gradient-to-br from-emerald-500/10 to-background border-emerald-500/30">
+              <Card className="bg-gradient-to-br from-elec-yellow/10 to-background border-elec-yellow/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q2: Can a paperwork mistake ever be a critical fail?
                   </h3>
                   <p className="text-sm text-muted-foreground mb-2">A: Not usually — unless it hides or misrepresents a dangerous condition that could affect safety decisions.</p>
-                  <div className="text-xs text-orange-600 dark:text-emerald-400 font-medium">
+                  <div className="text-xs text-orange-600 dark:text-elec-yellow font-medium">
                     ⚠️ Exception: Documentation that could mislead someone about safety-critical information
                   </div>
                 </div>
               </Card>
-              <Card className="bg-gradient-to-br from-emerald-500/10 to-background border-emerald-500/30">
+              <Card className="bg-gradient-to-br from-elec-yellow/10 to-background border-elec-yellow/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q3: Do assessors give a second chance if you miss a step in safe isolation?
                   </h3>
                   <p className="text-sm text-muted-foreground mb-2">A: No — safety is non-negotiable. Critical safety errors result in immediate section failure with no opportunity for correction.</p>
-                  <div className="text-xs text-red-600 dark:text-emerald-400 font-medium">
+                  <div className="text-xs text-red-600 dark:text-elec-yellow font-medium">
                     🚫 Zero tolerance policy - one mistake = instant section fail
                   </div>
                 </div>
               </Card>
-              <Card className="bg-gradient-to-br from-emerald-500/10 to-background border-emerald-500/30">
+              <Card className="bg-gradient-to-br from-elec-yellow/10 to-background border-elec-yellow/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q4: If I realise I made a critical error halfway through, can I correct it?
                   </h3>
                   <p className="text-sm text-muted-foreground mb-2">A: No — once a critical safety error is observed by the assessor, the section is immediately failed. Prevention is the only strategy.</p>
-                  <div className="text-xs text-red-600 dark:text-emerald-400 font-medium">
+                  <div className="text-xs text-red-600 dark:text-elec-yellow font-medium">
                     🛑 Assessors will stop the section immediately upon observing critical errors
                   </div>
                 </div>
               </Card>
-              <Card className="bg-gradient-to-br from-emerald-500/10 to-background border-emerald-500/30">
+              <Card className="bg-gradient-to-br from-elec-yellow/10 to-background border-elec-yellow/30">
                 <div className="p-4">
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q5: Are critical fails only about electrical safety?
                   </h3>
                   <p className="text-sm text-muted-foreground mb-2">A: No — they also cover unsafe tool use, PPE breaches, and general unsafe site behaviour that could cause injury.</p>
-                  <div className="text-xs text-emerald-400 dark:text-emerald-400 font-medium">
+                  <div className="text-xs text-elec-yellow dark:text-elec-yellow font-medium">
                     🔧 Covers all aspects of health & safety, not just electrical work
                   </div>
                 </div>
@@ -713,9 +713,9 @@ const AM2Module2Section5 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-gradient-to-r from-emerald-500/15 via-card to-card/60 border-emerald-500/40 mb-8">
+        <Card className="bg-gradient-to-r from-elec-yellow/15 via-card to-card/60 border-elec-yellow/40 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Summary
             </h2>
             <div className="space-y-4">
@@ -726,15 +726,15 @@ const AM2Module2Section5 = () => {
               </p>
               <ul className="space-y-2 text-xs sm:text-sm text-foreground">
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   Use systematic safety procedures and never skip steps to save time
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   Treat the assessment as a live site where others' lives depend on your work
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   Remember: if it's unsafe in the real world, it's an instant fail in AM2
                 </li>
               </ul>
@@ -748,9 +748,9 @@ const AM2Module2Section5 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-emerald-500/30 mb-8">
+        <Card className="bg-card border-elec-yellow/30 mb-8">
           <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Knowledge Check: 10-Question Quiz
             </h2>
             <p className="text-sm text-muted-foreground mb-6">
@@ -764,14 +764,14 @@ const AM2Module2Section5 = () => {
         <div className="flex flex-col sm:flex-row gap-3 justify-between">
           <Link 
             to="../section4"
-            className="flex items-center gap-2 px-4 py-3 bg-card border border-emerald-500/30 text-foreground rounded-lg hover:border-emerald-500/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
+            className="flex items-center gap-2 px-4 py-3 bg-card border border-elec-yellow/30 text-foreground rounded-lg hover:border-elec-yellow/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
           >
             <ArrowLeft className="h-4 w-4" />
             Previous: Section 4
           </Link>
           <Link 
             to="../section6"
-            className="flex items-center gap-2 px-4 py-3 bg-emerald-500 text-black rounded-lg hover:bg-emerald-500/90 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
+            className="flex items-center gap-2 px-4 py-3 bg-elec-yellow text-black rounded-lg hover:bg-elec-yellow/90 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
           >
             Next: Section 6
             <ArrowLeft className="h-4 w-4 rotate-180" />

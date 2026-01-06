@@ -494,7 +494,7 @@ const Module2Section3_6 = () => {
                 </h3>
                 <div className="bg-card border border-elec-yellow/30 p-3 rounded">
                   <p className="font-medium text-elec-yellow mb-2">Look For:</p>
-                  <ul className="list-disc pl-4 space-y-1 text-emerald-200 text-xs">
+                  <ul className="list-disc pl-4 space-y-1 text-elec-yellow text-xs">
                     <li>Multiple junction boxes</li>
                     <li>Independent operation</li>
                     <li>Branching cable routes</li>

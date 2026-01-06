@@ -6,13 +6,16 @@ export type ProfileType = {
   username: string;
   full_name: string;
   avatar_url: string;
-  role?: 'admin' | 'electrician' | 'apprentice' | 'visitor' | 'employer'; // Added role field
+  role?: 'admin' | 'electrician' | 'apprentice' | 'visitor' | 'employer';
   created_at?: string;
   updated_at?: string;
   bio?: string;
   location?: string;
   website?: string;
-  subscribed?: boolean; // Add missing property for subscription status
+  subscribed?: boolean;
+  onboarding_completed?: boolean;
+  ecs_card_type?: string;
+  elec_id_enabled?: boolean;
 };
 
 export type AuthContextType = {
@@ -33,5 +36,14 @@ export type AuthContextType = {
   signIn: (email: string, password: string) => Promise<{ error: any; user?: User | undefined }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
-  fetchProfile?: (userId: string) => Promise<ProfileType | null>; // Add optional fetchProfile method
+  resetPassword: (email: string) => Promise<{ error: any }>;
+  updatePassword: (newPassword: string) => Promise<{ error: any }>;
+  resendConfirmationEmail: (email: string) => Promise<{ error: any }>;
+  updateProfile: (userId: string, profileData: {
+    role?: string;
+    ecs_card_type?: string;
+    elec_id_enabled?: boolean;
+    onboarding_completed?: boolean;
+  }) => Promise<{ error: any }>;
+  fetchProfile?: (userId: string) => Promise<ProfileType | null>;
 };

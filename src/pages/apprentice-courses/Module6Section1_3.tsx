@@ -234,7 +234,7 @@ const Module6Section1_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Initial Verification Requirements</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Initial Verification Requirements</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -289,7 +289,7 @@ const Module6Section1_3 = () => {
                       </div>
 
                       <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded border border-yellow-200 dark:border-yellow-800">
-                        <p className="font-medium text-yellow-700 dark:text-elec-yellow mb-2">Critical Safety Point</p>
+                        <p className="font-medium text-yellow-700 text-elec-yellow mb-2">Critical Safety Point</p>
                         <p className="text-xs sm:text-sm text-white">
                           Energising an untested installation can result in electric shock, fire, or equipment damage. Initial verification is a legal requirement under EAWR and professional duty under BS 7671. The person who energises an untested circuit accepts full legal responsibility for any consequences.
                         </p>
@@ -300,8 +300,8 @@ const Module6Section1_3 = () => {
               </div>
             </div>
 
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mt-4">
-              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Professional Practice Note</p>
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mt-4">
+              <p className="font-medium text-blue-700 text-elec-yellow mb-2">Professional Practice Note</p>
               <p className="text-xs sm:text-sm text-white">
                 Some installers are tempted to "just switch on quickly to see if it works" - this is extremely dangerous and unprofessional. Proper testing may take time, but it can prevent fires, save lives, and protect your professional reputation. Never compromise on initial verification.
               </p>
@@ -329,7 +329,7 @@ const Module6Section1_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Alteration Testing Requirements</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Alteration Testing Requirements</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -487,7 +487,7 @@ const Module6Section1_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Periodic Testing Requirements</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Periodic Testing Requirements</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -570,7 +570,7 @@ const Module6Section1_3 = () => {
             </p>
           </div>
           <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-            <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Key Lessons</p>
+            <p className="font-medium text-red-700 text-elec-yellow mb-2">Key Lessons</p>
             <ul className="text-xs sm:text-sm text-white space-y-1">
               <li>• Proper testing would have identified the poor connection before energising</li>
               <li>• Minor Works Certificate would have provided legal documentation</li>
@@ -584,7 +584,7 @@ const Module6Section1_3 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="border-l-4 border-l-elec-yellow pl-4 bg-emerald-50/50 dark:bg-emerald-950/20 py-3">
+            <div className="border-l-4 border-l-elec-yellow pl-4 bg-elec-yellow/5/50 dark:bg-elec-yellow/10 py-3">
               <p className="font-medium text-white mb-2">Q: Can I energise just part of a new installation to test it?</p>
               <p className="text-xs sm:text-sm text-white">A: No. Initial verification must be completed on the entire installation before any part is energised. Partial energising can create dangerous conditions and invalidates the testing process.</p>
             </div>
@@ -611,8 +611,8 @@ const Module6Section1_3 = () => {
           </h2>
           <div className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Before Any Testing</p>
+              <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Before Any Testing</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>• Always carry out safe isolation before testing</li>
                   <li>• Verify test instruments are calibrated and functioning</li>

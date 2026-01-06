@@ -149,9 +149,9 @@ const Section5_5 = () => {
         {/* Title Block */}
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <AlertTriangle className="h-8 w-8 text-emerald-400" />
+            <AlertTriangle className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 5.5
               </span>
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
@@ -177,7 +177,7 @@ const Section5_5 = () => {
                 <li>• Professional discipline prevents fatal errors</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-card border border-elec-yellow/30">
               <h3 className="font-semibold text-white mb-3">Spot it / Use it</h3>
               <ul className="space-y-1 text-sm text-gray-300">
                 <li>• Not using lock-off devices</li>
@@ -194,19 +194,19 @@ const Section5_5 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Learning Outcomes</h2>
           <ul className="space-y-3">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Identify frequent mistakes made during isolation</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Understand the consequences of incorrect procedures</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Learn how to prevent errors through habits, training, and checks</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Develop professional discipline and safety awareness</span>
             </li>
           </ul>
@@ -531,7 +531,7 @@ const Section5_5 = () => {
 
             <div className="bg-red-500/20 border border-border/30 rounded-lg p-4">
               <div className="flex items-start gap-3">
-                <AlertCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                <AlertCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-red-200 font-medium mb-2">
                     Real Cost of Electrical Accidents
@@ -615,7 +615,7 @@ const Section5_5 = () => {
                 An experienced electrician was replacing a faulty switch in an office block. He isolated what he believed was the correct MCB based on the consumer unit labels. However, the office had been rewired years earlier, and the labels were never updated. When he removed the switch, he received a 230V shock from the live conductor.
               </p>
               
-              <div className="mt-3 p-2 bg-emerald-600 dark:bg-emerald-700 rounded text-sm">
+              <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                 <p className="text-white font-medium">Lessons learned:</p>
                 <p className="text-emerald-50">
                   Circuit verification using proper testing methods is essential. Never trust labels alone. The company implemented a circuit verification policy requiring testing at both the distribution board and the work location before any isolation work begins.
@@ -629,7 +629,7 @@ const Section5_5 = () => {
                 Three electricians were working on different lighting circuits in a warehouse. They used a single shared lock to save time. When one electrician finished early and left with the key, another team member arrived and assumed all work was complete. He restored power while the remaining electrician was still working, resulting in a serious electrical burn.
               </p>
               
-              <div className="mt-3 p-2 bg-emerald-600 dark:bg-emerald-700 rounded text-sm">
+              <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                 <p className="text-white font-medium">Lessons learned:</p>
                 <p className="text-emerald-50">
                   Individual accountability cannot be compromised. The site now requires personal locks for each worker and uses group lock boxes for multi-person jobs. Communication protocols were also strengthened with mandatory team briefings before energising any systems.
@@ -643,7 +643,7 @@ const Section5_5 = () => {
                 During routine maintenance, an electrician tested a circuit and confirmed it was dead using his voltage tester. However, he didn't retest the tester after use. Unknown to him, the tester had failed during the testing process due to an internal fault. He proceeded to work on what he thought was a dead circuit but received a severe shock when he touched the live conductor.
               </p>
               
-              <div className="mt-3 p-2 bg-emerald-600 dark:bg-emerald-700 rounded text-sm">
+              <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                 <p className="text-white font-medium">Lessons learned:</p>
                 <p className="text-emerald-50">
                   The "test-lock-test" procedure exists for critical safety reasons. The company now requires annual tester calibration, monthly functionality checks, and mandatory proving unit testing before and after every use. They also implemented a buddy system for isolation procedures on high-risk work.
@@ -654,9 +654,9 @@ const Section5_5 = () => {
         </div>
 
         {/* Section 12: Practical prevention checklist */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">12</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">12</div>
             <h2 className="text-lg sm:text-xl font-semibold text-white">Practical prevention checklist</h2>
           </div>
           
@@ -709,7 +709,7 @@ const Section5_5 = () => {
               </div>
             </div>
 
-            <div className="bg-emerald-500/20 border border-border/30 rounded-lg p-4">
+            <div className="bg-elec-yellow/20 border border-border/30 rounded-lg p-4">
               <h4 className="font-medium text-white mb-3">The professional approach</h4>
               <p className="text-blue-200 text-sm mb-3">
                 True electrical professionals understand that safety procedures aren't bureaucratic obstacles - they're life-saving protocols developed from decades of industry experience and accident analysis.
@@ -741,19 +741,19 @@ const Section5_5 = () => {
                 <h4 className="font-medium text-white mb-3">Critical success factors</h4>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Never skip steps in the isolation process</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Use only proper, calibrated test equipment</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Maintain individual lock and key control</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Verify circuit identity before isolation</span>
                   </li>
                 </ul>
@@ -762,26 +762,26 @@ const Section5_5 = () => {
                 <h4 className="font-medium text-white mb-3">Professional standards</h4>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Time pressure never justifies cutting corners</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Communicate clearly with all site personnel</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Report near-misses to prevent future incidents</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">Lead by example in safety practices</span>
                   </li>
                 </ul>
               </div>
             </div>
 
-            <div className="mt-6 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
+            <div className="mt-6 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
               <p className="text-white font-medium text-center">
                 "Safety isn't just about following rules - it's about going home to your family every day. Make every isolation count."
               </p>

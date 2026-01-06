@@ -373,7 +373,7 @@ const Module7Section5_3 = () => {
         </Card>
 
         {/* Real-World Applications */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-green-500/5 to-emerald-500/10 border-green-500/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-green-500/5 to-elec-yellow/10 border-green-500/20">
           <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Real-World Applications</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">

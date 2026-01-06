@@ -527,7 +527,7 @@ const Module5Section6_4 = () => {
         <Card className="mb-8 p-6 bg-transparent border-white/20">
           <h2 className="text-2xl font-bold mb-4 text-white">Real World Example</h2>
           <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-4">
-            <h3 className="font-semibold text-red-800 dark:text-elec-yellow mb-2">Communication Breakdown</h3>
+            <h3 className="font-semibold text-red-800 text-elec-yellow mb-2">Communication Breakdown</h3>
             <p className="text-base text-white">
               An apprentice is told to "terminate the cable in the distribution board." He assumes this means connecting it to the main switch, but the supervisor intended it to be connected to an outgoing circuit breaker. Because he didn't clarify, the result was a wasted hour of rework and an unnecessary safety risk.
             </p>
@@ -554,7 +554,7 @@ const Module5Section6_4 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-card/10 to-emerald-500/10 border-elec-yellow/30">
+        <Card className="mb-8 p-6 bg-gradient-to-br from-card/10 to-elec-yellow/10 border-elec-yellow/30">
           <div className="flex items-start gap-3 mb-4">
             <BookOpen className="w-6 h-6 text-elec-yellow mt-1" />
             <h2 className="text-2xl font-bold text-white">Pocket Guide</h2>

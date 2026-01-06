@@ -262,7 +262,7 @@ const Module4Section6_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Common Defect Categories</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Common Defect Categories</p>
                     <p className="text-base text-white mb-2"><strong>Mechanical defects:</strong> Issues with physical installation components.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Loose fixings on accessories or containment systems</li>
@@ -318,7 +318,7 @@ const Module4Section6_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Identification Methods</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Identification Methods</p>
                     <p className="text-base text-white mb-2"><strong>Visual inspection:</strong> First step in defect identification.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Check for visible issues such as exposed copper conductors</li>
@@ -419,7 +419,7 @@ const Module4Section6_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Safe Correction Procedures</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Safe Correction Procedures</p>
                     <p className="text-base text-white mb-2"><strong>Safety first:</strong> Always isolate the affected circuit before beginning work.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Switch off and lock off the circuit at the consumer unit</li>
@@ -516,7 +516,7 @@ const Module4Section6_5 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-card/10 to-emerald-500/5 border-elec-yellow/30">
+        <Card className="mb-8 p-6 bg-gradient-to-br from-card/10 to-elec-yellow/5 border-elec-yellow/30">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 rounded-lg bg-elec-yellow/20">
               <Wrench className="w-5 h-5 text-elec-yellow" />
@@ -565,7 +565,7 @@ const Module4Section6_5 = () => {
         </Card>
 
         {/* Enhanced Summary - Comprehensive Recap */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-green-500/5 to-emerald-500/10 border-green-400/20">
+        <Card className="mb-8 p-6 bg-gradient-to-br from-green-500/5 to-elec-yellow/10 border-green-400/20">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 rounded-lg bg-green-500/20">
               <Target className="w-5 h-5 text-green-600" />

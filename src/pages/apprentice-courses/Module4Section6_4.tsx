@@ -246,7 +246,7 @@ const Module4Section6_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Fixing Selection and Suitability</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Fixing Selection and Suitability</p>
                     <p className="text-base text-white mb-2"><strong>Surface compatibility:</strong> Ensure screws, clips, saddles, or brackets are appropriate for the mounting surface.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Masonry fixings: Use appropriate plugs or anchors for concrete/brick walls</li>
@@ -336,7 +336,7 @@ const Module4Section6_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Termination Quality and Security</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Termination Quality and Security</p>
                     <p className="text-base text-white mb-2"><strong>Stripping and preparation:</strong> Cable ends should be stripped to the correct length with no exposed copper.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Strip length should match terminal requirements (typically 10-12mm)</li>
@@ -381,7 +381,7 @@ const Module4Section6_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Physical Testing Procedures</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Physical Testing Procedures</p>
                     <p className="text-base text-white mb-2"><strong>Connection testing:</strong> Verify security without damaging components.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Gently tug cables at terminations to check security</li>
@@ -423,7 +423,7 @@ const Module4Section6_4 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           
           <div className="space-y-4">
-            <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
               <h3 className="font-medium text-white mb-2">Essential Tools and Equipment</h3>
               <div className="text-xs sm:text-sm text-white space-y-2">
                 <p><strong>Basic tools:</strong> Screwdrivers (slotted and Phillips), torque screwdriver, inspection torch, cable detector, measuring tape.</p>
@@ -506,7 +506,7 @@ const Module4Section6_4 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Examples</h2>
           
           <div className="space-y-4">
-            <div className="rounded-lg p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20">
               <h3 className="font-medium text-white mb-2">Case Study 1: Hotel Refurbishment</h3>
               <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Problem:</strong> During final testing of a hotel refurbishment project, several sockets failed the polarity test despite initial visual inspection appearing satisfactory.
@@ -522,7 +522,7 @@ const Module4Section6_4 = () => {
               </p>
             </div>
 
-            <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
               <h3 className="font-medium text-white mb-2">Case Study 2: Office Block Cable Damage</h3>
               <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Problem:</strong> Six months after completion, an office block experienced intermittent power failures. Investigation found damaged cables behind partition walls.

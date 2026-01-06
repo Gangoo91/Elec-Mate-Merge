@@ -298,11 +298,11 @@ const Module5Section5_2 = () => {
             The construction industry operates under strict hierarchies and communication protocols designed to maintain safety, quality, and efficiency. Understanding your role within this structure and communicating effectively with supervisors ensures projects run smoothly and helps build your professional reputation within the industry.
           </p>
           
-          <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
+          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
                 <p className="text-xs sm:text-sm text-white">
                   Effective communication with supervisors reduces project delays by up to 40% and significantly improves safety outcomes through clearer understanding of instructions and procedures.
                 </p>
@@ -315,7 +315,7 @@ const Module5Section5_2 = () => {
               <strong>Real Impact:</strong> Projects with excellent supervisor-trades communication show 30% fewer rework incidents and improved team morale.
             </p>
             
-            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
+            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
               <p className="text-xs sm:text-sm text-white">
                 <strong>Professional Standard:</strong> Clear communication skills are essential for career progression and are valued highly by employers across the construction industry.
               </p>
@@ -429,7 +429,7 @@ const Module5Section5_2 = () => {
               <div className="flex items-start gap-2 sm:gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3 text-base sm:text-lg">Role of Supervisors and Foremen</h3>
+                  <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3 text-base sm:text-lg">Role of Supervisors and Foremen</h3>
                   
                   <p className="text-sm sm:text-base text-white mb-4">
                     Supervisors and foremen are your key communication link on site. Understanding their role helps you communicate more effectively and get the support you need.
@@ -446,8 +446,8 @@ const Module5Section5_2 = () => {
                       </ul>
                     </div>
 
-                    <div className="bg-emerald-50 dark:bg-blue-900/20 p-2 sm:p-3 rounded border border-blue-200 dark:border-blue-800">
-                      <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2 text-xs sm:text-sm">Why This Matters</p>
+                    <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-2 sm:p-3 rounded border border-blue-200 dark:border-blue-800">
+                      <p className="font-medium text-blue-700 text-elec-yellow mb-2 text-xs sm:text-sm">Why This Matters</p>
                       <p className="text-xs sm:text-xs sm:text-sm text-white">
                         Supervisors and foremen have the authority to make decisions about your work and are accountable for the outcomes. Building good communication with them directly impacts your daily work experience and career development.
                       </p>
@@ -544,7 +544,7 @@ const Module5Section5_2 = () => {
               <div className="flex items-start gap-2 sm:gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base sm:text-lg">Effective Communication Skills</h3>
+                  <h3 className="font-semibold text-orange-600 text-elec-yellow mb-3 text-base sm:text-lg">Effective Communication Skills</h3>
                   
                   <p className="text-sm sm:text-base text-white mb-4">
                     Professional communication involves both verbal and non-verbal elements. These skills help build trust and ensure clear understanding.
@@ -570,7 +570,7 @@ const Module5Section5_2 = () => {
                     </div>
 
                     <div className="bg-orange-50 dark:bg-orange-900/20 p-2 sm:p-3 rounded border border-orange-200 dark:border-orange-800">
-                      <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2 text-xs sm:text-sm">Communication Example</p>
+                      <p className="font-medium text-orange-700 text-elec-yellow mb-2 text-xs sm:text-sm">Communication Example</p>
                       <p className="text-xs sm:text-xs sm:text-sm text-white italic">
                         "Good morning, John. I've finished the first fix in the office area. Before I start the second fix, could you confirm which circuits need RCD protection? I want to make sure I understand the specification correctly."
                       </p>
@@ -596,7 +596,7 @@ const Module5Section5_2 = () => {
               <div className="flex items-start gap-2 sm:gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base sm:text-lg">Common Communication Issues</h3>
+                  <h3 className="font-semibold text-red-600 text-elec-yellow mb-3 text-base sm:text-lg">Common Communication Issues</h3>
                   
                   <p className="text-sm sm:text-base text-white mb-4">
                     Understanding common communication problems helps you avoid them and work more effectively with supervisors and foremen.
@@ -605,7 +605,7 @@ const Module5Section5_2 = () => {
                   <div className="space-y-3 sm:space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div className="bg-red-50 dark:bg-red-900/20 p-2 sm:p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2 text-xs sm:text-sm">Making Assumptions</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2 text-xs sm:text-sm">Making Assumptions</p>
                         <ul className="text-xs sm:text-xs sm:text-sm text-white list-disc ml-3 sm:ml-4 space-y-1">
                           <li>Assuming you understand without clarification</li>
                           <li>Thinking "it's obvious" what was meant</li>
@@ -614,7 +614,7 @@ const Module5Section5_2 = () => {
                       </div>
                       
                       <div className="bg-red-50 dark:bg-red-900/20 p-2 sm:p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2 text-xs sm:text-sm">Poor Record Keeping</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2 text-xs sm:text-sm">Poor Record Keeping</p>
                         <ul className="text-xs sm:text-xs sm:text-sm text-white list-disc ml-3 sm:ml-4 space-y-1">
                           <li>Forgetting instructions due to lack of notes</li>
                           <li>Relying only on memory for complex tasks</li>
@@ -624,7 +624,7 @@ const Module5Section5_2 = () => {
                     </div>
 
                     <div className="bg-red-50 dark:bg-red-900/20 p-2 sm:p-3 rounded border border-red-200 dark:border-red-800">
-                      <p className="font-medium text-red-700 dark:text-elec-yellow mb-2 text-xs sm:text-sm">Trade Conflicts</p>
+                      <p className="font-medium text-red-700 text-elec-yellow mb-2 text-xs sm:text-sm">Trade Conflicts</p>
                       <p className="text-xs sm:text-xs sm:text-sm text-white">
                         Misunderstandings between trades leading to conflicts, delays, and tension on site. These often arise from unclear communication about workspace sharing, installation sequences, or responsibilities.
                       </p>
@@ -641,7 +641,7 @@ const Module5Section5_2 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           <div className="space-y-4">
             {practicalGuidance.map((step, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+              <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
                 <div className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">
                   {index + 1}
                 </div>

@@ -227,9 +227,9 @@ const Section3_4 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Shield className="h-8 w-8 text-emerald-400" />
+            <Shield className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 3.4
               </span>
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
@@ -246,8 +246,8 @@ const Section3_4 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Hierarchy:</strong> Ranks controls from most to least effective protection.</li>
                 <li><strong>Elimination:</strong> Most effective - completely removes the hazard.</li>
@@ -256,8 +256,8 @@ const Section3_4 = () => {
                 <li><strong>Combination:</strong> Multiple controls together provide best protection.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> High-risk tasks, over-reliance on PPE, new installations, live work requirements.</li>
                 <li><strong>Use:</strong> Risk assessment planning, method statement creation, safety briefings.</li>
@@ -273,37 +273,37 @@ const Section3_4 = () => {
           <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand what control measures are and their purpose in electrical safety</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Know the five levels of the hierarchy of control and their effectiveness</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply the hierarchy to electrical safety scenarios and risk management</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand why PPE is the last line of defence in protection</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Select appropriate combinations of control measures for different situations</span>
             </li>
           </ul>
         </Card>
 
         {/* What Are Control Measures */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">What Are Control Measures?</h2>
           </div>
           
           <div className="space-y-4">
-            <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
               <p className="text-blue-800 dark:text-blue-200 font-medium">
                 A control measure is anything you do to remove or reduce a hazard. The right control measures 
                 reduce the likelihood of an accident and/or reduce the severity if something does go wrong.
@@ -319,7 +319,7 @@ const Section3_4 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-emerald-400" />
+                  <Zap className="h-4 w-4 text-elec-yellow" />
                   Electrical Safety Examples
                 </h4>
                 <ul className="text-sm space-y-1">
@@ -331,7 +331,7 @@ const Section3_4 = () => {
               </div>
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-emerald-400" />
+                  <Shield className="h-4 w-4 text-elec-yellow" />
                   Physical Protection Examples
                 </h4>
                 <ul className="text-sm space-y-1">
@@ -354,9 +354,9 @@ const Section3_4 = () => {
         />
 
         {/* The Hierarchy of Control */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">The Hierarchy of Control</h2>
           </div>
           
@@ -387,11 +387,11 @@ const Section3_4 = () => {
               </div>
 
               {/* Level 2 - Substitution */}
-              <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 border-l-4 border-emerald-500 rounded-lg p-6">
+              <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 border-l-4 border-elec-yellow rounded-lg p-6">
                 <div className="flex items-start gap-4">
-                  <span className="bg-emerald-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">2</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">2</span>
                   <div className="flex-1">
-                    <h4 className="text-lg sm:text-xl font-semibold text-blue-700 dark:text-emerald-400 mb-2">Substitute the Hazard</h4>
+                    <h4 className="text-lg sm:text-xl font-semibold text-blue-700 dark:text-elec-yellow mb-2">Substitute the Hazard</h4>
                     <p className="text-blue-800 dark:text-blue-200 mb-3">Replace the hazard with something less dangerous.</p>
                     <div className="bg-blue-200 dark:bg-blue-800/50 rounded-lg p-3">
                       <p className="text-sm text-blue-800 dark:text-blue-200">
@@ -404,9 +404,9 @@ const Section3_4 = () => {
               </div>
 
               {/* Level 3 - Engineering Controls */}
-              <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-950/30 dark:to-yellow-900/30 border-l-4 border-emerald-500 rounded-lg p-6">
+              <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-950/30 dark:to-yellow-900/30 border-l-4 border-elec-yellow rounded-lg p-6">
                 <div className="flex items-start gap-4">
-                  <span className="bg-emerald-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">3</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">3</span>
                   <div className="flex-1">
                     <h4 className="text-lg sm:text-xl font-semibold text-yellow-700 dark:text-yellow-300 mb-2">Engineering Controls</h4>
                     <p className="text-yellow-800 dark:text-yellow-200 mb-3">Use physical measures to prevent access to the hazard.</p>
@@ -425,7 +425,7 @@ const Section3_4 = () => {
                 <div className="flex items-start gap-4">
                   <span className="bg-orange-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">4</span>
                   <div className="flex-1">
-                    <h4 className="text-lg sm:text-xl font-semibold text-orange-700 dark:text-emerald-400 mb-2">Administrative Controls</h4>
+                    <h4 className="text-lg sm:text-xl font-semibold text-orange-700 dark:text-elec-yellow mb-2">Administrative Controls</h4>
                     <p className="text-orange-800 dark:text-orange-200 mb-3">Use procedures, training, and policies to control behaviour.</p>
                     <div className="bg-orange-200 dark:bg-orange-800/50 rounded-lg p-3">
                       <p className="text-sm text-orange-800 dark:text-orange-200">
@@ -442,7 +442,7 @@ const Section3_4 = () => {
                 <div className="flex items-start gap-4">
                   <span className="bg-red-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">5</span>
                   <div className="flex-1">
-                    <h4 className="text-lg sm:text-xl font-semibold text-red-700 dark:text-emerald-400 mb-2">Personal Protective Equipment (PPE)</h4>
+                    <h4 className="text-lg sm:text-xl font-semibold text-red-700 dark:text-elec-yellow mb-2">Personal Protective Equipment (PPE)</h4>
                     <p className="text-red-800 dark:text-red-200 mb-3">Protect the individual worker from harm.</p>
                     <div className="bg-red-200 dark:bg-red-800/50 rounded-lg p-3">
                       <p className="text-sm text-red-800 dark:text-red-200">
@@ -497,7 +497,7 @@ const Section3_4 = () => {
               </div>
               
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                <h4 className="font-semibold mb-2 text-red-700 dark:text-emerald-400">Least Effective (Bottom Level)</h4>
+                <h4 className="font-semibold mb-2 text-red-700 dark:text-elec-yellow">Least Effective (Bottom Level)</h4>
                 <ul className="text-sm space-y-1">
                   <li>• Hazard remains present</li>
                   <li>• Relies entirely on individual</li>
@@ -537,14 +537,14 @@ const Section3_4 = () => {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
                   <div>
-                    <p className="font-medium text-blue-700 dark:text-emerald-400">Substitution:</p>
+                    <p className="font-medium text-blue-700 dark:text-elec-yellow">Substitution:</p>
                     <p className="text-sm">Use 110V tools instead of 230V where possible.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
                   <div>
                     <p className="font-medium text-yellow-700 dark:text-yellow-300">Engineering:</p>
                     <p className="text-sm">Install temporary barriers around the work area.</p>
@@ -553,14 +553,14 @@ const Section3_4 = () => {
                 <div className="flex items-start gap-3">
                   <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
                   <div>
-                    <p className="font-medium text-orange-700 dark:text-emerald-400">Administrative:</p>
+                    <p className="font-medium text-orange-700 dark:text-elec-yellow">Administrative:</p>
                     <p className="text-sm">Use a permit-to-work system and brief all workers.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">5</span>
                   <div>
-                    <p className="font-medium text-red-700 dark:text-emerald-400">PPE:</p>
+                    <p className="font-medium text-red-700 dark:text-elec-yellow">PPE:</p>
                     <p className="text-sm">Provide safety glasses, hard hats, and insulated footwear.</p>
                   </div>
                 </div>
@@ -583,7 +583,7 @@ const Section3_4 = () => {
             </p>
             
             <div className="bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-              <h4 className="font-semibold mb-2 text-purple-700 dark:text-emerald-400">Example: Multiple Controls Working Together</h4>
+              <h4 className="font-semibold mb-2 text-purple-700 dark:text-elec-yellow">Example: Multiple Controls Working Together</h4>
               <p className="text-sm text-purple-800 dark:text-purple-200 mb-2">
                 For electrical panel maintenance:
               </p>
@@ -603,7 +603,7 @@ const Section3_4 = () => {
           <div className="flex items-center gap-3 mb-4">
             <div className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">6</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
-              <AlertTriangle className="h-6 w-6 text-emerald-400" />
+              <AlertTriangle className="h-6 w-6 text-elec-yellow" />
               Common Mistakes in Control Selection
             </h2>
           </div>
@@ -611,7 +611,7 @@ const Section3_4 = () => {
           <div className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                <h4 className="font-semibold mb-2 text-red-700 dark:text-emerald-400">What NOT to Do</h4>
+                <h4 className="font-semibold mb-2 text-red-700 dark:text-elec-yellow">What NOT to Do</h4>
                 <ul className="text-sm space-y-1">
                   <li>• Jumping straight to PPE without considering other options</li>
                   <li>• Relying on a single control measure</li>
@@ -638,7 +638,7 @@ const Section3_4 = () => {
         {/* FAQs */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-            <Lightbulb className="h-6 w-6 text-emerald-400" />
+            <Lightbulb className="h-6 w-6 text-elec-yellow" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-6">
@@ -654,7 +654,7 @@ const Section3_4 = () => {
         {/* Pocket Card */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Shield className="h-6 w-6 text-emerald-400" />
+            <Shield className="h-6 w-6 text-elec-yellow" />
             Hierarchy of Control - Quick Reference
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
@@ -666,11 +666,11 @@ const Section3_4 = () => {
                   <span>Elimination - Remove the hazard</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">2</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">2</span>
                   <span>Substitution - Use safer alternative</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">3</span>
+                  <span className="bg-elec-yellow text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">3</span>
                   <span>Engineering - Physical barriers/guards</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -700,7 +700,7 @@ const Section3_4 = () => {
         {/* Quiz */}
         <div className="mb-8">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-            <Award className="h-6 w-6 text-emerald-400" />
+            <Award className="h-6 w-6 text-elec-yellow" />
             Knowledge Check
           </h2>
           <Quiz questions={quizQuestions} />

@@ -318,7 +318,7 @@ const Module4Section1_4 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{phase.phase}</p>
+                      <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">{phase.phase}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">{phase.description}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Activities:</strong> {phase.activities}
@@ -411,7 +411,7 @@ const Module4Section1_4 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{aspect.trade}</p>
+                      <p className="font-semibold text-purple-600 text-elec-yellow mb-1">{aspect.trade}</p>
                       <p className="text-xs sm:text-sm text-white mb-2"><strong>Activities:</strong> {aspect.activities}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Coordination needs:</strong> {aspect.coordinationNeeds}
@@ -456,7 +456,7 @@ const Module4Section1_4 = () => {
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">{tool.tool}</p>
+                      <p className="font-semibold text-orange-600 text-elec-yellow mb-1">{tool.tool}</p>
                       <p className="text-xs sm:text-sm text-white mb-2">{tool.purpose}</p>
                       <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Applications:</strong> {tool.applications}

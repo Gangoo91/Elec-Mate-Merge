@@ -329,8 +329,8 @@ const Module2Section6_6: React.FC = () => {
             <h3 className="font-medium text-white mb-2">Advanced monitoring and control techniques</h3>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-blue-700 dark:text-elec-yellow">Data analysis and interpretation</h4>
+              <div className="rounded-lg p-4 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/10 border border-border/30">
+                <h4 className="font-medium mb-2 text-blue-700 text-elec-yellow">Data analysis and interpretation</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li><strong>Baseload identification:</strong> Measure overnight consumption to find always-on loads</li>
                   <li><strong>Peak demand analysis:</strong> Identify when highest power is used and potential for load shifting</li>
@@ -339,8 +339,8 @@ const Module2Section6_6: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-elec-yellow/30">
-                <h4 className="font-medium mb-2 text-emerald-700 dark:text-elec-yellow">Smart home integration</h4>
+              <div className="rounded-lg p-4 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/10 border border-elec-yellow/30">
+                <h4 className="font-medium mb-2 text-elec-yellow text-elec-yellow">Smart home integration</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li><strong>Home automation platforms:</strong> Integrate multiple smart devices for coordinated control</li>
                   <li><strong>Voice control:</strong> Use assistants for manual override of automated systems</li>
@@ -393,7 +393,7 @@ const Module2Section6_6: React.FC = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 to-orange-500/10 border-2 border-elec-yellow/30">
+        <Card className="mb-8 p-6 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10 border-2 border-elec-yellow/30">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Receipt className="w-5 h-5 text-elec-yellow" />
             Energy Monitoring & Smart Tech - Pocket Guide
@@ -413,7 +413,7 @@ const Module2Section6_6: React.FC = () => {
               </div>
 
               <div className="bg-[#121212]/50 rounded-lg p-3 border border-white/10">
-                <h4 className="font-semibold mb-2 text-emerald-600">Monitoring Methods</h4>
+                <h4 className="font-semibold mb-2 text-elec-yellow">Monitoring Methods</h4>
                 <ul className="space-y-1 text-xs">
                   <li>• Plug-in monitors: portable appliances only</li>
                   <li>• CT clamps: single live conductor, correct direction</li>

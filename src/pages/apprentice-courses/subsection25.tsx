@@ -142,9 +142,9 @@ const Section6_3 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Title block */}
         <div className="flex items-start gap-4 mb-8">
-          <Heart className="h-8 w-8 text-emerald-400 mt-2" />
+          <Heart className="h-8 w-8 text-elec-yellow mt-2" />
           <div className="flex-1">
-            <div className="inline-flex items-center px-3 py-1 bg-emerald-500 text-black rounded-full text-sm font-semibold mb-4">
+            <div className="inline-flex items-center px-3 py-1 bg-elec-yellow text-black rounded-full text-sm font-semibold mb-4">
               Module 6.3
             </div>
             <h1 className="text-4xl font-bold text-white mb-4">
@@ -167,11 +167,11 @@ const Section6_3 = () => {
                 For electrical workers, knowing how to respond safely to electric shock and arc burns is critical.
               </p>
             </div>
-            <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
-              <h3 className="text-emerald-400 font-semibold mb-2 text-sm">Spot it / Use it</h3>
+            <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
+              <h3 className="text-elec-yellow font-semibold mb-2 text-sm">Spot it / Use it</h3>
               <div className="space-y-2 text-gray-300 text-sm">
-                <p><span className="text-emerald-400">Spot:</span> First aid box location, trained first aider names, emergency contact numbers</p>
-                <p><span className="text-emerald-400">Use:</span> Isolate power first, assess safety, provide aid within your training, call 999 when needed</p>
+                <p><span className="text-elec-yellow">Spot:</span> First aid box location, trained first aider names, emergency contact numbers</p>
+                <p><span className="text-elec-yellow">Use:</span> Isolate power first, assess safety, provide aid within your training, call 999 when needed</p>
               </div>
             </div>
           </div>
@@ -182,19 +182,19 @@ const Section6_3 = () => {
           <h2 className="text-2xl font-bold text-white mb-6">Learning Outcomes</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Understand legal first aid requirements on electrical sites</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Identify site provision: kits, appointed person vs trained first aider</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Respond to incidents safely with electrical-specific knowledge</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Record incidents and know when RIDDOR applies</span>
             </div>
           </div>
@@ -330,9 +330,9 @@ const Section6_3 = () => {
         </div>
 
         {/* Section 4 */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-start gap-4 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">
               4
             </div>
             <div className="flex-1">
@@ -429,27 +429,27 @@ const Section6_3 = () => {
               <h4 className="font-semibold text-white mb-3">What happened next:</h4>
               <ul className="space-y-2 text-gray-300 text-sm">
                 <li className="flex gap-2">
-                  <span className="text-emerald-400">•</span>
+                  <span className="text-elec-yellow">•</span>
                   Colleague immediately isolated the power supply to ensure scene safety
                 </li>
                 <li className="flex gap-2">
-                  <span className="text-emerald-400">•</span>
+                  <span className="text-elec-yellow">•</span>
                   Checked victim was conscious and breathing normally
                 </li>
                 <li className="flex gap-2">
-                  <span className="text-emerald-400">•</span>
+                  <span className="text-elec-yellow">•</span>
                   Cooled burns with clean running water for 20 minutes
                 </li>
                 <li className="flex gap-2">
-                  <span className="text-emerald-400">•</span>
+                  <span className="text-elec-yellow">•</span>
                   Called 999 providing location, nature of injury, and condition
                 </li>
                 <li className="flex gap-2">
-                  <span className="text-emerald-400">•</span>
+                  <span className="text-elec-yellow">•</span>
                   Applied sterile dressings from first aid kit while waiting for ambulance
                 </li>
                 <li className="flex gap-2">
-                  <span className="text-emerald-400">•</span>
+                  <span className="text-elec-yellow">•</span>
                   Incident recorded in accident book and reported under RIDDOR (over-7-day injury)
                 </li>
               </ul>
@@ -470,7 +470,7 @@ const Section6_3 = () => {
         <Card className="p-6 bg-card border-border/20 mb-8">
           <h2 className="text-2xl font-bold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">Do we always need a trained first aider or is an appointed person enough?</h3>
               <p className="text-gray-300 text-sm">
                 It depends on site size and risk. Small, low-risk sites may only need an appointed person. 
@@ -479,7 +479,7 @@ const Section6_3 = () => {
               </p>
             </div>
             
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">Are medications allowed in first aid kits?</h3>
               <p className="text-gray-300 text-sm">
                 No. Standard workplace first aid kits cannot contain medications like paracetamol, aspirin, 
@@ -488,7 +488,7 @@ const Section6_3 = () => {
               </p>
             </div>
             
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">How often should first aid kits be checked and restocked?</h3>
               <p className="text-gray-300 text-sm">
                 Monthly checks are recommended to ensure contents are in date, undamaged, and complete. 
@@ -497,7 +497,7 @@ const Section6_3 = () => {
               </p>
             </div>
             
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">Where should first aid information be displayed?</h3>
               <p className="text-gray-300 text-sm">
                 Clear signage must show the location of first aid equipment and the names of trained personnel. 
@@ -506,7 +506,7 @@ const Section6_3 = () => {
               </p>
             </div>
             
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">Who can use an AED (defibrillator) on site? Is training required?</h3>
               <p className="text-gray-300 text-sm">
                 Modern AEDs are designed for use by anyone - they provide voice prompts and won't deliver 
@@ -515,7 +515,7 @@ const Section6_3 = () => {
               </p>
             </div>
             
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">How do first aid records relate to RIDDOR reporting?</h3>
               <p className="text-gray-300 text-sm">
                 All incidents must be recorded in the accident book. RIDDOR applies to serious injuries, 
@@ -535,23 +535,23 @@ const Section6_3 = () => {
               site's arrangements, understand electrical-specific risks, and be prepared to respond safely in emergencies.
             </p>
             
-            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-              <h3 className="text-emerald-400 font-semibold mb-3">Key Takeaways</h3>
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
+              <h3 className="text-elec-yellow font-semibold mb-3">Key Takeaways</h3>
               <ul className="space-y-2 text-gray-300 text-sm">
                 <li className="flex gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Know your site's first aid arrangements - where kits are and who's trained
                 </li>
                 <li className="flex gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Electrical emergencies require power isolation before providing aid
                 </li>
                 <li className="flex gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Quick, appropriate response prevents complications and saves lives
                 </li>
                 <li className="flex gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   All incidents must be recorded and serious ones reported under RIDDOR
                 </li>
               </ul>

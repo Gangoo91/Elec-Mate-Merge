@@ -481,7 +481,7 @@ const Module3Section1_3: React.FC = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-world scenario: Manufacturing Plant Upgrade</h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
-            <div className="flex items-start gap-3 border-l-4 border-emerald-400 p-4 rounded">
+            <div className="flex items-start gap-3 border-l-4 border-elec-yellow p-4 rounded">
               <Factory className="w-5 h-5 text-elec-yellow mt-0.5" />
               <div>
                 <p className="font-medium mb-2">The Challenge</p>

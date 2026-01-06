@@ -193,7 +193,7 @@ const Section2_5: React.FC = () => {
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 2.5
             </Badge>
@@ -210,8 +210,8 @@ const Section2_5: React.FC = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Slip/Trip Risks:</strong> Wet surfaces, uneven floors, cables, poor lighting are major hazards.</li>
                 <li><strong>Manual Handling:</strong> Use TILE method - Task, Individual, Load, Environment assessment.</li>
@@ -219,8 +219,8 @@ const Section2_5: React.FC = () => {
                 <li>Poor practices lead to musculoskeletal injuries and fall accidents.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Wet floors, trailing cables, poor lighting, heavy equipment, cluttered walkways.</li>
                 <li><strong>Use:</strong> TILE assessment, lifting aids, proper footwear, team lifts for heavy items.</li>
@@ -492,7 +492,7 @@ const Section2_5: React.FC = () => {
             Tools and Equipment
           </h2>
           <div className="grid md:grid-cols-2 gap-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-4 bg-emerald-500/5 border border-emerald-500/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 border border-elec-yellow/30">
               <p className="font-medium mb-2">Manual Handling Aids</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Trolleys and sack trucks for heavy equipment</li>
@@ -501,7 +501,7 @@ const Section2_5: React.FC = () => {
                 <li>Team lifting straps for coordinated lifts</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-emerald-500/5 border border-emerald-500/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 border border-elec-yellow/30">
               <p className="font-medium mb-2">Safety Equipment</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Non-slip safety footwear with good sole grip</li>
@@ -520,7 +520,7 @@ const Section2_5: React.FC = () => {
             Industry Standards & Compliance
           </h2>
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-4 bg-emerald-500/5 border border-emerald-500/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 border border-elec-yellow/30">
               <p className="font-medium mb-2">Manual Handling Operations Regulations 1992</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Avoid manual handling where possible</li>
@@ -529,7 +529,7 @@ const Section2_5: React.FC = () => {
                 <li>Provide training and information</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-emerald-500/5 border border-emerald-500/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 border border-elec-yellow/30">
               <p className="font-medium mb-2">Health and Safety at Work Act 1974</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Employer duty of care</li>
@@ -538,7 +538,7 @@ const Section2_5: React.FC = () => {
                 <li>Worker cooperation requirements</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-emerald-500/5 border border-emerald-500/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 border border-elec-yellow/30">
               <p className="font-medium mb-2">Workplace (Health, Safety and Welfare) Regulations 1992</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Adequate lighting requirements</li>
@@ -615,7 +615,7 @@ const Section2_5: React.FC = () => {
             Summary
           </h2>
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-4 bg-emerald-500/5 border border-emerald-500/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 border border-elec-yellow/30">
               <p className="font-medium mb-2">Risk Identification</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Slip/trip hazards are the most common workplace accidents</li>
@@ -624,7 +624,7 @@ const Section2_5: React.FC = () => {
                 <li>Environmental factors significantly affect safety</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-emerald-500/5 border border-emerald-500/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 border border-elec-yellow/30">
               <p className="font-medium mb-2">TILE Assessment</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Task: What, how often, how far</li>
@@ -633,7 +633,7 @@ const Section2_5: React.FC = () => {
                 <li>Environment: Space, floors, lighting</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-emerald-500/5 border border-emerald-500/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 border border-elec-yellow/30">
               <p className="font-medium mb-2">Prevention Measures</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Good housekeeping and cable management</li>
@@ -663,23 +663,23 @@ const Section2_5: React.FC = () => {
               </ul>
             </div>
             <div className="space-y-3">
-              <h3 className="font-medium text-emerald-400 flex items-center gap-2">
+              <h3 className="font-medium text-elec-yellow flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" />
                 Don'ts
               </h3>
               <ul className="space-y-2">
-                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" /><span>Never lift alone if load exceeds guidelines</span></li>
-                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" /><span>Don't leave cables across walkways</span></li>
-                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" /><span>Avoid rushing or taking shortcuts</span></li>
-                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" /><span>Don't ignore spills or trip hazards</span></li>
-                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" /><span>Never compromise on adequate lighting</span></li>
+                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" /><span>Never lift alone if load exceeds guidelines</span></li>
+                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" /><span>Don't leave cables across walkways</span></li>
+                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" /><span>Avoid rushing or taking shortcuts</span></li>
+                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" /><span>Don't ignore spills or trip hazards</span></li>
+                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" /><span>Never compromise on adequate lighting</span></li>
               </ul>
             </div>
           </div>
         </Card>
 
         {/* Quick Reference Card */}
-        <Card className="mb-8 p-6 bg-emerald-500/5 border border-emerald-500/30">
+        <Card className="mb-8 p-6 bg-elec-yellow/5 border border-elec-yellow/30">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Reference Card</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
             <div>

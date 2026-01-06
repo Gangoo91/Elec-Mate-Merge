@@ -546,7 +546,7 @@ const Module2Section1_2 = () => {
             </div>
 
             <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-              <p className="font-semibold text-emerald-600 mb-2">This shows how V, I, R knowledge helps you:</p>
+              <p className="font-semibold text-elec-yellow mb-2">This shows how V, I, R knowledge helps you:</p>
               <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                 <li>Verify circuit safety through calculations</li>
                 <li>Identify potential problems before they cause issues</li>
@@ -586,7 +586,7 @@ const Module2Section1_2 = () => {
                 <p>The electrical pressure that drives current through circuits. UK mains = 230V.</p>
               </div>
               <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                <p className="font-bold text-emerald-600 mb-2">Current (I)</p>
+                <p className="font-bold text-elec-yellow mb-2">Current (I)</p>
                 <p>The flow of electrons through conductors. Measured in Amperes (A).</p>
               </div>
               <div className="bg-card border border-border/30 p-4 rounded-lg">

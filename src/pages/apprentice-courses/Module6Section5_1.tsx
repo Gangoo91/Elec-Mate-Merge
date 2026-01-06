@@ -236,7 +236,7 @@ const Module6Section5_1 = () => {
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
                   <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Why Insulation Resistance Testing is Essential</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Why Insulation Resistance Testing is Essential</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -283,7 +283,7 @@ const Module6Section5_1 = () => {
                       </p>
                       
                       <div className="bg-card border border-elec-yellow/20 rounded p-3">
-                        <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow">
+                        <p className="text-sm font-medium text-blue-700 text-elec-yellow">
                           It is not just a formality — it is a legal requirement under the Electricity at Work Regulations 1989 and a fundamental step in keeping people safe.
                         </p>
                       </div>
@@ -389,7 +389,7 @@ const Module6Section5_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Link to BS 7671 and Legal Requirements</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Link to BS 7671 and Legal Requirements</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -464,7 +464,7 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div className="bg-card border border-orange-500/20 rounded p-3">
-                        <p className="text-sm font-medium text-orange-700 dark:text-elec-yellow">
+                        <p className="text-sm font-medium text-orange-700 text-elec-yellow">
                           Carrying out and recording insulation resistance tests is a direct way of proving that these legal duties have been met and demonstrating due diligence in electrical safety.
                         </p>
                       </div>
@@ -490,7 +490,7 @@ const Module6Section5_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Consequences of Skipping IR Testing</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Consequences of Skipping IR Testing</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -572,7 +572,7 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div className="bg-card border border-red-500/20 rounded p-3">
-                        <p className="text-sm font-medium text-red-700 dark:text-elec-yellow">
+                        <p className="text-sm font-medium text-red-700 text-elec-yellow">
                           Electricians who neglect this essential test risk not only their own reputation and livelihood but also the safety and lives of those using the installation. There is no acceptable excuse for skipping IR testing.
                         </p>
                       </div>
@@ -628,7 +628,7 @@ const Module6Section5_1 = () => {
                 This led to nuisance tripping of protective devices and an eventual small fire in a ceiling void. When the incident was investigated, the absence of recorded test results meant the contractor could not demonstrate compliance. They were forced to pay for retesting and repairs, as well as facing criticism from the client.
               </p>
               <div className="mt-3 sm:mt-4 p-2 sm:p-3 border border-elec-yellow/20 rounded">
-                <p className="text-xs sm:text-sm font-medium text-emerald-700 dark:text-elec-yellow">
+                <p className="text-xs sm:text-sm font-medium text-elec-yellow text-elec-yellow">
                   ✅ Lesson: Carrying out and recording insulation resistance tests protects lives, property, and professional credibility.
                 </p>
               </div>

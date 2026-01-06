@@ -417,8 +417,8 @@ const Module3Section2_5: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-                <p className="font-medium text-emerald-200 mb-2">Support and structural calculations</p>
-                <ul className="list-disc pl-4 space-y-1 text-emerald-200">
+                <p className="font-medium text-elec-yellow mb-2">Support and structural calculations</p>
+                <ul className="list-disc pl-4 space-y-1 text-elec-yellow">
                   <li><strong>Support loading:</strong> Trunking weight + cable weight + 2.5 safety factor</li>
                   <li><strong>Underfloor spacing:</strong> 600mm centres for standard loads up to 50kg/m</li>
                   <li><strong>Dado spacing:</strong> 750mm centres with additional support at junctions</li>

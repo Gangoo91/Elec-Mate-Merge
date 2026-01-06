@@ -223,7 +223,7 @@ const Module4Section5_8 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Common Fault Categories and Symptoms</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Common Fault Categories and Symptoms</p>
                     <p className="text-base text-white mb-2"><strong>Loose connections:</strong> High resistance faults causing overheating and intermittent operation.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Symptoms: Flickering lights, intermittent power loss, burning smells, hot terminals</li>
@@ -282,7 +282,7 @@ const Module4Section5_8 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Systematic Analysis of Fault Causes</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Systematic Analysis of Fault Causes</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Poor workmanship factors:</strong> Human errors during installation affecting quality and safety.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Insufficient terminal tightening leading to high resistance connections</li>
@@ -341,7 +341,7 @@ const Module4Section5_8 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Professional Diagnostic Procedures</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Professional Diagnostic Procedures</p>
                     <p className="text-base text-white mb-2"><strong>Visual inspection methodology:</strong> Systematic examination for obvious defects and damage.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Look for burn marks, discolouration, or heat damage around connections</li>
@@ -450,7 +450,7 @@ const Module4Section5_8 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Systematic Prevention Methods</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Systematic Prevention Methods</p>
                     <p className="text-base text-white mb-2"><strong>Quality control procedures:</strong> Built-in checks to prevent faults reaching later stages.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Double-check all connections before progressing to next installation stage</li>

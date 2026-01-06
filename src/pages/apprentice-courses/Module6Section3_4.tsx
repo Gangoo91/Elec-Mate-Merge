@@ -248,7 +248,7 @@ const Module6Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Why Prove Dead?</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Why Prove Dead?</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -306,7 +306,7 @@ const Module6Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Safe Isolation Procedure (Step by Step)</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Safe Isolation Procedure (Step by Step)</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -458,7 +458,7 @@ const Module6Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Consequences of Skipping Proving Dead</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Consequences of Skipping Proving Dead</p>
                     
                     <div className="space-y-4">
                        <div>
@@ -684,11 +684,11 @@ const Module6Section3_4 = () => {
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-center">
             <div className="p-4 rounded-lg border border-red-500/20">
               <Shield className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
-              <p className="font-semibold text-red-600 dark:text-elec-yellow text-sm">Always lock off and label</p>
+              <p className="font-semibold text-red-600 text-elec-yellow text-sm">Always lock off and label</p>
             </div>
             <div className="p-4 rounded-lg border border-orange-500/20">
               <Eye className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
-              <p className="font-semibold text-orange-600 dark:text-elec-yellow text-sm">Use only two-pole testers</p>
+              <p className="font-semibold text-orange-600 text-elec-yellow text-sm">Use only two-pole testers</p>
             </div>
             <div className="p-4 rounded-lg border border-amber-500/20">
               <Zap className="w-8 h-8 text-amber-500 mx-auto mb-2" />
@@ -700,7 +700,7 @@ const Module6Section3_4 = () => {
             </div>
             <div className="p-4 rounded-lg border border-elec-yellow/20">
               <Target className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
-              <p className="font-semibold text-elec-yellow dark:text-elec-yellow text-sm">Never assume circuits are dead</p>
+              <p className="font-semibold text-elec-yellow text-elec-yellow text-sm">Never assume circuits are dead</p>
             </div>
           </div>
         </Card>

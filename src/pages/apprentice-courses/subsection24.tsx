@@ -147,9 +147,9 @@ const Section6_2 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Title Block */}
         <div className="flex items-start gap-6 mb-12">
-          <AlertTriangle className="h-8 w-8 text-emerald-400 flex-shrink-0 mt-2" />
+          <AlertTriangle className="h-8 w-8 text-elec-yellow flex-shrink-0 mt-2" />
           <div className="flex-1">
-            <div className="inline-flex items-center px-3 py-1 bg-emerald-500 text-black rounded-full text-sm font-semibold mb-4">
+            <div className="inline-flex items-center px-3 py-1 bg-elec-yellow text-black rounded-full text-sm font-semibold mb-4">
               Module 6.2
             </div>
             <h1 className="text-4xl font-bold text-white mb-4">
@@ -173,7 +173,7 @@ const Section6_2 = () => {
                 using the HSE online portal within specific timeframes.
               </p>
             </div>
-            <div className="p-4 bg-card border border-emerald-500/30 rounded-lg">
+            <div className="p-4 bg-card border border-elec-yellow/30 rounded-lg">
               <h3 className="text-lg font-semibold text-white mb-3">Spot it / Use it</h3>
               <p className="text-gray-300 text-sm leading-relaxed">
                 <strong>Spot:</strong> Unconsciousness from shock, fractures, burns needing hospital treatment, dangerous near-misses.
@@ -189,19 +189,19 @@ const Section6_2 = () => {
           <h2 className="text-2xl font-bold text-white mb-6">Learning Outcomes</h2>
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Understand what RIDDOR is and why it matters</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Know what must be reported (major injuries, over-7-day injuries, diseases, dangerous occurrences, gas incidents)</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Identify who reports and timeframes</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span className="text-gray-300">Apply good reporting and evidence-preservation practice</span>
             </div>
           </div>
@@ -312,9 +312,9 @@ const Section6_2 = () => {
         </div>
 
         {/* Section 4: Dangerous Occurrences and Practical Examples */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-start gap-4 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
               4
             </div>
             <h2 className="text-lg sm:text-xl font-semibold text-white">Dangerous Occurrences and Practical Examples</h2>
@@ -382,23 +382,23 @@ const Section6_2 = () => {
               <p className="text-gray-300 mb-3 font-medium">Good Reporting Practice:</p>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-gray-300 text-sm">Preserve the scene and gather evidence</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-gray-300 text-sm">Provide immediate first aid and ensure safety</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-gray-300 text-sm">Notify relevant parties promptly</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-gray-300 text-sm">Record facts only, avoid speculation</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-gray-300 text-sm">Maintain confidentiality and dignity</span>
                 </div>
               </div>
@@ -420,29 +420,29 @@ const Section6_2 = () => {
                 <h4 className="font-semibold text-white mb-3">What happened next:</h4>
                 <div className="space-y-2">
                   <div className="flex items-start gap-3">
-                    <div className="bg-emerald-500 w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="bg-elec-yellow w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
                     <span>Site supervisor immediately secured the area and ensured Sarah was unharmed</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="bg-emerald-500 w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="bg-elec-yellow w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
                     <span>Power was isolated to the affected panel</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="bg-emerald-500 w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="bg-elec-yellow w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
                     <span>Photos were taken of the damaged equipment and Sarah's cracked glasses</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="bg-emerald-500 w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="bg-elec-yellow w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
                     <span>RIDDOR report was filed immediately as a "dangerous occurrence"</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="bg-emerald-500 w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="bg-elec-yellow w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
                     <span>Investigation revealed the loose terminal and led to improved maintenance procedures</span>
                   </div>
                 </div>
               </div>
               
-              <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
+              <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">Why this was reportable:</h4>
                 <p>Even though Sarah wasn't injured, this was a "dangerous occurrence" under RIDDOR because the arc flash could have caused serious injury or death. The incident helped identify a maintenance issue that could affect other workers.</p>
               </div>
@@ -455,42 +455,42 @@ const Section6_2 = () => {
           <h2 className="text-2xl font-bold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-6">
             
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Do I need to report minor injuries that require first aid?</h3>
               <p className="text-gray-300 text-sm">
                 No, minor injuries requiring only basic first aid don't need RIDDOR reporting. However, if the injury prevents someone from working for 7+ consecutive days, it becomes reportable as an "over-7-day injury."
               </p>
             </div>
 
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">What if I'm not sure whether something is reportable?</h3>
               <p className="text-gray-300 text-sm">
                 When in doubt, consult the HSE guidance or speak to your safety officer. It's better to report something that turns out not to be required than to miss a reportable incident. The HSE provides detailed guidance and a helpline for clarification.
               </p>
             </div>
 
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Can I report incidents online outside normal working hours?</h3>
               <p className="text-gray-300 text-sm">
                 Yes, the HSE online reporting system is available 24/7. For fatal or major injuries, you should report immediately regardless of the time. Phone reporting is also available for urgent cases outside office hours.
               </p>
             </div>
 
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">What happens after I submit a RIDDOR report?</h3>
               <p className="text-gray-300 text-sm">
                 You'll receive a confirmation with a reference number. Keep this for your records. The HSE may follow up with questions or decide to investigate. In some cases, they may visit the site to examine the circumstances and ensure proper safety measures are in place.
               </p>
             </div>
 
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Do subcontractors need to report their own incidents?</h3>
               <p className="text-gray-300 text-sm">
                 Self-employed persons and subcontractors are responsible for reporting their own incidents. However, if you're the main contractor or responsible person, you should ensure they understand their obligations and assist with reporting if needed.
               </p>
             </div>
 
-            <div className="border-l-4 border-emerald-500 pl-4">
+            <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">What's the penalty for not reporting a RIDDOR incident?</h3>
               <p className="text-gray-300 text-sm">
                 Failure to report can result in prosecution, unlimited fines, and enforcement action. The HSE takes non-compliance seriously as it prevents them from monitoring workplace safety trends and taking appropriate action to protect workers.

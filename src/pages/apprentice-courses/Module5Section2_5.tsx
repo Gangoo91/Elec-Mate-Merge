@@ -254,7 +254,7 @@ const Module5Section2_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Distribution Board Expansion Planning</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Distribution Board Expansion Planning</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -342,8 +342,8 @@ const Module5Section2_5 = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Real-World Planning Example</p>
+                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
+                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Real-World Planning Example</p>
                         <p className="text-xs sm:text-sm text-white">
                           <strong>Scenario:</strong> New build house with gas boiler. Design should include: 32A way for future EV charger, 
                           40A way for heat pump conversion, 16A way for solar PV, plus 2 general spare ways. This ensures the 
@@ -494,7 +494,7 @@ const Module5Section2_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Building Regulations Part M Compliance</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Building Regulations Part M Compliance</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -541,7 +541,7 @@ const Module5Section2_5 = () => {
                         <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
                           <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                             <div>
-                              <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Residential (Category 1-3)</p>
+                              <p className="font-medium text-purple-700 text-elec-yellow mb-2">Residential (Category 1-3)</p>
                               <ul className="text-xs text-white space-y-1">
                                 <li>• Cat 1: Basic accessibility</li>
                                 <li>• Cat 2: Enhanced accessibility</li>
@@ -550,7 +550,7 @@ const Module5Section2_5 = () => {
                               </ul>
                             </div>
                             <div>
-                              <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Commercial Buildings</p>
+                              <p className="font-medium text-purple-700 text-elec-yellow mb-2">Commercial Buildings</p>
                               <ul className="text-xs text-white space-y-1">
                                 <li>• DDA compliance mandatory</li>
                                 <li>• Accessible route requirements</li>
@@ -559,7 +559,7 @@ const Module5Section2_5 = () => {
                               </ul>
                             </div>
                             <div>
-                              <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Public Buildings</p>
+                              <p className="font-medium text-purple-700 text-elec-yellow mb-2">Public Buildings</p>
                               <ul className="text-xs text-white space-y-1">
                                 <li>• Hearing loops integration</li>
                                 <li>• Visual alarm indicators</li>
@@ -583,7 +583,7 @@ const Module5Section2_5 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Accessibility Design Example</p>
+                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Accessibility Design Example</p>
                         <p className="text-xs sm:text-sm text-white">
                           <strong>Wheelchair Accessible Kitchen:</strong> Socket outlets at 150mm above worktop (avoiding 
                           splash zones), switches at 900-1000mm height, consumer unit relocated to accessible height 
@@ -693,7 +693,7 @@ const Module5Section2_5 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Regulatory Priority Hierarchy</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Regulatory Priority Hierarchy</p>
                         <p className="text-xs sm:text-sm text-white">
                           1. <strong>Safety first:</strong> BS 7671 safety requirements cannot be compromised<br/>
                           2. <strong>Accessibility second:</strong> Part M requirements where they do not conflict with safety<br/>
@@ -734,15 +734,15 @@ const Module5Section2_5 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-8 p-6 bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
+        <Card className="mb-8 p-6 bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
           <div className="flex items-center gap-3 mb-4">
             <Lightbulb className="w-6 h-6 text-elec-yellow" />
             <h2 className="text-lg sm:text-xl font-semibold text-blue-800 dark:text-blue-200">Practical Guidance</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-3">Expansion Planning Checklist:</p>
-              <ul className="space-y-2 text-blue-700 dark:text-elec-yellow">
+              <p className="font-medium text-blue-700 text-elec-yellow mb-3">Expansion Planning Checklist:</p>
+              <ul className="space-y-2 text-blue-700 text-elec-yellow">
                 <li>• Leave at least 20–25% spare capacity in distribution boards</li>
                 <li>• Plan for EV charging (32A), heat pumps (40A+), solar PV (16-32A)</li>
                 <li>• Size main supply cable for 120% expected maximum demand</li>
@@ -751,8 +751,8 @@ const Module5Section2_5 = () => {
               </ul>
             </div>
             <div>
-              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-3">Maintenance & Accessibility:</p>
-              <ul className="space-y-2 text-blue-700 dark:text-elec-yellow">
+              <p className="font-medium text-blue-700 text-elec-yellow mb-3">Maintenance & Accessibility:</p>
+              <ul className="space-y-2 text-blue-700 text-elec-yellow">
                 <li>• Avoid fully filling trunking — allow 30–40% spare space</li>
                 <li>• Install local isolators within 3m of fixed equipment</li>
                 <li>• Follow Part M socket heights: 450-1200mm above FFL</li>
@@ -962,9 +962,9 @@ const Module5Section2_5 = () => {
             {/* Quick Reference Tables */}
             <div className="mt-6 pt-4 border-t border-slate-300 dark:border-slate-600">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-emerald-50 dark:bg-blue-950/30 p-4 rounded border border-blue-200 dark:border-blue-800">
+                <div className="bg-elec-yellow/5 dark:bg-blue-950/30 p-4 rounded border border-blue-200 dark:border-blue-800">
                   <h5 className="font-semibold text-sm text-blue-800 dark:text-blue-200 mb-2">Key BS 7671 Regulations</h5>
-                  <div className="text-xs text-blue-700 dark:text-elec-yellow space-y-1">
+                  <div className="text-xs text-blue-700 text-elec-yellow space-y-1">
                     <p><strong>132.9:</strong> Safe operation, maintenance & repair</p>
                     <p><strong>132.12:</strong> Accessibility for operation</p>
                     <p><strong>314.1:</strong> Circuit arrangement for maintenance</p>
@@ -974,7 +974,7 @@ const Module5Section2_5 = () => {
                 </div>
                 <div className="bg-purple-50 dark:bg-purple-950/30 p-4 rounded border border-purple-200 dark:border-purple-800">
                   <h5 className="font-semibold text-sm text-purple-800 dark:text-purple-200 mb-2">Building Categories (Part M)</h5>
-                  <div className="text-xs text-purple-700 dark:text-elec-yellow space-y-1">
+                  <div className="text-xs text-purple-700 text-elec-yellow space-y-1">
                     <p><strong>Category 1:</strong> Basic accessibility (visitable)</p>
                     <p><strong>Category 2:</strong> Enhanced accessibility (adaptable)</p>
                     <p><strong>Category 3:</strong> Wheelchair accessible</p>

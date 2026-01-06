@@ -234,7 +234,7 @@ const Module6Section1_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Fundamental Knowledge Requirements</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Fundamental Knowledge Requirements</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -287,7 +287,7 @@ const Module6Section1_5 = () => {
                       </div>
 
                       <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded border border-yellow-200 dark:border-yellow-800">
-                        <p className="font-medium text-yellow-700 dark:text-elec-yellow mb-2">Learning Expectation</p>
+                        <p className="font-medium text-yellow-700 text-elec-yellow mb-2">Learning Expectation</p>
                         <p className="text-xs sm:text-sm text-white">
                           At Level 2, you're expected to understand the 'why' behind each procedure, not just memorise steps. This conceptual understanding enables you to assist effectively and builds the foundation for independent competence at Level 3.
                         </p>
@@ -298,8 +298,8 @@ const Module6Section1_5 = () => {
               </div>
             </div>
 
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mt-4">
-              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Knowledge Assessment Methods</p>
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mt-4">
+              <p className="font-medium text-blue-700 text-elec-yellow mb-2">Knowledge Assessment Methods</p>
               <p className="text-xs sm:text-sm text-white">
                 Level 2 knowledge is typically assessed through written examinations, practical observations, and portfolio evidence. You should be able to explain procedures, identify test equipment, and describe safety requirements even if you cannot yet perform all tasks independently.
               </p>
@@ -327,7 +327,7 @@ const Module6Section1_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Supervised Practical Skills</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Supervised Practical Skills</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -510,7 +510,7 @@ const Module6Section1_5 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Qualification Progression Pathway</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Qualification Progression Pathway</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -648,7 +648,7 @@ const Module6Section1_5 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="border-l-4 border-l-elec-yellow pl-4 bg-emerald-50/50 dark:bg-emerald-950/20 py-3">
+            <div className="border-l-4 border-l-elec-yellow pl-4 bg-elec-yellow/5/50 dark:bg-elec-yellow/10 py-3">
               <p className="font-medium text-white mb-2">Q: Can I practice testing on my own time to improve my skills?</p>
               <p className="text-xs sm:text-sm text-white">A: Only with appropriate supervision and safety measures. Never practice on live circuits or without qualified oversight. Use training boards and de-energised systems only.</p>
             </div>
@@ -675,8 +675,8 @@ const Module6Section1_5 = () => {
           </h2>
           <div className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Learning Best Practice</p>
+              <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Learning Best Practice</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>• Always ask for clarification before carrying out testing tasks</li>
                   <li>• Focus on learning procedures and understanding why each test is carried out</li>

@@ -236,7 +236,7 @@ const Module6Section2_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Equipment Condition Checks</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Equipment Condition Checks</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -296,7 +296,7 @@ const Module6Section2_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Cable and Conductor Inspection</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Cable and Conductor Inspection</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -410,7 +410,7 @@ const Module6Section2_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Earthing and Bonding Systems</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Earthing and Bonding Systems</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -480,7 +480,7 @@ const Module6Section2_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Safe Zone Compliance</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Safe Zone Compliance</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -557,7 +557,7 @@ const Module6Section2_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Workmanship Quality Indicators</p>
+                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Workmanship Quality Indicators</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -596,7 +596,7 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Professional Standards</p>
+                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Professional Standards</p>
                         <p className="text-xs sm:text-sm text-white">
                           Poor workmanship not only affects appearance but can lead to safety hazards, premature failure, and non-compliance with standards. Document all workmanship issues found during inspection.
                         </p>
@@ -755,8 +755,8 @@ const Module6Section2_1 = () => {
               </ul>
             </div>
 
-            <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-              <h4 className="font-semibold text-blue-700 dark:text-elec-yellow mb-2">Inspector Competence and Responsibility</h4>
+            <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+              <h4 className="font-semibold text-blue-700 text-elec-yellow mb-2">Inspector Competence and Responsibility</h4>
               <p className="text-xs sm:text-sm text-white mb-2">
                 Visual inspection requires significant knowledge and experience. The inspector must be competent to:
               </p>
@@ -861,7 +861,7 @@ const Module6Section2_1 = () => {
             </div>
 
             <div className="p-4 border-l-4 border-red-500 ">
-              <h3 className="font-semibold text-red-700 dark:text-elec-yellow mb-2">Case Study 2: Bathroom Bonding Failure</h3>
+              <h3 className="font-semibold text-red-700 text-elec-yellow mb-2">Case Study 2: Bathroom Bonding Failure</h3>
               <p className="text-base text-white mb-2">
                 <strong>Situation:</strong> A bathroom renovation inspection revealed beautiful new fittings but missing supplementary bonding connections.
               </p>
@@ -877,7 +877,7 @@ const Module6Section2_1 = () => {
             </div>
 
             <div className="p-4 border-l-4 border-elec-yellow ">
-              <h3 className="font-semibold text-blue-700 dark:text-elec-yellow mb-2">Case Study 3: Cable in Unsafe Zone</h3>
+              <h3 className="font-semibold text-blue-700 text-elec-yellow mb-2">Case Study 3: Cable in Unsafe Zone</h3>
               <p className="text-base text-white mb-2">
                 <strong>Situation:</strong> Office renovation work had required new socket outlets, but cable routing appeared to violate safe zone requirements.
               </p>

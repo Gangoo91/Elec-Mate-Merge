@@ -138,9 +138,9 @@ const Section4_2 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Shield className="h-8 w-8 text-emerald-400" />
+            <Shield className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 4.2
               </span>
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
@@ -157,8 +157,8 @@ const Section4_2 = () => {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Selection:</strong> Choose PPE based on risk assessment and task requirements.</li>
                 <li><strong>Inspection:</strong> Before each use plus formal periodic checks.</li>
@@ -167,8 +167,8 @@ const Section4_2 = () => {
                 <li><strong>Training:</strong> Ensure all users understand proper use and care.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Worn PPE, wrong protection level, poor storage, missed inspections.</li>
                 <li><strong>Use:</strong> PPE assessments, maintenance schedules, training records.</li>
@@ -184,37 +184,37 @@ const Section4_2 = () => {
           <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Select appropriate PPE based on risk assessment and task analysis</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand inspection requirements and procedures for different PPE types</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Know when PPE should be replaced and disposal procedures</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand employer and employee responsibilities for PPE management</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply proper maintenance and storage procedures to extend PPE life</span>
             </li>
           </ul>
         </Card>
 
         {/* PPE Selection Criteria */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">PPE Selection Criteria</h2>
           </div>
           
           <div className="space-y-6">
-            <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
               <p className="font-medium text-blue-800 dark:text-blue-200 mb-3">
                 Selecting the right PPE requires careful analysis of the work environment, tasks, and potential hazards. 
                 The selection must be based on a thorough risk assessment.
@@ -224,7 +224,7 @@ const Section4_2 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-emerald-400" />
+                  <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Risk Assessment Factors
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -238,7 +238,7 @@ const Section4_2 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Users className="h-4 w-4 text-emerald-400" />
+                  <Users className="h-4 w-4 text-elec-yellow" />
                   Personal Factors
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -275,9 +275,9 @@ const Section4_2 = () => {
         />
 
         {/* Maintenance Requirements */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">Maintenance Requirements</h2>
           </div>
           
@@ -285,7 +285,7 @@ const Section4_2 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Eye className="h-4 w-4 text-emerald-400" />
+                  <Eye className="h-4 w-4 text-elec-yellow" />
                   Daily Inspection
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -298,7 +298,7 @@ const Section4_2 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-emerald-400" />
+                  <Calendar className="h-4 w-4 text-elec-yellow" />
                   Periodic Inspection
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -311,7 +311,7 @@ const Section4_2 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <RefreshCw className="h-4 w-4 text-emerald-400" />
+                  <RefreshCw className="h-4 w-4 text-elec-yellow" />
                   Cleaning & Care
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -324,7 +324,7 @@ const Section4_2 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Settings className="h-4 w-4 text-emerald-400" />
+                  <Settings className="h-4 w-4 text-elec-yellow" />
                   Storage Requirements
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
@@ -348,7 +348,7 @@ const Section4_2 = () => {
           <div className="space-y-4">
             <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
               <h4 className="font-semibold mb-2 text-red-800 dark:text-red-200">Immediate Replacement Required</h4>
-              <ul className="text-red-700 dark:text-emerald-400 text-sm space-y-1">
+              <ul className="text-red-700 dark:text-elec-yellow text-sm space-y-1">
                 <li>• Visible damage (cracks, tears, holes)</li>
                 <li>• Failed electrical test</li>
                 <li>• Contamination that cannot be cleaned</li>
@@ -386,9 +386,9 @@ const Section4_2 = () => {
           
           <div className="space-y-6">
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200">Employer Responsibilities</h4>
-                <ul className="text-blue-700 dark:text-emerald-400 text-sm space-y-1">
+                <ul className="text-blue-700 dark:text-elec-yellow text-sm space-y-1">
                   <li>• Provide suitable PPE free of charge</li>
                   <li>• Ensure PPE meets relevant standards</li>
                   <li>• Provide training on proper use</li>
@@ -479,9 +479,9 @@ const Section4_2 = () => {
         </div>
 
         {/* Real World Example */}
-        <div className="mb-8 border-l-4 border-emerald-500 p-6 bg-card rounded-lg">
+        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">6</div>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">6</div>
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">Real World Example</h2>
           </div>
           
@@ -513,13 +513,13 @@ const Section4_2 = () => {
         {/* FAQs */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Lightbulb className="h-5 w-5 text-emerald-400" />
+            <Lightbulb className="h-5 w-5 text-elec-yellow" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border pb-4 last:border-b-0">
-                <h4 className="font-semibold mb-2 text-emerald-400">{faq.question}</h4>
+                <h4 className="font-semibold mb-2 text-elec-yellow">{faq.question}</h4>
                 <p className="text-muted-foreground text-sm">{faq.answer}</p>
               </div>
             ))}
@@ -531,27 +531,27 @@ const Section4_2 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
           <ul className="space-y-2 text-foreground">
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>PPE selection must be based on thorough risk assessment</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Daily inspection before use and periodic formal inspection are both required</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Electrical PPE requires regular testing to verify continued protection</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Both employers and employees have specific responsibilities for PPE</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Proper maintenance and storage are essential for PPE effectiveness</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Damaged or expired PPE must be immediately removed from service</span>
             </li>
           </ul>

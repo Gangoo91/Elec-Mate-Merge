@@ -223,7 +223,7 @@ const Module4Section5_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Ferrule Construction and Types</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Ferrule Construction and Types</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Primary function:</strong> Prevent conductor strands from splaying when inserted into terminals.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Available types:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -280,7 +280,7 @@ const Module4Section5_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Sleeving Applications and Colour Coding</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Sleeving Applications and Colour Coding</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Primary applications:</strong> Insulate and identify bare conductors in electrical installations.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>BS 7671 colour coding requirements:</strong></p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
@@ -326,7 +326,7 @@ const Module4Section5_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Gland Types and Applications</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Gland Types and Applications</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Metallic glands:</strong> Used with armoured cables for mechanical retention and earth continuity.</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Brass or stainless steel construction for corrosion resistance</li>
@@ -378,7 +378,7 @@ const Module4Section5_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Crimp Terminal Types and Applications</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Crimp Terminal Types and Applications</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Ring crimps:</strong> For bolted terminations providing secure mechanical connection.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Spade crimps:</strong> For quick-connect terminals allowing easy disconnection.</p>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Butt crimps:</strong> For joining conductors end-to-end in cable extensions.</p>
@@ -394,7 +394,7 @@ const Module4Section5_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Common Errors to Avoid</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Common Errors to Avoid</p>
                     <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Using wrong size accessory for conductor cross-sectional area</li>
                       <li>Not fully inserting conductor into ferrule, gland, or crimp before securing</li>

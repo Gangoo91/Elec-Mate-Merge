@@ -435,7 +435,7 @@ const Module2Section5_2 = () => {
                 
                 <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">XLPE</h4>
-                  <ul className="space-y-1 text-emerald-200 text-sm">
+                  <ul className="space-y-1 text-elec-yellow text-sm">
                     <li>• <strong>Rating:</strong> Typically 90°C</li>
                     <li>• <strong>Uses:</strong> SWA, high-performance cables</li>
                     <li>• <strong>Benefit:</strong> Higher current capacity</li>
@@ -551,7 +551,7 @@ const Module2Section5_2 = () => {
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Installation Best Practices</h3>
               <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-emerald-200">
+                <ul className="list-disc pl-4 space-y-2 text-sm text-elec-yellow">
                   <li><strong>Documentation:</strong> Record conductor material, CSA, and insulation type on certificates</li>
                   <li><strong>Termination Quality:</strong> Use calibrated torque tools and verify connection tightness</li>
                   <li><strong>Environmental Protection:</strong> Ensure IP ratings and environmental sealing are adequate</li>
@@ -643,7 +643,7 @@ const Module2Section5_2 = () => {
               <div className="space-y-4">
                 <div className="bg-card border border-elec-yellow/30 p-3 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Selection Checklist</h4>
-                  <ul className="space-y-1 text-emerald-200 text-xs">
+                  <ul className="space-y-1 text-elec-yellow text-xs">
                     <li>• <strong>Current:</strong> Check capacity tables (App 4)</li>
                     <li>• <strong>Voltage drop:</strong> Calculate for actual length</li>
                     <li>• <strong>Environment:</strong> Temperature, moisture, chemicals</li>

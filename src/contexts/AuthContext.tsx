@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkSubscriptionStatus 
   } = useSubscriptionStatus(profile);
   const { isDevelopmentMode, toggleDevelopmentMode } = useDevelopmentMode();
-  const { signIn, signUp, signOut } = useAuthentication();
+  const { signIn, signUp, signOut, resetPassword, updatePassword, resendConfirmationEmail, updateProfile } = useAuthentication();
 
 
   const value: AuthContextType = {
@@ -43,6 +43,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     signIn,
     signUp,
     signOut,
+    resetPassword,
+    updatePassword,
+    resendConfirmationEmail,
+    updateProfile,
     fetchProfile,
   };
 

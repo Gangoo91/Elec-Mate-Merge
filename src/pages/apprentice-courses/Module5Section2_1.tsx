@@ -216,7 +216,7 @@ const Module5Section2_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Safe Design</p>
+                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Safe Design</p>
                     <p className="text-base text-white mb-2"><strong>Prevents danger:</strong> Protects people, property, and equipment from electrical hazards.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Shock protection through proper earthing and RCD protection</li>
@@ -275,7 +275,7 @@ const Module5Section2_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Safety Principles in Design</p>
+                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Safety Principles in Design</p>
                     <p className="text-base text-white mb-2"><strong>Shock Protection:</strong> Preventing contact with live parts and earth fault protection.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Basic protection: insulation, enclosure, barriers</li>
@@ -324,7 +324,7 @@ const Module5Section2_1 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">User-Focused Design Elements</p>
+                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">User-Focused Design Elements</p>
                     <p className="text-base text-white mb-2"><strong>Socket outlet provision:</strong> Adequate numbers to meet user needs.</p>
                     <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Avoid over-reliance on extension leads (safety hazard)</li>
@@ -400,7 +400,7 @@ const Module5Section2_1 = () => {
             
             <div className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Step 1: Initial Assessment</p>
+                <p className="font-medium text-elec-yellow text-elec-yellow mb-2">Step 1: Initial Assessment</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Identify intended use:</strong> Domestic, commercial, industrial applications</li>
                   <li>✅ <strong>Site survey:</strong> Check for damp conditions, flammable materials, access restrictions</li>
@@ -420,7 +420,7 @@ const Module5Section2_1 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-600 dark:text-elec-yellow mb-2">Step 3: Future-Proofing</p>
+                <p className="font-medium text-purple-600 text-elec-yellow mb-2">Step 3: Future-Proofing</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Spare capacity:</strong> Allow 25-30% spare capacity in consumer units</li>
                   <li>✅ <strong>EV charging:</strong> Consider 32A supply for future electric vehicle charging</li>
@@ -430,7 +430,7 @@ const Module5Section2_1 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Step 4: Accessibility Compliance</p>
+                <p className="font-medium text-orange-600 text-elec-yellow mb-2">Step 4: Accessibility Compliance</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Height requirements:</strong> Switches 900-1200mm, sockets 450-1200mm from floor</li>
                   <li>✅ <strong>Colour contrast:</strong> Visible distinction between fittings and backgrounds</li>
@@ -451,7 +451,7 @@ const Module5Section2_1 = () => {
                 <Users className="w-4 h-4" />
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-2">The £50,000 Design Mistake</p>
+                <p className="font-semibold text-orange-600 text-elec-yellow mb-2">The £50,000 Design Mistake</p>
                 <p className="text-base text-white mb-3">
                   <strong>The Project:</strong> A 200-unit new build housing development in Manchester where the electrical contractor installed minimal socket provision to meet basic building regulations - just one double socket per bedroom and limited kitchen outlets.
                 </p>
@@ -467,7 +467,7 @@ const Module5Section2_1 = () => {
                 </div>
                 
                 <div className="bg-card p-4 rounded-lg mb-3 border border-red-500/20">
-                  <p className="font-medium text-red-600 dark:text-elec-yellow mb-2">The Consequences:</p>
+                  <p className="font-medium text-red-600 text-elec-yellow mb-2">The Consequences:</p>
                   <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                     <li><strong>Safety hazards:</strong> Residents used dangerous daisy-chained extension leads</li>
                     <li><strong>Customer complaints:</strong> 180 out of 200 homes complained within 6 months</li>
@@ -520,7 +520,7 @@ const Module5Section2_1 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Functional Requirements</p>
+                <p className="font-medium text-elec-yellow text-elec-yellow mb-2">Functional Requirements</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>🔌 Adequate socket outlets for room usage</li>
                   <li>💡 Sufficient lighting without dark spots</li>
@@ -533,7 +533,7 @@ const Module5Section2_1 = () => {
             
             <div className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-600 dark:text-elec-yellow mb-2">Compliance & Quality</p>
+                <p className="font-medium text-purple-600 text-elec-yellow mb-2">Compliance & Quality</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>📋 Meet Building Regulations Part P & M</li>
                   <li>📖 Follow manufacturer instructions</li>
@@ -544,7 +544,7 @@ const Module5Section2_1 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Future-Proofing</p>
+                <p className="font-medium text-orange-600 text-elec-yellow mb-2">Future-Proofing</p>
                 <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>🚗 Allow for EV charging points</li>
                   <li>🏡 Plan for smart home technology</li>
