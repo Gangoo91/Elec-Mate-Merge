@@ -78,7 +78,7 @@ export function useAuthentication() {
           },
         },
       });
-      
+
       if (error) {
         toast({
           title: 'Signup Failed',
@@ -87,13 +87,35 @@ export function useAuthentication() {
         });
         return { error };
       }
-      
+
+      // Send branded welcome email via Resend
+      if (data?.user) {
+        try {
+          const { error: emailError } = await supabase.functions.invoke('send-welcome-email', {
+            body: {
+              userId: data.user.id,
+              email: email,
+              fullName: fullName,
+            },
+          });
+
+          if (emailError) {
+            console.warn('Welcome email failed to send:', emailError);
+            // Don't fail signup if email fails - it's not critical
+          } else {
+            console.log('Welcome email sent successfully');
+          }
+        } catch (emailErr) {
+          console.warn('Error sending welcome email:', emailErr);
+        }
+      }
+
       // Success toast
       toast({
         title: 'Signup Successful',
         description: 'Your account has been created successfully. You now have a 7-day free trial!',
       });
-      
+
       return { error: null };
     } catch (error: any) {
       toast({
@@ -177,18 +199,29 @@ export function useAuthentication() {
 
   const resendConfirmationEmail = async (email: string) => {
     try {
-      const { error } = await supabase.auth.resend({
-        type: 'signup',
-        email,
+      // Use our branded welcome email function via Resend
+      const { error } = await supabase.functions.invoke('send-welcome-email', {
+        body: {
+          email: email,
+          fullName: '', // Will show "Hi there" if name not available
+        },
       });
 
       if (error) {
-        toast({
-          title: 'Failed to Resend',
-          description: error.message,
-          variant: 'destructive',
+        // Fallback to Supabase's default resend
+        const { error: supabaseError } = await supabase.auth.resend({
+          type: 'signup',
+          email,
         });
-        return { error };
+
+        if (supabaseError) {
+          toast({
+            title: 'Failed to Resend',
+            description: supabaseError.message,
+            variant: 'destructive',
+          });
+          return { error: supabaseError };
+        }
       }
 
       toast({
