@@ -337,8 +337,8 @@ const CollegeDashboard = () => {
 
   return (
     <CollegeProvider>
-      <div className="min-h-screen bg-background text-foreground p-3 sm:p-6 md:p-8 space-y-4 sm:space-y-6 md:space-y-8 pb-20 sm:pb-6">
-        <div className="md:max-w-7xl mx-auto md:px-6 lg:px-10 xl:px-14">
+      <div className="min-h-screen mobile-safe-area">
+        <div className="space-y-4 sm:space-y-6 md:space-y-8 animate-fade-in px-4 sm:px-6 py-4 md:py-6 pb-20 sm:pb-12">
           {/* Header - Native App Style (non-sticky) */}
           <div className="relative w-full">
             {/* Back button - top left */}
@@ -372,7 +372,7 @@ const CollegeDashboard = () => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => handleNavigate("collegesettings")}
+                onClick={() => navigate("/settings")}
                 className="flex items-center gap-2"
               >
                 <Settings className="h-4 w-4" />
@@ -395,18 +395,16 @@ const CollegeDashboard = () => {
               </div>
             </div>
           </div>
+
+          {/* Main Content */}
+          {renderSection()}
+
+          {/* Command Palette */}
+          <CommandPalette open={commandPaletteOpen} onOpenChange={setCommandPaletteOpen} onNavigate={handleNavigate} />
+
+          {/* Quick Actions FAB */}
+          <QuickActions onNavigate={handleNavigate} />
         </div>
-
-        {/* Main Content */}
-        <div className="md:px-6 lg:px-10 xl:px-14 space-y-4 md:space-y-6 lg:space-y-8">
-          <div className="animate-fade-in">{renderSection()}</div>
-        </div>
-
-        {/* Command Palette */}
-        <CommandPalette open={commandPaletteOpen} onOpenChange={setCommandPaletteOpen} onNavigate={handleNavigate} />
-
-        {/* Quick Actions FAB */}
-        <QuickActions onNavigate={handleNavigate} />
       </div>
     </CollegeProvider>
   );
