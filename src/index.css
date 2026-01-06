@@ -280,9 +280,28 @@
   .pb-safe {
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
-  
+
   .pt-safe {
     padding-top: max(1rem, env(safe-area-inset-top));
+  }
+
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Touch feedback for mobile interactions */
+  .touch-highlight {
+    -webkit-tap-highlight-color: rgba(255, 209, 0, 0.1);
+  }
+
+  /* Momentum scrolling for iOS */
+  .momentum-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
   
   /* Prevent iOS zoom on input focus */

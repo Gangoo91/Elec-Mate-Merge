@@ -3,6 +3,7 @@
  *
  * Premium stat card with animated counter, trend indicator,
  * gradient icon background, and hover lift effect.
+ * Mobile-first responsive design.
  */
 
 import { motion } from 'framer-motion';
@@ -100,33 +101,35 @@ export function StatCard({
       onClick={onClick}
       className={cn(
         // Base styling
-        'relative overflow-hidden rounded-xl',
+        'relative overflow-hidden',
+        // Responsive border radius
+        'rounded-xl sm:rounded-2xl',
         // Glass morphism
         'glass-premium',
-        // Padding
-        'p-4',
-        // Fixed height for uniform sizing
-        'h-[100px]',
+        // Responsive padding
+        'p-3 sm:p-4',
+        // Responsive min-height for uniform sizing
+        'min-h-[80px] sm:min-h-[100px]',
         // Cursor for clickable
         isClickable && 'cursor-pointer',
-        // Touch target
-        'touch-manipulation',
+        // Touch optimization
+        'touch-manipulation active:scale-[0.98] transition-transform',
         className
       )}
     >
       {/* Content */}
-      <div className="flex items-start justify-between gap-3">
-        {/* Icon */}
+      <div className="flex items-start justify-between gap-2 sm:gap-3">
+        {/* Icon - responsive sizing */}
         <div className={cn(
-          'flex-shrink-0 p-2.5 rounded-lg',
+          'flex-shrink-0 p-2 sm:p-2.5 rounded-lg sm:rounded-xl',
           styles.iconBg
         )}>
-          <Icon className={cn('h-5 w-5', styles.iconColor)} />
+          <Icon className={cn('h-4 w-4 sm:h-5 sm:w-5', styles.iconColor)} />
         </div>
 
         {/* Stats */}
         <div className="flex-1 min-w-0 text-right">
-          {/* Value */}
+          {/* Value - responsive text */}
           <div className="flex items-baseline justify-end gap-1">
             <AnimatedCounter
               value={value}
@@ -135,19 +138,19 @@ export function StatCard({
               decimals={decimals}
               formatAsCurrency={formatAsCurrency}
               className={cn(
-                'text-2xl font-bold tracking-tight',
+                'text-xl sm:text-2xl font-bold tracking-tight',
                 styles.accentColor
               )}
             />
           </div>
 
-          {/* Label */}
-          <p className="text-xs text-white/80 mt-0.5 truncate">{label}</p>
+          {/* Label - responsive text */}
+          <p className="text-[10px] sm:text-xs text-white/80 mt-0.5 truncate">{label}</p>
 
           {/* Trend indicator */}
           {trendDirection && (
             <div className={cn(
-              'inline-flex items-center gap-0.5 mt-1.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full',
+              'inline-flex items-center gap-0.5 mt-1 sm:mt-1.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full',
               trendDirection === 'up' && 'bg-green-500/10 text-green-400',
               trendDirection === 'down' && 'bg-red-500/10 text-red-400',
               trendDirection === 'neutral' && 'bg-white/5 text-white/60'
@@ -170,7 +173,7 @@ export function StatCard({
 
       {/* Progress bar */}
       {progress !== undefined && (
-        <div className="mt-3">
+        <div className="mt-2 sm:mt-3">
           <div className="h-1 bg-white/[0.05] rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
@@ -205,12 +208,13 @@ export function CompactStat({
 
   return (
     <div className={cn(
-      'flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.03]',
+      'flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-white/[0.03]',
+      'touch-manipulation',
       className
     )}>
-      <Icon className={cn('h-4 w-4', styles.iconColor)} />
-      <span className="text-sm text-white/90">{label}:</span>
-      <span className={cn('text-sm font-semibold', styles.accentColor)}>
+      <Icon className={cn('h-3.5 w-3.5 sm:h-4 sm:w-4', styles.iconColor)} />
+      <span className="text-xs sm:text-sm text-white/90">{label}:</span>
+      <span className={cn('text-xs sm:text-sm font-semibold', styles.accentColor)}>
         {typeof value === 'number' ? value.toLocaleString() : value}
       </span>
     </div>
