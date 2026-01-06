@@ -61,7 +61,7 @@ const handler = async (req: Request): Promise<Response> => {
       type: 'signup',
       email: email,
       options: {
-        redirectTo: `${Deno.env.get('SITE_URL') || 'https://elec-mate.uk'}/auth/signin?confirmed=true`,
+        redirectTo: `${Deno.env.get('SITE_URL') || 'https://elec-mate.com'}/auth/signin?confirmed=true`,
       }
     });
 
@@ -70,7 +70,7 @@ const handler = async (req: Request): Promise<Response> => {
     if (linkError) {
       console.warn('Could not generate confirmation link:', linkError.message);
       // Fallback to sign-in page
-      confirmationUrl = `${Deno.env.get('SITE_URL') || 'https://elec-mate.uk'}/auth/signin`;
+      confirmationUrl = `${Deno.env.get('SITE_URL') || 'https://elec-mate.com'}/auth/signin`;
     }
 
     console.log('Confirmation URL generated');
@@ -80,7 +80,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email via Resend
     const { data: emailData, error: emailError } = await resend.emails.send({
-      from: 'Elec-Mate <founder@elec-mate.uk>',
+      from: 'Elec-Mate <founder@elec-mate.com>',
       to: [email],
       subject: 'Welcome to Elec-Mate - Please Confirm Your Email',
       html: emailHtml,
@@ -251,7 +251,7 @@ function generateWelcomeEmailHTML(fullName: string, confirmationUrl: string): st
                 Need help getting started?
               </p>
               <p style="margin: 0; font-size: 14px; color: #e5e5e5;">
-                Reply to this email or reach us at <a href="mailto:founder@elec-mate.uk" style="color: #fbbf24; text-decoration: none;">founder@elec-mate.uk</a>
+                Reply to this email or reach us at <a href="mailto:founder@elec-mate.com" style="color: #fbbf24; text-decoration: none;">founder@elec-mate.com</a>
               </p>
             </td>
           </tr>
@@ -263,7 +263,7 @@ function generateWelcomeEmailHTML(fullName: string, confirmationUrl: string): st
                 &copy; ${new Date().getFullYear()} Elec-Mate. All rights reserved.
               </p>
               <p style="margin: 0; font-size: 11px; color: #525252;">
-                You're receiving this because you signed up at elec-mate.uk
+                You're receiving this because you signed up at elec-mate.com
               </p>
             </td>
           </tr>
