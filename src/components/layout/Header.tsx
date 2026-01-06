@@ -155,8 +155,6 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
 
         {/* Right side - Actions */}
         <div className="flex items-center gap-1 sm:gap-1.5">
-          {/* Mobile clock - compact */}
-          <LiveClock className="md:hidden" />
           <MessagesDropdown />
           <NotificationDropdown />
           <UserProfileDropdown />
